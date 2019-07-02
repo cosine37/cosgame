@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/indexController.js"></script>
+<body ng-app="indexApp" ng-controller="indexCtrl">
+	<div id="header" class="header">
+		<table style="width: 100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+			</tr>
+		</table>
+		
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button>Home</button>
+		<button ng-click="goto('dominion')">Dominion</button>
+		<button ng-click="goto('mafia')">Mafia</button>
+		<button>Others</button>
+	</div>
+	
+</body>
+</html>

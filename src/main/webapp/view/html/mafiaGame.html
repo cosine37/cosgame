@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mafiaGame.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/mafiaGameController.js"></script>
+<body ng-app="mafiaGameApp" ng-controller="mafiaGameCtrl">
+	<div id="roomtitle" class="roomtitle">
+		<h2>Room ID: {{roomId}}</h2>
+	</div>
+	<div id="gamearea" class="gamearea">
+		<table>
+			<tr>
+				<td>
+					<div style="height: 500px; width: 1200px">
+						Player
+						<table>
+							<tr>
+								<td ng-repeat="playerName in playerNames">
+									<div style="height: 500px; width: 120px">
+										<table>
+											<tr>
+												<td>photo</td>
+											</tr>
+											<tr>
+												<td>{{playerName}}</td>
+											</tr>
+										</table>
+									</div>
+									
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+				<td>Log</td>
+			</tr>
+			<tr>
+				<td colspan="2">Typing</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

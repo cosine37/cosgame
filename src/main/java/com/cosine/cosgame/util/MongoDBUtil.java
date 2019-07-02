@@ -1,0 +1,69 @@
+package com.cosine.cosgame.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
+
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+public class MongoDBUtil {
+	MongoClient mongoClient;
+	MongoDatabase mongoDB;
+	
+	String collectionName;
+	
+	static final String MONGOURL = "localhost";
+	
+	public MongoDBUtil() {
+		mongoClient = new MongoClient(MONGOURL, 27017);
+	}
+	
+	public MongoDBUtil(String dbname) {
+		mongoClient = new MongoClient(MONGOURL, 27017);
+		mongoDB = mongoClient.getDatabase(dbname);
+		System.out.println("connected!");
+	}
+	
+	public void setCol(String col) {
+		collectionName = col;
+	}
+	
+	public void insert(Document doc) {
+		List<Document> docs = new ArrayList<Document>();
+		docs.add(doc);
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		collection.insertMany(docs);
+	}
+	
+	public void insert(String col, Document doc) {
+		setCol(col);
+		insert(doc);
+	}
+	
+	public void delete(String key, String value) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		collection.deleteMany(Filters.eq(key, value));
+	}
+	
+	public Document read(String key, String value) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		Document doc = collection.find(Filters.eq(key,value)).first();
+		return doc;
+	}
+	
+	public List<String> getValues(String key) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		List<String> ans = new ArrayList<String>();
+		FindIterable<Document> docs = collection.find();
+		for (Document doc : docs) {
+			ans.add(doc.getString(key));
+		}
+		return ans;
+	}
+}

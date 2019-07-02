@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/loginController.js"></script>
+<body ng-app="loginApp" ng-controller="loginCtrl">
+	
+	<div id="login">
+		<table>
+			<tr>
+				<td>Username</td>
+				<td><input type="text" ng-model="username"/></td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td><input type="text" ng-model="password"/></td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td></td>
+				<td><button ng-click="login()">Login</button></td>
+			</tr>
+			<tr>
+				<td>{{password}}</td>
+				<td>{{encrypted}}</td>
+			</tr>
+		</table>
+	</div>
+	
+</body>
+</html>

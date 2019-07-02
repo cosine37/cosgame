@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/dominionGameController.js"></script>
+<body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
+	<div id="otherplayer" class="otherplayer">
+		Other Player Area
+	</div>
+	<div id="supply">
+		<div id="basic" style="float: left; width: 200px;">
+			<table>
+				<tr>
+					<td><img src="{{base[0].image}}" data-ng-style="{{baseStyle}}"/></td>
+					<td><img src="{{base[1].image}}" data-ng-style="{{baseStyle}}"/></td>
+				</tr>
+				<tr>
+					<td><img src="{{base[2].image}}" data-ng-style="{{baseStyle}}"/></td>
+					<td><img src="{{base[3].image}}" data-ng-style="{{baseStyle}}"/></td>
+				</tr>
+				<tr>
+					<td><img src="{{base[4].image}}" data-ng-style="{{baseStyle}}"/></td>
+					<td><img src="{{base[5].image}}" data-ng-style="{{baseStyle}}"/></td>
+				</tr>
+				<tr>
+					<td><img src="{{base[6].image}}" data-ng-style="{{baseStyle}}"/></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<div id="kindom" style="float: left; margin-left: 10px; width: 400px;">
+			<table>
+				<tr>
+					<td><img src="{{kindom[0].image}}" data-ng-style="{{kindomStyle}}"/></td>
+					<td><img src="{{kindom[1].image}}" data-ng-style="{{kindomStyle}}"/></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="player" style="clear:both; ">Player
+		
+	</div>
+</body>
+</html>

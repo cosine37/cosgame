@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/mafiaRulesController.js"></script>
+<style>
+.role {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+.active, .role:hover {
+  background-color: #ccc;
+}
+
+
+.roledesc {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+</style>
+
+<body ng-app="mafiaRulesApp" ng-controller="mafiaRulesCtrl">
+	
+	
+	<div id="header" class="header">
+		<table style="width: 100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+			</tr>
+		</table>
+		
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button>Home</button>
+		<button>Dominion</button>
+		<button>Mafia</button>
+		<button>Others</button>
+	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div id="sidebar" class="sidebar">
+			<table>
+				<tr><td><button ng-click="rooms()">Rooms</button></td></tr>
+				<tr><td><button>Rules</button></td></tr>
+			</table>
+		</div>
+		
+		<div id="content" class="content">
+			<div id="rules" class="rules">
+				<button class="role" >杀手</button>
+				<div class="roledesc">
+					<h3>杀手</h3>
+					<h5>阵营：坏人</h5>
+					<p>每天晚上可以杀一名角色，正常情况下该名角色在第二天早上被宣布死亡</p>
+					<p>知道所有<b>杀手</b>和<b>恐怖分子</b>的身份</p>
+				</div>
+				<button class="role">平民</button>
+				<div class="roledesc">
+					<h3>平民</h3>
+					<h5>阵营：好人</h5>
+					<p>没有特殊能力</p>
+				</div>
+				<button class="role" id="police">警察</button>
+				<div class="roledesc">
+					<h3>警察</h3>
+					<h5>阵营：好人</h5>
+					<p>每天晚上可以获知一名角色的阵营</p>
+					<p>知道所有<b>警察</b>的身份</p>
+				</div>
+				<button class="role">花蝴蝶</button>
+				<div class="roledesc">
+					<h3>花蝴蝶</h3>
+					<h5>阵营：好人</h5>
+					<p>每天晚上可以抱一名角色；该角色本回合不会被杀手杀死</p>
+					<p>你不可以不抱任何角色，也不可以抱自己</p>
+					<p>若你被<b>杀手</b>杀，你抱的角色也视为被<b>杀手</b>杀</p>
+					<p>若你被<b>狙击手</b>射杀，你抱的角色也视为被<b>狙击手</b>射杀</p>
+					<p>你抱的角色会被<b>狙击手</b>射杀</p>
+				</div>
+				<button class="role">死胖子</button>
+				<div class="roledesc">
+					<h3>死胖子</h3>
+					<h5>阵营：好人</h5>
+					<p><b>杀手</b>需要杀你两次才能杀死你</p>
+					<p>若你被<b>狙击手</b>射杀或白天投票阶段得票最多，你立即死亡</p>
+					<p>若你被<b>花蝴蝶</b>抱且花蝴蝶被杀手杀死，则你只视为被杀手杀一次</p>
+				</div>
+				<button class="role">狙击手</button>
+				<div class="roledesc">
+					<h3>狙击手</h3>
+					<h5>阵营：好人</h5>
+					<p>在晚上可以开枪，被开枪的玩家直接被杀死。每局游戏只可以开一次枪，在开枪前不会被<b>杀手</b>杀死</p>
+					<p>你开枪可以直接杀死<b>死胖子</b></p>
+					<p>但是白天投票阶段若你票数最多，即使你没有开枪也会死亡</p>
+				</div>
+				<button class="role">白痴</button>
+				<div class="roledesc">
+					<h3>白痴</h3>
+					<h5>阵营：好人</h5>
+					<p>你可以在任何时候亮出身份，包括投票阶段结束时</p>
+					<p>亮出身份后，你不会被票死，若你投票阶段得票最多，则直接进入夜晚阶段，投票阶段没有人死亡</p>
+					<p>若你的身份为亮出，你夜晚阶段可以随意说话，白天说话时你可以插嘴，但你无法参与投票</p>
+				</div>
+				<button class="role">恐怖分子</button>
+				<div class="roledesc">
+					<h3>恐怖分子</h3>
+					<h5>阵营：坏人</h5>
+					<p>天亮阶段时，当死者发表完遗言后，你可以立即亮出你的角色牌并指定一名角色，你与该角色死亡，游戏直接进入夜晚阶段</p>
+					<p>你不知道<b>杀手</b>身份，所有<b>杀手</b>第一天晚上知道你的身份</p>
+					<p>你可以在任何玩家发言之前发动你的技能</p>
+					<p>你发动技能后，所有发言结束且跳过投票阶段</p>
+					<p>你不可以在投票阶段或晚上使用技能</p>
+				</div>
+				<button class="role">法医</button>
+				<div class="roledesc">
+					<h3>法医</h3>
+					<h5>阵营：好人</h5>
+					<p>晚上可以得知指定的前一夜或白天死亡角色的身份，仅限一次</p>
+				</div>
+				<button class="role">两姐妹</button>
+				<div class="roledesc">
+					<h3>两姐妹</h3>
+					<h5>阵营：好人</h5>
+					<p>共两位，互相知道身份</p>
+				</div>
+				<button class="role">三兄弟</button>
+				<div class="roledesc">
+					<h3>三兄弟</h3>
+					<h5>阵营：好人</h5>
+					<p>共三位，互相知道身份</p>
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+	
+	<script>
+	var acc = document.getElementsByClassName('role');
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+  		acc[i].addEventListener("click", function() {
+    	/* Toggle between adding and removing the "active" class,
+    	to highlight the button that controls the panel */
+    	this.classList.toggle("active");
+
+    	/* Toggle between hiding and showing the active panel */
+    	var panel = this.nextElementSibling;
+    	if (panel.style.display === "block") {
+      		panel.style.display = "none";
+    	} else {
+      		panel.style.display = "block";
+    	}
+  		});
+	}
+	</script>
+	
+</body>
+</html>

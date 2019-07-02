@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/mafiaMainController.js"></script>
+
+<body ng-app="mafiaMainApp" ng-controller="mafiaMainCtrl">
+	<div id="header" class="header">
+		<table style="width: 100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+			</tr>
+		</table>
+		
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button ng-click="goto('index')">Home</button>
+		<button ng-click="goto('dominion')">Dominion</button>
+		<button>Mafia</button>
+		<button>Others</button>
+	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div id="sidebar" class="sidebar">
+			<table>
+				<tr><td><button>Rooms</button></td></tr>
+				<tr><td><button ng-click="rules()">Rules</button></td></tr>
+			</table>
+		</div>
+		
+		<div id="content" class="content">
+			<div id="rooms" class="rooms">	
+				<table>
+					<tr>
+						<td><button ng-click="newGame()">Demo Mafia Room</button></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td>Room Id</td>
+						<td><button ng-click="createRoomWindow()">Create</button></td>
+					</tr>
+					<tr ng-repeat="roomId in roomIds">
+						<td>{{roomId}}</td>
+						<td><button ng-click="enterRoom(roomId)">Enter</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
