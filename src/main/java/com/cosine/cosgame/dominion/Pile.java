@@ -105,7 +105,19 @@ public class Pile {
 	public void setNumCardsInit(int numCardsInit) {
 		this.numCardsInit = numCardsInit;
 	}
-
+	
+	public void setIsSupply(boolean isSupply) {
+		this.isSupply = isSupply;
+	}
+	
+	public void setIsSplit(boolean isSplit) {
+		this.isSplit = isSplit;
+	}
+	
+	public void setIsMixed(boolean isMixed) {
+		this.isMixed = isMixed;
+	}
+	
 	public boolean isSupply() {
 		return isSupply;
 	}

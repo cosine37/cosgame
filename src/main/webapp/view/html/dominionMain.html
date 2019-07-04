@@ -37,7 +37,13 @@
 			<div id="rooms" class="rooms">	
 				<table>
 					<tr>
-						<td><button ng-click="newGame()">Demo Room</button></td>
+						<td><button ng-click="newGame()">Create Room</button></td>
+					</tr>
+				</table>
+				<table>
+					<tr ng-repeat="boardId in boardIds">
+						<td>{{boardId}}</td>
+						<td><button ng-click="enterBoard(boardId)">Enter</button></td>
 					</tr>
 				</table>
 			</div>

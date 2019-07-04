@@ -18,4 +18,12 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.goto('dominiongame');
 			})
 		}
+		
+		$scope.enterBoard = function(x){
+			$scope.goto("dominiongame?BoardId="+x);
+		}
+		
+		$http.post("/dominionboards").then(function(response){
+			$scope.boardIds = response.data.value;
+		});
 }]);

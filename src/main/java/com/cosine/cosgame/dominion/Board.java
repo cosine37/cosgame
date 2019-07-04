@@ -84,9 +84,89 @@ public class Board {
 		return kindom;
 	}
 	
+	public void getBoardFromDB(String id) {
+		CardFactory factory = new CardFactory();
+		
+		Document doc = dbutil.read("boardId", id);
+		status = (int)doc.get("status");
+		boardId = (String)doc.get("boardId");
+		numPlayers = (int)doc.get("numPlayers");
+		
+		List<Document> baseDocs = (List<Document>)doc.get("base");
+		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
+		List<Document> playerDocs = (List<Document>)doc.get("players");
+		int i;
+		
+		kindom = new ArrayList<Pile>();
+		basePile = new ArrayList<Pile>();
+		players = new ArrayList<Player>();
+		for (i=0;i<kindomDocs.size();i++) {
+			Pile p = new Pile();
+			String name = (String)kindomDocs.get(i).get("name");
+			boolean isSupply = (boolean)kindomDocs.get(i).get("isSupply");
+			boolean isMixed = (boolean)kindomDocs.get(i).get("isMixed");
+			boolean isSplit = (boolean)kindomDocs.get(i).get("isSplit");
+			p.setName(name);
+			p.setIsSupply(isSupply);
+			p.setIsMixed(isMixed);
+			p.setIsSplit(isSplit);
+			
+			if (isMixed || isSplit) {
+				
+			} else {
+				int n = (int)((Document)kindomDocs.get(i).get("pile")).get("number");
+				String cardname = (String)((Document)kindomDocs.get(i).get("pile")).get("name");
+				p.setCards(factory.createCards(cardname, n));
+			}
+			kindom.add(p);
+		}
+		for (i=0;i<baseDocs.size();i++) {
+			Pile p = new Pile();
+			String name = (String)baseDocs.get(i).get("name");
+			int n = (int)baseDocs.get(i).get("number");
+			p.setName(name);
+			p.setCards(factory.createCards(name, n));
+			basePile.add(p);
+		}
+		for (i=0;i<playerDocs.size();i++) {
+			Player p = new Player();
+			p.setName((String)playerDocs.get(i).get("name"));
+			p.setPhase((int)playerDocs.get(i).get("phase"));
+			p.setAction((int)playerDocs.get(i).get("action"));
+			p.setCoin((int)playerDocs.get(i).get("coin"));
+			p.setBuy((int)playerDocs.get(i).get("buy"));
+			p.setCoffer((int)playerDocs.get(i).get("coffer"));
+			p.setVillager((int)playerDocs.get(i).get("villager"));
+			p.setVp((int)playerDocs.get(i).get("vp"));
+			
+			List<Document> discardDocs = (List<Document>)playerDocs.get(i).get("discard");
+			List<Document> deckDocs = (List<Document>)playerDocs.get(i).get("deck");
+			List<Document> handDocs = (List<Document>)playerDocs.get(i).get("hand");
+			List<Document> playDocs = (List<Document>)playerDocs.get(i).get("play");
+			List<Card> discard = new ArrayList<Card>();
+			List<Card> deck = new ArrayList<Card>();
+			List<Card> hand = new ArrayList<Card>();
+			List<Card> play = new ArrayList<Card>();
+		
+			int j;
+			for (j=0;j<discardDocs.size();j++) {discard.add(factory.createCard((String)discardDocs.get(j).get("name")));}
+			for (j=0;j<deckDocs.size();j++) {deck.add(factory.createCard((String)deckDocs.get(j).get("name")));}
+			for (j=0;j<handDocs.size();j++) {hand.add(factory.createCard((String)handDocs.get(j).get("name")));}
+			for (j=0;j<playDocs.size();j++) {play.add(factory.createCard((String)playDocs.get(j).get("name")));}
+			p.setDiscard(discard);
+			p.setDeck(deck);
+			p.setHand(hand);
+			p.setPlay(play);
+			players.add(p);
+		}
+		
+		
+	}
+	
 	public void storeBoardToDB() {
 		Document doc = new Document();
 		
+		doc.append("status", status);
 		doc.append("boardId", boardId);
 		doc.append("numPlayers", numPlayers);
 		
@@ -95,6 +175,7 @@ public class Board {
 		int i;
 		for (i=0;i<kindom.size();i++) {
 			Document dop = new Document();
+			dop.append("name", kindom.get(i).getName());
 			dop.append("isSupply", kindom.get(i).isSupply());
 			dop.append("isMixed", kindom.get(i).isMixed());
 			dop.append("isSplit", kindom.get(i).isSplit());
@@ -122,6 +203,12 @@ public class Board {
 			Document dop = new Document();
 			dop.append("name", players.get(i).getName());
 			dop.append("phase", players.get(i).getPhase());
+			dop.append("action", players.get(i).getAction());
+			dop.append("coin", players.get(i).getCoin());
+			dop.append("buy", players.get(i).getBuy());
+			dop.append("coffer", players.get(i).getCoffer());
+			dop.append("villager", players.get(i).getVillager());
+			dop.append("vp", players.get(i).getVp());
 			
 			int j;
 			List<Document> discardDocs = new ArrayList<Document>();

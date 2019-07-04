@@ -1,5 +1,8 @@
 package com.cosine.cosgame.dominion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cosine.cosgame.dominion.base.*;
 import com.cosine.cosgame.dominion.dominion.*;
 
@@ -20,5 +23,13 @@ public class CardFactory {
 		if (cardname.equals("Smithy")) return new Smithy();
 		if (cardname.equals("Village")) return new Village();
 		return null;
+	}
+	
+	public List<Card> createCards(String cardname, int n) {
+		List<Card> cardlist = new ArrayList<Card>();
+		for (int i=0;i<n;i++) {
+			cardlist.add(createCard(cardname));
+		}
+		return cardlist;
 	}
 }

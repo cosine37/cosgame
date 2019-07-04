@@ -33,6 +33,8 @@ public class DominionGameController {
 	@RequestMapping(value="/dominiongame/getbase", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> getBase(){
 		board = new Board();
+		board.initialize("a", 2);
+		board.randomize();
 		List<Pile> piles = board.getBase();
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
@@ -40,6 +42,8 @@ public class DominionGameController {
 	@RequestMapping(value="/dominiongame/getkindom", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> getKindom(){
 		board = new Board();
+		board.initialize("a", 2);
+		board.randomize();
 		List<Pile> piles = board.getKindom();
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}

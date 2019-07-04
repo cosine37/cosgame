@@ -18,7 +18,7 @@ public class Player {
 	
 	int coin, action, buy;
 	
-	int coffer, villager;
+	int coffer, villager, vp;
 	
 	public Player() {
 		this.name = "tempname";
@@ -94,7 +94,9 @@ public class Player {
 	public String getName() {
 		return name;
 	}
-	
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getPhase() {
 		return phase;
 	}
@@ -115,6 +117,18 @@ public class Player {
 	}
 	public List<Card> getHand(){
 		return hand;
+	}
+	public void setDiscard(List<Card> discard) {
+		this.discard = discard;
+	}
+	public void setDeck(List<Card> deck) {
+		this.deck = deck;
+	}
+	public void setPlay(List<Card> play) {
+		this.play = play;
+	}
+	public void setHand(List<Card> hand) {
+		this.hand = hand;
 	}
 	public int getCoin() {
 		return coin;
@@ -142,5 +156,32 @@ public class Player {
 	}
 	public void addBuy(int x) {
 		this.buy = this.buy + x;
+	}
+	public int getCoffer() {
+		return coffer;
+	}
+	public void setCoffer(int coffer) {
+		this.coffer = coffer;
+	}
+	public void addCoffer(int x) {
+		this.coffer = this.coffer + x;
+	}
+	public int getVillager() {
+		return villager;
+	}
+	public void setVillager(int villager) {
+		this.villager = villager;
+	}
+	public void addVillager(int x) {
+		this.villager = this.villager + x;
+	}
+	public int getVp() {
+		return vp;
+	}
+	public void setVp(int vp) {
+		this.vp = vp;
+	}
+	public void addVp(int x) {
+		this.vp = this.vp + x;
 	}
 }
