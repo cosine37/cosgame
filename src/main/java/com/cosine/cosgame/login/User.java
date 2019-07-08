@@ -13,10 +13,23 @@ public class User {
 	String username;
 	String password;
 	String encrypted;
-	String state;
+	String role;
 	
+	// user role
 	public static String PLAYER = "PLAYER";
 	public static String ADMIN = "ADMIN";
+	
+	// user status
+	public static int LOGOUT = 0;
+	public static int LOGIN = 1;
+	public static int DOMINIONROOM = 11;
+	public static int DOMINIONGAME = 12;
+	public static int MAFIAROOM = 21;
+	public static int MAFIAGAME = 22;
+	
+	// redirect to the room
+	String roomId;
+	int status;
 	
 	MongoDBUtil dbutil;
 	
@@ -25,7 +38,8 @@ public class User {
 		String col = "user";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
-		state = "player";
+		role = "player";
+		status = LOGOUT;
 	}
 	
 	public User(String username) {
@@ -79,7 +93,9 @@ public class User {
 		Document doc = new Document();
 		doc.append("username", username);
 		doc.append("encrypted", encrypted);
-		doc.append("state", state);
+		doc.append("role", role);
+		doc.append("status",status);
+		doc.append("roomId", roomId);
 		dbutil.insert(doc);
 	}
 	
