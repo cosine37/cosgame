@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.base{
+	float: left;
+	height: 109px;
+	width: 71px;
+}
+.base-number{
+	position: relative;
+	top:80%;
+	left:68%;
+	background-color:red;
+	color:white;
+	width: 30%;
+}
+.kindom{
+	float: left;
+	height: 210px;
+	width: 140px;
+}
+.kindom-number{
+	position: relative;
+	top:89%;
+	left:82%;
+	background-color:red;
+	color:white;
+	width: 17%;
+}

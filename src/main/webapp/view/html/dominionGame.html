@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/dominionGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionGameController.js"></script>
@@ -12,32 +13,61 @@
 	</div>
 	<div id="supply">
 		<div id="basic" style="float: left; width: 200px;">
-			<table>
-				<tr>
-					<td><img ng-src="{{base[0].image}}" ng-style="{{baseStyle}}"/></td>
-					<td><img ng-src="{{base[1].image}}" ng-style="{{baseStyle}}"/></td>
-				</tr>
-				<tr>
-					<td><img ng-src="{{base[2].image}}" ng-style="{{baseStyle}}"/></td>
-					<td><img ng-src="{{base[3].image}}" ng-style="{{baseStyle}}"/></td>
-				</tr>
-				<tr>
-					<td><img ng-src="{{base[4].image}}" ng-style="{{baseStyle}}"/></td>
-					<td><img ng-src="{{base[5].image}}" ng-style="{{baseStyle}}"/></td>
-				</tr>
-				<tr>
-					<td><img ng-src="{{base[6].image}}" ng-style="{{baseStyle}}"/></td>
-					<td></td>
-				</tr>
-			</table>
+			<div class="base" style="background:url({{base[0].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[0].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-left: 5px;background:url({{base[1].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[1].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-top: 5px;background:url({{base[2].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[2].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-left: 5px;margin-top: 5px;background:url({{base[3].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[3].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-top: 5px;background:url({{base[4].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[4].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-left: 5px;margin-top: 5px;background:url({{base[5].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[5].numCards}}
+				</div>
+			</div>
+			<div class="base" style="margin-top: 5px;background:url({{base[6].image}});background-size:cover" >
+				<div class="base-number">
+					{{base[6].numCards}}
+				</div>
+			</div>
 		</div>
 		<div id="kindom" style="float: left; margin-left: 10px; width: 400px;">
+			<div class="kindom" style="background:url({{kindom[0].image}});background-size:cover">
+				<div class="kindom-number">
+					{{kindom[0].numCards}}
+				</div>
+			</div>
+			<div class="kindom" style="margin-left: 10px;background:url({{kindom[1].image}});background-size:cover">
+				<div class="kindom-number">
+					{{kindom[1].numCards}}
+				</div>
+			</div>
+			<!-- 
 			<table>
 				<tr>
 					<td><img ng-src="{{kindom[0].image}}" ng-style="{{kindomStyle}}"/></td>
 					<td><img ng-src="{{kindom[1].image}}" ng-style="{{kindomStyle}}"/></td>
 				</tr>
 			</table>
+			 -->
 		</div>
 	</div>
 	<div id="player" style="clear:both; ">Player
