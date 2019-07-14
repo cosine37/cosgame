@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="/view/css/loginTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/registerController.js"></script>
+<body ng-app="registerApp" ng-controller="registerCtrl">
+<div id="register" class="register">
+	<div id="logo" class="rlogo">Cosgame</div>
+	<div class="registerback">
+		<div class="rtitle">Register</div>
+		<div class="inputs">
+			<div class="loginword">Username</div>
+			<div class="logintext"><input type="text" name="username" ng-model="username"/></div>
+			<div class="loginword">Password</div>
+			<div class="logintext"><input type="password" name="p1" ng-model="p1"/></div>
+			<div class="loginword">Re-enter Password</div>
+			<div class="logintext"><input type="password" name="p2" ng-model="p2"/></div>
+			<div class="buttons">
+				<button ng-click="register()">Submit</button>
+				<button class="cancel" ng-click="goto('login')">Cancel</button>
+			</div>
+		</div>
+		
+	</div>
+</div>

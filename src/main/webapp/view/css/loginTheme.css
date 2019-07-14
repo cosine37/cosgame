@@ -1,0 +1,75 @@
+@charset "UTF-8";
+html{
+	height: 100%;
+}
+body{
+	background: url("/image/Webpage/login_background.jpg") no-repeat center center;
+	background-size:cover;
+	background-attachment: fixed;
+	height: 100%;
+	margin: 0;
+}
+.login{
+	background-color:white;
+	opacity:0.7;
+	min-height: 200px;
+	min-width: 400px;
+	height: 100%;
+	width: 40%;
+}
+.register{
+	min-height: 200px;
+	min-width: 400px;
+	height: 60%;
+	width: 40%;
+	padding-left: 30%;
+	padding-top: 10%;
+}
+.registerback{
+	height: 100%;
+	width: 100%;
+	background-color:white;
+	opacity:0.7;
+}
+.inputs{
+	height: 100%;
+	width: 100%;
+	padding-left: 30%;
+	padding-top: 10px;
+}
+.title{
+	font-family:"Times New Roman", Times, serif;
+	font-size: 60px;
+	margin-left: 20%;
+	padding-top: 20px;
+}
+.rlogo{
+	
+}
+.rtitle{
+	font-family:"Times New Roman", Times, serif;
+	font-size: 50px;
+	margin-left: 30%;
+	padding-top: 30px;
+}
+.loginword{
+	margin-top: 10px;
+	font-size: 20px;
+}
+.logintext{
+	margin-top: 0px;
+	font-size: 20px;
+}
+.buttons{
+	margin-top: 10px;
+}
+.buttons button{
+	background-color: grey;
+	border: none;
+	border-radius: 6px;
+	padding: 7px 15px;
+}
+.content{
+	margin-left: 20%;
+	margin-top: 80px;
+}
