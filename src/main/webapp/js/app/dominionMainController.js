@@ -13,6 +13,12 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
+		$scope.logout = function(){
+			$http({url: "/logout", method: "POST"}).then(function(response){
+				$scope.goto('login');
+			});
+		}
+		
 		$scope.newGame = function(){
 			$http.post("/dominiongame/newgame").then(function(response){
 				$scope.goto('dominiongame');

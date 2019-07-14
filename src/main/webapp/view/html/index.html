@@ -9,15 +9,15 @@
 <script src="/js/app/indexController.js"></script>
 <body ng-app="indexApp" ng-controller="indexCtrl">
 	<div id="header" class="header">
-		<table style="width: 100%">
+		<table width="100%">
 			<tr>
 				<td><h1 class="title">Cosgame</h1></td>
+				<td align="right" style="padding-right: 30px"><button ng-click="logout()">Logout</button></td>
 			</tr>
 		</table>
-		
 	</div>
 	
-	<div id="tabs" class="tabs">
+	<div id="tabs" class="tabs" style="clear:both; ">
 		<button>Home</button>
 		<button ng-click="goto('dominion')">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>

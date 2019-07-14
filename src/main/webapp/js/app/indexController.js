@@ -12,4 +12,10 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 			var x = "http://localhost:8080";
 			$window.location.href = x + "/" + d;
 		}
+		
+		$scope.logout = function(){
+			$http({url: "/logout", method: "POST"}).then(function(response){
+				$scope.goto('login');
+			});
+		}
 }]);

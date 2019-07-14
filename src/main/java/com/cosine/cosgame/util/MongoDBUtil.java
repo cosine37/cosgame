@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bson.Document;
 
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -66,4 +65,5 @@ public class MongoDBUtil {
 		}
 		return ans;
 	}
+	
 }

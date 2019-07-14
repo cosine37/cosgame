@@ -2,6 +2,7 @@ package com.cosine.cosgame.mongo;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.login.User;
 import com.cosine.cosgame.mafia.Mafia;
 import com.cosine.cosgame.mafia.Room;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -16,7 +17,10 @@ public class MongoTry {
 		Document doc = new Document("title","testdoc");
 		util.insert(doc);
 		*/
+		User user = new User("aaaa");
+		user.getEncrypted();
 		
+		/*
 		try {
 			
 			Room room = new Room();
@@ -29,6 +33,6 @@ public class MongoTry {
 		} catch(Exception e){
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
-		
+		*/
 	}
 }

@@ -18,6 +18,12 @@ app.controller("loginCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.login = function(){
 			var u = $scope.username;
 			var p = $scope.password;
+			
+			if (p == null || u == null || p == "" || u == ""){
+				alert("Username and/or password cannot be empty!");
+				return;
+			}
+
 			var e = "";
 			var i = 0;
 			var t = 0;
@@ -31,8 +37,19 @@ app.controller("loginCtrl", ['$scope', '$window', '$http', '$document',
 
 			var data = {"username": u, "encrypted": e};
 			$http({url: "/login/verify", method: "POST", params: data}).then(function(response){
-				$scope.result = response.data.value;
-				alert($scope.result);
+				$scope.result = response.data.value[0];
+				if ($scope.result=="verified"){
+					$http({url: "/login/username", method: "POST", params: data}).then(function(response){
+						data = {"username": u};
+						$scope.goto('index');
+					});
+					
+				} else {
+					alert("Wrong username and/or password!");
+					$scope.username="";
+					$scope.password="";
+				}
 			});
 		}
+		
 }]);

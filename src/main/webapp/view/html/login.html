@@ -3,33 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/loginTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/loginController.js"></script>
 <body ng-app="loginApp" ng-controller="loginCtrl">
-	
-	<div id="login">
-		<table>
-			<tr>
-				<td>Username</td>
-				<td><input type="text" ng-model="username"/></td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td><input type="text" ng-model="password"/></td>
-			</tr>
-			<tr></tr>
-			<tr>
-				<td></td>
-				<td><button ng-click="login()">Login</button></td>
-			</tr>
-			<tr>
-				<td>{{password}}</td>
-				<td>{{encrypted}}</td>
-			</tr>
-		</table>
+<div id="login" class="login">
+	<div id="logo" class="title">Cosgame</div>
+	<div class="content">
+		<!-- <form action="/login" method="post">
+			<div class="wrongpassword"></div>
+			<div class="loginword">Username</div>
+			<div class="logintext"><input type="text" name="username"/></div>
+			<div class="loginword">Password</div>
+			<div class="logintext"><input type="password" name="password"/></div>
+			<div class="buttons">
+				<button type="submit">Login</button>
+				<button>Register</button>
+			</div>
+		</form>
+		 -->
+		<div class="wrongpassword"></div>
+		<div class="loginword">Username</div>
+		<div class="logintext"><input type="text" name="username" ng-model="username"/></div>
+		<div class="loginword">Password</div>
+		<div class="logintext"><input type="password" name="password" ng-model="password"/></div>
+		<div class="buttons">
+			<button ng-click="login()">Login</button>
+			<button ng-click="goto('register')">Register</button>
+		</div>
 	</div>
-	
+</div>
 </body>
 </html>

@@ -35,11 +35,12 @@ public class User {
 	
 	public User() {
 		String dbname = "admin";
-		String col = "user";
+		String col = "users";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 		role = "player";
 		status = LOGOUT;
+		encrypted = "";
 	}
 	
 	public User(String username) {
@@ -59,14 +60,20 @@ public class User {
 	}
 	
 	public boolean verifyEncrypted(String encrypted) {
-		return this.encrypted == encrypted;
+		if (this.encrypted != null) {
+			return this.encrypted.equals(encrypted);
+		} else {
+			return false;
+		}
+		
 	}
 	
 	public StringEntity verifyEncryptedAsStringEntity(String encrypted) {
+		getEncrypted();
 		boolean f = verifyEncrypted(encrypted);
 		StringEntity entity = new StringEntity();
 		List<String> ans = new ArrayList<String>();
-		if (this.encrypted == "") {
+		if (this.encrypted.equals("")) {
 			ans.add("user not exist");
 		} else {
 			if (f) {
@@ -99,5 +106,9 @@ public class User {
 		dbutil.insert(doc);
 	}
 	
+	public boolean exists() {
+		Document doc = dbutil.read("username", username);
+		return (doc!=null);
+	}
 	
 }
