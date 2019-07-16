@@ -13,7 +13,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
 		
-		registration.addPathPatterns("/index","/dominion","/dominiongame","/mafia","/mafiarules","/mafiagame");
+		registration.addPathPatterns("/index","/dominion","/dominiongame","/dominionboard","/mafia","/mafiarules","/mafiagame");
 		//registration.excludePathPatterns("/login","/error","/view/css/**","/image/**","/js/**"); 
 	}
 }

@@ -8,6 +8,9 @@ var app = angular.module("dominionMainApp", []);
 app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 	
+		//TODO: customize this
+		$scope.numplayers = 2;
+	
 		$scope.goto = function(d){
 			var x = "http://localhost:8080";
 			$window.location.href = x + "/" + d;
@@ -23,6 +26,13 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
 			$http.post("/dominiongame/newgame").then(function(response){
 				$scope.goto('dominiongame');
 			})
+		}
+		
+		$scope.newBoard = function(){
+			var data = {"numPlayers": $scope.numplayers};
+			$http({url: "/dominiongame/newboard", method: "POST", params: data}).then(function(response){
+				$scope.goto("dominionboard");
+			});
 		}
 		
 		$scope.enterBoard = function(x){

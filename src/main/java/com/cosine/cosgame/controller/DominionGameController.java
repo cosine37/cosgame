@@ -1,12 +1,17 @@
 package com.cosine.cosgame.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.dominion.Board;
 import com.cosine.cosgame.dominion.Pile;
@@ -18,10 +23,47 @@ public class DominionGameController {
 	Board board;
 	
 	@RequestMapping(value="/dominiongame/newgame", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> newgame() {
+	public ResponseEntity<StringEntity> newgame(HttpServletRequest request) {
 		StringEntity entity = new StringEntity();
-		//entity.setValue("nothing");
 		board = new Board();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/board/getact", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getact(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String act = (String) session.getAttribute("act");
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		value.add(act);
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/dominiongame/newboard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> newboard(HttpServletRequest request, @RequestParam int numPlayers) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		session.setAttribute("act","newboard");
+		StringEntity entity = new StringEntity();
+		board = new Board();
+		board.createBoard(username, numPlayers);
+		board.storeBoardToDB();
+		List<String> value = new ArrayList<String>();
+		value.add(board.getBoardId());
+		session.setAttribute("boardId", board.getBoardId());
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/playernames", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> playernames(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		StringEntity entity = new StringEntity();
+		List<String> value = board.getPlayerNames();
+		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

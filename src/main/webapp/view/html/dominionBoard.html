@@ -6,8 +6,9 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
-<script src="/js/app/dominionMainController.js"></script>
-<body ng-app="dominionMainApp" ng-controller="dominionMainCtrl">
+<script src="/js/app/dominionBoardController.js"></script>
+<body ng-app="dominionBoardApp" ng-controller="dominionBoardCtrl">
+	<!-- 
 	<div id="header" class="header">
 		<table style="width: 100%">
 			<tr>
@@ -24,8 +25,9 @@
 		<button ng-click="goto('mafia')">Mafia</button>
 		<button>Others</button>
 	</div>
-	
+	 -->
 	<div id="tabcontent" class="tabcontent">
+		<!-- 
 		<div id="sidebar" class="sidebar">
 			<table>
 				<tr><td><button>Rooms</button></td></tr>
@@ -33,18 +35,25 @@
 				<tr><td><button>Cards</button></td></tr>
 			</table>
 		</div>
-		
+		 -->
 		<div id="content" class="content">
-			<div id="rooms" class="rooms">	
+			<div id="settings" style="float: left">
 				<table>
 					<tr>
-						<td><button ng-click="newBoard()">Create Room</button></td>
+						<td>Settings</td>
+					</tr>
+					<tr>
+						<td><button>Ready</button></td>
 					</tr>
 				</table>
+			</div>
+			<div id="playerlist">
 				<table>
-					<tr ng-repeat="boardId in boardIds">
-						<td>{{boardId}}</td>
-						<td><button ng-click="enterBoard(boardId)">Enter</button></td>
+					<tr ng-repeat="playername in playernames track by $index">
+						<td>{{playername}}</td>
+					</tr>
+					<tr>
+						<td><h2>Messages</h2></td>
 					</tr>
 				</table>
 			</div>

@@ -48,15 +48,20 @@ public class Board {
 		this.numPlayers = numPlayers;
 		int i;
 		players = new ArrayList<Player>();
-		for (i=0;i<numPlayers;i++) {
+		Player lp = new Player(this.lord);
+		players.add(lp);
+		/*
+		for (i=1;i<numPlayers;i++) {
 			Player tp = new Player();
 			players.add(tp);
 		}
+		*/
 		kindom = new ArrayList<Pile>();
 		basePile = new ArrayList<Pile>();
 	}
 	
 	public void setup() {
+		
 		randomize();
 		int i;
 		for (i=0;i<kindom.size();i++) {
@@ -69,11 +74,16 @@ public class Board {
 		Date date= new Date();
 		String id = Long.toString(date.getTime());
 		initialize(id, numPlayers);
+		status = BEFORE;
 	}
 	
 	public void randomize() {
 		basePile = base.getPiles();
 		kindom = dominion.getPiles();
+	}
+	
+	public String getBoardId() {
+		return boardId;
 	}
 	
 	public List<Pile> getBase(){
@@ -82,6 +92,19 @@ public class Board {
 	
 	public List<Pile> getKindom(){
 		return kindom;
+	}
+	
+	public List<Player> getPlayers(){
+		return players;
+	}
+	
+	public List<String> getPlayerNames(){
+		List<String> ans = new ArrayList<String>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			ans.add(players.get(i).getName());
+		}
+		return ans;
 	}
 	
 	public void getBoardFromDB(String id) {
