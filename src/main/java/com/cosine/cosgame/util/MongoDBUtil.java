@@ -66,4 +66,8 @@ public class MongoDBUtil {
 		return ans;
 	}
 	
+	public void update(String key, String value, String ukey, Object uvalue) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		collection.updateOne(new Document(key, value), new Document("$set", new Document(ukey, uvalue)));
+	}
 }

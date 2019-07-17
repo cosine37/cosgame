@@ -107,14 +107,19 @@ public class Board {
 		return ans;
 	}
 	
-	public boolean addBot() {
+	public void addBot(boolean storeToDB) {
 		if (numPlayers <= players.size()) {
-			return false;
+			
+		} else {
+			Player bot = new Player();
+			bot.bot();
+			players.add(bot);
+			if (storeToDB) {
+				List<Document> playerDocs = genPlayerDocs();
+				dbutil.update("boardId", boardId, "players", playerDocs);
+			}
 		}
-		Player bot = new Player();
-		bot.bot();
-		players.add(bot);
-		return true;
+		
 	}
 	
 	public void removeSelfFromDB() {
@@ -200,42 +205,9 @@ public class Board {
 		
 	}
 	
-	public void storeBoardToDB() {
-		Document doc = new Document();
-		
-		doc.append("status", status);
-		doc.append("boardId", boardId);
-		doc.append("numPlayers", numPlayers);
-		
-		List<Document> baseDocs = new ArrayList<Document>();
-		List<Document> kindomDocs = new ArrayList<Document>();
-		int i;
-		for (i=0;i<kindom.size();i++) {
-			Document dop = new Document();
-			dop.append("name", kindom.get(i).getName());
-			dop.append("isSupply", kindom.get(i).isSupply());
-			dop.append("isMixed", kindom.get(i).isMixed());
-			dop.append("isSplit", kindom.get(i).isSplit());
-			if (kindom.get(i).isMixed() || kindom.get(i).isSplit()) {
-				
-			} else {
-				Document dok = new Document();
-				dok.append("name",kindom.get(i).getName());
-				dok.append("number", kindom.get(i).getNumCards());
-				dop.append("pile", dok);
-			}
-			kindomDocs.add(dop);
-		}
-		for (i=0;i<basePile.size();i++) {
-			Document dop = new Document();
-			dop.append("name",basePile.get(i).getName());
-			dop.append("number", basePile.get(i).getNumCards());
-			baseDocs.add(dop);
-		}
-		doc.append("base", baseDocs);
-		doc.append("kindom", kindomDocs);
-		
+	public List<Document> genPlayerDocs(){
 		List<Document> playerDocs = new ArrayList<Document>();
+		int i;
 		for (i=0;i<players.size();i++) {
 			Document dop = new Document();
 			dop.append("name", players.get(i).getName());
@@ -283,6 +255,46 @@ public class Board {
 			
 			playerDocs.add(dop);
 		}
+		return playerDocs;
+	}
+	
+	public void storeBoardToDB() {
+		Document doc = new Document();
+		
+		doc.append("status", status);
+		doc.append("boardId", boardId);
+		doc.append("numPlayers", numPlayers);
+		
+		List<Document> baseDocs = new ArrayList<Document>();
+		List<Document> kindomDocs = new ArrayList<Document>();
+		int i;
+		for (i=0;i<kindom.size();i++) {
+			Document dop = new Document();
+			dop.append("name", kindom.get(i).getName());
+			dop.append("isSupply", kindom.get(i).isSupply());
+			dop.append("isMixed", kindom.get(i).isMixed());
+			dop.append("isSplit", kindom.get(i).isSplit());
+			if (kindom.get(i).isMixed() || kindom.get(i).isSplit()) {
+				
+			} else {
+				Document dok = new Document();
+				dok.append("name",kindom.get(i).getName());
+				dok.append("number", kindom.get(i).getNumCards());
+				dop.append("pile", dok);
+			}
+			kindomDocs.add(dop);
+		}
+		for (i=0;i<basePile.size();i++) {
+			Document dop = new Document();
+			dop.append("name",basePile.get(i).getName());
+			dop.append("number", basePile.get(i).getNumCards());
+			baseDocs.add(dop);
+		}
+		doc.append("base", baseDocs);
+		doc.append("kindom", kindomDocs);
+		
+		List<Document> playerDocs = genPlayerDocs();
+		
 		doc.append("players", playerDocs);
 		dbutil.insert(doc);
 		System.out.println("Board with id " + boardId + " is stored in db");

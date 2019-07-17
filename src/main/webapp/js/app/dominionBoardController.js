@@ -7,6 +7,10 @@ var setUrl = function(d){
 var app = angular.module("dominionBoardApp", []);
 app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
+		$scope.goto = function(d){
+			var x = "http://localhost:8080";
+			$window.location.href = x + "/" + d;
+		}
 	
 		$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
 			$scope.playernames = response.data.value;
@@ -17,6 +21,12 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 				$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
 					$scope.playernames = response.data.value;
 				});
+			});
+		}
+		
+		$scope.leave = function() {
+			$http({url: "/dominiongame/leaveboard", method: "POST"}).then(function(response){
+				$scope.goto("dominion");
 			});
 		}
 		

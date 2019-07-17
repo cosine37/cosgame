@@ -8,34 +8,9 @@
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionBoardController.js"></script>
 <body ng-app="dominionBoardApp" ng-controller="dominionBoardCtrl">
-	<!-- 
-	<div id="header" class="header">
-		<table style="width: 100%">
-			<tr>
-				<td><h1 class="title">Cosgame</h1></td>
-				<td align="right" style="padding-right: 30px"><button ng-click="logout()">Logout</button></td>
-			</tr>
-		</table>
-		
-	</div>
 	
-	<div id="tabs" class="tabs">
-		<button ng-click="goto('index')">Home</button>
-		<button>Dominion</button>
-		<button ng-click="goto('mafia')">Mafia</button>
-		<button>Others</button>
-	</div>
-	 -->
 	<div id="tabcontent" class="tabcontent">
-		<!-- 
-		<div id="sidebar" class="sidebar">
-			<table>
-				<tr><td><button>Rooms</button></td></tr>
-				<tr><td><button>Rules</button></td></tr>
-				<tr><td><button>Cards</button></td></tr>
-			</table>
-		</div>
-		 -->
+		
 		<div id="content" class="content">
 			<div id="settings" style="float: left; width: 50%">
 				<table>
@@ -56,7 +31,7 @@
 						<td colspan="2">
 							<button>Ready</button>
 							<button ng-click="addBot()">Add Bot</button>
-							<button>Leave</button>
+							<button ng-click="leave()">Leave</button>
 						</td>
 					</tr>
 				</table>
