@@ -12,4 +12,12 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.playernames = response.data.value;
 		});
 		
+		$scope.addBot = function() {
+			$http({url: "/dominiongame/addbot", method: "POST"}).then(function(response){
+				$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
+					$scope.playernames = response.data.value;
+				});
+			});
+		}
+		
 }]);

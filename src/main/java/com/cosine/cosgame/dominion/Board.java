@@ -107,6 +107,20 @@ public class Board {
 		return ans;
 	}
 	
+	public boolean addBot() {
+		if (numPlayers <= players.size()) {
+			return false;
+		}
+		Player bot = new Player();
+		bot.bot();
+		players.add(bot);
+		return true;
+	}
+	
+	public void removeSelfFromDB() {
+		dbutil.delete("boardId", boardId);
+	}
+	
 	public void getBoardFromDB(String id) {
 		CardFactory factory = new CardFactory();
 		

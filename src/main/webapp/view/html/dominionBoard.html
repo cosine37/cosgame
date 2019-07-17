@@ -37,18 +37,35 @@
 		</div>
 		 -->
 		<div id="content" class="content">
-			<div id="settings" style="float: left">
+			<div id="settings" style="float: left; width: 50%">
 				<table>
 					<tr>
-						<td>Settings</td>
+						<td colspan="2"><h2>Settings</h2></td>
 					</tr>
 					<tr>
-						<td><button>Ready</button></td>
+						<td><p>Number of players:</p></td>
+						<td>
+							<select>
+								<option value ="2">2</option>
+								<option value ="3">3</option>
+								<option value ="4">4</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button>Ready</button>
+							<button ng-click="addBot()">Add Bot</button>
+							<button>Leave</button>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div id="playerlist">
 				<table>
+					<tr>
+						<td><h2>Players</h2></td>
+					</tr>
 					<tr ng-repeat="playername in playernames track by $index">
 						<td>{{playername}}</td>
 					</tr>

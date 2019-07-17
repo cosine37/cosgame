@@ -67,6 +67,20 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/addbot", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addbot(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		if (board.addBot()) {
+			board.removeSelfFromDB();
+			board.storeBoardToDB();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/randomize", method = RequestMethod.POST)
 	public void randomize() {
 		board.randomize();

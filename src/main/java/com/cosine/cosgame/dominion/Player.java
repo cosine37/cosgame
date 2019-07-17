@@ -17,8 +17,8 @@ public class Player {
 	int phase;
 	
 	int coin, action, buy;
-	
 	int coffer, villager, vp;
+	boolean isBot;
 	
 	public Player() {
 		this.name = "tempname";
@@ -26,10 +26,15 @@ public class Player {
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
+		isBot = false;
 	}
 	public Player(String name) {
 		this();
 		this.name = name;
+	}
+	public void bot() {
+		isBot = true;
+		this.name = "bot";
 	}
 	
 	public void resetValues() {

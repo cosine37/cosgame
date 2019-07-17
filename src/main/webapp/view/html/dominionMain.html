@@ -42,7 +42,7 @@
 					</tr>
 				</table>
 				<table>
-					<tr ng-repeat="boardId in boardIds">
+					<tr ng-repeat="boardId in boardIds track by $index">
 						<td>{{boardId}}</td>
 						<td><button ng-click="enterBoard(boardId)">Enter</button></td>
 					</tr>
