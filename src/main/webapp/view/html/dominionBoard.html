@@ -20,16 +20,12 @@
 					<tr>
 						<td><p>Number of players:</p></td>
 						<td>
-							<select>
-								<option value ="2">2</option>
-								<option value ="3">3</option>
-								<option value ="4">4</option>
-							</select>
+							<select ng-init="numPlayers = numPlayerOptions[0]" ng-model="numPlayers" ng-options="x for x in numPlayerOptions">
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<button>Ready</button>
+							<button ng-click="ready()">Ready</button>
 							<button ng-click="addBot()">Add Bot</button>
 							<button ng-click="leave()">Leave</button>
 						</td>
