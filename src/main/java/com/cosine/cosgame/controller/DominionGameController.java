@@ -24,8 +24,10 @@ public class DominionGameController {
 	
 	@RequestMapping(value="/dominiongame/newgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newgame(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
 		StringEntity entity = new StringEntity();
-		board = new Board();
+		
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
@@ -85,6 +87,17 @@ public class DominionGameController {
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
 		board.removeSelfFromDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/resign", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> resign(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		board.resign();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

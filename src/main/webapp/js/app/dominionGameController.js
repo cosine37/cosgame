@@ -38,5 +38,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.kindom=response.data;
 		});
 		
+		$scope.resign = function(){
+			$scope.goto('dominionend');
+		}
+		
 		
 }]);

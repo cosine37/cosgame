@@ -50,12 +50,6 @@ public class Board {
 		players = new ArrayList<Player>();
 		Player lp = new Player(this.lord);
 		players.add(lp);
-		/*
-		for (i=1;i<numPlayers;i++) {
-			Player tp = new Player();
-			players.add(tp);
-		}
-		*/
 		kindom = new ArrayList<Pile>();
 		basePile = new ArrayList<Pile>();
 	}
@@ -75,6 +69,11 @@ public class Board {
 		String id = Long.toString(date.getTime());
 		initialize(id, numPlayers);
 		status = BEFORE;
+	}
+	
+	public void resign() {
+		this.status = ENDGAME;
+		updateDB("status", status);
 	}
 	
 	public void randomize() {
@@ -116,10 +115,15 @@ public class Board {
 			players.add(bot);
 			if (storeToDB) {
 				List<Document> playerDocs = genPlayerDocs();
-				dbutil.update("boardId", boardId, "players", playerDocs);
+				//dbutil.update("boardId", boardId, "players", playerDocs);
+				updateDB("players", playerDocs);
 			}
 		}
 		
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("boardId", boardId, key, value);
 	}
 	
 	public void removeSelfFromDB() {
