@@ -21,11 +21,12 @@ public class Pile {
 	}
 	
 	public Pile(String name) {
+		this();
 		this.name = name;
 	}
 	
 	public Pile(Class c, int num) {
-		cards = new ArrayList<Card>();
+		this();
 		int i;
 		for (i=0;i<num;i++) {
 			try {
@@ -72,6 +73,12 @@ public class Pile {
 
 	public Card getTop() {
 		return cards.get(0);
+	}
+	
+	public Card removeTop() {
+		Card card = cards.get(0);
+		cards.remove(0);
+		return card;
 	}
 
 	public String getName() {

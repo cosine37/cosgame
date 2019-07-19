@@ -7,6 +7,11 @@
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionGameController.js"></script>
+<script>
+function myfn(s){
+	alert(s);
+}
+</script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
 	<div id="otherplayer" class="otherplayer">
 		Other Player Area
@@ -50,12 +55,12 @@
 			</div>
 		</div>
 		<div id="kindom" style="float: left; margin-left: 10px; width: 400px;">
-			<div class="kindom" style="background:url({{kindom[0].image}});background-size:cover">
+			<div class="kindom" style="background:url({{kindom[0].image}});background-size:cover" oncontextmenu="myfn('0')">
 				<div class="kindom-number">
 					{{kindom[0].numCards}}
 				</div>
 			</div>
-			<div class="kindom" style="margin-left: 10px;background:url({{kindom[1].image}});background-size:cover">
+			<div class="kindom" style="margin-left: 10px;background:url({{kindom[1].image}});background-size:cover" ng-right-click="showCard(kindom[1].image)">
 				<div class="kindom-number">
 					{{kindom[1].numCards}}
 				</div>
@@ -73,5 +78,12 @@
 	<div id="player" style="clear:both; ">Player
 		<button ng-click="resign()">Resign</button>
 	</div>
+	
+	<div ng-show="showBigImage">
+		<div ng-style="bigImageStyle">
+			
+		</div>
+	</div>
+	
 </body>
 </html>

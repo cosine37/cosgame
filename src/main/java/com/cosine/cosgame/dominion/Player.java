@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Player {
 	String name;
+	Board board;
 	
 	Trash trashMat;
 	
@@ -36,11 +37,18 @@ public class Player {
 		isBot = true;
 		this.name = "bot";
 	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 	
 	public void resetValues() {
 		coin = 0;
 		action = 1;
 		buy = 1;
+	}
+	
+	public void putOnDiscard(Card card) {
+		this.discard.add(card);
 	}
 	
 	public void play(Card card) {

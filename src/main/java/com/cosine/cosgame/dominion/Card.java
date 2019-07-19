@@ -75,6 +75,10 @@ public class Card {
 		
 	}
 	
+	public void onGain(Player p) {
+		
+	}
+	
 	public Ask play() {
 		vanilla();
 		Ask ask = new Ask();

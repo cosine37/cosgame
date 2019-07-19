@@ -1,7 +1,9 @@
 package com.cosine.cosgame.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -69,5 +71,15 @@ public class MongoDBUtil {
 	public void update(String key, String value, String ukey, Object uvalue) {
 		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
 		collection.updateOne(new Document(key, value), new Document("$set", new Document(ukey, uvalue)));
+		/*
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		Map<String, Object> m1 = new HashMap<>();
+		m1.put(key, value);
+		Map<String, Object> mu = new HashMap<>();
+		mu.put(ukey, uvalue);
+		Map<String, Object> m2 = new HashMap<>();
+		m2.put("$set", mu);
+		collection.updateOne(m1, m2);
+		*/
 	}
 }

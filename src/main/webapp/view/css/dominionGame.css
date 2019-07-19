@@ -6,8 +6,8 @@
 }
 .base-number{
 	position: relative;
-	top:80%;
-	left:68%;
+	top:0%;
+	left:0%;
 	background-color:red;
 	color:white;
 	width: 30%;
@@ -19,8 +19,8 @@
 }
 .kindom-number{
 	position: relative;
-	top:89%;
-	left:82%;
+	top:0%;
+	left:0%;
 	background-color:red;
 	color:white;
 	width: 17%;

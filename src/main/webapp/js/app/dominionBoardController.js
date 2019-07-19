@@ -34,7 +34,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.ready = function() {
 			if ($scope.playernames.length == $scope.numPlayers){
-				$http({url: "/dominiongame/newgame", method: "POST"}).then(function(response){
+				$http({url: "/dominiongame/setup", method: "POST"}).then(function(response){
 					$scope.goto("dominiongame");
 				});
 			} else {

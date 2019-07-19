@@ -7,6 +7,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.dominion.base.Base;
+import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -55,12 +56,45 @@ public class Board {
 	}
 	
 	public void setup() {
-		
+		boolean useShelters = false;
+		boolean hasHeirloom = false;
 		randomize();
-		int i;
+		int i,j;
 		for (i=0;i<kindom.size();i++) {
 			kindom.get(i).getCards().get(0).setup();
 		}
+		
+		int copperIndex = 4;
+		int estateIndex = 5;
+		
+		// give players start pile
+		if (useShelters) {
+			
+		} else if (hasHeirloom) {
+			
+		} else {
+			for (i=0;i<players.size();i++) {
+				for (j=0;j<7;j++) {
+					gainToPlayerFromPile(players.get(i), basePile.get(copperIndex));
+				}
+				for (j=0;j<3;j++) {
+					Card estate = new Estate();
+					gainToPlayer(players.get(i), estate);
+				}
+			}
+		}
+		
+	}
+	
+	public void gainToPlayer(Player p, Card card) {
+		p.putOnDiscard(card);
+		card.onGain(p);
+	}
+	
+	public void gainToPlayerFromPile(Player p, Pile pile) {
+		Card card = pile.removeTop();
+		p.putOnDiscard(card);
+		card.onGain(p);
 	}
 	
 	public void createBoard(String lord, int numPlayers) {
@@ -83,6 +117,10 @@ public class Board {
 	
 	public String getBoardId() {
 		return boardId;
+	}
+	
+	public String getLord() {
+		return lord;
 	}
 	
 	public List<Pile> getBase(){
@@ -137,6 +175,7 @@ public class Board {
 		status = (int)doc.get("status");
 		boardId = (String)doc.get("boardId");
 		numPlayers = (int)doc.get("numPlayers");
+		lord = (String)doc.get("lord");
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -152,10 +191,12 @@ public class Board {
 			boolean isSupply = (boolean)kindomDocs.get(i).get("isSupply");
 			boolean isMixed = (boolean)kindomDocs.get(i).get("isMixed");
 			boolean isSplit = (boolean)kindomDocs.get(i).get("isSplit");
+			String image = (String)kindomDocs.get(i).get("image");
 			p.setName(name);
 			p.setIsSupply(isSupply);
 			p.setIsMixed(isMixed);
 			p.setIsSplit(isSplit);
+			p.setImage(image);
 			
 			if (isMixed || isSplit) {
 				
@@ -170,8 +211,10 @@ public class Board {
 			Pile p = new Pile();
 			String name = (String)baseDocs.get(i).get("name");
 			int n = (int)baseDocs.get(i).get("number");
+			String image = (String)baseDocs.get(i).get("image");
 			p.setName(name);
 			p.setCards(factory.createCards(name, n));
+			p.setImage(image);
 			basePile.add(p);
 		}
 		for (i=0;i<playerDocs.size();i++) {
@@ -231,25 +274,25 @@ public class Board {
 			
 			for (j=0;j<players.get(i).getDiscard().size();j++) {
 				Document d = new Document();
-				d.append("name", players.get(i).getDiscard().get(j));
+				d.append("name", players.get(i).getDiscard().get(j).getName());
 				discardDocs.add(d);
 			}
 			
 			for (j=0;j<players.get(i).getDeck().size();j++) {
 				Document d = new Document();
-				d.append("name", players.get(i).getDeck().get(j));
+				d.append("name", players.get(i).getDeck().get(j).getName());
 				deckDocs.add(d);
 			}
 			
 			for (j=0;j<players.get(i).getHand().size();j++) {
 				Document d = new Document();
-				d.append("name", players.get(i).getHand().get(j));
+				d.append("name", players.get(i).getHand().get(j).getName());
 				handDocs.add(d);
 			}
 			
 			for (j=0;j<players.get(i).getPlay().size();j++) {
 				Document d = new Document();
-				d.append("name", players.get(i).getPlay().get(j));
+				d.append("name", players.get(i).getPlay().get(j).getName());
 				playDocs.add(d);
 			}
 			dop.append("discard", discardDocs);
@@ -262,14 +305,20 @@ public class Board {
 		return playerDocs;
 	}
 	
-	public void storeBoardToDB() {
-		Document doc = new Document();
-		
-		doc.append("status", status);
-		doc.append("boardId", boardId);
-		doc.append("numPlayers", numPlayers);
-		
+	public List<Document> genBaseDocs(){
 		List<Document> baseDocs = new ArrayList<Document>();
+		int i;
+		for (i=0;i<basePile.size();i++) {
+			Document dop = new Document();
+			dop.append("name",basePile.get(i).getName());
+			dop.append("number", basePile.get(i).getNumCards());
+			dop.append("image", basePile.get(i).getImage());
+			baseDocs.add(dop);
+		}
+		return baseDocs;
+	}
+	
+	public List<Document> genKindomDocs(){
 		List<Document> kindomDocs = new ArrayList<Document>();
 		int i;
 		for (i=0;i<kindom.size();i++) {
@@ -278,6 +327,7 @@ public class Board {
 			dop.append("isSupply", kindom.get(i).isSupply());
 			dop.append("isMixed", kindom.get(i).isMixed());
 			dop.append("isSplit", kindom.get(i).isSplit());
+			dop.append("image", kindom.get(i).getImage());
 			if (kindom.get(i).isMixed() || kindom.get(i).isSplit()) {
 				
 			} else {
@@ -288,17 +338,23 @@ public class Board {
 			}
 			kindomDocs.add(dop);
 		}
-		for (i=0;i<basePile.size();i++) {
-			Document dop = new Document();
-			dop.append("name",basePile.get(i).getName());
-			dop.append("number", basePile.get(i).getNumCards());
-			baseDocs.add(dop);
-		}
+		return kindomDocs;
+	}
+	
+	public void storeBoardToDB() {
+		Document doc = new Document();
+		
+		doc.append("status", status);
+		doc.append("boardId", boardId);
+		doc.append("numPlayers", numPlayers);
+		doc.append("lord", lord);
+		
+		List<Document> baseDocs = genBaseDocs();
+		List<Document> kindomDocs = genKindomDocs();
 		doc.append("base", baseDocs);
 		doc.append("kindom", kindomDocs);
 		
 		List<Document> playerDocs = genPlayerDocs();
-		
 		doc.append("players", playerDocs);
 		dbutil.insert(doc);
 		System.out.println("Board with id " + boardId + " is stored in db");
