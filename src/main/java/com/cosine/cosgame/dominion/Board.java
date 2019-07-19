@@ -64,8 +64,8 @@ public class Board {
 			kindom.get(i).getCards().get(0).setup();
 		}
 		
-		int copperIndex = 4;
-		int estateIndex = 5;
+		int copperIndex = 5;
+		int estateIndex = 4;
 		
 		// give players start pile
 		if (useShelters) {
