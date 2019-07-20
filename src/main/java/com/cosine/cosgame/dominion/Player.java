@@ -35,7 +35,6 @@ public class Player {
 	}
 	public void bot() {
 		isBot = true;
-		this.name = "bot";
 	}
 	public void setBoard(Board board) {
 		this.board = board;

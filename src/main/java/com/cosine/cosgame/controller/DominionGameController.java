@@ -122,7 +122,7 @@ public class DominionGameController {
 			board.randomize();
 			board.setup();
 			board.updateDB("base", board.genBaseDocs());
-			board.updateDB("player", board.genPlayerDocs());
+			board.updateDB("players", board.genPlayerDocs());
 			board.updateDB("kindom", board.genKindomDocs());
 		}
 		StringEntity entity = new StringEntity();

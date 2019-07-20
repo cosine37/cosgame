@@ -11,6 +11,7 @@ import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.util.MongoDBUtil;
+import com.cosine.cosgame.util.TextGenerator;
 
 public class Board {
 	String boardId;
@@ -148,12 +149,26 @@ public class Board {
 		if (numPlayers <= players.size()) {
 			
 		} else {
-			Player bot = new Player();
+			TextGenerator gen = new TextGenerator();
+			gen.readName();
+			int i;
+			String botName = "";
+			boolean flag = true;
+			while (flag) {
+				botName = gen.generateName() + "(bot)";
+				flag = false;
+				for (i=0;i<players.size();i++) {
+					if (players.get(i).getName().equals(botName)) {
+						flag = true;
+						break;
+					}
+				}
+			}
+			Player bot = new Player(botName);
 			bot.bot();
 			players.add(bot);
 			if (storeToDB) {
 				List<Document> playerDocs = genPlayerDocs();
-				//dbutil.update("boardId", boardId, "players", playerDocs);
 				updateDB("players", playerDocs);
 			}
 		}
