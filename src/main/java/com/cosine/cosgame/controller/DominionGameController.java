@@ -148,4 +148,15 @@ public class DominionGameController {
 		List<Pile> piles = board.getKindom();
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/dominiongame/firstcards", method = RequestMethod.POST)
+	public ResponseEntity<List<Pile>> firstCards(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		List<Pile> piles = board.getAllCards(username);
+		return new ResponseEntity<>(piles, HttpStatus.OK);
+	}
 }

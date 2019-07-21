@@ -24,6 +24,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.bigImage="/image/Dominion/cards/Dominion/Smithy.png";
 		$scope.showBigImage = false;
 		$scope.bigImageStyle = {};
+		$scope.topMessage = "Your starting cards";
 		/*
 		$scope.bigImageStyle = {
 			"height": "210px", 
@@ -56,6 +57,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.base=response.data;
 			$http.post('/dominiongame/getkindom').then(function(response){
 				$scope.kindom=response.data;
+				$http.post('/dominiongame/firstcards').then(function(response){
+					$scope.hand=response.data;
+				})
 			});
 		});
 		
@@ -79,6 +83,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showCard = function(image){
 			a(image);
 		}
+		
 		
 		
 }]);

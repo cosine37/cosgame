@@ -145,6 +145,17 @@ public class Board {
 		return ans;
 	}
 	
+	public List<Pile> getAllCards(String name){
+		List<Pile> piles = new ArrayList<Pile>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(name)) {
+				piles = players.get(i).getAllCards();
+			}
+		}
+		return piles;
+	}
+	
 	public void addBot(boolean storeToDB) {
 		if (numPlayers <= players.size()) {
 			

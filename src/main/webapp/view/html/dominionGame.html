@@ -77,6 +77,14 @@ function myfn(s){
 	</div>
 	<div id="player" style="clear:both; ">Player
 		<button ng-click="resign()">Resign</button>
+		{{topMessage}}
+		<div>
+			<div class="kindom" ng-repeat="x in hand" style="background:url({{x.image}});background-size:cover">
+				<div class="kindom-number">
+					{{x.numCards}}
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<div ng-show="showBigImage">

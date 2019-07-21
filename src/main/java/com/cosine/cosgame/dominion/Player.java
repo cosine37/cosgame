@@ -54,6 +54,17 @@ public class Player {
 		
 	}
 	
+	public List<Pile> getAllCards(){
+		PileGen pileGen = new PileGen();
+		pileGen.add(discard);
+		pileGen.add(hand);
+		pileGen.add(deck);
+		pileGen.add(play);
+		List<Pile> piles = pileGen.getPiles();
+		return piles;
+		
+	}
+	
 	public void shuffle() {
 		Random rand = new Random();
 		while (discard.size()>0) {
