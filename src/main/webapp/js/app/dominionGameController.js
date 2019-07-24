@@ -25,6 +25,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showBigImage = false;
 		$scope.bigImageStyle = {};
 		$scope.topMessage = "Your starting cards";
+		$scope.phaseButton = "start";
 		/*
 		$scope.bigImageStyle = {
 			"height": "210px", 
@@ -59,6 +60,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.kindom=response.data;
 				$http.post('/dominiongame/firstcards').then(function(response){
 					$scope.hand=response.data;
+					
 				})
 			});
 		});
@@ -69,19 +71,38 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		a = function(image){
 			$scope.bigImage = image;
-			alert(image);
 			$scope.showBigImage = true;
-			alert($scope.showBigImage);
 			$scope.bigImageStyle = {
-				"height": "210px", 
-				"width": "140px", 
+				"height": "420px", 
+				"width": "280px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-140px",
+				"margin-top": "-210px",
 				"background": "url(" + image + ")", 
 				"background-size": "cover"
+			}
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
 			}
 		}
 		
 		$scope.showCard = function(image){
 			a(image);
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false;
+		}
+		
+		$scope.pb = function(){
+			
 		}
 		
 		

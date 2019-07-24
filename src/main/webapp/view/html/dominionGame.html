@@ -59,6 +59,9 @@ function myfn(s){
 				<div class="kindom-number">
 					{{kindom[0].numCards}}
 				</div>
+				<div class="kindom-question">
+					<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-mouseover="showCard(kindom[0].image)"/>
+				</div>
 			</div>
 			<div class="kindom" style="margin-left: 10px;background:url({{kindom[1].image}});background-size:cover" ng-right-click="showCard(kindom[1].image)">
 				<div class="kindom-number">
@@ -78,6 +81,7 @@ function myfn(s){
 	<div id="player" style="clear:both; ">Player
 		<button ng-click="resign()">Resign</button>
 		{{topMessage}}
+		<button ng-click="pb()">{{phaseButton}}</button>
 		<div>
 			<div class="kindom" ng-repeat="x in hand" style="background:url({{x.image}});background-size:cover">
 				<div class="kindom-number">
@@ -87,7 +91,7 @@ function myfn(s){
 		</div>
 	</div>
 	
-	<div ng-show="showBigImage">
+	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()">
 		<div ng-style="bigImageStyle">
 			
 		</div>
