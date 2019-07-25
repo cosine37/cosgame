@@ -122,8 +122,13 @@ public class DominionGameController {
 			board.randomize();
 			board.setup();
 			board.updateDB("base", board.genBaseDocs());
-			board.updateDB("players", board.genPlayerDocs());
+			//board.updateDB("players", board.genPlayerDocs());
+			board.updateDB("players", board.genPlayerNameDoc());
 			board.updateDB("kindom", board.genKindomDocs());
+			int i;
+			for (i=0;i<board.getPlayers().size();i++) {
+				board.updateDB(board.getPlayers().get(i).getName(), board.genPlayerDoc(i));
+			}
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

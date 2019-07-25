@@ -179,8 +179,10 @@ public class Board {
 			bot.bot();
 			players.add(bot);
 			if (storeToDB) {
-				List<Document> playerDocs = genPlayerDocs();
+				List<Document> playerDocs = genPlayerNameDoc();
 				updateDB("players", playerDocs);
+				Document dob = genPlayerDoc(players.size()-1);
+				updateDB(botName,dob);
 			}
 		}
 		
@@ -245,19 +247,21 @@ public class Board {
 		}
 		for (i=0;i<playerDocs.size();i++) {
 			Player p = new Player();
-			p.setName((String)playerDocs.get(i).get("name"));
-			p.setPhase((int)playerDocs.get(i).get("phase"));
-			p.setAction((int)playerDocs.get(i).get("action"));
-			p.setCoin((int)playerDocs.get(i).get("coin"));
-			p.setBuy((int)playerDocs.get(i).get("buy"));
-			p.setCoffer((int)playerDocs.get(i).get("coffer"));
-			p.setVillager((int)playerDocs.get(i).get("villager"));
-			p.setVp((int)playerDocs.get(i).get("vp"));
+			String name = (String) playerDocs.get(i).get("name");
+			p.setName(name);
+			Document dop = (Document)doc.get(name);
+			p.setPhase((int)dop.get("phase"));
+			p.setAction((int)dop.get("action"));
+			p.setCoin((int)dop.get("coin"));
+			p.setBuy((int)dop.get("buy"));
+			p.setCoffer((int)dop.get("coffer"));
+			p.setVillager((int)dop.get("villager"));
+			p.setVp((int)dop.get("vp"));
 			
-			List<Document> discardDocs = (List<Document>)playerDocs.get(i).get("discard");
-			List<Document> deckDocs = (List<Document>)playerDocs.get(i).get("deck");
-			List<Document> handDocs = (List<Document>)playerDocs.get(i).get("hand");
-			List<Document> playDocs = (List<Document>)playerDocs.get(i).get("play");
+			List<Document> discardDocs = (List<Document>)dop.get("discard");
+			List<Document> deckDocs = (List<Document>)dop.get("deck");
+			List<Document> handDocs = (List<Document>)dop.get("hand");
+			List<Document> playDocs = (List<Document>)dop.get("play");
 			List<Card> discard = new ArrayList<Card>();
 			List<Card> deck = new ArrayList<Card>();
 			List<Card> hand = new ArrayList<Card>();
@@ -273,62 +277,66 @@ public class Board {
 			p.setHand(hand);
 			p.setPlay(play);
 			players.add(p);
+			
 		}
-		
-		
 	}
 	
-	public List<Document> genPlayerDocs(){
-		List<Document> playerDocs = new ArrayList<Document>();
+	public List<Document> genPlayerNameDoc() {
 		int i;
+		List<Document> dopn = new ArrayList<Document>();
 		for (i=0;i<players.size();i++) {
-			Document dop = new Document();
-			dop.append("name", players.get(i).getName());
-			dop.append("phase", players.get(i).getPhase());
-			dop.append("action", players.get(i).getAction());
-			dop.append("coin", players.get(i).getCoin());
-			dop.append("buy", players.get(i).getBuy());
-			dop.append("coffer", players.get(i).getCoffer());
-			dop.append("villager", players.get(i).getVillager());
-			dop.append("vp", players.get(i).getVp());
-			
-			int j;
-			List<Document> discardDocs = new ArrayList<Document>();
-			List<Document> deckDocs = new ArrayList<Document>();
-			List<Document> handDocs = new ArrayList<Document>();
-			List<Document> playDocs = new ArrayList<Document>();
-			
-			for (j=0;j<players.get(i).getDiscard().size();j++) {
-				Document d = new Document();
-				d.append("name", players.get(i).getDiscard().get(j).getName());
-				discardDocs.add(d);
-			}
-			
-			for (j=0;j<players.get(i).getDeck().size();j++) {
-				Document d = new Document();
-				d.append("name", players.get(i).getDeck().get(j).getName());
-				deckDocs.add(d);
-			}
-			
-			for (j=0;j<players.get(i).getHand().size();j++) {
-				Document d = new Document();
-				d.append("name", players.get(i).getHand().get(j).getName());
-				handDocs.add(d);
-			}
-			
-			for (j=0;j<players.get(i).getPlay().size();j++) {
-				Document d = new Document();
-				d.append("name", players.get(i).getPlay().get(j).getName());
-				playDocs.add(d);
-			}
-			dop.append("discard", discardDocs);
-			dop.append("deck", deckDocs);
-			dop.append("hand", handDocs);
-			dop.append("play", playDocs);
-			
-			playerDocs.add(dop);
+			Document d = new Document();
+			d.append("name", players.get(i).getName());
+			dopn.add(d);
 		}
-		return playerDocs;
+		return dopn;
+	}
+	
+	public Document genPlayerDoc(int i) {
+		Document dop = new Document();
+		dop.append("phase", players.get(i).getPhase());
+		dop.append("action", players.get(i).getAction());
+		dop.append("coin", players.get(i).getCoin());
+		dop.append("buy", players.get(i).getBuy());
+		dop.append("coffer", players.get(i).getCoffer());
+		dop.append("villager", players.get(i).getVillager());
+		dop.append("vp", players.get(i).getVp());
+		
+		int j;
+		List<Document> discardDocs = new ArrayList<Document>();
+		List<Document> deckDocs = new ArrayList<Document>();
+		List<Document> handDocs = new ArrayList<Document>();
+		List<Document> playDocs = new ArrayList<Document>();
+		
+		for (j=0;j<players.get(i).getDiscard().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getDiscard().get(j).getName());
+			discardDocs.add(d);
+		}
+		
+		for (j=0;j<players.get(i).getDeck().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getDeck().get(j).getName());
+			deckDocs.add(d);
+		}
+		
+		for (j=0;j<players.get(i).getHand().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getHand().get(j).getName());
+			handDocs.add(d);
+		}
+		
+		for (j=0;j<players.get(i).getPlay().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getPlay().get(j).getName());
+			playDocs.add(d);
+		}
+		dop.append("discard", discardDocs);
+		dop.append("deck", deckDocs);
+		dop.append("hand", handDocs);
+		dop.append("play", playDocs);
+		
+		return dop;
 	}
 	
 	public List<Document> genBaseDocs(){
@@ -375,13 +383,19 @@ public class Board {
 		doc.append("numPlayers", numPlayers);
 		doc.append("lord", lord);
 		
+		List<Document> dopn = genPlayerNameDoc();
+		doc.append("players", dopn);
+		
 		List<Document> baseDocs = genBaseDocs();
 		List<Document> kindomDocs = genKindomDocs();
 		doc.append("base", baseDocs);
 		doc.append("kindom", kindomDocs);
 		
-		List<Document> playerDocs = genPlayerDocs();
-		doc.append("players", playerDocs);
+		int i;
+		for (i=0;i<players.size();i++) {
+			Document dop = genPlayerDoc(i);
+			doc.append(players.get(i).getName(), dop);
+		}
 		dbutil.insert(doc);
 		System.out.println("Board with id " + boardId + " is stored in db");
 	}
