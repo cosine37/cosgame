@@ -27,8 +27,10 @@ public class Board {
 	
 	int status;
 	public static final int BEFORE = 0;
-	public static final int INGAME = 1;
+	public static final int FIRSTCARDS = 1;
+	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
+	//int goodToGo;
 	
 	MongoDBUtil dbutil;
 	
@@ -54,6 +56,9 @@ public class Board {
 		players.add(lp);
 		kindom = new ArrayList<Pile>();
 		basePile = new ArrayList<Pile>();
+		
+		//goodToGo = 0;
+		status = BEFORE;
 	}
 	
 	public void setup() {
@@ -85,6 +90,38 @@ public class Board {
 			}
 		}
 		
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getIsBot()) {
+				//goodToGo++;
+				players.get(i).goodToGo();
+			}
+		}
+		status = FIRSTCARDS;
+	}
+	
+	public void playerGoodToGo(String name) {
+		int i;
+		int goodToGo = 0;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(name)) {
+				//goodToGo++;
+				players.get(i).goodToGo();
+			}
+			if (players.get(i).getIsGoodToGo()){
+				goodToGo = goodToGo + 1;
+			}
+		}
+		if (goodToGo == numPlayers) {
+			start();
+		}
+	}
+	
+	public void start() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).cleanUp();
+		}
+		status = INGAME;
 	}
 	
 	public void gainToPlayer(Player p, Card card) {
@@ -124,6 +161,10 @@ public class Board {
 		return lord;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+	
 	public List<Pile> getBase(){
 		return basePile;
 	}
@@ -135,6 +176,18 @@ public class Board {
 	public List<Player> getPlayers(){
 		return players;
 	}
+	
+	public Player getPlayerByName(String name) {
+		Player player = new Player();
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(name)) {
+				player = players.get(i);
+			}
+		}
+		return player;
+	}
+	
 	
 	public List<String> getPlayerNames(){
 		List<String> ans = new ArrayList<String>();
@@ -204,6 +257,7 @@ public class Board {
 		boardId = (String)doc.get("boardId");
 		numPlayers = (int)doc.get("numPlayers");
 		lord = (String)doc.get("lord");
+		//goodToGo = (int)doc.get("goodToGo");
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -250,6 +304,8 @@ public class Board {
 			String name = (String) playerDocs.get(i).get("name");
 			p.setName(name);
 			Document dop = (Document)doc.get(name);
+			p.setIsBot((boolean)dop.getBoolean("isbot"));
+			p.setIsGoodToGo((boolean)dop.getBoolean("isgoodtogo"));
 			p.setPhase((int)dop.get("phase"));
 			p.setAction((int)dop.get("action"));
 			p.setCoin((int)dop.get("coin"));
@@ -294,6 +350,8 @@ public class Board {
 	
 	public Document genPlayerDoc(int i) {
 		Document dop = new Document();
+		dop.append("isgoodtogo", players.get(i).getIsGoodToGo());
+		dop.append("isbot", players.get(i).getIsBot());
 		dop.append("phase", players.get(i).getPhase());
 		dop.append("action", players.get(i).getAction());
 		dop.append("coin", players.get(i).getCoin());
@@ -339,6 +397,17 @@ public class Board {
 		return dop;
 	}
 	
+	public Document genPlayerDoc(String name) {
+		Document doc = new Document();
+		int i;
+		for (i=0;i<numPlayers;i++) {
+			if (players.get(i).getName().equals(name)) {
+				doc = genPlayerDoc(i);
+			}
+		}
+		return doc;
+	}
+	
 	public List<Document> genBaseDocs(){
 		List<Document> baseDocs = new ArrayList<Document>();
 		int i;
@@ -382,6 +451,7 @@ public class Board {
 		doc.append("boardId", boardId);
 		doc.append("numPlayers", numPlayers);
 		doc.append("lord", lord);
+		//doc.append("goodToGo", goodToGo);
 		
 		List<Document> dopn = genPlayerNameDoc();
 		doc.append("players", dopn);

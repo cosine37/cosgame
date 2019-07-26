@@ -20,7 +20,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		$scope.base=[];
 		$scope.kindom=[];
-		
+		$scope.status="first cards";
 		$scope.bigImage="/image/Dominion/cards/Dominion/Smithy.png";
 		$scope.showBigImage = false;
 		$scope.bigImageStyle = {};
@@ -58,8 +58,23 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.base=response.data;
 			$http.post('/dominiongame/getkindom').then(function(response){
 				$scope.kindom=response.data;
-				$http.post('/dominiongame/firstcards').then(function(response){
-					$scope.hand=response.data;
+				$http.post('/dominiongame/getstatus').then(function(response){
+					$scope.status=response.data.value[0];
+					if ($scope.status == "first cards"){
+						$scope.topMessage = "Your starting cards";
+						$scope.phaseButton = "start";
+						$http.post('/dominiongame/firstcards').then(function(response){
+							$scope.hand=response.data;
+						})
+					} else if ($scope.status == "in game"){
+						$scope.topMessage = "";
+						$scope.phaseButton = "";
+						$http.post('/dominiongame/gethand').then(function(response){
+							$scope.hand=response.data;
+						})
+					} else {
+						
+					}
 					
 				})
 			});
@@ -69,7 +84,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.goto('dominionend');
 		}
 		
-		a = function(image){
+		$scope.showCard = function(image){
 			$scope.bigImage = image;
 			$scope.showBigImage = true;
 			$scope.bigImageStyle = {
@@ -93,16 +108,18 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
-		$scope.showCard = function(image){
-			a(image);
-		}
-		
 		$scope.unshowBigImage = function(){
 			$scope.showBigImage = false;
 		}
 		
 		$scope.pb = function(){
-			
+			if ($scope.status == "first cards"){
+				$http.post('/dominiongame/finishfirstcards').then(function(response){
+					$http.post('/dominiongame/gethand').then(function(response){
+						$scope.hand=response.data;
+					});
+				});
+			}
 		}
 		
 		

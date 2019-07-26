@@ -19,7 +19,7 @@ public class Player {
 	
 	int coin, action, buy;
 	int coffer, villager, vp;
-	boolean isBot;
+	boolean isBot, isGoodToGo;
 	
 	public Player() {
 		this.name = "tempname";
@@ -28,6 +28,7 @@ public class Player {
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
 		isBot = false;
+		isGoodToGo = false;
 	}
 	public Player(String name) {
 		this();
@@ -35,6 +36,21 @@ public class Player {
 	}
 	public void bot() {
 		isBot = true;
+	}
+	public boolean getIsBot() {
+		return isBot;
+	}
+	public void setIsBot(boolean isBot) {
+		this.isBot = isBot;
+	}
+	public void goodToGo() {
+		isGoodToGo = true;
+	}
+	public boolean getIsGoodToGo() {
+		return isGoodToGo;
+	}
+	public void setIsGoodToGo(boolean isGoodToGo) {
+		this.isGoodToGo = isGoodToGo;
 	}
 	public void setBoard(Board board) {
 		this.board = board;
@@ -85,6 +101,17 @@ public class Player {
 				hand.add(deck.remove(0));
 			}
 		}
+	}
+	
+	public void cleanUp() {
+		int i;
+		while (hand.size()>0) {
+			discard.add(hand.remove(0));
+		}
+		while (play.size()>0) {
+			discard.add(play.remove(0));
+		}
+		draw(5);
 	}
 	
 	public void setup() {
@@ -140,6 +167,12 @@ public class Player {
 	}
 	public List<Card> getHand(){
 		return hand;
+	}
+	public List<Pile> getHandAsPiles(){
+		PileGen pileGen = new PileGen();
+		pileGen.add(hand);
+		List<Pile> piles = pileGen.getPiles();
+		return piles;
 	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;

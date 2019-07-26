@@ -121,8 +121,8 @@ public class DominionGameController {
 		if (username.equals(board.getLord())) {
 			board.randomize();
 			board.setup();
+			board.updateDB("status", board.getStatus());
 			board.updateDB("base", board.genBaseDocs());
-			//board.updateDB("players", board.genPlayerDocs());
 			board.updateDB("players", board.genPlayerNameDoc());
 			board.updateDB("kindom", board.genKindomDocs());
 			int i;
@@ -164,4 +164,62 @@ public class DominionGameController {
 		List<Pile> piles = board.getAllCards(username);
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/dominiongame/gethand", method = RequestMethod.POST)
+	public ResponseEntity<List<Pile>> gethand(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		List<Pile> piles = board.getPlayerByName(username).getHandAsPiles();
+		return new ResponseEntity<>(piles, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/finishfirstcards", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> finishfirstcards(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.playerGoodToGo(username);
+		board.updateDB("status", board.getStatus());
+		board.updateDB(username, board.genPlayerDoc(username));
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/getstatus", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getstatus(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		int status = board.getStatus();
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		String s;
+		switch (status) {
+			case 0:
+				s = "before";
+				break;
+			case 1:
+				s = "first cards";
+				break;
+			case 2:
+				s = "in game";
+				break;
+			case 3:
+				s = "end game";
+				break;
+			default:
+				s = "unknown";
+				break;
+		}
+		value.add(s);
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 }
