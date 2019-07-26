@@ -122,6 +122,7 @@ public class DominionGameController {
 			board.randomize();
 			board.setup();
 			board.updateDB("status", board.getStatus());
+			board.updateDB("startPlayer", board.getStartPlayer());
 			board.updateDB("base", board.genBaseDocs());
 			board.updateDB("players", board.genPlayerNameDoc());
 			board.updateDB("kindom", board.genKindomDocs());

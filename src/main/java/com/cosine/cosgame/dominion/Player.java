@@ -13,9 +13,14 @@ public class Player {
 	List<Card> discard, hand, deck, play, revealed;
 	
 	public static final String[] phases = {"Start", "Action", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
-	public static final String ACTION_PHASE = "Action";
-	public static final String TREASURE_PHASE = "Treasure";
 	int phase;
+	public static final int START = 0;
+	public static final int ACTION = 1;
+	public static final int TREASURE = 2;
+	public static final int BUY = 3;
+	public static final int NIGHT = 4;
+	public static final int CLEANUP = 5;
+	public static final int OFFTURN = 6;
 	
 	int coin, action, buy;
 	int coffer, villager, vp;

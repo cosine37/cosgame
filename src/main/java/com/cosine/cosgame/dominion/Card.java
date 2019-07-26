@@ -14,6 +14,7 @@ public class Card {
 	protected String name;
 	protected String image;
 	protected Player player;
+	protected Board board;
 	
 	// price of the card
 	protected int price;
@@ -194,13 +195,13 @@ public class Card {
 	
 	public boolean playable() {
 		boolean ans = false;
-		if (player.getPhaseAsString().equals(Player.ACTION_PHASE)) {
+		if (player.getPhase() == Player.ACTION) {
 			if (isAction()) {
 				ans = true;
 			}
 		}
 		
-		if (player.getPhaseAsString().equals(Player.TREASURE_PHASE)) {
+		if (player.getPhase() == Player.TREASURE) {
 			if (isTreasure()) {
 				ans = true;
 			}
@@ -214,6 +215,10 @@ public class Card {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+	
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 }

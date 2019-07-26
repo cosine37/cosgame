@@ -3,6 +3,7 @@ package com.cosine.cosgame.dominion;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -30,7 +31,8 @@ public class Board {
 	public static final int FIRSTCARDS = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
-	//int goodToGo;
+	
+	int startPlayer;
 	
 	MongoDBUtil dbutil;
 	
@@ -38,6 +40,7 @@ public class Board {
 		base = new Base();
 		dominion = new Dominion();
 		trash = new Trash();
+		startPlayer = 0;
 	
 		String dbname = "dominion";
 		String col = "board";
@@ -57,7 +60,6 @@ public class Board {
 		kindom = new ArrayList<Pile>();
 		basePile = new ArrayList<Pile>();
 		
-		//goodToGo = 0;
 		status = BEFORE;
 	}
 	
@@ -90,12 +92,17 @@ public class Board {
 			}
 		}
 		
+		// Decide which player goes first
+		Random rand = new Random();
+		System.out.println("players.size()="+players.size());
+		startPlayer = rand.nextInt(players.size());
+		System.out.println("startPlayer="+startPlayer);
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getIsBot()) {
-				//goodToGo++;
 				players.get(i).goodToGo();
 			}
 		}
+		
 		status = FIRSTCARDS;
 	}
 	
@@ -104,7 +111,6 @@ public class Board {
 		int goodToGo = 0;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getName().equals(name)) {
-				//goodToGo++;
 				players.get(i).goodToGo();
 			}
 			if (players.get(i).getIsGoodToGo()){
@@ -163,6 +169,10 @@ public class Board {
 	
 	public int getStatus() {
 		return status;
+	}
+	
+	public int getStartPlayer() {
+		return startPlayer;
 	}
 	
 	public List<Pile> getBase(){
@@ -257,7 +267,7 @@ public class Board {
 		boardId = (String)doc.get("boardId");
 		numPlayers = (int)doc.get("numPlayers");
 		lord = (String)doc.get("lord");
-		//goodToGo = (int)doc.get("goodToGo");
+		startPlayer = (int)doc.get("startPlayer");
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -451,7 +461,7 @@ public class Board {
 		doc.append("boardId", boardId);
 		doc.append("numPlayers", numPlayers);
 		doc.append("lord", lord);
-		//doc.append("goodToGo", goodToGo);
+		doc.append("startPlayer", startPlayer);
 		
 		List<Document> dopn = genPlayerNameDoc();
 		doc.append("players", dopn);
