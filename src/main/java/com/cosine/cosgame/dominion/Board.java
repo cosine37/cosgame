@@ -33,6 +33,7 @@ public class Board {
 	public static final int ENDGAME = 3;
 	
 	int startPlayer;
+	int currentPlayer;
 	
 	MongoDBUtil dbutil;
 	
@@ -41,6 +42,7 @@ public class Board {
 		dominion = new Dominion();
 		trash = new Trash();
 		startPlayer = 0;
+		currentPlayer = 0;
 	
 		String dbname = "dominion";
 		String col = "board";
@@ -96,6 +98,7 @@ public class Board {
 		Random rand = new Random();
 		System.out.println("players.size()="+players.size());
 		startPlayer = rand.nextInt(players.size());
+		currentPlayer = startPlayer;
 		System.out.println("startPlayer="+startPlayer);
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getIsBot()) {
@@ -124,10 +127,27 @@ public class Board {
 	
 	public void start() {
 		int i;
+		currentPlayer = currentPlayer-1;
+		if (currentPlayer<0) {
+			currentPlayer = currentPlayer + players.size();
+		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).cleanUp();
+			players.get(i).setPhase(Player.OFFTURN);
 		}
 		status = INGAME;
+		nextPlayer();
+	}
+	
+	public void nextPlayer() {
+		players.get(currentPlayer).setPhase(Player.OFFTURN);
+		currentPlayer = (currentPlayer+1)%players.size();
+		while (players.get(currentPlayer).getIsBot()) {
+			players.get(currentPlayer).goWithAI();
+			players.get(currentPlayer).setPhase(Player.OFFTURN);
+			currentPlayer = (currentPlayer+1)%players.size();
+		}
+		players.get(currentPlayer).nextPhase();
 	}
 	
 	public void gainToPlayer(Player p, Card card) {
@@ -198,7 +218,6 @@ public class Board {
 		return player;
 	}
 	
-	
 	public List<String> getPlayerNames(){
 		List<String> ans = new ArrayList<String>();
 		int i;
@@ -206,6 +225,20 @@ public class Board {
 			ans.add(players.get(i).getName());
 		}
 		return ans;
+	}
+	
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
+	public Player getCurrentPlayerAsPlayer() {
+		return players.get(currentPlayer);
+	}
+	
+	public String getCurrentPlayerName() {
+		System.out.println("players.size()="+players.size());
+		System.out.println("currentPlayer="+currentPlayer);
+		return players.get(currentPlayer).getName();
 	}
 	
 	public List<Pile> getAllCards(String name){
@@ -268,6 +301,7 @@ public class Board {
 		numPlayers = (int)doc.get("numPlayers");
 		lord = (String)doc.get("lord");
 		startPlayer = (int)doc.get("startPlayer");
+		currentPlayer = (int)doc.get("currentPlayer");
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -311,6 +345,7 @@ public class Board {
 		}
 		for (i=0;i<playerDocs.size();i++) {
 			Player p = new Player();
+			p.setBoard(this);
 			String name = (String) playerDocs.get(i).get("name");
 			p.setName(name);
 			Document dop = (Document)doc.get(name);
@@ -462,6 +497,7 @@ public class Board {
 		doc.append("numPlayers", numPlayers);
 		doc.append("lord", lord);
 		doc.append("startPlayer", startPlayer);
+		doc.append("currentPlayer", currentPlayer);
 		
 		List<Document> dopn = genPlayerNameDoc();
 		doc.append("players", dopn);

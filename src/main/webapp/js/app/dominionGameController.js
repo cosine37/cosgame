@@ -21,19 +21,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.base=[];
 		$scope.kindom=[];
 		$scope.status="first cards";
+		$scope.phase="";
 		$scope.bigImage="/image/Dominion/cards/Dominion/Smithy.png";
 		$scope.showBigImage = false;
 		$scope.bigImageStyle = {};
 		$scope.topMessage = "Your starting cards";
 		$scope.phaseButton = "start";
-		/*
-		$scope.bigImageStyle = {
-			"height": "210px", 
-			"width": "140px", 
-			"background": "url(" + $scope.bigImage + ")", 
-			"background-size": "cover"
-		}
-		*/
+
 		$scope.baseStyle={
 			"height": "109px",
 			"width": "71px"
@@ -54,29 +48,61 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
+		getphase = function(){
+			$http.post('/dominiongame/getphase').then(function(response){
+				$scope.phase=response.data.value[0];
+				if ($scope.phase == "Start"){
+					
+				} else if ($scope.phase == "Action"){
+					$scope.topMessage = "You may play Action cards";
+					$scope.phaseButton = "End Action";
+				} else if ($scope.phase == "Treasure"){
+					$scope.topMessage = "You may play Treasure cards";
+					$scope.phaseButton = "Buy cards";
+				} else if ($scope.phase == "Buy"){
+					$scope.topMessage = "You may buy cards";
+					$scope.phaseButton = "End Buy";
+				} else if ($scope.phase == "Night"){
+					$scope.topMessage = "You may play Night cards";
+					$scope.phaseButton = "End Night";
+				} else if ($scope.phase == "Cleanup"){
+					
+				} else if ($scope.phase == "Offturn"){
+					$scope.topMessage = "It's not your turn";
+					$scope.phaseButton = "Don't click";
+					$http.post('/dominiongame/nextplayer').then(function(response){
+						getphase();
+					});
+				}
+				$http.post('/dominiongame/gethand').then(function(response){
+					$scope.hand=response.data;
+				});
+			});
+		}
+		
+		getstatus = function(){
+			$http.post('/dominiongame/getstatus').then(function(response){
+				$scope.status=response.data.value[0];
+				if ($scope.status == "first cards"){
+					$scope.topMessage = "Your starting cards";
+					$scope.phaseButton = "start";
+					$http.post('/dominiongame/firstcards').then(function(response){
+						$scope.hand=response.data;
+					});
+				} else if ($scope.status == "in game"){
+					getphase()
+				} else {
+					
+				}
+				
+			});
+		}
+		
 		$http.post('/dominiongame/getbase').then(function(response){
 			$scope.base=response.data;
 			$http.post('/dominiongame/getkindom').then(function(response){
 				$scope.kindom=response.data;
-				$http.post('/dominiongame/getstatus').then(function(response){
-					$scope.status=response.data.value[0];
-					if ($scope.status == "first cards"){
-						$scope.topMessage = "Your starting cards";
-						$scope.phaseButton = "start";
-						$http.post('/dominiongame/firstcards').then(function(response){
-							$scope.hand=response.data;
-						})
-					} else if ($scope.status == "in game"){
-						$scope.topMessage = "";
-						$scope.phaseButton = "";
-						$http.post('/dominiongame/gethand').then(function(response){
-							$scope.hand=response.data;
-						})
-					} else {
-						
-					}
-					
-				})
+				getstatus();
 			});
 		});
 		
@@ -115,10 +141,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.pb = function(){
 			if ($scope.status == "first cards"){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
-					$http.post('/dominiongame/gethand').then(function(response){
-						$scope.hand=response.data;
-					});
+					getstatus();
 				});
+			} else if ($scope.status == "in game"){
+				if ($scope.phase == "Offturn"){
+					
+				} else {
+					$http.post('/dominiongame/nextphase').then(function(response){
+						getphase();
+					});
+				}
 			}
 		}
 		

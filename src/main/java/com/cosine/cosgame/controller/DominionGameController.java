@@ -177,6 +177,19 @@ public class DominionGameController {
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/cleanup", method = RequestMethod.POST)
+	public ResponseEntity<List<Pile>> cleanup(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.getPlayerByName(username).cleanUp();
+		board.updateDB(username, board.genPlayerDoc(username));
+		List<Pile> piles = board.getPlayerByName(username).getHandAsPiles();
+		return new ResponseEntity<>(piles, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/finishfirstcards", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> finishfirstcards(HttpServletRequest request){
 		HttpSession session = request.getSession();
@@ -220,6 +233,75 @@ public class DominionGameController {
 		}
 		value.add(s);
 		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/getphase", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getPhase(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		String phase = board.getPlayerByName(username).getPhaseAsString();
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		value.add(phase);
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/nextphase", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> nextPhase(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.getPlayerByName(username).nextPhase();
+		board.updateDB(username, board.genPlayerDoc(username));
+		String phase = board.getPlayerByName(username).getPhaseAsString();
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		value.add(phase);
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/nextplayer", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> nextPlayer(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		String p1 = board.getCurrentPlayerName();
+		board.nextPlayer();
+		String p2 = board.getCurrentPlayerName();
+		board.updateDB("currentPlayer", board.getCurrentPlayer());
+		board.updateDB(p1, board.genPlayerDoc(p1));
+		board.updateDB(p2, board.genPlayerDoc(p2));
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/ai", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> ai(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		String p1 = board.getCurrentPlayerName();
+		String p2;
+		if (board.getCurrentPlayerAsPlayer().getIsBot()) {
+			board.getCurrentPlayerAsPlayer().goWithAI();
+			board.nextPlayer();
+			p2 = board.getCurrentPlayerName();
+			board.updateDB("currentPlayer", board.getCurrentPlayer());
+			board.updateDB(p1, board.genPlayerDoc(p1));
+			board.updateDB(p2, board.genPlayerDoc(p2));
+		}
+		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

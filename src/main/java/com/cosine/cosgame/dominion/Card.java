@@ -175,6 +175,10 @@ public class Card {
 	public boolean isCursed() {
 		return types[INDEX_CURSED];
 	}
+	
+	public boolean isNight() {
+		return types[INDEX_NIGHT];
+	}
 
 	public boolean isAttack() {
 		return types[INDEX_ATTACK];

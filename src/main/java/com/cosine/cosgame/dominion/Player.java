@@ -7,14 +7,17 @@ import java.util.Random;
 public class Player {
 	String name;
 	Board board;
+	AI ai;
 	
 	Trash trashMat;
 	
 	List<Card> discard, hand, deck, play, revealed;
+	String cleanUpOptions;
+	String startOptions;
 	
 	public static final String[] phases = {"Start", "Action", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	int phase;
-	public static final int START = 0;
+	public static final int START = 0; // this turn deals with duration cards
 	public static final int ACTION = 1;
 	public static final int TREASURE = 2;
 	public static final int BUY = 3;
@@ -34,6 +37,9 @@ public class Player {
 		play = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
+		ai = new AI(this);
+		cleanUpOptions = "";
+		startOptions = "";
 	}
 	public Player(String name) {
 		this();
@@ -144,6 +150,78 @@ public class Player {
 			}
 			
 		}
+	}
+	
+	public void goWithAI() {
+		ai.startPhase();
+		ai.actionPhase();
+		ai.treasurePhase();
+		ai.buyPhase();
+		ai.nightPhase();
+		ai.cleanupPhase();
+		cleanUp();
+	}
+	
+	public void nextPhase() {
+		phase = (phase+1)%7;
+		if (phase == START) {
+			action = 1;
+			buy = 1;
+			if (startOptions=="") {
+				phase++;
+			}
+		}
+		if (phase == ACTION) {
+			if (noCardType("action")) {
+				phase++;
+			}
+		}
+		if (phase == TREASURE) {
+			if (noCardType("treasure")) {
+				phase++;
+			}
+		}
+		if (phase == BUY) {
+			if (buy == 0) {
+				phase++;
+			}
+		}
+		if (phase == NIGHT) {
+			if (noCardType("night")) {
+				phase++;
+			}
+		}
+		if (phase == CLEANUP) {
+			if (cleanUpOptions=="") {
+				phase++;
+			}
+		}
+		if (phase == OFFTURN) {
+			cleanUp();
+			action = 0;
+			buy = 0;
+		}
+	}
+	
+	public boolean noCardType(String type) {
+		int i;
+		for (i=0;i<hand.size();i++) {
+			if (type.equals("action")) {
+				if (hand.get(i).isAction()) {
+					return false;
+				}
+			} else if (type.equals("treasure")) {
+				if (hand.get(i).isTreasure()) {
+					return false;
+				}
+			} else if (type.equals("night")) {
+				if (hand.get(i).isNight()) {
+					return false;
+				}
+			}
+		}
+		return true;
+		
 	}
 	
 	public String getName() {
