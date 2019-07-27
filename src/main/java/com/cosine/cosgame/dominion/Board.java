@@ -50,6 +50,25 @@ public class Board {
 		dbutil.setCol(col);
 	}
 	
+	public void kick(String kickedName, boolean storeToDB) {
+		if (kickedName.equals(lord)) {
+			
+		} else {
+			dbutil.removeKey("boardId", boardId, kickedName);
+			int i;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getName().equals(kickedName)) {
+					players.remove(i);
+					break;
+				}
+			}
+			if (storeToDB) {
+				updateDB("players",genPlayerNameDoc());
+			}
+		}
+		
+	}
+	
 	//createBoard => initialize => setup => start
 	
 	public void initialize(String boardId, int numPlayers) {

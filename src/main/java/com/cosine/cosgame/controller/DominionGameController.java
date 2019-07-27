@@ -27,6 +27,24 @@ public class DominionGameController {
 	
 	Board board;
 	
+	@RequestMapping(value="/dominiongame/islord", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> isLord(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		String ans = "not Lord";
+		if (board.getLord().equals(username)) {
+			ans = "Lord";
+		}
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		value.add(ans);
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/newgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newgame(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
@@ -80,6 +98,17 @@ public class DominionGameController {
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
 		board.addBot(true);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="dominiongame/kick", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request,@RequestParam String kickedName){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		board.kick(kickedName, true);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

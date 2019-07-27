@@ -38,7 +38,10 @@
 						<td><h2>Players</h2></td>
 					</tr>
 					<tr ng-repeat="playername in playernames track by $index">
-						<td>{{playername}}</td>
+						<td>
+							{{playername}}
+							<button ng-show="showKick($index)" ng-click="kick(playername)">kick</button>
+						</td>
 					</tr>
 					<tr>
 						<td><h2>Messages</h2></td>

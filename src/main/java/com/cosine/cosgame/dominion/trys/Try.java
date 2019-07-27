@@ -17,9 +17,6 @@ public class Try {
 		*/
 		
 		Board board = new Board();
-		board.getBoardFromDB("1563715273810");
-		System.out.println(board.getPlayerNames());
-		List<Pile> piles = board.getAllCards("aaaa");
-		System.out.println(piles.size());
+		board.getBoardFromDB("1564218211045");
 	}
 }
