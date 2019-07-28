@@ -334,4 +334,23 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/addons", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addons(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		String action = Integer.toString(board.getPlayerByName(username).getAction());
+		String buy = Integer.toString(board.getPlayerByName(username).getBuy());
+		String coin = Integer.toString(board.getPlayerByName(username).getCoin());
+		List<String> value = new ArrayList<String>();
+		value.add(action);
+		value.add(buy);
+		value.add(coin);
+		StringEntity entity = new StringEntity();
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 }

@@ -48,6 +48,24 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
+		gethand = function(){
+			$http.post('/dominiongame/gethand').then(function(response){
+				$scope.hand=response.data;
+			});
+		}
+		
+		getaddon = function(){
+			$http.post('dominiongame/addons').then(function(response){
+				var action=response.data.value[0];
+				var buy=response.data.value[1];
+				var coin=response.data.value[2];
+				$scope.topMessage = $scope.topMessage + " Action: " + action;
+				$scope.topMessage = $scope.topMessage + " Buy: " + buy;
+				$scope.topMessage = $scope.topMessage + " Coin: " + coin;
+				gethand();
+			});
+		}
+		
 		getphase = function(){
 			$http.post('/dominiongame/getphase').then(function(response){
 				$scope.phase=response.data.value[0];
@@ -56,12 +74,15 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				} else if ($scope.phase == "Action"){
 					$scope.topMessage = "You may play Action cards";
 					$scope.phaseButton = "End Action";
+					getaddon();
 				} else if ($scope.phase == "Treasure"){
 					$scope.topMessage = "You may play Treasure cards";
 					$scope.phaseButton = "Buy cards";
+					getaddon();
 				} else if ($scope.phase == "Buy"){
 					$scope.topMessage = "You may buy cards";
 					$scope.phaseButton = "End Buy";
+					getaddon();
 				} else if ($scope.phase == "Night"){
 					$scope.topMessage = "You may play Night cards";
 					$scope.phaseButton = "End Night";
@@ -74,9 +95,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						getphase();
 					});
 				}
-				$http.post('/dominiongame/gethand').then(function(response){
-					$scope.hand=response.data;
-				});
+				
 			});
 		}
 		
