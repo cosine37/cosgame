@@ -173,6 +173,19 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		playCard = function(card){
+			var data = {"cardName": card.name};
+			$http({url: "/dominiongame/playcard", method: "POST", params: data}).then(function(response){
+				getaddon();
+			});
+		}
 		
+		$scope.play = function(index){
+			if ($scope.phase == "Treasure"){
+				if ($scope.hand[index].top.treasure){
+					playCard($scope.hand[index].top);
+				}
+			}
+		}
 		
 }]);

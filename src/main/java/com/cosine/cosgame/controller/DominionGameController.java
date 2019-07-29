@@ -103,7 +103,7 @@ public class DominionGameController {
 	}
 	
 	@RequestMapping(value="dominiongame/kick", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> kick(HttpServletRequest request,@RequestParam String kickedName){
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam String kickedName){
 		HttpSession session = request.getSession(true);
 		String boardId = (String) session.getAttribute("boardId");
 		Board board = new Board();
@@ -353,4 +353,16 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/playcard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam String cardName){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.getPlayerByName(username).play(cardName);
+		board.updatePlayerDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 }

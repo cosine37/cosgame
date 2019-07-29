@@ -77,8 +77,26 @@ public class Player {
 		this.discard.add(card);
 	}
 	
-	public void play(Card card) {
-		
+	public Ask play(Card card) {
+		Ask ask = new Ask();
+		return ask;
+	}
+	
+	public Ask play(String cardName) {
+		int i;
+		Card c;
+		for (i=0;i<hand.size();i++) {
+			if (hand.get(i).getName().equals(cardName)) {
+				c = hand.get(i);
+				hand.remove(i);
+				c.setPlayer(this);
+				c.play();
+				play.add(c);
+				break;
+			}
+		}
+		Ask ask = new Ask();
+		return ask;
 	}
 	
 	public List<Pile> getAllCards(){
@@ -198,8 +216,6 @@ public class Player {
 		}
 		if (phase == OFFTURN) {
 			cleanUp();
-			action = 0;
-			buy = 0;
 		}
 	}
 	

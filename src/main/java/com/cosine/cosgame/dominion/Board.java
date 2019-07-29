@@ -115,10 +115,8 @@ public class Board {
 		
 		// Decide which player goes first
 		Random rand = new Random();
-		System.out.println("players.size()="+players.size());
 		startPlayer = rand.nextInt(players.size());
 		currentPlayer = startPlayer;
-		System.out.println("startPlayer="+startPlayer);
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getIsBot()) {
 				players.get(i).goodToGo();
@@ -160,6 +158,9 @@ public class Board {
 	
 	public void nextPlayer() {
 		players.get(currentPlayer).setPhase(Player.OFFTURN);
+		players.get(currentPlayer).setAction(0);
+		players.get(currentPlayer).setBuy(0);
+		players.get(currentPlayer).setCoin(0);
 		currentPlayer = (currentPlayer+1)%players.size();
 		while (players.get(currentPlayer).getIsBot()) {
 			players.get(currentPlayer).goWithAI();
@@ -305,6 +306,10 @@ public class Board {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("boardId", boardId, key, value);
+	}
+	
+	public void updatePlayerDB(String name) {
+		updateDB(name, genPlayerDoc(name));
 	}
 	
 	public void removeSelfFromDB() {
