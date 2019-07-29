@@ -5,6 +5,7 @@ import java.util.List;
 import com.cosine.cosgame.dominion.Board;
 import com.cosine.cosgame.dominion.Pile;
 import com.cosine.cosgame.login.User;
+import com.cosine.cosgame.prehandle.dominion.DominionCards;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Try {
@@ -16,7 +17,7 @@ public class Try {
 		util.update("boardId", "1563353674770", "status", 1);
 		*/
 		
-		Board board = new Board();
-		board.getBoardFromDB("1564218211045");
+		DominionCards dc = new DominionCards();
+		dc.change("cccccc");
 	}
 }

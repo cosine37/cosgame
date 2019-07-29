@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/app/dominionListController.js"></script>
+<script>
+	var xmlobj;
+	var count=0;
+	function createXMLHttpRequest(){
+	  if(window.ActiveXObject){
+	    xmlobj=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	  else if(window.XMLHttpRequest){
+	    xmlobj=new XMLHttpRequest();
+	  }
+	}
+	function Autofresh(){
+	  createXMLHttpRequest();    
+	   count=count+1;    
+	  //xmlobj.open("GET","currenttime.php?count="+count,true);
+	  xmlobj.open("POST", "/ajaxdemo");
+	  xmlobj.responseType = "json";
+	  xmlobj.onreadystatechange=doAjax;
+	  xmlobj.send();
+	}
+	function doAjax(){
+	  if(xmlobj.readyState==4 && xmlobj.status==200){
+	    var time_span=document.getElementById('aaa');
+	    
+	    time_span.innerHTML=xmlobj.response.value;
+	    setTimeout("Autofresh()",2000);
+	  }
+	}
+</script>
+<body ng-app="dominionListApp" ng-controller="dominionListCtrl" onLoad="Autofresh()">
+	<div id="header" class="header">
+		<table style="width: 100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+				<td align="right" style="padding-right: 30px"><button ng-click="logout()">Logout</button></td>
+			</tr>
+		</table>
+		
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button ng-click="goto('index')">Home</button>
+		<button>Dominion</button>
+		<button ng-click="goto('mafia')">Mafia</button>
+		<button>Others</button>
+	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div id="sidebar" class="sidebar">
+			<table>
+				<tr><td><button ng-click="goto('dominion')">Rooms</button></td></tr>
+				<tr><td><button>Rules</button></td></tr>
+				<tr><td><button>Cards</button></td></tr>
+			</table>
+		</div>
+		
+	</div>
+	<div id="content" class="content">
+		<p>现在的时间是：<span id="aaa"></span></p>
+	</div>
+	
+	
+</body>
+</html>

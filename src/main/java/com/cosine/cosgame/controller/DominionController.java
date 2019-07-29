@@ -44,4 +44,9 @@ public class DominionController {
 	public String dominionEnd() {
 		return "dominionEnd";
 	}
+	
+	@RequestMapping(value="/dominionlist", method = RequestMethod.GET)
+	public String dominionList() {
+		return "dominionList";
+	}
 }
