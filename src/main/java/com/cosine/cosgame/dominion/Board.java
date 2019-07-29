@@ -199,8 +199,12 @@ public class Board {
 		updateDB("status", status);
 	}
 	
-	public void randomize() {
+	public void baseSetup() {
+		base = new Base(players.size());
 		basePile = base.getPiles();
+	}
+	
+	public void randomize() {
 		kindom = dominion.getPiles();
 	}
 	

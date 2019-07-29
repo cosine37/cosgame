@@ -68,7 +68,6 @@ public class DominionGameController {
 	public ResponseEntity<StringEntity> newboard(HttpServletRequest request, @RequestParam int numPlayers) {
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
-		session.setAttribute("act","newboard");
 		StringEntity entity = new StringEntity();
 		board = new Board();
 		board.createBoard(username, numPlayers);
@@ -149,6 +148,7 @@ public class DominionGameController {
 		String username = (String) session.getAttribute("username");
 		board.getBoardFromDB(boardId);
 		if (username.equals(board.getLord())) {
+			board.baseSetup();
 			board.randomize();
 			board.setup();
 			board.updateDB("status", board.getStatus());
