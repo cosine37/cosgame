@@ -131,6 +131,7 @@ public class DominionGameController {
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
 		board.resign();
+		// TODO: maybe get the final cards before cleaning db
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

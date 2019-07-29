@@ -96,6 +96,11 @@ public class Board {
 		int copperIndex = 5;
 		int estateIndex = 4;
 		
+		// clean player cards in case
+		for (i=0;i<players.size();i++) {
+			players.get(i).cleanCards();
+		}
+		
 		// give players start pile
 		if (useShelters) {
 			
@@ -310,6 +315,14 @@ public class Board {
 	
 	public void updatePlayerDB(String name) {
 		updateDB(name, genPlayerDoc(name));
+	}
+	
+	public void cleanPlayerDBs() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).cleanCards();
+			updatePlayerDB(players.get(i).getName());
+		}
 	}
 	
 	public void removeSelfFromDB() {

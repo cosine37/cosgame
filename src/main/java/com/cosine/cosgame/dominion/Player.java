@@ -45,6 +45,14 @@ public class Player {
 		this();
 		this.name = name;
 	}
+	public void cleanCards() {
+		discard = new ArrayList<Card>();
+		hand = new ArrayList<Card>();
+		deck = new ArrayList<Card>();
+		play = new ArrayList<Card>();
+		cleanUpOptions = "";
+		startOptions = "";
+	}
 	public void bot() {
 		isBot = true;
 	}
