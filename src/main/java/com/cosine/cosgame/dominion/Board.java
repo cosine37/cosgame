@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.cosine.cosgame.dominion.base.Base;
 import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
+import com.cosine.cosgame.dominion.oriental.Oriental;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.util.MongoDBUtil;
 import com.cosine.cosgame.util.TextGenerator;
@@ -21,6 +22,7 @@ public class Board {
 	
 	Expansion base;
 	Expansion dominion;
+	Expansion oriental;
 	Trash trash;
 	List<Player> players;
 	List<Pile> kindom;
@@ -40,6 +42,7 @@ public class Board {
 	public Board() {
 		base = new Base();
 		dominion = new Dominion();
+		oriental = new Oriental();
 		trash = new Trash();
 		startPlayer = 0;
 		currentPlayer = 0;
@@ -218,6 +221,7 @@ public class Board {
 	
 	public void resign() {
 		this.status = ENDGAME;
+		
 		updateDB("status", status);
 	}
 	
@@ -228,6 +232,8 @@ public class Board {
 	
 	public void randomize() {
 		kindom = dominion.getPiles();
+		
+		kindom.add(oriental.getPiles().get(0));
 	}
 	
 	public String getBoardId() {

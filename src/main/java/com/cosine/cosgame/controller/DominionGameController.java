@@ -45,7 +45,7 @@ public class DominionGameController {
 		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	/*
 	@RequestMapping(value="/dominiongame/newgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newgame(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
@@ -53,7 +53,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	*/
 	@RequestMapping(value="/dominiongame/board/getact", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> getact(HttpServletRequest request){
 		HttpSession session = request.getSession(true);
@@ -131,7 +131,9 @@ public class DominionGameController {
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
 		board.resign();
+		
 		// TODO: maybe get the final cards before cleaning db
+		//board.cleanPlayerDBs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

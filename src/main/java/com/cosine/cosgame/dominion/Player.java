@@ -46,6 +46,12 @@ public class Player {
 		this.name = name;
 	}
 	public void cleanCards() {
+		action = 1;
+		buy = 1;
+		coin = 0;
+		vp = 0;
+		coffer = 0;
+		villager = 0;
 		discard = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
@@ -150,8 +156,13 @@ public class Player {
 		}
 	}
 	
+	public void discardHand() {
+		while (hand.size()>0) {
+			discard.add(hand.remove(0));
+		}
+	}
+	
 	public void cleanUp() {
-		int i;
 		while (hand.size()>0) {
 			discard.add(hand.remove(0));
 		}

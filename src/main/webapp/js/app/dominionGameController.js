@@ -22,7 +22,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.kindom=[];
 		$scope.status="first cards";
 		$scope.phase="";
-		$scope.bigImage="/image/Dominion/cards/Dominion/Smithy.png";
+		$scope.bigImage="";
 		$scope.showBigImage = false;
 		$scope.bigImageStyle = {};
 		$scope.topMessage = "Your starting cards";
@@ -130,7 +130,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		});
 		
 		$scope.resign = function(){
-			$scope.goto('dominionend');
+			$http.post('/dominiongame/resign').then(function(response){
+				$scope.goto('dominionend');
+			});
 		}
 		
 		$scope.showCard = function(image){
