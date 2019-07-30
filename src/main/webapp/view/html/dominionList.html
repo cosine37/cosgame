@@ -21,7 +21,6 @@
 	function Autofresh(){
 	  createXMLHttpRequest();    
 	   count=count+1;    
-	  //xmlobj.open("GET","currenttime.php?count="+count,true);
 	  xmlobj.open("POST", "/ajaxdemo");
 	  xmlobj.responseType = "json";
 	  xmlobj.onreadystatechange=doAjax;
@@ -67,7 +66,6 @@
 	<div id="content" class="content">
 		<p>现在的时间是：<span id="aaa"></span></p>
 	</div>
-	
 	
 </body>
 </html>

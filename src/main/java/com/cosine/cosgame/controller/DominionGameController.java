@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.dominion.Board;
 import com.cosine.cosgame.dominion.Pile;
+import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.security.LoginInterceptor;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -362,6 +363,34 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		board.getPlayerByName(username).play(cardName);
+		board.updatePlayerDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/buycard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> buyCard(HttpServletRequest request, @RequestParam String cardName){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.playerBuy(board.getPlayerByName(username), board.getPileByTop(cardName));
+		board.updateSupply();
+		board.updatePlayerDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/gaincard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> gainCard(HttpServletRequest request, @RequestParam String cardName){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
+		board.updateSupply();
 		board.updatePlayerDB(username);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

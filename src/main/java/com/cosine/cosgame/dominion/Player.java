@@ -82,6 +82,7 @@ public class Player {
 	}
 	
 	public void putOnDiscard(Card card) {
+		card.setPlayer(this);
 		this.discard.add(card);
 	}
 	

@@ -175,6 +175,28 @@ public class Board {
 		players.get(currentPlayer).nextPhase();
 	}
 	
+	public Pile getPileByTop(String name) {
+		int i;
+		for (i=0;i<basePile.size();i++) {
+			if (basePile.get(i).getTop().getName().equals(name)) {
+				return basePile.get(i);
+			}
+		}
+		for (i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getTop().getName().equals(name)) {
+				return kindom.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void playerBuy(Player p, Pile pile) {
+		Card card = pile.getTop();
+		p.buy = p.buy - 1;
+		p.coin = p.coin - card.getPrice();
+		card.onBuy(p);
+	}
+	
 	public void gainToPlayer(Player p, Card card) {
 		p.putOnDiscard(card);
 		card.onGain(p);
@@ -319,6 +341,11 @@ public class Board {
 	
 	public void updatePlayerDB(String name) {
 		updateDB(name, genPlayerDoc(name));
+	}
+	
+	public void updateSupply() {
+		updateDB("base", genBaseDocs());
+		updateDB("kindom", genKindomDocs());
 	}
 	
 	public void cleanPlayerDBs() {

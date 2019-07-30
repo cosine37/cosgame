@@ -27,6 +27,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.bigImageStyle = {};
 		$scope.topMessage = "Your starting cards";
 		$scope.phaseButton = "start";
+		$scope.action=0
+		$scope.buy=0;
+		$scope.coin=0;
 
 		$scope.baseStyle={
 			"height": "109px",
@@ -56,12 +59,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		getaddon = function(){
 			$http.post('dominiongame/addons').then(function(response){
-				var action=response.data.value[0];
-				var buy=response.data.value[1];
-				var coin=response.data.value[2];
-				$scope.topMessage = $scope.topMessage + " Action: " + action;
-				$scope.topMessage = $scope.topMessage + " Buy: " + buy;
-				$scope.topMessage = $scope.topMessage + " Coin: " + coin;
+				$scope.action=response.data.value[0];
+				$scope.buy=response.data.value[1];
+				$scope.coin=response.data.value[2];
+				$scope.topMessage = $scope.topMessage + " Action: " + $scope.action;
+				$scope.topMessage = $scope.topMessage + " Buy: " + $scope.buy;
+				$scope.topMessage = $scope.topMessage + " Coin: " + $scope.coin;
 				gethand();
 			});
 		}
@@ -116,6 +119,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				
 			});
 		}
+		
 		
 		$http.post('/dominiongame/getbase').then(function(response){
 			$scope.base=response.data;
@@ -184,6 +188,54 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			if ($scope.phase == "Treasure"){
 				if ($scope.hand[index].top.treasure){
 					playCard($scope.hand[index].top);
+				}
+			}
+		}
+		
+		getsupply = function(){
+			$http.post('/dominiongame/getbase').then(function(response){
+				$scope.base=response.data;
+				$http.post('/dominiongame/getkindom').then(function(response){
+					$scope.kindom=response.data;
+					getstatus();
+				});
+			});
+		}
+		
+		gainCard = function(cardName){
+			var data = {"cardName": cardName}
+			$http({url: "/dominiongame/gaincard", method: "POST", params: data}).then(function(response){
+				getsupply();
+			});
+		}
+		
+		buyCard = function(cardName){
+			var data = {"cardName": cardName}
+			$http({url: "/dominiongame/buycard", method: "POST", params: data}).then(function(response){
+				gainCard(cardName);
+			});
+		}
+		
+		$scope.buyc = function(bk, index){
+			if ($scope.phase == "Buy"){
+				if ($scope.buy > 0){
+					var pile;
+					var cardName = "";
+					var numCards = 0;
+					var price = 0;
+					if (bk == "kindom"){
+						pile = $scope.kindom[index];
+					} else if (bk = "base"){
+						pile = $scope.base[index];
+					}
+					numCards = pile.numCards;
+					if (numCards > 0){
+						price = pile.cards[0].price;
+						if (price <= $scope.coin){
+							cardName = pile.cards[0].name;
+							buyCard(cardName);
+						}
+					}
 				}
 			}
 		}

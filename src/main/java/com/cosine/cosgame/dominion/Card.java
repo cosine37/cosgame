@@ -80,6 +80,10 @@ public class Card {
 		
 	}
 	
+	public void onBuy(Player p) {
+		
+	}
+	
 	public Ask play() {
 		vanilla();
 		Ask ask = new Ask();
