@@ -232,6 +232,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						pile = $scope.kindom[index];
 					} else if (bk = "base"){
 						pile = $scope.base[index];
+						
 					}
 					numCards = pile.numCards;
 					if (numCards > 0){

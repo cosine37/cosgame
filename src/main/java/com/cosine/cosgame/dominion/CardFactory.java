@@ -22,6 +22,10 @@ public class CardFactory {
 		
 		if (cardname.equals("Smithy")) return new Smithy();
 		if (cardname.equals("Village")) return new Village();
+		if (cardname.equals("Market")) return new Market();
+		if (cardname.equals("Laboratory")) return new Laboratory();
+		if (cardname.equals("Festival")) return new Festival();
+		if (cardname.equals("Woodcutter")) return new Woodcutter();
 		return null;
 	}
 	
