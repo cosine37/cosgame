@@ -190,6 +190,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					playCard($scope.hand[index].top);
 				}
 			}
+			if ($scope.phase == "Action"){
+				if ($scope.hand[index].top.actionType){
+					playCard($scope.hand[index].top);
+				}
+			}
 		}
 		
 		getsupply = function(){

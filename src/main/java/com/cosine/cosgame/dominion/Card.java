@@ -164,7 +164,7 @@ public class Card {
 		return score;
 	}
 
-	public boolean isAction() {
+	public boolean isActionType() {
 		return types[INDEX_ACTION];
 	}
 
@@ -204,7 +204,7 @@ public class Card {
 	public boolean playable() {
 		boolean ans = false;
 		if (player.getPhase() == Player.ACTION) {
-			if (isAction()) {
+			if (isActionType()) {
 				ans = true;
 			}
 		}

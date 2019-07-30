@@ -94,17 +94,26 @@ public class Player {
 	public Ask play(String cardName) {
 		int i;
 		Card c;
+		Ask ask = new Ask();
+		if (phase == ACTION) {
+			if (action == 0) {
+				return ask;
+			}
+		}
 		for (i=0;i<hand.size();i++) {
 			if (hand.get(i).getName().equals(cardName)) {
 				c = hand.get(i);
 				hand.remove(i);
 				c.setPlayer(this);
+				if (phase == ACTION) {
+					action = action - 1;
+				}
 				c.play();
 				play.add(c);
 				break;
 			}
 		}
-		Ask ask = new Ask();
+		
 		return ask;
 	}
 	
@@ -232,7 +241,7 @@ public class Player {
 		int i;
 		for (i=0;i<hand.size();i++) {
 			if (type.equals("action")) {
-				if (hand.get(i).isAction()) {
+				if (hand.get(i).isActionType()) {
 					return false;
 				}
 			} else if (type.equals("treasure")) {
