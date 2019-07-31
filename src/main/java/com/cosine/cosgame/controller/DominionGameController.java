@@ -286,10 +286,14 @@ public class DominionGameController {
 		board.getPlayerByName(username).nextPhase();
 		board.updateDB(username, board.genPlayerDoc(username));
 		String phase = board.getPlayerByName(username).getPhaseAsString();
+		if (phase.equals("Offturn")) {
+			board.gameEndJudge();
+		}
+		String status = board.getStatusAsString();
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
 		value.add(phase);
-		entity.setValue(value);
+		entity.setValue(value);	
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

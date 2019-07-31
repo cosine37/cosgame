@@ -12,6 +12,7 @@ public class Player {
 	Trash trashMat;
 	
 	PlayedCounter counter;
+	ScoreKeeper sk;
 	List<Card> discard, hand, deck, play, revealed;
 	String cleanUpOptions;
 	String startOptions;
@@ -42,6 +43,7 @@ public class Player {
 		cleanUpOptions = "";
 		startOptions = "";
 		counter = new PlayedCounter();
+		sk = new ScoreKeeper(this);
 	}
 	public Player(String name) {
 		this();
@@ -270,6 +272,10 @@ public class Player {
 		}
 		return true;
 		
+	}
+	
+	public int getScore() {
+		return sk.getScore();
 	}
 	
 	public String getName() {

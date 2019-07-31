@@ -28,7 +28,7 @@ public class ArmyDrummer extends Card{
 	}
 	
 	public Ask onGain(Player p) {
-		if (p.getPhase() != player.OFFTURN) {
+		if (p.getPhase() != Player.OFFTURN) {
 			p.addCoin(1);
 		}
 		Ask ask = new Ask();

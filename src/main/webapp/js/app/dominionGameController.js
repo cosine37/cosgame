@@ -113,8 +113,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					});
 				} else if ($scope.status == "in game"){
 					getphase()
-				} else {
-					
+				} else if ($scope.status == "end game"){
+					alert("game ends");
+					$scope.goto('dominionend');
 				}
 				
 			});
@@ -173,7 +174,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
-						getphase();
+						//getphase();
+						getstatus();
 					});
 				}
 			}

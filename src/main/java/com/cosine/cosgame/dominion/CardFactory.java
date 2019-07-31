@@ -37,6 +37,17 @@ public class CardFactory {
 		return null;
 	}
 	
+	public Card createCard(String cardname, Player p) {
+		Card card = createCard(cardname);
+		if (card != null) {
+			card.setPlayer(p);
+			return card;
+		} else {
+			return null;
+		}
+		
+	}
+	
 	public List<Card> createCards(String cardname, int n) {
 		List<Card> cardlist = new ArrayList<Card>();
 		for (int i=0;i<n;i++) {
@@ -44,4 +55,5 @@ public class CardFactory {
 		}
 		return cardlist;
 	}
+	
 }

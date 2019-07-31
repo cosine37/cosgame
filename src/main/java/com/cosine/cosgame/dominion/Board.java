@@ -34,6 +34,7 @@ public class Board {
 	public static final int FIRSTCARDS = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
+	//public static final String[] statuses = {"Before", "FirstCards", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	
 	int startPlayer;
 	int currentPlayer;
@@ -78,7 +79,6 @@ public class Board {
 	public void initialize(String boardId, int numPlayers) {
 		this.boardId = boardId;
 		this.numPlayers = numPlayers;
-		int i;
 		players = new ArrayList<Player>();
 		Player lp = new Player(this.lord);
 		players.add(lp);
@@ -251,6 +251,10 @@ public class Board {
 		return status;
 	}
 	
+	public String getStatusAsString() {
+		return Integer.toString(status);
+	}
+	
 	public int getStartPlayer() {
 		return startPlayer;
 	}
@@ -342,6 +346,29 @@ public class Board {
 			}
 		}
 		
+	}
+	
+	public void gameEndJudge() {
+		int emptyPile = 0;
+		int provinceIndex = 0;
+		int i;
+		if (basePile.get(provinceIndex).getNumCards() == 0) {
+			this.status = ENDGAME;
+			updateDB("status", status);
+			return;
+		} else {
+			for (i=0;i<basePile.size();i++) {
+				if (basePile.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
+			}
+			for (i=0;i<kindom.size();i++) {
+				if (kindom.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
+			}
+			if (emptyPile > 2) {
+				this.status = ENDGAME;
+				updateDB("status", status);
+				return;
+			}
+		}
 	}
 	
 	public void updateDB(String key, Object value) {
