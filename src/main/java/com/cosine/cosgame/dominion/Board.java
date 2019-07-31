@@ -8,6 +8,7 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.dominion.base.Base;
+import com.cosine.cosgame.dominion.base.Empty;
 import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
 import com.cosine.cosgame.dominion.oriental.Oriental;
@@ -166,6 +167,7 @@ public class Board {
 	
 	public void nextPlayer() {
 		players.get(currentPlayer).setPhase(Player.OFFTURN);
+		players.get(currentPlayer).resetPlayed();
 		players.get(currentPlayer).setAction(0);
 		players.get(currentPlayer).setBuy(0);
 		players.get(currentPlayer).setCoin(0);
@@ -234,6 +236,7 @@ public class Board {
 		kindom = dominion.getPiles();
 		
 		kindom.add(oriental.getPiles().get(0));
+		kindom.add(oriental.getPiles().get(1));
 	}
 	
 	public String getBoardId() {
@@ -403,7 +406,11 @@ public class Board {
 			} else {
 				int n = (int)((Document)kindomDocs.get(i).get("pile")).get("number");
 				String cardname = (String)((Document)kindomDocs.get(i).get("pile")).get("name");
-				p.setCards(factory.createCards(cardname, n));
+				if (n == 0) {
+					p.setCards(factory.createCards("Empty", 1));
+				} else {
+					p.setCards(factory.createCards(cardname, n));
+				}
 			}
 			kindom.add(p);
 		}
@@ -413,7 +420,11 @@ public class Board {
 			int n = (int)baseDocs.get(i).get("number");
 			String image = (String)baseDocs.get(i).get("image");
 			p.setName(name);
-			p.setCards(factory.createCards(name, n));
+			if (n == 0) {
+				p.setCards(factory.createCards("Empty", 1));
+			} else {
+				p.setCards(factory.createCards(name, n));
+			}
 			p.setImage(image);
 			basePile.add(p);
 		}
@@ -437,20 +448,25 @@ public class Board {
 			List<Document> deckDocs = (List<Document>)dop.get("deck");
 			List<Document> handDocs = (List<Document>)dop.get("hand");
 			List<Document> playDocs = (List<Document>)dop.get("play");
+			List<Document> playedDocs = (List<Document>)dop.get("played");
 			List<Card> discard = new ArrayList<Card>();
 			List<Card> deck = new ArrayList<Card>();
 			List<Card> hand = new ArrayList<Card>();
 			List<Card> play = new ArrayList<Card>();
+			List<String> played = new ArrayList<String>();
 		
 			int j;
 			for (j=0;j<discardDocs.size();j++) {discard.add(factory.createCard((String)discardDocs.get(j).get("name")));}
 			for (j=0;j<deckDocs.size();j++) {deck.add(factory.createCard((String)deckDocs.get(j).get("name")));}
 			for (j=0;j<handDocs.size();j++) {hand.add(factory.createCard((String)handDocs.get(j).get("name")));}
 			for (j=0;j<playDocs.size();j++) {play.add(factory.createCard((String)playDocs.get(j).get("name")));}
+			for (j=0;j<playedDocs.size();j++) {played.add((String)playedDocs.get(j).get("value"));}
+			
 			p.setDiscard(discard);
 			p.setDeck(deck);
 			p.setHand(hand);
 			p.setPlay(play);
+			p.setPlayedCounter(played);
 			players.add(p);
 			
 		}
@@ -485,6 +501,8 @@ public class Board {
 		List<Document> handDocs = new ArrayList<Document>();
 		List<Document> playDocs = new ArrayList<Document>();
 		
+		List<Document> playedDocs = new ArrayList<Document>();
+		
 		for (j=0;j<players.get(i).getDiscard().size();j++) {
 			Document d = new Document();
 			d.append("name", players.get(i).getDiscard().get(j).getName());
@@ -508,10 +526,17 @@ public class Board {
 			d.append("name", players.get(i).getPlay().get(j).getName());
 			playDocs.add(d);
 		}
+		
+		for (j=0;j<players.get(i).getPlayedList().size();j++) {
+			Document d = new Document();
+			d.append("value", players.get(i).getPlayedList().get(j));
+			playedDocs.add(d);
+		}
 		dop.append("discard", discardDocs);
 		dop.append("deck", deckDocs);
 		dop.append("hand", handDocs);
 		dop.append("play", playDocs);
+		dop.append("played", playedDocs);
 		
 		return dop;
 	}

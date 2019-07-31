@@ -11,6 +11,7 @@ public class Player {
 	
 	Trash trashMat;
 	
+	PlayedCounter counter;
 	List<Card> discard, hand, deck, play, revealed;
 	String cleanUpOptions;
 	String startOptions;
@@ -40,6 +41,7 @@ public class Player {
 		ai = new AI(this);
 		cleanUpOptions = "";
 		startOptions = "";
+		counter = new PlayedCounter();
 	}
 	public Player(String name) {
 		this();
@@ -52,6 +54,7 @@ public class Player {
 		vp = 0;
 		coffer = 0;
 		villager = 0;
+		counter = new PlayedCounter();
 		discard = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
@@ -367,5 +370,24 @@ public class Player {
 	}
 	public void addVp(int x) {
 		this.vp = this.vp + x;
+	}
+	public void addPlayed(String s) {
+		counter.add(s);
+	}
+	public int getPlayed(String s) {
+		return counter.numPlayed(s);
+	}
+	public void resetPlayed() {
+		counter = new PlayedCounter();
+	}
+	public List<String> getPlayedList(){
+		return counter.getPlayedList();
+	}
+	public void setPlayedCounter(List<String> pc) {
+		int i;
+		counter = new PlayedCounter();
+		for (i=0;i<pc.size();i++) {
+			counter.add(pc.get(i));
+		}
 	}
 }

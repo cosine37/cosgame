@@ -98,13 +98,12 @@ public class Pile {
 	}
 
 	public int getNumCards() {
+		if (cards.size() == 1) {
+			if (cards.get(0).getName().equals("Empty")) return 0;
+		}
 		return cards.size();
 	}
-/*
-	public void setNumCards(int numCards) {
-		this.numCards = numCards;
-	}
-*/
+	
 	public int getNumCardsInit() {
 		return numCardsInit;
 	}

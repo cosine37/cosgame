@@ -76,12 +76,14 @@ public class Card {
 		
 	}
 	
-	public void onGain(Player p) {
-		
+	public Ask onGain(Player p) {
+		Ask ask = new Ask();
+		return ask;
 	}
 	
-	public void onBuy(Player p) {
-		
+	public Ask onBuy(Player p) {
+		Ask ask = new Ask();
+		return ask;
 	}
 	
 	public Ask play() {

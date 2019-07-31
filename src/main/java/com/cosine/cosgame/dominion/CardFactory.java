@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.cosine.cosgame.dominion.base.*;
 import com.cosine.cosgame.dominion.dominion.*;
-import com.cosine.cosgame.dominion.oriental.PendantForWine;
+import com.cosine.cosgame.dominion.oriental.*;
 
 public class CardFactory {
 	public CardFactory() {
@@ -13,6 +13,8 @@ public class CardFactory {
 	}
 	
 	public Card createCard(String cardname) {
+		if (cardname.equals("Empty")) return new Empty();
+		
 		if (cardname.equals("Copper")) return new Copper();
 		if (cardname.equals("Silver")) return new Silver();
 		if (cardname.equals("Gold")) return new Gold();
@@ -30,6 +32,7 @@ public class CardFactory {
 		
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
+		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
 		
 		return null;
 	}
