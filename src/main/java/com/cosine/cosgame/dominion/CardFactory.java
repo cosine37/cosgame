@@ -29,7 +29,7 @@ public class CardFactory {
 		if (cardname.equals("Laboratory")) return new Laboratory();
 		if (cardname.equals("Festival")) return new Festival();
 		if (cardname.equals("Woodcutter")) return new Woodcutter();
-		
+		if (cardname.equals("Gardens")) return new Gardens();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

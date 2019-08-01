@@ -119,14 +119,53 @@ public class DominionGameController {
 	@RequestMapping(value="/dominiongame/resign", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> resign(HttpServletRequest request){
 		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
-		board.resign();
+		board.resign(username);
 		
-		// TODO: maybe get the final cards before cleaning db
 		//board.cleanPlayerDBs();
 		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/endgamemsg", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> endgameMsg(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		String endPlayer = board.getEndPlayer();
+		String endType = board.getEndType();
+		String endMsg = "";
+		if (endPlayer.equals(username)) {
+			if (endType.equals("resign")) {
+				endMsg = "You resigned";
+			} else if (endType.equals("win")) {
+				endMsg = "You win";
+			} else {
+				
+			}
+		} else {
+			if (endType.equals("resign")) {
+				endMsg = endPlayer + " resigned";
+			} else if (endType.equals("win")) {
+				endMsg = "You lose";
+			} else {
+				
+			}
+		}
+		List<String> value = new ArrayList<String>();
+		value.add(endMsg);
+		for (int i=0;i<board.getPlayers().size();i++) {
+			endMsg = board.getPlayers().get(i).getName();
+			endMsg = endMsg + ": " + Integer.toString(board.getPlayers().get(i).getScore());
+			value.add(endMsg);
+		}
+		StringEntity entity = new StringEntity();
+		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

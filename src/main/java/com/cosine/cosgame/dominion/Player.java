@@ -139,6 +139,15 @@ public class Player {
 		
 	}
 	
+	public List<Card> getAllCardsAsCards(){
+		List<Card> allCards = new ArrayList<Card>();
+		allCards.addAll(discard);
+		allCards.addAll(hand);
+		allCards.addAll(deck);
+		allCards.addAll(play);
+		return allCards;
+	}
+	
 	public void shuffle() {
 		Random rand = new Random();
 		while (discard.size()>0) {
@@ -275,6 +284,7 @@ public class Player {
 	}
 	
 	public int getScore() {
+		sk = new ScoreKeeper(this);
 		return sk.getScore();
 	}
 	

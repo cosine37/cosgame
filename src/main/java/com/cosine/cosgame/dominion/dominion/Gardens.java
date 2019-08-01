@@ -1,6 +1,7 @@
 package com.cosine.cosgame.dominion.dominion;
 
 import com.cosine.cosgame.dominion.Card;
+import com.cosine.cosgame.dominion.Player;
 
 public class Gardens extends Card{
 	public Gardens() {
@@ -11,8 +12,9 @@ public class Gardens extends Card{
 		this.price = 4;
 	}
 	
-	public int getScore() {
-		int score = player.getAllCards().size() / 10;
+	public int getScore(Player p) {
+		int score = p.getAllCardsAsCards().size() / 10;
+		//System.out.println("score="+score);
 		return score;
 	}
 }

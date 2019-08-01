@@ -162,7 +162,7 @@ public class Card {
 		return producePotion;
 	}
 
-	public int getScore() {
+	public int getScore(Player p) {
 		return score;
 	}
 

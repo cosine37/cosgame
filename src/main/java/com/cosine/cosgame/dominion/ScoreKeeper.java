@@ -14,7 +14,7 @@ public class ScoreKeeper {
 	public ScoreKeeper(Player p) {
 		super();
 		this.p = p;
-		allCards = p.getDiscard();
+		allCards = p.getAllCardsAsCards();
 	}
 	
 	public int getScore() {
@@ -22,8 +22,7 @@ public class ScoreKeeper {
 		int i;
 		for (i=0;i<allCards.size();i++) {
 			if (allCards.get(i).isVictory() || allCards.get(i).isCursed()) {
-				allCards.get(i).setPlayer(p);
-				int score = allCards.get(i).getScore();
+				int score = allCards.get(i).getScore(p);
 				ans = ans + score;
 			}
 		}

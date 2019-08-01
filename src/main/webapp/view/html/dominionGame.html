@@ -7,11 +7,6 @@
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionGameController.js"></script>
-<script>
-function myfn(s){
-	alert(s);
-}
-</script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
 	<div id="otherplayer" class="otherplayer">
 		Other Player Area
@@ -99,6 +94,11 @@ function myfn(s){
 			<div class="kindom" style="margin-top: 10px; margin-left: 10px;background:url({{kindom[7].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 7)">
 				<div class="kindom-number">
 					{{kindom[7].numCards}}
+				</div>
+			</div>
+			<div class="kindom" style="margin-top: 10px; margin-left: 10px;background:url({{kindom[8].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 8)">
+				<div class="kindom-number">
+					{{kindom[8].numCards}}
 				</div>
 			</div>
 			<!-- 

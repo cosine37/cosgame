@@ -36,6 +36,9 @@ public class Board {
 	public static final int ENDGAME = 3;
 	//public static final String[] statuses = {"Before", "FirstCards", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	
+	String endPlayer;
+	String endType;
+	
 	int startPlayer;
 	int currentPlayer;
 	
@@ -48,9 +51,12 @@ public class Board {
 		trash = new Trash();
 		startPlayer = 0;
 		currentPlayer = 0;
+		endType = "";
+		endPlayer = "";
 	
 		String dbname = "dominion";
 		String col = "board";
+		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
@@ -89,6 +95,8 @@ public class Board {
 	}
 	
 	public void setup() {
+		endType = "";
+		endPlayer = "";
 		boolean useShelters = false;
 		boolean hasHeirloom = false;
 		randomize();
@@ -221,10 +229,13 @@ public class Board {
 		status = BEFORE;
 	}
 	
-	public void resign() {
+	public void resign(String name) {
 		this.status = ENDGAME;
-		
+		this.endPlayer = name;
+		this.endType = "resign";
 		updateDB("status", status);
+		updateDB("endType", endType);
+		updateDB("endPlayer", endPlayer);
 	}
 	
 	public void baseSetup() {
@@ -249,6 +260,14 @@ public class Board {
 	
 	public int getStatus() {
 		return status;
+	}
+	
+	public String getEndPlayer() {
+		return endPlayer;
+	}
+	
+	public String getEndType() {
+		return endType;
 	}
 	
 	public String getStatusAsString() {
@@ -354,7 +373,10 @@ public class Board {
 		int i;
 		if (basePile.get(provinceIndex).getNumCards() == 0) {
 			this.status = ENDGAME;
+			setWinner();
 			updateDB("status", status);
+			updateDB("endType", endType);
+			updateDB("endPlayer", endPlayer);
 			return;
 		} else {
 			for (i=0;i<basePile.size();i++) {
@@ -365,8 +387,25 @@ public class Board {
 			}
 			if (emptyPile > 2) {
 				this.status = ENDGAME;
+				setWinner();
 				updateDB("status", status);
+				updateDB("endType", endType);
+				updateDB("endPlayer", endPlayer);
 				return;
+			}
+		}
+	}
+	
+	public void setWinner() {
+		int i, score, index;
+		int highest = -10000;
+		endType = "win";
+		for (i=0;i<players.size();i++) {
+			index = (i+startPlayer)%players.size();
+			score = players.get(index).getScore();
+			if (score >= highest) {
+				highest = score;
+				endPlayer = players.get(index).getName();
 			}
 		}
 	}
@@ -406,6 +445,8 @@ public class Board {
 		lord = (String)doc.get("lord");
 		startPlayer = (int)doc.get("startPlayer");
 		currentPlayer = (int)doc.get("currentPlayer");
+		endType = (String)doc.get("endType");
+		endPlayer = (String)doc.get("endPlayer");
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -624,6 +665,8 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("startPlayer", startPlayer);
 		doc.append("currentPlayer", currentPlayer);
+		doc.append("endType", endType);
+		doc.append("endPlayer", endPlayer);
 		
 		List<Document> dopn = genPlayerNameDoc();
 		doc.append("players", dopn);
