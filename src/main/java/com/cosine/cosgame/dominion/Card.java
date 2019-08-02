@@ -41,6 +41,9 @@ public class Card {
 	protected static final int INDEX_REACTION = 11;
 	protected static final int INDEX_DURATION = 12;
 	
+	// This is used for treasure, default true
+	boolean autoplay;
+	
 	String where;
 	
 	public Card() {
@@ -58,6 +61,8 @@ public class Card {
 		price = 0;
 		pricePotion = 0;
 		priceDebt = 0;
+		
+		autoplay = true;
 		
 		int i;
 		for (i=0;i<100;i++) {
@@ -229,6 +234,10 @@ public class Card {
 	
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	
+	public boolean isAutoplay() {
+		return autoplay;
 	}
 	
 }

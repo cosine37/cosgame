@@ -284,6 +284,21 @@ public class Player {
 		
 	}
 	
+	public void autoplayTreasure() {
+		int i=0;
+		while (i<hand.size()) {
+			if (hand.get(i).isTreasure() && hand.get(i).isAutoplay()) {
+				Card c = hand.get(i);
+				hand.remove(i);
+				c.setPlayer(this);
+				c.play();
+				play.add(c);
+			} else {
+				i++;
+			}
+		}
+	}
+	
 	public int getScore() {
 		sk = new ScoreKeeper(this);
 		return sk.getScore();

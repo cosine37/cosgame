@@ -346,13 +346,24 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		String p1 = board.getCurrentPlayerName();
-		//int cp1 = board.getCurrentPlayer();
 		board.nextPlayer();
-		//int cp2 = board.getCurrentPlayer();
 		String p2 = board.getCurrentPlayerName();
 		board.updateDB("currentPlayer", board.getCurrentPlayer());
 		board.updateDB(p1, board.genPlayerDoc(p1));
 		board.updateDB(p2, board.genPlayerDoc(p2));
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/autoplaytreasure", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> autoplayTreasure(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		board.getPlayerByName(username).autoplayTreasure();
+		board.updatePlayerDB(username);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

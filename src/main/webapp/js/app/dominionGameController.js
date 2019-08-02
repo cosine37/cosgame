@@ -79,9 +79,14 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.phaseButton = "End Action";
 					getaddon();
 				} else if ($scope.phase == "Treasure"){
-					$scope.topMessage = "You may play Treasure cards";
-					$scope.phaseButton = "Buy cards";
-					getaddon();
+					if ($scope.phaseButton == "Buy Cards"){
+						$scope.topMessage = "You may play Treasure cards";
+						getaddon();
+					} else {
+						$scope.topMessage = "You may play Treasure cards";
+						$scope.phaseButton = "Autoplay Treasures";
+						getaddon();
+					}
 				} else if ($scope.phase == "Buy"){
 					$scope.topMessage = "You may buy cards";
 					$scope.phaseButton = "End Buy";
@@ -172,6 +177,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			} else if ($scope.status == "in game"){
 				if ($scope.phase == "Offturn"){
 					
+				} else if ($scope.phase == "Treasure" && $scope.phaseButton == "Autoplay Treasures"){
+					$http.post('dominiongame/autoplaytreasure').then(function(response){
+						$scope.phaseButton = "Buy Cards";
+						getstatus();
+					});
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
 						//getphase();
