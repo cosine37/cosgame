@@ -24,7 +24,7 @@ import com.cosine.cosgame.util.StringEntity;
 @Controller
 public class DominionGameController {
 	
-	protected static final Log logger = LogFactory.getLog(LoginInterceptor.class);
+	protected static final Log logger = LogFactory.getLog(DominionGameController.class);
 	
 	Board board;
 	
@@ -263,7 +263,9 @@ public class DominionGameController {
 		board.getBoardFromDB(boardId);
 		board.playerGoodToGo(username);
 		board.updateDB("status", board.getStatus());
-		board.updateDB(username, board.genPlayerDoc(username));
+		for (int i=0;i<board.getPlayers().size();i++) {
+			board.updateDB(board.getPlayers().get(i).getName(), board.genPlayerDoc(i));
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -344,7 +346,9 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		String p1 = board.getCurrentPlayerName();
+		//int cp1 = board.getCurrentPlayer();
 		board.nextPlayer();
+		//int cp2 = board.getCurrentPlayer();
 		String p2 = board.getCurrentPlayerName();
 		board.updateDB("currentPlayer", board.getCurrentPlayer());
 		board.updateDB(p1, board.genPlayerDoc(p1));

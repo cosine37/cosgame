@@ -34,7 +34,6 @@ public class Board {
 	public static final int FIRSTCARDS = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
-	//public static final String[] statuses = {"Before", "FirstCards", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	
 	String endPlayer;
 	String endType;
@@ -168,6 +167,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).cleanUp();
 			players.get(i).setPhase(Player.OFFTURN);
+			//updatePlayerDB(players.get(i).getName());
 		}
 		status = INGAME;
 		nextPlayer();
@@ -183,6 +183,7 @@ public class Board {
 		while (players.get(currentPlayer).getIsBot()) {
 			players.get(currentPlayer).goWithAI();
 			players.get(currentPlayer).setPhase(Player.OFFTURN);
+			updatePlayerDB(players.get(currentPlayer).getName());
 			currentPlayer = (currentPlayer+1)%players.size();
 		}
 		players.get(currentPlayer).nextPhase();

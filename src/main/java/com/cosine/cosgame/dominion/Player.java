@@ -214,6 +214,7 @@ public class Player {
 	}
 	
 	public void goWithAI() {
+		ai = new AI(this);
 		ai.startPhase();
 		ai.actionPhase();
 		ai.treasurePhase();

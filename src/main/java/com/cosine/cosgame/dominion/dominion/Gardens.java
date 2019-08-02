@@ -14,7 +14,6 @@ public class Gardens extends Card{
 	
 	public int getScore(Player p) {
 		int score = p.getAllCardsAsCards().size() / 10;
-		//System.out.println("score="+score);
 		return score;
 	}
 }
