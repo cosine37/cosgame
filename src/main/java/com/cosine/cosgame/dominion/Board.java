@@ -43,6 +43,8 @@ public class Board {
 	
 	MongoDBUtil dbutil;
 	
+	Logger logger;
+	
 	public Board() {
 		base = new Base();
 		dominion = new Dominion();
@@ -52,6 +54,7 @@ public class Board {
 		currentPlayer = 0;
 		endType = "";
 		endPlayer = "";
+		logger = new Logger();
 	
 		String dbname = "dominion";
 		String col = "board";
@@ -187,6 +190,7 @@ public class Board {
 			players.get(currentPlayer).setPhase(Player.OFFTURN);
 			updatePlayerDB(players.get(currentPlayer).getName());
 			updateSupply();
+			updateLogsDB();
 			currentPlayer = (currentPlayer+1)%players.size();
 		}
 		players.get(currentPlayer).nextPhase();
@@ -212,6 +216,7 @@ public class Board {
 		p.buy = p.buy - 1;
 		p.coin = p.coin - card.getPrice();
 		card.onBuy(p);
+		
 	}
 	
 	public void gainToPlayer(Player p, Card card) {
@@ -326,6 +331,10 @@ public class Board {
 		return players.get(currentPlayer).getName();
 	}
 	
+	public Logger getLogger() {
+		return logger;
+	}
+	
 	public List<Pile> getAllCards(String name){
 		List<Pile> piles = new ArrayList<Pile>();
 		int i;
@@ -418,6 +427,10 @@ public class Board {
 	
 	public void updatePlayerDB(String name) {
 		updateDB(name, genPlayerDoc(name));
+	}
+	
+	public void updateLogsDB() {
+		updateDB("logs", logger.getLoggerAsDocument());
 	}
 	
 	public void updateSupply() {
@@ -540,6 +553,8 @@ public class Board {
 			players.add(p);
 			
 		}
+		List<Document> logDocs = (List<Document>)doc.get("logs");
+		logger.setLoggerFromDocument(logDocs);
 	}
 	
 	public List<Document> genPlayerNameDoc() {
@@ -683,6 +698,8 @@ public class Board {
 			Document dop = genPlayerDoc(i);
 			doc.append(players.get(i).getName(), dop);
 		}
+		List<Document> logDocs = logger.getLoggerAsDocument();
+		doc.append("logs", logDocs);
 		dbutil.insert(doc);
 		System.out.println("Board with id " + boardId + " is stored in db");
 	}

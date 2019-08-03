@@ -363,8 +363,10 @@ public class DominionGameController {
 		String boardId = (String) session.getAttribute("boardId");
 		board = new Board();
 		board.getBoardFromDB(boardId);
+		board.getLogger().addAutoplayTreasure(board.getPlayerByName(username));
 		board.getPlayerByName(username).autoplayTreasure();
 		board.updatePlayerDB(username);
+		board.updateLogsDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -416,7 +418,9 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		board.getPlayerByName(username).play(cardName);
+		board.getLogger().addPlayCard(username, cardName);
 		board.updatePlayerDB(username);
+		board.updateLogsDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -429,8 +433,10 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		board.playerBuy(board.getPlayerByName(username), board.getPileByTop(cardName));
+		board.getLogger().addBuyCard(username, cardName);
 		board.updateSupply();
 		board.updatePlayerDB(username);
+		board.updateLogsDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -443,8 +449,10 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
+		board.getLogger().addGainCard(username, cardName);
 		board.updateSupply();
 		board.updatePlayerDB(username);
+		board.updateLogsDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

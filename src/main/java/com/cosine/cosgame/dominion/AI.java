@@ -36,6 +36,7 @@ public class AI {
 	
 	public void treasurePhase() {
 		if (player.getPhase() == Player.TREASURE) {
+			board.getLogger().addAutoplayTreasure(player);
 			player.autoplayTreasure();
 			player.nextPhase();
 		}
@@ -97,7 +98,9 @@ public class AI {
 	
 	void buy(String cardName) {
 		board.playerBuy(player, board.getPileByTop(cardName));
+		board.getLogger().addBuyCard(player.getName(), cardName);
 		board.gainToPlayerFromPile(player, board.getPileByTop(cardName));
+		board.getLogger().addGainCard(player.getName(), cardName);
 		board.gameEndJudge();
 	}
 	
@@ -111,6 +114,7 @@ public class AI {
 			for (i=0;i<hand.size();i++) {
 				if (hand.get(i).getAction()>0 && hand.get(i).isSafe()) {
 					player.play(hand.get(i).getName());
+					board.getLogger().addPlayCard(player.getName(), hand.get(i).getName());
 					count = count + 1;
 					flag = true;
 					break;
@@ -130,6 +134,7 @@ public class AI {
 			for (i=0;i<hand.size();i++) {
 				if (hand.get(i).getAction()==0 && hand.get(i).isSafe()) {
 					player.play(hand.get(i).getName());
+					board.getLogger().addPlayCard(player.getName(), hand.get(i).getName());
 					count = count + 1;
 					flag = true;
 					break;
