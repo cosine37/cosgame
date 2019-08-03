@@ -39,7 +39,6 @@ public class Player {
 		play = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
-		ai = new AI(this);
 		cleanUpOptions = "";
 		startOptions = "";
 		counter = new PlayedCounter();
@@ -213,15 +212,15 @@ public class Player {
 		}
 	}
 	
-	public void goWithAI() {
-		ai = new AI(this);
+	public void goWithAI(Board board) {
+		ai = new AI(this, board);
 		ai.startPhase();
 		ai.actionPhase();
 		ai.treasurePhase();
 		ai.buyPhase();
 		ai.nightPhase();
 		ai.cleanupPhase();
-		cleanUp();
+		//cleanUp();
 	}
 	
 	public void nextPhase() {
@@ -229,6 +228,7 @@ public class Player {
 		if (phase == START) {
 			action = 1;
 			buy = 1;
+			coin = 0;
 			if (startOptions=="") {
 				phase++;
 			}

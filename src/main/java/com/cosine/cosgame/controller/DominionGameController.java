@@ -266,6 +266,7 @@ public class DominionGameController {
 		for (int i=0;i<board.getPlayers().size();i++) {
 			board.updateDB(board.getPlayers().get(i).getName(), board.genPlayerDoc(i));
 		}
+		board.updateSupply();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -377,7 +378,7 @@ public class DominionGameController {
 		String p1 = board.getCurrentPlayerName();
 		String p2;
 		if (board.getCurrentPlayerAsPlayer().getIsBot()) {
-			board.getCurrentPlayerAsPlayer().goWithAI();
+			board.getCurrentPlayerAsPlayer().goWithAI(board);
 			board.nextPlayer();
 			p2 = board.getCurrentPlayerName();
 			board.updateDB("currentPlayer", board.getCurrentPlayer());

@@ -1,13 +1,17 @@
 package com.cosine.cosgame.dominion;
 
+import java.util.List;
+
 public class AI {
 	Player player;
+	Board board;
 	public AI() {
 		
 	}
 	
-	public AI(Player player) {
+	public AI(Player player, Board board) {
 		this.player = player;
+		this.board = board;
 	}
 	
 	public void startPhase() {
@@ -18,22 +22,28 @@ public class AI {
 	}
 	
 	public void actionPhase() {
-		// TODO
+		int c1;
+		int c2;
 		if (player.getPhase() == Player.ACTION) {
+			while (true) {
+				c1 = playAllNonTerminal();
+				c2 = playAllTerminal();
+				if (c1 == 0 && c2 == 0) break;
+			}
 			player.nextPhase();
 		}
 	}
 	
 	public void treasurePhase() {
-		// TODO
 		if (player.getPhase() == Player.TREASURE) {
+			player.autoplayTreasure();
 			player.nextPhase();
 		}
 	}
 	
 	public void buyPhase() {
-		// TODO
 		if (player.getPhase() == Player.BUY) {
+			naiveBuy();
 			player.nextPhase();
 		}
 	}
@@ -57,4 +67,76 @@ public class AI {
 		
 	}
 	
+	void naiveBuy() {
+		if (player.getCoin() >= 8) {
+			buy("Province");
+		} else if (player.getCoin() >= 6) {
+			if (board.getPileByTop("Province").getNumCards() <= 2) {
+				buy("Duchy");
+			} else {
+				buy("Gold");
+			}
+		} else if (player.getCoin() >= 5) {
+			if (board.getPileByTop("Province").getNumCards() <= 2) {
+				buy("Duchy");
+			} else {
+				buy("Silver");
+			}
+		} else if (player.getCoin() >= 3) {
+			if (board.getPileByTop("Province").getNumCards() <= 2) {
+				buy("Estate");
+			} else {
+				buy("Silver");
+			}
+		} else if (player.getCoin() >= 2) {
+			if (board.getPileByTop("Province").getNumCards() <= 2) {
+				buy("Estate");
+			}
+		}
+	}
+	
+	void buy(String cardName) {
+		board.playerBuy(player, board.getPileByTop(cardName));
+		board.gainToPlayerFromPile(player, board.getPileByTop(cardName));
+		board.gameEndJudge();
+	}
+	
+	int playAllNonTerminal() {
+		int count = 0;
+		boolean flag = true;
+		while (flag && player.getAction()>0) {
+			flag = false;
+			int i;
+			List<Card> hand = player.getHand();
+			for (i=0;i<hand.size();i++) {
+				if (hand.get(i).getAction()>0 && hand.get(i).isSafe()) {
+					player.play(hand.get(i).getName());
+					count = count + 1;
+					flag = true;
+					break;
+				}
+			}
+		}
+		return count;
+	}
+	
+	int playAllTerminal() {
+		int count = 0;
+		boolean flag = true;
+		while (flag && player.getAction()>0) {
+			flag = false;
+			int i;
+			List<Card> hand = player.getHand();
+			for (i=0;i<hand.size();i++) {
+				if (hand.get(i).getAction()==0 && hand.get(i).isSafe()) {
+					player.play(hand.get(i).getName());
+					count = count + 1;
+					flag = true;
+					break;
+				}
+			}
+			
+		}
+		return count;
+	}
 }

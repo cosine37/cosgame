@@ -160,6 +160,7 @@ public class Board {
 	
 	public void start() {
 		int i;
+		currentPlayer = startPlayer;
 		currentPlayer = currentPlayer-1;
 		if (currentPlayer<0) {
 			currentPlayer = currentPlayer + players.size();
@@ -181,9 +182,11 @@ public class Board {
 		players.get(currentPlayer).setCoin(0);
 		currentPlayer = (currentPlayer+1)%players.size();
 		while (players.get(currentPlayer).getIsBot()) {
-			players.get(currentPlayer).goWithAI();
+			players.get(currentPlayer).nextPhase();
+			players.get(currentPlayer).goWithAI(this);
 			players.get(currentPlayer).setPhase(Player.OFFTURN);
 			updatePlayerDB(players.get(currentPlayer).getName());
+			updateSupply();
 			currentPlayer = (currentPlayer+1)%players.size();
 		}
 		players.get(currentPlayer).nextPhase();
@@ -320,8 +323,6 @@ public class Board {
 	}
 	
 	public String getCurrentPlayerName() {
-		System.out.println("players.size()="+players.size());
-		System.out.println("currentPlayer="+currentPlayer);
 		return players.get(currentPlayer).getName();
 	}
 	

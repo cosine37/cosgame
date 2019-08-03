@@ -10,6 +10,8 @@ public class PendantForWine extends Card{
 		this.image = "/image/Dominion/cards/Oriental/PendantForWine.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;
+		
+		this.safe = false;
 	}
 	
 	public Ask play() {

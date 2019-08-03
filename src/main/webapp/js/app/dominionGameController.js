@@ -100,7 +100,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.topMessage = "It's not your turn";
 					$scope.phaseButton = "Don't click";
 					$http.post('/dominiongame/nextplayer').then(function(response){
-						getphase();
+						$http.post('/dominiongame/getbase').then(function(response){
+							$scope.base=response.data;
+							$http.post('/dominiongame/getkindom').then(function(response){
+								$scope.kindom=response.data;
+								getstatus();
+							});
+						});
 					});
 				}
 				
@@ -125,7 +131,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				
 			});
 		}
-		
 		
 		$http.post('/dominiongame/getbase').then(function(response){
 			$scope.base=response.data;
@@ -172,7 +177,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.pb = function(){
 			if ($scope.status == "first cards"){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
-					getstatus();
+					getsupply();
 				});
 			} else if ($scope.status == "in game"){
 				if ($scope.phase == "Offturn"){
@@ -184,7 +189,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					});
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
-						//getphase();
 						getstatus();
 					});
 				}

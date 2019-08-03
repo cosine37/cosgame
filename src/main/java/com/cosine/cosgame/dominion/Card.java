@@ -42,7 +42,10 @@ public class Card {
 	protected static final int INDEX_DURATION = 12;
 	
 	// This is used for treasure, default true
-	boolean autoplay;
+	protected boolean autoplay;
+	
+	// These are used for AI
+	protected boolean safe; // AI will play the card if the card is safe
 	
 	String where;
 	
@@ -63,6 +66,8 @@ public class Card {
 		priceDebt = 0;
 		
 		autoplay = true;
+		
+		safe = true;
 		
 		int i;
 		for (i=0;i<100;i++) {
@@ -238,6 +243,10 @@ public class Card {
 	
 	public boolean isAutoplay() {
 		return autoplay;
+	}
+	
+	public boolean isSafe() {
+		return safe;
 	}
 	
 }
