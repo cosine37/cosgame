@@ -37,12 +37,22 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/login/username", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> username(HttpServletRequest request, @RequestParam String username) {
+	public ResponseEntity<StringEntity> setUsername(HttpServletRequest request, @RequestParam String username) {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("username", username);
-		session.setMaxInactiveInterval(10 * 60);
-		logger.info(request.getAttribute("username"));
+		session.setMaxInactiveInterval(20 * 60);
 		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/username", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> username(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		List<String> value = new ArrayList<String>();
+		value.add(username);
+		StringEntity entity = new StringEntity();
+		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
