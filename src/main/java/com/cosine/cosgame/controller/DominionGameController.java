@@ -420,7 +420,9 @@ public class DominionGameController {
 		String username = (String) session.getAttribute("username");
 		board = new Board();
 		board.getBoardFromDB(boardId);
-		Ask ask = board.getPlayerByName(username).play(cardName);
+		Player player = board.getPlayerByName(username);
+		player.setBoard(board);
+		Ask ask = player.play(cardName);
 		board.getLogger().addPlayCard(username, cardName);
 		board.updatePlayerDB(username);
 		board.updateLogsDB();
@@ -442,6 +444,7 @@ public class DominionGameController {
 		CardFactory factory = new CardFactory();
 		Card card = factory.createCard(cardName);
 		card.setPlayer(player);
+		card.setBoard(board);
 		Ask ask = card.response(a);
 		player.setAsk(ask);
 		board.updatePlayerDB(username);

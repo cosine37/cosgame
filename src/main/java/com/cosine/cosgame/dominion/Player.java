@@ -89,6 +89,9 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public Board getBoard() {
+		return board;
+	}
 	
 	public void resetValues() {
 		coin = 0;
@@ -120,6 +123,7 @@ public class Player {
 				c = hand.get(i);
 				hand.remove(i);
 				c.setPlayer(this);
+				c.setBoard(board);
 				if (phase == ACTION) {
 					action = action - 1;
 				}
