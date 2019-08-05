@@ -27,9 +27,13 @@ public class Player {
 	public static final int CLEANUP = 5;
 	public static final int OFFTURN = 6;
 	
+	int subPhase; // this is linked to Ask type
+	
 	int coin, action, buy;
 	int coffer, villager, vp;
 	boolean isBot, isGoodToGo;
+	
+	Ask ask;
 	
 	public Player() {
 		this.name = "tempname";
@@ -43,6 +47,7 @@ public class Player {
 		startOptions = "";
 		counter = new PlayedCounter();
 		sk = new ScoreKeeper(this);
+		ask = new Ask();
 	}
 	public Player(String name) {
 		this();
@@ -118,12 +123,12 @@ public class Player {
 				if (phase == ACTION) {
 					action = action - 1;
 				}
-				c.play();
+				ask = c.play();
 				play.add(c);
 				break;
 			}
 		}
-		
+		setAsk(ask);
 		return ask;
 	}
 	
@@ -175,6 +180,18 @@ public class Player {
 		}
 	}
 	
+	public Card discardTop() {
+		if (deck.size() == 0) {
+			shuffle();
+		}
+		if (deck.size() == 0) {
+			return null;
+		}
+		Card card = deck.remove(0);
+		discard.add(card);
+		return card;
+	}
+	
 	public void cleanUp() {
 		while (hand.size()>0) {
 			discard.add(hand.remove(0));
@@ -189,25 +206,22 @@ public class Player {
 
 	}
 	
+	
 	public void trash(List<String> cards, String from) {
 		int i, j;
-		for (i=0;i<=cards.size();i++) {
-			j = 0;
-			while (1>0) {
-				if (from == "hand") {
-					if (j == hand.size()) {
-						break;
-					}
+		Card card;
+		Trash trash = board.getTrash();
+		if (from == "hand") {
+			for (i=0;i<cards.size();i++) {
+				for (j=0;j<hand.size();j++) {
 					if (hand.get(j).getName().equals(cards.get(i))) {
-						trashMat.add(hand.remove(j));
+						card = hand.remove(j);
+						trash.add(card);
 						break;
 					}
-				} else if (from == "revealed") {
-					
-				} else if (from == "deck") {
-					
 				}
 			}
+		} else if (from == "deck") {
 			
 		}
 	}
@@ -297,6 +311,20 @@ public class Player {
 				i++;
 			}
 		}
+	}
+	
+	public boolean has(String cardName, String where) {
+		boolean ans = false;
+		if (where.equals("hand")) {
+			for (int i=0;i<hand.size();i++) {
+				if (hand.get(i).getName().equals(cardName)) {
+					ans = true;
+					break;
+				}
+			}
+		}
+		
+		return ans;
 	}
 	
 	public int getScore() {
@@ -414,6 +442,12 @@ public class Player {
 	}
 	public List<String> getPlayedList(){
 		return counter.getPlayedList();
+	}
+	public void setAsk(Ask ask) {
+		this.ask = ask;
+	}
+	public Ask getAsk() {
+		return ask;
 	}
 	public void setPlayedCounter(List<String> pc) {
 		int i;

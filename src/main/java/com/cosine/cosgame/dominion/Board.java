@@ -295,6 +295,10 @@ public class Board {
 		return kindom;
 	}
 	
+	public Trash getTrash() {
+		return trash;
+	}
+	
 	public List<Player> getPlayers(){
 		return players;
 	}
@@ -436,6 +440,7 @@ public class Board {
 	public void updateSupply() {
 		updateDB("base", genBaseDocs());
 		updateDB("kindom", genKindomDocs());
+		updateDB("trash", trash.toDocument());
 	}
 	
 	public void cleanPlayerDBs() {
@@ -462,6 +467,9 @@ public class Board {
 		currentPlayer = (int)doc.get("currentPlayer");
 		endType = (String)doc.get("endType");
 		endPlayer = (String)doc.get("endPlayer");
+		
+		List<Document> trashDocs = (List<Document>)doc.get("trash");
+		trash.setTrashFromDoc(trashDocs);
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -527,6 +535,10 @@ public class Board {
 			p.setVillager((int)dop.get("villager"));
 			p.setVp((int)dop.get("vp"));
 			
+			Ask ask = new Ask();
+			ask.setAskFromDocument((Document) dop.get("ask"));
+			p.setAsk(ask);
+			
 			List<Document> discardDocs = (List<Document>)dop.get("discard");
 			List<Document> deckDocs = (List<Document>)dop.get("deck");
 			List<Document> handDocs = (List<Document>)dop.get("hand");
@@ -579,6 +591,7 @@ public class Board {
 		dop.append("coffer", players.get(i).getCoffer());
 		dop.append("villager", players.get(i).getVillager());
 		dop.append("vp", players.get(i).getVp());
+		dop.append("ask", players.get(i).getAsk().toDocument());
 		
 		int j;
 		List<Document> discardDocs = new ArrayList<Document>();
@@ -672,7 +685,7 @@ public class Board {
 		}
 		return kindomDocs;
 	}
-	
+		
 	public void storeBoardToDB() {
 		Document doc = new Document();
 		
@@ -692,6 +705,9 @@ public class Board {
 		List<Document> kindomDocs = genKindomDocs();
 		doc.append("base", baseDocs);
 		doc.append("kindom", kindomDocs);
+		
+		List<Document> trashDocs = trash.toDocument();
+		doc.append("trash", trashDocs);
 		
 		int i;
 		for (i=0;i<players.size();i++) {

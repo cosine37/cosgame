@@ -88,27 +88,31 @@ public class Card {
 	
 	public Ask onGain(Player p) {
 		Ask ask = new Ask();
+		ask.setCardName(name);
 		return ask;
 	}
 	
 	public Ask onBuy(Player p) {
 		Ask ask = new Ask();
+		ask.setCardName(name);
 		return ask;
 	}
 	
 	public Ask play() {
 		vanilla();
 		Ask ask = new Ask();
+		ask.setCardName(name);
 		return ask;
 	}
 	
-	public Ask afterChoice(String msg) {
+	public Ask afterChoice(Ask a) {
 		Ask ask = new Ask();
 		return ask;
 	}
 	
-	public Ask response(String msg) {
+	public Ask response(Ask a) {
 		Ask ask = new Ask();
+		ask.setCardName(name);
 		return ask;
 	}
 

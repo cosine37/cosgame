@@ -24,6 +24,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.phase="";
 		$scope.bigImage="";
 		$scope.showBigImage = false;
+		$scope.showPhaseButton = true;
 		$scope.bigImageStyle = {};
 		$scope.topMessage = "Your starting cards";
 		$scope.phaseButton = "start";
@@ -72,12 +73,23 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		getphase = function(){
 			$http.post('/dominiongame/getphase').then(function(response){
 				$scope.phase=response.data.value[0];
+				$scope.showPhaseButton = true;
 				if ($scope.phase == "Start"){
 					
 				} else if ($scope.phase == "Action"){
-					$scope.topMessage = "You may play Action cards";
-					$scope.phaseButton = "End Action";
-					getaddon();
+					$http.post('/dominiongame/getask').then(function(response){
+						$scope.ask = response.data;
+						if ($scope.ask.type == 0){
+							$scope.topMessage = "You may play Action cards";
+							$scope.phaseButton = "End Action";
+							getaddon();
+						} else if ($scope.ask.type == 1){
+							$scope.topMessage = $scope.ask.msg;
+							$scope.showPhaseButton = false;
+							getaddon();
+						}
+					});
+					
 				} else if ($scope.phase == "Treasure"){
 					if ($scope.phaseButton == "Buy Cards"){
 						$scope.topMessage = "You may play Treasure cards";
@@ -195,10 +207,19 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		$scope.choose = function(index){
+			var data = {"ans": index.toString()};
+			$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+				$scope.ask = response.data;
+				getsupply();
+			});
+		}
+		
 		playCard = function(card){
 			var data = {"cardName": card.name};
 			$http({url: "/dominiongame/playcard", method: "POST", params: data}).then(function(response){
-				getaddon();
+				$scope.ask = response.data;
+				getsupply();
 			});
 		}
 		
@@ -209,8 +230,10 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			}
 			if ($scope.phase == "Action"){
-				if ($scope.hand[index].top.actionType){
-					playCard($scope.hand[index].top);
+				if ($scope.ask.type == 0){
+					if ($scope.hand[index].top.actionType){
+						playCard($scope.hand[index].top);
+					}
 				}
 			}
 		}

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.dominion.Ask;
 import com.cosine.cosgame.dominion.Board;
+import com.cosine.cosgame.dominion.Card;
+import com.cosine.cosgame.dominion.CardFactory;
 import com.cosine.cosgame.dominion.Pile;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.security.LoginInterceptor;
@@ -411,18 +414,51 @@ public class DominionGameController {
 	}
 	
 	@RequestMapping(value="/dominiongame/playcard", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam String cardName){
+	public ResponseEntity<Ask> playCard(HttpServletRequest request, @RequestParam String cardName){
 		HttpSession session = request.getSession();
 		String boardId = (String) session.getAttribute("boardId");
 		String username = (String) session.getAttribute("username");
 		board = new Board();
 		board.getBoardFromDB(boardId);
-		board.getPlayerByName(username).play(cardName);
+		Ask ask = board.getPlayerByName(username).play(cardName);
 		board.getLogger().addPlayCard(username, cardName);
 		board.updatePlayerDB(username);
 		board.updateLogsDB();
-		StringEntity entity = new StringEntity();
-		return new ResponseEntity<>(entity, HttpStatus.OK);
+		board.updateSupply();
+		return new ResponseEntity<>(ask, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/response", method = RequestMethod.POST)
+	public ResponseEntity<Ask> response(HttpServletRequest request, @RequestParam String ans){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		Player player = board.getPlayerByName(username);
+		Ask a = player.getAsk();
+		a.parseAns(ans);
+		String cardName = a.getCardName();
+		CardFactory factory = new CardFactory();
+		Card card = factory.createCard(cardName);
+		card.setPlayer(player);
+		Ask ask = card.response(a);
+		player.setAsk(ask);
+		board.updatePlayerDB(username);
+		board.updateLogsDB();
+		board.updateSupply();
+		return new ResponseEntity<>(ask, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/getask", method = RequestMethod.POST)
+	public ResponseEntity<Ask> getask(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		Ask ask = board.getPlayerByName(username).getAsk();
+		return new ResponseEntity<>(ask, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dominiongame/buycard", method = RequestMethod.POST)
