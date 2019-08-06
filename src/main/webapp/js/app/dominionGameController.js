@@ -285,8 +285,10 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						for (i=0;i<$scope.choosehand.length;i++){
 							total = total + $scope.choosehand[i];
 						}
+						if (total<$scope.ask.upper){
+							$scope.choosehand[index] = $scope.choosehand[index] + 1;
+						}
 						
-						$scope.choosehand[index] = $scope.choosehand[index] + 1;
 					}
 					
 				}

@@ -104,6 +104,12 @@ public class Card {
 		return ask;
 	}
 	
+	public Ask onTrash(Player p) {
+		Ask ask = new Ask();
+		ask.setCardName(name);
+		return ask;
+	}
+	
 	public Ask play() {
 		vanilla();
 		Ask ask = new Ask();

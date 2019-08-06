@@ -225,6 +225,16 @@ public class Player {
 
 	}
 	
+	public Card trash(int index) {
+		if (hand.size()>index) {
+			Card card = hand.remove(index);
+			board.getTrash().add(card);
+			card.onTrash(this);
+			return card;
+		} else {
+			return null;
+		}
+	}
 	
 	public void trash(List<String> cards, String from) {
 		int i, j;
