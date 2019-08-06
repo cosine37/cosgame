@@ -100,7 +100,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 							getaddon();
 						} else if ($scope.ask.type == 2){
 							$scope.topMessage = $scope.ask.msg;
-							$scope.showPhaseButton = $scope.showPhaseButtonWhenChooseHand();
+							$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 							$scope.showClearButton = true;
 							$scope.phaseButton = "Confirm";
 							getaddon();
@@ -263,6 +263,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			for (i=0;i<$scope.choosehand.length;i++){
 				$scope.choosehand[i] = 0;
 			}
+			$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 		}
 		
 		$scope.play = function(index){
@@ -290,7 +291,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						}
 						
 					}
-					
+					$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 				}
 			}
 		}
@@ -319,7 +320,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.showPhaseButtonWhenChooseHand = function(){
+		showPhaseButtonWhenChooseHand = function(){
 			var i;
 			var total = 0;
 			for (i=0;i<$scope.choosehand.length;i++){

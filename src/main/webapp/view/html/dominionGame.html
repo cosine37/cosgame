@@ -128,8 +128,8 @@
 	<div id="player" style="clear:both; ">Player
 		<button ng-click="resign()">Resign</button>
 		{{topMessage}}
-		<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
 		<button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button>
+		<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
 		<button ng-repeat="x in ask.options track by $index" ng-click="choose($index)">{{x}}</button>
 		<div>
 			<div class="kindom" ng-click="play($index)" ng-repeat="x in hand track by $index" style="background:url({{x.image}});background-size:cover">

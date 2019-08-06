@@ -382,33 +382,31 @@ public class Board {
 		
 	}
 	
-	public void gameEndJudge() {
+	public int getNumEmptyPile() {
 		int emptyPile = 0;
+		int i;
+		for (i=0;i<basePile.size();i++) {
+			if (basePile.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
+		}
+		for (i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
+		}
+		return emptyPile;
+	}
+	
+	public void gameEndJudge() {
+		int emptyPile = getNumEmptyPile();
 		int provinceIndex = 0;
 		int i;
-		if (basePile.get(provinceIndex).getNumCards() == 0) {
+		if (basePile.get(provinceIndex).getNumCards() == 0 || emptyPile > 2) {
 			this.status = ENDGAME;
 			setWinner();
 			updateDB("status", status);
 			updateDB("endType", endType);
 			updateDB("endPlayer", endPlayer);
 			return;
-		} else {
-			for (i=0;i<basePile.size();i++) {
-				if (basePile.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
-			}
-			for (i=0;i<kindom.size();i++) {
-				if (kindom.get(i).getNumCards() == 0) emptyPile = emptyPile+1;
-			}
-			if (emptyPile > 2) {
-				this.status = ENDGAME;
-				setWinner();
-				updateDB("status", status);
-				updateDB("endType", endType);
-				updateDB("endPlayer", endPlayer);
-				return;
-			}
 		}
+		
 	}
 	
 	public void setWinner() {

@@ -17,6 +17,9 @@ public class Chapel extends Card{
 	
 	public Ask play() {
 		Ask ask = super.play();
+		if (player.getHand().size() == 0) {
+			return ask;
+		}
 		ask.setType(Ask.HANDCHOOSE);
 		ask.setUpper(4);
 		ask.setLower(0);
