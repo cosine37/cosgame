@@ -31,6 +31,10 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.action=0
 		$scope.buy=0;
 		$scope.coin=0;
+		$scope.choosehand=[];
+		$scope.showClearButton = false;
+		//$scope.chooseUpper=0;
+		//$scope.chooseLower=0;
 
 		$scope.baseStyle={
 			"height": "109px",
@@ -55,6 +59,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		gethand = function(){
 			$http.post('/dominiongame/gethand').then(function(response){
 				$scope.hand=response.data;
+				var n = $scope.hand.length;
+				$scope.choosehand = new Array(n);
+				var i;
+				for (i=0;i<n;i++){
+					$scope.choosehand[i] = 0;
+				}
 			});
 		}
 		
@@ -74,6 +84,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$http.post('/dominiongame/getphase').then(function(response){
 				$scope.phase=response.data.value[0];
 				$scope.showPhaseButton = true;
+				$scope.showClearButton = false;
 				if ($scope.phase == "Start"){
 					
 				} else if ($scope.phase == "Action"){
@@ -86,6 +97,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						} else if ($scope.ask.type == 1){
 							$scope.topMessage = $scope.ask.msg;
 							$scope.showPhaseButton = false;
+							getaddon();
+						} else if ($scope.ask.type == 2){
+							$scope.topMessage = $scope.ask.msg;
+							$scope.showPhaseButton = $scope.showPhaseButtonWhenChooseHand();
+							$scope.showClearButton = true;
+							$scope.phaseButton = "Confirm";
 							getaddon();
 						}
 					});
@@ -135,7 +152,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						$scope.hand=response.data;
 					});
 				} else if ($scope.status == "in game"){
-					getphase()
+					getphase();
 				} else if ($scope.status == "end game"){
 					alert("game ends");
 					$scope.goto('dominionend');
@@ -199,6 +216,24 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						$scope.phaseButton = "Buy Cards";
 						getstatus();
 					});
+				} else if ($scope.phase == "Action" && $scope.ask.type == 2){
+					var s = "";
+					var i,j,x;
+					for (i=0;i<$scope.choosehand.length;i++){
+						x = $scope.choosehand[i];
+						for (j=0;j<x;j++){
+							if (s == ""){
+								s = $scope.hand[i].name;
+							} else {
+								s = s+","+$scope.hand[i].name;
+							}
+						}
+					}
+					var data = {"ans": s};
+					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+						$scope.ask = response.data;
+						getsupply();
+					});
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
 						getstatus();
@@ -223,6 +258,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.clearChoosehand = function(){
+			var i;
+			for (i=0;i<$scope.choosehand.length;i++){
+				$scope.choosehand[i] = 0;
+			}
+		}
+		
 		$scope.play = function(index){
 			if ($scope.phase == "Treasure"){
 				if ($scope.hand[index].top.treasure){
@@ -234,6 +276,19 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					if ($scope.hand[index].top.actionType){
 						playCard($scope.hand[index].top);
 					}
+				} else if ($scope.ask.type == 2){ // choosehand
+					if ($scope.choosehand[index] == $scope.hand[index].numCards){
+						$scope.choosehand[index] = 0;
+					} else {
+						var i;
+						var total = 0;
+						for (i=0;i<$scope.choosehand.length;i++){
+							total = total + $scope.choosehand[i];
+						}
+						
+						$scope.choosehand[index] = $scope.choosehand[index] + 1;
+					}
+					
 				}
 			}
 		}
@@ -260,6 +315,18 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$http({url: "/dominiongame/buycard", method: "POST", params: data}).then(function(response){
 				gainCard(cardName);
 			});
+		}
+		
+		$scope.showPhaseButtonWhenChooseHand = function(){
+			var i;
+			var total = 0;
+			for (i=0;i<$scope.choosehand.length;i++){
+				total = total + $scope.choosehand[i];
+			}
+			if (total >= $scope.ask.lower && total <= $scope.ask.upper){
+				return true;
+			}
+			return false;
 		}
 		
 		$scope.buyc = function(bk, index){

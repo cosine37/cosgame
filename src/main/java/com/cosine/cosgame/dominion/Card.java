@@ -98,6 +98,12 @@ public class Card {
 		return ask;
 	}
 	
+	public Ask onDiscard(Player p) {
+		Ask ask = new Ask();
+		ask.setCardName(name);
+		return ask;
+	}
+	
 	public Ask play() {
 		vanilla();
 		Ask ask = new Ask();
@@ -105,15 +111,8 @@ public class Card {
 		return ask;
 	}
 	
-	public Ask afterChoice(Ask a) {
-		Ask ask = new Ask();
-		return ask;
-	}
-	
 	public Ask response(Ask a) {
-		Ask ask = new Ask();
-		ask.setCardName(name);
-		return ask;
+		return a;
 	}
 
 	public int getAction() {

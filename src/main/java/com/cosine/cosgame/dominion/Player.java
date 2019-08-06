@@ -179,8 +179,11 @@ public class Player {
 	}
 	
 	public void discardHand() {
+		Card card;
 		while (hand.size()>0) {
-			discard.add(hand.remove(0));
+			card = hand.remove(0);
+			card.onDiscard(this);
+			discard.add(card);
 		}
 	}
 	
@@ -192,8 +195,20 @@ public class Player {
 			return null;
 		}
 		Card card = deck.remove(0);
+		card.onDiscard(this);
 		discard.add(card);
 		return card;
+	}
+	
+	public Card discard(int index) {
+		if (hand.size()>index) {
+			Card card = hand.remove(index);
+			card.onDiscard(this);
+			discard.add(card);
+			return card;
+		} else {
+			return null;
+		}
 	}
 	
 	public void cleanUp() {

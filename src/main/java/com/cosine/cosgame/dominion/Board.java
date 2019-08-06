@@ -256,7 +256,7 @@ public class Board {
 		kindom = dominion.getPiles();
 		
 		//kindom.add(oriental.getPiles().get(0));
-		kindom.add(oriental.getPiles().get(1));
+		//kindom.add(oriental.getPiles().get(1));
 	}
 	
 	public String getBoardId() {

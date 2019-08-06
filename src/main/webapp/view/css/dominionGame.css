@@ -31,3 +31,18 @@
 	top:0%;
 	right:0%;
 }
+.choosehand{
+	position: relative;
+	top: 18px;
+	left: 11px;
+	height: 80px;
+	width: 80px;
+}
+.choosehand-number{
+	position: relative;
+	top: 26px;
+	left: 33px;
+	color: white;
+	font-weight:500;
+	font-size:24px;
+}
