@@ -45,8 +45,6 @@ public class Poacher extends Card{
 	public Ask response(Ask a) {
 		Ask ask = super.response(a);
 		int i,j;
-		Card card;
-		int n = ask.getSelectedCards().size();
 		for (i=0;i<ask.getSelectedCards().size();i++) {
 			for (j=0;j<player.getHand().size();j++) {
 				if (player.getHand().get(j).getName().equals(ask.getSelectedCards().get(i))) {

@@ -35,6 +35,7 @@ public class CardFactory {
 		if (cardname.equals("Cellar")) return new Cellar();
 		if (cardname.equals("Chapel")) return new Chapel();
 		if (cardname.equals("Poacher")) return new Poacher();
+		if (cardname.equals("ThroneRoom")) return new ThroneRoom();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

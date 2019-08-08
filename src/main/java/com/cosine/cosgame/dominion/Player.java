@@ -67,6 +67,7 @@ public class Player {
 		play = new ArrayList<Card>();
 		cleanUpOptions = "";
 		startOptions = "";
+		ask = new Ask();
 	}
 	public void bot() {
 		isBot = true;
@@ -107,6 +108,18 @@ public class Player {
 	public Ask play(Card card) {
 		Ask ask = new Ask();
 		return ask;
+	}
+	
+	public void moveToPlay(String cardName) {
+		Card c;
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).getName().equals(cardName)) {
+				c = hand.get(i);
+				hand.remove(i);
+				play.add(c);
+				break;
+			}
+		}
 	}
 	
 	public Ask play(String cardName) {
@@ -353,6 +366,21 @@ public class Player {
 			}
 		}
 		
+		return ans;
+	}
+	
+	public boolean hasType(String type) {
+		boolean ans = false;
+		for (int i=0;i<hand.size();i++) {
+			if (type == "Action" && hand.get(i).isActionType()) {
+				ans = true;
+				break;
+			}
+			if (type == "Treasure" && hand.get(i).isTreasure()) {
+				ans = true;
+				break;
+			}
+		}
 		return ans;
 	}
 	

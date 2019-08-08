@@ -110,6 +110,9 @@ public class Board {
 		int copperIndex = 5;
 		int estateIndex = 4;
 		
+		// clean trash
+		trash = new Trash();
+		
 		// clean player cards in case
 		for (i=0;i<players.size();i++) {
 			players.get(i).cleanCards();

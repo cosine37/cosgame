@@ -11,16 +11,22 @@ public class Ask {
 	/**
 	 * Possible types:
 	 * 		None: 		Do nothing
-	 * 		Choose: 	Choose between card options
-	 * 		Trash: 		Trash cards
-	 * 		Gain:		
-	 * 		Discard:	
+	 * 		Option: 	Deals with options
+	 * 		Handchoose:	Choose card(s) from hand
+	 * 		Gain		Choose card from supply
+	 * 		View		View top cards
+	 * 		ViewChoose	Choose card(s) from view
+	 * 		ViewSort	Sort viewed cards in any order
+	 * 		Throne		Play a selected cards 2 or more times
 	 * 
 	 */
 	int type;
+	int subType; // for throne
 	public static final int NONE = 0;
 	public static final int OPTION = 1;
 	public static final int HANDCHOOSE = 2;
+	
+	public static final int THRONE = 11;
 	
 	String cardName;
 	String msg;
@@ -31,6 +37,14 @@ public class Ask {
 	int resLevel;
 	
 	int upper, lower;
+	String thronedCard;
+	Ask thronedAsk;
+	int thronedAskType;
+	public static final int PLAY = 101;
+	public static final int RESPONSE = 102;
+	
+	int restriction;
+	public static final int ACTION = 1001;
 	
 	public Ask() {
 		type = 0;
@@ -59,6 +73,14 @@ public class Ask {
 	
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+	public int getSubType() {
+		return subType;
+	}
+	
+	public void setSubType(int subType) {
+		this.subType = subType;
 	}
 	
 	public void setMsg(String msg) {
@@ -109,17 +131,60 @@ public class Ask {
 		return ans;
 	}
 	
+	public void setResLevel(int resLevel) {
+		this.resLevel = resLevel;
+	}
+	
+	public int getResLevel() {
+		return resLevel;
+	}
+	
+	public void setThronedCard(String thronedCard) {
+		this.thronedCard = thronedCard;
+	}
+	
+	public String getThronedCard() {
+		return thronedCard;
+	}
+	
+	public void setThronedAsk(Ask thronedAsk) {
+		this.thronedAsk = thronedAsk;
+	}
+	
+	public Ask getThronedAsk() {
+		return thronedAsk;
+	}
+	
+	public void setThronedAskType(int thronedAskType) {
+		this.thronedAskType = thronedAskType;
+	}
+	
+	public int getThronedAskType() {
+		return thronedAskType;
+	}
+	
+	public void addResLevel() {
+		resLevel = resLevel + 1;
+	}
+	
 	public void parseAns(String s) {
 		if (type == OPTION) {
 			ans = Integer.parseInt(s);
 		} else if (type == HANDCHOOSE) {
-			selectedCards = Arrays.asList(s.split(","));
+			if (s.equals("")) {
+				selectedCards = new ArrayList<String>();
+			} else {
+				selectedCards = Arrays.asList(s.split(","));
+			}
+		} else if (type == THRONE) {
+			thronedAsk.parseAns(s);
 		}
 	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("type", type);
+		doc.append("subType", subType);
 		if (type == OPTION) {
 			List<Document> doo = new ArrayList<Document>();
 			for (int i=0;i<options.size();i++) {
@@ -146,12 +211,20 @@ public class Ask {
 			doc.append("resLevel", resLevel);
 			doc.append("ans", ans);
 			doc.append("cardName", cardName);
+		} else if (type == THRONE) {
+			Document doa = thronedAsk.toDocument();
+			doc.append("thronedAsk", doa);
+			doc.append("resLevel", resLevel);
+			doc.append("thronedAskType", thronedAskType);
+			doc.append("thronedCard", thronedCard);
+			doc.append("cardName", cardName);
 		}
 		return doc;
 	}
 	
 	public void setAskFromDocument(Document doc) {
 		type = (int)doc.get("type");
+		subType = (int)doc.get("subType");
 		if (type == NONE) {
 			resLevel = 0;
 		} else if (type == OPTION) {
@@ -178,6 +251,14 @@ public class Ask {
 			ans = (int)doc.get("ans");
 			cardName = (String)doc.get("cardName");
 			msg = (String)doc.get("msg");
+		} else if (type == THRONE) {
+			Document doa = (Document)doc.get("thronedAsk");
+			thronedAsk = new Ask();
+			thronedAsk.setAskFromDocument(doa);
+			resLevel = (int)doc.get("resLevel");
+			thronedAskType = (int)doc.get("thronedAskType");
+			thronedCard = (String)doc.get("thronedCard");
+			cardName = (String)doc.get("cardName");
 		}
 	}
 }

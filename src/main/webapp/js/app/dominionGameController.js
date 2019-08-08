@@ -32,6 +32,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.buy=0;
 		$scope.coin=0;
 		$scope.choosehand=[];
+		$scope.options = [];
 		$scope.showClearButton = false;
 		//$scope.chooseUpper=0;
 		//$scope.chooseLower=0;
@@ -85,24 +86,31 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.phase=response.data.value[0];
 				$scope.showPhaseButton = true;
 				$scope.showClearButton = false;
+				$scope.options = [];
 				if ($scope.phase == "Start"){
 					
 				} else if ($scope.phase == "Action"){
 					$http.post('/dominiongame/getask').then(function(response){
 						$scope.ask = response.data;
-						if ($scope.ask.type == 0){
+						var task = $scope.ask;
+						while (task.type == 11){
+							task = task.thronedAsk;
+						}
+						if (task.type == 0){
 							$scope.topMessage = "You may play Action cards";
 							$scope.phaseButton = "End Action";
 							getaddon();
-						} else if ($scope.ask.type == 1){
-							$scope.topMessage = $scope.ask.msg;
+						} else if (task.type == 1){
+							$scope.topMessage = task.msg;
 							$scope.showPhaseButton = false;
+							$scope.options = task.options;
 							getaddon();
-						} else if ($scope.ask.type == 2){
-							$scope.topMessage = $scope.ask.msg;
+						} else if (task.type == 2){
+							$scope.topMessage = task.msg;
 							$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 							$scope.showClearButton = true;
 							$scope.phaseButton = "Confirm";
+							
 							getaddon();
 						}
 					});
@@ -204,11 +212,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.pb = function(){
+			//alert($scope.phase);
 			if ($scope.status == "first cards"){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
 					getsupply();
 				});
 			} else if ($scope.status == "in game"){
+				
 				if ($scope.phase == "Offturn"){
 					
 				} else if ($scope.phase == "Treasure" && $scope.phaseButton == "Autoplay Treasures"){
@@ -216,24 +226,35 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						$scope.phaseButton = "Buy Cards";
 						getstatus();
 					});
-				} else if ($scope.phase == "Action" && $scope.ask.type == 2){
-					var s = "";
-					var i,j,x;
-					for (i=0;i<$scope.choosehand.length;i++){
-						x = $scope.choosehand[i];
-						for (j=0;j<x;j++){
-							if (s == ""){
-								s = $scope.hand[i].name;
-							} else {
-								s = s+","+$scope.hand[i].name;
+				} else if ($scope.phase == "Action"){
+					var task = $scope.ask;
+					while (task.type == 11){
+						task = task.thronedAsk;
+					}
+					if (task.type == 2){
+						var s = "";
+						var i,j,x;
+						for (i=0;i<$scope.choosehand.length;i++){
+							x = $scope.choosehand[i];
+							for (j=0;j<x;j++){
+								if (s == ""){
+									s = $scope.hand[i].name;
+								} else {
+									s = s+","+$scope.hand[i].name;
+								}
 							}
 						}
+						var data = {"ans": s};
+						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+							$scope.ask = response.data;
+							//alert($scope.ask.type);
+							getsupply();
+						});
+					} else {
+						$http.post('/dominiongame/nextphase').then(function(response){
+							getstatus();
+						});
 					}
-					var data = {"ans": s};
-					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
-						$scope.ask = response.data;
-						getsupply();
-					});
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
 						getstatus();
@@ -273,11 +294,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			}
 			if ($scope.phase == "Action"){
-				if ($scope.ask.type == 0){
+				var task = $scope.ask;
+				while (task.type == 11){
+					task = task.thronedAsk;
+				}
+				
+				if (task.type == 0){
 					if ($scope.hand[index].top.actionType){
 						playCard($scope.hand[index].top);
 					}
-				} else if ($scope.ask.type == 2){ // choosehand
+				} else if (task.type == 2){ // choosehand
 					if ($scope.choosehand[index] == $scope.hand[index].numCards){
 						$scope.choosehand[index] = 0;
 					} else {
@@ -286,13 +312,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						for (i=0;i<$scope.choosehand.length;i++){
 							total = total + $scope.choosehand[i];
 						}
-						if (total<$scope.ask.upper){
+						if (total<task.upper){
 							$scope.choosehand[index] = $scope.choosehand[index] + 1;
 						}
 						
 					}
 					$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
-				}
+				} 
 			}
 		}
 		
@@ -321,12 +347,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		showPhaseButtonWhenChooseHand = function(){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
 			var i;
 			var total = 0;
 			for (i=0;i<$scope.choosehand.length;i++){
 				total = total + $scope.choosehand[i];
 			}
-			if (total >= $scope.ask.lower && total <= $scope.ask.upper){
+			if (total >= task.lower && total <= task.upper){
 				return true;
 			}
 			return false;

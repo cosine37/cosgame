@@ -16,6 +16,7 @@ public class Dominion extends Expansion{
 	Pile cellarPile;
 	Pile chapelPile;
 	Pile poacherPile;
+	Pile throneRoomPile;
 	
 	public Dominion() {
 		super();
@@ -32,6 +33,7 @@ public class Dominion extends Expansion{
 		cellarPile = new Pile(Cellar.class, 10);
 		chapelPile = new Pile(Chapel.class, 10);
 		poacherPile = new Pile(Poacher.class, 10);
+		throneRoomPile = new Pile(ThroneRoom.class, 10);
 		
 		piles.add(villagePile);
 		piles.add(smithyPile);
@@ -39,12 +41,13 @@ public class Dominion extends Expansion{
 		piles.add(laboratoryPile);
 		piles.add(marketPile);
 		//piles.add(woodcutterPile);
-		piles.add(gardensPile);
+		//piles.add(gardensPile);
 		piles.add(moneylenderPile);
 		piles.add(vassalPile);
 		//piles.add(cellarPile);
 		piles.add(chapelPile);
 		piles.add(poacherPile);
+		piles.add(throneRoomPile);
 		
 		numPiles = 10;
 	}
