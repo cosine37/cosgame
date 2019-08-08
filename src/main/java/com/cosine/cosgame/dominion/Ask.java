@@ -25,6 +25,7 @@ public class Ask {
 	public static final int NONE = 0;
 	public static final int OPTION = 1;
 	public static final int HANDCHOOSE = 2;
+	public static final int GAIN = 3;
 	
 	public static final int THRONE = 11;
 	
@@ -45,6 +46,7 @@ public class Ask {
 	
 	int restriction;
 	public static final int ACTION = 1001;
+	public static final int TREASURE = 1002;
 	
 	public Ask() {
 		type = 0;
@@ -54,6 +56,7 @@ public class Ask {
 		upper = 0;
 		cardName = "";
 		msg = "";
+		restriction = 0;
 		
 		options = new ArrayList<String>();
 		selectedCards = new ArrayList<String>();
@@ -178,6 +181,12 @@ public class Ask {
 			}
 		} else if (type == THRONE) {
 			thronedAsk.parseAns(s);
+		} else if (type == GAIN) {
+			selectedCards = new ArrayList<String>();
+			if (s.equals("")) {
+			} else {
+				selectedCards.add(s);
+			}
 		}
 	}
 	
@@ -211,6 +220,7 @@ public class Ask {
 			doc.append("resLevel", resLevel);
 			doc.append("ans", ans);
 			doc.append("cardName", cardName);
+			doc.append("restriction", restriction);
 		} else if (type == THRONE) {
 			Document doa = thronedAsk.toDocument();
 			doc.append("thronedAsk", doa);
@@ -218,6 +228,20 @@ public class Ask {
 			doc.append("thronedAskType", thronedAskType);
 			doc.append("thronedCard", thronedCard);
 			doc.append("cardName", cardName);
+		} else if (type == GAIN) {
+			doc.append("msg", msg);
+			doc.append("upper", upper);
+			doc.append("lower", lower);
+			doc.append("cardName", cardName);
+			doc.append("restriction", restriction);
+			doc.append("resLevel", resLevel);
+			List<Document> doo = new ArrayList<Document>();
+			for (int i=0;i<selectedCards.size();i++) {
+				Document d = new Document();
+				d.append("card", selectedCards.get(i));
+				doo.add(d);
+			}
+			doc.append("selectedCards", doo);
 		}
 		return doc;
 	}
@@ -250,6 +274,7 @@ public class Ask {
 			resLevel = (int)doc.get("resLevel");
 			ans = (int)doc.get("ans");
 			cardName = (String)doc.get("cardName");
+			restriction = (int)doc.get("restriction");
 			msg = (String)doc.get("msg");
 		} else if (type == THRONE) {
 			Document doa = (Document)doc.get("thronedAsk");
@@ -259,6 +284,20 @@ public class Ask {
 			thronedAskType = (int)doc.get("thronedAskType");
 			thronedCard = (String)doc.get("thronedCard");
 			cardName = (String)doc.get("cardName");
+		} else if (type == GAIN) {
+			List<Document> doo = (List<Document>)doc.get("selectedCards");
+			selectedCards = new ArrayList<String>();
+			for (int i=0;i<doo.size();i++) {
+				String option = (String)doo.get(i).get("card");
+				selectedCards.add(option);
+			}
+			msg = (String)doc.get("msg");
+			upper = (int)doc.get("upper");
+			lower = (int)doc.get("lower");
+			resLevel = (int)doc.get("resLevel");
+			restriction = (int)doc.get("restriction");
+			cardName = (String)doc.get("cardName");
+			
 		}
 	}
 }

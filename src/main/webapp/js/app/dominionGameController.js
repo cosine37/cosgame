@@ -110,7 +110,10 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 							$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 							$scope.showClearButton = true;
 							$scope.phaseButton = "Confirm";
-							
+							getaddon();
+						} else if (task.type == 3){
+							$scope.topMessage = task.msg;
+							$scope.showPhaseButton = false;
 							getaddon();
 						}
 					});
@@ -125,9 +128,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						getaddon();
 					}
 				} else if ($scope.phase == "Buy"){
-					$scope.topMessage = "You may buy cards";
-					$scope.phaseButton = "End Buy";
-					getaddon();
+					$http.post('/dominiongame/getask').then(function(response){
+						$scope.ask = response.data;
+						var task = $scope.ask;
+						while (task.type == 11){
+							task = task.thronedAsk;
+						}
+						$scope.topMessage = "You may buy cards";
+						$scope.phaseButton = "End Buy";
+						getaddon();
+					});
 				} else if ($scope.phase == "Night"){
 					$scope.topMessage = "You may play Night cards";
 					$scope.phaseButton = "End Night";
@@ -363,7 +373,28 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.buyc = function(bk, index){
-			if ($scope.phase == "Buy"){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 3){
+				if (bk == "kindom"){
+					pile = $scope.kindom[index];
+				} else if (bk = "base"){
+					pile = $scope.base[index];
+				}
+				numCards = pile.numCards;
+				if (numCards > 0){
+					price = pile.cards[0].price;
+					if (price >= task.lower && price <= task.upper){
+						var data = {"ans": pile.cards[0].name};
+						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+							$scope.ask = response.data;
+							getsupply();
+						});
+					}
+				}
+			} else if ($scope.phase == "Buy"){
 				if ($scope.buy > 0){
 					var pile;
 					var cardName = "";
@@ -373,7 +404,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						pile = $scope.kindom[index];
 					} else if (bk = "base"){
 						pile = $scope.base[index];
-						
 					}
 					numCards = pile.numCards;
 					if (numCards > 0){

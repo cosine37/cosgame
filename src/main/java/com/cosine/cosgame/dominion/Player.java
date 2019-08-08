@@ -105,6 +105,20 @@ public class Player {
 		this.discard.add(card);
 	}
 	
+	public void putOnHand(Card card) {
+		card.setPlayer(this);
+		this.hand.add(card);
+	}
+	
+	public void topDeck(String cardName) {
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).getName().equals(cardName)) {
+				Card card = hand.remove(i);
+				deck.add(0, card);
+			}
+		}
+	}
+	
 	public Ask play(Card card) {
 		Ask ask = new Ask();
 		return ask;

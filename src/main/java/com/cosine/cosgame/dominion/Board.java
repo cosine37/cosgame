@@ -233,6 +233,18 @@ public class Board {
 		card.onGain(p);
 	}
 	
+	public void gainToPlayerFromPileToHand(Player p, Pile pile) {
+		Card card = pile.removeTop();
+		p.putOnHand(card);
+		card.onGain(p);
+	}
+	
+	public void gainToPlayerFromPileToTopdeck(Player p, Pile pile) {
+		Card card = pile.removeTop();
+		p.deck.add(0, card);
+		card.onGain(p);
+	}
+	
 	public void createBoard(String lord, int numPlayers) {
 		this.lord = lord;
 		Date date= new Date();
