@@ -1,0 +1,60 @@
+package com.cosine.cosgame.dominion.dominion;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cosine.cosgame.dominion.Ask;
+import com.cosine.cosgame.dominion.Card;
+
+public class Remodel extends Card{
+	public Remodel() {
+		super();
+		this.name = "Remodel";
+		this.image = "/image/Dominion/cards/Dominion/Remodel.png";
+		this.types[INDEX_ACTION] = true;
+		this.price = 4;
+	}
+	
+	public Ask play() {
+		Ask ask = super.play();
+		if (player.getHand().size() == 0) {
+			return ask;
+		}
+		ask.setType(Ask.HANDCHOOSE);
+		ask.setMsg("Trash a card from your hand");
+		ask.setUpper(1);
+		ask.setLower(1);
+		return ask;
+	}
+	
+	public Ask response(Ask a) {
+		Ask ask = super.response(a);
+		if (ask.getResLevel() == 0) {
+			String cardName = ask.getSelectedCards().get(0);
+			int price = 0;
+			for (int i=0;i<player.getHand().size();i++) {
+				if (player.getHand().get(i).getName().equals(cardName)) {
+					price = player.getHand().get(i).getPrice();
+					player.setBoard(board);
+					player.trash(i);
+				}
+			}
+			ask = new Ask();
+			ask.setCardName(name);
+			ask.setType(Ask.GAIN);
+			ask.setResLevel(1);
+			ask.setLower(0);
+			ask.setUpper(price + 2);
+			ask.setMsg("Gain a card costing up to "+Integer.toString(ask.getUpper()));
+		} else if (ask.getResLevel() == 1) {
+			String gainedCardName = ask.getSelectedCards().get(0);
+			board.gainToPlayerFromPile(player, board.getPileByTop(gainedCardName));
+			ask = new Ask();
+			ask.setCardName(name);
+			ask.setResLevel(2);
+		} else {
+			ask = new Ask();
+		}
+		return ask;
+	}
+}
