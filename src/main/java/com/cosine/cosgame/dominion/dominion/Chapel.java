@@ -33,7 +33,7 @@ public class Chapel extends Card{
 		Card card;
 		int n = ask.getSelectedCards().size();
 		for (i=0;i<ask.getSelectedCards().size();i++) {
-			for (j=0;j<player.getHand().size();j++) {
+			for (j=player.getHand().size()-1;j>=0;j--) {
 				if (player.getHand().get(j).getName().equals(ask.getSelectedCards().get(i))) {
 					player.setBoard(board);
 					player.trash(j);

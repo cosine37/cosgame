@@ -47,8 +47,6 @@ public class Board {
 	
 	public Board() {
 		base = new Base();
-		dominion = new Dominion();
-		oriental = new Oriental();
 		trash = new Trash();
 		startPlayer = 0;
 		currentPlayer = 0;
@@ -83,6 +81,13 @@ public class Board {
 	}
 	
 	//createBoard => initialize => setup => start
+	public void createBoard(String lord, int numPlayers) {
+		this.lord = lord;
+		Date date= new Date();
+		String id = Long.toString(date.getTime());
+		initialize(id, numPlayers);
+		status = BEFORE;
+	}
 	
 	public void initialize(String boardId, int numPlayers) {
 		this.boardId = boardId;
@@ -101,7 +106,7 @@ public class Board {
 		endPlayer = "";
 		boolean useShelters = false;
 		boolean hasHeirloom = false;
-		randomize();
+		//randomize();
 		int i,j;
 		for (i=0;i<kindom.size();i++) {
 			kindom.get(i).getCards().get(0).setup();
@@ -245,14 +250,6 @@ public class Board {
 		card.onGain(p);
 	}
 	
-	public void createBoard(String lord, int numPlayers) {
-		this.lord = lord;
-		Date date= new Date();
-		String id = Long.toString(date.getTime());
-		initialize(id, numPlayers);
-		status = BEFORE;
-	}
-	
 	public void resign(String name) {
 		this.status = ENDGAME;
 		this.endPlayer = name;
@@ -268,10 +265,12 @@ public class Board {
 	}
 	
 	public void randomize() {
-		kindom = dominion.getPiles();
-		
-		//kindom.add(oriental.getPiles().get(0));
-		//kindom.add(oriental.getPiles().get(1));
+		dominion = new Dominion();
+		oriental = new Oriental();
+		Expansion e = new Expansion();
+		e.addExpansion(dominion);
+		e.addExpansion(oriental);
+		kindom = e.genKindomPile();
 	}
 	
 	public String getBoardId() {

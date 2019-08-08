@@ -67,6 +67,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		board = new Board();
 		board.createBoard(username, numPlayers);
+		board.randomize();
 		board.storeBoardToDB();
 		List<String> value = new ArrayList<String>();
 		value.add(board.getBoardId());
@@ -173,8 +174,16 @@ public class DominionGameController {
 	}
 	
 	@RequestMapping(value="/dominiongame/randomize", method = RequestMethod.POST)
-	public void randomize() {
+	public ResponseEntity<StringEntity> randomize(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		//board.baseSetup();
 		board.randomize();
+		board.updateSupply();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dominiongame/setup", method = RequestMethod.POST)
@@ -186,7 +195,7 @@ public class DominionGameController {
 		board.getBoardFromDB(boardId);
 		if (username.equals(board.getLord())) {
 			board.baseSetup();
-			board.randomize();
+			//board.randomize();
 			board.setup();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("startPlayer", board.getStartPlayer());

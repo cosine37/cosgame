@@ -44,23 +44,23 @@ public class Dominion extends Expansion{
 		minePile = new Pile(Mine.class, 10);
 		
 		piles.add(villagePile);
-		//piles.add(smithyPile);
-		//piles.add(festivalPile);
+		piles.add(smithyPile);
+		piles.add(festivalPile);
 		piles.add(laboratoryPile);
 		piles.add(marketPile);
-		//piles.add(woodcutterPile);
-		//piles.add(gardensPile);
-		//piles.add(moneylenderPile);
+		piles.add(woodcutterPile);
+		piles.add(gardensPile);
+		piles.add(moneylenderPile);
 		piles.add(vassalPile);
-		//piles.add(cellarPile);
+		piles.add(cellarPile);
 		piles.add(chapelPile);
-		//piles.add(poacherPile);
+		piles.add(poacherPile);
 		piles.add(throneRoomPile);
 		piles.add(workshopPile);
 		piles.add(artisanPile);
 		piles.add(remodelPile);
 		piles.add(minePile);
 		
-		numPiles = 10;
+		
 	}
 }

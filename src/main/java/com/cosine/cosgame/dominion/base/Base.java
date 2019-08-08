@@ -33,7 +33,6 @@ public class Base extends Expansion{
 		piles.add(copperPile);
 		piles.add(cursePile);
 		
-		numPiles = 7;
 	}
 	
 	public Base(int numPlayers) {
@@ -68,7 +67,6 @@ public class Base extends Expansion{
 		piles.add(copperPile);
 		piles.add(cursePile);
 		
-		numPiles = 7;
 	}
 	
 	public void sort(int x){

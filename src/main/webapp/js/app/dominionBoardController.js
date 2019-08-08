@@ -13,7 +13,10 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.isLord = false;
+		$scope.showBigImage = false;
 		var s = "";
+		
+		$scope.kindom = [];
 		
 		$http({url: "/dominiongame/islord", method: "POST"}).then(function(response){
 			s = response.data.value[0];
@@ -23,6 +26,10 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 		$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
 			$scope.playernames = response.data.value;
 			$scope.playernames[0] = $scope.playernames[0] + "(lord)";
+		});
+		
+		$http.post('/dominiongame/getkindom').then(function(response){
+			$scope.kindom=response.data;
 		});
 		
 		$scope.addBot = function() {
@@ -57,6 +64,15 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		
+		$scope.randomize = function(){
+			$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
+				$http.post('/dominiongame/getkindom').then(function(response){
+					$scope.kindom=response.data;
+				});
+			});
+		}
+		
 		$scope.kick = function(name){
 			var data = {"kickedName": name};
 			$http({url: "/dominiongame/kick", method: "POST", params: data}).then(function(response){
@@ -65,6 +81,34 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.playernames[0] = $scope.playernames[0] + "(lord)";
 				});
 			});
+		}
+		
+		$scope.showCard = function(image){
+			$scope.bigImage = image;
+			$scope.showBigImage = true;
+			$scope.bigImageStyle = {
+				"height": "420px", 
+				"width": "280px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-140px",
+				"margin-top": "-210px",
+				"background": "url(" + image + ")", 
+				"background-size": "cover"
+			}
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
+			}
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false;
 		}
 		
 }]);

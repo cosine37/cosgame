@@ -111,10 +111,11 @@ public class Player {
 	}
 	
 	public void topDeck(String cardName) {
-		for (int i=0;i<hand.size();i++) {
+		for (int i=hand.size()-1;i>=0;i--) {
 			if (hand.get(i).getName().equals(cardName)) {
 				Card card = hand.remove(i);
 				deck.add(0, card);
+				break;
 			}
 		}
 	}
@@ -126,7 +127,7 @@ public class Player {
 	
 	public void moveToPlay(String cardName) {
 		Card c;
-		for (int i=0;i<hand.size();i++) {
+		for (int i=hand.size()-1;i>=0;i--) {
 			if (hand.get(i).getName().equals(cardName)) {
 				c = hand.get(i);
 				hand.remove(i);
@@ -145,7 +146,7 @@ public class Player {
 				return ask;
 			}
 		}
-		for (i=0;i<hand.size();i++) {
+		for (i=hand.size()-1;i>=0;i--) {
 			if (hand.get(i).getName().equals(cardName)) {
 				c = hand.get(i);
 				hand.remove(i);
@@ -269,7 +270,7 @@ public class Player {
 		Trash trash = board.getTrash();
 		if (from == "hand") {
 			for (i=0;i<cards.size();i++) {
-				for (j=0;j<hand.size();j++) {
+				for (j=hand.size()-1;j>=0;j--) {
 					if (hand.get(j).getName().equals(cards.get(i))) {
 						card = hand.remove(j);
 						trash.add(card);

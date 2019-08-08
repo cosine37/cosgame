@@ -33,7 +33,7 @@ public class Mine extends Card{
 		if (ask.getResLevel() == 0) {
 			String cardName = ask.getSelectedCards().get(0);
 			int price = 0;
-			for (int i=0;i<player.getHand().size();i++) {
+			for (int i=player.getHand().size();i>=0;i--) {
 				if (player.getHand().get(i).getName().equals(cardName)) {
 					price = player.getHand().get(i).getPrice();
 					player.setBoard(board);

@@ -16,7 +16,6 @@ public class Oriental extends Expansion {
 		piles.add(pendantForWinePile);
 		piles.add(armyDrummerPile);
 		
-		numPiles = 2;
 	}
 
 }
