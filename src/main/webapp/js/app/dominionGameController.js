@@ -314,18 +314,20 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						playCard($scope.hand[index].top);
 					}
 				} else if (task.type == 2){ // choosehand
-					if ($scope.choosehand[index] == $scope.hand[index].numCards){
-						$scope.choosehand[index] = 0;
-					} else {
-						var i;
-						var total = 0;
-						for (i=0;i<$scope.choosehand.length;i++){
-							total = total + $scope.choosehand[i];
+					if (task.restriction == 0 || (task.restriction == 1001 && $scope.hand[index].top.actionType) || (task.restriction == 1002 && $scope.hand[index].top.treasure)){
+						if ($scope.choosehand[index] == $scope.hand[index].numCards){
+							$scope.choosehand[index] = 0;
+						} else {
+							var i;
+							var total = 0;
+							for (i=0;i<$scope.choosehand.length;i++){
+								total = total + $scope.choosehand[i];
+							}
+							if (total<task.upper){
+								$scope.choosehand[index] = $scope.choosehand[index] + 1;
+							}
+							
 						}
-						if (total<task.upper){
-							$scope.choosehand[index] = $scope.choosehand[index] + 1;
-						}
-						
 					}
 					$scope.showPhaseButton = showPhaseButtonWhenChooseHand();
 				} 
@@ -386,12 +388,14 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				numCards = pile.numCards;
 				if (numCards > 0){
 					price = pile.cards[0].price;
-					if (price >= task.lower && price <= task.upper){
-						var data = {"ans": pile.cards[0].name};
-						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
-							$scope.ask = response.data;
-							getsupply();
-						});
+					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
+						if (price >= task.lower && price <= task.upper){
+							var data = {"ans": pile.cards[0].name};
+							$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+								$scope.ask = response.data;
+								getsupply();
+							});
+						}
 					}
 				}
 			} else if ($scope.phase == "Buy"){

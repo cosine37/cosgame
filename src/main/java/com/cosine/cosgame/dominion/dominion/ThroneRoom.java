@@ -22,6 +22,7 @@ public class ThroneRoom extends Card{
 		ask.setMsg("You may play an action card from your hand twice");
 		ask.setUpper(1);
 		ask.setLower(0);
+		ask.setRestriction(Ask.ACTION);
 		return ask;
 	}
 	

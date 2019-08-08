@@ -170,6 +170,14 @@ public class Ask {
 		resLevel = resLevel + 1;
 	}
 	
+	public void setRestriction(int restriction) {
+		this.restriction = restriction;
+	}
+	
+	public int getRestriction() {
+		return restriction;
+	}
+	
 	public void parseAns(String s) {
 		if (type == OPTION) {
 			ans = Integer.parseInt(s);
