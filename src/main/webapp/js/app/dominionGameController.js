@@ -34,6 +34,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.choosehand=[];
 		$scope.options = [];
 		$scope.showClearButton = false;
+		$scope.showViewed = false;
+		$scope.viewed=[];
 		//$scope.chooseUpper=0;
 		//$scope.chooseLower=0;
 
@@ -50,6 +52,15 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.playStyle={
 			"height": "109px",
 			"width": "71px"
+		}
+		
+		$scope.viewedStyle = {
+			"position": "absolute",
+			"left": "30%",
+			"top": "10%",
+			"padding": "10px",
+			"background-color": "grey",
+			"border": "2px"
 		}
 		
 		$scope.goto = function(d){
@@ -86,6 +97,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.phase=response.data.value[0];
 				$scope.showPhaseButton = true;
 				$scope.showClearButton = false;
+				$scope.showViewed = false;
 				$scope.options = [];
 				if ($scope.phase == "Start"){
 					
@@ -114,6 +126,15 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						} else if (task.type == 3){
 							$scope.topMessage = task.msg;
 							$scope.showPhaseButton = false;
+							getaddon();
+						} else if (task.type == 4){
+							$scope.showViewed = true;
+							$scope.viewed = task.viewedCardsImage;
+							if (task.subType == 1){
+								$scope.topMessage = task.msg;
+								$scope.showPhaseButton = false;
+								$scope.options = task.options;
+							}
 							getaddon();
 						}
 					});

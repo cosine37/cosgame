@@ -41,6 +41,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
+		revealed = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -437,6 +438,15 @@ public class Player {
 		List<Pile> piles = pileGen.getPiles();
 		return piles;
 	}
+	public List<Card> getRevealed(){
+		return revealed;
+	}
+	public List<Pile> getRevealedAsPiles(){
+		PileGen pileGen = new PileGen();
+		pileGen.add(revealed);
+		List<Pile> piles = pileGen.getPiles();
+		return piles;
+	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;
 	}
@@ -448,6 +458,9 @@ public class Player {
 	}
 	public void setHand(List<Card> hand) {
 		this.hand = hand;
+	}
+	public void setRevealed(List<Card> revealed) {
+		this.revealed = revealed;
 	}
 	public int getCoin() {
 		return coin;

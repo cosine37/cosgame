@@ -151,5 +151,10 @@
 		</div>
 	</div>
 	
+	<div ng-style="viewedStyle" ng-show="showViewed" >
+		<div class="kindom" ng-repeat="x in viewed track by $index" style="background:url({{x}});background-size:cover">
+		</div>
+	</div>
+	
 </body>
 </html>

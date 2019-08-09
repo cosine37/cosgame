@@ -21,19 +21,27 @@ public class Ask {
 	 * 
 	 */
 	int type;
-	int subType; // for throne
 	public static final int NONE = 0;
 	public static final int OPTION = 1;
 	public static final int HANDCHOOSE = 2;
 	public static final int GAIN = 3;
+	public static final int VIEW = 4;
 	
 	public static final int THRONE = 11;
+	
+	int subType; // for view
+	public static final int CHOOSE = 51;
+	public static final int REARRANGE = 52;
+	// and option
 	
 	String cardName;
 	String msg;
 	
 	List<String> options;
 	List<String> selectedCards;
+	List<String> viewedCards;
+	List<String> viewedCardsImage;
+	boolean showAsPile; // for view
 	int ans;
 	int resLevel;
 	
@@ -57,9 +65,11 @@ public class Ask {
 		cardName = "";
 		msg = "";
 		restriction = 0;
+		showAsPile = false;
 		
 		options = new ArrayList<String>();
 		selectedCards = new ArrayList<String>();
+		viewedCards = new ArrayList<String>();
 	}
 	
 	public String getCardName() {
@@ -108,6 +118,22 @@ public class Ask {
 	
 	public List<String> getSelectedCards(){
 		return selectedCards;
+	}
+	
+	public void setViewedCards(List<String>viewedCards) {
+		this.viewedCards = viewedCards;
+	}
+	
+	public List<String> getViewedCards(){
+		return viewedCards;
+	}
+	
+	public void setViewedCardsImage(List<String>viewedCardsImage) {
+		this.viewedCardsImage = viewedCardsImage;
+	}
+	
+	public List<String> getViewedCardsImage(){
+		return viewedCardsImage;
 	}
 	
 	public void setLower(int lower) {
@@ -195,6 +221,10 @@ public class Ask {
 			} else {
 				selectedCards.add(s);
 			}
+		} else if (type == VIEW) {
+			if (subType == OPTION) {
+				ans = Integer.parseInt(s);
+			}
 		}
 	}
 	
@@ -250,6 +280,36 @@ public class Ask {
 				doo.add(d);
 			}
 			doc.append("selectedCards", doo);
+		} else if (type == VIEW) {
+			doc.append("msg", msg);
+			doc.append("showAsPile", showAsPile);
+			List<Document> doo = new ArrayList<Document>();
+			for (int i=0;i<viewedCards.size();i++) {
+				Document d = new Document();
+				d.append("card", viewedCards.get(i));
+				doo.add(d);
+			}
+			doc.append("viewedCards", doo);
+			doo = new ArrayList<Document>();
+			for (int i=0;i<viewedCardsImage.size();i++) {
+				Document d = new Document();
+				d.append("image", viewedCardsImage.get(i));
+				doo.add(d);
+			}
+			doc.append("viewedCardsImage", doo);
+			if (subType == OPTION) {
+				doo = new ArrayList<Document>();
+				for (int i=0;i<options.size();i++) {
+					Document d = new Document();
+					d.append("option", options.get(i));
+					doo.add(d);
+				}
+				doc.append("options", doo);
+				doc.append("ans", ans);
+			}
+			doc.append("resLevel", resLevel);
+			doc.append("restriction", restriction);
+			doc.append("cardName", cardName);
 		}
 		return doc;
 	}
@@ -305,7 +365,33 @@ public class Ask {
 			resLevel = (int)doc.get("resLevel");
 			restriction = (int)doc.get("restriction");
 			cardName = (String)doc.get("cardName");
-			
+		} else if (type == VIEW) {
+			msg = (String)doc.get("msg");
+			showAsPile = (boolean)doc.get("showAsPile");
+			viewedCards = new ArrayList<String>();
+			List<Document> doo = (List<Document>)doc.get("viewedCards");
+			for (int i=0;i<doo.size();i++) {
+				String cardName = (String)doo.get(i).get("card");
+				viewedCards.add(cardName);
+			}
+			viewedCardsImage = new ArrayList<String>();
+			doo = (List<Document>)doc.get("viewedCardsImage");
+			for (int i=0;i<doo.size();i++) {
+				String cardImage = (String)doo.get(i).get("image");
+				viewedCardsImage.add(cardImage);
+			}
+			if (subType == OPTION) {
+				doo = (List<Document>)doc.get("options");
+				options = new ArrayList<String>();
+				for (int i=0;i<doo.size();i++) {
+					String option = (String)doo.get(i).get("option");
+					options.add(option);
+				}
+				ans = (int)doc.get("ans");
+			}
+			resLevel = (int)doc.get("resLevel");
+			restriction = (int)doc.get("restriction");
+			cardName = (String)doc.get("cardName");
 		}
 	}
 }

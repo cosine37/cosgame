@@ -55,7 +55,6 @@ public class Expansion {
 				}
 			}
 			kindom.add(p);
-			System.out.println(kindom.get(i).getName());
 		}
 		
 		for (i=0;i<numKindom;i++) {
