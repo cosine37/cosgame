@@ -301,6 +301,7 @@ public class Player {
 			action = 1;
 			buy = 1;
 			coin = 0;
+			resetPlayed();
 			if (startOptions=="") {
 				phase++;
 			}

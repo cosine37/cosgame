@@ -445,6 +445,13 @@ public class Board {
 		updateDB(name, genPlayerDoc(name));
 	}
 	
+	public void updatePlayersDB() {
+		for (int i=0;i<players.size();i++) {
+			String name = players.get(i).getName();
+			updatePlayerDB(name);
+		}
+	}
+	
 	public void updateLogsDB() {
 		updateDB("logs", logger.getLoggerAsDocument());
 	}

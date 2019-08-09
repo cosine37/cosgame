@@ -433,7 +433,7 @@ public class DominionGameController {
 		player.setBoard(board);
 		Ask ask = player.play(cardName);
 		board.getLogger().addPlayCard(username, cardName);
-		board.updatePlayerDB(username);
+		board.updatePlayersDB();
 		board.updateLogsDB();
 		board.updateSupply();
 		return new ResponseEntity<>(ask, HttpStatus.OK);
@@ -456,7 +456,7 @@ public class DominionGameController {
 		card.setBoard(board);
 		Ask ask = card.response(a);
 		player.setAsk(ask);
-		board.updatePlayerDB(username);
+		board.updatePlayersDB();
 		board.updateLogsDB();
 		board.updateSupply();
 		return new ResponseEntity<>(ask, HttpStatus.OK);
