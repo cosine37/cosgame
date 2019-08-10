@@ -11,6 +11,7 @@ import com.cosine.cosgame.dominion.base.Base;
 import com.cosine.cosgame.dominion.base.Empty;
 import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
+import com.cosine.cosgame.dominion.intrigue.Intrigue;
 import com.cosine.cosgame.dominion.oriental.Oriental;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -23,6 +24,7 @@ public class Board {
 	
 	Expansion base;
 	Expansion dominion;
+	Expansion intrigue;
 	Expansion oriental;
 	Trash trash;
 	List<Player> players;
@@ -266,10 +268,12 @@ public class Board {
 	
 	public void randomize() {
 		dominion = new Dominion();
+		intrigue = new Intrigue();
 		oriental = new Oriental();
 		Expansion e = new Expansion();
 		e.addExpansion(dominion);
 		e.addExpansion(oriental);
+		e.addExpansion(intrigue);
 		kindom = e.genKindomPile();
 	}
 	

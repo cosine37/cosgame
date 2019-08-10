@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cosine.cosgame.dominion.base.*;
 import com.cosine.cosgame.dominion.dominion.*;
+import com.cosine.cosgame.dominion.intrigue.*;
 import com.cosine.cosgame.dominion.oriental.*;
 
 public class CardFactory {
@@ -44,6 +45,10 @@ public class CardFactory {
 		if (cardname.equals("Merchant")) return new Merchant();
 		if (cardname.equals("CouncilRoom")) return new CouncilRoom();
 		if (cardname.equals("Sentry")) return new Sentry();
+		
+		if (cardname.equals("ShantyTown")) return new ShantyTown();
+		if (cardname.equals("Duke")) return new Duke();
+		if (cardname.equals("Harem")) return new Harem();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
