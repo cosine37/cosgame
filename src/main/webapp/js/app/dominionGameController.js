@@ -514,10 +514,19 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			while (task.type == 11){
 				task = task.thronedAsk;
 			}
+			
 			if (task.type == 4){
 				if (task.subType == 51){
-					$scope.chooseViewed[index] = 1 - $scope.chooseViewed[index];
-					$scope.showPhaseButton = showPhaseButtonWhenChooseViewed();
+					var total = 0;
+					for (i=0;i<$scope.chooseViewed.length;i++){
+						total = total + $scope.chooseViewed[i];
+					}
+					if (total == task.upper && $scope.chooseViewed[index] == 0){
+						
+					} else {
+						$scope.chooseViewed[index] = 1 - $scope.chooseViewed[index];
+						$scope.showPhaseButton = showPhaseButtonWhenChooseViewed();
+					}
 				} else if (task.subType == 52){
 					if ($scope.forRearrange == -1){
 						$scope.forRearrange = index;
