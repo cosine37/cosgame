@@ -36,6 +36,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showClearButton = false;
 		$scope.showViewed = false;
 		$scope.viewed=[];
+		$scope.forRearrange = -1;
+		$scope.chooseViewed = [];
 		//$scope.chooseUpper=0;
 		//$scope.chooseLower=0;
 
@@ -134,6 +136,25 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 								$scope.topMessage = task.msg;
 								$scope.showPhaseButton = false;
 								$scope.options = task.options;
+							} else if (task.subType == 51){
+								$scope.topMessage = task.msg;
+								$scope.showPhaseButton = showPhaseButtonWhenChooseViewed();
+								$scope.showClearButton = true;
+								$scope.phaseButton = "Confirm";
+								var n = $scope.viewed.length;
+								$scope.chooseViewed = new Array(n);
+								for (i=0;i<n;i++){
+									$scope.chooseViewed[i]=0;
+								}
+							} else if (task.subType == 52){
+								$scope.topMessage = task.msg;
+								$scope.showPhaseButton = true;
+								$scope.phaseButton = "Confirm";
+								var n = $scope.viewed.length;
+								$scope.chooseViewed = new Array(n);
+								for (i=0;i<n;i++){
+									$scope.chooseViewed[i] = i;
+								}
 							}
 							getaddon();
 						}
@@ -278,10 +299,42 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						var data = {"ans": s};
 						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 							$scope.ask = response.data;
-							//alert($scope.ask.type);
 							getsupply();
 						});
-					} else {
+					} else if (task.type == 4 && task.subType == 51){
+						var s = "";
+						var i,j;
+						for (i=0;i<$scope.chooseViewed.length; i++){
+							if ($scope.chooseViewed[i] == 1){
+								if (s=="") {
+									s=i.toString();
+								} else {
+									s = s+","+i.toString();
+								}
+							}
+						}
+						var data = {"ans": s};
+						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+							$scope.ask = response.data;
+							getsupply();
+						});
+					} else if (task.type == 4 && task.subType == 52){
+						var s = "";
+						var i,j;
+						//alert($scope.chooseViewed.toString());
+						for (i=0;i<$scope.chooseViewed.length;i++){
+							if (s == ""){
+								s = $scope.chooseViewed[i].toString();
+							} else {
+								s = s + "," + $scope.chooseViewed[i].toString();
+							}
+						}
+						var data = {"ans": s};
+						$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+							$scope.ask = response.data;
+							getsupply();
+						});
+					} else{
 						$http.post('/dominiongame/nextphase').then(function(response){
 							getstatus();
 						});
@@ -379,6 +432,44 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.showRevealedTop = function(index){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 4 && task.subType == 52){
+				if (index == $scope.viewed.length-1){
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		
+		$scope.showRevealedTarget = function(index){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 4 && task.subType == 51){
+				if ($scope.chooseViewed[index] > 0){
+					return true;
+				} else {
+					return false;
+				}
+			} else if (task.type == 4 && task.subType == 52){
+				if (index == $scope.forRearrange){
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		
 		showPhaseButtonWhenChooseHand = function(){
 			var task = $scope.ask;
 			while (task.type == 11){
@@ -393,6 +484,56 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				return true;
 			}
 			return false;
+		}
+		
+		showPhaseButtonWhenChooseViewed = function(){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			var i;
+			var total = 0;
+			if (task.type == 4){
+				if (task.subType == 51){
+					for (i=0;i<$scope.chooseViewed.length;i++){
+						total = total + $scope.chooseViewed[i];
+					}
+					if (total >= task.lower && total <= task.upper){
+						return true;
+					}
+				} else if (task.subType == 52){
+					return true;
+				}
+			} 
+			
+			return false;
+		}
+		
+		$scope.clickViewed = function(index){
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 4){
+				if (task.subType == 51){
+					$scope.chooseViewed[index] = 1 - $scope.chooseViewed[index];
+					$scope.showPhaseButton = showPhaseButtonWhenChooseViewed();
+				} else if (task.subType == 52){
+					if ($scope.forRearrange == -1){
+						$scope.forRearrange = index;
+					} else if ($scope.forRearrange == index){
+						$scope.forRearrange = -1;
+					} else {
+						var temp = $scope.chooseViewed[$scope.forRearrange];
+						$scope.chooseViewed[$scope.forRearrange] = $scope.chooseViewed[index];
+						$scope.chooseViewed[index] = temp;
+						temp = $scope.viewed[$scope.forRearrange];
+						$scope.viewed[$scope.forRearrange] = $scope.viewed[index];
+						$scope.viewed[index] = temp;
+						$scope.forRearrange = -1;
+					}
+				}
+			}
 		}
 		
 		$scope.buyc = function(bk, index){

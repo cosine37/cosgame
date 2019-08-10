@@ -24,6 +24,7 @@ public class Dominion extends Expansion{
 	Pile libraryPile;
 	Pile merchantPile;
 	Pile councilRoomPile;
+	Pile sentryPile;
 	
 	public Dominion() {
 		super();
@@ -48,6 +49,7 @@ public class Dominion extends Expansion{
 		libraryPile = new Pile(Library.class, 10);
 		merchantPile = new Pile(Merchant.class, 10);
 		councilRoomPile = new Pile(CouncilRoom.class, 10);
+		sentryPile = new Pile(Sentry.class, 10);
 		
 		piles.add(villagePile);
 		piles.add(smithyPile);
@@ -69,6 +71,6 @@ public class Dominion extends Expansion{
 		piles.add(libraryPile);
 		piles.add(merchantPile);
 		piles.add(councilRoomPile);
-		
+		piles.add(sentryPile);
 	}
 }

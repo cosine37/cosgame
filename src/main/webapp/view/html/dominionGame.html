@@ -152,7 +152,13 @@
 	</div>
 	
 	<div ng-style="viewedStyle" ng-show="showViewed" >
-		<div class="kindom" ng-repeat="x in viewed track by $index" style="background:url({{x}});background-size:cover">
+		<div class="kindom" ng-repeat="x in viewed track by $index" ng-click="clickViewed($index)" style="background:url({{x}});background-size:cover">
+			<div class="chooserevealed" ng-show="showRevealedTarget($index)" style='background:url("/image/Dominion/target.png");background-size:cover'>
+				
+			</div>
+			<div class="chooserevealedtop" ng-show="showRevealedTop($index)">
+				<span>Top</span>
+			</div>
 		</div>
 	</div>
 	

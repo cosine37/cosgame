@@ -121,6 +121,21 @@ public class Player {
 		}
 	}
 	
+	public void topDeck(Card card) {
+		deck.add(0,card);
+	}
+	
+	public void topDeckRevealed(List<Integer> lsi) {
+		for (int i=0;i<lsi.size();i++) {
+			int index = lsi.get(i);
+			Card card = revealed.get(index);
+			topDeck(card);
+		}
+		while (revealed.size()>0) {
+			revealed.remove(0);
+		}
+	}
+	
 	public Ask play(Card card) {
 		Ask ask = new Ask();
 		return ask;
@@ -399,6 +414,19 @@ public class Player {
 			}
 		}
 		return ans;
+	}
+	
+	public void revealTop(int x) {
+		while (revealed.size()<x) {
+			if (deck.size() == 0) {
+				shuffle();
+			}
+			if (deck.size() == 0) {
+				break;
+			}
+			Card card = deck.remove(0);
+			revealed.add(card);
+		}
 	}
 	
 	public int getScore() {

@@ -41,6 +41,7 @@ public class Ask {
 	List<String> selectedCards;
 	List<String> viewedCards;
 	List<String> viewedCardsImage;
+	List<Integer> selectedRevealed;
 	boolean showAsPile; // for view
 	int ans;
 	int resLevel;
@@ -70,6 +71,8 @@ public class Ask {
 		options = new ArrayList<String>();
 		selectedCards = new ArrayList<String>();
 		viewedCards = new ArrayList<String>();
+		viewedCardsImage = new ArrayList<String>();
+		selectedRevealed = new ArrayList<Integer>();
 	}
 	
 	public String getCardName() {
@@ -134,6 +137,14 @@ public class Ask {
 	
 	public List<String> getViewedCardsImage(){
 		return viewedCardsImage;
+	}
+	
+	public void setSelectedRevealed(List<Integer> selectedRevealed) {
+		this.selectedRevealed = selectedRevealed;
+	}
+	
+	public List<Integer> getSelectedRevealed(){
+		return selectedRevealed;
 	}
 	
 	public void setLower(int lower) {
@@ -224,6 +235,27 @@ public class Ask {
 		} else if (type == VIEW) {
 			if (subType == OPTION) {
 				ans = Integer.parseInt(s);
+			} else if (subType == CHOOSE) {
+				if (s.equals("")) {
+					selectedRevealed = new ArrayList<Integer>();
+				} else {
+					selectedRevealed = new ArrayList<Integer>();
+					List<String> tsl = Arrays.asList(s.split(","));
+					for (int i=0;i<tsl.size();i++) {
+						selectedRevealed.add(Integer.parseInt(tsl.get(i)));
+					}
+					System.out.println("selectedRevealed = "+ selectedRevealed.toString());
+				}
+			} else if (subType == REARRANGE) {
+				if (s.equals("")) {
+					selectedRevealed = new ArrayList<Integer>();
+				} else {
+					selectedRevealed = new ArrayList<Integer>();
+					List<String> tsl = Arrays.asList(s.split(","));
+					for (int i=0;i<tsl.size();i++) {
+						selectedRevealed.add(Integer.parseInt(tsl.get(i)));
+					}
+				}
 			}
 		}
 	}
@@ -306,6 +338,24 @@ public class Ask {
 				}
 				doc.append("options", doo);
 				doc.append("ans", ans);
+			} else if (subType == CHOOSE) {
+				doo = new ArrayList<Document>();
+				for (int i=0;i<selectedRevealed.size();i++) {
+					Document d = new Document();
+					d.append("index", selectedRevealed.get(i));
+					doo.add(d);
+				}
+				doc.append("selectedRevealed", doo);
+				doc.append("upper", upper);
+				doc.append("lower", lower);
+			} else if (subType == REARRANGE) {
+				doo = new ArrayList<Document>();
+				for (int i=0;i<selectedRevealed.size();i++) {
+					Document d = new Document();
+					d.append("index", selectedRevealed.get(i));
+					doo.add(d);
+				}
+				doc.append("selectedRevealed", doo);
 			}
 			doc.append("resLevel", resLevel);
 			doc.append("restriction", restriction);
@@ -388,6 +438,22 @@ public class Ask {
 					options.add(option);
 				}
 				ans = (int)doc.get("ans");
+			} else if (subType == CHOOSE) {
+				doo = (List<Document>)doc.get("selectedRevealed");
+				selectedRevealed = new ArrayList<Integer>();
+				for (int i=0; i<doo.size();i++){
+					int cardIndex = (int)doo.get(i).get("index");
+					selectedRevealed.add(cardIndex);
+				}
+				upper = (int)doc.get("upper");
+				lower = (int)doc.get("lower");
+			} else if (subType == REARRANGE) {
+				doo = (List<Document>)doc.get("selectedRevealed");
+				selectedRevealed = new ArrayList<Integer>();
+				for (int i=0; i<doo.size();i++){
+					int cardIndex = (int)doo.get(i).get("index");
+					selectedRevealed.add(cardIndex);
+				}
 			}
 			resLevel = (int)doc.get("resLevel");
 			restriction = (int)doc.get("restriction");
