@@ -46,6 +46,7 @@ public class CardFactory {
 		if (cardname.equals("CouncilRoom")) return new CouncilRoom();
 		if (cardname.equals("Sentry")) return new Sentry();
 		if (cardname.equals("Harbinger")) return new Harbinger();
+		if (cardname.equals("Witch")) return new Witch();
 		
 		if (cardname.equals("ShantyTown")) return new ShantyTown();
 		if (cardname.equals("Duke")) return new Duke();

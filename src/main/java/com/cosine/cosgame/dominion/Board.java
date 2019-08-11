@@ -368,6 +368,19 @@ public class Board {
 		return piles;
 	}
 	
+	public void attackHandle(Player p, Ask ask, String cardName) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(p.getName())) {
+				
+			} else if (players.get(i).getIsBot()){
+				players.get(i).botAttackHandle(ask);
+			} else {
+				
+			}
+		}
+	}
+	
 	public void addBot(boolean storeToDB) {
 		if (numPlayers <= players.size()) {
 			

@@ -32,10 +32,11 @@ public class Ask {
 	int subType; // for view
 	public static final int CHOOSE = 51;
 	public static final int REARRANGE = 52;
-	// and option
+	public static final int ATTACKBLOCK = 31;
 	
 	String cardName;
 	String msg;
+	String attackName; // for attackblock
 	
 	List<String> options;
 	List<String> selectedCards;
@@ -213,6 +214,14 @@ public class Ask {
 	
 	public int getRestriction() {
 		return restriction;
+	}
+	
+	public void setAttackName(String attackName) {
+		this.attackName = attackName;
+	}
+	
+	public String getAttackName() {
+		return attackName;
 	}
 	
 	public void parseAns(String s) {

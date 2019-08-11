@@ -310,6 +310,19 @@ public class Player {
 		//cleanUp();
 	}
 	
+	public boolean hasAttackBlock() {
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).isAttackBlock()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void botAttackHandle(Ask ask) {
+		
+	}
+	
 	public void nextPhase() {
 		phase = (phase+1)%7;
 		if (phase == START) {

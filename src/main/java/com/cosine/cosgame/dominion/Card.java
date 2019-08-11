@@ -41,6 +41,9 @@ public class Card {
 	protected static final int INDEX_REACTION = 11;
 	protected static final int INDEX_DURATION = 12;
 	
+	// categories
+	protected static final int INDEX_ATTACKBLOCK = 31;
+	
 	// This is used for treasure, default true
 	protected boolean autoplay;
 	
@@ -211,6 +214,10 @@ public class Card {
 
 	public boolean isReaction() {
 		return types[INDEX_REACTION];
+	}
+	
+	public boolean isAttackBlock() {
+		return types[INDEX_ATTACKBLOCK];
 	}
 	
 	public int numTypes() {

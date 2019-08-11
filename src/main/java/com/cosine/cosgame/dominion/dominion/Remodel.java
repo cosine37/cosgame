@@ -37,6 +37,7 @@ public class Remodel extends Card{
 					price = player.getHand().get(i).getPrice();
 					player.setBoard(board);
 					player.trash(i);
+					break;
 				}
 			}
 			ask = new Ask();
