@@ -2,12 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Dominion Game</title>
 <link rel="stylesheet" type="text/css" href="/view/css/dominionGame.css">
+<!-- 
+	<audio autoplay="autoplay" loop=""><source src="/sound/BGM/TritschTratschPolka.wma"></audio>
+	
+ -->
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionGameController.js"></script>
+<script src="js/bgm.js"></script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
+	<div id="audioplayer">
+		
+		<!-- 
+			<audio src="/sound/BGM/TritschTratschPolka.mp3" autostart="true"></audio>
+			<embed src="/sound/BGM/TritschTratschPolka.mp3" autostart="true" loop="true" hidden="true"></embed>
+			<source src="/sound/BGM/TritschTratschPolka.mp3" type="audio/mpeg" />
+		 -->
+		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
+	</div>
+	
 	<div id="otherplayer" class="otherplayer">
 		Other Player Area
 	</div>
@@ -162,5 +177,11 @@
 		</div>
 	</div>
 	
+	
+	
 </body>
+<!-- 
+		
+		
+ -->
 </html>

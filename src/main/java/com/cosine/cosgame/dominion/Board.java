@@ -209,11 +209,17 @@ public class Board {
 	public Pile getPileByTop(String name) {
 		int i;
 		for (i=0;i<basePile.size();i++) {
+			if (basePile.get(i).getCards().size() == 0) {
+				continue;
+			}
 			if (basePile.get(i).getTop().getName().equals(name)) {
 				return basePile.get(i);
 			}
 		}
 		for (i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getCards().size() == 0) {
+				continue;
+			}
 			if (kindom.get(i).getTop().getName().equals(name)) {
 				return kindom.get(i);
 			}

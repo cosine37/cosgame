@@ -31,7 +31,12 @@ public class Witch extends Card{
 						
 					}
 				} else {
-					board.gainToPlayerFromPile(p, board.getPileByTop("Curse"));
+					if (board.getPileByTop("Curse") == null) {
+						
+					} else {
+						board.gainToPlayerFromPile(p, board.getPileByTop("Curse"));
+					}
+					
 				}
 			}
 		}
