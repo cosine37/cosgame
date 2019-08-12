@@ -144,4 +144,8 @@ public class AI {
 		}
 		return count;
 	}
+	
+	public void dealWithAttack(String cardName) {
+		
+	}
 }

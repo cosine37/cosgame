@@ -364,6 +364,11 @@ public class Player {
 		}
 	}
 	
+	public void dealWithAttack(String cardName) {
+		ai = new AI(this, board);
+		ai.dealWithAttack(cardName);
+	}
+	
 	public boolean noCardType(String type) {
 		int i;
 		for (i=0;i<hand.size();i++) {

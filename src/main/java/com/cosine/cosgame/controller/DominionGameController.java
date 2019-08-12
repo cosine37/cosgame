@@ -433,6 +433,11 @@ public class DominionGameController {
 		player.setBoard(board);
 		Ask ask = player.play(cardName);
 		board.getLogger().addPlayCard(username, cardName);
+		if (ask.getType() == Ask.NONE) {
+			if (ask.getSubType() == Ask.ATTACK) {
+				board.attackHandle(player, cardName);
+			}
+		}
 		board.updatePlayersDB();
 		board.updateLogsDB();
 		board.updateSupply();

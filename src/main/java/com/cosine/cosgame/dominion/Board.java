@@ -374,15 +374,41 @@ public class Board {
 		return piles;
 	}
 	
-	public void attackHandle(Player p, Ask ask, String cardName) {
-		int i;
-		for (i=0;i<players.size();i++) {
-			if (players.get(i).getName().equals(p.getName())) {
-				
-			} else if (players.get(i).getIsBot()){
-				players.get(i).botAttackHandle(ask);
+	public void attackHandle(Player player, String cardName) {
+		CardFactory factory = new CardFactory();
+		Card card = factory.createCard(cardName);
+		for (int i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			if (p.getName().equals(player.getName())){
+				continue;
 			} else {
-				
+				if (p.hasAttackBlock()) {
+					if (p.getIsBot()) {
+						
+					} else {
+						Ask ask = new Ask();
+						ask.setType(Ask.OPTION);
+						String s = "";
+						for (int j=0;i<p.getHand().size();i++) {
+							if (p.getHand().get(j).isAttackBlock()) {
+								s = p.getHand().get(j).getName();
+							}
+						}
+						ask.setMsg("You may reveal " + s + " to block " + cardName);
+						List<String> options = new ArrayList<String>();
+						options.add("Reveal" + s);
+						options.add("Don't reveal");
+						p.setAsk(ask);
+					}
+				} else {
+					card.setPlayer(p);
+					card.setBoard(this);
+					Ask ask = card.attack();
+					p.setAsk(ask);
+					if (p.getIsBot()) {
+						p.dealWithAttack(cardName);
+					}
+				}
 			}
 		}
 	}

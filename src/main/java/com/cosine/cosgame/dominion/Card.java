@@ -73,7 +73,7 @@ public class Card {
 		safe = true;
 		
 		int i;
-		for (i=0;i<100;i++) {
+		for (i=0;i<30;i++) {
 			types[i] = false;
 		}
 	}
@@ -117,6 +117,39 @@ public class Card {
 		vanilla();
 		Ask ask = new Ask();
 		ask.setCardName(name);
+		if (isAttack()) {
+			ask.setSubType(Ask.ATTACK);
+		}
+		/*
+		if (isAttack()) {
+			for (int i=0;i<board.getPlayers().size();i++) {
+				Player p = board.getPlayers().get(i);
+				if (p.getName().equals(player.getName())) {
+					continue;
+				} else {
+					if (p.hasAttackBlock()) {
+						Ask a = new Ask();
+						String s = "";
+						for (int j=0;j<p.getHand().size();j++) {
+							Card c = p.getHand().get(j);
+							if (c.isAttackBlock()) {
+								s = c.getName();
+							}
+						}
+						a.setMsg("You may reveal "+s+" to block "+name);
+						a.setType(Ask.REACTION);
+						a.setSubType(Ask.ATTACKBLOCK);
+					} else {
+						
+					}
+				}
+			}
+		}*/
+		return ask;
+	}
+	
+	public Ask attack() {
+		Ask ask = new Ask();
 		return ask;
 	}
 	

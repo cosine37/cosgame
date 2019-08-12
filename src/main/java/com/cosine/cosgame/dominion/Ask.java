@@ -26,12 +26,14 @@ public class Ask {
 	public static final int HANDCHOOSE = 2;
 	public static final int GAIN = 3;
 	public static final int VIEW = 4;
+	public static final int REACTION = 5;
 	
 	public static final int THRONE = 11;
 	
 	int subType; // for view
 	public static final int CHOOSE = 51;
 	public static final int REARRANGE = 52;
+	public static final int ATTACK = 30;
 	public static final int ATTACKBLOCK = 31;
 	
 	String cardName;
