@@ -49,6 +49,7 @@ public class CardFactory {
 		if (cardname.equals("Witch")) return new Witch();
 		if (cardname.equals("Moat")) return new Moat();
 		if (cardname.equals("Bureaucrat")) return new Bureaucrat();
+		if (cardname.equals("Militia")) return new Militia();
 		
 		if (cardname.equals("ShantyTown")) return new ShantyTown();
 		if (cardname.equals("Duke")) return new Duke();

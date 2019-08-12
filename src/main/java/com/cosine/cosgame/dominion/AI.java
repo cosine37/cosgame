@@ -160,6 +160,30 @@ public class AI {
 					return;
 				}
 			}
+		} else if (cardName.equals("Militia")) {
+			int i = 0;
+			while (i<player.getHand().size()) {
+				Card c = player.getHand().get(i);
+				if ((!c.isActionType()) && (!c.isTreasure()) && (!c.isNight())) {
+					player.discard(i);
+					if (player.getHand().size() == 3) return;
+				} else {
+					i++;
+				}
+			}
+			i=0;
+			while (i<player.getHand().size()) {
+				Card c = player.getHand().get(i);
+				if (c.getName().equals("Copper")) {
+					player.discard(i);
+					if (player.getHand().size() == 3) return;
+				} else {
+					i++;
+				}
+			}
+			while (player.getHand().size() > 3) {
+				player.discard(0);
+			}
 		}
 	}
 }

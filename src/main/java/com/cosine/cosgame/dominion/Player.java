@@ -255,6 +255,18 @@ public class Player {
 		}
 	}
 	
+	public Card discard(String cardName) {
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).getName().equals(cardName)) {
+				Card card = hand.remove(i);
+				card.onDiscard(this);
+				discard.add(card);
+				return card;
+			}
+		} 
+		return null;
+	}
+	
 	public void cleanUp() {
 		while (hand.size()>0) {
 			discard.add(hand.remove(0));
