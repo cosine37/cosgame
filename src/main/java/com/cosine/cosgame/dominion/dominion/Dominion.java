@@ -28,6 +28,7 @@ public class Dominion extends Expansion{
 	Pile harbingerPile;
 	Pile witchPile;
 	Pile moatPile;
+	Pile bureaucratPile;
 	
 	public Dominion() {
 		super();
@@ -56,6 +57,7 @@ public class Dominion extends Expansion{
 		harbingerPile = new Pile(Harbinger.class, 10);
 		witchPile = new Pile(Witch.class, 10);
 		moatPile = new Pile(Moat.class, 10);
+		bureaucratPile = new Pile(Bureaucrat.class, 10);
 		
 		piles.add(villagePile);
 		piles.add(smithyPile);
@@ -81,5 +83,6 @@ public class Dominion extends Expansion{
 		piles.add(harbingerPile);
 		piles.add(witchPile);
 		piles.add(moatPile);
+		piles.add(bureaucratPile);
 	}
 }

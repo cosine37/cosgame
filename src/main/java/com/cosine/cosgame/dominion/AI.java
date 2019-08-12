@@ -93,10 +93,16 @@ public class AI {
 			if (board.getPileByTop("Province").getNumCards() <= 2) {
 				buy("Estate");
 			}
+			if (player.getCoin() == 2) {
+				buy("Moat");
+			}
 		}
 	}
 	
 	void buy(String cardName) {
+		if (board.getPileByTop(cardName) == null) {
+			return;
+		}
 		board.playerBuy(player, board.getPileByTop(cardName));
 		board.getLogger().addBuyCard(player.getName(), cardName);
 		board.gainToPlayerFromPile(player, board.getPileByTop(cardName));
@@ -146,6 +152,14 @@ public class AI {
 	}
 	
 	public void dealWithAttack(String cardName) {
-		
+		if (cardName.equals("Bureaucrat")) {
+			for (int i=0;i<player.getHand().size();i++) {
+				if (player.getHand().get(i).isVictory()){
+					String s = player.getHand().get(i).getName();
+					player.topDeck(s);
+					return;
+				}
+			}
+		}
 	}
 }

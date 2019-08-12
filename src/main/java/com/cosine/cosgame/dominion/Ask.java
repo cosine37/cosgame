@@ -59,6 +59,7 @@ public class Ask {
 	int restriction;
 	public static final int ACTION = 1001;
 	public static final int TREASURE = 1002;
+	public static final int VICTORY = 1003;
 	
 	public Ask() {
 		type = 0;

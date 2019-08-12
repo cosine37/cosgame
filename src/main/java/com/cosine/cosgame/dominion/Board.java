@@ -401,12 +401,13 @@ public class Board {
 						p.setAsk(ask);
 					}
 				} else {
-					card.setPlayer(p);
-					card.setBoard(this);
-					Ask ask = card.attack();
-					p.setAsk(ask);
 					if (p.getIsBot()) {
 						p.dealWithAttack(cardName);
+					} else {
+						card.setPlayer(p);
+						card.setBoard(this);
+						Ask ask = card.attack();
+						p.setAsk(ask);
 					}
 				}
 			}
