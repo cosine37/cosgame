@@ -184,6 +184,12 @@ public class AI {
 			while (player.getHand().size() > 3) {
 				player.discard(0);
 			}
+		} else {
+			CardFactory factory = new CardFactory();
+			Card c = factory.createCard(cardName);
+			c.setPlayer(player);
+			c.setBoard(board);
+			c.attack();
 		}
 	}
 }

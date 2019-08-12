@@ -402,6 +402,7 @@ public class Board {
 					}
 				} else {
 					if (p.getIsBot()) {
+						p.setBoard(this);
 						p.dealWithAttack(cardName);
 					} else {
 						card.setPlayer(p);
