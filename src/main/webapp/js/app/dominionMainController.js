@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("dominionMainApp", []);
-app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 	
 		//TODO: customize this
 		$scope.numplayers = 2;
@@ -39,7 +39,25 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.goto("dominiongame?BoardId="+x);
 		}
 		
-		$http.post("/dominionboards").then(function(response){
-			$scope.boardIds = response.data.value;
-		});
+		$scope.getBoard = function(){
+			$http.post("/dominionboards").then(function(response){
+				var lst = response.data.value;
+				var i = 0;
+				$scope.boardIds = new Array();
+				while (i<lst.length){
+					var boardObject = new Object();
+					boardObject.id = lst[i];
+					i = i+1;
+					boardObject.status = lst[i];
+					i = i+1;
+					$scope.boardIds.push(boardObject);
+				}
+			});
+			$timeout(function(){
+			    $scope.getBoard();
+			},1000);
+		}
+		
+		$scope.getBoard();
+		
 }]);
