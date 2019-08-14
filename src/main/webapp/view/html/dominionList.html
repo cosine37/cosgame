@@ -8,6 +8,7 @@
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionListController.js"></script>
 <script>
+	/*
 	var xmlobj;
 	var count=0;
 	function createXMLHttpRequest(){
@@ -34,6 +35,7 @@
 	    setTimeout("Autofresh()",2000);
 	  }
 	}
+	*/
 </script>
 <body ng-app="dominionListApp" ng-controller="dominionListCtrl" onLoad="Autofresh()">
 	<div id="header" class="header">
@@ -66,8 +68,14 @@
 		</div>
 		
 	</div>
+	
+	<div id="expansions">
+		<button>Base</button>
+		<button>Intrigue</button>
+		<button>Oriental</button>
+	</div>
 	<div id="content" class="content">
-		<p>现在的时间是：<span id="aaa"></span></p>
+		
 	</div>
 	
 </body>

@@ -3,6 +3,9 @@ package com.cosine.cosgame.dominion;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cosine.cosgame.dominion.base.Base;
+import com.cosine.cosgame.dominion.dominion.Dominion;
+import com.cosine.cosgame.dominion.intrigue.Intrigue;
 import com.cosine.cosgame.util.MongoDBUtil;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -34,6 +37,19 @@ public class DominionMega {
 			value.add(boards.get(i).getStatusAsString());
 		}
 		entity.setValue(value);
+		return entity;
+	}
+	
+	public StringEntity getCardsAsAtringEntity(String exp) {
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		if (exp.equals("Base")) {
+			
+		} else if (exp.equals("Intrigue")) {
+			
+		} else if (exp.equals("Oriental")) {
+			
+		}
 		return entity;
 	}
 }
