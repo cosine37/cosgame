@@ -14,12 +14,6 @@
 <script src="js/bgm.js"></script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
 	<div id="audioplayer">
-		
-		<!-- 
-			<audio src="/sound/BGM/TritschTratschPolka.mp3" autostart="true"></audio>
-			<embed src="/sound/BGM/TritschTratschPolka.mp3" autostart="true" loop="true" hidden="true"></embed>
-			<source src="/sound/BGM/TritschTratschPolka.mp3" type="audio/mpeg" />
-		 -->
 		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
 	</div>
 	
@@ -140,14 +134,20 @@
 			 -->
 		</div>
 	</div>
-	<div id="player" style="clear:both; ">Player
-		<button ng-click="resign()">Resign</button>
-		{{topMessage}}
-		<button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button>
-		<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
-		<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
+	<div id="player" style="clear:both; ">
 		<div>
-			<div class="kindom" ng-click="play($index)" ng-repeat="x in hand track by $index" style="background:url({{x.image}});background-size:cover">
+			Player
+			<button ng-click="resign()">Resign</button>
+			{{topMessage}}
+			<button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button>
+			<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
+			<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
+		</div>
+		
+		<div class="kindom" ng-show="discardTop != null" style="background:url({{discardTop.image}});background-size:cover;">
+		</div>
+		<div style="float: left; margin-left: 50px">
+			<div class="kindom" ng-click="play($index)" ng-repeat="x in hand track by $index" style="background:url({{x.image}});background-size:cover;">
 				<div class="kindom-number">
 					{{x.numCards}}
 				</div>

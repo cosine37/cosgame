@@ -253,6 +253,21 @@ public class DominionGameController {
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/getdiscard", method = RequestMethod.POST)
+	public ResponseEntity<Card> getdiscard(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		List<Card> discard = board.getPlayerByName(username).getDiscard();
+		if (discard.size() == 0) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		Card card = discard.get(discard.size() - 1);
+		return new ResponseEntity<>(card, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/cleanup", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> cleanup(HttpServletRequest request){
 		HttpSession session = request.getSession(true);

@@ -38,8 +38,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.viewed=[];
 		$scope.forRearrange = -1;
 		$scope.chooseViewed = [];
-		//$scope.chooseUpper=0;
-		//$scope.chooseLower=0;
 
 		$scope.baseStyle={
 			"height": "109px",
@@ -69,6 +67,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			var x = "http://localhost:8080";
 			$window.location.href = x + "/" + d;
 		}
+		getdiscard = function(){
+			$http.post('/dominiongame/getdiscard').then(function(response){
+				$scope.discardTop = response.data;
+			});
+		}
 		
 		gethand = function(){
 			$http.post('/dominiongame/gethand').then(function(response){
@@ -79,6 +82,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				for (i=0;i<n;i++){
 					$scope.choosehand[i] = 0;
 				}
+				getdiscard()
 			});
 		}
 		
