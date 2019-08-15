@@ -67,9 +67,17 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			var x = "http://localhost:8080";
 			$window.location.href = x + "/" + d;
 		}
+		
+		getdeck = function(){
+			$http.post('/dominiongame/getdeck').then(function(response){
+				$scope.numDeck = response.data.value[0];
+			});
+		}
+		
 		getdiscard = function(){
 			$http.post('/dominiongame/getdiscard').then(function(response){
 				$scope.discardTop = response.data;
+				getdeck();
 			});
 		}
 		

@@ -53,6 +53,21 @@ public class TextGenerator{
 		return ans;
 	}
 	
+	public String generateNameEasy() {
+		List<String> names = new ArrayList<String>();
+		names.add("Alan");
+		names.add("Bob");
+		names.add("Cindy");
+		names.add("Dylan");
+		names.add("Ella");
+		names.add("Fox");
+		names.add("George");
+		names.add("Helen");
+		int i = (int)(Math.random() * 8);
+		String ans = names.get(i);
+		return ans;
+	}
+	
 	public TextGenerator() {}
 	
 }

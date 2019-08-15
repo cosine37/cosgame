@@ -241,6 +241,21 @@ public class DominionGameController {
 		List<Pile> piles = board.getAllCards(username);
 		return new ResponseEntity<>(piles, HttpStatus.OK);
 	}
+
+	@RequestMapping(value="/dominiongame/getdeck", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getdeck(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		String s = Integer.toString(board.getPlayerByName(username).getDeck().size());
+		List<String> value = new ArrayList<String>();
+		value.add(s);
+		StringEntity entity = new StringEntity();
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/dominiongame/gethand", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> gethand(HttpServletRequest request){

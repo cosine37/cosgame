@@ -420,12 +420,12 @@ public class Board {
 			
 		} else {
 			TextGenerator gen = new TextGenerator();
-			gen.readName();
+			//gen.readName();
 			int i;
 			String botName = "";
 			boolean flag = true;
 			while (flag) {
-				botName = gen.generateName() + "(bot)";
+				botName = gen.generateNameEasy() + "(bot)";
 				flag = false;
 				for (i=0;i<players.size();i++) {
 					if (players.get(i).getName().equals(botName)) {
