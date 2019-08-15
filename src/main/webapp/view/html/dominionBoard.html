@@ -55,7 +55,7 @@
 					</tr>
 					<tr ng-repeat="playername in playernames track by $index">
 						<td>
-							{{playername}}
+							<span>{{playername}} {{playerstatus[$index]}}</span>
 							<button ng-show="showKick($index)" ng-click="kick(playername)">kick</button>
 						</td>
 					</tr>

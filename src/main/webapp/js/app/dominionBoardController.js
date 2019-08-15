@@ -28,6 +28,10 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.playernames[0] = $scope.playernames[0] + "(lord)";
 		});
 		
+		$http.post('/dominiongame/playerstatus').then(function(response){
+			$scope.playerstatus = response.data.value;
+		});
+		
 		$http.post('/dominiongame/getkindom').then(function(response){
 			$scope.kindom=response.data;
 		});
