@@ -29,18 +29,8 @@ public class Chapel extends Card{
 	
 	public Ask response(Ask a) {
 		Ask ask = super.response(a);
-		int i,j;
-		Card card;
-		int n = ask.getSelectedCards().size();
-		for (i=0;i<ask.getSelectedCards().size();i++) {
-			for (j=player.getHand().size()-1;j>=0;j--) {
-				if (player.getHand().get(j).getName().equals(ask.getSelectedCards().get(i))) {
-					player.setBoard(board);
-					player.trash(j);
-					break;
-				}
-			}
-		}
+		player.setBoard(board);
+		player.trash(ask.getSelectedCards(), "hand");
 		ask = new Ask();
 		return ask;
 	}

@@ -296,12 +296,13 @@ public class Player {
 		int i, j;
 		Card card;
 		Trash trash = board.getTrash();
-		if (from == "hand") {
+		if (from.equals("hand")) {
 			for (i=0;i<cards.size();i++) {
 				for (j=hand.size()-1;j>=0;j--) {
 					if (hand.get(j).getName().equals(cards.get(i))) {
 						card = hand.remove(j);
-						trash.add(card);
+						board.getTrash().add(card);
+						card.onTrash(this);
 						break;
 					}
 				}
