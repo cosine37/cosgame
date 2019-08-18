@@ -64,3 +64,11 @@
 	left: 50%;
 	border: 2px;
 }
+.hand{
+	position: absolute;
+	bottom: 0%;
+	left: 50%;
+	height: 160px;
+	width: 600px;
+	margin: 0,0,0,-300px;
+}

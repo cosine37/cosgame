@@ -63,14 +63,41 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			"border": "2px"
 		}
 		
+		$scope.deckStyle = {
+			"background": "url('/image/Dominion/cards/Card_back.jpg')",
+			"background-size": "cover",
+			"float": "left"
+		}
+		
 		$scope.goto = function(d){
 			var x = "http://localhost:8080";
 			$window.location.href = x + "/" + d;
 		}
 		
+		getplay = function(){
+			$http.post('/dominiongame/getplay').then(function(response){
+				$scope.playCards=response.data;
+			});
+		}
+		
 		getdeck = function(){
 			$http.post('/dominiongame/getdeck').then(function(response){
 				$scope.numDeck = response.data.value[0];
+				if ($scope.numDeck == 0){
+					$scope.deckStyle = {
+						"background": "url('/image/Dominion/cards/Card_back.jpg')",
+						"background-size": "cover",
+						"float": "left",
+						"visibility": "hidden"
+					}
+				} else {
+					$scope.deckStyle = {
+						"background": "url('/image/Dominion/cards/Card_back.jpg')",
+						"background-size": "cover",
+						"float": "left"
+					}
+				}
+				getplay();
 			});
 		}
 		

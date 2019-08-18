@@ -489,6 +489,14 @@ public class Player {
 	public List<Card> getPlay(){
 		return play;
 	}
+	
+	public List<Pile> getPlayAsPiles(){
+		PileGen pileGen = new PileGen();
+		pileGen.add(play);
+		List<Pile> piles = pileGen.getPiles();
+		return piles;
+	}
+	
 	public List<Card> getHand(){
 		return hand;
 	}
