@@ -472,13 +472,51 @@ public class Player {
 		this.name = name;
 	}
 	public int getPhase() {
+		autoSetPhase();
 		return phase;
 	}
 	public String getPhaseAsString() {
+		autoSetPhase();
 		return phases[phase];
 	}
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	public void autoSetPhase() {
+		if (phase == ACTION) {
+			if (ask.getType() == Ask.NONE) {
+				if (action == 0 && villager == 0) {
+					phase = TREASURE;
+				} else if (noCardType("action")) {
+					phase = TREASURE;
+				} 
+			}
+		}
+		if (phase == TREASURE) {
+			if (ask.getType() == Ask.NONE) {
+				if (noCardType("treasure")) {
+					phase = BUY;
+				}
+			}
+		}
+		if (phase == BUY) {
+			if (buy == 0) {
+				phase = NIGHT;
+			}
+		}
+		if (phase == NIGHT) {
+			if (noCardType("night")) {
+				phase = CLEANUP;
+			}
+		}
+		if (phase == CLEANUP) {
+			if (cleanUpOptions=="") {
+				phase = OFFTURN;
+			}
+		}
+		if (phase == OFFTURN) {
+			cleanUp();
+		}
 	}
 	public List<Card> getDiscard(){
 		return discard;

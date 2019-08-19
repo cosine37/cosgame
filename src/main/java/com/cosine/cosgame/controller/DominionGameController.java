@@ -389,6 +389,7 @@ public class DominionGameController {
 		String phase = board.getPlayerByName(username).getPhaseAsString();
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
+		board.updateDB(username, board.genPlayerDoc(username));
 		value.add(phase);
 		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
