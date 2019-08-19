@@ -20,6 +20,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		$scope.base=[];
 		$scope.kindom=[];
+		$scope.baseStyle=[];
+		$scope.kindomStyle=[];
 		$scope.status="first cards";
 		$scope.phase="";
 		$scope.bigImage="";
@@ -259,7 +261,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				
 			});
 		}
-		
+		/*
 		$http.post('/dominiongame/getbase').then(function(response){
 			$scope.base=response.data;
 			$http.post('/dominiongame/getkindom').then(function(response){
@@ -267,7 +269,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				getstatus();
 			});
 		});
-		
+		*/
 		$scope.resign = function(){
 			$http.post('/dominiongame/resign').then(function(response){
 				$scope.goto('dominionend');
@@ -447,15 +449,64 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setBaseStyle = function(){
+			var i;
+			var n = $scope.base.length;
+			$scope.baseStyle = new Array(n);
+			for (i=0;i<n;i++){
+				var tJsonObj = {
+					"float": "left",
+					"height": "105px",
+					"width": "70px"	
+				}
+				tJsonObj["background-image"] = "url("+$scope.base[i].cards[0].image+")";
+				tJsonObj["background-size"] = "cover";
+				if (i%1 == 0){
+					tJsonObj["margin-left"] = "5px";
+				}
+				if (i>1){
+					tJsonObj["margin-top"] = "5px";
+				}
+				$scope.baseStyle[i] = tJsonObj;
+			}
+		}
+		
+		setKindomStyle = function(){
+			var i;
+			var n = $scope.kindom.length;
+			$scope.kindomStyle = new Array(n);
+			for (i=0;i<n;i++){
+				var tJsonObj = {
+					"float": "left",
+					"height": "157px",
+					"width": "105px"	
+				}
+				tJsonObj["background-image"] = "url("+$scope.kindom[i].cards[0].image+")";
+				tJsonObj["background-size"] = "cover";
+				if (i!=0 && i!=5){
+					tJsonObj["margin-left"] = "10px";
+				}
+				if (i>4){
+					tJsonObj["margin-top"] = "5px";
+				}
+				$scope.kindomStyle[i] = tJsonObj;
+			}
+		}
+		
 		getsupply = function(){
 			$http.post('/dominiongame/getbase').then(function(response){
 				$scope.base=response.data;
+				setBaseStyle();
+				
 				$http.post('/dominiongame/getkindom').then(function(response){
 					$scope.kindom=response.data;
+					setKindomStyle();
 					getstatus();
 				});
 			});
 		}
+		
+		getsupply();
 		
 		gainCard = function(cardName){
 			var data = {"cardName": cardName}

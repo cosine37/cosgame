@@ -22,107 +22,20 @@
 	</div>
 	<div id="supply">
 		<div id="basic" style="float: left; width: 200px;">
-			<div class="base" style="background:url({{base[0].cards[0].image}});background-size:cover" ng-click="buyc('base', 0)">
+			<div ng-repeat="baseCard in base track by $index" ng-style="baseStyle[$index]" ng-click="buyc('base', $index)">
 				<div class="base-number">
-					{{base[0].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-left: 5px;background:url({{base[1].cards[0].image}});background-size:cover" ng-click="buyc('base', 1)" >
-				<div class="base-number">
-					{{base[1].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-top: 5px;background:url({{base[2].cards[0].image}});background-size:cover" ng-click="buyc('base', 2)" >
-				<div class="base-number">
-					{{base[2].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-left: 5px;margin-top: 5px;background:url({{base[3].cards[0].image}});background-size:cover" ng-click="buyc('base', 3)" >
-				<div class="base-number">
-					{{base[3].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-top: 5px;background:url({{base[4].cards[0].image}});background-size:cover"  ng-click="buyc('base', 4)">
-				<div class="base-number">
-					{{base[4].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-left: 5px;margin-top: 5px;background:url({{base[5].cards[0].image}});background-size:cover"  ng-click="buyc('base', 5)">
-				<div class="base-number">
-					{{base[5].numCards}}
-				</div>
-			</div>
-			<div class="base" style="margin-top: 5px;background:url({{base[6].cards[0].image}});background-size:cover"  ng-click="buyc('base', 6)">
-				<div class="base-number">
-					{{base[6].numCards}}
+					{{base[$index].numCards}}
 				</div>
 			</div>
 		</div>
 		<div id="kindomCards" style="margin-left: 10px; width: 800px;">
 			<div id="kindom">
-				<div class="kindom" style="background:url({{kindom[0].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 0)">
+				<div ng-repeat="kindomCard in kindom track by $index" ng-style="kindomStyle[$index]" ng-click="buyc('kindom', $index)">
 					<div class="kindom-number">
-						{{kindom[0].numCards}}
+						{{kindom[$index].numCards}}
 					</div>
 					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[0].image);$event.stopPropagation();"/>
-					</div>
-				</div>
-				<div class="kindom" style="margin-left: 10px;background:url({{kindom[1].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 1)">
-					<div class="kindom-number">
-						{{kindom[1].numCards}}
-					</div>
-				</div>
-				<div class="kindom" style="margin-left: 10px;background:url({{kindom[2].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 2)">
-					<div class="kindom-number">
-						{{kindom[2].numCards}}
-					</div>
-				</div>
-				<div class="kindom" style="margin-left: 10px;background:url({{kindom[3].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 3)">
-					<div class="kindom-number">
-						{{kindom[3].numCards}}
-					</div>
-					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[3].image);$event.stopPropagation();"/>
-					</div>
-				</div>
-				<div class="kindom" style="margin-left: 10px;background:url({{kindom[4].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 4)">
-					<div class="kindom-number">
-						{{kindom[4].numCards}}
-					</div>
-				</div>
-				<div class="kindom" style="margin-top: 5px;background:url({{kindom[5].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 5)">
-					<div class="kindom-number">
-						{{kindom[5].numCards}}
-					</div>
-				</div>
-				<div class="kindom" style="margin-top: 5px; margin-left: 10px;background:url({{kindom[6].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 6)">
-					<div class="kindom-number">
-						{{kindom[6].numCards}}
-					</div>
-				</div>
-				<div class="kindom" style="margin-top: 5px; margin-left: 10px;background:url({{kindom[7].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 7)">
-					<div class="kindom-number">
-						{{kindom[7].numCards}}
-					</div>
-					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[7].image);$event.stopPropagation();"/>
-					</div>
-				</div>
-				<div class="kindom" style="margin-top: 5px; margin-left: 10px;background:url({{kindom[8].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 8)">
-					<div class="kindom-number">
-						{{kindom[8].numCards}}
-					</div>
-					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[8].image);$event.stopPropagation();"/>
-					</div>
-				</div>
-				<div class="kindom" style="margin-top: 5px; margin-left: 10px;background:url({{kindom[9].cards[0].image}});background-size:cover" ng-click="buyc('kindom', 9)">
-					<div class="kindom-number">
-						{{kindom[9].numCards}}
-					</div>
-					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[9].image);$event.stopPropagation();"/>
+						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[$index].image);"/>
 					</div>
 				</div>
 			</div>
