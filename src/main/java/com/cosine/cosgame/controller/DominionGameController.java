@@ -390,6 +390,9 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
 		board.updateDB(username, board.genPlayerDoc(username));
+		if (phase.equals("Offturn")) {
+			board.gameEndJudge();
+		}
 		value.add(phase);
 		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);

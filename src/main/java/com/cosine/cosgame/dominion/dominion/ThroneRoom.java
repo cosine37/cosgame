@@ -55,8 +55,10 @@ public class ThroneRoom extends Card{
 			}
 			ask.setThronedAsk(thronedAsk);
 			if (thronedAsk.getType() == Ask.NONE) {
+				if (thronedAsk.getSubType() == Ask.ATTACK) {
+					board.attackHandle(player, cardName);
+				}
 				ask.addResLevel();
-				System.out.println(ask.getResLevel());
 				ask.setThronedAskType(Ask.PLAY);
 				if (ask.getResLevel() == 3) {
 					ask = new Ask();

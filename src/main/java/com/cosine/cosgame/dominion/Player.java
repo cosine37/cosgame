@@ -514,9 +514,6 @@ public class Player {
 				phase = OFFTURN;
 			}
 		}
-		if (phase == OFFTURN) {
-			cleanUp();
-		}
 	}
 	public List<Card> getDiscard(){
 		return discard;
