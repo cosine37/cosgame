@@ -41,6 +41,7 @@ public class Moneylender extends Card{
 			ls.add("Copper");
 			player.trash(ls, "hand");
 			player.addCoin(3);
+			log(player.getName() + " trashes a Copper for $3", 1);
 		} else {
 			
 		}

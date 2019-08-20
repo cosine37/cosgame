@@ -157,11 +157,6 @@ public class Player {
 		int i;
 		Card c;
 		Ask ask = new Ask();
-		if (phase == ACTION) {
-			if (action == 0) {
-				return ask;
-			}
-		}
 		for (i=hand.size()-1;i>=0;i--) {
 			if (hand.get(i).getName().equals(cardName)) {
 				c = hand.get(i);
@@ -172,6 +167,7 @@ public class Player {
 					action = action - 1;
 				}
 				ask = c.play();
+				System.out.println("ask.type="+ask.getType());
 				play.add(c);
 				break;
 			}
@@ -472,11 +468,9 @@ public class Player {
 		this.name = name;
 	}
 	public int getPhase() {
-		autoSetPhase();
 		return phase;
 	}
 	public String getPhaseAsString() {
-		autoSetPhase();
 		return phases[phase];
 	}
 	public void setPhase(int phase) {
@@ -501,17 +495,7 @@ public class Player {
 		}
 		if (phase == BUY) {
 			if (buy == 0) {
-				phase = NIGHT;
-			}
-		}
-		if (phase == NIGHT) {
-			if (noCardType("night")) {
-				phase = CLEANUP;
-			}
-		}
-		if (phase == CLEANUP) {
-			if (cleanUpOptions=="") {
-				phase = OFFTURN;
+				nextPhase();
 			}
 		}
 	}

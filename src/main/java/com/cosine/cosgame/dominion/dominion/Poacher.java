@@ -53,6 +53,12 @@ public class Poacher extends Card{
 				}
 			}
 		}
+		int n = ask.getSelectedCards().size();
+		if (n == 1) {
+			log(player.getName() + " discards a card", 1);
+		} else {
+			log(player.getName() + " discards " + n + " cards", 1);
+		}
 		ask = new Ask();
 		return ask;
 	}

@@ -41,7 +41,9 @@ public class Cellar extends Card{
 				}
 			}
 		}
+		log(player.getName() + " discards " + n + " cards", 1);
 		player.draw(n);
+		log(player.getName() + " draws " + n + " cards", 1);
 		ask = new Ask();
 		return ask;
 	}

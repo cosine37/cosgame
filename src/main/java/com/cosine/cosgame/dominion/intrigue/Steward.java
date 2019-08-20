@@ -35,9 +35,11 @@ public class Steward extends Card{
 		if (a.getType() == Ask.OPTION) {
 			if (a.getAns() == 0) {
 				player.draw(2);
+				log(player.getName() + " draws 2 cards", 1);
 				return ask;
 			} else if (a.getAns() == 1) {
 				player.addCoin(2);
+				log(player.getName() + " gets +$2", 1);
 				return ask;
 			} else if (a.getAns() == 2) {
 				ask.setCardName(name);
@@ -52,6 +54,7 @@ public class Steward extends Card{
 		} else if (a.getType() == Ask.HANDCHOOSE) {
 			player.setBoard(board);
 			player.trash(a.getSelectedCards(), "hand");
+			log(player.getName() + " trashes 2 cards", 1);
 			return ask;
 		} else {
 			return ask;

@@ -51,6 +51,7 @@ public class Harbinger extends Card{
 			int index = ask.getSelectedRevealed().get(0);
 			Card card = player.getDiscard().remove(index);
 			player.topDeck(card);
+			log(player.getName() + " topdecks a card from dicard", 1);
 		} else {
 			
 		}

@@ -16,15 +16,15 @@ public class CouncilRoom extends Card{
 	}
 	
 	public Ask play() {
-		vanilla();
+		Ask ask = super.play();
 		for (int i=0;i<board.getPlayers().size();i++) {
 			if (board.getPlayers().get(i).getName().equals(player.getName())) {
 				
 			} else {
 				board.getPlayers().get(i).draw(1);
+				log("Each other player draws a card", 1);
 			}
 		}
-		Ask ask = new Ask();
 		return ask;
 	}
 }

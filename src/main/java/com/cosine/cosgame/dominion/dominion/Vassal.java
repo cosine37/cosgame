@@ -20,6 +20,7 @@ public class Vassal extends Card{
 		Ask ask = super.play();
 		Card card = player.discardTop();
 		if (card == null) return ask;
+		log(player.getName() + " discards a " + card.getName(), 1);
 		if (card.isActionType()) {
 			ask.setType(Ask.OPTION);
 			String msg = "You may play " + card.getName();
@@ -44,6 +45,7 @@ public class Vassal extends Card{
 				card.setPlayer(player);
 				card.setBoard(player.getBoard());
 				ask = card.play();
+				log(player.getName() + " plays a " + card.getName(), 1);
 			}
 		} else {
 			ask.setType(Ask.NONE);

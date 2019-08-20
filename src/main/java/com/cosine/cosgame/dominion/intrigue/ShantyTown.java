@@ -14,7 +14,7 @@ public class ShantyTown extends Card{
 	}
 	
 	public Ask play() {
-		vanilla();
+		Ask ask = super.play();
 		boolean flag = true;
 		for (int i=0;i<player.getHand().size();i++) {
 			if (player.getHand().get(i).isActionType()) {
@@ -24,8 +24,8 @@ public class ShantyTown extends Card{
 		}
 		if (flag) {
 			player.draw(2);
+			log(player.getName() + " draws 2 cards", 1);
 		}
-		Ask ask = new Ask();
 		return ask;
 	}
 }

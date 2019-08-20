@@ -20,6 +20,7 @@ public class Bureaucrat extends Card{
 			
 		} else {
 			board.gainToPlayerFromPileToTopdeck(player, board.getPileByTop("Silver"));
+			log(player.getName() + " gains a silver on top of the deck", 1);
 		}
 		return ask;
 	}
@@ -43,6 +44,7 @@ public class Bureaucrat extends Card{
 				}
 			}
 			player.topDeck(cardName);
+			log(player.getName() + " topdecks a " + cardName, 1);
 			return ask;
 		}
 		ask.setCardName(name);

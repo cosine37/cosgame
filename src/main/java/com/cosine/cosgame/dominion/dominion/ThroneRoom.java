@@ -49,6 +49,13 @@ public class ThroneRoom extends Card{
 			Ask thronedAsk;
 			if (ask.getThronedAskType() == Ask.PLAY) {
 				thronedAsk = card.play();
+				/*
+				if (ask.getResLevel() == 1) {
+					log(player.getName() + " plays " + card.getName(), 1);
+				} else if (ask.getResLevel() == 2) {
+					log(player.getName() + " plays " + card.getName() + " again", 1);
+				}
+				*/
 				ask.setThronedAskType(Ask.RESPONSE);
 			} else {
 				thronedAsk = card.response(ask.getThronedAsk());

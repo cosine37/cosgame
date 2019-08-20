@@ -38,6 +38,7 @@ public class Mine extends Card{
 					price = player.getHand().get(i).getPrice();
 					player.setBoard(board);
 					player.trash(i);
+					log(player.getName() + " trashes a " + cardName, 1);
 					break;
 				}
 			}
@@ -51,6 +52,7 @@ public class Mine extends Card{
 			ask.setMsg("Gain a Treasure card costing up to "+Integer.toString(ask.getUpper())+" to your hand");
 		} else if (ask.getResLevel() == 1) {
 			String gainedCardName = ask.getSelectedCards().get(0);
+			log(player.getName() + " gains a " + gainedCardName + " to hand", 1);
 			board.gainToPlayerFromPileToHand(player, board.getPileByTop(gainedCardName));
 			ask = new Ask();
 			ask.setCardName(name);

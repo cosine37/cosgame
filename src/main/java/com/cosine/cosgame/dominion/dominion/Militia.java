@@ -31,7 +31,9 @@ public class Militia extends Card{
 		if (a.getSubType() == Ask.ATTACK) {
 			for (int i=0; i<a.getSelectedCards().size();i++) {
 				player.discard(a.getSelectedCards().get(i));
+				
 			}
+			log(player.getName() + " discards " + a.getSelectedCards().size() + " cards", 1);
 		}
 		Ask ask = new Ask();
 		return ask;

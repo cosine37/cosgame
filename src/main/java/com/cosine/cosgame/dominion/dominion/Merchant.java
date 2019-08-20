@@ -16,9 +16,8 @@ public class Merchant extends Card{
 	}
 	
 	public Ask play() {
-		vanilla();
+		Ask ask = super.play();
 		player.addPlayed(name);
-		Ask ask = new Ask();
 		return ask;
 	}
 }

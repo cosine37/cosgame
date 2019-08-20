@@ -22,6 +22,7 @@ public class Witch extends Card{
 			
 		} else {
 			board.gainToPlayerFromPile(player, board.getPileByTop("Curse"));
+			log(player.getName() + " gains a Curse ", 1);
 		}
 		return ask;
 	}

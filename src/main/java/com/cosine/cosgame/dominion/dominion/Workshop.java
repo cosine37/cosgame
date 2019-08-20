@@ -27,6 +27,7 @@ public class Workshop extends Card{
 	public Ask response(Ask a) {
 		Ask ask = super.response(a);
 		String gainedCardName = ask.getSelectedCards().get(0);
+		log(player.getName() + " gains a " + gainedCardName, 1);
 		board.gainToPlayerFromPile(player, board.getPileByTop(gainedCardName));
 		ask = new Ask();
 		return ask;

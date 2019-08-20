@@ -89,6 +89,10 @@ public class Card {
 		
 	}
 	
+	public void log(String s, int level) {
+		board.getLogger().add(s, level);
+	}
+	
 	public Ask onGain(Player p) {
 		Ask ask = new Ask();
 		ask.setCardName(name);
@@ -115,6 +119,13 @@ public class Card {
 	
 	public Ask play() {
 		vanilla();
+		if (player != null) {
+			if (player.getPhase() == Player.ACTION) {
+				if (board != null) {
+					board.getLogger().addPlayCard(player.getName(), name);
+				}
+			}
+		}
 		Ask ask = new Ask();
 		ask.setCardName(name);
 		if (isAttack()) {

@@ -54,6 +54,13 @@ public class Sentry extends Card{
 				card.onTrash(player);
 				board.getTrash().add(card);
 			}
+			int n = ask.getSelectedRevealed().size();
+			if (n == 1) {
+				log(player.getName() + " trashes a card", 1);
+			} else if (n > 1) {
+				log(player.getName() + " trashes " + n + " cards", 1);
+			}
+			
 			if (player.getRevealed().size() == 0) {
 				ask = new Ask();
 			} else {
@@ -76,6 +83,12 @@ public class Sentry extends Card{
 				card.onDiscard(player);
 				player.getDiscard().add(card);
 			}
+			int n = ask.getSelectedRevealed().size();
+			if (n == 1) {
+				log(player.getName() + " discards a card", 1);
+			} else if (n > 1) {
+				log(player.getName() + " discards " + n + " cards", 1);
+			}
 			if (player.getRevealed().size() == 0) {
 				ask = new Ask();
 			} else {
@@ -92,6 +105,12 @@ public class Sentry extends Card{
 			}
 		} else if (ask.getResLevel() == 2) {
 			player.topDeckRevealed(ask.getSelectedRevealed());
+			int n = ask.getSelectedRevealed().size();
+			if (n == 1) {
+				log(player.getName() + " topdecks a card", 1);
+			} else if (n > 1) {
+				log(player.getName() + " topdecks " + n + " cards", 1);
+			}
 			ask = new Ask();
 		}
 		return ask;

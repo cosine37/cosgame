@@ -386,6 +386,7 @@ public class DominionGameController {
 		String boardId = (String) session.getAttribute("boardId");
 		board = new Board();
 		board.getBoardFromDB(boardId);
+		board.getPlayerByName(username).autoSetPhase();
 		String phase = board.getPlayerByName(username).getPhaseAsString();
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
@@ -500,7 +501,6 @@ public class DominionGameController {
 		Player player = board.getPlayerByName(username);
 		player.setBoard(board);
 		Ask ask = player.play(cardName);
-		board.getLogger().addPlayCard(username, cardName);
 		if (ask.getType() == Ask.NONE) {
 			if (ask.getSubType() == Ask.ATTACK) {
 				board.attackHandle(player, cardName);
@@ -553,8 +553,8 @@ public class DominionGameController {
 		String username = (String) session.getAttribute("username");
 		board = new Board();
 		board.getBoardFromDB(boardId);
-		board.playerBuy(board.getPlayerByName(username), board.getPileByTop(cardName));
 		board.getLogger().addBuyCard(username, cardName);
+		board.playerBuy(board.getPlayerByName(username), board.getPileByTop(cardName));
 		board.updateSupply();
 		board.updatePlayerDB(username);
 		board.updateLogsDB();
@@ -569,8 +569,8 @@ public class DominionGameController {
 		String username = (String) session.getAttribute("username");
 		board = new Board();
 		board.getBoardFromDB(boardId);
-		board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
 		board.getLogger().addGainCard(username, cardName);
+		board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
 		board.updateSupply();
 		board.updatePlayerDB(username);
 		board.updateLogsDB();

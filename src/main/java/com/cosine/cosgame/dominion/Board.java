@@ -231,29 +231,34 @@ public class Board {
 		Card card = pile.getTop();
 		p.buy = p.buy - 1;
 		p.coin = p.coin - card.getPrice();
+		card.setBoard(this);
 		card.onBuy(p);
 		
 	}
 	
 	public void gainToPlayer(Player p, Card card) {
+		card.setBoard(this);
 		p.putOnDiscard(card);
 		card.onGain(p);
 	}
 	
 	public void gainToPlayerFromPile(Player p, Pile pile) {
 		Card card = pile.removeTop();
+		card.setBoard(this);
 		p.putOnDiscard(card);
 		card.onGain(p);
 	}
 	
 	public void gainToPlayerFromPileToHand(Player p, Pile pile) {
 		Card card = pile.removeTop();
+		card.setBoard(this);
 		p.putOnHand(card);
 		card.onGain(p);
 	}
 	
 	public void gainToPlayerFromPileToTopdeck(Player p, Pile pile) {
 		Card card = pile.removeTop();
+		card.setBoard(this);
 		p.deck.add(0, card);
 		card.onGain(p);
 	}

@@ -28,6 +28,7 @@ public class Artisan extends Card{
 		Ask ask = super.response(a);
 		if (ask.getResLevel() == 0) {
 			String gainedCardName = ask.getSelectedCards().get(0);
+			log(player.getName() + " gains a " + gainedCardName + " to hand", 1);
 			board.gainToPlayerFromPileToHand(player, board.getPileByTop(gainedCardName));
 			ask = new Ask();
 			ask.setCardName(name);
@@ -39,6 +40,7 @@ public class Artisan extends Card{
 		} else if (ask.getResLevel() == 1) {
 			String cardName = ask.getSelectedCards().get(0);
 			player.topDeck(cardName);
+			log(player.getName() + " topdecks a card", 1);
 			ask = new Ask();
 			ask.setCardName(name);
 			ask.setResLevel(2);
