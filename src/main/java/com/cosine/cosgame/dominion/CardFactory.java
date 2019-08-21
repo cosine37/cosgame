@@ -55,6 +55,8 @@ public class CardFactory {
 		if (cardname.equals("Duke")) return new Duke();
 		if (cardname.equals("Harem")) return new Harem();
 		if (cardname.equals("Steward")) return new Steward();
+		if (cardname.equals("Nobles")) return new Nobles();
+		if (cardname.equals("Pawn")) return new Pawn();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
