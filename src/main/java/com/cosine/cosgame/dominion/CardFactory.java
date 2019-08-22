@@ -60,6 +60,9 @@ public class CardFactory {
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
+		if (cardname.equals("Exile")) return new Exile();
+		if (cardname.equals("TempleFair")) return new TempleFair();
+		if (cardname.equals("LanternExhibition")) return new LanternExhibition();
 		
 		return null;
 	}

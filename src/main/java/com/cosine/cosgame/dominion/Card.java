@@ -28,6 +28,9 @@ public class Card {
 	// for Victory & Curse
 	protected int score;
 	
+	// some special care
+	protected int specialCare;
+	
 	protected boolean[] types = new boolean[100];
 	// Primary types
 	protected static final int INDEX_ACTION = 0;
@@ -43,6 +46,10 @@ public class Card {
 	
 	// categories
 	protected static final int INDEX_ATTACKBLOCK = 31;
+	
+	// special cares
+	protected static final int SC_NONE = 0;
+	protected static final int SC_CLEANUPTOSECLUSION = 1;
 	
 	// This is used for treasure, default true
 	protected boolean autoplay;
@@ -76,6 +83,8 @@ public class Card {
 		for (i=0;i<30;i++) {
 			types[i] = false;
 		}
+		
+		specialCare = 0;
 	}
 	
 	public void vanilla() {
@@ -282,6 +291,10 @@ public class Card {
 	
 	public boolean isSafe() {
 		return safe;
+	}
+	
+	public int getSpecialCare() {
+		return specialCare;
 	}
 	
 }

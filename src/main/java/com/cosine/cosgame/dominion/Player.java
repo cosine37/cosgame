@@ -13,7 +13,7 @@ public class Player {
 	
 	PlayedCounter counter;
 	ScoreKeeper sk;
-	List<Card> discard, hand, deck, play, revealed;
+	List<Card> discard, hand, deck, play, revealed, seclusion;
 	String cleanUpOptions;
 	String startOptions;
 	
@@ -42,6 +42,7 @@ public class Player {
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
 		revealed = new ArrayList<Card>();
+		seclusion = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -66,6 +67,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
+		seclusion = new ArrayList<Card>();
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
@@ -202,6 +204,10 @@ public class Player {
 			int size = discard.size();
 			deck.add(discard.remove(rand.nextInt(size)));
 		}
+		while (seclusion.size()>0) {
+			Card card = seclusion.remove(0);
+			discard.add(card);
+		}
 	}
 	
 	public void draw(int x) {
@@ -211,7 +217,12 @@ public class Player {
 				shuffle();
 			}
 			if (deck.size() == 0) {
-				// do nothing
+				if (discard.size() > 0) {
+					shuffle();
+				}
+			}
+			if (deck.size() == 0) {
+
 			} else {
 				hand.add(deck.remove(0));
 			}
@@ -268,7 +279,13 @@ public class Player {
 			discard.add(hand.remove(0));
 		}
 		while (play.size()>0) {
-			discard.add(play.remove(0));
+			Card card = play.remove(0);
+			if (card.getSpecialCare() == Card.SC_NONE) {
+				discard.add(card);
+			} else if (card.getSpecialCare() == Card.SC_CLEANUPTOSECLUSION) {
+				seclusion.add(card);
+			}
+			
 		}
 		draw(5);
 	}
@@ -291,7 +308,6 @@ public class Player {
 	public void trash(List<String> cards, String from) {
 		int i, j;
 		Card card;
-		Trash trash = board.getTrash();
 		if (from.equals("hand")) {
 			for (i=0;i<cards.size();i++) {
 				for (j=hand.size()-1;j>=0;j--) {
@@ -299,6 +315,24 @@ public class Player {
 						card = hand.remove(j);
 						board.getTrash().add(card);
 						card.onTrash(this);
+						break;
+					}
+				}
+			}
+		} else if (from == "deck") {
+			
+		}
+	}
+	
+	public void exile(List<String> cards, String from) {
+		int i, j;
+		Card card;
+		if (from.equals("hand")) {
+			for (i=0;i<cards.size();i++) {
+				for (j=hand.size()-1;j>=0;j--) {
+					if (hand.get(j).getName().equals(cards.get(i))) {
+						card = hand.remove(j);
+						seclusion.add(card);
 						break;
 					}
 				}
@@ -534,6 +568,9 @@ public class Player {
 		List<Pile> piles = pileGen.getPiles();
 		return piles;
 	}
+	public List<Card> getSeclusion(){
+		return seclusion;
+	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;
 	}
@@ -548,6 +585,9 @@ public class Player {
 	}
 	public void setRevealed(List<Card> revealed) {
 		this.revealed = revealed;
+	}
+	public void setSeclusion(List<Card> seclusion) {
+		this.seclusion = seclusion;
 	}
 	public int getCoin() {
 		return coin;
