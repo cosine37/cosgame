@@ -40,6 +40,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.viewed=[];
 		$scope.forRearrange = -1;
 		$scope.chooseViewed = [];
+		$scope.logs = [];
 
 		$scope.baseStyle={
 			"height": "109px",
@@ -76,11 +77,28 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
+		
+		
+		adjustLogs = function(){
+			var div = document.getElementById('logs');
+			div.scrollTop = div.scrollHeight;
+		}
+		
 		getplay = function(){
 			$http.post('/dominiongame/getplay').then(function(response){
 				$scope.playCards=response.data;
+				adjustLogs();
 			});
 		}
+		
+		getlogs = function(){
+			$http.post('/dominiongame/getlogs').then(function(response){
+				$scope.logs = response.data.value;
+				getplay();
+			});
+		}
+		
+		
 		
 		getdeck = function(){
 			$http.post('/dominiongame/getdeck').then(function(response){
@@ -99,7 +117,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						"float": "left"
 					}
 				}
-				getplay();
+				getlogs();
 			});
 		}
 		

@@ -5,12 +5,24 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.util.StringEntity;
+
 public class Logger {
 	List<Log> logs;
 	
 	public Logger() {
 		logs = new ArrayList<Log>();
 	}
+	
+	public StringEntity getLogsAsStringEntity() {
+		StringEntity entity = new StringEntity();
+		List<String> value = new ArrayList<String>();
+		for (int i=0;i<logs.size();i++) {
+			value.add(logs.get(i).getMsg());
+		}
+		entity.setValue(value);
+		return entity;
+	} 
 	
 	public void setLoggerFromDocument(List<Document> docs) {
 		logs = new ArrayList<Log>();

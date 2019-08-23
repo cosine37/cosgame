@@ -4,14 +4,10 @@
 <meta charset="UTF-8">
 <title>Dominion Game</title>
 <link rel="stylesheet" type="text/css" href="/view/css/dominionGame.css">
-<!-- 
-	<audio autoplay="autoplay" loop=""><source src="/sound/BGM/TritschTratschPolka.wma"></audio>
-	
- -->
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/dominionGameController.js"></script>
-<script src="js/bgm.js"></script>
+<script src="/js/bgm.js"></script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
 	<div id="audioplayer">
 		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
@@ -28,7 +24,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="kindomCards" style="margin-left: 10px; width: 800px;">
+		<div id="kindomCards" style="float: left; margin-left: 10px; width: 600px;">
 			<div id="kindom">
 				<div ng-repeat="kindomCard in kindom track by $index" ng-style="kindomStyle[$index]" ng-click="buyc('kindom', $index)">
 					<div class="kindom-number">
@@ -48,8 +44,19 @@
 				</div>
 			</div>
 		</div>
-		
+		<div id="sidesection" style="margin-left: 30px;">
+			<div id="logtabs">
+				<button>Logs</button>
+				<button>Trash</button>
+			</div>
+			<div id="logs" style="overflow-y: scroll; overflow:auto; height: 350px">
+				<div ng-repeat = "log in logs track by $index">
+					{{log}}
+				</div>
+			</div>
+		</div>
 	</div>
+	
 	<div id="player" style="clear:both; ">
 		<div>
 			Player

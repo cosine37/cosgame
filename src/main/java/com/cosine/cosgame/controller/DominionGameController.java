@@ -246,6 +246,16 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/getlogs", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getLogs(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		StringEntity entity = board.getLogger().getLogsAsStringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/getbase", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> getBase(HttpServletRequest request){
 		board = new Board();
