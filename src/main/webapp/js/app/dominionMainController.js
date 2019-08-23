@@ -36,7 +36,10 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.enterBoard = function(x){
-			$scope.goto("dominiongame?BoardId="+x);
+			var data = {"boardId": x};
+			$http({url: "/dominiongame/enterboard", method: "POST", params: data}).then(function(response){
+				$scope.goto("dominionboard");
+			});
 		}
 		
 		$scope.getBoard = function(){

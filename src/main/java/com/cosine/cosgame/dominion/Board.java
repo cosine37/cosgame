@@ -420,6 +420,21 @@ public class Board {
 		}
 	}
 	
+	public void addPlayer(String playerName, boolean storeToDB) {
+		if (numPlayers <= players.size()) {
+			
+		} else {
+			Player p = new Player(playerName);
+			players.add(p);
+		}
+		if (storeToDB) {
+			List<Document> playerDocs = genPlayerNameDoc();
+			updateDB("players", playerDocs);
+			Document dob = genPlayerDoc(players.size()-1);
+			updateDB(playerName,dob);
+		}
+	}
+	
 	public void addBot(boolean storeToDB) {
 		if (numPlayers <= players.size()) {
 			

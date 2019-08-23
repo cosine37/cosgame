@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("dominionBoardApp", []);
-app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -114,5 +114,20 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.unshowBigImage = function(){
 			$scope.showBigImage = false;
 		}
+		
+		getAllInfo = function(){
+			$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
+				$scope.playernames = response.data.value;
+				$scope.playernames[0] = $scope.playernames[0] + "(lord)";
+				$http.post('/dominiongame/getkindom').then(function(response){
+					$scope.kindom=response.data;
+				});
+			});
+			$timeout(function(){
+			    getAllInfo();
+			},1000);
+		}
+		
+		getAllInfo();
 		
 }]);
