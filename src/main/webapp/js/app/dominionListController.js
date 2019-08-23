@@ -9,7 +9,7 @@ app.controller("dominionListCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 	
 		$scope.goto = function(d){
-			var x = "http://localhost:8080";
+			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

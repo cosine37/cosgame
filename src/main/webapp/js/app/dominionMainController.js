@@ -12,7 +12,7 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.numplayers = 2;
 	
 		$scope.goto = function(d){
-			var x = "http://localhost:8080";
+			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		
