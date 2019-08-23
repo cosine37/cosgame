@@ -63,6 +63,8 @@ public class CardFactory {
 		if (cardname.equals("Exile")) return new Exile();
 		if (cardname.equals("TempleFair")) return new TempleFair();
 		if (cardname.equals("LanternExhibition")) return new LanternExhibition();
+		if (cardname.equals("CorruptedOfficial")) return new CorruptedOfficial();
+		if (cardname.equals("DragonBoat")) return new DragonBoat();
 		
 		return null;
 	}
