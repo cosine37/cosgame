@@ -206,6 +206,28 @@ public class Board {
 		players.get(currentPlayer).nextPhase();
 	}
 	
+	public List<String> getCardnamesWithPrice(int price){
+		List<String> cns = new ArrayList<>();
+		int i;
+		for (i=0;i<basePile.size();i++) {
+			if (basePile.get(i).getCards().size() == 0) {
+				continue;
+			}
+			if (basePile.get(i).getTop().getPrice() == price) {
+				cns.add(basePile.get(i).getTop().getName());
+			}
+		}
+		for (i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getCards().size() == 0) {
+				continue;
+			}
+			if (kindom.get(i).getTop().getPrice() == price) {
+				cns.add(kindom.get(i).getTop().getName());
+			}
+		}
+		return cns;
+	}
+	
 	public Pile getPileByTop(String name) {
 		int i;
 		for (i=0;i<basePile.size();i++) {

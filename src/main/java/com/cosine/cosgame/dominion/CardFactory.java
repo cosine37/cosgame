@@ -57,6 +57,8 @@ public class CardFactory {
 		if (cardname.equals("Steward")) return new Steward();
 		if (cardname.equals("Nobles")) return new Nobles();
 		if (cardname.equals("Pawn")) return new Pawn();
+		if (cardname.equals("TradingPost")) return new TradingPost();
+		if (cardname.equals("Upgrade")) return new Upgrade();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

@@ -11,6 +11,8 @@ public class Intrigue extends Expansion {
 	Pile stewardPile;
 	Pile noblesPile;
 	Pile pawnPile;
+	Pile tradingPostPile;
+	Pile upgradePile;
 	
 	public Intrigue() {
 		super();
@@ -21,6 +23,8 @@ public class Intrigue extends Expansion {
 		stewardPile = new Pile(Steward.class, 10);
 		noblesPile = new Pile(Nobles.class, 12);
 		pawnPile = new Pile(Pawn.class, 10);
+		tradingPostPile = new Pile(TradingPost.class, 10);
+		upgradePile = new Pile(Upgrade.class, 10);
 		
 		piles.add(shantyTownPile);
 		piles.add(dukePile);
@@ -28,6 +32,8 @@ public class Intrigue extends Expansion {
 		piles.add(stewardPile);
 		piles.add(noblesPile);
 		piles.add(pawnPile);
+		piles.add(tradingPostPile);
+		piles.add(upgradePile);
 		
 	}
 
