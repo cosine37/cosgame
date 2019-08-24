@@ -453,11 +453,13 @@ public class Player {
 	}
 	
 	public void autoplayTreasure() {
+		int total = 0;
 		int i=0;
 		while (i<hand.size()) {
 			if (hand.get(i).isTreasure() && hand.get(i).isAutoplay()) {
 				Card c = hand.get(i);
 				hand.remove(i);
+				total = total + c.getCoin();
 				c.setPlayer(this);
 				c.play();
 				play.add(c);
@@ -465,6 +467,7 @@ public class Player {
 				i++;
 			}
 		}
+		board.getLogger().add(name + " gets + $"+total, 0);
 	}
 	
 	public boolean has(String cardName, String where) {

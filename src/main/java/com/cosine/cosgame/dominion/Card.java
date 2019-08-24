@@ -100,6 +100,36 @@ public class Card {
 		player.addBuy(buy);
 		player.addCoin(coin);
 		
+		boolean flag = false;
+		String s = player.getName() + " gets";
+		if (card>0) {
+			s = s+" +"+card+" Card";
+			flag = true;
+		}
+		if (action>0) {
+			if (flag) {
+				s = s+",";
+			}
+			s = s+" +"+action+" Action";
+			flag = true;
+		}
+		if (buy>0) {
+			if (flag) {
+				s = s+",";
+			}
+			s = s+" +"+buy+" Buy";
+			flag = true;
+		}
+		if (coin>0) {
+			if (flag) {
+				s = s+",";
+			}
+			s = s+" + $"+coin;
+			flag = true;
+		}
+		if (flag && isActionType()) {
+			log(s,1);
+		}
 		numTurns = nt;
 	}
 	
@@ -108,7 +138,10 @@ public class Card {
 	}
 	
 	public void log(String s, int level) {
-		board.getLogger().add(s, level);
+		if (board != null) {
+			board.getLogger().add(s, level);
+		}
+		
 	}
 	
 	public Ask onGain(Player p) {
@@ -136,7 +169,6 @@ public class Card {
 	}
 	
 	public Ask play() {
-		vanilla();
 		if (player != null) {
 			if (player.getPhase() == Player.ACTION) {
 				player.addNumActionsPlayed();
@@ -145,6 +177,7 @@ public class Card {
 				}
 			}
 		}
+		vanilla();
 		Ask ask = new Ask();
 		ask.setCardName(name);
 		if (isAttack()) {
