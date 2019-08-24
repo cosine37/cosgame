@@ -11,6 +11,7 @@ public class Card {
 	protected int coffer;
 	protected int villager;
 	
+	// basic features
 	protected String name;
 	protected String image;
 	protected Player player;
@@ -27,6 +28,10 @@ public class Card {
 	
 	// for Victory & Curse
 	protected int score;
+	
+	// for duration cards
+	protected int nt; // feature
+	protected int numTurns; // for record
 	
 	// some special care
 	protected int specialCare;
@@ -85,6 +90,8 @@ public class Card {
 		}
 		
 		specialCare = 0;
+		nt = 0;
+		numTurns = 0;
 	}
 	
 	public void vanilla() {
@@ -92,6 +99,8 @@ public class Card {
 		player.addAction(action);
 		player.addBuy(buy);
 		player.addCoin(coin);
+		
+		numTurns = nt;
 	}
 	
 	public void setup() {
@@ -144,6 +153,12 @@ public class Card {
 	}
 	
 	public Ask attack() {
+		Ask ask = new Ask();
+		return ask;
+	}
+	
+	public Ask duration() {
+		numTurns = numTurns - 1;
 		Ask ask = new Ask();
 		return ask;
 	}
@@ -215,6 +230,14 @@ public class Card {
 	public int getScore(Player p) {
 		return score;
 	}
+	
+	public int getNumTurns() {
+		return numTurns;
+	}
+	
+	public void setNumTurns(int numTurns) {
+		this.numTurns = numTurns;
+	}
 
 	public boolean isActionType() {
 		return types[INDEX_ACTION];
@@ -242,6 +265,10 @@ public class Card {
 
 	public boolean isReaction() {
 		return types[INDEX_REACTION];
+	}
+	
+	public boolean isDuration() {
+		return types[INDEX_DURATION];
 	}
 	
 	public boolean isAttackBlock() {

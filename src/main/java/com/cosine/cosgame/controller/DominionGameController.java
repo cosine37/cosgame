@@ -426,6 +426,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
 		board.updateDB(username, board.genPlayerDoc(username));
+		board.updateLogsDB();
 		if (phase.equals("Offturn")) {
 			board.gameEndJudge();
 		}
@@ -443,6 +444,7 @@ public class DominionGameController {
 		board.getBoardFromDB(boardId);
 		board.getPlayerByName(username).nextPhase();
 		board.updateDB(username, board.genPlayerDoc(username));
+		board.updateLogsDB();
 		String phase = board.getPlayerByName(username).getPhaseAsString();
 		if (phase.equals("Offturn")) {
 			board.gameEndJudge();
@@ -468,6 +470,7 @@ public class DominionGameController {
 		board.updateDB("currentPlayer", board.getCurrentPlayer());
 		board.updateDB(p1, board.genPlayerDoc(p1));
 		board.updateDB(p2, board.genPlayerDoc(p2));
+		board.updateLogsDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

@@ -16,6 +16,7 @@ public class Player {
 	List<Card> discard, hand, deck, play, revealed, seclusion;
 	String cleanUpOptions;
 	String startOptions;
+	List<Ask> startAsks;
 	
 	public static final String[] phases = {"Start", "Action", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	int phase;
@@ -278,14 +279,19 @@ public class Player {
 		while (hand.size()>0) {
 			discard.add(hand.remove(0));
 		}
-		while (play.size()>0) {
-			Card card = play.remove(0);
-			if (card.getSpecialCare() == Card.SC_NONE) {
-				discard.add(card);
-			} else if (card.getSpecialCare() == Card.SC_CLEANUPTOSECLUSION) {
-				seclusion.add(card);
+		int i=0;
+		while (i<play.size()) {
+			Card card = play.get(i);
+			if (card.getNumTurns() == 0) {
+				play.remove(i);
+				if (card.getSpecialCare() == Card.SC_NONE) {
+					discard.add(card);
+				} else if (card.getSpecialCare() == Card.SC_CLEANUPTOSECLUSION) {
+					seclusion.add(card);
+				}
+			} else { // for duration cards
+				i = i+1;
 			}
-			
 		}
 		draw(5);
 	}
@@ -373,7 +379,17 @@ public class Player {
 			buy = 1;
 			coin = 0;
 			resetPlayed();
-			if (startOptions=="") {
+			startAsks = new ArrayList<>();
+			for (int i=0;i<play.size();i++) {
+				Card card = play.get(i);
+				card.setPlayer(this);
+				card.setBoard(board);
+				Ask ask = card.duration();
+				if (ask.getType() != ask.NONE) {
+					startAsks.add(ask);
+				}
+			}
+			if (startAsks.size() == 0) {
 				phase++;
 			}
 		}

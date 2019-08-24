@@ -13,6 +13,7 @@ import com.cosine.cosgame.dominion.base.Estate;
 import com.cosine.cosgame.dominion.dominion.Dominion;
 import com.cosine.cosgame.dominion.intrigue.Intrigue;
 import com.cosine.cosgame.dominion.oriental.Oriental;
+import com.cosine.cosgame.dominion.seaside.Seaside;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.util.MongoDBUtil;
 import com.cosine.cosgame.util.TextGenerator;
@@ -25,6 +26,7 @@ public class Board {
 	Expansion base;
 	Expansion dominion;
 	Expansion intrigue;
+	Expansion seaside;
 	Expansion oriental;
 	Trash trash;
 	List<Player> players;
@@ -305,11 +307,13 @@ public class Board {
 	public void randomize() {
 		dominion = new Dominion();
 		intrigue = new Intrigue();
+		seaside = new Seaside();
 		oriental = new Oriental();
 		Expansion e = new Expansion();
 		e.addExpansion(dominion);
 		e.addExpansion(oriental);
 		e.addExpansion(intrigue);
+		e.addExpansion(seaside);
 		kindom = e.genKindomPile();
 	}
 	
@@ -673,7 +677,13 @@ public class Board {
 			for (j=0;j<discardDocs.size();j++) {discard.add(factory.createCard((String)discardDocs.get(j).get("name")));}
 			for (j=0;j<deckDocs.size();j++) {deck.add(factory.createCard((String)deckDocs.get(j).get("name")));}
 			for (j=0;j<handDocs.size();j++) {hand.add(factory.createCard((String)handDocs.get(j).get("name")));}
-			for (j=0;j<playDocs.size();j++) {play.add(factory.createCard((String)playDocs.get(j).get("name")));}
+			for (j=0;j<playDocs.size();j++) {
+				Card c = factory.createCard((String)playDocs.get(j).get("name"));
+				if (c.isDuration()) {
+					c.setNumTurns((int)playDocs.get(j).get("numTurns"));
+				}
+				play.add(c);
+			}
 			for (j=0;j<revealedDocs.size();j++) {revealed.add(factory.createCard((String)revealedDocs.get(j).get("name")));}
 			for (j=0;j<seclusionDocs.size();j++) {seclusion.add(factory.createCard((String)seclusionDocs.get(j).get("name")));}
 			for (j=0;j<playedDocs.size();j++) {played.add((String)playedDocs.get(j).get("value"));}
@@ -746,6 +756,9 @@ public class Board {
 		for (j=0;j<players.get(i).getPlay().size();j++) {
 			Document d = new Document();
 			d.append("name", players.get(i).getPlay().get(j).getName());
+			if (players.get(i).getPlay().get(j).isDuration()) {
+				d.append("numTurns", players.get(i).getPlay().get(j).getNumTurns());
+			}
 			playDocs.add(d);
 		}
 		
