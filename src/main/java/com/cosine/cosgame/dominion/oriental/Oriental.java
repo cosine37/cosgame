@@ -11,6 +11,7 @@ public class Oriental extends Expansion {
 	Pile lanternExhibitionPile;
 	Pile corruptedOfficialPile;
 	Pile dragonBoatPile;
+	Pile tombSweepingPile;
 	
 	public Oriental() {
 		super();
@@ -22,6 +23,7 @@ public class Oriental extends Expansion {
 		lanternExhibitionPile = new Pile(LanternExhibition.class, 10);
 		corruptedOfficialPile = new Pile(CorruptedOfficial.class, 20);
 		dragonBoatPile = new Pile(DragonBoat.class, 10);
+		tombSweepingPile = new Pile(TombSweeping.class, 10);
 		
 		piles.add(pendantForWinePile);
 		piles.add(armyDrummerPile);
@@ -30,6 +32,7 @@ public class Oriental extends Expansion {
 		piles.add(lanternExhibitionPile);
 		piles.add(corruptedOfficialPile);
 		piles.add(dragonBoatPile);
+		piles.add(tombSweepingPile);
 		
 	}
 

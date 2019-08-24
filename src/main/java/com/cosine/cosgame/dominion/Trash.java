@@ -17,6 +17,30 @@ public class Trash {
 		trashedCards.add(card);
 	}
 	
+	public void gainToPlayer(Player p, String cardName) {
+		for (int i=trashedCards.size()-1; i>=0; i--) {
+			if (trashedCards.get(i).getName().equals(cardName)) {
+				Card card = trashedCards.remove(i);
+				card.setBoard(p.getBoard());
+				p.putOnDiscard(card);
+				card.onGain(p);
+				break;
+			}
+		}
+	}
+	
+	public void gainToPlayerHand(Player p, String cardName) {
+		for (int i=trashedCards.size()-1; i>=0; i--) {
+			if (trashedCards.get(i).getName().equals(cardName)) {
+				Card card = trashedCards.remove(i);
+				card.setBoard(p.getBoard());
+				p.getHand().add(card);
+				card.onGain(p);
+				break;
+			}
+		}
+	}
+	
 	public List<Card> getTrashedCards(){
 		return trashedCards;
 	}
