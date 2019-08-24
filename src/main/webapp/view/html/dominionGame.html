@@ -46,12 +46,19 @@
 		</div>
 		<div id="sidesection" style="margin-left: 30px;">
 			<div id="logtabs">
-				<button>Logs</button>
-				<button>Trash</button>
+				<button ng-click="logButton()">Logs</button>
+				<button ng-click="trashButton()">Trash</button>
 			</div>
-			<div id="logs" style="overflow-y: scroll; overflow:auto; height: 350px">
+			<div id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px">
 				<div ng-repeat = "log in logs track by $index">
 					{{log}}
+				</div>
+			</div>
+			<div id="trash" ng-show="showTrash" style="overflow-y: scroll; overflow:auto; height: 350px">
+				<div class="base" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover; margin-top: 10px">
+					<div class="kindom-number">
+						{{z.numCards}}
+					</div>
 				</div>
 			</div>
 		</div>

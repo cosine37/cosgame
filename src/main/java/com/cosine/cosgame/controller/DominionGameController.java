@@ -237,6 +237,8 @@ public class DominionGameController {
 			board.updateDB("base", board.genBaseDocs());
 			board.updateDB("players", board.genPlayerNameDoc());
 			board.updateDB("kindom", board.genKindomDocs());
+			board.updateDB("trash", board.getTrash().toDocument());
+			board.updateDB("logs", board.getLogger().getLoggerAsDocument());
 			int i;
 			for (i=0;i<board.getPlayers().size();i++) {
 				board.updateDB(board.getPlayers().get(i).getName(), board.genPlayerDoc(i));
@@ -337,6 +339,17 @@ public class DominionGameController {
 		}
 		Card card = discard.get(discard.size() - 1);
 		return new ResponseEntity<>(card, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/gettrash", method = RequestMethod.POST)
+	public ResponseEntity<List<Pile>> gettrash(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		List<Pile> trashPiles = board.getTrash().getTrashedCardsAsPiles();
+		return new ResponseEntity<>(trashPiles, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dominiongame/cleanup", method = RequestMethod.POST)

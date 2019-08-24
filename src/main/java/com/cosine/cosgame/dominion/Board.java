@@ -120,6 +120,9 @@ public class Board {
 		// clean trash
 		trash = new Trash();
 		
+		// clean logs
+		logger = new Logger();
+		
 		// clean player cards in case
 		for (i=0;i<players.size();i++) {
 			players.get(i).cleanCards();

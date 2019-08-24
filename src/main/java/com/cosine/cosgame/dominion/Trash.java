@@ -21,6 +21,13 @@ public class Trash {
 		return trashedCards;
 	}
 	
+	public List<Pile> getTrashedCardsAsPiles(){
+		PileGen pileGen = new PileGen();
+		pileGen.add(trashedCards);
+		List<Pile> trashedPiles = pileGen.getPiles();
+		return trashedPiles;
+	}
+	
 	public List<Document> toDocument() {
 		List<Document> trashDocs = new ArrayList<Document>();
 		for (int i=0;i<trashedCards.size();i++) {

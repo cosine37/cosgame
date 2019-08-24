@@ -41,6 +41,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.forRearrange = -1;
 		$scope.chooseViewed = [];
 		$scope.logs = [];
+		$scope.trashCards = [];
+		$scope.showLogs = true;
+		$scope.showTrash = false;
 
 		$scope.baseStyle={
 			"height": "109px",
@@ -77,11 +80,26 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
+		$scope.logButton = function(){
+			$scope.showLogs = true;
+			$scope.showTrash = false;
+		}
 		
+		$scope.trashButton = function(){
+			$scope.showLogs = false;
+			$scope.showTrash = true;
+		}
+		
+		gettrash = function(){
+			$http.post('/dominiongame/gettrash').then(function(response){
+				$scope.trashCards=response.data;
+			});
+		}
 		
 		adjustLogs = function(){
 			var div = document.getElementById('logs');
 			div.scrollTop = div.scrollHeight;
+			gettrash();
 		}
 		
 		getplay = function(){
