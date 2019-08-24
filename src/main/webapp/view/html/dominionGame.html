@@ -22,6 +22,9 @@
 				<div class="base-number">
 					{{base[$index].numCards}}
 				</div>
+				<div class="plus" ng-show="showPlus('base', $index)">
+					<img src="/image/Dominion/plus.png" height="20" width="20""/>
+				</div>
 			</div>
 		</div>
 		<div id="kindomCards" style="float: left; margin-left: 10px; width: 600px;">
@@ -32,6 +35,9 @@
 					</div>
 					<div class="kindom-question">
 						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[$index].image);"/>
+					</div>
+					<div class="plus" ng-show="showPlus('kindom', $index)">
+						<img src="/image/Dominion/plus.png" height="20" width="20""/>
 					</div>
 				</div>
 			</div>

@@ -46,11 +46,13 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showTrash = false;
 
 		$scope.baseStyle={
+			"position": "relative",
 			"height": "109px",
 			"width": "71px"
 		};
 		
 		$scope.kindomStyle={
+			"position": "relative",
 			"height": "210px",
 			"width": "140px"
 		};
@@ -297,15 +299,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				
 			});
 		}
-		/*
-		$http.post('/dominiongame/getbase').then(function(response){
-			$scope.base=response.data;
-			$http.post('/dominiongame/getkindom').then(function(response){
-				$scope.kindom=response.data;
-				getstatus();
-			});
-		});
-		*/
 		$scope.resign = function(){
 			$http.post('/dominiongame/resign').then(function(response){
 				$scope.goto('dominionend');
@@ -341,7 +334,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.pb = function(){
-			//alert($scope.phase);
 			if ($scope.status == "first cards"){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
 					getsupply();
@@ -398,7 +390,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					} else if (task.type == 4 && task.subType == 52){
 						var s = "";
 						var i,j;
-						//alert($scope.chooseViewed.toString());
 						for (i=0;i<$scope.chooseViewed.length;i++){
 							if (s == ""){
 								s = $scope.chooseViewed[i].toString();
@@ -491,6 +482,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.baseStyle = new Array(n);
 			for (i=0;i<n;i++){
 				var tJsonObj = {
+					"position": "relative",
 					"float": "left",
 					"height": "105px",
 					"width": "70px"	
@@ -513,6 +505,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.kindomStyle = new Array(n);
 			for (i=0;i<n;i++){
 				var tJsonObj = {
+					"position": "relative",
 					"float": "left",
 					"height": "157px",
 					"width": "105px"	
@@ -669,6 +662,61 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			}
+		}
+		
+		$scope.showPlus = function(bk, index){
+			if ($scope.ask == null) return false;
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 3){
+				if (bk == "kindom"){
+					pile = $scope.kindom[index];
+				} else if (bk = "base"){
+					pile = $scope.base[index];
+				}
+				numCards = pile.numCards;
+				if (numCards > 0){
+					price = pile.cards[0].price;
+					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
+						if (price >= task.lower && price <= task.upper){
+							/*
+							var data = {"ans": pile.cards[0].name};
+							$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+								$scope.ask = response.data;
+								getsupply();
+							});
+							*/
+							return true;
+						}
+					}
+				}
+			} else if ($scope.phase == "Buy"){
+				if ($scope.buy > 0){
+					var pile;
+					var cardName = "";
+					var numCards = 0;
+					var price = 0;
+					if (bk == "kindom"){
+						pile = $scope.kindom[index];
+					} else if (bk = "base"){
+						pile = $scope.base[index];
+					}
+					numCards = pile.numCards;
+					if (numCards > 0){
+						price = pile.cards[0].price;
+						if (price <= $scope.coin){
+							/*
+							cardName = pile.cards[0].name;
+							buyCard(cardName);
+							*/
+							return true;
+						}
+					}
+				}
+			}
+			return false;
 		}
 		
 		$scope.buyc = function(bk, index){

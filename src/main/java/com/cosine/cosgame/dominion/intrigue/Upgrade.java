@@ -41,6 +41,7 @@ public class Upgrade extends Card{
 				return ask;
 			} else if (cns.size() == 1) {
 				board.gainToPlayerFromPile(player, board.getPileByTop(cns.get(0)));
+				log(player.getName() + " gains a " + cns.get(0), 1);
 				Ask ask = new Ask();
 				return ask;
 			} else {
