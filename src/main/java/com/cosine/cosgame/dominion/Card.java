@@ -139,6 +139,7 @@ public class Card {
 		vanilla();
 		if (player != null) {
 			if (player.getPhase() == Player.ACTION) {
+				player.addNumActionsPlayed();
 				if (board != null) {
 					board.getLogger().addPlayCard(player.getName(), name);
 				}

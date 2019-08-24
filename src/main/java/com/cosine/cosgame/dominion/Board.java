@@ -653,6 +653,7 @@ public class Board {
 			p.setCoffer((int)dop.get("coffer"));
 			p.setVillager((int)dop.get("villager"));
 			p.setVp((int)dop.get("vp"));
+			p.setNumActionsPlayed((int)dop.getInteger("numActionsPlayed"));
 			
 			Ask ask = new Ask();
 			ask.setAskFromDocument((Document) dop.get("ask"));
@@ -725,6 +726,7 @@ public class Board {
 		dop.append("villager", players.get(i).getVillager());
 		dop.append("vp", players.get(i).getVp());
 		dop.append("ask", players.get(i).getAsk().toDocument());
+		dop.append("numActionsPlayed", players.get(i).getNumActionsPlayed());
 		
 		int j;
 		List<Document> discardDocs = new ArrayList<Document>();

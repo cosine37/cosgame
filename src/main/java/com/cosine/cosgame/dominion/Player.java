@@ -31,6 +31,7 @@ public class Player {
 	int subPhase; // this is linked to Ask type
 	
 	int coin, action, buy;
+	int numActionsPlayed;
 	int coffer, villager, vp;
 	boolean isBot, isGoodToGo;
 	
@@ -51,6 +52,7 @@ public class Player {
 		counter = new PlayedCounter();
 		sk = new ScoreKeeper(this);
 		ask = new Ask();
+		numActionsPlayed = 0;
 	}
 	public Player(String name) {
 		this();
@@ -264,7 +266,7 @@ public class Player {
 	}
 	
 	public Card discard(String cardName) {
-		for (int i=0;i<hand.size();i++) {
+		for (int i=hand.size()-1;i>=0;i--) {
 			if (hand.get(i).getName().equals(cardName)) {
 				Card card = hand.remove(i);
 				card.onDiscard(this);
@@ -378,6 +380,7 @@ public class Player {
 			action = 1;
 			buy = 1;
 			coin = 0;
+			numActionsPlayed = 0;
 			resetPlayed();
 			startAsks = new ArrayList<>();
 			for (int i=0;i<play.size();i++) {
@@ -385,7 +388,7 @@ public class Player {
 				card.setPlayer(this);
 				card.setBoard(board);
 				Ask ask = card.duration();
-				if (ask.getType() != ask.NONE) {
+				if (ask.getType() != Ask.NONE) {
 					startAsks.add(ask);
 				}
 			}
@@ -683,5 +686,14 @@ public class Player {
 		for (i=0;i<pc.size();i++) {
 			counter.add(pc.get(i));
 		}
+	}
+	public void setNumActionsPlayed(int numActionsPlayed) {
+		this.numActionsPlayed = numActionsPlayed;
+	}
+	public int getNumActionsPlayed() {
+		return numActionsPlayed;
+	}
+	public void addNumActionsPlayed() {
+		numActionsPlayed = numActionsPlayed + 1;
 	}
 }

@@ -44,8 +44,10 @@ public class Baron extends Card{
 			player.discard("Estate");
 			player.addBuy(1);
 			player.addCoin(4);
+			log(player.getName() + " discards an Estate for +1 Buy, + $4", 1);
 		} else if (a.getAns() == 1) {
 			board.gainToPlayerFromPile(player, board.getPileByTop("Estate"));
+			log(player.getName() + " gains an Estate", 1);
 		}
 		return ask;
 	}

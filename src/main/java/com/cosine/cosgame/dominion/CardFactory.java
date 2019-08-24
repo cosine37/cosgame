@@ -62,6 +62,9 @@ public class CardFactory {
 		if (cardname.equals("Upgrade")) return new Upgrade();
 		if (cardname.equals("Baron")) return new Baron();
 		if (cardname.equals("Ironworks")) return new Ironworks();
+		if (cardname.equals("Courtyard")) return new Courtyard();
+		if (cardname.equals("Patrol")) return new Patrol();
+		if (cardname.equals("Conspirator")) return new Conspirator();
 		
 		if (cardname.equals("Caravan")) return new Caravan();
 		if (cardname.equals("FishingVillage")) return new FishingVillage();
