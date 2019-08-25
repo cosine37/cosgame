@@ -13,7 +13,7 @@ public class Player {
 	
 	PlayedCounter counter;
 	ScoreKeeper sk;
-	List<Card> discard, hand, deck, play, revealed, seclusion;
+	List<Card> discard, hand, deck, play, revealed, seclusion, island;
 	String cleanUpOptions;
 	String startOptions;
 	List<Ask> startAsks;
@@ -45,6 +45,7 @@ public class Player {
 		play = new ArrayList<Card>();
 		revealed = new ArrayList<Card>();
 		seclusion = new ArrayList<Card>();
+		island = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -71,6 +72,7 @@ public class Player {
 		deck = new ArrayList<Card>();
 		play = new ArrayList<Card>();
 		seclusion = new ArrayList<Card>();
+		island = new ArrayList<Card>();
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
@@ -171,9 +173,8 @@ public class Player {
 				if (phase == ACTION) {
 					action = action - 1;
 				}
-				ask = c.play();
-				System.out.println("ask.type="+ask.getType());
 				play.add(c);
+				ask = c.play();
 				break;
 			}
 		}
@@ -187,6 +188,8 @@ public class Player {
 		pileGen.add(hand);
 		pileGen.add(deck);
 		pileGen.add(play);
+		pileGen.add(seclusion);
+		pileGen.add(island);
 		List<Pile> piles = pileGen.getPiles();
 		return piles;
 		
@@ -198,6 +201,8 @@ public class Player {
 		allCards.addAll(hand);
 		allCards.addAll(deck);
 		allCards.addAll(play);
+		allCards.addAll(seclusion);
+		allCards.addAll(island);
 		return allCards;
 	}
 	
@@ -593,6 +598,9 @@ public class Player {
 	public List<Card> getSeclusion(){
 		return seclusion;
 	}
+	public List<Card> getIsland(){
+		return island;
+	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;
 	}
@@ -610,6 +618,9 @@ public class Player {
 	}
 	public void setSeclusion(List<Card> seclusion) {
 		this.seclusion = seclusion;
+	}
+	public void setIsland(List<Card> island) {
+		this.island = island;
 	}
 	public int getCoin() {
 		return coin;

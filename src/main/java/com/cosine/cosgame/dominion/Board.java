@@ -674,6 +674,7 @@ public class Board {
 			List<Document> playDocs = (List<Document>)dop.get("play");
 			List<Document> revealedDocs = (List<Document>)dop.get("revealed");
 			List<Document> seclusionDocs = (List<Document>)dop.get("seclusion");
+			List<Document> islandDocs = (List<Document>)dop.get("island");
 			List<Document> playedDocs = (List<Document>)dop.get("played");
 			List<Card> discard = new ArrayList<Card>();
 			List<Card> deck = new ArrayList<Card>();
@@ -681,6 +682,7 @@ public class Board {
 			List<Card> play = new ArrayList<Card>();
 			List<Card> revealed = new ArrayList<Card>();
 			List<Card> seclusion = new ArrayList<Card>();
+			List<Card> island = new ArrayList<Card>();
 			List<String> played = new ArrayList<String>();
 		
 			int j;
@@ -696,6 +698,7 @@ public class Board {
 			}
 			for (j=0;j<revealedDocs.size();j++) {revealed.add(factory.createCard((String)revealedDocs.get(j).get("name")));}
 			for (j=0;j<seclusionDocs.size();j++) {seclusion.add(factory.createCard((String)seclusionDocs.get(j).get("name")));}
+			for (j=0;j<islandDocs.size();j++) {island.add(factory.createCard((String)islandDocs.get(j).get("name")));}
 			for (j=0;j<playedDocs.size();j++) {played.add((String)playedDocs.get(j).get("value"));}
 			
 			p.setDiscard(discard);
@@ -704,6 +707,7 @@ public class Board {
 			p.setPlay(play);
 			p.setRevealed(revealed);
 			p.setSeclusion(seclusion);
+			p.setIsland(island);
 			p.setPlayedCounter(played);
 			players.add(p);
 			
@@ -744,6 +748,7 @@ public class Board {
 		List<Document> playDocs = new ArrayList<Document>();
 		List<Document> revealedDocs = new ArrayList<Document>();
 		List<Document> seclusionDocs = new ArrayList<Document>();
+		List<Document> islandDocs = new ArrayList<Document>();
 		List<Document> playedDocs = new ArrayList<Document>();
 		
 		for (j=0;j<players.get(i).getDiscard().size();j++) {
@@ -785,6 +790,12 @@ public class Board {
 			seclusionDocs.add(d);
 		}
 		
+		for (j=0;j<players.get(i).getIsland().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getIsland().get(j).getName());
+			islandDocs.add(d);
+		}
+		
 		for (j=0;j<players.get(i).getPlayedList().size();j++) {
 			Document d = new Document();
 			d.append("value", players.get(i).getPlayedList().get(j));
@@ -797,6 +808,7 @@ public class Board {
 		dop.append("played", playedDocs);
 		dop.append("revealed", revealedDocs);
 		dop.append("seclusion", seclusionDocs);
+		dop.append("island", islandDocs);
 		return dop;
 	}
 	
