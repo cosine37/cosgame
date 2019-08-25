@@ -22,6 +22,8 @@ public class Intrigue extends Expansion {
 	public Intrigue() {
 		super();
 		
+		name = "Intrigue";
+		
 		shantyTownPile = new Pile(ShantyTown.class, 10);
 		dukePile = new Pile(Duke.class, 12);
 		haremPile = new Pile(Harem.class, 12);

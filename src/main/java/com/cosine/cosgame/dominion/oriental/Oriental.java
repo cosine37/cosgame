@@ -16,6 +16,8 @@ public class Oriental extends Expansion {
 	public Oriental() {
 		super();
 		
+		name = "Oriental";
+		
 		pendantForWinePile = new Pile(PendantForWine.class, 10);
 		armyDrummerPile = new Pile(ArmyDrummer.class, 10);
 		exilePile = new Pile(Exile.class, 10);

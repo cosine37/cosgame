@@ -34,7 +34,7 @@
 						{{kindom[$index].numCards}}
 					</div>
 					<div class="kindom-question">
-						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[$index].image);"/>
+						<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(kindom[$index].image);$event.stopPropagation();"/>
 					</div>
 					<div class="plus" ng-show="showPlus('kindom', $index)">
 						<img src="/image/Dominion/plus.png" height="20" width="20""/>

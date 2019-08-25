@@ -13,6 +13,8 @@ public class Seaside extends Expansion{
 	public Seaside() {
 		super();
 		
+		name = "Seaside";
+		
 		caravanPile = new Pile(Caravan.class, 10);
 		fishingVillagePile = new Pile(FishingVillage.class, 10);
 		merchantShipPile = new Pile(MerchantShip.class, 10);

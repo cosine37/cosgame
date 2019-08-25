@@ -3,16 +3,10 @@ package com.cosine.cosgame.dominion;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cosine.cosgame.dominion.base.Copper;
-import com.cosine.cosgame.dominion.base.Curse;
-import com.cosine.cosgame.dominion.base.Duchy;
-import com.cosine.cosgame.dominion.base.Estate;
-import com.cosine.cosgame.dominion.base.Gold;
-import com.cosine.cosgame.dominion.base.Province;
-import com.cosine.cosgame.dominion.base.Silver;
-
 public class Expansion {
+	protected String name;
 	protected List<Pile> piles;
+	protected List<Pile> kindom;
 	
 	public Expansion() {
 		piles = new ArrayList<Pile>();
@@ -23,8 +17,90 @@ public class Expansion {
 		return piles;
 	}
 	
-	public void sort(int x) {
-		
+	boolean shouldSwap(List<Pile> piles, int i, int j) {
+		if (piles.get(i).getTop().getPrice() > piles.get(j).getTop().getPrice()) {
+			return true;
+		} else if (piles.get(i).getTop().getPrice() == piles.get(j).getTop().getPrice()) {
+			String si = piles.get(i).getTop().getName().toUpperCase();
+			String sj = piles.get(j).getTop().getName().toUpperCase();
+			int x = 0;
+			int ai, aj;
+			while (x<si.length()) {
+				if (x>=sj.length()) {
+					return false;
+				}
+				ai = si.charAt(x);
+				aj = sj.charAt(x);
+				if (ai>aj) return true;
+				if (ai<aj) return false;
+				x = x+1;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public List<Pile> getPilesSorted(){
+		List<Pile> sortedPiles = new ArrayList<Pile>();
+		Pile p;
+		int i,j;
+		for (i=0;i<piles.size();i++) {
+			sortedPiles.add(piles.get(i));
+		}
+		for (i=0;i<sortedPiles.size();i++) {
+			for (j=i+1;j<sortedPiles.size();j++) {
+				if (shouldSwap(sortedPiles, i,j)) {
+					p = sortedPiles.get(i);
+					sortedPiles.set(i, sortedPiles.get(j));
+					sortedPiles.set(j, p);
+				}
+			}
+		}
+		return sortedPiles;
+	}
+	
+	public void sortPiles() {
+		piles = getPilesSorted();
+	}
+	
+	public void resetPiles() {
+		piles = new ArrayList<Pile>();
+	}
+	
+	public void resetKindom() {
+		kindom = new ArrayList<Pile>();
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void addKindom(Pile p) {
+		boolean flag = true;
+		for (int i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getName().equals(p.getName())) {
+				flag = false;
+			}
+		}
+		if (flag) {
+			kindom.add(p);
+		}
+	}
+	
+	public void addPile(Pile p) {
+		boolean flag = true;
+		for (int i=0;i<piles.size();i++) {
+			if (piles.get(i).getName().equals(p.getName())) {
+				flag = false;
+			}
+		}
+		if (flag) {
+			piles.add(p);
+		}
 	}
 	
 	public void addExpansion(Expansion e) {
@@ -35,7 +111,6 @@ public class Expansion {
 	}
 	
 	public List<Pile> genKindomPile(){
-		List<Pile> kindom = new ArrayList<Pile>();
 		int numKindom = 10;
 		// TODO: add potential extra pile afterwards
 		int i,j,x;

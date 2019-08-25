@@ -34,6 +34,8 @@ public class Dominion extends Expansion{
 	public Dominion() {
 		super();
 		
+		name = "Dominion";
+		
 		smithyPile = new Pile(Smithy.class, 10);
 		villagePile = new Pile(Village.class, 10);
 		festivalPile = new Pile(Festival.class, 10);

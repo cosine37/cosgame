@@ -33,6 +33,8 @@ public class Board {
 	List<Pile> kindom;
 	List<Pile> basePile;
 	
+	CardList cardList;
+	
 	int status;
 	public static final int BEFORE = 0;
 	public static final int FIRSTCARDS = 1;
@@ -57,6 +59,8 @@ public class Board {
 		endType = "";
 		endPlayer = "";
 		logger = new Logger();
+		
+		cardList = new CardList();
 	
 		String dbname = "dominion";
 		String col = "board";
@@ -305,16 +309,7 @@ public class Board {
 	}
 	
 	public void randomize() {
-		dominion = new Dominion();
-		intrigue = new Intrigue();
-		seaside = new Seaside();
-		oriental = new Oriental();
-		Expansion e = new Expansion();
-		e.addExpansion(dominion);
-		e.addExpansion(oriental);
-		e.addExpansion(intrigue);
-		e.addExpansion(seaside);
-		kindom = e.genKindomPile();
+		kindom = cardList.genKindomPiles();
 	}
 	
 	public String getBoardId() {
@@ -395,6 +390,10 @@ public class Board {
 	
 	public Logger getLogger() {
 		return logger;
+	}
+	
+	public CardList getCardList() {
+		return cardList;
 	}
 	
 	public List<Pile> getAllCards(String name){
@@ -589,6 +588,9 @@ public class Board {
 		
 		List<Document> trashDocs = (List<Document>)doc.get("trash");
 		trash.setTrashFromDoc(trashDocs);
+		
+		Document selectedDoc = (Document)doc.get("cardList");
+		cardList.setSelectedFromDoc(selectedDoc);
 		
 		List<Document> baseDocs = (List<Document>)doc.get("base");
 		List<Document> kindomDocs = (List<Document>)doc.get("kindom");
@@ -849,6 +851,7 @@ public class Board {
 		doc.append("currentPlayer", currentPlayer);
 		doc.append("endType", endType);
 		doc.append("endPlayer", endPlayer);
+		doc.append("cardList", cardList.getSelectedDoc());
 		
 		List<Document> dopn = genPlayerNameDoc();
 		doc.append("players", dopn);
