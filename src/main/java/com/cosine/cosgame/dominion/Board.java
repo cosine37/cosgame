@@ -294,6 +294,13 @@ public class Board {
 		card.onGain(p);
 	}
 	
+	public void trashFromPile(Player p, Pile pile) {
+		Card card = pile.removeTop();
+		card.setBoard(this);
+		trash.add(card);
+		card.onTrash(p);
+	}
+	
 	public void resign(String name) {
 		this.status = ENDGAME;
 		this.endPlayer = name;

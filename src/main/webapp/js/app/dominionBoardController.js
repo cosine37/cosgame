@@ -245,6 +245,8 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 				
 			} else if ($scope.used.length == 10){
 				
+			} else if (!$scope.isLord){
+				
 			} else {
 				$scope.selected[k][key] = 2;
 				$scope.used.push($scope.expansions[k].piles[key].image);

@@ -74,6 +74,7 @@ public class TombSweeping extends Card{
 				
 				if (revealed.size() == 1) {
 					board.getTrash().gainToPlayerHand(player, revealed.get(0));
+					log(player.getName() + " gains a "+ revealed.get(0) + " from trash to hand", 1);
 					ask = new Ask();
 				}
 			} else {
@@ -92,6 +93,8 @@ public class TombSweeping extends Card{
 				}
 				ask = new Ask();
 			} else if (ask.getType() == Ask.VIEW) {
+				String cardname = ask.getViewedCards().get(ask.getSelectedRevealed().get(0));
+				log(player.getName() + " gains a "+ cardname + " from trash to hand", 1);
 				board.getTrash().gainToPlayerHand(player, ask.getViewedCards().get(ask.getSelectedRevealed().get(0)));
 				ask = new Ask();
 			} else {
