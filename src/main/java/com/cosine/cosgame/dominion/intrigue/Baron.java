@@ -12,6 +12,7 @@ public class Baron extends Card{
 		this.name = "Baron";
 		this.image = "/image/Dominion/cards/Intrigue/Baron.png";
 		this.types[INDEX_ACTION] = true;
+		this.buy = 1;
 		this.price = 4;
 	}
 	
@@ -27,7 +28,7 @@ public class Baron extends Card{
 			board.gainToPlayerFromPile(player, board.getPileByTop("Estate"));
 		} else {
 			ask.setType(Ask.OPTION);
-			ask.setMsg("You may discard an Estate for +1 Buy, + $4");
+			ask.setMsg("You may discard an Estate for + $4");
 			List<String> options = new ArrayList<>();
 			options.add("Discard an Estate");
 			options.add("Don't Discard");
@@ -42,9 +43,8 @@ public class Baron extends Card{
 		Ask ask = new Ask();
 		if (a.getAns() == 0) {
 			player.discard("Estate");
-			player.addBuy(1);
 			player.addCoin(4);
-			log(player.getName() + " discards an Estate for +1 Buy, + $4", 1);
+			log(player.getName() + " discards an Estate for + $4", 1);
 		} else if (a.getAns() == 1) {
 			board.gainToPlayerFromPile(player, board.getPileByTop("Estate"));
 			log(player.getName() + " gains an Estate", 1);

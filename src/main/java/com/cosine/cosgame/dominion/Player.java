@@ -572,7 +572,10 @@ public class Player {
 			}
 		}
 		if (phase == TREASURE) {
-			if (ask.getType() == Ask.NONE) {
+			if (ask.getType() == Ask.NONE || ask.getType() == Ask.SINGLEOPTION) {
+				if (ask.getType() == Ask.SINGLEOPTION) {
+					ask.setType(Ask.NONE);
+				}
 				if (noCardType("treasure")) {
 					phase = BUY;
 				}

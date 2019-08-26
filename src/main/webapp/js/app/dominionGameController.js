@@ -244,6 +244,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 								}
 							}
 							getaddon();
+						} else if (task.type == 6){
+							$scope.topMessage = "You may play Action cards";
+							$scope.showPhaseButton = true;
+							$scope.options = task.options;
+							getaddon();
 						}
 					});
 					
@@ -459,7 +464,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					task = task.thronedAsk;
 				}
 				
-				if (task.type == 0){
+				if (task.type == 0 || task.type == 6){
 					if ($scope.hand[index].top.actionType){
 						playCard($scope.hand[index].top);
 					}

@@ -10,14 +10,16 @@ public class Ask {
 	
 	/**
 	 * Possible types:
-	 * 		None: 		Do nothing
-	 * 		Option: 	Deals with options
-	 * 		Handchoose:	Choose card(s) from hand
-	 * 		Gain		Choose card from supply
-	 * 		View		View top cards
-	 * 		ViewChoose	Choose card(s) from view
-	 * 		ViewSort	Sort viewed cards in any order
-	 * 		Throne		Play a selected cards 2 or more times
+	 * 		None	 		Do nothing
+	 * 		Option		 	Deals with options
+	 * 		Handchoose		Choose card(s) from hand
+	 * 		Gain			Choose card from supply
+	 * 		View			View top cards
+	 * 		ViewChoose		Choose card(s) from view
+	 * 		ViewSort		Sort viewed cards in any order
+	 *      Reaction
+	 *      SingleOption	Player can select single options or not
+	 * 		Throne			Play a selected cards 2 or more times
 	 * 
 	 */
 	int type;
@@ -27,6 +29,7 @@ public class Ask {
 	public static final int GAIN = 3;
 	public static final int VIEW = 4;
 	public static final int REACTION = 5;
+	public static final int SINGLEOPTION = 6;
 	
 	public static final int THRONE = 11;
 	
@@ -231,7 +234,7 @@ public class Ask {
 	}
 	
 	public void parseAns(String s) {
-		if (type == OPTION) {
+		if (type == OPTION || type == SINGLEOPTION) {
 			ans = Integer.parseInt(s);
 		} else if (type == HANDCHOOSE) {
 			if (s.equals("")) {
@@ -279,7 +282,7 @@ public class Ask {
 		Document doc = new Document();
 		doc.append("type", type);
 		doc.append("subType", subType);
-		if (type == OPTION) {
+		if (type == OPTION || type == SINGLEOPTION) {
 			List<Document> doo = new ArrayList<Document>();
 			for (int i=0;i<options.size();i++) {
 				Document d = new Document();
@@ -384,7 +387,7 @@ public class Ask {
 		subType = (int)doc.get("subType");
 		if (type == NONE) {
 			resLevel = 0;
-		} else if (type == OPTION) {
+		} else if (type == OPTION || type == SINGLEOPTION) {
 			List<Document> doo = (List<Document>)doc.get("options");
 			options = new ArrayList<String>();
 			for (int i=0;i<doo.size();i++) {
