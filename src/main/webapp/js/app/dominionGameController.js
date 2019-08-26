@@ -42,6 +42,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.chooseViewed = [];
 		$scope.logs = [];
 		$scope.trashCards = [];
+		$scope.tokens = [];
 		$scope.showLogs = true;
 		$scope.showTrash = false;
 
@@ -92,9 +93,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.showTrash = true;
 		}
 		
+		gettokens = function(){
+			$http.post('/dominiongame/gettokens').then(function(response){
+				$scope.tokens=response.data.value;
+			});
+		}
+		
 		gettrash = function(){
 			$http.post('/dominiongame/gettrash').then(function(response){
 				$scope.trashCards=response.data;
+				gettokens();
 			});
 		}
 		
@@ -456,7 +464,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 						playCard($scope.hand[index].top);
 					}
 				} else if (task.type == 2){ // choosehand
-					if (task.restriction == 0 || (task.restriction == 1001 && $scope.hand[index].top.actionType) || (task.restriction == 1002 && $scope.hand[index].top.treasure)){
+					if (task.restriction == 0 || (task.restriction == 1001 && $scope.hand[index].top.actionType) || (task.restriction == 1002 && $scope.hand[index].top.treasure)
+							|| (task.restriction == 1015 && $scope.hand[index].top.actionType) || (task.restriction == 1015 && $scope.hand[index].top.general)){
 						if ($scope.choosehand[index] == $scope.hand[index].numCards){
 							$scope.choosehand[index] = 0;
 						} else {
@@ -764,6 +773,19 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			}
+		}
+		
+		$scope.useMemorial = function(){
+			$http.post('/dominiongame/usememorial').then(function(response){
+				getsupply();
+			});
+		}
+		
+		$scope.disableUseMemorial = function(){
+			if ($scope.phase=="Action" && $scope.ask.type==0){
+				return false;
+			}
+			return true;
 		}
 		
 }]);

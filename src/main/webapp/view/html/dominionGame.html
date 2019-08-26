@@ -101,6 +101,11 @@
 			</div>
 		</div>
 		
+		<div style="clear: both" ng-show="tokens[3]!='0'">
+			<span>Memorial tokens: {{tokens[3]}}</span>
+			<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Use Memorial token</button>
+		</div>
+		
 	</div>
 	
 	

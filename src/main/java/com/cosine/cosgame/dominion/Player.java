@@ -32,7 +32,7 @@ public class Player {
 	
 	int coin, action, buy;
 	int numActionsPlayed;
-	int coffer, villager, vp;
+	int coffer, villager, vp, memorial;
 	boolean isBot, isGoodToGo;
 	
 	Ask ask;
@@ -66,6 +66,7 @@ public class Player {
 		vp = 0;
 		coffer = 0;
 		villager = 0;
+		memorial = 0;
 		counter = new PlayedCounter();
 		discard = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
@@ -251,11 +252,32 @@ public class Player {
 			shuffle();
 		}
 		if (deck.size() == 0) {
+			if (discard.size() > 0) {
+				shuffle();
+			}
+		}
+		if (deck.size() == 0) {
 			return null;
 		}
 		Card card = deck.remove(0);
 		card.onDiscard(this);
 		discard.add(card);
+		return card;
+	}
+	
+	public Card getTop() {
+		if (deck.size() == 0) {
+			shuffle();
+		}
+		if (deck.size() == 0) {
+			if (discard.size() > 0) {
+				shuffle();
+			}
+		}
+		if (deck.size() == 0) {
+			return null;
+		}
+		Card card = deck.get(0);
 		return card;
 	}
 	
@@ -402,7 +424,7 @@ public class Player {
 			}
 		}
 		if (phase == ACTION) {
-			if (noCardType("action")) {
+			if (noCardType("action") && memorial == 0) {
 				phase++;
 			}
 		}
@@ -540,11 +562,13 @@ public class Player {
 	public void autoSetPhase() {
 		if (phase == ACTION) {
 			if (ask.getType() == Ask.NONE) {
-				if (action == 0 && villager == 0) {
-					phase = TREASURE;
-				} else if (noCardType("action")) {
-					phase = TREASURE;
-				} 
+				if (memorial == 0) {
+					if (action == 0 && villager == 0) {
+						phase = TREASURE;
+					} else if (noCardType("action")) {
+						phase = TREASURE;
+					} 
+				}
 			}
 		}
 		if (phase == TREASURE) {
@@ -675,6 +699,20 @@ public class Player {
 	}
 	public void addVp(int x) {
 		this.vp = this.vp + x;
+	}
+	public int getMemorial() {
+		return memorial;
+	}
+	public void setMemorial(int memorial) {
+		this.memorial = memorial;
+	}
+	public void addMemorial(int x) {
+		this.memorial = this.memorial + x;
+	}
+	public void useMemorial() {
+		this.memorial = this.memorial - 1;
+		board.getLogger().add(name + " uses a Memorial token to draw a card", 0);
+		draw(1);
 	}
 	public void addPlayed(String s) {
 		counter.add(s);

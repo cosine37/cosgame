@@ -45,6 +45,12 @@ public class Poacher extends Card{
 	public Ask response(Ask a) {
 		Ask ask = super.response(a);
 		int i,j;
+		int n = ask.getSelectedCards().size();
+		if (n == 1) {
+			log(player.getName() + " discards a card", 1);
+		} else {
+			log(player.getName() + " discards " + n + " cards", 1);
+		}
 		for (i=0;i<ask.getSelectedCards().size();i++) {
 			for (j=player.getHand().size()-1;j>=0;j--) {
 				if (player.getHand().get(j).getName().equals(ask.getSelectedCards().get(i))) {
@@ -52,12 +58,6 @@ public class Poacher extends Card{
 					break;
 				}
 			}
-		}
-		int n = ask.getSelectedCards().size();
-		if (n == 1) {
-			log(player.getName() + " discards a card", 1);
-		} else {
-			log(player.getName() + " discards " + n + " cards", 1);
 		}
 		ask = new Ask();
 		return ask;

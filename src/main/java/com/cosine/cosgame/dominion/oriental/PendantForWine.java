@@ -18,8 +18,8 @@ public class PendantForWine extends Card{
 		Ask ask = super.play();
 		if (player.getHand().size()>0) {
 			player.addCoin(5);
-			player.discardHand();
 			log(player.getName() + " discards hand for +$5", 1);
+			player.discardHand();
 		}
 		return ask;
 	}

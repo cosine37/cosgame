@@ -18,9 +18,11 @@ public class Vassal extends Card{
 	
 	public Ask play() {
 		Ask ask = super.play();
-		Card card = player.discardTop();
-		if (card == null) return ask;
+		Card card = player.getTop();
 		log(player.getName() + " discards a " + card.getName(), 1);
+		if (card == null) return ask;
+		player.discardTop();
+		
 		if (card.isActionType()) {
 			ask.setType(Ask.OPTION);
 			String msg = "You may play " + card.getName();

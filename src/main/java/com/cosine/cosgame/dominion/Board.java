@@ -662,6 +662,7 @@ public class Board {
 			p.setCoffer((int)dop.get("coffer"));
 			p.setVillager((int)dop.get("villager"));
 			p.setVp((int)dop.get("vp"));
+			p.setMemorial((int)dop.get("memorial"));
 			p.setNumActionsPlayed((int)dop.getInteger("numActionsPlayed"));
 			
 			Ask ask = new Ask();
@@ -738,6 +739,7 @@ public class Board {
 		dop.append("coffer", players.get(i).getCoffer());
 		dop.append("villager", players.get(i).getVillager());
 		dop.append("vp", players.get(i).getVp());
+		dop.append("memorial", players.get(i).getMemorial());
 		dop.append("ask", players.get(i).getAsk().toDocument());
 		dop.append("numActionsPlayed", players.get(i).getNumActionsPlayed());
 		

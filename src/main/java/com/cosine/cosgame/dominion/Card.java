@@ -10,6 +10,7 @@ public class Card {
 	protected int vp;
 	protected int coffer;
 	protected int villager;
+	protected int memorial;
 	
 	// basic features
 	protected String name;
@@ -43,6 +44,7 @@ public class Card {
 	protected static final int INDEX_VICTORY = 2;
 	protected static final int INDEX_CURSED = 3;
 	protected static final int INDEX_NIGHT = 4;
+	protected static final int INDEX_GENERAL = 5;
 	
 	// Secondary types
 	protected static final int INDEX_ATTACK = 10;
@@ -291,6 +293,10 @@ public class Card {
 	
 	public boolean isNight() {
 		return types[INDEX_NIGHT];
+	}
+	
+	public boolean isGeneral() {
+		return types[INDEX_GENERAL];
 	}
 
 	public boolean isAttack() {

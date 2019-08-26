@@ -33,6 +33,7 @@ public class Cellar extends Card{
 		int i,j;
 		Card card;
 		int n = ask.getSelectedCards().size();
+		log(player.getName() + " discards " + n + " cards", 1);
 		for (i=0;i<ask.getSelectedCards().size();i++) {
 			for (j=player.getHand().size()-1;j>=0;j--) {
 				if (player.getHand().get(j).getName().equals(ask.getSelectedCards().get(i))) {
@@ -41,7 +42,6 @@ public class Cellar extends Card{
 				}
 			}
 		}
-		log(player.getName() + " discards " + n + " cards", 1);
 		player.draw(n);
 		log(player.getName() + " draws " + n + " cards", 1);
 		ask = new Ask();

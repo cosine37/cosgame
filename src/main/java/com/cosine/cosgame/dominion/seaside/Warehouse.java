@@ -31,10 +31,10 @@ public class Warehouse extends Card{
 	
 	public Ask response(Ask a) {
 		Ask ask = super.response(a);
+		log(player.getName()+" discards 3 cards",1);
 		for (int i=0;i<ask.getSelectedCards().size();i++) {
 			player.discard(ask.getSelectedCards().get(i));
 		}
-		log(player.getName()+" discards 3 cards",1);
 		ask = new Ask();
 		return ask;
 	}

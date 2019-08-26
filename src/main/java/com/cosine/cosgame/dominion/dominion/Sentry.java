@@ -78,16 +78,16 @@ public class Sentry extends Card{
 				ask.setViewedCardsImage(revealedImage);
 			}
 		} else if (ask.getResLevel() == 1) {
-			for (int i=0;i<ask.getSelectedRevealed().size();i++) {
-				card = player.getRevealed().remove(ask.getSelectedRevealed().get(i)-i);
-				card.onDiscard(player);
-				player.getDiscard().add(card);
-			}
 			int n = ask.getSelectedRevealed().size();
 			if (n == 1) {
 				log(player.getName() + " discards a card", 1);
 			} else if (n > 1) {
 				log(player.getName() + " discards " + n + " cards", 1);
+			}
+			for (int i=0;i<ask.getSelectedRevealed().size();i++) {
+				card = player.getRevealed().remove(ask.getSelectedRevealed().get(i)-i);
+				card.onDiscard(player);
+				player.getDiscard().add(card);
 			}
 			if (player.getRevealed().size() == 0) {
 				ask = new Ask();

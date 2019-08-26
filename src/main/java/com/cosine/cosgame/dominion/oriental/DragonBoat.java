@@ -55,8 +55,8 @@ public class DragonBoat extends Card{
 		Ask ask = super.response(a);
 		if (ask.getResLevel() == 0) {
 			player.setBoard(board);
-			player.discard(ask.getSelectedCards().get(0));
 			log(player.getName() + " discards a card", 1);
+			player.discard(ask.getSelectedCards().get(0));
 			player.revealTop(2);
 			if (player.getRevealed().size() == 0) {
 				ask = new Ask();

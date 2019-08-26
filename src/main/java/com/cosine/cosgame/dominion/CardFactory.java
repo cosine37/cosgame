@@ -84,6 +84,9 @@ public class CardFactory {
 		if (cardname.equals("CorruptedOfficial")) return new CorruptedOfficial();
 		if (cardname.equals("DragonBoat")) return new DragonBoat();
 		if (cardname.equals("TombSweeping")) return new TombSweeping();
+		if (cardname.equals("Executioner")) return new Executioner();
+		if (cardname.equals("PaperMaker")) return new PaperMaker();
+		if (cardname.equals("Quadrangle")) return new Quadrangle();
 		
 		return null;
 	}
