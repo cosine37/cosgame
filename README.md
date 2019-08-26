@@ -10,7 +10,7 @@ After played several games, I started brainstorming my own cards for the game an
 
 This is the login page.  User information is stored in MongoDB and new user is able to register
 
-![avatar](https://s2.ax1x.com/2019/08/16/meIWDA.png)
+![avatar](https://s2.ax1x.com/2019/08/26/mWgYJU.png)
 
 This is the game play page.  Although the UI is not well-polished yet, the service realizes all the game mechanics including playing Action cards and Treasure cards, buying new cards, and end game handle.
 
