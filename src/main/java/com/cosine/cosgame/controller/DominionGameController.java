@@ -230,7 +230,6 @@ public class DominionGameController {
 		board.getBoardFromDB(boardId);
 		if (username.equals(board.getLord())) {
 			board.baseSetup();
-			//board.randomize();
 			board.setup();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("startPlayer", board.getStartPlayer());

@@ -92,6 +92,7 @@ public class CardFactory {
 		if (cardname.equals("Executioner")) return new Executioner();
 		if (cardname.equals("PaperMaker")) return new PaperMaker();
 		if (cardname.equals("Quadrangle")) return new Quadrangle();
+		if (cardname.equals("FieldReaper")) return new FieldReaper();
 		
 		return null;
 	}

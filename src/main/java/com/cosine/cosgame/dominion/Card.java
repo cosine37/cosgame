@@ -155,6 +155,7 @@ public class Card {
 	public Ask onBuy(Player p) {
 		Ask ask = new Ask();
 		ask.setCardName(name);
+		onBuyBuffs(p);
 		return ask;
 	}
 	
@@ -168,6 +169,15 @@ public class Card {
 		Ask ask = new Ask();
 		ask.setCardName(name);
 		return ask;
+	}
+	
+	// Returns the corresponding buff
+	public int inPlay() {
+		return -1;
+	}
+	
+	public int inPlayOther() {
+		return -1;
 	}
 	
 	public Ask play() {
@@ -362,6 +372,23 @@ public class Card {
 	
 	public int getSpecialCare() {
 		return specialCare;
+	}
+	
+	public void onBuyBuffs(Player p) {
+		Buff buff = new Buff();
+		buff.setBuffs(board, p);
+		
+		// Memorials for Victory
+		if (types[INDEX_VICTORY]) {
+			int x = buff.getBuff(Buff.MEMORIALBUYVICTORY);
+			if (x == 1) {
+				log(p.getName() + " receives a memorial token", 1);
+				p.addMemorial(1);
+			} else if (x > 1) {
+				log(p.getName() + " receives " + x + " memorial tokens", 1);
+				p.addMemorial(x);
+			}
+		}
 	}
 	
 }
