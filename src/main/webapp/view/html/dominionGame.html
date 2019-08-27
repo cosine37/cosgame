@@ -75,6 +75,8 @@
 			Player
 			<button ng-click="resign()">Resign</button>
 			{{topMessage}}
+			<input ng-show="showGuess()" type="text" ng-model="guessedCardName">
+			<button ng-show="showGuess()" ng-click="guess()">Guess</button>
 			<button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button>
 			<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
 			<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>

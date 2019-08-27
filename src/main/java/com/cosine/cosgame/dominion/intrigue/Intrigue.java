@@ -22,6 +22,7 @@ public class Intrigue extends Expansion {
 	Pile lurkerPile;
 	Pile miningVillagePile;
 	Pile millPile;
+	Pile wishingWellPile;
 	
 	public Intrigue() {
 		super();
@@ -45,6 +46,7 @@ public class Intrigue extends Expansion {
 		lurkerPile = new Pile(Lurker.class, 10);
 		miningVillagePile = new Pile(MiningVillage.class, 10);
 		millPile = new Pile(Mill.class, 12);
+		wishingWellPile = new Pile(WishingWell.class, 10);
 		
 		piles.add(shantyTownPile);
 		piles.add(dukePile);
@@ -63,6 +65,7 @@ public class Intrigue extends Expansion {
 		piles.add(lurkerPile);
 		piles.add(miningVillagePile);
 		piles.add(millPile);
+		piles.add(wishingWellPile);
 		
 	}
 

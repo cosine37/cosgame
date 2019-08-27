@@ -30,6 +30,7 @@ public class Ask {
 	public static final int VIEW = 4;
 	public static final int REACTION = 5;
 	public static final int SINGLEOPTION = 6;
+	public static final int GUESS = 7;
 	
 	public static final int THRONE = 11;
 	
@@ -275,6 +276,12 @@ public class Ask {
 					}
 				}
 			}
+		} else if (type == GUESS) {
+			selectedCards = new ArrayList<String>();
+			if (s.equals("")) {
+			} else {
+				selectedCards.add(s);
+			}
 		}
 	}
 	
@@ -378,6 +385,17 @@ public class Ask {
 			doc.append("resLevel", resLevel);
 			doc.append("restriction", restriction);
 			doc.append("cardName", cardName);
+		} else if (type == GUESS) {
+			doc.append("msg", msg);
+			doc.append("cardName", cardName);
+			doc.append("resLevel", resLevel);
+			List<Document> doo = new ArrayList<Document>();
+			for (int i=0;i<selectedCards.size();i++) {
+				Document d = new Document();
+				d.append("card", selectedCards.get(i));
+				doo.add(d);
+			}
+			doc.append("selectedCards", doo);
 		}
 		return doc;
 	}
@@ -475,6 +493,16 @@ public class Ask {
 			}
 			resLevel = (int)doc.get("resLevel");
 			restriction = (int)doc.get("restriction");
+			cardName = (String)doc.get("cardName");
+		} else if (type == GUESS) {
+			List<Document> doo = (List<Document>)doc.get("selectedCards");
+			selectedCards = new ArrayList<String>();
+			for (int i=0;i<doo.size();i++) {
+				String option = (String)doo.get(i).get("card");
+				selectedCards.add(option);
+			}
+			resLevel = (int)doc.get("resLevel");
+			msg = (String)doc.get("msg");
 			cardName = (String)doc.get("cardName");
 		}
 	}

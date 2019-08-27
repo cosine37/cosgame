@@ -45,6 +45,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.tokens = [];
 		$scope.showLogs = true;
 		$scope.showTrash = false;
+		$scope.guessedCardName = "";
 
 		$scope.baseStyle={
 			"position": "relative",
@@ -212,7 +213,8 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 							$scope.showClearButton = true;
 							$scope.phaseButton = "Confirm";
 							getaddon();
-						} else if (task.type == 3){
+						} else if (task.type == 3 || task.type == 7){
+							$scope.guessedCardName = "";
 							$scope.topMessage = task.msg;
 							$scope.showPhaseButton = false;
 							getaddon();
@@ -678,13 +680,32 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		$scope.showGuess = function(){
+			if ($scope.ask == null) return false;
+			var task = $scope.ask;
+			while (task.type == 11){
+				task = task.thronedAsk;
+			}
+			if (task.type == 7) return true;
+			return false;
+		}
+		
+		$scope.guess = function(){
+			var data = {"ans": $scope.guessedCardName};
+			$scope.guessedCardName = "";
+			$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
+				$scope.ask = response.data;
+				getsupply();
+			});
+		}
+		
 		$scope.showPlus = function(bk, index){
 			if ($scope.ask == null) return false;
 			var task = $scope.ask;
 			while (task.type == 11){
 				task = task.thronedAsk;
 			}
-			if (task.type == 3){
+			if (task.type == 3 || task.type == 7){
 				if (bk == "kindom"){
 					pile = $scope.kindom[index];
 				} else if (bk = "base"){
@@ -694,14 +715,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				if (numCards > 0){
 					price = pile.cards[0].price;
 					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
-						if (price >= task.lower && price <= task.upper){
-							/*
-							var data = {"ans": pile.cards[0].name};
-							$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
-								$scope.ask = response.data;
-								getsupply();
-							});
-							*/
+						if (task.type == 7 || (price >= task.lower && price <= task.upper)){
 							return true;
 						}
 					}
@@ -721,10 +735,6 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					if (numCards > 0){
 						price = pile.cards[0].price;
 						if (price <= $scope.coin){
-							/*
-							cardName = pile.cards[0].name;
-							buyCard(cardName);
-							*/
 							return true;
 						}
 					}
@@ -738,7 +748,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			while (task.type == 11){
 				task = task.thronedAsk;
 			}
-			if (task.type == 3){
+			if (task.type == 3 || task.type == 7){
 				if (bk == "kindom"){
 					pile = $scope.kindom[index];
 				} else if (bk = "base"){
@@ -748,7 +758,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				if (numCards > 0){
 					price = pile.cards[0].price;
 					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
-						if (price >= task.lower && price <= task.upper){
+						if (task.type == 7 || (price >= task.lower && price <= task.upper)){
 							var data = {"ans": pile.cards[0].name};
 							$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 								$scope.ask = response.data;
