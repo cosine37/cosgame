@@ -77,6 +77,8 @@ public class CardFactory {
 		if (cardname.equals("Tactician")) return new Tactician();
 		if (cardname.equals("Island")) return new Island();
 		if (cardname.equals("Warehouse")) return new Warehouse();
+		if (cardname.equals("TreasureMap")) return new TreasureMap();
+		if (cardname.equals("Explorer")) return new Explorer();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

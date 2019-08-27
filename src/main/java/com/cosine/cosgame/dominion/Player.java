@@ -359,6 +359,12 @@ public class Player {
 		}
 	}
 	
+	public void trash(String cardname, String from) {
+		List<String> lsc = new ArrayList<String>();
+		lsc.add(cardname);
+		trash(lsc, from);
+	}
+	
 	public void exile(List<String> cards, String from) {
 		int i, j;
 		Card card;
