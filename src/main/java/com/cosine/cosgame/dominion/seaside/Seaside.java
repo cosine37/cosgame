@@ -13,6 +13,7 @@ public class Seaside extends Expansion{
 	Pile warehousePile;
 	Pile treasureMapPile;
 	Pile explorerPile;
+	Pile nativeVillagePile;
 	
 	public Seaside() {
 		super();
@@ -28,6 +29,7 @@ public class Seaside extends Expansion{
 		warehousePile = new Pile(Warehouse.class, 10);
 		treasureMapPile = new Pile(TreasureMap.class, 10);
 		explorerPile = new Pile(Explorer.class, 10);
+		nativeVillagePile = new Pile(NativeVillage.class, 10);
 		
 		piles.add(caravanPile);
 		piles.add(fishingVillagePile);
@@ -38,5 +40,6 @@ public class Seaside extends Expansion{
 		piles.add(warehousePile);
 		piles.add(treasureMapPile);
 		piles.add(explorerPile);
+		piles.add(nativeVillagePile);
 	}
 }

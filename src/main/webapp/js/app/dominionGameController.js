@@ -45,6 +45,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.tokens = [];
 		$scope.showLogs = true;
 		$scope.showTrash = false;
+		$scope.showMat = false;
 		$scope.guessedCardName = "";
 
 		$scope.baseStyle={
@@ -87,16 +88,31 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.logButton = function(){
 			$scope.showLogs = true;
 			$scope.showTrash = false;
+			$scope.showMat = false;
 		}
 		
 		$scope.trashButton = function(){
 			$scope.showLogs = false;
 			$scope.showTrash = true;
+			$scope.showMat = false;
+		}
+		
+		$scope.matButton = function(){
+			$scope.showLogs = false;
+			$scope.showTrash = false;
+			$scope.showMat = true;
+		}
+		
+		getmats = function(){
+			$http.post('/dominiongame/getmats').then(function(response){
+				$scope.mats = response.data;
+			});
 		}
 		
 		gettokens = function(){
 			$http.post('/dominiongame/gettokens').then(function(response){
 				$scope.tokens=response.data.value;
+				getmats();
 			});
 		}
 		

@@ -13,7 +13,7 @@ public class Player {
 	
 	PlayedCounter counter;
 	ScoreKeeper sk;
-	List<Card> discard, hand, deck, play, revealed, seclusion, island;
+	List<Card> discard, hand, deck, play, revealed, seclusion, island, nativeVillage;
 	String cleanUpOptions;
 	String startOptions;
 	List<Ask> startAsks;
@@ -46,6 +46,7 @@ public class Player {
 		revealed = new ArrayList<Card>();
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
+		nativeVillage = new ArrayList<Card>();
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -74,6 +75,7 @@ public class Player {
 		play = new ArrayList<Card>();
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
+		nativeVillage = new ArrayList<Card>();
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
@@ -191,6 +193,7 @@ public class Player {
 		pileGen.add(play);
 		pileGen.add(seclusion);
 		pileGen.add(island);
+		pileGen.add(nativeVillage);
 		List<Pile> piles = pileGen.getPiles();
 		return piles;
 		
@@ -204,6 +207,7 @@ public class Player {
 		allCards.addAll(play);
 		allCards.addAll(seclusion);
 		allCards.addAll(island);
+		allCards.addAll(nativeVillage);
 		return allCards;
 	}
 	
@@ -278,6 +282,14 @@ public class Player {
 			return null;
 		}
 		Card card = deck.get(0);
+		return card;
+	}
+	
+	public Card removeTop() {
+		Card card = getTop();
+		if (card != null) {
+			deck.remove(0);
+		}
 		return card;
 	}
 	
@@ -634,6 +646,9 @@ public class Player {
 	public List<Card> getIsland(){
 		return island;
 	}
+	public List<Card> getNativeVillage(){
+		return nativeVillage;
+	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;
 	}
@@ -654,6 +669,9 @@ public class Player {
 	}
 	public void setIsland(List<Card> island) {
 		this.island = island;
+	}
+	public void setNativeVillage(List<Card> nativeVillage) {
+		this.nativeVillage = nativeVillage;
 	}
 	public int getCoin() {
 		return coin;
@@ -756,5 +774,22 @@ public class Player {
 	}
 	public void addNumActionsPlayed() {
 		numActionsPlayed = numActionsPlayed + 1;
+	}
+	public List<List<Pile>> getMatsAsPiles() {
+		PileGen pileGen;
+		pileGen = new PileGen();
+		pileGen.add(seclusion);
+		List<Pile> seclusionPiles = pileGen.getPiles();
+		pileGen = new PileGen();
+		pileGen.add(island);
+		List<Pile> islandPiles = pileGen.getPiles();
+		pileGen = new PileGen();
+		pileGen.add(nativeVillage);
+		List<Pile> nativeVillagePiles = pileGen.getPiles();
+		List<List<Pile>> ans = new ArrayList<>();
+		ans.add(seclusionPiles);
+		ans.add(islandPiles);
+		ans.add(nativeVillagePiles);
+		return ans;
 	}
 }

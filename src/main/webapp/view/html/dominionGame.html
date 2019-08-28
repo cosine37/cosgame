@@ -54,6 +54,7 @@
 			<div id="logtabs">
 				<button ng-click="logButton()">Logs</button>
 				<button ng-click="trashButton()">Trash</button>
+				<button ng-click="matButton()">Mats</button>
 			</div>
 			<div id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px">
 				<div ng-repeat = "log in logs track by $index">
@@ -64,6 +65,32 @@
 				<div class="base" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover; margin-top: 10px">
 					<div class="kindom-number">
 						{{z.numCards}}
+					</div>
+				</div>
+			</div>
+			<div id="mat" ng-show="showMat" style="overflow-y: scroll; overflow:auto; height: 350px">
+				<div id ="seclusion" ng-show="mats[0].length > 0" style="clear:both; padding-top: 10px">
+					<h3>Seclusion</h3>
+					<div class="base" ng-repeat="x in mats[0] track by $index" style="background:url({{x.image}});background-size:cover">
+						<div class="kindom-number">
+							{{x.numCards}}
+						</div>
+					</div>
+				</div>
+				<div id ="island" ng-show="mats[1].length > 0" style="clear:both; padding-top: 10px">
+					<h3>Island</h3>
+					<div class="base" ng-repeat="x in mats[1] track by $index" style="background:url({{x.image}});background-size:cover">
+						<div class="kindom-number">
+							{{x.numCards}}
+						</div>
+					</div>
+				</div>
+				<div id ="nativevillage" ng-show="mats[2].length > 0" style="clear:both; padding-top: 10px">
+					<h3>Native Village</h3>
+					<div class="base" ng-repeat="x in mats[2] track by $index" style="background:url({{x.image}});background-size:cover">
+						<div class="kindom-number">
+							{{x.numCards}}
+						</div>
 					</div>
 				</div>
 			</div>
