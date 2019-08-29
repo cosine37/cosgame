@@ -94,6 +94,7 @@ public class CardFactory {
 		if (cardname.equals("PaperMaker")) return new PaperMaker();
 		if (cardname.equals("Quadrangle")) return new Quadrangle();
 		if (cardname.equals("FieldReaper")) return new FieldReaper();
+		if (cardname.equals("FireworkShow")) return new FireworkShow();
 		
 		return null;
 	}

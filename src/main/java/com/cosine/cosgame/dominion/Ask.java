@@ -48,6 +48,7 @@ public class Ask {
 	List<String> selectedCards;
 	List<String> viewedCards;
 	List<String> viewedCardsImage;
+	List<String> viewedCardsChooseable;
 	List<Integer> selectedRevealed;
 	boolean showAsPile; // for view
 	int ans;
@@ -66,6 +67,7 @@ public class Ask {
 	public static final int TREASURE = 1002;
 	public static final int VICTORY = 1003;
 	
+	public static final int COPPERCURSED = 1041;
 	public static final int ACTIONGENERAL = 1015;
 	
 	public Ask() {
@@ -83,9 +85,18 @@ public class Ask {
 		selectedCards = new ArrayList<String>();
 		viewedCards = new ArrayList<String>();
 		viewedCardsImage = new ArrayList<String>();
+		viewedCardsChooseable = new ArrayList<String>();
 		selectedRevealed = new ArrayList<Integer>();
 	}
 	
+	public List<String> getViewedCardsChooseable() {
+		return viewedCardsChooseable;
+	}
+
+	public void setViewedCardsChooseable(List<String> viewedCardsChooseable) {
+		this.viewedCardsChooseable = viewedCardsChooseable;
+	}
+
 	public String getCardName() {
 		return cardName;
 	}
@@ -365,6 +376,13 @@ public class Ask {
 				doc.append("ans", ans);
 			} else if (subType == CHOOSE) {
 				doo = new ArrayList<Document>();
+				for (int i=0;i<viewedCardsChooseable.size();i++) {
+					Document d = new Document();
+					d.append("c", viewedCardsChooseable.get(i));
+					doo.add(d);
+				}
+				doc.append("viewedCardsChooseable", doo);
+				doo = new ArrayList<Document>();
 				for (int i=0;i<selectedRevealed.size();i++) {
 					Document d = new Document();
 					d.append("index", selectedRevealed.get(i));
@@ -475,6 +493,12 @@ public class Ask {
 				}
 				ans = (int)doc.get("ans");
 			} else if (subType == CHOOSE) {
+				viewedCardsChooseable = new ArrayList<String>();
+				doo = (List<Document>)doc.get("viewedCardsChooseable");
+				for (int i=0;i<doo.size();i++) {
+					String c = (String)doo.get(i).get("c");
+					viewedCardsChooseable.add(c);
+				}
 				doo = (List<Document>)doc.get("selectedRevealed");
 				selectedRevealed = new ArrayList<Integer>();
 				for (int i=0; i<doo.size();i++){

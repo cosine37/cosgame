@@ -16,6 +16,7 @@ public class Oriental extends Expansion {
 	Pile paperMakerPile;
 	Pile quadranglePile;
 	Pile fieldReaperPile;
+	Pile fireworkShowPile;
 	
 	public Oriental() {
 		super();
@@ -32,8 +33,9 @@ public class Oriental extends Expansion {
 		tombSweepingPile = new Pile(TombSweeping.class, 10);
 		executionerPile = new Pile(Executioner.class, 10);
 		paperMakerPile = new Pile(PaperMaker.class, 10);
-		quadranglePile = new Pile(Quadrangle.class, 10);
+		quadranglePile = new Pile(Quadrangle.class, 12);
 		fieldReaperPile = new Pile(FieldReaper.class, 10);
+		fireworkShowPile = new Pile(FireworkShow.class, 10);
 		
 		piles.add(pendantForWinePile);
 		piles.add(armyDrummerPile);
@@ -47,6 +49,7 @@ public class Oriental extends Expansion {
 		piles.add(paperMakerPile);
 		piles.add(quadranglePile);
 		piles.add(fieldReaperPile);
+		piles.add(fireworkShowPile);
 		
 	}
 

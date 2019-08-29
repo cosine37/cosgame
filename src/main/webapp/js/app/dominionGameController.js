@@ -199,6 +199,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 							}
 						} else if (task.subType == 52){
 							$scope.showConfirmButton = true;
+							var n = $scope.viewed.length;
 							$scope.chooseViewed = new Array(n);
 							for (var i=0;i<n;i++){
 								$scope.chooseViewed[i] = i;
@@ -207,10 +208,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			} else if ($scope.phase == "Treasure"){
+				$scope.disablePhaseButton = false;
 				$scope.topMessage = "You may play Treasure cards";
 				$scope.showAutoplayButton = true;
 				$scope.phaseButton = "Buy Cards";
 			} else if ($scope.phase == "Buy"){
+				$scope.disablePhaseButton = false;
 				$scope.topMessage = "You may buy cards";
 				$scope.phaseButton = "End Buy";
 			} else if ($scope.phase == "Night"){
@@ -229,10 +232,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			if ($scope.status == 1){
 				$scope.topMessage = "Your starting cards";
 				$scope.showConfirmButton = true;
+				$scope.showPhaseButton = false;
 				$http.post('/dominiongame/firstcards').then(function(response){
 					$scope.hand=response.data;
 				});
 			} else if ($scope.status == 2){
+				$scope.showPhaseButton = true;
 				setButtons();
 			} else if ($scope.status == 3){
 				alert("game ends");
@@ -321,6 +326,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.cb = function(){
+			
 			if ($scope.status == 1){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
 					getboard();
@@ -602,15 +608,17 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 			if (task.type == 4){
 				if (task.subType == 51){
-					var total = 0;
-					for (i=0;i<$scope.chooseViewed.length;i++){
-						total = total + $scope.chooseViewed[i];
-					}
-					if (total == task.upper && $scope.chooseViewed[index] == 0){
-						
-					} else {
-						$scope.chooseViewed[index] = 1 - $scope.chooseViewed[index];
-						$scope.showConfirmButton = showConfirmButtonWhenChooseViewed();
+					if (task.restriction == 0 || task.viewedCardsChooseable[index] == "yes"){
+						var total = 0;
+						for (i=0;i<$scope.chooseViewed.length;i++){
+							total = total + $scope.chooseViewed[i];
+						}
+						if (total == task.upper && $scope.chooseViewed[index] == 0){
+							
+						} else {
+							$scope.chooseViewed[index] = 1 - $scope.chooseViewed[index];
+							$scope.showConfirmButton = showConfirmButtonWhenChooseViewed();
+						}
 					}
 				} else if (task.subType == 52){
 					if ($scope.forRearrange == -1){

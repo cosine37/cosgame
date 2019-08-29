@@ -64,7 +64,8 @@
 				</div>
 			</div>
 			<div id="trash" ng-show="showTrash" style="overflow-y: scroll; overflow:auto; height: 350px">
-				<div class="base" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover; margin-top: 10px">
+				<h3 style="padding-top: 10px">Trash</h3>
+				<div class="base" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover">
 					<div class="kindom-number">
 						{{z.numCards}}
 					</div>
@@ -112,7 +113,7 @@
 		
 		<div style="float: left; width: 120px">
 			<div>
-				<div><button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button></div>
+				<div><button ng-show="showPhaseButton" ng-disabled="disablePhaseButton" ng-click="pb()">{{phaseButton}}</button></div>
 				<div ng-show="tokens != null && tokens[3]!='0'">
 					<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
 				</div>
