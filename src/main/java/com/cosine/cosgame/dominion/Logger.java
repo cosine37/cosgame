@@ -14,6 +14,14 @@ public class Logger {
 		logs = new ArrayList<Log>();
 	}
 	
+	public List<String> getLogsAsList(){
+		List<String> lst = new ArrayList<>();
+		for (int i=0;i<logs.size();i++) {
+			lst.add(logs.get(i).getMsg());
+		}
+		return lst;
+	}
+	
 	public StringEntity getLogsAsStringEntity() {
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();

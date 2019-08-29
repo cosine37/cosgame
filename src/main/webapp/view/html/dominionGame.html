@@ -12,10 +12,11 @@
 	<div id="audioplayer">
 		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
 	</div>
-	
-	<div id="otherplayer" class="otherplayer">
-		Other Player Area
-	</div>
+	<!-- 
+		<div id="otherplayer" class="otherplayer">
+			Other Player Area
+		</div>
+	 -->
 	<div id="supply">
 		<div id="basic" style="float: left; width: 200px;">
 			<div ng-repeat="baseCard in base track by $index" ng-style="baseStyle[$index]" ng-click="buyc('base', $index)">
@@ -55,6 +56,7 @@
 				<button ng-click="logButton()">Logs</button>
 				<button ng-click="trashButton()">Trash</button>
 				<button ng-click="matButton()">Mats</button>
+				<button ng-click="resign()">Resign</button></div>
 			</div>
 			<div id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px">
 				<div ng-repeat = "log in logs track by $index">
@@ -98,21 +100,30 @@
 	</div>
 	
 	<div id="player" style="clear:both; ">
-		<div>
-			Player
-			<button ng-click="resign()">Resign</button>
-			{{topMessage}}
+		<div style = "height: 25px">
+			{{topMessage}}    {{addon}}
 			<input ng-show="showGuess()" type="text" ng-model="guessedCardName">
 			<button ng-show="showGuess()" ng-click="guess()">Guess</button>
-			<button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button>
+			<button ng-show="showConfirmButton" ng-click="cb()">Confirm</button>
+			<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
 			<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
 			<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
 		</div>
 		
-		<div class="kindom" ng-show="discardTop != null" style="background:url({{discardTop.image}});background-size:cover;">
+		<div style="float: left; width: 120px">
+			<div>
+				<div><button ng-show="showPhaseButton" ng-click="pb()">{{phaseButton}}</button></div>
+				<div ng-show="tokens != null && tokens[3]!='0'">
+					<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
+				</div>
+				
+			</div>
 		</div>
-		<div class="kindom" ng-style="deckStyle">
-			<div class="kindom-number" ng-show="numDeck != '0'">
+		
+		<div class="kindom" ng-style="discardStyle" style="float: left">
+		</div>
+		<div class="kindom" ng-style="deckStyle" style="float: left;">
+			<div class="kindom-number" ng-show="numDeck != '0' && status == 2">
 				{{numDeck}}
 			</div>
 		</div>
@@ -130,10 +141,7 @@
 			</div>
 		</div>
 		
-		<div style="clear: both" ng-show="tokens[3]!='0'">
-			<span>Memorial tokens: {{tokens[3]}}</span>
-			<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Use Memorial token</button>
-		</div>
+		
 		
 	</div>
 	

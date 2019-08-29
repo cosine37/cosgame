@@ -741,6 +741,14 @@ public class Player {
 		board.getLogger().add(name + " uses a Memorial token to draw a card", 0);
 		draw(1);
 	}
+	public List<Integer> getTokens(){
+		List<Integer> ans = new ArrayList<>();
+		ans.add(vp);
+		ans.add(coffer);
+		ans.add(villager);
+		ans.add(memorial);
+		return ans;
+	}
 	public void addPlayed(String s) {
 		counter.add(s);
 	}

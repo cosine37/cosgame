@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.dominion.Ask;
 import com.cosine.cosgame.dominion.Board;
+import com.cosine.cosgame.dominion.BoardEntity;
 import com.cosine.cosgame.dominion.Card;
 import com.cosine.cosgame.dominion.CardFactory;
 import com.cosine.cosgame.dominion.Pile;
 import com.cosine.cosgame.dominion.Player;
+import com.cosine.cosgame.dominion.PlayerEntity;
 import com.cosine.cosgame.security.LoginInterceptor;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -246,27 +248,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/dominiongame/getlogs", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> getLogs(HttpServletRequest request){
-		HttpSession session = request.getSession(true);
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		StringEntity entity = board.getLogger().getLogsAsStringEntity();
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/getbase", method = RequestMethod.POST)
-	public ResponseEntity<List<Pile>> getBase(HttpServletRequest request){
-		board = new Board();
-		HttpSession session = request.getSession(true);
-		String boardId = (String) session.getAttribute("boardId");
-		board.getBoardFromDB(boardId);
-		List<Pile> piles = board.getBase();
-		return new ResponseEntity<>(piles, HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value="/dominiongame/getkindom", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> getKindom(HttpServletRequest request){
 		board = new Board();
@@ -301,87 +283,6 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/dominiongame/gettokens", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> gettokens(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		Player player = board.getPlayerByName(username);
-		List<String> value = new ArrayList<>();
-		value.add(Integer.toString(player.getVp()));
-		value.add(Integer.toString(player.getCoffer()));
-		value.add(Integer.toString(player.getVillager()));
-		value.add(Integer.toString(player.getMemorial()));
-		StringEntity entity = new StringEntity();
-		entity.setValue(value);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/getplay", method = RequestMethod.POST)
-	public ResponseEntity<List<Pile>> getplay(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		List<Pile> piles = board.getPlayerByName(username).getPlayAsPiles();
-		return new ResponseEntity<>(piles, HttpStatus.OK);
-	}
-
-	@RequestMapping(value="/dominiongame/getdeck", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> getdeck(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		String s = Integer.toString(board.getPlayerByName(username).getDeck().size());
-		List<String> value = new ArrayList<String>();
-		value.add(s);
-		StringEntity entity = new StringEntity();
-		entity.setValue(value);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/gethand", method = RequestMethod.POST)
-	public ResponseEntity<List<Pile>> gethand(HttpServletRequest request){
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		List<Pile> piles = board.getPlayerByName(username).getHandAsPiles();
-		return new ResponseEntity<>(piles, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/getdiscard", method = RequestMethod.POST)
-	public ResponseEntity<Card> getdiscard(HttpServletRequest request){
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		List<Card> discard = board.getPlayerByName(username).getDiscard();
-		if (discard.size() == 0) {
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		}
-		Card card = discard.get(discard.size() - 1);
-		return new ResponseEntity<>(card, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/gettrash", method = RequestMethod.POST)
-	public ResponseEntity<List<Pile>> gettrash(HttpServletRequest request){
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		List<Pile> trashPiles = board.getTrash().getTrashedCardsAsPiles();
-		return new ResponseEntity<>(trashPiles, HttpStatus.OK);
-	}
-	
 	@RequestMapping(value="/dominiongame/cleanup", method = RequestMethod.POST)
 	public ResponseEntity<List<Pile>> cleanup(HttpServletRequest request){
 		HttpSession session = request.getSession(true);
@@ -411,60 +312,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/dominiongame/getstatus", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> getstatus(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		int status = board.getStatus();
-		StringEntity entity = new StringEntity();
-		List<String> value = new ArrayList<String>();
-		String s;
-		switch (status) {
-			case 0:
-				s = "before";
-				break;
-			case 1:
-				s = "first cards";
-				break;
-			case 2:
-				s = "in game";
-				break;
-			case 3:
-				s = "end game";
-				break;
-			default:
-				s = "unknown";
-				break;
-		}
-		value.add(s);
-		entity.setValue(value);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/getphase", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> getPhase(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		board.getPlayerByName(username).autoSetPhase();
-		String phase = board.getPlayerByName(username).getPhaseAsString();
-		StringEntity entity = new StringEntity();
-		List<String> value = new ArrayList<String>();
-		board.updateDB(username, board.genPlayerDoc(username));
-		board.updateLogsDB();
-		if (phase.equals("Offturn")) {
-			board.gameEndJudge();
-		}
-		value.add(phase);
-		entity.setValue(value);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value="/dominiongame/nextphase", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> nextPhase(HttpServletRequest request){
 		HttpSession session = request.getSession();
@@ -539,26 +387,7 @@ public class DominionGameController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/dominiongame/addons", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> addons(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String boardId = (String) session.getAttribute("boardId");
-		String username = (String) session.getAttribute("username");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		String action = Integer.toString(board.getPlayerByName(username).getAction());
-		String buy = Integer.toString(board.getPlayerByName(username).getBuy());
-		String coin = Integer.toString(board.getPlayerByName(username).getCoin());
-		List<String> value = new ArrayList<String>();
-		value.add(action);
-		value.add(buy);
-		value.add(coin);
-		StringEntity entity = new StringEntity();
-		entity.setValue(value);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value="/dominiongame/playcard", method = RequestMethod.POST)
 	public ResponseEntity<Ask> playCard(HttpServletRequest request, @RequestParam String cardName){
 		HttpSession session = request.getSession();
@@ -602,45 +431,31 @@ public class DominionGameController {
 		board.updateSupply();
 		return new ResponseEntity<>(ask, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/dominiongame/getask", method = RequestMethod.POST)
-	public ResponseEntity<Ask> getask(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String boardId = (String) session.getAttribute("boardId");
-		String username = (String) session.getAttribute("username");
-		board = new Board();
-		board.getBoardFromDB(boardId);
-		Ask ask = board.getPlayerByName(username).getAsk();
-		return new ResponseEntity<>(ask, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/dominiongame/getmats", method = RequestMethod.POST)
-	public ResponseEntity<List<List<Pile>>> getmats(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String boardId = (String) session.getAttribute("boardId");
-		String username = (String) session.getAttribute("username");
-		board.getBoardFromDB(boardId);
-		Player player = board.getPlayerByName(username);
-		List<List<Pile>> mats = player.getMatsAsPiles();
-		return new ResponseEntity<>(mats, HttpStatus.OK);
-	}
-	
+
 	@RequestMapping(value="/dominiongame/getboard", method = RequestMethod.POST)
-	public ResponseEntity<Board> getboard(HttpServletRequest request){
+	public ResponseEntity<BoardEntity> getboard(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String boardId = (String) session.getAttribute("boardId");
 		board.getBoardFromDB(boardId);
-		return new ResponseEntity<>(board, HttpStatus.OK);
+		BoardEntity entity = new BoardEntity(board);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dominiongame/getplayer", method = RequestMethod.POST)
-	public ResponseEntity<Player> getplayer(HttpServletRequest request){
+	public ResponseEntity<PlayerEntity> getplayer(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String boardId = (String) session.getAttribute("boardId");
 		String username = (String) session.getAttribute("username");
 		board.getBoardFromDB(boardId);
 		Player player = board.getPlayerByName(username);
-		return new ResponseEntity<>(player, HttpStatus.OK);
+		player.autoSetPhase();
+		board.updateDB(username, board.genPlayerDoc(username));
+		board.updateLogsDB();
+		if (player.getPhaseAsString().equals("Offturn")) {
+			board.gameEndJudge();
+		}
+		PlayerEntity entity = new PlayerEntity(player);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dominiongame/buycard", method = RequestMethod.POST)

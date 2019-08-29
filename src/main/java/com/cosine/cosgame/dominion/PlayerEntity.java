@@ -1,0 +1,124 @@
+package com.cosine.cosgame.dominion;
+
+import java.util.List;
+
+public class PlayerEntity {
+	List<Pile> play;
+	List<Pile> hand;
+	Ask ask;
+	Card discard;
+	int deck;
+	String phase;
+	List<List<Pile>> mats;
+	List<Integer> tokens;
+	int action;
+	int buy;
+	int coin;
+	
+	public PlayerEntity(Player player) {
+		play = player.getPlayAsPiles();
+		hand = player.getHandAsPiles();
+		ask = player.getAsk();
+		if (player.getDiscard().size() == 0) {
+			discard = null;
+		} else {
+			discard = player.getDiscard().get(player.getDiscard().size() - 1);
+		}
+		
+		deck = player.getDeck().size();
+		phase = player.getPhaseAsString();
+		mats = player.getMatsAsPiles();
+		tokens = player.getTokens();
+		action = player.getAction();
+		buy = player.getBuy();
+		coin = player.getCoin();
+	}
+	
+	public String getPhase() {
+		return phase;
+	}
+	
+	public void setPhase(String phase) {
+		this.phase = phase;
+	}
+
+	public int getAction() {
+		return action;
+	}
+
+	public void setAction(int action) {
+		this.action = action;
+	}
+
+	public int getBuy() {
+		return buy;
+	}
+
+	public void setBuy(int buy) {
+		this.buy = buy;
+	}
+
+	public int getCoin() {
+		return coin;
+	}
+
+	public void setCoin(int coin) {
+		this.coin = coin;
+	}
+
+	public List<Pile> getPlay() {
+		return play;
+	}
+
+	public void setPlay(List<Pile> play) {
+		this.play = play;
+	}
+
+	public List<Pile> getHand() {
+		return hand;
+	}
+
+	public void setHand(List<Pile> hand) {
+		this.hand = hand;
+	}
+
+	public Ask getAsk() {
+		return ask;
+	}
+
+	public void setAsk(Ask ask) {
+		this.ask = ask;
+	}
+
+	public Card getDiscard() {
+		return discard;
+	}
+
+	public void setDiscard(Card discard) {
+		this.discard = discard;
+	}
+
+	public int getDeck() {
+		return deck;
+	}
+
+	public void setDeck(int deck) {
+		this.deck = deck;
+	}
+
+	public List<List<Pile>> getMats() {
+		return mats;
+	}
+
+	public void setMats(List<List<Pile>> mats) {
+		this.mats = mats;
+	}
+
+	public List<Integer> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<Integer> tokens) {
+		this.tokens = tokens;
+	}
+}
