@@ -4,38 +4,48 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/dominionGameEnd.css">
 </head>
 <script src="/js/lib/angular.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/dominionEndController.js"></script>
 <body data-ng-app="dominionEndApp" data-ng-controller="dominionEndCtrl">
-	<div>
-		<h2>{{endgame.msg}}</h2>
-		<div>
-			<table>
-				<tr ng-repeat="x in endgame.scores track by $index">
-					<td>{{endgame.playernames[$index]}}</td>
-					<td>{{x}}</td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			<div ng-repeat="(ip, p) in endgame.playernames track by ip">
-				<h2>{{p}}</h2>
-				<table>
-					<tr>
-						<td>Card</td>
-						<td>#</td>
-						<td>VP</td>
-						<td>Description</td>
-					</tr>
-					<tr ng-repeat="(ir, r) in endgame.records[ip] track by ir">
-						<td ng-repeat="(ix, x) in endgame.records[ip][ir] track by ix">{{x}}</td>
+	<div class="outer">
+		<div class="endgameback">
+			<h1 class="msg">{{endgame.msg}}</h1>
+			<div>
+				<table class="table-bordered">
+					<tr ng-repeat="x in endgame.scores track by $index">
+						<td>{{endgame.playernames[$index]}}</td>
+						<td>{{x}}</td>
 					</tr>
 				</table>
 			</div>
-		</div>
-		<div>	
-			<button ng-click="goto('dominionboard')">back</button>
+			<div>
+				<div ng-repeat="(ip, p) in endgame.playernames track by ip">
+					<h2 class="name">{{p}}</h2>
+					<table class="table">
+						<thread>
+							<tr>
+								<td>Card</td>
+								<td>#</td>
+								<td>VP</td>
+								<td>Description</td>
+							</tr>
+						</thread>
+						<tbody>
+							<tr ng-repeat="(ir, r) in endgame.records[ip] track by ir">
+								<td ng-repeat="(ix, x) in endgame.records[ip][ir] track by ix">{{x}}</td>
+							</tr>
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+			<div style="height: 40px">	
+				<button class="back" ng-click="goto('dominionboard')">back</button>
+			</div>
 		</div>
 	</div>
 </body>
