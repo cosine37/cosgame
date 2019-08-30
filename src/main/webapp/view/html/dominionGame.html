@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dominion Game</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/dominionGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
@@ -12,12 +13,8 @@
 	<div id="audioplayer">
 		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
 	</div>
-	<!-- 
-		<div id="otherplayer" class="otherplayer">
-			Other Player Area
-		</div>
-	 -->
-	<div id="supply">
+
+	<div id="supply" class="supply">
 		<div id="basic" style="float: left; width: 200px;">
 			<div ng-repeat="baseCard in base track by $index" ng-style="baseStyle[$index]" ng-click="buyc('base', $index)">
 				<div class="base-number">
@@ -43,7 +40,7 @@
 				</div>
 			</div>
 			
-			<div id="play" style="margin-top: 10px;">
+			<div id="play" style="margin-top: 10px; width: 600px; height:105px">
 				<div class="base" ng-repeat="y in playCards track by $index" style="background:url({{y.image}});background-size:cover; margin-top: 10px">
 					<div class="kindom-number">
 						{{y.numCards}}
@@ -51,19 +48,19 @@
 				</div>
 			</div>
 		</div>
-		<div id="sidesection" style="margin-left: 30px;">
-			<div id="logtabs">
+		<div id="sidesection" style="margin-left: 50px; float: left; width: 400px;">
+			<div id="logtabs" style="positon:relative;left: 10%;">
 				<button ng-click="logButton()">Logs</button>
 				<button ng-click="trashButton()">Trash</button>
 				<button ng-click="matButton()">Mats</button>
-				<button ng-click="resign()">Resign</button></div>
+				<button ng-click="resign()">Resign</button>
 			</div>
-			<div id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px">
+			<div class="sidecontent" id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px">
 				<div ng-repeat = "log in logs track by $index">
 					{{log}}
 				</div>
 			</div>
-			<div id="trash" ng-show="showTrash" style="overflow-y: scroll; overflow:auto; height: 350px">
+			<div class="sidecontent" id="trash" ng-show="showTrash">
 				<h3 style="padding-top: 10px">Trash</h3>
 				<div class="base" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover">
 					<div class="kindom-number">
@@ -71,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="mat" ng-show="showMat" style="overflow-y: scroll; overflow:auto; height: 350px">
+			<div class="sidecontent" id="mat" ng-show="showMat">
 				<div id ="seclusion" ng-show="mats[0].length > 0" style="clear:both; padding-top: 10px">
 					<h3>Seclusion</h3>
 					<div class="base" ng-repeat="x in mats[0] track by $index" style="background:url({{x.image}});background-size:cover">
@@ -97,27 +94,38 @@
 					</div>
 				</div>
 			</div>
+			<div class="buttonarea">
+				<div>
+					<span>{{addon}}</span> 
+				</div>
+				
+				<div class="phasearea" style="float:left">
+					<div style="float:right"><button ng-show="showPhaseButton" ng-disabled="disablePhaseButton" ng-click="pb()">{{phaseButton}}</button></div>
+					<div ng-show="tokens != null && tokens[3]!='0'" style="float:right">
+						<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 	
-	<div id="player" style="clear:both; ">
-		<div style = "height: 25px">
-			{{topMessage}}    {{addon}}
-			<input ng-show="showGuess()" type="text" ng-model="guessedCardName">
-			<button ng-show="showGuess()" ng-click="guess()">Guess</button>
-			<button ng-show="showConfirmButton" ng-click="cb()">Confirm</button>
-			<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
-			<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
-			<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
+	<div id="player" class="player" style="clear:both;">
+		<div style="width: 100%; height: 25px">
+			<div style="padding-left: 220px">
+				<span>{{topMessage}}</span>
+				<input ng-show="showGuess()" type="text" ng-model="guessedCardName">
+				<button ng-show="showGuess()" ng-click="guess()">Guess</button>
+				<button ng-show="showConfirmButton" ng-click="cb()">Confirm</button>
+				<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
+				<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
+				<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
+			</div>
+			
 		</div>
 		
-		<div style="float: left; width: 120px">
+		<div style="float: left; width: 120px; height: 157px">
 			<div>
-				<div><button ng-show="showPhaseButton" ng-disabled="disablePhaseButton" ng-click="pb()">{{phaseButton}}</button></div>
-				<div ng-show="tokens != null && tokens[3]!='0'">
-					<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
-				</div>
-				
 			</div>
 		</div>
 		
@@ -142,10 +150,7 @@
 			</div>
 		</div>
 		
-		
-		
 	</div>
-	
 	
 	
 	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()">

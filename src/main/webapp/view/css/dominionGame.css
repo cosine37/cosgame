@@ -1,4 +1,35 @@
 @charset "UTF-8";
+html{
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	background: url("/image/Dominion/background/BaseArt.jpg") no-repeat center center;
+	background-size:cover;
+	background-attachment: fixed;
+	height: 100%;
+	margin: 0;
+	padding: 0px;
+	color: white;
+}
+button {
+	color: white;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: transparent;
+}
+button[disable]{
+	color: gray;
+	border-color: grey;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: transparent;
+}
 .base{
 	float: left;
 	height: 105px;
@@ -11,6 +42,7 @@
 	background-color:red;
 	color:white;
 	width: 30%;
+	text-align: center;
 }
 .kindom{
 	float: left;
@@ -24,6 +56,7 @@
 	background-color:red;
 	color:white;
 	width: 20%;
+	text-align: center;
 }
 
 .kindom-question{
@@ -68,6 +101,24 @@
 	top: 50%;
 	left: 50%;
 	border: 2px;
+}
+.supply{
+	position: relative;
+	height: 70%;
+	padding-top: 2px;
+	background-color: rgba(0,0,0,0.8);
+}
+.player{
+	position: relative;
+	height: 30%;
+	background-color: rgba(0,0,0,0.8);
+}
+.sidecontent{
+	border: 1px solid white;
+	overflow-y: scroll;
+	overflow:auto;
+	height: 350px;
+	padding-left: 10px;
 }
 .hand{
 	position: absolute;
