@@ -21,6 +21,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.kindom = [];
 		$scope.allCards = [];
+		$scope.expStyle = [];
 		$scope.cardStyle = [];
 		
 		var expansionShow = [];
@@ -47,6 +48,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		$http.post('/dominiongame/getkindom').then(function(response){
 			$scope.kindom=response.data;
 		});
+		
 		
 		$scope.addBot = function() {
 			$http({url: "/dominiongame/addbot", method: "POST"}).then(function(response){
@@ -145,6 +147,15 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		getAllInfo();
 		
+		setDominionButton = function(){
+			var n = $scope.expansions.length;
+			$scope.expStyle = new Array(n).fill("");
+			$scope.expStyle[0] = {
+				"color": "rgb(51,51,51)",
+				"background": "rgba(255,255,255,0.8)"
+			}	
+		}
+		
 		getSelected = function(){
 			$http.post('/dominionlist/getselected').then(function(response){
 				$scope.selected = response.data;
@@ -167,6 +178,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		getAllCards = function(){
 			$http.post('/dominionlist/allcards').then(function(response){
 				$scope.expansions=response.data;
+				setDominionButton();
 				getSelected();
 			});
 		}
@@ -185,7 +197,6 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					"top": "0%",
 					"height": "100%",
 					"width": "100%",
-					"background": "rgba(150, 150, 150)"
 				}
 				$scope.expansionDivStyle = {
 					"left": "10%",
@@ -221,9 +232,9 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.changeExpansion = function(index){
-			//$scope.includeAll = true;
 			var n = $scope.expansions.length;
 			expansionShow = new Array(n).fill(false);
+			
 			expansionShow[index] = true;
 			var m = $scope.expansions[index].piles.length;
 			$scope.cardStyle = new Array(m);
@@ -237,6 +248,11 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					"background-size": "cover"
 				}
 				$scope.cardStyle[i] = tjsonObj;
+			}
+			$scope.expStyle = new Array(n).fill("");
+			$scope.expStyle[index] = {
+				"color": "rgb(51,51,51)",
+				"background": "rgba(255,255,255,0.8)"
 			}
 		}
 		
@@ -263,7 +279,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.usedCard = function(index){
-			var image = "/image/Dominion/cards/Card_back.jpg";
+			var image = "/image/Dominion/cards/Card_back.png";
 			if (index < $scope.used.length){
 				image = $scope.used[index];
 			}

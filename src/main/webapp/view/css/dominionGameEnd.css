@@ -13,7 +13,8 @@ body{
 	position: relative;
 	padding-left: 27%;
 	width: 73%;
-	top: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 .endgameback{
 	border-radius: 10px;

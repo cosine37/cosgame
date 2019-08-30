@@ -1,0 +1,121 @@
+@charset "UTF-8";
+html{
+	height: 100%;
+}
+body{
+	background: url("/image/Dominion/background/BaseArt.jpg") no-repeat center center;
+	background-size:cover;
+	background-attachment: fixed;
+	height: 100%;
+	margin: 0;
+}
+.outer{
+	position: relative;
+	padding-left: 10%;
+	width: 90%;
+	padding-top: 20px;
+}
+.boardback{
+	position: relative;
+	height: 540px;
+	border-radius: 10px;
+	padding: 30px;
+	background-color: rgba(0,0,0,0.8);
+}
+.cardlistouter{
+	position: relative;
+	padding-left: 7%;
+	width: 93%;
+	padding-top: 20px;
+}
+.cardlistback{
+	position: relative;
+	height: 570px;
+	border-radius: 10px;
+	padding: 15px;
+	background-color: rgba(0,0,0,0.8);
+}
+.cardlistdiv{
+	position: relative;
+	left: 0%;
+	right: 0%;
+	height: 100%;
+	width: 100%;
+}
+.cardlistdiv button{
+	color: white;
+	background: transparent;
+}
+.cardlistdiv button[disabled]{
+	color: grey;
+	background: transparent;
+	border-color: grey;
+}
+.cardlistdiv input{
+	color: white;
+	background: transparent;
+}
+.expansiondiv{
+	margin-top: 10px;
+	height: 100%;
+	margin-left: 5%;
+	width: 92%;
+	color: white;
+}
+.expansionbar{
+	margin-top: 10px;
+	margin-left: 5%;
+}
+.expansionbar button{
+	margin-right: 10px;
+}
+.usedcards{
+	width:85%:
+}
+.twobuttons{
+	float: right;
+	width: 15%;
+	margin-top: 80px;
+	margin-right: 5px;
+}
+.settings{
+	color: white;
+	float: left;
+	width: 55%;
+}
+.playerlist{
+	color: white;
+}
+.settings button{
+	color: white;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 12px;
+	padding-right: 12px;
+	background: transparent;
+}
+.settings select{
+	color: white;
+	background: transparent;
+}
+.settings option{
+	color: white;
+	background-color: rgb(51,51,51);
+}
+.playerlist button{
+	color: white;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: transparent;
+}
+.playertable{
+	height: 200px;
+}
+.playertitle{
+	height: 20px;
+}
+.playername{
+	height: 20px;
+}

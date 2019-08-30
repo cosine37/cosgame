@@ -79,7 +79,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.deckStyle = {
-			"background": "url('/image/Dominion/cards/Card_back.jpg')",
+			"background": "url('/image/Dominion/cards/Card_back.png')",
 			"background-size": "cover",
 			"float": "left"
 		}
@@ -117,21 +117,21 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 			if ($scope.numDeck == 0 || $scope.status != 2){
 				$scope.deckStyle = {
-					"background": "url('/image/Dominion/cards/Card_back.jpg')",
+					"background": "url('/image/Dominion/cards/Card_back.png')",
 					"background-size": "cover",
 					"float": "left",
 					"visibility": "hidden"
 				}
 			} else {
 				$scope.deckStyle = {
-					"background": "url('/image/Dominion/cards/Card_back.jpg')",
+					"background": "url('/image/Dominion/cards/Card_back.png')",
 					"background-size": "cover",
 					"float": "left"
 				}
 			}
 			if ($scope.discardTop == null || $scope.status != 2){
 				$scope.discardStyle = {
-					"background": "url('/image/Dominion/cards/Card_back.jpg')",
+					"background": "url('/image/Dominion/cards/Card_back.png')",
 					"background-size": "cover",
 					"float": "left",
 					"visibility": "hidden"
