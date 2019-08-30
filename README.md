@@ -1,5 +1,5 @@
 # Cosgame
-This project features some board games frequently played with my friends.  This is a **Spring Boot** project with **AngularJS** for Front-End and MongoDB for Database.  Right now Cosgame has Dominion and Mafia.
+This project features some board games frequently played with my friends.  This is a **Spring Boot** project with **AngularJS** and **Bootstrap** for Front-End and MongoDB for Database.  The corresponding languages are Java, JavaScript, HTML and CSS.  Right now Cosgame has Dominion and Mafia.
 
 ## Dominion (partially completed)
 Dominion is a deck-building game.  The general rules of the game can be seen in the following link:
@@ -10,11 +10,11 @@ After played several games, I started brainstorming my own cards for the game an
 
 This is the login page.  User information is stored in MongoDB and new user is able to register
 
-![avatar](https://s2.ax1x.com/2019/08/26/mWgYJU.png)
+![avatar](https://s2.ax1x.com/2019/08/30/mjWxwd.md.png)
 
-This is the game play page.  Although the UI is not well-polished yet, the service realizes all the game mechanics including playing Action cards and Treasure cards, buying new cards, and end game handle.
+This is the game play page.  The service now realizes all the game mechanics including playing Action cards and Treasure cards, buying new cards, and end game handle.
 
-This service is under fast development and it will be updated frequently.
+This service is under fast development and will be updated frequently.
 
 ## Mafia (under development)
 Mafia is an old-school game that I played from more than ten years ago.  It is a game about identity.  Each player has a role.  The innocents and the police must try their best to figure out who are the mafias.  The detailed introduction of the game is provided below.
