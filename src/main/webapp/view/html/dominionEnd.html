@@ -9,10 +9,32 @@
 <script src="/js/app/dominionEndController.js"></script>
 <body data-ng-app="dominionEndApp" data-ng-controller="dominionEndCtrl">
 	<div>
-		<h2>{{endMsg}}</h2>
-		<p>{{sc1}}</p>
-		<p>{{sc2}}</p>
+		<h2>{{endgame.msg}}</h2>
 		<div>
+			<table>
+				<tr ng-repeat="x in endgame.scores track by $index">
+					<td>{{endgame.playernames[$index]}}</td>
+					<td>{{x}}</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<div ng-repeat="(ip, p) in endgame.playernames track by ip">
+				<h2>{{p}}</h2>
+				<table>
+					<tr>
+						<td>Card</td>
+						<td>#</td>
+						<td>VP</td>
+						<td>Description</td>
+					</tr>
+					<tr ng-repeat="(ir, r) in endgame.records[ip] track by ir">
+						<td ng-repeat="(ix, x) in endgame.records[ip][ir] track by ix">{{x}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div>	
 			<button ng-click="goto('dominionboard')">back</button>
 		</div>
 	</div>

@@ -12,14 +12,8 @@ app.controller("dominionEndCtrl", ['$scope', '$window', '$http', '$document',
 			$window.location.href = x + "/" + d;
 		}
 		
-		$scope.endMsg = "";
-		$scope.sc1 = "";
-		$scope.sc2 = "";
-		
 		$http.post('/dominiongame/endgamemsg').then(function(response){
-			$scope.endMsg = response.data.value[0];
-			$scope.sc1 = response.data.value[1];
-			$scope.sc2 = response.data.value[2];
+			$scope.endgame = response.data;
 		});
 		
 }]);

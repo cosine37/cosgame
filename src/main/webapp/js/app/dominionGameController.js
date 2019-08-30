@@ -286,9 +286,12 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		getboard();
 		
 		$scope.resign = function(){
-			$http.post('/dominiongame/resign').then(function(response){
-				$scope.goto('dominionend');
-			});
+			var r = confirm("Are you sure you want to resign?")
+			if (r){
+				$http.post('/dominiongame/resign').then(function(response){
+					$scope.goto('dominionend');
+				});
+			}
 		}
 		
 		$scope.showCard = function(image){

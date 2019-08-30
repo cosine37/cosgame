@@ -20,6 +20,7 @@ import com.cosine.cosgame.dominion.Board;
 import com.cosine.cosgame.dominion.BoardEntity;
 import com.cosine.cosgame.dominion.Card;
 import com.cosine.cosgame.dominion.CardFactory;
+import com.cosine.cosgame.dominion.EndGameEntity;
 import com.cosine.cosgame.dominion.Pile;
 import com.cosine.cosgame.dominion.Player;
 import com.cosine.cosgame.dominion.PlayerEntity;
@@ -172,41 +173,30 @@ public class DominionGameController {
 	}
 	
 	@RequestMapping(value="/dominiongame/endgamemsg", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> endgameMsg(HttpServletRequest request){
+	public ResponseEntity<EndGameEntity> endgameMsg(HttpServletRequest request){
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
-		String endPlayer = board.getEndPlayer();
-		String endType = board.getEndType();
-		String endMsg = "";
-		if (endPlayer.equals(username)) {
-			if (endType.equals("resign")) {
-				endMsg = "You resigned";
-			} else if (endType.equals("win")) {
-				endMsg = "You win";
+		EndGameEntity entity = new EndGameEntity(board);
+		if (entity.getWinner().equals(username)) {
+			if (entity.getType().equals("resign")) {
+				entity.setMsg("You Resigned");
+			} else if (entity.getType().equals("win")) {
+				entity.setMsg("You Win");
 			} else {
 				
 			}
 		} else {
-			if (endType.equals("resign")) {
-				endMsg = endPlayer + " resigned";
-			} else if (endType.equals("win")) {
-				endMsg = "You lose";
+			if (entity.getType().equals("resign")) {
+				entity.setMsg(entity.getWinner() + " Resigned");
+			} else if (entity.getType().equals("win")) {
+				entity.setMsg("You Lose");
 			} else {
 				
 			}
 		}
-		List<String> value = new ArrayList<String>();
-		value.add(endMsg);
-		for (int i=0;i<board.getPlayers().size();i++) {
-			endMsg = board.getPlayers().get(i).getName();
-			endMsg = endMsg + ": " + Integer.toString(board.getPlayers().get(i).getScore());
-			value.add(endMsg);
-		}
-		StringEntity entity = new StringEntity();
-		entity.setValue(value);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
