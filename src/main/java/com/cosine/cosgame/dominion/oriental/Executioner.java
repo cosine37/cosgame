@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cosine.cosgame.dominion.Ask;
 import com.cosine.cosgame.dominion.Card;
+import com.cosine.cosgame.dominion.Player;
 
 public class Executioner extends Card{
 	public Executioner() {
@@ -42,6 +43,15 @@ public class Executioner extends Card{
 			log(player.getName() + " receives 2 Memorial tokens",1);
 		}
 		ask = new Ask();
+		return ask;
+	}
+	
+	public Ask onGain(Player p) {
+		if (p.getPhase() != Player.OFFTURN) {
+			p.addCoin(1);
+			log(p.getName() + " gets +$1", 1);
+		}
+		Ask ask = new Ask();
 		return ask;
 	}
 }

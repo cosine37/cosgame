@@ -10,7 +10,7 @@ public class LanternExhibition extends Card{
 		this.name = "LanternExhibition";
 		this.image = "/image/Dominion/cards/Oriental/LanternExhibition.png";
 		this.types[INDEX_ACTION] = true;
-		this.price = 5;
+		this.price = 6;
 		this.card = 3;
 		this.action = 1;
 

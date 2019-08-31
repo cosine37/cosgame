@@ -31,9 +31,11 @@ public class ArmyDrummer extends Card{
 	}
 	
 	public Ask onGain(Player p) {
-		if (p.getPhase() != Player.OFFTURN) {
-			p.addCoin(1);
-			log(p.getName() + " gets +$1", 1);
+		int n = p.getDiscard().size() - 1;
+		if (p.getDiscard().get(n).getName().equals(name)) {
+			Card card = p.getDiscard().remove(n);
+			p.getSeclusion().add(card);
+			log("Army Drummer is gained to " + p.getName() + "'s Seclusion mat", 0);
 		}
 		Ask ask = new Ask();
 		return ask;
