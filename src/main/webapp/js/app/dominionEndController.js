@@ -14,6 +14,11 @@ app.controller("dominionEndCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$http.post('/dominiongame/endgamemsg').then(function(response){
 			$scope.endgame = response.data;
+			$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
+				
+			});
 		});
+		
+		
 		
 }]);

@@ -223,7 +223,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.topMessage = "It's not your turn";
 				$scope.phaseButton = "Don't click";
 				$http.post('/dominiongame/nextplayer').then(function(response){
-					getboard();
+					getplayer();
 				});
 			}
 		}
@@ -250,9 +250,22 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			div.scrollTop = div.scrollHeight;
 		}
 		
+		getboard = function(){
+			$http.post("/dominiongame/getboard").then(function(response){
+				$scope.base = response.data.base;
+				$scope.kindom = response.data.kindom;
+				$scope.trashCards = response.data.trash;
+				$scope.logs = response.data.logs;
+				$scope.status = response.data.status;
+				setStatus();
+				setBaseStyle();
+				setKindomStyle();
+				adjustLogs();
+			});
+		}
+
 		getplayer = function(){
 			$http.post("/dominiongame/getplayer").then(function(response){
-				adjustLogs();
 				$scope.playCards = response.data.play;
 				$scope.tokens = response.data.tokens;
 				$scope.numDeck = response.data.deck;
@@ -264,26 +277,14 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.coin = response.data.coin;
 				$scope.mats = response.data.mats;
 				$scope.ask = response.data.ask;
-				setStatus();
 				setAddon();
 				setCards();
+				getboard();
+				
 			});
 		}
 		
-		getboard = function(){
-			$http.post("/dominiongame/getboard").then(function(response){
-				$scope.base = response.data.base;
-				$scope.kindom = response.data.kindom;
-				$scope.trashCards = response.data.trash;
-				$scope.logs = response.data.logs;
-				$scope.status = response.data.status;
-				setBaseStyle();
-				setKindomStyle();
-				getplayer();
-			});
-		}
-		
-		getboard();
+		getplayer();
 		
 		$scope.resign = function(){
 			var r = confirm("Are you sure you want to resign?")
@@ -324,7 +325,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.autoplay = function(){
 			$http.post('/dominiongame/autoplaytreasure').then(function(response){
-				getboard();
+				getplayer();
 			});
 		}
 		
@@ -332,7 +333,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 			if ($scope.status == 1){
 				$http.post('/dominiongame/finishfirstcards').then(function(response){
-					getboard();
+					getplayer();
 				});
 			} else if ($scope.status == 2){
 				var task = $scope.ask;
@@ -355,7 +356,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					var data = {"ans": s};
 					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 						$scope.ask = response.data;
-						getboard();
+						getplayer();
 					});
 				} else if (task.type == 4 && task.subType == 51){
 					var s = "";
@@ -372,7 +373,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					var data = {"ans": s};
 					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 						$scope.ask = response.data;
-						getboard();
+						getplayer();
 					});
 				} else if (task.type == 4 && task.subType == 52){
 					var s = "";
@@ -387,7 +388,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					var data = {"ans": s};
 					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 						$scope.ask = response.data;
-						getboard();
+						getplayer();
 					});
 				}
 			}
@@ -399,7 +400,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					
 				} else {
 					$http.post('/dominiongame/nextphase').then(function(response){
-						getboard();
+						getplayer();
 					});
 				}
 			}
@@ -409,7 +410,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			var data = {"ans": index.toString()};
 			$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 				$scope.ask = response.data;
-				getboard();
+				getplayer();
 			});
 		}
 		
@@ -417,7 +418,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			var data = {"cardName": card.name};
 			$http({url: "/dominiongame/playcard", method: "POST", params: data}).then(function(response){
 				$scope.ask = response.data;
-				getboard();
+				getplayer();
 			});
 		}
 		
@@ -515,7 +516,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		gainCard = function(cardName){
 			var data = {"cardName": cardName}
 			$http({url: "/dominiongame/gaincard", method: "POST", params: data}).then(function(response){
-				getboard();
+				getplayer();
 			});
 		}
 		
@@ -656,7 +657,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.guessedCardName = "";
 			$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 				$scope.ask = response.data;
-				getboard();
+				getplayer();
 			});
 		}
 		
@@ -723,7 +724,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 							var data = {"ans": pile.cards[0].name};
 							$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
 								$scope.ask = response.data;
-								getboard();
+								getplayer();
 							});
 						}
 					}
@@ -753,7 +754,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.useMemorial = function(){
 			$http.post('/dominiongame/usememorial').then(function(response){
-				getboard();
+				getplayer();
 			});
 		}
 		

@@ -102,7 +102,6 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.showCard = function(image){
-			//alert(image.toString());
 			$scope.bigImage = image;
 			$scope.showBigImage = true;
 			$scope.bigImageStyle = {

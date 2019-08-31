@@ -332,6 +332,11 @@ public class DominionGameController {
 		String boardId = (String) session.getAttribute("boardId");
 		board = new Board();
 		board.getBoardFromDB(boardId);
+		int status = board.getStatus();
+		if (status == 3) {
+			StringEntity entity = new StringEntity();
+			return new ResponseEntity<>(entity, HttpStatus.OK);
+		}
 		String p1 = board.getCurrentPlayerName();
 		board.nextPlayer();
 		String p2 = board.getCurrentPlayerName();
