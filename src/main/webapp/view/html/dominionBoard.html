@@ -89,14 +89,16 @@
 							<button ng-click="includeAll(k)" ng-disabled="!isLord">Include all</button>
 							<button ng-click="excludeAll(k)" ng-disabled="!isLord">Exclude all</button>
 						</div>
-						<div ng-repeat="(key, pile) in expansion.piles track by key" style="float: left">
-							<div ng-style="cardStyle[key]" ng-click="use(k,key)">
-								<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(pile.image);$event.stopPropagation();"/>
+						<div style="overflow-y: scroll; overflow:auto;height: 240px">
+							<div ng-repeat="(key, pile) in expansion.piles track by key" style="float: left">
+								<div ng-style="cardStyle[key]" ng-click="use(k,key)">
+									<img src="/image/Dominion/qsmark.png" height="20" width="20" ng-click="showCard(pile.image);$event.stopPropagation();"/>
+								</div>
+								<div>
+									<input type="checkbox" ng-checked="selected[k][key] == 0" ng-click="check(k,key)" ng-disabled="selected[k][key] == 2 || (!isLord)">
+									<button ng-click="use(k,key)" ng-disabled="selected[k][key] == 2 || used.length == 10 || (!isLord)" style="margin-left: 10px">use</button>
+								</div>  
 							</div>
-							<div>
-								<input type="checkbox" ng-checked="selected[k][key] == 0" ng-click="check(k,key)" ng-disabled="selected[k][key] == 2 || (!isLord)">
-								<button ng-click="use(k,key)" ng-disabled="selected[k][key] == 2 || used.length == 10 || (!isLord)" style="margin-left: 10px">use</button>
-							</div>  
 						</div>
 					</div>
 					<div class="usedcards">

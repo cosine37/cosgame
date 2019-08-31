@@ -24,15 +24,15 @@ body{
 }
 .cardlistouter{
 	position: relative;
-	padding-left: 7%;
-	width: 93%;
+	padding-left: 10%;
+	width: 90%;
 	padding-top: 20px;
 }
 .cardlistback{
 	position: relative;
-	height: 570px;
+	height: 540px;
 	border-radius: 10px;
-	padding: 15px;
+	padding-top: 20px;
 	background-color: rgba(0,0,0,0.8);
 }
 .cardlistdiv{

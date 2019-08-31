@@ -1,0 +1,5 @@
+@charset "UTF-8";
+.nav-tabs .nav-link.active{
+	background: rgb(0,100,100);
+	color: white;
+}

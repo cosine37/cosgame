@@ -1,0 +1,43 @@
+.tabs{
+	height: 10%;
+	width: 100%;
+	background: linear-gradient(rgb(100,100,100), rgb(200,200,200), rgb(200,200,200), rgb(200,200,200), rgb(100,100,100));
+	clear: both;
+}
+.tabs button{
+	outline: none;
+	background: transparent;
+	border: 0px;
+	font-size: 18px;
+	line-height: 60px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius:10px 10px 0 0;
+	color: black;
+}
+.tabcontent{
+	padding-top: 20px;
+	height: 75%;
+	width: 100%;
+	background-color: rgb(51,51,51);
+}
+.tabcontent button{
+	outline: none;
+	color: white;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: transparent;
+}
+.table{
+	color: white;
+	width: 60%;
+}
+.sidebar{
+	background: transparent;
+}
+.sidebar a{
+	color: white;
+}

@@ -3,16 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/dominionTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/dominionMainController.js"></script>
 <body ng-app="dominionMainApp" ng-controller="dominionMainCtrl">
 	<div id="header" class="header">
 		<table style="width: 100%">
 			<tr>
 				<td><h1 class="title">Cosgame</h1></td>
-				<td align="right" style="padding-right: 30px"><button ng-click="logout()">Logout</button></td>
+				<td align="right" style="padding-right: 30px">
+					<span style="margin-right: 10px; color: white">{{username}}</span>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
+				</td>
 			</tr>
 		</table>
 		
@@ -20,36 +27,65 @@
 	
 	<div id="tabs" class="tabs">
 		<button ng-click="goto('index')">Home</button>
-		<button>Dominion</button>
+		<button style="padding-top: 0px; color: white; font-size: 24px; background-color:rgb(51,51,51)">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>
 		<button>Others</button>
 	</div>
 	
 	<div id="tabcontent" class="tabcontent">
-		<div id="sidebar" class="sidebar">
-			<table>
-				<tr><td><button>Rooms</button></td></tr>
-				<tr><td><button>Rules</button></td></tr>
-				<tr><td><button ng-click="goto('dominionlist')">Cards</button></td></tr>
-			</table>
-		</div>
-		
-		<div id="content" class="content">
-			<div id="rooms" class="rooms">	
-				<table>
-					<tr>
-						<td><button ng-click="newBoard()">Create Room</button></td>
-					</tr>
-				</table>
-				<table>
-					<tr ng-repeat="boardId in boardIds track by $index">
-						<td>{{boardId.id}}</td>
-						<td>{{boardId.status}}</td>
-						<td><button ng-click="enterBoard(boardId.id)">Enter</button></td>
-					</tr>
-				</table>
+		<div class="container">
+			<div id="sidebar" class="sidebar">
+				<ul class="nav nav-tabs flex-column" role="tablist">
+				    <li class="nav-item">
+				      <a class="nav-link active" data-toggle="tab" href="#roomstab">Rooms</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rulestab">Rules</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#cardstab">Cards</a>
+				    </li>
+				  </ul>
+			</div>
+			
+			<div class="tab-content">
+				<div id="roomstab" class="content container tab-pane active">
+					<div id="rooms" class="rooms">	
+						<table style="width: 60%;">
+							<tr>
+								<td style="float: right"><button ng-click="newBoard()">Create Room</button></td>
+							</tr>
+						</table>
+						<table class="table">
+							<thread>
+								<tr>
+									<td>Board Id</td>
+									<td>Board Status</td>
+									<td>Enter</td>
+								</tr>
+							</thread>
+							<tbody>
+								<tr ng-repeat="boardId in boardIds track by $index">
+									<td>{{boardId.id}}</td>
+									<td>{{boardId.status}}</td>
+									<td><button ng-click="enterBoard(boardId.id)">Enter</button></td>
+								</tr>
+							</tbody>
+							
+						</table>
+					</div>
+				</div>
+				
+				<div id="rulestab" class="content container tab-pane fade">
+					rules
+				</div>
+				
+				<div id="cardstab" class="content container tab-pane fade">
+					cards
+				</div>
 			</div>
 		</div>
+		
 	</div>
 	
 	

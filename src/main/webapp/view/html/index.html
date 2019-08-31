@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/indexTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/indexController.js"></script>
 <body ng-app="indexApp" ng-controller="indexCtrl">
 	<div id="header" class="header">
@@ -14,17 +18,45 @@
 				<td><h1 class="title">Cosgame</h1></td>
 				<td align="right" style="padding-right: 30px">
 					<span style="margin-right: 10px; color: white">{{username}}</span>
-					<button ng-click="logout()">Logout</button>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
-	<div id="tabs" class="tabs" style="clear:both; ">
-		<button>Home</button>
+	<div id="tabs" class="tabs">
+		<button style="padding-top: 0px; color: rgb(0,100,100); font-size: 24px; background-color:white">Home</button>
 		<button ng-click="goto('dominion')">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>
 		<button>Others</button>
+	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div class="container">
+			<div id="sidebar" class="sidebar">
+				<ul class="nav nav-tabs flex-column" role="tablist">
+				    <li class="nav-item">
+				      <a class="nav-link active" data-toggle="tab" href="#newstab">News</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#abouttab">About</a>
+				    </li>
+				  </ul>
+			</div>
+			
+			<div class="tab-content">
+				<div id="newstab" class="content container tab-pane active">
+					<h1>Welcome to Cosgame</h1>
+				</div>
+				
+				<div id="abouttab" class="content container tab-pane fade">
+					<h2>About</h2>
+					<p>Cosgame is developed by Cosine37.</p>
+				</div>
+				
+			</div>
+		</div>
+		
 	</div>
 	
 </body>

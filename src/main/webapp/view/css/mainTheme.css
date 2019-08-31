@@ -10,27 +10,58 @@ html {
 }
 
 .header{
-	background-color: blue;
+	background:url("/image/Webpage/top.png");
 	width: 100%;
+	background-position: 30% 60%;
+	height: 15%;
+}
+
+.tabs{
+	height: 10%;
+	width: 100%;
+	background: linear-gradient(black, rgb(0,100,100), rgb(0,100,100), rgb(0,100,100), black);
+	clear: both;
+}
+
+.tabs button{
+	outline: none;
+	background: transparent;
+	border: 0px;
+	font-size: 18px;
+	line-height: 60px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius:10px 10px 0 0;
+	color: white;
 }
 
 .title{
-	padding-left: 10px;
+	padding-left: 20px;
+	padding-top: 20px;
 	padding-bottom: 10px;
 	color: white;
 }
 
 .tabcontent{
+	padding-top: 20px;
+	height: 65%;
 	width: 100%;
 }
-
-.sidebar{
-	width: 15%;
-	float: left;
-
+.container{
+	margin: 0px;
+	padding: 0px;
 }
-
 .content{
 	width: 85%;
 	float: left;
+	padding-left: 20px;
+}
+.sidebar{
+	height: 100%;
+	width: 15%;
+	float: left;
+}
+.sidebar a{
+	color: rgb(0,100,100);
 }

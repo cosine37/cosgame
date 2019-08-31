@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/loginTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
@@ -11,22 +12,10 @@
 <div id="login" class="login">
 	<div id="logo" class="title">Cosgame</div>
 	<div class="content">
-		<!-- <form action="/login" method="post">
-			<div class="wrongpassword"></div>
-			<div class="loginword">Username</div>
-			<div class="logintext"><input type="text" name="username"/></div>
-			<div class="loginword">Password</div>
-			<div class="logintext"><input type="password" name="password"/></div>
-			<div class="buttons">
-				<button type="submit">Login</button>
-				<button>Register</button>
-			</div>
-		</form>
-		 -->
 		<div class="wrongpassword"></div>
-		<div class="loginword">Username</div>
+		<div class="loginword"><span style="color: black">Username</span></div>
 		<div class="logintext"><input type="text" name="username" ng-model="username"/></div>
-		<div class="loginword">Password</div>
+		<div class="loginword"><span style="color: black">Password</span></div>
 		<div class="logintext"><input type="password" name="password" ng-model="password"/></div>
 		<div class="buttons">
 			<button ng-click="login()">Login</button>

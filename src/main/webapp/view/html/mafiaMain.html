@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mafiaTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/app/mafiaMainController.js"></script>
@@ -13,7 +15,10 @@
 		<table style="width: 100%">
 			<tr>
 				<td><h1 class="title">Cosgame</h1></td>
-				<td align="right" style="padding-right: 30px"><button ng-click="logout()">Logout</button></td>
+				<td align="right" style="padding-right: 30px">
+					<span style="margin-right: 10px; color: white">{{username}}</span>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
+				</td>
 			</tr>
 		</table>
 		
@@ -22,7 +27,7 @@
 	<div id="tabs" class="tabs">
 		<button ng-click="goto('index')">Home</button>
 		<button ng-click="goto('dominion')">Dominion</button>
-		<button>Mafia</button>
+		<button style="padding-top: 0px; color: darkred; font-size: 24px; background-color:white">Mafia</button>
 		<button>Others</button>
 	</div>
 	
