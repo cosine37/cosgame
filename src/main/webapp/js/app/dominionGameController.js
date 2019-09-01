@@ -146,9 +146,16 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		setAddon = function(){
-			$scope.addon = " Action: " + $scope.action;
-			$scope.addon = $scope.addon + " Buy: " + $scope.buy;
-			$scope.addon = $scope.addon + " Coin: " + $scope.coin;
+			if ($scope.action < 2){
+				$scope.addon = $scope.action + " Action | ";
+			} else {
+				$scope.addon = $scope.action + " Actions | ";
+			}
+			if ($scope.buy < 2){
+				$scope.addon = $scope.addon + $scope.buy + " Buy | ";
+			} else {
+				$scope.addon = $scope.addon + $scope.buy + " Buys | ";
+			}
 		}
 		
 		setButtons = function(){
@@ -261,10 +268,10 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.trashCards = response.data.trash;
 				$scope.logs = response.data.logs;
 				$scope.status = response.data.status;
+				adjustLogs();
 				setStatus();
 				setBaseStyle();
 				setKindomStyle();
-				adjustLogs();
 			});
 		}
 
@@ -303,7 +310,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.bigImage = image;
 			$scope.showBigImage = true;
 			$scope.bigImageStyle = {
-				"height": "420px", 
+				"height": "435px", 
 				"width": "280px", 
 				"position": "absolute",
 				"left": "50%",
@@ -479,11 +486,18 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				var tJsonObj = {
 					"position": "relative",
 					"float": "left",
-					"height": "105px",
-					"width": "70px"	
+					"height": "78px",
+					"width": "90px",
+					"border-top-style": "solid",
+					"border-top-width": "6px",
+					"border-bottom-style": "solid",
+					"border-bottom-width": "6px",
+					"border-radius": "5px",
+					"border-color": "black"
 				}
 				tJsonObj["background-image"] = "url("+$scope.base[i].cards[0].image+")";
 				tJsonObj["background-size"] = "cover";
+				tJsonObj["background-position"] = "50% 6%";
 				if (i%1 == 0){
 					tJsonObj["margin-left"] = "5px";
 				}
@@ -502,11 +516,18 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				var tJsonObj = {
 					"position": "relative",
 					"float": "left",
-					"height": "157px",
-					"width": "105px"	
+					"height": "101px",
+					"width": "120px",
+					"border-top-style": "solid",
+					"border-top-width": "8px",
+					"border-bottom-style": "solid",
+					"border-bottom-width": "8px",
+					"border-radius": "5px",
+					"border-color": "black"
 				}
 				tJsonObj["background-image"] = "url("+$scope.kindom[i].cards[0].image+")";
 				tJsonObj["background-size"] = "cover";
+				tJsonObj["background-position"] = "50% 10%";
 				if (i!=0 && i!=5){
 					tJsonObj["margin-left"] = "10px";
 				}

@@ -14,7 +14,10 @@ body{
 	color: white;
 }
 button {
+	user-select:none;
 	color: white;
+	border-color: white;
+	border-style:solid;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	padding-left: 5px;
@@ -24,54 +27,211 @@ button {
 button[disabled]{
 	color: gray;
 	border-color: grey;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 5px;
-	padding-right: 5px;
-	background: transparent;
 }
-.base{
+.addon-coin{
+	position: relative;
+	float: left;
+	top: 6px;
+	left: 5px;
+	height: 24px;
+	width: 24px;
+	background: url("/image/Dominion/coin.png");
+	background-size: cover;
+}
+
+.addon-price{
+	position: absolute;
+	user-select:none;
+	text-align: center;
+	font-size: 16px;
+	font-family:"arial";
+	font-weight: bold;
+	width: 24px;
+	color: black;
+	top: 0px;
+	left: 50%;
+	margin-left: -12px;
+}
+.play{
 	float: left;
 	height: 105px;
 	width: 70px;
 }
+.play-number{
+	position: relative;
+	user-select:none;
+	top:0%;
+	left:0%;
+	background-color:red;
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	color:white;
+	width: 30%;
+	text-align: center;
+}
+.play-coin{
+	position: absolute;
+	clear: both;
+	left: 2px;
+	bottom: 2px;
+	height: 16px;
+	width: 16px;
+	background: url("/image/Dominion/coin.png");
+	background-size: cover;
+}
+
+.play-price{
+	position: absolute;
+	user-select:none;
+	text-align: center;
+	font-size: 12px;
+	font-family:"arial";
+	font-weight: bold;
+	color: black;
+	top: -1px;
+	width: 16px;
+	left: 50%;
+	margin-left: -8px;
+}
+.base{
+	float: left;
+	height: 90px;
+	width: 80px;
+}
 .base-number{
 	position: relative;
-	top:0%;
+	user-select:none;
+	top: -6px;
 	left:0%;
 	background-color:red;
 	color:white;
 	width: 30%;
 	text-align: center;
+	border-radius: 5px;
+}
+.base-question{
+	position: absolute;
+	user-select:none;
+	float: left;
+	top: -8px;
+	right: 2px;
+}
+.base-plus{
+	position: absolute;
+	bottom: -3px;
+	right: 2px;
+}
+.base-coin{
+	position: absolute;
+	clear: both;
+	left: 2px;
+	bottom: -4px;
+	height: 20px;
+	width: 20px;
+	background: url("/image/Dominion/coin.png");
+	background-size: cover;
+}
+.kindom-supply{
+	float: left;
+	height: 157px;
+	width: 105px;
 }
 .kindom{
 	float: left;
 	height: 157px;
 	width: 105px;
 }
-.kindom-number{
+
+.hand-number{
 	position: relative;
-	top:0%;
+	user-select:none;
+	float: left;
+	top: 0%;
 	left:0%;
 	background-color:red;
 	color:white;
 	width: 20%;
+	padding: 0px;
 	text-align: center;
+	border-radius: 5px;
+}
+.hand-coin{
+	position: absolute;
+	clear: both;
+	left: 2px;
+	bottom: 2px;
+	height: 20px;
+	width: 20px;
+	background: url("/image/Dominion/coin.png");
+	background-size: cover;
+}
+
+.hand-question{
+	position: relative;
+	user-select:none;
+	float: left;
+	top: 0%;
+	left: 75px;
+}
+
+.kindom-number{
+	position: relative;
+	user-select:none;
+	float: left;
+	top: -8px;
+	left:0%;
+	background-color:red;
+	font-size: 15px;
+	color:white;
+	width: 20%;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	border-radius: 5px;
 }
 
 .kindom-question{
-	position: relative;
-	top:0%;
-	right:0%;
-}
-.plus{
 	position: absolute;
-	bottom: 0px;
-	right: 0px;
+	user-select:none;
+	float: left;
+	top: -10px;
+	right: 2px;
+}
+
+.kindom-coin{
+	position: absolute;
+	clear: both;
+	left: 2px;
+	bottom: -6px;
+	height: 20px;
+	width: 20px;
+	background: url("/image/Dominion/coin.png");
+	background-size: cover;
+}
+
+.kindom-price{
+	position: absolute;
+	user-select:none;
+	text-align: center;
+	font-size: 15px;
+	font-family:"arial";
+	font-weight: bold;
+	color: black;
+	top: -1px;
+	width: 20px;
+	left: 50%;
+	margin-left: -10px;
+}
+
+.kindom-plus{
+	position: absolute;
+	bottom: -5px;
+	right: 2px;
 }
 .choosehand{
-	position: relative;
-	top: 18px;
+	position: absolute;
+	top: 33px;
 	left: 11px;
 	height: 80px;
 	width: 80px;
@@ -95,6 +255,7 @@ button[disabled]{
 	color: white;
 	font-weight:500;
 	font-size:24px;
+	user-select:none;
 }
 .viewed{
 	position: absolute;
@@ -104,13 +265,13 @@ button[disabled]{
 }
 .supply{
 	position: relative;
-	height: 70%;
-	padding-top: 2px;
+	height: 74%;
+	padding-top: 4px;
 	background-color: rgba(0,0,0,0.8);
 }
 .player{
 	position: relative;
-	height: 30%;
+	height: 26%;
 	background-color: rgba(0,0,0,0.8);
 }
 .sidecontent{
