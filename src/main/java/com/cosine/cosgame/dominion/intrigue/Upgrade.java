@@ -31,11 +31,11 @@ public class Upgrade extends Card{
 		if (a.getResLevel() == 0) {
 			String cardname = a.getSelectedCards().get(0);
 			CardFactory factory = new CardFactory();
-			int price = factory.createCard(cardname).getPrice() + 1;
+			int price = factory.createCard(cardname).getPrice(player.getPriceReduce()) + 1;
 			player.setBoard(board);
 			player.trash(a.getSelectedCards(), "hand");
 			log(player.getName() + " trashes a card", 1);
-			List<String> cns = board.getCardnamesWithPrice(price);
+			List<String> cns = board.getCardnamesWithPrice(price, player.getPriceReduce());
 			if (cns.size() == 0) {
 				Ask ask = new Ask();
 				return ask;

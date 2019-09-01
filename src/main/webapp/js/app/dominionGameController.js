@@ -51,6 +51,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showMat = false;
 		$scope.guessedCardName = "";
 		$scope.addon = "";
+		$scope.reducer = 0;
 
 		$scope.baseStyle={
 			"position": "relative",
@@ -256,6 +257,40 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setPrices = function(){
+			var i;
+			for (i=0;i<$scope.base.length;i++){
+				var x = $scope.base[i].top.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.base[i].top.price = x;
+			}
+			for (i=0;i<$scope.kindom.length;i++){
+				var x = $scope.kindom[i].top.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.kindom[i].top.price = x;
+			}
+			if ($scope.discardTop != null){
+				var x = $scope.discardTop.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.discardTop.price = x;
+			}
+			for (i=0;i<$scope.hand.length;i++){
+				var x = $scope.hand[i].top.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.hand[i].top.price = x;
+			}
+			for (i=0;i<$scope.playCards.length;i++){
+				var x = $scope.playCards[i].top.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.playCards[i].top.price = x;
+			}
+			for (i=0;i<$scope.trashCards.length;i++){
+				var x = $scope.trashCards[i].top.price - $scope.reducer;
+				if (x < 0) x = 0;
+				$scope.trashCards[i].top.price = x;
+			}
+		}
+		
 		adjustLogs = function(){
 			var div = document.getElementById('logs');
 			div.scrollTop = div.scrollHeight;
@@ -268,10 +303,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.trashCards = response.data.trash;
 				$scope.logs = response.data.logs;
 				$scope.status = response.data.status;
-				adjustLogs();
+				setPrices();
 				setStatus();
 				setBaseStyle();
 				setKindomStyle();
+				adjustLogs();
 			});
 		}
 
@@ -288,6 +324,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.coin = response.data.coin;
 				$scope.mats = response.data.mats;
 				$scope.ask = response.data.ask;
+				$scope.reducer = response.data.reducer;
 				setAddon();
 				setCards();
 				getboard();
@@ -700,7 +737,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				numCards = pile.numCards;
 				if (numCards > 0){
-					price = pile.cards[0].price;
+					price = pile.top.price;
 					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
 						if (task.type == 7 || (price >= task.lower && price <= task.upper)){
 							return true;
@@ -720,7 +757,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 					numCards = pile.numCards;
 					if (numCards > 0){
-						price = pile.cards[0].price;
+						price = pile.top.price
 						if (price <= $scope.coin){
 							return true;
 						}
@@ -743,7 +780,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				numCards = pile.numCards;
 				if (numCards > 0){
-					price = pile.cards[0].price;
+					price = pile.top.price;
 					if (task.restriction == 0 || (task.restriction == 1001 && pile.cards[0].actionType) || (task.restriction == 1002 && pile.cards[0].treasure)){
 						if (task.type == 7 || (price >= task.lower && price <= task.upper)){
 							var data = {"ans": pile.cards[0].name};
@@ -767,7 +804,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 					numCards = pile.numCards;
 					if (numCards > 0){
-						price = pile.cards[0].price;
+						price = pile.top.price;
 						if (price <= $scope.coin){
 							cardName = pile.cards[0].name;
 							buyCard(cardName);

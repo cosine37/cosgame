@@ -34,7 +34,7 @@ public class Remodel extends Card{
 			int price = 0;
 			for (int i=player.getHand().size()-1;i>=0;i--) {
 				if (player.getHand().get(i).getName().equals(cardName)) {
-					price = player.getHand().get(i).getPrice();
+					price = player.getHand().get(i).getPrice(player.getPriceReduce());
 					player.setBoard(board);
 					player.trash(i);
 					log(player.getName() + " trashes a " + cardName, 1);

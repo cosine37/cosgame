@@ -70,6 +70,7 @@ public class CardFactory {
 		if (cardname.equals("MiningVillage")) return new MiningVillage();
 		if (cardname.equals("Mill")) return new Mill();
 		if (cardname.equals("WishingWell")) return new WishingWell();
+		if (cardname.equals("Bridge")) return new Bridge();
 		
 		if (cardname.equals("Caravan")) return new Caravan();
 		if (cardname.equals("FishingVillage")) return new FishingVillage();

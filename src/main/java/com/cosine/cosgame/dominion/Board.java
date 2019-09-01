@@ -215,14 +215,14 @@ public class Board {
 		players.get(currentPlayer).nextPhase();
 	}
 	
-	public List<String> getCardnamesWithPrice(int price){
+	public List<String> getCardnamesWithPrice(int price, int reducer){
 		List<String> cns = new ArrayList<>();
 		int i;
 		for (i=0;i<basePile.size();i++) {
 			if (basePile.get(i).getCards().size() == 0) {
 				continue;
 			}
-			if (basePile.get(i).getTop().getPrice() == price) {
+			if (basePile.get(i).getTop().getPrice(reducer) == price) {
 				cns.add(basePile.get(i).getTop().getName());
 			}
 		}
@@ -230,7 +230,7 @@ public class Board {
 			if (kindom.get(i).getCards().size() == 0) {
 				continue;
 			}
-			if (kindom.get(i).getTop().getPrice() == price) {
+			if (kindom.get(i).getTop().getPrice(reducer) == price) {
 				cns.add(kindom.get(i).getTop().getName());
 			}
 		}
@@ -260,9 +260,9 @@ public class Board {
 	
 	public void playerBuy(Player p, Pile pile) {
 		Card card = pile.getTop();
-		p.buy = p.buy - 1;
-		p.coin = p.coin - card.getPrice();
 		card.setBoard(this);
+		p.buy = p.buy - 1;
+		p.coin = p.coin - card.getPrice(p.getPriceReduce());
 		card.onBuy(p);
 		
 	}
@@ -669,6 +669,7 @@ public class Board {
 			p.setVp((int)dop.get("vp"));
 			p.setMemorial((int)dop.get("memorial"));
 			p.setNumActionsPlayed((int)dop.getInteger("numActionsPlayed"));
+			p.setPriceReduce((int)dop.getInteger("priceReduce"));
 			
 			Ask ask = new Ask();
 			ask.setAskFromDocument((Document) dop.get("ask"));
@@ -751,6 +752,7 @@ public class Board {
 		dop.append("memorial", players.get(i).getMemorial());
 		dop.append("ask", players.get(i).getAsk().toDocument());
 		dop.append("numActionsPlayed", players.get(i).getNumActionsPlayed());
+		dop.append("priceReduce", players.get(i).getPriceReduce());
 		
 		int j;
 		List<Document> discardDocs = new ArrayList<Document>();

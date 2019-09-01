@@ -256,6 +256,12 @@ public class Card {
 	public int getPrice() {
 		return price;
 	}
+	
+	public int getPrice(int reducer) {
+		int ans = price - reducer;
+		if (ans < 0) ans = 0;
+		return ans;
+	}
 
 	public int getPricePotion() {
 		return pricePotion;

@@ -32,7 +32,7 @@ public class PaperMaker extends Card{
 		Ask ask = super.response(a);
 		String cardname = a.getSelectedCards().get(0);
 		CardFactory factory = new CardFactory();
-		int price = factory.createCard(cardname).getPrice() + 1;
+		int price = factory.createCard(cardname).getPrice(player.getPriceReduce());
 		player.setBoard(board);
 		player.trash(a.getSelectedCards(), "hand");
 		log(player.getName() + " trashes a "+cardname,1);

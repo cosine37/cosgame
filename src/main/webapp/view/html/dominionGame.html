@@ -67,7 +67,7 @@
 			</div>
 			
 			<div style="position: relative; clear: both; width: 100%; margin-top: 20px; height: 40px">
-				<div id="addon" style="clear:both; width: 600px; padding-left: 230px; text-align:center;user-select:none; font-size: 20px;">
+				<div id="addon" style="clear:both; width: 600px; padding-left: 240px; text-align:center;user-select:none; font-size: 20px;">
 					<div style="float:left">
 						{{addon}}
 					</div>
@@ -104,34 +104,54 @@
 			</div>
 			<div class="sidecontent" id="trash" ng-show="showTrash" style="margin-top: 10px">
 				<h3 style="padding-top: 10px">Trash</h3>
-				<div class="play" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover">
+				<div class="play" ng-repeat="z in trashCards track by $index" style="background:url({{z.image}});background-size:cover; position: relative">
 					<div class="play-number">
 						{{z.numCards}}
+					</div>
+					<div class="play-coin">
+						<div class="play-price">
+							{{z.top.price}}
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="sidecontent" id="mat" ng-show="showMat" style="margin-top: 10px">
 				<div id ="seclusion" ng-show="mats[0].length > 0" style="clear:both; padding-top: 10px">
 					<h3>Seclusion</h3>
-					<div class="play" ng-repeat="x in mats[0] track by $index" style="background:url({{x.image}});background-size:cover">
+					<div class="play" ng-repeat="x in mats[0] track by $index" style="background:url({{x.image}});background-size:cover; position: relative">
 						<div class="play-number">
 							{{x.numCards}}
+						</div>
+						<div class="play-coin">
+							<div class="play-price">
+								{{x.top.price}}
+							</div>
 						</div>
 					</div>
 				</div>
 				<div id ="island" ng-show="mats[1].length > 0" style="clear:both; padding-top: 10px">
 					<h3>Island</h3>
-					<div class="play" ng-repeat="x in mats[1] track by $index" style="background:url({{x.image}});background-size:cover">
+					<div class="play" ng-repeat="x in mats[1] track by $index" style="background:url({{x.image}});background-size:cover; position: relative">
 						<div class="play-number">
 							{{x.numCards}}
+						</div>
+						<div class="play-coin">
+							<div class="play-price">
+								{{x.top.price}}
+							</div>
 						</div>
 					</div>
 				</div>
 				<div id ="nativevillage" ng-show="mats[2].length > 0" style="clear:both; padding-top: 10px">
 					<h3>Native Village</h3>
-					<div class="base" ng-repeat="x in mats[2] track by $index" style="background:url({{x.image}});background-size:cover">
-						<div class="kindom-number">
+					<div class="play" ng-repeat="x in mats[2] track by $index" style="background:url({{x.image}});background-size:cover; position: relative">
+						<div class="play-number">
 							{{x.numCards}}
+						</div>
+						<div class="play-coin">
+							<div class="play-price">
+								{{x.top.price}}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -191,12 +211,17 @@
 	</div>
 	
 	<div ng-style="viewedStyle" ng-show="showViewed" >
-		<div class="kindom" ng-repeat="x in viewed track by $index" ng-click="clickViewed($index)" style="background:url({{x}});background-size:cover">
+		<div class="kindom" ng-repeat="x in viewed track by $index" ng-click="clickViewed($index)" style="background:url({{x}});background-size:cover; position: relative">
 			<div class="chooserevealed" ng-show="showRevealedTarget($index)" style='background:url("/image/Dominion/target.png");background-size:cover'>
 				
 			</div>
 			<div class="chooserevealedtop" ng-show="showRevealedTop($index)">
 				<span>Top</span>
+			</div>
+			<div class="hand-coin">
+				<div class="hand-price">
+					{{x.price}}
+				</div>
 			</div>
 		</div>
 	</div>

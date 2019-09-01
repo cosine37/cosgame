@@ -18,6 +18,8 @@ public class Player {
 	String startOptions;
 	List<Ask> startAsks;
 	
+	int priceReduce;
+	
 	public static final String[] phases = {"Start", "Action", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	int phase;
 	public static final int START = 0; // this turn deals with duration cards
@@ -55,6 +57,7 @@ public class Player {
 		sk = new ScoreKeeper(this);
 		ask = new Ask();
 		numActionsPlayed = 0;
+		priceReduce = 0;
 	}
 	public Player(String name) {
 		this();
@@ -79,6 +82,7 @@ public class Player {
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
+		priceReduce = 0;
 	}
 	public void bot() {
 		isBot = true;
@@ -426,6 +430,7 @@ public class Player {
 			buy = 1;
 			coin = 0;
 			numActionsPlayed = 0;
+			priceReduce = 0;
 			resetPlayed();
 			startAsks = new ArrayList<>();
 			for (int i=0;i<play.size();i++) {
@@ -697,6 +702,15 @@ public class Player {
 	}
 	public void addBuy(int x) {
 		this.buy = this.buy + x;
+	}
+	public int getPriceReduce() {
+		return priceReduce;
+	}
+	public void setPriceReduce(int priceReduce) {
+		this.priceReduce = priceReduce;
+	}
+	public void addPriceReduce(int x) {
+		priceReduce = priceReduce + x;
 	}
 	public int getCoffer() {
 		return coffer;

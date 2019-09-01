@@ -24,7 +24,7 @@ public class TombSweeping extends Card{
 		List<Pile> trashCards = board.getTrash().getTrashedCardsAsPiles();
 		int total = 0;
 		for (int i=0;i<trashCards.size();i++) {
-			if (trashCards.get(i).getTop().getPrice() <= 2) total = total+1;
+			if (trashCards.get(i).getTop().getPrice(player.getPriceReduce()) <= 2) total = total+1;
 		}
 		if (total == 0) {
 			ask.setType(Ask.HANDCHOOSE);
@@ -61,7 +61,7 @@ public class TombSweeping extends Card{
 				List<String> revealed = new ArrayList<String>();
 				List<String> revealedImage = new ArrayList<String>();
 				for (int i=0;i<trashCards.size();i++) {
-					if (trashCards.get(i).getTop().getPrice() <= 2) {
+					if (trashCards.get(i).getTop().getPrice(player.getPriceReduce()) <= 2) {
 						revealed.add(trashCards.get(i).getTop().getName());
 						revealedImage.add(trashCards.get(i).getTop().getImage());
 					}
