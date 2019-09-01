@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.dominion.dominion.Dominion;
+import com.cosine.cosgame.dominion.entertainment.Entertainments;
 import com.cosine.cosgame.dominion.intrigue.Intrigue;
 import com.cosine.cosgame.dominion.oriental.Oriental;
 import com.cosine.cosgame.dominion.seaside.Seaside;
@@ -28,14 +29,17 @@ public class CardList {
 		Expansion intrigue = new Intrigue();
 		Expansion seaside = new Seaside();
 		Expansion oriental = new Oriental();
+		Expansion entertainments = new Entertainments();
 		dominion.sortPiles();
 		intrigue.sortPiles();
 		seaside.sortPiles();
 		oriental.sortPiles();
+		entertainments.sortPiles();
 		expansions.add(dominion);
 		expansions.add(intrigue);
 		expansions.add(seaside);
 		expansions.add(oriental);
+		expansions.add(entertainments);
 		
 		selected = new ArrayList<>();
 		List<Integer> selectedInExpansion;

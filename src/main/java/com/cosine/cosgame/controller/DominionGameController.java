@@ -34,6 +34,12 @@ public class DominionGameController {
 	
 	Board board;
 	
+	@RequestMapping(value="/dominiongame/empty", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> empty(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/islord", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> isLord(HttpServletRequest request){
 		HttpSession session = request.getSession(true);

@@ -54,6 +54,8 @@ public class Card {
 	// categories
 	protected static final int INDEX_ATTACKBLOCK = 31;
 	
+	protected static final int INDEX_DICEMODIFY = 41;
+	
 	// special cares
 	protected static final int SC_NONE = 0;
 	protected static final int SC_CLEANUPTOSECLUSION = 1;
@@ -329,6 +331,10 @@ public class Card {
 	
 	public boolean isAttackBlock() {
 		return types[INDEX_ATTACKBLOCK];
+	}
+	
+	public boolean isDiceModify() {
+		return types[INDEX_DICEMODIFY];
 	}
 	
 	public int numTypes() {

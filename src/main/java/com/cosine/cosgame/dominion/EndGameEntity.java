@@ -8,6 +8,7 @@ public class EndGameEntity {
 			"Mill", "Duke", "Harem", "Nobles",
 			"Island",
 			"Quadrangle",
+			"CatanIsland",
 			"Curse",
 			"CorruptedOfficial"};
 	String msg;

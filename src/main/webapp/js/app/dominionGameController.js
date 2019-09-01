@@ -307,7 +307,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				setStatus();
 				setBaseStyle();
 				setKindomStyle();
-				adjustLogs();
+				$http.post("/dominiongame/empty").then(function(response){
+					adjustLogs();
+				});
 			});
 		}
 

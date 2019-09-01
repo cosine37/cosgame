@@ -19,6 +19,7 @@ public class Player {
 	List<Ask> startAsks;
 	
 	int priceReduce;
+	List<Integer> diceResults;
 	
 	public static final String[] phases = {"Start", "Action", "Treasure", "Buy", "Night", "Clean Up", "Offturn"};
 	int phase;
@@ -49,6 +50,7 @@ public class Player {
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
 		nativeVillage = new ArrayList<Card>();
+		diceResults = new ArrayList<Integer>();
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -79,6 +81,7 @@ public class Player {
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
 		nativeVillage = new ArrayList<Card>();
+		diceResults = new ArrayList<Integer>();
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
@@ -423,6 +426,34 @@ public class Player {
 		
 	}
 	
+	public boolean hasDiceModify() {
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).isDiceModify()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Ask rollDice(int n) {
+		int i;
+		diceResults = new ArrayList<Integer>();
+		Random rand = new Random();
+		int x;
+		for (i=0;i<n;i++) {
+			x = rand.nextInt(6) + 1;
+			diceResults.add(x);
+		}
+		Ask ask = new Ask();
+		if (hasDiceModify()) {
+			
+		} else {
+			
+		}
+		return ask;
+	}
+	
+	
 	public void nextPhase() {
 		phase = (phase+1)%7;
 		if (phase == START) {
@@ -675,6 +706,12 @@ public class Player {
 	}
 	public void setNativeVillage(List<Card> nativeVillage) {
 		this.nativeVillage = nativeVillage;
+	}
+	public List<Integer> getDiceResults(){
+		return diceResults;
+	}
+	public void setDiceResults(List<Integer> diceResults) {
+		this.diceResults = diceResults;
 	}
 	public int getCoin() {
 		return coin;

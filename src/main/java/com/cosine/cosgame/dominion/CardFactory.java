@@ -8,6 +8,7 @@ import com.cosine.cosgame.dominion.dominion.*;
 import com.cosine.cosgame.dominion.intrigue.*;
 import com.cosine.cosgame.dominion.seaside.*;
 import com.cosine.cosgame.dominion.oriental.*;
+import com.cosine.cosgame.dominion.entertainment.*;
 
 public class CardFactory {
 	public CardFactory() {
@@ -99,6 +100,8 @@ public class CardFactory {
 		if (cardname.equals("Quadrangle")) return new Quadrangle();
 		if (cardname.equals("FieldReaper")) return new FieldReaper();
 		if (cardname.equals("FireworkShow")) return new FireworkShow();
+		
+		if (cardname.equals("CatanIsland")) return new CatanIsland();
 		
 		return null;
 	}

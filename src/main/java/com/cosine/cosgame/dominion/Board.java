@@ -28,6 +28,7 @@ public class Board {
 	Expansion intrigue;
 	Expansion seaside;
 	Expansion oriental;
+	Expansion entertainments;
 	Trash trash;
 	List<Player> players;
 	List<Pile> kindom;
