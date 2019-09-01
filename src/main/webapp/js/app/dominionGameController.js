@@ -165,14 +165,18 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				while (task.type == 11){
 					task = task.thronedAsk;
 				}
-				if (task.type == 0 || task.type == 6){
+				if (task.type == 0 || task.type == 6 || (task.type == 4 && task.subType == 6)){
 					$scope.disablePhaseButton = false;
 					$scope.topMessage = "You may play Action cards";
 					if ($scope.tokens[3] > 0){
 						$scope.topMessage = $scope.topMessage + " and use Memorial tokens";
 					}
-					if (task.type == 6){
+					if (task.type == 6 || (task.type == 4 && task.subType == 6)){
 						$scope.options = task.options;
+						if (task.type == 4){
+							$scope.showViewed = true;
+							$scope.viewed = task.viewedCardsImage;
+						}
 					}
 				} else{
 					$scope.topMessage = task.msg;
@@ -441,7 +445,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				while (task.type == 11){
 					task = task.thronedAsk;
 				}
-				if (task.type == 0 || task.type == 6){
+				if (task.type == 0 || task.type == 6 || (task.type == 4 && task.subType == 6)){
 					if ($scope.hand[index].top.actionType){
 						playCard($scope.hand[index].top);
 					}

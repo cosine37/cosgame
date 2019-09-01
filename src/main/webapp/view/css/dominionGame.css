@@ -21,7 +21,7 @@ button {
 	padding-right: 5px;
 	background: transparent;
 }
-button[disable]{
+button[disabled]{
 	color: gray;
 	border-color: grey;
 	padding-top: 0px;

@@ -263,7 +263,7 @@ public class Ask {
 				selectedCards.add(s);
 			}
 		} else if (type == VIEW) {
-			if (subType == OPTION) {
+			if (subType == OPTION || subType == SINGLEOPTION) {
 				ans = Integer.parseInt(s);
 			} else if (subType == CHOOSE) {
 				if (s.equals("")) {
@@ -365,7 +365,7 @@ public class Ask {
 				doo.add(d);
 			}
 			doc.append("viewedCardsImage", doo);
-			if (subType == OPTION) {
+			if (subType == OPTION || subType == SINGLEOPTION) {
 				doo = new ArrayList<Document>();
 				for (int i=0;i<options.size();i++) {
 					Document d = new Document();
@@ -484,7 +484,7 @@ public class Ask {
 				String cardImage = (String)doo.get(i).get("image");
 				viewedCardsImage.add(cardImage);
 			}
-			if (subType == OPTION) {
+			if (subType == OPTION || subType == SINGLEOPTION) {
 				doo = (List<Document>)doc.get("options");
 				options = new ArrayList<String>();
 				for (int i=0;i<doo.size();i++) {

@@ -422,7 +422,12 @@ public class Board {
 			if (p.getName().equals(player.getName())){
 				continue;
 			} else {
-				if (p.hasAttackBlock()) {
+				Buff buff = new Buff();
+				buff.setBuffs(this, p);
+				int x = buff.getBuff(Buff.UNAFFACTEDBYATTACK);
+				if (x > 0) {
+					
+				} else if (p.hasAttackBlock()) {
 					if (p.getIsBot()) {
 						
 					} else {
