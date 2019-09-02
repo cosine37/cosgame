@@ -295,6 +295,13 @@ public class Board {
 		card.onGain(p);
 	}
 	
+	public void gainToPlayerFromPileToSeclusion(Player p, Pile pile) {
+		Card card = pile.removeTop();
+		card.setBoard(this);
+		p.getSeclusion().add(card);
+		card.onGain(p);
+	}
+	
 	public void trashFromPile(Player p, Pile pile) {
 		Card card = pile.removeTop();
 		card.setBoard(this);

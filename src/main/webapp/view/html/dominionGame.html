@@ -86,7 +86,7 @@
 					<button ng-show="showConfirmButton" ng-click="cb()">Confirm</button>
 					<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
 					<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
-					<button ng-repeat="x in options track by $index" ng-click="choose($index)">{{x}}</button>
+					<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length > 1">{{x}}</button>
 				</div>
 			</div>
 		</div>
@@ -162,6 +162,7 @@
 					<div ng-show="tokens != null && tokens[3]!='0'" style="float:right">
 						<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
 					</div>
+					<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length == 1">{{x}}</button>
 				</div>
 			</div>
 			

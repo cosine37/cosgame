@@ -143,6 +143,7 @@ public class Player {
 	}
 	
 	public void topDeckRevealed(List<Integer> lsi) {
+		if (revealed.size() == 0) return;
 		for (int i=0;i<lsi.size();i++) {
 			int index = lsi.get(i);
 			Card card = revealed.get(index);

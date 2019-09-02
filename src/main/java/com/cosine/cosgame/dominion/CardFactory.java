@@ -100,6 +100,7 @@ public class CardFactory {
 		if (cardname.equals("Quadrangle")) return new Quadrangle();
 		if (cardname.equals("FieldReaper")) return new FieldReaper();
 		if (cardname.equals("FireworkShow")) return new FireworkShow();
+		if (cardname.equals("ImperialExam")) return new ImperialExam();
 		
 		if (cardname.equals("CatanIsland")) return new CatanIsland();
 		
