@@ -30,33 +30,10 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.usedExp = [];
 		$scope.usedIndex = [];
 		$scope.useHelperArray = new Array(10);
-		/*
-		$http({url: "/dominiongame/islord", method: "POST"}).then(function(response){
-			s = response.data.value[0];
-			if (s == "Lord") $scope.isLord = true;
-		});
 		
-		$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
-			$scope.playernames = response.data.value;
-			$scope.playernames[0] = $scope.playernames[0] + "(lord)";
-		});
-		
-		$http.post('/dominiongame/playerstatus').then(function(response){
-			$scope.playerstatus = response.data.value;
-		});
-		
-		$http.post('/dominiongame/getkindom').then(function(response){
-			$scope.kindom=response.data;
-		});
-		*/
 		$scope.addBot = function() {
 			$http({url: "/dominiongame/addbot", method: "POST"}).then(function(response){
-				/*
-				$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
-					$scope.playernames = response.data.value;
-					$scope.playernames[0] = $scope.playernames[0] + "(lord)";
-				});
-				*/
+				
 			});
 		}
 		
@@ -76,7 +53,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.ready = function() {
 			if ($scope.playernames.length == $scope.numPlayers){
 				$http({url: "/dominiongame/ready", method: "POST"}).then(function(response){
-					//$scope.goto("dominiongame");
+					
 				});
 			} else {
 				alert("No enough players!");
@@ -86,23 +63,14 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.randomize = function(){
 			$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
-				/*
-				$http.post('/dominiongame/getkindom').then(function(response){
-					$scope.kindom=response.data;
-				});
-				*/
+				
 			});
 		}
 		
 		$scope.kick = function(name){
 			var data = {"kickedName": name};
 			$http({url: "/dominiongame/kick", method: "POST", params: data}).then(function(response){
-				/*
-				$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
-					$scope.playernames = response.data.value;
-					$scope.playernames[0] = $scope.playernames[0] + "(lord)";
-				});
-				*/
+				
 			});
 		}
 		
@@ -146,15 +114,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.goto("dominiongame");
 				}
 			});
-			/*
-			$http({url: "/dominiongame/playernames", method: "POST"}).then(function(response){
-				$scope.playernames = response.data.value;
-				$scope.playernames[0] = $scope.playernames[0] + "(lord)";
-				$http.post('/dominiongame/getkindom').then(function(response){
-					$scope.kindom=response.data;
-				});
-			});
-			*/
+			
 			$timeout(function(){
 				if ($scope.status == 0){
 					getAllInfo();
@@ -184,7 +144,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.usedIndex = new Array();
 					var i,j;
 					for (i=0;i<expcards.length;i++){
-						$scope.used.push($scope.expansions[expacrds[i]].expCardImage);
+						$scope.used.push($scope.expansions[expcards[i]].expCardImage);
 					}
 					for (i=0;i<$scope.selected.length;i++){
 						for (j=0;j<$scope.selected[i].length;j++){
@@ -424,12 +384,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					};
 				$http({url: "/dominionlist/setselected", method: "POST", params: data}).then(function(response){
 					$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
-						/*
-						$http.post('/dominiongame/getkindom').then(function(response){
-							$scope.kindom=response.data;
-							$scope.cardList();
-						});
-						*/
+						$scope.cardList();
 					});
 				});
 			}
