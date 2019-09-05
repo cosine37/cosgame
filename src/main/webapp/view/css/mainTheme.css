@@ -17,7 +17,7 @@ html {
 }
 
 .tabs{
-	height: 10%;
+	height: 62px;
 	width: 100%;
 	background: linear-gradient(black, rgb(0,100,100), rgb(0,100,100), rgb(0,100,100), black);
 	clear: both;

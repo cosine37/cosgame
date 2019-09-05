@@ -19,6 +19,11 @@ app.controller("dominionEndCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		});
 		
+		$scope.backButton = function(){
+			$http.post('/dominiongame/resetstatus').then(function(response){
+				$scope.goto('dominionboard');
+			});
+		}
 		
 		
 }]);

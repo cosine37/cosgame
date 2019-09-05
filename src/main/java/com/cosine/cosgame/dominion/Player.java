@@ -36,7 +36,7 @@ public class Player {
 	int coin, action, buy;
 	int numActionsPlayed;
 	int coffer, villager, vp, memorial;
-	boolean isBot, isGoodToGo;
+	boolean isReady, isBot, isGoodToGo;
 	
 	Ask ask;
 	
@@ -51,6 +51,7 @@ public class Player {
 		island = new ArrayList<Card>();
 		nativeVillage = new ArrayList<Card>();
 		diceResults = new ArrayList<Integer>();
+		isReady = false;
 		isBot = false;
 		isGoodToGo = false;
 		cleanUpOptions = "";
@@ -87,8 +88,19 @@ public class Player {
 		ask = new Ask();
 		priceReduce = 0;
 	}
+	public void ready() {
+		isReady = true;
+	}
+	public boolean getIsReady() {
+		return isReady;
+	}
+	public void setIsReady(boolean isReady) {
+		this.isReady = isReady;
+	}
 	public void bot() {
 		isBot = true;
+		isReady = true;
+		isGoodToGo = true;
 	}
 	public boolean getIsBot() {
 		return isBot;

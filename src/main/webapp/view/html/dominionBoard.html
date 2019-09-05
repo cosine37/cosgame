@@ -57,7 +57,7 @@
 						</tr>
 						<tr ng-repeat="playername in playernames track by $index">
 							<td>
-								<span>{{playername}} {{playerstatus[$index]}}</span>
+								<span>{{playername}} {{readyStatus[$index]}}</span>
 								<button ng-show="showKick($index)" ng-click="kick(playername)">kick</button>
 							</td>
 						</tr>
@@ -88,7 +88,7 @@
 						<div>
 							<button ng-click="includeAll(k)" ng-disabled="!isLord">Include all</button>
 							<button ng-click="excludeAll(k)" ng-disabled="!isLord || disableExclude(k)">Exclude all</button>
-							<button ng-click="addOne(k)" ng-disabled="!isLord || showAddOne(k)">Add one</button>
+							<button ng-click="addOne(k)" ng-disabled="!isLord || disableAddOne(k)">Add one</button>
 						</div>
 						<div style="overflow-y: scroll; overflow:auto;height: 240px">
 							<div ng-repeat="(key, pile) in expansion.piles track by key" style="float: left">

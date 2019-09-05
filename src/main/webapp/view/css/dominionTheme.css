@@ -1,8 +1,5 @@
 .tabs{
-	height: 10%;
-	width: 100%;
 	background: linear-gradient(rgb(100,100,100), rgb(200,200,200), rgb(200,200,200), rgb(200,200,200), rgb(100,100,100));
-	clear: both;
 }
 .tabs button{
 	outline: none;

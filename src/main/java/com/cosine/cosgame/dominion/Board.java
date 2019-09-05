@@ -110,7 +110,24 @@ public class Board {
 		status = BEFORE;
 	}
 	
+	public void ready(String name) {
+		int i;
+		int readyCount = 0;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(name)) {
+				players.get(i).ready();
+			}
+			if (players.get(i).getIsReady()){
+				readyCount = readyCount + 1;
+			}
+		}
+		if (readyCount == numPlayers) {
+			setup();
+		}
+	}
+	
 	public void setup() {
+		baseSetup();
 		endType = "";
 		endPlayer = "";
 		boolean useShelters = false;
@@ -333,6 +350,15 @@ public class Board {
 	
 	public String getLord() {
 		return lord;
+	}
+	
+	public void resetStatus() {
+		status = 0;
+		for (int i=0;i<players.size();i++) {
+			if (!players.get(i).getIsBot()) {
+				players.get(i).setIsReady(false);
+			}
+		}
 	}
 	
 	public int getStatus() {
@@ -666,6 +692,7 @@ public class Board {
 			String name = (String) playerDocs.get(i).get("name");
 			p.setName(name);
 			Document dop = (Document)doc.get(name);
+			p.setIsReady((boolean)dop.getBoolean("isready"));
 			p.setIsBot((boolean)dop.getBoolean("isbot"));
 			p.setIsGoodToGo((boolean)dop.getBoolean("isgoodtogo"));
 			p.setPhase((int)dop.get("phase"));
@@ -748,6 +775,7 @@ public class Board {
 	
 	public Document genPlayerDoc(int i) {
 		Document dop = new Document();
+		dop.append("isready", players.get(i).getIsReady());
 		dop.append("isgoodtogo", players.get(i).getIsGoodToGo());
 		dop.append("isbot", players.get(i).getIsBot());
 		dop.append("phase", players.get(i).getPhase());
