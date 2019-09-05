@@ -56,8 +56,19 @@ public class DominionListController {
 		return new ResponseEntity<>(selected, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominionlist/getexpcards", method = RequestMethod.POST)
+	public ResponseEntity<List<Integer>> getexpcards(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		List<Integer> expcards = board.getCardList().getExpansionCards();
+		return new ResponseEntity<>(expcards, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominionlist/setselected", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> setselected(HttpServletRequest request, @RequestParam String selectedJson){
+	public ResponseEntity<StringEntity> setselected(HttpServletRequest request, @RequestParam String selectedJson, 
+			@RequestParam String usedExp){
 		//System.out.println(selectedJson);
 		List<String> tls = Arrays.asList(selectedJson.split("],"));
 		List<List<Integer>> selected = new ArrayList<>();
@@ -67,18 +78,27 @@ public class DominionListController {
 			s = s.replace("[", "");
 			s = s.replace("]", "");
 			s = s.replace(",", "");
-			System.out.println(s);
 			a = new ArrayList<>();
 			for (int j=0;j<s.length();j++) {
 				a.add(s.charAt(j) - '0');
 			}
 			selected.add(a);
 		}
+		tls = Arrays.asList(usedExp.split(","));
+		a = new ArrayList<>();
+		for (int i=0;i<tls.size();i++) {
+			String s = tls.get(i);
+			s = s.replace("[", "");
+			s = s.replace("]", "");
+			a.add(Integer.parseInt(s));
+		}
+		System.out.println(a);
 		HttpSession session = request.getSession(true);
 		String boardId = (String) session.getAttribute("boardId");
 		Board board = new Board();
 		board.getBoardFromDB(boardId);
 		board.getCardList().setSelected(selected);
+		board.getCardList().setExpansionCards(a);
 		board.updateDB("cardList", board.getCardList().getSelectedDoc());
 		
 		StringEntity entity = new StringEntity();

@@ -22,6 +22,7 @@ public class Oriental extends Expansion {
 	public Oriental() {
 		super();
 		
+		expCardImage = "/image/Dominion/cards/Expansions/Oriental.png";
 		name = "Oriental";
 		
 		pendantForWinePile = new Pile(PendantForWine.class, 10);

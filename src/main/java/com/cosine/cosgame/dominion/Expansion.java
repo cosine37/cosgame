@@ -7,7 +7,8 @@ public class Expansion {
 	protected String name;
 	protected List<Pile> piles;
 	protected List<Pile> kindom;
-	
+	protected String expCardImage;
+
 	public Expansion() {
 		piles = new ArrayList<Pile>();
 		
@@ -77,6 +78,10 @@ public class Expansion {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getExpCardImage() {
+		return expCardImage;
 	}
 	
 	public void addKindom(Pile p) {

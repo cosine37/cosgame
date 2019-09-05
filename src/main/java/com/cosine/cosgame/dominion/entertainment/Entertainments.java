@@ -9,6 +9,7 @@ public class Entertainments extends Expansion{
 	public Entertainments() {
 		super();
 		
+		expCardImage = "/image/Dominion/cards/Expansions/Entertainments.png";
 		name = "Entertainment";
 		
 		catanIslandPile = new Pile(CatanIsland.class, 12);

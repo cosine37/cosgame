@@ -21,6 +21,7 @@ public class Seaside extends Expansion{
 	public Seaside() {
 		super();
 		
+		expCardImage = "/image/Dominion/cards/Expansions/Seaside.png";
 		name = "Seaside";
 		
 		caravanPile = new Pile(Caravan.class, 10);

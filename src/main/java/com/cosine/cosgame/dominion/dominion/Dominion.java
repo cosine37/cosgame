@@ -34,6 +34,7 @@ public class Dominion extends Expansion{
 	public Dominion() {
 		super();
 		
+		expCardImage = "/image/Dominion/cards/Expansions/Dominion.png";
 		name = "Dominion";
 		
 		smithyPile = new Pile(Smithy.class, 10);

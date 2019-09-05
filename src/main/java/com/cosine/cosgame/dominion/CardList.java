@@ -22,6 +22,8 @@ public class CardList {
 	
 	List<List<Integer>> selected;
 	
+	List<Integer> expansionCards;
+	
 	public CardList() {
 		numKindom = 10;
 		
@@ -51,6 +53,7 @@ public class CardList {
 			selected.add(selectedInExpansion);
 		}
 		
+		expansionCards = new ArrayList<>();
 	}
 	
 	public List<Expansion> getExpansions(){
@@ -78,6 +81,11 @@ public class CardList {
 			}
 			selected.add(selectedInExpansion);
 		}
+		expansionCards = new ArrayList<>();
+		List<Document> expCards = (List<Document>)selectedDoc.get("expansionCards");
+		for (int i=0;i<expCards.size();i++) {
+			expansionCards.add(expCards.get(i).getInteger("e"));
+		}
 	}
 	
 	public Document getSelectedDoc() {
@@ -98,6 +106,13 @@ public class CardList {
 			}
 			selectedDoc.append(expansions.get(i).getName(), selectionsInExp);
 		}
+		List<Document> expCards = new ArrayList<>();
+		for (int i=0;i<expansionCards.size();i++) {
+			Document doc = new Document();
+			doc.append("e", expansionCards.get(i));
+			expCards.add(doc);
+		}
+		selectedDoc.append("expansionCards", expCards);
 		return selectedDoc;
 	}
 	
@@ -153,21 +168,36 @@ public class CardList {
 	}
 	
 	public List<Pile> genKindomPiles() {
-		int i,j;
+		int i,j,k;
 		List<Pile> kindom = new ArrayList<>();
 		List<Pile> buffer = new ArrayList<>();
+		
+		List<Integer> expCount = new ArrayList<>();
+		for (i=0;i<expansions.size();i++) expCount.add(0);
+		for (i=0;i<expansionCards.size();i++) {
+			int x = expCount.get(expansionCards.get(i)) + 1;
+			expCount.set(expansionCards.get(i), x);
+		}
+		int x;
+		Pile p;
 		for (i=0;i<selected.size();i++) {
+			List<Pile> singleExp = new ArrayList<>();
 			for (j=0;j<selected.get(i).size();j++) {
 				if (selected.get(i).get(j) == INCLUDE) {
 					kindom.add(expansions.get(i).getPiles().get(j));
 				} else if (selected.get(i).get(j) == FORRANDOMIZE) {
-					buffer.add(expansions.get(i).getPiles().get(j));
+					singleExp.add(expansions.get(i).getPiles().get(j));
+					//buffer.add(expansions.get(i).getPiles().get(j));
 				}
 			}
+			for (j=0;j<expCount.get(i);j++) {
+				x = (int)(Math.random() * singleExp.size());
+				p = singleExp.remove(x);
+				kindom.add(p);
+			}
+			buffer.addAll(singleExp);
 		}
-		boolean flag;
-		int x;
-		Pile p;
+		
 		while (kindom.size()<numKindom) {
 			x = (int)(Math.random() * buffer.size());
 			p = buffer.remove(x);
@@ -194,6 +224,14 @@ public class CardList {
 		}
 		
 		return kindom;
+	}
+
+	public List<Integer> getExpansionCards() {
+		return expansionCards;
+	}
+
+	public void setExpansionCards(List<Integer> expansionCards) {
+		this.expansionCards = expansionCards;
 	}
 	
 }

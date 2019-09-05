@@ -158,19 +158,25 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		getSelected = function(){
 			$http.post('/dominionlist/getselected').then(function(response){
 				$scope.selected = response.data;
-				$scope.used = new Array();
-				$scope.usedExp = new Array();
-				$scope.usedIndex = new Array();
-				var i,j;
-				for (i=0;i<$scope.selected.length;i++){
-					for (j=0;j<$scope.selected[i].length;j++){
-						if ($scope.selected[i][j] == 2){
-							$scope.used.push($scope.expansions[i].piles[j].image);
-							$scope.usedExp.push(i);
-							$scope.usedIndex.push(j);
+				$http.post('/dominionlist/getexpcards').then(function(response){
+					var expcards = response.data;
+					$scope.used = new Array();
+					$scope.usedExp = new Array();
+					$scope.usedIndex = new Array();
+					var i,j;
+					for (i=0;i<expcards.length;i++){
+						$scope.used.push($scope.expansions[expacrds[i]].expCardImage);
+					}
+					for (i=0;i<$scope.selected.length;i++){
+						for (j=0;j<$scope.selected[i].length;j++){
+							if ($scope.selected[i][j] == 2){
+								$scope.used.push($scope.expansions[i].piles[j].image);
+								$scope.usedExp.push(i);
+								$scope.usedIndex.push(j);
+							}
 						}
 					}
-				}
+				});
 			});
 		}
 		
@@ -221,7 +227,7 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 					}
 					$scope.cardStyle[i] = tjsonObj;
 				}
-				
+				$scope.changeExpansion(0);
 			}
 		}
 		
@@ -271,10 +277,34 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.unuse = function(index){
+			/*
+			if ($scope.usedIndex[index] == -1){
+				var i;
+				var total = 0;
+				var k = $scope.usedExp[index];
+				//alert("k="+k);
+				alert($scope.selected[k]);
+				for (i=0;i<$scope.selected[k].length;i++){
+					if ($scope.selected[k][i] == 0){
+						total = total+1;
+					}
+				}
+				var t = 0;
+				for (i=0;i<$scope.usedExp.length;i++){
+					if ($scope.usedExp[i] == k){
+						t = t+1;
+					}
+				}
+				if (t>=total) return;
+			} else {
+				
+			}
+			*/
 			$scope.selected[$scope.usedExp[index]][$scope.usedIndex[index]] = 0;
 			$scope.used.splice(index,1);
 			$scope.usedExp.splice(index,1);
 			$scope.usedIndex.splice(index,1);
+			
 		}
 		
 		$scope.usedCard = function(index){
@@ -292,12 +322,40 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 			return tjsonObj;
 		}
 		
+		$scope.disableExclude = function(k){
+			var t = 0;
+			for (i=0;i<$scope.usedExp.length;i++){
+				if ($scope.usedExp[i] == k  && $scope.usedIndex[i] == -1){
+					t = t+1;
+				}
+			}
+			if (t>0) return true; else return false;
+		}
+		
+		$scope.disableCheck = function(k,key){
+			if ($scope.selected[k][key] == 1) return false;
+			var i;
+			var total = 0;
+			for (i=0;i<$scope.selected[k].length;i++){
+				if ($scope.selected[k][i] == 0){
+					total = total+1;
+				}
+			}
+			var t = 0;
+			for (i=0;i<$scope.usedExp.length;i++){
+				if ($scope.usedExp[i] == k  && $scope.usedIndex[i] == -1){
+					t = t+1;
+				}
+			}
+			if (t>=total) return true; else return false;
+		}
+		
 		$scope.check = function(k,key){
 			if ($scope.selected[k][key] == 2){
 				
 			} else {
 				$scope.selected[k][key] = 1 - $scope.selected[k][key];
-			}
+			} 
 		}
 		
 		$scope.includeAll = function(k){
@@ -318,6 +376,29 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		$scope.addOne = function(k){
+			$scope.used.push($scope.expansions[k].expCardImage);
+			$scope.usedExp.push(k);
+			$scope.usedIndex.push(-1);
+		}
+		
+		$scope.showAddOne = function(k){
+			var i;
+			var total = 0;
+			for (i=0;i<$scope.selected[k].length;i++){
+				if ($scope.selected[k][i] == 0){
+					total = total+1;
+				}
+			}
+			var t = 0;
+			for (i=0;i<$scope.usedExp.length;i++){
+				if ($scope.usedExp[i] == k && $scope.usedIndex[i] == -1){
+					t = t+1;
+				}
+			}
+			if (t>=total) return true; else return false;
+		}
+		
 		$scope.confirm = function(){
 			var i,j;
 			var total = 0;
@@ -329,7 +410,16 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 			if (total < 10){
 				alert("You have less than 10 available cards!")
 			} else {
-				var data = {"selectedJson": $scope.selected};
+				var x = new Array();
+				for (i=0;i<$scope.usedExp.length;i++){
+					if ($scope.usedIndex[i] == -1){
+						x.push($scope.usedExp[i]);
+					}
+				}
+				var data = {
+						"selectedJson": $scope.selected,
+						"usedExp": x
+					};
 				$http({url: "/dominionlist/setselected", method: "POST", params: data}).then(function(response){
 					$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
 						$http.post('/dominiongame/getkindom').then(function(response){

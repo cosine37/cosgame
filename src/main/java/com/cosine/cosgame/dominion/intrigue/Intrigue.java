@@ -28,6 +28,7 @@ public class Intrigue extends Expansion {
 	public Intrigue() {
 		super();
 		
+		expCardImage = "/image/Dominion/cards/Expansions/Intrigue.png";
 		name = "Intrigue";
 		
 		shantyTownPile = new Pile(ShantyTown.class, 10);
