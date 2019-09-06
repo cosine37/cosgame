@@ -208,6 +208,7 @@ public class Card {
 	public Ask duration() {
 		numTurns = numTurns - 1;
 		Ask ask = new Ask();
+		ask.setCardName(name);
 		return ask;
 	}
 	

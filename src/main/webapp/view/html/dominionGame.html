@@ -101,6 +101,9 @@
 				<div ng-repeat = "log in logs track by $index">
 					{{log}}
 				</div>
+				<div class="startask" ng-repeat = "startAsk in startAsks track by $index" ng-click="clickstartask($index)">
+					{{startAsk.msg}} (from {{startAsk.cardName}})
+				</div>
 			</div>
 			<div class="sidecontent" id="trash" ng-show="showTrash" style="margin-top: 10px">
 				<h3 style="padding-top: 10px">Trash</h3>

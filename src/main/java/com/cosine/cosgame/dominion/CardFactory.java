@@ -101,6 +101,7 @@ public class CardFactory {
 		if (cardname.equals("FieldReaper")) return new FieldReaper();
 		if (cardname.equals("FireworkShow")) return new FireworkShow();
 		if (cardname.equals("ImperialExam")) return new ImperialExam();
+		if (cardname.equals("SwallowFleet")) return new SwallowFleet();
 		
 		if (cardname.equals("CatanIsland")) return new CatanIsland();
 		

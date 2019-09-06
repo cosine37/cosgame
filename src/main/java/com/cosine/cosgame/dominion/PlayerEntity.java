@@ -6,6 +6,7 @@ public class PlayerEntity {
 	List<Pile> play;
 	List<Pile> hand;
 	Ask ask;
+	List<Ask> startAsks;
 	Card discard;
 	int deck;
 	String phase;
@@ -20,6 +21,7 @@ public class PlayerEntity {
 		play = player.getPlayAsPiles();
 		hand = player.getHandAsPiles();
 		ask = player.getAsk();
+		startAsks = player.getStartAsks();
 		if (player.getDiscard().size() == 0) {
 			discard = null;
 		} else {
@@ -90,6 +92,14 @@ public class PlayerEntity {
 
 	public void setAsk(Ask ask) {
 		this.ask = ask;
+	}
+
+	public List<Ask> getStartAsks() {
+		return startAsks;
+	}
+
+	public void setStartAsks(List<Ask> startAsks) {
+		this.startAsks = startAsks;
 	}
 
 	public Card getDiscard() {

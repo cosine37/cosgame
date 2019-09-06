@@ -166,12 +166,23 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.showViewed = false;
 			$scope.options = [];
 			if ($scope.phase == "Start"){
-				
+				$scope.disablePhaseButton = true;
+				$scope.topMessage = "Resolve Reaction cards by clicking on corresponding logs";
+				var task = $scope.ask;
+				while (task.type == 11){
+					task = task.thronedAsk;
+				}
+				if (task.type == 3){
+					$scope.topMessage = task.msg;
+				}
 			} else if ($scope.phase == "Action"){
 				$scope.phaseButton = "End Action";
 				var task = $scope.ask;
 				while (task.type == 11){
 					task = task.thronedAsk;
+				}
+				if (task.type == 3){
+					$scope.topMessage = task.msg;
 				}
 				if (task.type == 0 || task.type == 6 || (task.type == 4 && task.subType == 6)){
 					$scope.disablePhaseButton = false;
@@ -232,6 +243,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.topMessage = "You may play Night cards";
 				$scope.phaseButton = "End Night";
 			} else if ($scope.phase == "Offturn"){
+				$scope.disablePhaseButton = true;
 				$scope.topMessage = "It's not your turn";
 				$scope.phaseButton = "Don't click";
 				$http.post('/dominiongame/nextplayer').then(function(response){
@@ -326,6 +338,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.coin = response.data.coin;
 				$scope.mats = response.data.mats;
 				$scope.ask = response.data.ask;
+				$scope.startAsks = response.data.startAsks;
 				$scope.reducer = response.data.reducer;
 				setAddon();
 				setCards();
@@ -493,7 +506,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				if (task.type == 0 || task.type == 6 || (task.type == 4 && task.subType == 6)){
 					if ($scope.hand[index].top.actionType){
-						playCard($scope.hand[index].top);
+						if ($scope.action > 0){
+							playCard($scope.hand[index].top);
+						}
 					}
 				} else if (task.type == 2){ // choosehand
 					if (task.restriction == 0 || (task.restriction == 1001 && $scope.hand[index].top.actionType) || (task.restriction == 1002 && $scope.hand[index].top.treasure)
@@ -826,7 +841,17 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			if ($scope.phase=="Action" && $scope.ask.type==0){
 				return false;
 			}
+			if ($scope.phase=="Action" && $scope.ask.type==6){
+				return false;
+			}
 			return true;
+		}
+		
+		$scope.clickstartask = function(index){
+			var data = {"index": index};
+			$http({url: "/dominiongame/startaskhandle", method: "POST", params: data}).then(function(response){
+				getplayer();
+			});
 		}
 		
 }]);

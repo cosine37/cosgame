@@ -59,6 +59,7 @@ public class Player {
 		counter = new PlayedCounter();
 		sk = new ScoreKeeper(this);
 		ask = new Ask();
+		startAsks = new ArrayList<>();
 		numActionsPlayed = 0;
 		priceReduce = 0;
 	}
@@ -86,6 +87,7 @@ public class Player {
 		cleanUpOptions = "";
 		startOptions = "";
 		ask = new Ask();
+		startAsks = new ArrayList<>();
 		priceReduce = 0;
 	}
 	public void ready() {
@@ -466,6 +468,17 @@ public class Player {
 		return ask;
 	}
 	
+	public void startBuffs() {
+		List<Ask> asks = new ArrayList<>();
+		Buff buff = new Buff();
+		buff.setBuffs(board, this);
+		
+		//plus $ from SwallowFleet
+		int x = buff.getBuff(Buff.PLUSONEOTHERSTART);
+		board.getLogger().add(name + " gets +$1 (from Swallow Fleet)", 0);
+		coin = coin + x;
+		
+	}
 	
 	public void nextPhase() {
 		phase = (phase+1)%7;
@@ -486,6 +499,7 @@ public class Player {
 					startAsks.add(ask);
 				}
 			}
+			startBuffs();
 			if (startAsks.size() == 0) {
 				phase++;
 			}
@@ -628,6 +642,13 @@ public class Player {
 		this.phase = phase;
 	}
 	public void autoSetPhase() {
+		if (phase == START) {
+			if (startAsks.size() == 0) {
+				if (ask.getType() == Ask.NONE) {
+					phase = ACTION;
+				}
+			}
+		}
 		if (phase == ACTION) {
 			if (ask.getType() == Ask.NONE) {
 				if (memorial == 0) {
@@ -800,6 +821,7 @@ public class Player {
 	}
 	public void useMemorial() {
 		this.memorial = this.memorial - 1;
+		ask = new Ask();
 		board.getLogger().add(name + " uses a Memorial token to draw a card", 0);
 		draw(1);
 	}
@@ -828,6 +850,16 @@ public class Player {
 	}
 	public Ask getAsk() {
 		return ask;
+	}
+	public List<Ask> getStartAsks() {
+		return startAsks;
+	}
+	public void setStartAsks(List<Ask> startAsks) {
+		this.startAsks = startAsks;
+	}
+	public void startAskHandle(int i) {
+		Ask ask = startAsks.remove(i);
+		this.ask = ask;
 	}
 	public void setPlayedCounter(List<String> pc) {
 		int i;

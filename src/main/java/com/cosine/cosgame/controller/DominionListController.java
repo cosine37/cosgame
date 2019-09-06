@@ -84,15 +84,18 @@ public class DominionListController {
 			}
 			selected.add(a);
 		}
-		tls = Arrays.asList(usedExp.split(","));
 		a = new ArrayList<>();
-		for (int i=0;i<tls.size();i++) {
-			String s = tls.get(i);
-			s = s.replace("[", "");
-			s = s.replace("]", "");
-			a.add(Integer.parseInt(s));
+		if (usedExp.equals("NONE")) {
+			
+		} else {
+			tls = Arrays.asList(usedExp.split(","));
+			for (int i=0;i<tls.size();i++) {
+				String s = tls.get(i);
+				s = s.replace("[", "");
+				s = s.replace("]", "");
+				a.add(Integer.parseInt(s));
+			}
 		}
-		System.out.println(a);
 		HttpSession session = request.getSession(true);
 		String boardId = (String) session.getAttribute("boardId");
 		Board board = new Board();

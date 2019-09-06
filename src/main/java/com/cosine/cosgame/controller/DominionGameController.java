@@ -409,6 +409,20 @@ public class DominionGameController {
 		board.updateSupply();
 		return new ResponseEntity<>(ask, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/dominiongame/startaskhandle", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startAskHandle(HttpServletRequest request, @RequestParam int index){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		String username = (String) session.getAttribute("username");
+		board = new Board();
+		board.getBoardFromDB(boardId);
+		Player player = board.getPlayerByName(username);
+		player.startAskHandle(index);
+		board.updatePlayersDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 
 	@RequestMapping(value="/dominiongame/getboard", method = RequestMethod.POST)
 	public ResponseEntity<BoardEntity> getboard(HttpServletRequest request){

@@ -289,3 +289,7 @@ button[disabled]{
 	width: 600px;
 	margin: 0,0,0,-300px;
 }
+.startask{
+	user-select:none;
+	color: blue;
+}

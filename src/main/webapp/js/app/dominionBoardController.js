@@ -378,10 +378,8 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 						x.push($scope.usedExp[i]);
 					}
 				}
-				var data = {
-						"selectedJson": $scope.selected,
-						"usedExp": x
-					};
+				if (x.length == 0) x = "NONE";
+				var data = {"selectedJson": $scope.selected,"usedExp": x};
 				$http({url: "/dominionlist/setselected", method: "POST", params: data}).then(function(response){
 					$http({url: "/dominiongame/randomize", method: "POST"}).then(function(response){
 						$scope.cardList();

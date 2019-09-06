@@ -710,6 +710,7 @@ public class Board {
 			ask.setAskFromDocument((Document) dop.get("ask"));
 			p.setAsk(ask);
 			
+			List<Document> startAsksDocs = (List<Document>)dop.get("startAsks");
 			List<Document> discardDocs = (List<Document>)dop.get("discard");
 			List<Document> deckDocs = (List<Document>)dop.get("deck");
 			List<Document> handDocs = (List<Document>)dop.get("hand");
@@ -719,6 +720,7 @@ public class Board {
 			List<Document> islandDocs = (List<Document>)dop.get("island");
 			List<Document> nativeVillageDocs = (List<Document>)dop.get("nativeVillage");
 			List<Document> playedDocs = (List<Document>)dop.get("played");
+			List<Ask> startAsks = new ArrayList<Ask>();
 			List<Card> discard = new ArrayList<Card>();
 			List<Card> deck = new ArrayList<Card>();
 			List<Card> hand = new ArrayList<Card>();
@@ -730,6 +732,11 @@ public class Board {
 			List<String> played = new ArrayList<String>();
 		
 			int j;
+			for (j=0;j<startAsksDocs.size();j++) {
+				Ask a = new Ask();
+				a.setAskFromDocument((Document)startAsksDocs.get(j).get("ask"));
+				startAsks.add(a);
+			}
 			for (j=0;j<discardDocs.size();j++) {discard.add(factory.createCard((String)discardDocs.get(j).get("name")));}
 			for (j=0;j<deckDocs.size();j++) {deck.add(factory.createCard((String)deckDocs.get(j).get("name")));}
 			for (j=0;j<handDocs.size();j++) {hand.add(factory.createCard((String)handDocs.get(j).get("name")));}
@@ -746,6 +753,7 @@ public class Board {
 			for (j=0;j<nativeVillageDocs.size();j++) {nativeVillage.add(factory.createCard((String)nativeVillageDocs.get(j).get("name")));}
 			for (j=0;j<playedDocs.size();j++) {played.add((String)playedDocs.get(j).get("value"));}
 			
+			p.setStartAsks(startAsks);
 			p.setDiscard(discard);
 			p.setDeck(deck);
 			p.setHand(hand);
@@ -791,6 +799,7 @@ public class Board {
 		dop.append("priceReduce", players.get(i).getPriceReduce());
 		
 		int j;
+		List<Document> startAsksDocs = new ArrayList<Document>();
 		List<Document> discardDocs = new ArrayList<Document>();
 		List<Document> deckDocs = new ArrayList<Document>();
 		List<Document> handDocs = new ArrayList<Document>();
@@ -800,6 +809,12 @@ public class Board {
 		List<Document> islandDocs = new ArrayList<Document>();
 		List<Document> nativeVillageDocs = new ArrayList<Document>();
 		List<Document> playedDocs = new ArrayList<Document>();
+		
+		for (j=0;j<players.get(i).getStartAsks().size();j++) {
+			Document d = new Document();
+			d.append("ask", players.get(i).getStartAsks().get(j).toDocument());
+			startAsksDocs.add(d);
+		}
 		
 		for (j=0;j<players.get(i).getDiscard().size();j++) {
 			Document d = new Document();
@@ -857,6 +872,7 @@ public class Board {
 			d.append("value", players.get(i).getPlayedList().get(j));
 			playedDocs.add(d);
 		}
+		dop.append("startAsks", startAsksDocs);
 		dop.append("discard", discardDocs);
 		dop.append("deck", deckDocs);
 		dop.append("hand", handDocs);
