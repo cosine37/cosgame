@@ -1,5 +1,8 @@
 package com.cosine.cosgame.dominion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
 	// vanilla bonuses 
 	protected int action;
@@ -68,6 +71,8 @@ public class Card {
 	
 	String where;
 	
+	protected List<String> under;
+	
 	public Card() {
 		action = 0;
 		coin = 0;
@@ -96,6 +101,8 @@ public class Card {
 		specialCare = 0;
 		nt = 0;
 		numTurns = 0;
+		
+		under = new ArrayList<>();
 	}
 	
 	public void vanilla() {
@@ -292,6 +299,22 @@ public class Card {
 	
 	public void setNumTurns(int numTurns) {
 		this.numTurns = numTurns;
+	}
+
+	public List<String> getUnder() {
+		return under;
+	}
+
+	public void setUnder(List<String> under) {
+		this.under = under;
+	}
+	
+	public void putUnderInHand(int index) {
+		CardFactory factory = new CardFactory();
+		String cardname = under.get(index);
+		Card card = factory.createCard(cardname);
+		under.remove(index);
+		player.getHand().add(card);
 	}
 
 	public boolean isActionType() {

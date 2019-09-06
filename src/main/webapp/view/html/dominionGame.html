@@ -84,7 +84,6 @@
 					<input ng-show="showGuess()" type="text" ng-model="guessedCardName">
 					<button ng-show="showGuess()" ng-click="guess()">Guess</button>
 					<button ng-show="showConfirmButton" ng-click="cb()">Confirm</button>
-					<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
 					<button ng-show="showClearButton" ng-click="clearChoosehand()">Re-select</button>
 					<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length > 1">{{x}}</button>
 				</div>
@@ -158,6 +157,19 @@
 						</div>
 					</div>
 				</div>
+				<div id ="haven" ng-show="mats[3].length > 0" style="clear:both; padding-top: 10px">
+					<h3>Haven</h3>
+					<div class="play" ng-repeat="x in mats[3] track by $index" style="background:url({{x.image}});background-size:cover; position: relative">
+						<div class="play-number">
+							{{x.numCards}}
+						</div>
+						<div class="play-coin">
+							<div class="play-price">
+								{{x.top.price}}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="buttonarea" style="margin-top: 10px">
 				<div class="phasearea" style="float:left">
@@ -165,6 +177,7 @@
 					<div ng-show="tokens != null && tokens[3]!='0'" style="float:right">
 						<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
 					</div>
+					<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
 					<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length == 1">{{x}}</button>
 				</div>
 			</div>

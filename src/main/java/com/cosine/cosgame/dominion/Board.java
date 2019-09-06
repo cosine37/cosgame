@@ -719,6 +719,7 @@ public class Board {
 			List<Document> seclusionDocs = (List<Document>)dop.get("seclusion");
 			List<Document> islandDocs = (List<Document>)dop.get("island");
 			List<Document> nativeVillageDocs = (List<Document>)dop.get("nativeVillage");
+			List<Document> havenDocs = (List<Document>)dop.get("haven");
 			List<Document> playedDocs = (List<Document>)dop.get("played");
 			List<Ask> startAsks = new ArrayList<Ask>();
 			List<Card> discard = new ArrayList<Card>();
@@ -729,6 +730,7 @@ public class Board {
 			List<Card> seclusion = new ArrayList<Card>();
 			List<Card> island = new ArrayList<Card>();
 			List<Card> nativeVillage = new ArrayList<Card>();
+			List<Card> haven = new ArrayList<Card>();
 			List<String> played = new ArrayList<String>();
 		
 			int j;
@@ -744,6 +746,14 @@ public class Board {
 				Card c = factory.createCard((String)playDocs.get(j).get("name"));
 				if (c.isDuration()) {
 					c.setNumTurns((int)playDocs.get(j).get("numTurns"));
+					if (playDocs.get(j).get("under") != null) {
+						List<Document> underDocs = (List<Document>)playDocs.get(j).get("under");
+						List<String> under = new ArrayList<>();
+						for (int ii=0;ii<underDocs.size();ii++) {
+							under.add(underDocs.get(ii).getString("c"));
+						}
+						c.setUnder(under);
+					}
 				}
 				play.add(c);
 			}
@@ -751,6 +761,7 @@ public class Board {
 			for (j=0;j<seclusionDocs.size();j++) {seclusion.add(factory.createCard((String)seclusionDocs.get(j).get("name")));}
 			for (j=0;j<islandDocs.size();j++) {island.add(factory.createCard((String)islandDocs.get(j).get("name")));}
 			for (j=0;j<nativeVillageDocs.size();j++) {nativeVillage.add(factory.createCard((String)nativeVillageDocs.get(j).get("name")));}
+			for (j=0;j<havenDocs.size();j++) {haven.add(factory.createCard((String)havenDocs.get(j).get("name")));}
 			for (j=0;j<playedDocs.size();j++) {played.add((String)playedDocs.get(j).get("value"));}
 			
 			p.setStartAsks(startAsks);
@@ -762,6 +773,7 @@ public class Board {
 			p.setSeclusion(seclusion);
 			p.setIsland(island);
 			p.setNativeVillage(nativeVillage);
+			p.setHaven(haven);
 			p.setPlayedCounter(played);
 			players.add(p);
 			
@@ -808,6 +820,7 @@ public class Board {
 		List<Document> seclusionDocs = new ArrayList<Document>();
 		List<Document> islandDocs = new ArrayList<Document>();
 		List<Document> nativeVillageDocs = new ArrayList<Document>();
+		List<Document> havenDocs = new ArrayList<Document>();
 		List<Document> playedDocs = new ArrayList<Document>();
 		
 		for (j=0;j<players.get(i).getStartAsks().size();j++) {
@@ -839,6 +852,16 @@ public class Board {
 			d.append("name", players.get(i).getPlay().get(j).getName());
 			if (players.get(i).getPlay().get(j).isDuration()) {
 				d.append("numTurns", players.get(i).getPlay().get(j).getNumTurns());
+				if (players.get(i).getPlay().get(j).getUnder().size() > 0) {
+					int ii;
+					List<Document> underDoc = new ArrayList<>();
+					for (ii=0;ii<players.get(i).getPlay().get(j).getUnder().size();ii++) {
+						Document dd = new Document();
+						dd.append("c", players.get(i).getPlay().get(j).getUnder().get(ii));
+						underDoc.add(dd);
+					}
+					d.append("under", underDoc);
+				}
 			}
 			playDocs.add(d);
 		}
@@ -866,6 +889,12 @@ public class Board {
 			d.append("name", players.get(i).getNativeVillage().get(j).getName());
 			nativeVillageDocs.add(d);
 		}
+		//System.out.println("Haven size in store = " + players.get(i).getHaven().size());
+		for (j=0;j<players.get(i).getHaven().size();j++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getHaven().get(j).getName());
+			havenDocs.add(d);
+		}
 		
 		for (j=0;j<players.get(i).getPlayedList().size();j++) {
 			Document d = new Document();
@@ -882,6 +911,7 @@ public class Board {
 		dop.append("seclusion", seclusionDocs);
 		dop.append("island", islandDocs);
 		dop.append("nativeVillage", nativeVillageDocs);
+		dop.append("haven", havenDocs);
 		return dop;
 	}
 	

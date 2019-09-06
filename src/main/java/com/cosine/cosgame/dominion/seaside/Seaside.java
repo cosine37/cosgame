@@ -17,6 +17,7 @@ public class Seaside extends Expansion{
 	Pile pearlDiverPile;
 	Pile bazaarPile;
 	Pile lighthousePile;
+	Pile havenPile;
 	
 	public Seaside() {
 		super();
@@ -37,6 +38,7 @@ public class Seaside extends Expansion{
 		pearlDiverPile = new Pile(PearlDiver.class, 10);
 		bazaarPile = new Pile(Bazaar.class, 10);
 		lighthousePile = new Pile(Lighthouse.class, 10);
+		havenPile = new Pile(Haven.class, 10);
 		
 		piles.add(caravanPile);
 		piles.add(fishingVillagePile);
@@ -51,5 +53,6 @@ public class Seaside extends Expansion{
 		piles.add(pearlDiverPile);
 		piles.add(bazaarPile);
 		piles.add(lighthousePile);
+		piles.add(havenPile);
 	}
 }

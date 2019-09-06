@@ -13,7 +13,7 @@ public class Player {
 	
 	PlayedCounter counter;
 	ScoreKeeper sk;
-	List<Card> discard, hand, deck, play, revealed, seclusion, island, nativeVillage;
+	List<Card> discard, hand, deck, play, revealed, seclusion, island, nativeVillage, haven;
 	String cleanUpOptions;
 	String startOptions;
 	List<Ask> startAsks;
@@ -50,6 +50,7 @@ public class Player {
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
 		nativeVillage = new ArrayList<Card>();
+		haven = new ArrayList<Card>();
 		diceResults = new ArrayList<Integer>();
 		isReady = false;
 		isBot = false;
@@ -83,6 +84,7 @@ public class Player {
 		seclusion = new ArrayList<Card>();
 		island = new ArrayList<Card>();
 		nativeVillage = new ArrayList<Card>();
+		haven = new ArrayList<Card>();
 		diceResults = new ArrayList<Integer>();
 		cleanUpOptions = "";
 		startOptions = "";
@@ -475,7 +477,9 @@ public class Player {
 		
 		//plus $ from SwallowFleet
 		int x = buff.getBuff(Buff.PLUSONEOTHERSTART);
-		board.getLogger().add(name + " gets +$1 (from Swallow Fleet)", 0);
+		if (x>0) {
+			board.getLogger().add(name + " gets +$" + x +" (from Swallow Fleet)", 0);
+		}
 		coin = coin + x;
 		
 	}
@@ -489,6 +493,11 @@ public class Player {
 			numActionsPlayed = 0;
 			priceReduce = 0;
 			resetPlayed();
+			while (haven.size()>0) {
+				Card card = haven.remove(0);
+				hand.add(card);
+				board.getLogger().add(name + " put a set aside card to hand (from Haven)", 1);
+			}
 			startAsks = new ArrayList<>();
 			for (int i=0;i<play.size();i++) {
 				Card card = play.get(i);
@@ -717,6 +726,9 @@ public class Player {
 	public List<Card> getNativeVillage(){
 		return nativeVillage;
 	}
+	public List<Card> getHaven(){
+		return haven;
+	}
 	public void setDiscard(List<Card> discard) {
 		this.discard = discard;
 	}
@@ -740,6 +752,9 @@ public class Player {
 	}
 	public void setNativeVillage(List<Card> nativeVillage) {
 		this.nativeVillage = nativeVillage;
+	}
+	public void setHaven(List<Card> haven) {
+		this.haven = haven;
 	}
 	public List<Integer> getDiceResults(){
 		return diceResults;
@@ -888,10 +903,14 @@ public class Player {
 		pileGen = new PileGen();
 		pileGen.add(nativeVillage);
 		List<Pile> nativeVillagePiles = pileGen.getPiles();
+		pileGen = new PileGen();
+		pileGen.add(haven);
+		List<Pile> havenPiles = pileGen.getPiles();
 		List<List<Pile>> ans = new ArrayList<>();
 		ans.add(seclusionPiles);
 		ans.add(islandPiles);
 		ans.add(nativeVillagePiles);
+		ans.add(havenPiles);
 		return ans;
 	}
 }
