@@ -62,7 +62,7 @@ public class Board {
 		logger = new Logger();
 		
 		cardList = new CardList();
-	
+		
 		String dbname = "dominion";
 		String col = "board";
 		

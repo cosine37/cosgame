@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.dominion.Ask;
+import com.cosine.cosgame.dominion.BGMManager;
 import com.cosine.cosgame.dominion.Board;
 import com.cosine.cosgame.dominion.BoardAllInfoEntity;
 import com.cosine.cosgame.dominion.BoardEntity;
@@ -421,6 +422,16 @@ public class DominionGameController {
 		player.startAskHandle(index);
 		board.updatePlayersDB();
 		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/dominiongame/getbgm", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> getBGM(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String boardId = (String) session.getAttribute("boardId");
+		board.getBoardFromDB(boardId);
+		BGMManager manager = new BGMManager();
+		StringEntity entity = manager.generateBGMsAsStringEntity(board);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 

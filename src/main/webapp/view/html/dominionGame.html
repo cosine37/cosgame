@@ -11,7 +11,7 @@
 <script src="/js/bgm.js"></script>
 <body data-ng-app="dominionGameApp" data-ng-controller="dominionGameCtrl">
 	<div id="audioplayer">
-		<audio id="bgm" src="/sound/BGM/TritschTratschPolka.mp3"></audio>
+		<audio id="bgm"></audio>
 	</div>
 
 	<div id="supply" class="supply">
@@ -95,6 +95,7 @@
 				<button ng-click="trashButton()">Trash</button>
 				<button ng-click="matButton()">Mats</button>
 				<button ng-click="resign()">Resign</button>
+				<button id="mute" onclick="mute()">BGM OFF</button>
 			</div>
 			<div class="sidecontent" id="logs" ng-show="showLogs" style="overflow-y: scroll; overflow:auto; height: 350px; margin-top: 10px">
 				<div ng-repeat = "log in logs track by $index">
@@ -177,8 +178,12 @@
 					<div ng-show="tokens != null && tokens[3]!='0'" style="float:right">
 						<button ng-click="useMemorial()" ng-disabled="disableUseMemorial()">Memorial ({{tokens[3]}})</button>
 					</div>
-					<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
-					<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length == 1">{{x}}</button>
+					<div style="float:right">
+						<button ng-show="showAutoplayButton" ng-click="autoplay()">Autoplay Treasure</button>
+					</div>
+					<div style="float:right">
+						<button ng-repeat="x in options track by $index" ng-click="choose($index)" ng-show="options.length == 1">{{x}}</button>
+					</div>
 				</div>
 			</div>
 			
