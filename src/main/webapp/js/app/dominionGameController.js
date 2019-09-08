@@ -15,16 +15,9 @@ app.directive('ngRightClick',function($parse){
         })
     }
 });
-/*
-app.filter('trustUrl',function($sce){
-    return function (input) {
-        return $sce.trustAsResourceUrl(input);
-    }
-});
-*/
+
 app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
-		//$scope.sce = $sce.trustAsResourceUrl;
 		$scope.base=[];
 		$scope.kindom=[];
 		$scope.baseStyle=[];
@@ -171,6 +164,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.showClearButton = false;
 			$scope.showAutoplayButton = false;
 			$scope.showViewed = false;
+			$scope.showRange = false;
 			$scope.options = [];
 			if ($scope.phase == "Start"){
 				$scope.disablePhaseButton = true;
@@ -212,6 +206,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					} else if (task.type == 2){
 						$scope.showClearButton = true;
 						$scope.showConfirmButton = showConfirmButtonWhenChooseHand();
+						if (task.subType == 53){
+							$scope.showRange = true;
+							$scope.range = task.range;
+							$scope.rangeResult = 0;
+						}
 					} else if (task.type == 3 || task.type == 7){
 						$scope.guessedCardName = "";
 					} else if (task.type == 4){
@@ -422,6 +421,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 								s = s+","+$scope.hand[i].name;
 							}
 						}
+					}
+					if (task.subType == 53){
+						s = $scope.rangeResult +","+s;
 					}
 					var data = {"ans": s};
 					$http({url: "/dominiongame/response", method: "POST", params: data}).then(function(response){
@@ -861,35 +863,4 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		
-		/*
-		setbgm = function(){
-			var n = 3;
-			var tArray = new Array(n);
-			tArray[0] = "/sound/BGM/TritschTratschPolka.mp3";
-			tArray[1] = "/sound/BGM/RondoAllaTurca.mp3";
-			tArray[2] = "/sound/BGM/RadetzkyMarsch.mp3";
-			var bgmArray = new Array(n);
-			var i = 0;
-			while (tArray.length > 0){
-				var x = Math.round(Math.random()*tArray.length);
-				bgmArray[i] = tArray[x];
-				tArray.splice(x,1);
-				i++;
-			}
-			//bgm = document.getElementById("bgm");
-			//bgm = angular.element("bgm");
-			var index = 0;
-			bgm.src = bgmArray[0];
-			bgm.play();
-			bgm.addEventListener("ended", function(){
-				index = index + 1;
-				
-				if (index == n) index = 0;
-				bgm.src = bgmArray[index];
-				bgm.play();
-			});
-		}
-		setbgm();
-		*/
 }]);

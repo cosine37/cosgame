@@ -20,6 +20,8 @@ public class Ask {
 	 *      Reaction
 	 *      SingleOption	Player can select single options or not
 	 * 		Throne			Play a selected cards 2 or more times
+	 * 		Guess			Player guess a card
+	 * 		RangeBar		Player put the selected card anywhere in deck
 	 * 
 	 */
 	int type;
@@ -37,6 +39,7 @@ public class Ask {
 	int subType; // for view
 	public static final int CHOOSE = 51;
 	public static final int REARRANGE = 52;
+	public static final int RANGEBAR = 53;
 	public static final int ATTACK = 30;
 	public static final int ATTACKBLOCK = 31;
 	
@@ -53,6 +56,7 @@ public class Ask {
 	boolean showAsPile; // for view
 	int ans;
 	int resLevel;
+	int range; // for rangebar;
 	
 	int upper, lower;
 	String thronedCard;
@@ -245,6 +249,14 @@ public class Ask {
 		return attackName;
 	}
 	
+	public void setRange(int range) {
+		this.range = range;
+	}
+	
+	public int getRange() {
+		return range;
+	}
+	
 	public void parseAns(String s) {
 		if (type == OPTION || type == SINGLEOPTION) {
 			ans = Integer.parseInt(s);
@@ -252,7 +264,11 @@ public class Ask {
 			if (s.equals("")) {
 				selectedCards = new ArrayList<String>();
 			} else {
-				selectedCards = Arrays.asList(s.split(","));
+				selectedCards = new ArrayList<>(Arrays.asList(s.split(",")));
+			}
+			if (subType == RANGEBAR) {
+				String ss = selectedCards.remove(0);
+				ans = Integer.parseInt(ss);
 			}
 		} else if (type == THRONE) {
 			thronedAsk.parseAns(s);
@@ -327,6 +343,10 @@ public class Ask {
 			doc.append("ans", ans);
 			doc.append("cardName", cardName);
 			doc.append("restriction", restriction);
+			if (subType == RANGEBAR) {
+				doc.append("ans", ans);
+				doc.append("range", range);
+			}
 		} else if (type == THRONE) {
 			Document doa = thronedAsk.toDocument();
 			doc.append("thronedAsk", doa);
@@ -444,10 +464,14 @@ public class Ask {
 			upper = (int)doc.get("upper");
 			lower = (int)doc.get("lower");
 			resLevel = (int)doc.get("resLevel");
-			ans = (int)doc.get("ans");
 			cardName = (String)doc.get("cardName");
 			restriction = (int)doc.get("restriction");
 			msg = (String)doc.get("msg");
+			ans = (int)doc.get("ans");
+			if (subType == RANGEBAR) {
+				ans = (int)doc.get("ans");
+				range = (int)doc.get("range");
+			}
 		} else if (type == THRONE) {
 			Document doa = (Document)doc.get("thronedAsk");
 			thronedAsk = new Ask();
