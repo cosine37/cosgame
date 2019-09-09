@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	Board board;
@@ -12,6 +14,7 @@ public class Player {
 	Trash trashMat;
 	
 	PlayedCounter counter;
+	GainedCard gainedCard;
 	ScoreKeeper sk;
 	List<Card> discard, hand, deck, play, revealed, seclusion, island, nativeVillage, haven;
 	String cleanUpOptions;
@@ -58,6 +61,7 @@ public class Player {
 		cleanUpOptions = "";
 		startOptions = "";
 		counter = new PlayedCounter();
+		gainedCard = new GainedCard();
 		sk = new ScoreKeeper(this);
 		ask = new Ask();
 		startAsks = new ArrayList<>();
@@ -77,6 +81,7 @@ public class Player {
 		villager = 0;
 		memorial = 0;
 		counter = new PlayedCounter();
+		gainedCard = new GainedCard();
 		discard = new ArrayList<Card>();
 		hand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
@@ -493,6 +498,7 @@ public class Player {
 			numActionsPlayed = 0;
 			priceReduce = 0;
 			resetPlayed();
+			resetGained();
 			while (haven.size()>0) {
 				Card card = haven.remove(0);
 				hand.add(card);
@@ -535,8 +541,20 @@ public class Player {
 			}
 		}
 		if (phase == CLEANUP) {
-			if (cleanUpOptions=="") {
-				phase++;
+			startAsks = new ArrayList<>();
+			for (int i=0;i<play.size();i++) {
+				Card card = play.get(i);
+				card.setPlayer(this);
+				card.setBoard(board);
+				Ask ask = card.cleanup();
+				if (ask.getType() != Ask.NONE) {
+					startAsks.add(ask);
+				}
+			}
+			if (startAsks.size() == 0) {
+				if (ask.getType() == Ask.NONE) {
+					phase++;
+				}
 			}
 		}
 		if (phase == OFFTURN) {
@@ -680,8 +698,16 @@ public class Player {
 			if (buy == 0) {
 				if (startAsks.size() == 0) {
 					if (ask.getType() == 0) {
-						nextPhase();
+						phase = CLEANUP;
 					}
+				}
+			}
+		}
+		if (phase == CLEANUP) {
+			if (startAsks.size() == 0) {
+				if (ask.getType() == Ask.NONE) {
+					//phase++;
+					nextPhase();
 				}
 			}
 		}
@@ -863,6 +889,27 @@ public class Player {
 	}
 	public List<String> getPlayedList(){
 		return counter.getPlayedList();
+	}
+	public void addGained(String s) {
+		gainedCard.add(s);
+	}
+	public void setGainedFromDoc(List<Document> lst) {
+		gainedCard.setFromDoc(lst);
+	}
+	public void setBoughtFromDoc(List<Document> lst) {
+		gainedCard.setBuyFromDoc(lst);
+	}
+	public GainedCard getGained() {
+		return this.gainedCard;
+	}
+	public void resetGained() {
+		gainedCard = new GainedCard();
+	}
+	public List<String> getGainedList(){
+		return gainedCard.getCardNames();
+	}
+	public boolean gainedVictory() {
+		return gainedCard.hasVictory();
 	}
 	public void setAsk(Ask ask) {
 		this.ask = ask;

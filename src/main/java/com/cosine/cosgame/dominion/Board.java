@@ -233,6 +233,20 @@ public class Board {
 		players.get(currentPlayer).nextPhase();
 	}
 	
+	public Player prevPlayer(Player p) {
+		int index;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(p.getName())) {
+				index = i-1;
+				if (index == -1) {
+					index = index+players.size();
+				}
+				return players.get(index);
+			}
+		}
+		return null;
+	}
+	
 	public List<String> getCardnamesWithPrice(int price, int reducer){
 		List<String> cns = new ArrayList<>();
 		int i;
@@ -705,6 +719,9 @@ public class Board {
 			p.setMemorial((int)dop.get("memorial"));
 			p.setNumActionsPlayed((int)dop.getInteger("numActionsPlayed"));
 			p.setPriceReduce((int)dop.getInteger("priceReduce"));
+			p.resetGained();
+			p.setGainedFromDoc((List<Document>)dop.get("gained"));
+			p.setBoughtFromDoc((List<Document>)dop.get("bought"));
 			
 			Ask ask = new Ask();
 			ask.setAskFromDocument((Document) dop.get("ask"));
@@ -809,6 +826,8 @@ public class Board {
 		dop.append("ask", players.get(i).getAsk().toDocument());
 		dop.append("numActionsPlayed", players.get(i).getNumActionsPlayed());
 		dop.append("priceReduce", players.get(i).getPriceReduce());
+		dop.append("gained", players.get(i).getGained().toDocument());
+		dop.append("bought", players.get(i).getGained().toDocumentBuy());
 		
 		int j;
 		List<Document> startAsksDocs = new ArrayList<Document>();

@@ -265,6 +265,11 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			} else if ($scope.phase == "Night"){
 				$scope.topMessage = "You may play Night cards";
 				$scope.phaseButton = "End Night";
+			} else if ($scope.phase == "Clean Up"){
+				$scope.disablePhaseButton = true;
+				$scope.topMessage = "Resolve clean up options by clicking on corresponding logs";
+				$scope.phaseButton = "Clean Up";
+				
 			} else if ($scope.phase == "Offturn"){
 				$scope.disablePhaseButton = true;
 				$scope.topMessage = "It's not your turn";

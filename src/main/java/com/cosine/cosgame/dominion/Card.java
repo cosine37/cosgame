@@ -62,6 +62,7 @@ public class Card {
 	// special cares
 	protected static final int SC_NONE = 0;
 	protected static final int SC_CLEANUPTOSECLUSION = 1;
+	protected static final int SC_CLEANUPTOPDECKIFNOVICTORY = 2;
 	
 	// This is used for treasure, default true
 	protected boolean autoplay;
@@ -158,6 +159,7 @@ public class Card {
 	public Ask onGain(Player p) {
 		Ask ask = new Ask();
 		ask.setCardName(name);
+		p.getGained().add(name);
 		onGainBuffs(p);
 		return ask;
 	}
@@ -165,6 +167,7 @@ public class Card {
 	public Ask onBuy(Player p) {
 		Ask ask = new Ask();
 		ask.setCardName(name);
+		p.getGained().addBuy(name);
 		onBuyBuffs(p);
 		return ask;
 	}
@@ -222,6 +225,11 @@ public class Card {
 	
 	public Ask response(Ask a) {
 		return a;
+	}
+	
+	public Ask cleanup() {
+		Ask ask = new Ask();
+		return ask;
 	}
 
 	public int getAction() {

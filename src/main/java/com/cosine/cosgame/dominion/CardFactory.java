@@ -88,6 +88,8 @@ public class CardFactory {
 		if (cardname.equals("Bazaar")) return new Bazaar();
 		if (cardname.equals("Lighthouse")) return new Lighthouse();
 		if (cardname.equals("Haven")) return new Haven();
+		if (cardname.equals("Smugglers")) return new Smugglers();
+		if (cardname.equals("Treasury")) return new Treasury();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
