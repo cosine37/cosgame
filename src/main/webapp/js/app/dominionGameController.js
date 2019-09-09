@@ -168,7 +168,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.options = [];
 			if ($scope.phase == "Start"){
 				$scope.disablePhaseButton = true;
-				$scope.topMessage = "Resolve Reaction cards by clicking on corresponding logs";
+				$scope.topMessage = "Resolve Duration cards by clicking on corresponding logs";
 				var task = $scope.ask;
 				while (task.type == 11){
 					task = task.thronedAsk;
@@ -242,9 +242,26 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.showAutoplayButton = true;
 				$scope.phaseButton = "Buy Cards";
 			} else if ($scope.phase == "Buy"){
-				$scope.disablePhaseButton = false;
-				$scope.topMessage = "You may buy cards";
-				$scope.phaseButton = "End Buy";
+				var task = $scope.ask;
+				while (task.type == 11){
+					task = task.thronedAsk;
+				}
+				if (task.type == 0){
+					if ($scope.startAsks.length == 0){
+						$scope.disablePhaseButton = false;
+						$scope.topMessage = "You may buy cards";
+						$scope.phaseButton = "End Buy";
+					} else {
+						$scope.disablePhaseButton = true;
+						$scope.topMessage = "Resolve Treasure cards by clicking on corresponding logs";
+						$scope.phaseButton = "End Buy";
+					}
+				} else if (task.type == 1){
+					$scope.disablePhaseButton = false;
+					$scope.topMessage = task.msg;
+					$scope.options = task.options;
+				}
+				
 			} else if ($scope.phase == "Night"){
 				$scope.topMessage = "You may play Night cards";
 				$scope.phaseButton = "End Night";
@@ -771,21 +788,25 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			} else if ($scope.phase == "Buy"){
-				if ($scope.buy > 0){
-					var pile;
-					var cardName = "";
-					var numCards = 0;
-					var price = 0;
-					if (bk == "kindom"){
-						pile = $scope.kindom[index];
-					} else if (bk = "base"){
-						pile = $scope.base[index];
-					}
-					numCards = pile.numCards;
-					if (numCards > 0){
-						price = pile.top.price
-						if (price <= $scope.coin){
-							return true;
+				if ($scope.startAsks.length){
+					
+				} else {
+					if ($scope.buy > 0){
+						var pile;
+						var cardName = "";
+						var numCards = 0;
+						var price = 0;
+						if (bk == "kindom"){
+							pile = $scope.kindom[index];
+						} else if (bk = "base"){
+							pile = $scope.base[index];
+						}
+						numCards = pile.numCards;
+						if (numCards > 0){
+							price = pile.top.price
+							if (price <= $scope.coin){
+								return true;
+							}
 						}
 					}
 				}
@@ -818,22 +839,26 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			} else if ($scope.phase == "Buy"){
-				if ($scope.buy > 0){
-					var pile;
-					var cardName = "";
-					var numCards = 0;
-					var price = 0;
-					if (bk == "kindom"){
-						pile = $scope.kindom[index];
-					} else if (bk = "base"){
-						pile = $scope.base[index];
-					}
-					numCards = pile.numCards;
-					if (numCards > 0){
-						price = pile.top.price;
-						if (price <= $scope.coin){
-							cardName = pile.cards[0].name;
-							buyCard(cardName);
+				if ($scope.startAsks.length){
+					
+				} else {
+					if ($scope.buy > 0){
+						var pile;
+						var cardName = "";
+						var numCards = 0;
+						var price = 0;
+						if (bk == "kindom"){
+							pile = $scope.kindom[index];
+						} else if (bk = "base"){
+							pile = $scope.base[index];
+						}
+						numCards = pile.numCards;
+						if (numCards > 0){
+							price = pile.top.price;
+							if (price <= $scope.coin){
+								cardName = pile.cards[0].name;
+								buyCard(cardName);
+							}
 						}
 					}
 				}

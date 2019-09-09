@@ -158,6 +158,7 @@ public class Card {
 	public Ask onGain(Player p) {
 		Ask ask = new Ask();
 		ask.setCardName(name);
+		onGainBuffs(p);
 		return ask;
 	}
 	
@@ -425,6 +426,39 @@ public class Card {
 				p.addMemorial(x);
 			}
 		}
+		
+		int pr = price - p.getPriceReduce();
+		if (pr < 0) pr =0;
+		
+		// Curse for copying cards
+		if (pr <= 6) {
+			int x = buff.getBuff(Buff.GAINCURSETOCOPY);
+			int n = board.getPileByTop("Curse").getNumCards();
+			if (n<x) x = n;
+			n = board.getPileByTop(name).getNumCards();
+			if (n<x) x = n;
+			for (int i=0;i<x;i++) {
+				Ask ask = new Ask();
+				ask.setCardName("PiscesJade");
+				ask.setType(Ask.OPTION);
+				ask.setMsg("You may gain a Curse to gain another copy of "+name);
+				List<String> options = new ArrayList<>();
+				options.add("Gain a Curse to gain another "+name);
+				options.add("Don't Gain");
+				ask.setOptions(options);
+				ask.setAns(-1);
+				p.getStartAsks().add(ask);
+			}
+		}
+		
+	}
+	
+	public void onGainBuffs(Player p) {
+		Buff buff = new Buff();
+		buff.setBuffs(board, p);
+		
+		
+		
 	}
 	
 }

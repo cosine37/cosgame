@@ -18,6 +18,7 @@ public class Buff {
 	
 	public static final int MEMORIALBUYVICTORY = 100;
 	public static final int PLUSONEOTHERSTART = 101;
+	public static final int GAINCURSETOCOPY = 102;
 	
 	public Buff() {
 		buffs = new ArrayList<>();

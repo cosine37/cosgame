@@ -678,7 +678,11 @@ public class Player {
 		}
 		if (phase == BUY) {
 			if (buy == 0) {
-				nextPhase();
+				if (startAsks.size() == 0) {
+					if (ask.getType() == 0) {
+						nextPhase();
+					}
+				}
 			}
 		}
 	}
