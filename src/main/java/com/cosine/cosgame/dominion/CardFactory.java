@@ -7,6 +7,7 @@ import com.cosine.cosgame.dominion.base.*;
 import com.cosine.cosgame.dominion.dominion.*;
 import com.cosine.cosgame.dominion.intrigue.*;
 import com.cosine.cosgame.dominion.seaside.*;
+import com.cosine.cosgame.dominion.prosperity.*;
 import com.cosine.cosgame.dominion.oriental.*;
 import com.cosine.cosgame.dominion.entertainment.*;
 
@@ -91,6 +92,8 @@ public class CardFactory {
 		if (cardname.equals("Smugglers")) return new Smugglers();
 		if (cardname.equals("Treasury")) return new Treasury();
 		if (cardname.equals("Salvager")) return new Salvager();
+		
+		if (cardname.equals("Monument")) return new Monument();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

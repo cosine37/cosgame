@@ -17,6 +17,8 @@ public class PlayerEntity {
 	int coin;
 	int reducer;
 	
+	int vp;
+	
 	public PlayerEntity(Player player) {
 		play = player.getPlayAsPiles();
 		hand = player.getHandAsPiles();
@@ -36,6 +38,7 @@ public class PlayerEntity {
 		buy = player.getBuy();
 		coin = player.getCoin();
 		reducer = player.getPriceReduce();
+		vp = player.getVp();
 	}
 	
 	public String getPhase() {
@@ -140,5 +143,13 @@ public class PlayerEntity {
 
 	public void setReducer(int reducer) {
 		this.reducer = reducer;
+	}
+
+	public int getVp() {
+		return vp;
+	}
+
+	public void setVp(int vp) {
+		this.vp = vp;
 	}
 }

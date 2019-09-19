@@ -8,6 +8,7 @@ import com.cosine.cosgame.dominion.entertainment.Entertainments;
 import com.cosine.cosgame.dominion.intrigue.Intrigue;
 import com.cosine.cosgame.dominion.oriental.Oriental;
 import com.cosine.cosgame.dominion.seaside.Seaside;
+import com.cosine.cosgame.dominion.prosperity.Prosperity;
 
 import org.bson.Document;
 
@@ -30,16 +31,19 @@ public class CardList {
 		Expansion dominion = new Dominion();
 		Expansion intrigue = new Intrigue();
 		Expansion seaside = new Seaside();
+		Expansion prosperity = new Prosperity();
 		Expansion oriental = new Oriental();
 		Expansion entertainments = new Entertainments();
 		dominion.sortPiles();
 		intrigue.sortPiles();
 		seaside.sortPiles();
+		prosperity.sortPiles();
 		oriental.sortPiles();
 		entertainments.sortPiles();
 		expansions.add(dominion);
 		expansions.add(intrigue);
 		expansions.add(seaside);
+		expansions.add(prosperity);
 		expansions.add(oriental);
 		expansions.add(entertainments);
 		

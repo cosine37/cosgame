@@ -24,6 +24,12 @@ public class EndGameEntity {
 		int i,j,score,numCards, tscore;
 		String desc;
 		Card c;
+		if (player.getVp()!=0) {
+			single.add("VP token");
+			single.add(Integer.toString(player.getVp()));
+			single.add(Integer.toString(player.getVp()));
+			record.add(single);
+		}
 		for (i=0;i<SCORECARDS.length;i++) {
 			for (j=0;j<player.getAllCards().size();j++) {
 				c = player.getAllCards().get(j).getTop();

@@ -27,6 +27,7 @@ public class Board {
 	Expansion dominion;
 	Expansion intrigue;
 	Expansion seaside;
+	Expansion prosperity;
 	Expansion oriental;
 	Expansion entertainments;
 	Trash trash;

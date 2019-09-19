@@ -18,7 +18,7 @@ public class ScoreKeeper {
 	}
 	
 	public int getScore() {
-		int ans = 0;
+		int ans = p.getVp();
 		int i;
 		for (i=0;i<allCards.size();i++) {
 			if (allCards.get(i).isVictory() || allCards.get(i).isCursed()) {

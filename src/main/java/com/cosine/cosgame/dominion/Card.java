@@ -111,6 +111,7 @@ public class Card {
 		player.addAction(action);
 		player.addBuy(buy);
 		player.addCoin(coin);
+		player.addVp(vp);
 		
 		boolean flag = false;
 		String s = player.getName() + " gets";
@@ -137,6 +138,13 @@ public class Card {
 				s = s+",";
 			}
 			s = s+" + $"+coin;
+			flag = true;
+		}
+		if (vp>0) {
+			if (flag) {
+				s = s+",";
+			}
+			s = s+" + "+vp+"vp";
 			flag = true;
 		}
 		if (flag && isActionType()) {
