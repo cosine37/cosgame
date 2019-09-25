@@ -94,6 +94,7 @@ public class CardFactory {
 		if (cardname.equals("Salvager")) return new Salvager();
 		
 		if (cardname.equals("Monument")) return new Monument();
+		if (cardname.equals("Forge")) return new Forge();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();

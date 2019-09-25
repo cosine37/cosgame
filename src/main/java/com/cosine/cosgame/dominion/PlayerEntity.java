@@ -10,12 +10,14 @@ public class PlayerEntity {
 	Card discard;
 	int deck;
 	String phase;
+	int goodToGo;
 	List<List<Pile>> mats;
 	List<Integer> tokens;
 	int action;
 	int buy;
 	int coin;
 	int reducer;
+	
 	
 	int vp;
 	
@@ -32,6 +34,11 @@ public class PlayerEntity {
 		
 		deck = player.getDeck().size();
 		phase = player.getPhaseAsString();
+		if (player.getIsGoodToGo()) {
+			goodToGo = 1;
+		} else {
+			goodToGo = 0;
+		}
 		mats = player.getMatsAsPiles();
 		tokens = player.getTokens();
 		action = player.getAction();
@@ -151,5 +158,13 @@ public class PlayerEntity {
 
 	public void setVp(int vp) {
 		this.vp = vp;
+	}
+
+	public int getGoodToGo() {
+		return goodToGo;
+	}
+
+	public void setGoodToGo(int goodToGo) {
+		this.goodToGo = goodToGo;
 	}
 }

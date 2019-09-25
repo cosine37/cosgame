@@ -16,8 +16,8 @@ app.directive('ngRightClick',function($parse){
     }
 });
 
-app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.base=[];
 		$scope.kindom=[];
 		$scope.baseStyle=[];
@@ -282,12 +282,21 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		setStatus = function() {
 			if ($scope.status == 1){
-				$scope.topMessage = "Your starting cards";
-				$scope.showConfirmButton = true;
-				$scope.showPhaseButton = false;
-				$http.post('/dominiongame/firstcards').then(function(response){
-					$scope.hand=response.data;
-				});
+				if ($scope.goodToGo == 0){
+					$scope.topMessage = "Your starting cards";
+					$scope.showConfirmButton = true;
+					$scope.showPhaseButton = false;
+					if ($scope.hand.length == 0){
+						$http.post('/dominiongame/firstcards').then(function(response){
+							$scope.hand=response.data;
+						});
+					}
+				} else {
+					$scope.topMessage = "Waiting for other players to confirm their hands";
+					$scope.showConfirmButton = false;
+					$scope.showPhaseButton = false;
+				}
+				
 			} else if ($scope.status == 2){
 				$scope.showPhaseButton = true;
 				setButtons();
@@ -368,6 +377,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.ask = response.data.ask;
 				$scope.startAsks = response.data.startAsks;
 				$scope.reducer = response.data.reducer;
+				$scope.goodToGo = response.data.goodToGo;
 				setAddon();
 				setCards();
 				getboard();
@@ -892,5 +902,28 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document',
 				getplayer();
 			});
 		}
+		
+		getStatus = function(){
+			$http.post("/dominiongame/status").then(function(response){
+				$scope.status = parseInt(response.data.value[0]);
+				setStatus();
+			});
+		}
+		
+		getAllInfo = function(){
+			if ($scope.status == 1){
+				getStatus();
+			} else {
+				if ($scope.phase == "Offturn"){
+					getplayer();
+				}
+			}
+			
+			$timeout(function(){
+				getAllInfo();
+			}, 1000);
+		}
+		
+		getAllInfo();
 		
 }]);
