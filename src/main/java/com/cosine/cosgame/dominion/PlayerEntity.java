@@ -3,6 +3,7 @@ package com.cosine.cosgame.dominion;
 import java.util.List;
 
 public class PlayerEntity {
+	String name;
 	List<Pile> play;
 	List<Pile> hand;
 	Ask ask;
@@ -18,10 +19,11 @@ public class PlayerEntity {
 	int coin;
 	int reducer;
 	
-	
 	int vp;
+	int score;
 	
 	public PlayerEntity(Player player) {
+		name = player.getName();
 		play = player.getPlayAsPiles();
 		hand = player.getHandAsPiles();
 		ask = player.getAsk();
@@ -46,8 +48,25 @@ public class PlayerEntity {
 		coin = player.getCoin();
 		reducer = player.getPriceReduce();
 		vp = player.getVp();
+		score = player.getScore();
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	public String getPhase() {
 		return phase;
 	}

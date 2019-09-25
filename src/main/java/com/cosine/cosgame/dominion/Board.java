@@ -175,6 +175,7 @@ public class Board {
 		startPlayer = rand.nextInt(players.size());
 		currentPlayer = startPlayer;
 		for (i=0;i<players.size();i++) {
+			players.get(i).setIsGoodToGo(false);
 			if (players.get(i).getIsBot()) {
 				players.get(i).goodToGo();
 			}

@@ -364,6 +364,9 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '
 
 		getplayer = function(){
 			$http.post("/dominiongame/getplayer").then(function(response){
+				$scope.playername = response.data.name;
+				$scope.score = response.data.score;
+				$scope.vp = response.data.vp;
 				$scope.playCards = response.data.play;
 				$scope.tokens = response.data.tokens;
 				$scope.numDeck = response.data.deck;
@@ -904,7 +907,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		getStatus = function(){
-			$http.post("/dominiongame/status").then(function(response){
+			$http.post("/dominiongame/getstatus").then(function(response){
 				$scope.status = parseInt(response.data.value[0]);
 				setStatus();
 			});
