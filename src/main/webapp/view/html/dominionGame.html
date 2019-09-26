@@ -54,7 +54,7 @@
 			</div>
 			
 			<div id="play" style="clear:both;margin-top: 10px; width: 600px; min-height:110px; border: true">
-				<div class="play" ng-repeat="y in playCards track by $index" style="background:url({{y.image}});background-size:cover; margin-top: 10px; position: relative">
+				<div class="play" ng-repeat="y in playCards track by $index" ng-style="playCardStyle[$index]">
 					<div class="play-number">
 						{{y.numCards}}
 					</div>
@@ -194,7 +194,7 @@
 		</div>
 		
 		<div style="float: left; margin-left: 50px; min-width: 650px; min-height: 1px">
-			<div class="kindom" ng-click="play($index)" ng-repeat="x in hand track by $index" style="background:url({{x.image}});background-size:cover; position: relative">
+			<div class="kindom" ng-click="play($index)" ng-repeat="x in hand track by $index" ng-style="handStyle[$index]">
 				<div class="hand-number">
 					{{x.numCards}}
 				</div>

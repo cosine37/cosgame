@@ -144,6 +144,73 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '
 					"float": "left"
 				}
 			}
+			$scope.handStyle = new Array(n);
+			if (n<7){
+				for (i=0;i<n;i++){
+					$scope.handStyle[i] = {
+						"background": "url(" + $scope.hand[i].image + ")",
+						"background-size": "cover",
+						"position": "relative"
+					}
+				}
+			} else if (n<11){
+				$scope.handStyle[0] = {
+					"background": "url(" + $scope.hand[0].image + ")",
+					"background-size": "cover",
+					"position": "relative"
+				}
+				for (i=1;i<n;i++){
+					$scope.handStyle[i] = {
+						"background": "url(" + $scope.hand[i].image + ")",
+						"background-size": "cover",
+						"position": "relative",
+						"margin-left": "-40px"
+					}
+				}
+			} else {
+				$scope.handStyle[0] = {
+						"background": "url(" + $scope.hand[0].image + ")",
+						"background-size": "cover",
+						"position": "relative"
+					}
+					for (i=1;i<n;i++){
+						$scope.handStyle[i] = {
+							"background": "url(" + $scope.hand[i].image + ")",
+							"background-size": "cover",
+							"position": "relative",
+							"margin-left": "-70px"
+						}
+					}
+			}
+			
+			var m = $scope.playCards.length;
+			$scope.playCardStyle = new Array(m);
+			if (m<9){
+				for (i=0;i<m;i++){
+					$scope.playCardStyle[i] = {
+						"background": "url(" + $scope.playCards[i].image + ")",
+						"background-size": "cover",
+						"margin-top": "10px",
+						"position": "relative"
+					}
+				}
+			} else {
+				$scope.playCardStyle[0] = {
+					"background": "url(" + $scope.playCards[0].image + ")",
+					"background-size": "cover",
+					"margin-top": "10px",
+					"position": "relative"
+				}
+				for (i=1;i<m;i++){
+					$scope.playCardStyle[i] = {
+						"background": "url(" + $scope.playCards[i].image + ")",
+						"background-size": "cover",
+						"margin-top": "10px",
+						"position": "relative",
+						"margin-left": "-25px"
+					}
+				}
+			}
 		}
 		
 		setAddon = function(){
@@ -289,6 +356,7 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '
 					if ($scope.hand.length == 0){
 						$http.post('/dominiongame/firstcards').then(function(response){
 							$scope.hand=response.data;
+							setCards();
 						});
 					}
 				} else {
