@@ -497,7 +497,9 @@ public class DominionGameController {
 		board = new Board();
 		board.getBoardFromDB(boardId);
 		board.getLogger().addGainCard(username, cardName);
-		board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
+		if (board.getPileByTop(cardName) != null) {
+			board.gainToPlayerFromPile(board.getPlayerByName(username), board.getPileByTop(cardName));
+		}
 		board.updateSupply();
 		board.updatePlayerDB(username);
 		board.updateLogsDB();

@@ -12,12 +12,14 @@ public class Pile {
 	boolean isSupply;
 	boolean isSplit;
 	boolean isMixed;
+	int embargo;
 	
 	public Pile() {
 		cards = new ArrayList<Card>();
 		isMixed = false;
 		isSplit = false;
 		isSupply = true;
+		embargo = 0;
 	}
 	
 	public Pile(String name) {
@@ -138,6 +140,18 @@ public class Pile {
 
 	public void setSupply(boolean isSupply) {
 		this.isSupply = isSupply;
+	}
+	
+	public int getEmbargo() {
+		return this.embargo;
+	}
+	
+	public void setEmbargo(int embargo) {
+		this.embargo = embargo;
+	}
+	
+	public void addEmbargo(int x) {
+		this.embargo = this.embargo + 1;
 	}
 	
 }

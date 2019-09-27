@@ -103,9 +103,9 @@ button[disabled]{
 	position: relative;
 	user-select:none;
 	top: -6px;
-	left:0%;
+	left: 0%;
 	background-color:red;
-	color:white;
+	color: white;
 	width: 30%;
 	text-align: center;
 	border-radius: 5px;
@@ -131,6 +131,27 @@ button[disabled]{
 	width: 20px;
 	background: url("/image/Dominion/coin.png");
 	background-size: cover;
+}
+.embargo{
+	poistion: absolute;
+	clear: both;
+	left: 50%;
+	bottom: -4px;
+	height: 20px;
+	width: 20px;
+	background-color: purple;
+	border-radius: 5px;
+}
+.embargo-num{
+	position: relative;
+	user-select: none;
+	text-align: center;
+	font-size: 15px;
+	font-family:"arial";
+	color: white;
+	width: 20px;
+	left: 50%;
+	margin-left: -10px;
 }
 .kindom-supply{
 	float: left;

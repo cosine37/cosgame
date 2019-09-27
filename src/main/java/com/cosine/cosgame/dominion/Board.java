@@ -133,7 +133,6 @@ public class Board {
 		endPlayer = "";
 		boolean useShelters = false;
 		boolean hasHeirloom = false;
-		//randomize();
 		int i,j;
 		for (i=0;i<kindom.size();i++) {
 			kindom.get(i).getCards().get(0).setup();
@@ -297,6 +296,16 @@ public class Board {
 		card.setBoard(this);
 		p.buy = p.buy - 1;
 		p.coin = p.coin - card.getPrice(p.getPriceReduce());
+		if (pile.getEmbargo() > 0) {
+			int i;
+			for (i=0;i<pile.getEmbargo();i++) {
+				if (getPileByTop("Curse") == null) {
+					break;
+				}
+				logger.add(p.getName() + " gains a Curse (from Embargo token)", 1);
+				gainToPlayerFromPile(p, getPileByTop("Curse"));
+			}
+		}
 		card.onBuy(p);
 		
 	}
@@ -695,11 +704,13 @@ public class Board {
 			boolean isMixed = (boolean)kindomDocs.get(i).get("isMixed");
 			boolean isSplit = (boolean)kindomDocs.get(i).get("isSplit");
 			String image = (String)kindomDocs.get(i).get("image");
+			int embargo = (int)kindomDocs.get(i).get("embargo");
 			p.setName(name);
 			p.setIsSupply(isSupply);
 			p.setIsMixed(isMixed);
 			p.setIsSplit(isSplit);
 			p.setImage(image);
+			p.setEmbargo(embargo);
 			
 			if (isMixed || isSplit) {
 				
@@ -719,6 +730,7 @@ public class Board {
 			String name = (String)baseDocs.get(i).get("name");
 			int n = (int)baseDocs.get(i).get("number");
 			String image = (String)baseDocs.get(i).get("image");
+			int embargo = (int)baseDocs.get(i).get("embargo");
 			p.setName(name);
 			if (n == 0) {
 				p.setCards(factory.createCards("Empty", 1));
@@ -726,6 +738,7 @@ public class Board {
 				p.setCards(factory.createCards(name, n));
 			}
 			p.setImage(image);
+			p.setEmbargo(embargo);
 			basePile.add(p);
 		}
 		for (i=0;i<playerDocs.size();i++) {
@@ -936,7 +949,7 @@ public class Board {
 			d.append("name", players.get(i).getNativeVillage().get(j).getName());
 			nativeVillageDocs.add(d);
 		}
-		//System.out.println("Haven size in store = " + players.get(i).getHaven().size());
+
 		for (j=0;j<players.get(i).getHaven().size();j++) {
 			Document d = new Document();
 			d.append("name", players.get(i).getHaven().get(j).getName());
@@ -981,6 +994,7 @@ public class Board {
 			dop.append("name",basePile.get(i).getName());
 			dop.append("number", basePile.get(i).getNumCards());
 			dop.append("image", basePile.get(i).getImage());
+			dop.append("embargo", basePile.get(i).getEmbargo());
 			baseDocs.add(dop);
 		}
 		return baseDocs;
@@ -996,6 +1010,7 @@ public class Board {
 			dop.append("isMixed", kindom.get(i).isMixed());
 			dop.append("isSplit", kindom.get(i).isSplit());
 			dop.append("image", kindom.get(i).getImage());
+			dop.append("embargo", kindom.get(i).getEmbargo());
 			if (kindom.get(i).isMixed() || kindom.get(i).isSplit()) {
 				
 			} else {

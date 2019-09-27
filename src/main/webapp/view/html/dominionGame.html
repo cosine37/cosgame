@@ -31,6 +31,11 @@
 						{{base[$index].top.price}}
 					</div>
 				</div>
+				<div class="embargo" ng-show="base[$index].embargo > 0">
+					<div class="embargo-num">
+						{{base[$index].embargo}}
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="kindomCards" style="float: left; margin-left: 10px; width: 650px;">
@@ -48,6 +53,11 @@
 					<div class="kindom-coin">
 						<div class="kindom-price">
 							{{kindom[$index].top.price}}
+						</div>
+					</div>
+					<div class="embargo" ng-show="kindom[$index].embargo > 0">
+						<div class="embargo-num">
+							{{kindom[$index].embargo}}
 						</div>
 					</div>
 				</div>
