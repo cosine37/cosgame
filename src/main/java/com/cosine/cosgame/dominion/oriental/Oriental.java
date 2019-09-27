@@ -20,6 +20,7 @@ public class Oriental extends Expansion {
 	Pile imperialExamPile;
 	Pile swallowFleetPile;
 	Pile piscesJadePile;
+	Pile compassPile;
 	
 	public Oriental() {
 		super();
@@ -43,6 +44,7 @@ public class Oriental extends Expansion {
 		imperialExamPile = new Pile(ImperialExam.class, 10);
 		swallowFleetPile = new Pile(SwallowFleet.class, 10);
 		piscesJadePile = new Pile(PiscesJade.class, 10);
+		compassPile = new Pile(Compass.class, 10);
 		
 		piles.add(pendantForWinePile);
 		piles.add(armyDrummerPile);
@@ -60,6 +62,7 @@ public class Oriental extends Expansion {
 		piles.add(imperialExamPile);
 		piles.add(swallowFleetPile);
 		piles.add(piscesJadePile);
+		piles.add(compassPile);
 		
 	}
 

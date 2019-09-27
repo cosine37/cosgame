@@ -112,6 +112,7 @@ public class CardFactory {
 		if (cardname.equals("ImperialExam")) return new ImperialExam();
 		if (cardname.equals("SwallowFleet")) return new SwallowFleet();
 		if (cardname.equals("PiscesJade")) return new PiscesJade();
+		if (cardname.equals("Compass")) return new Compass();
 		
 		if (cardname.equals("CatanIsland")) return new CatanIsland();
 		

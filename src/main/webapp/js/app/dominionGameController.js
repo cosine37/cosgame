@@ -304,10 +304,40 @@ app.controller("dominionGameCtrl", ['$scope', '$window', '$http', '$document', '
 					}
 				}
 			} else if ($scope.phase == "Treasure"){
-				$scope.disablePhaseButton = false;
-				$scope.topMessage = "You may play Treasure cards";
-				$scope.showAutoplayButton = true;
-				$scope.phaseButton = "Buy Cards";
+				var task = $scope.ask;
+				while (task.type == 11){
+					task = task.thronedAsk;
+				}
+				if (task.type == 0){
+					$scope.disablePhaseButton = false;
+					$scope.topMessage = "You may play Treasure cards";
+					$scope.showAutoplayButton = true;
+					$scope.phaseButton = "Buy Cards";
+				} else if (task.type == 4){
+					$scope.topMessage = task.msg;
+					$scope.disablePhaseButton = true;
+					$scope.showViewed = true;
+					$scope.viewed = task.viewedCardsImage;
+					if (task.subType == 1){
+						$scope.options = task.options;
+					} else if (task.subType == 51){
+						$scope.showClearButton = true;
+						$scope.showConfirmButton = showConfirmButtonWhenChooseViewed();
+						var n = $scope.viewed.length;
+						$scope.chooseViewed = new Array(n);
+						for (var i=0;i<n;i++){
+							$scope.chooseViewed[i] = 0;
+						}
+					} else if (task.subType == 52){
+						$scope.showConfirmButton = true;
+						var n = $scope.viewed.length;
+						$scope.chooseViewed = new Array(n);
+						for (var i=0;i<n;i++){
+							$scope.chooseViewed[i] = i;
+						}
+					}
+				}
+				
 			} else if ($scope.phase == "Buy"){
 				var task = $scope.ask;
 				while (task.type == 11){
