@@ -59,16 +59,20 @@
 						<table class="table">
 							<thread>
 								<tr>
-									<td>Board Id</td>
-									<td>Board Status</td>
-									<td>Enter</td>
+									<td align="center">Lord</td>
+									<td align="center">Board Id</td>
+									<td align="center">Number of Players</td>
+									<td align="center">Board Status</td>
+									<td align="center">Enter</td>
 								</tr>
 							</thread>
 							<tbody>
 								<tr ng-repeat="boardId in boardIds track by $index">
-									<td>{{boardId.id}}</td>
-									<td>{{boardId.status}}</td>
-									<td><button ng-click="enterBoard(boardId.id)">Enter</button></td>
+									<td align="center">{{boardId.lord}}</td>
+									<td align="center">{{boardId.id}}</td>
+									<td align="center">{{boardId.playersInfo}}</td>
+									<td align="center">{{boardId.status}}</td>
+									<td align="center"><button ng-click="enterBoard(boardId.id)" ng-show = "boardId.enterable == '1'">Enter</button></td>
 								</tr>
 							</tbody>
 							

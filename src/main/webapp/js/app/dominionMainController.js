@@ -57,6 +57,12 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '
 					i = i+1;
 					boardObject.status = lst[i];
 					i = i+1;
+					boardObject.lord = lst[i];
+					i = i+1;
+					boardObject.playersInfo = lst[i];
+					i = i+1;
+					boardObject.enterable = lst[i];
+					i = i+1;
 					$scope.boardIds.push(boardObject);
 				}
 			});

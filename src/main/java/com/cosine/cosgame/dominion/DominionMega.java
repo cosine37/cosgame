@@ -34,7 +34,10 @@ public class DominionMega {
 		List<String> value = new ArrayList<String>();
 		for (int i=0;i<boardIds.size();i++) {
 			value.add(boards.get(i).getBoardId());
-			value.add(boards.get(i).getStatusAsString());
+			value.add(boards.get(i).getStatusString());
+			value.add(boards.get(i).getLord());
+			value.add(boards.get(i).getPlayersInfo());
+			value.add(boards.get(i).enterable());
 		}
 		entity.setValue(value);
 		return entity;

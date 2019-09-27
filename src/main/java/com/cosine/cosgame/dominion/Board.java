@@ -393,6 +393,32 @@ public class Board {
 		return Integer.toString(status);
 	}
 	
+	public String getStatusString() {
+		String ans = "";
+		if (status == 0) ans = "Pending";
+		if (status == 1) ans = "In Game";
+		if (status == 2) ans = "In Game";
+		if (status == 3) ans = "End Game";
+		return ans;
+	}
+	
+	public int getNumPlayers() {
+		return numPlayers;
+	}
+	
+	public String getPlayersInfo() {
+		String ans = players.size() + "/" + numPlayers;
+		return ans;
+	}
+	
+	public String enterable() {
+		if (players.size() < numPlayers) {
+			return "1";
+		} else {
+			return "0";
+		}
+	}
+	
 	public int getStartPlayer() {
 		return startPlayer;
 	}
