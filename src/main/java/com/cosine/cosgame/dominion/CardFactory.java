@@ -96,6 +96,9 @@ public class CardFactory {
 		
 		if (cardname.equals("Monument")) return new Monument();
 		if (cardname.equals("Forge")) return new Forge();
+		if (cardname.equals("Worker's Village")) return new WorkersVillage();
+		if (cardname.equals("City")) return new City();
+		if (cardname.equals("Expand")) return new Expand();
 		
 		if (cardname.equals("PendantForWine")) return new PendantForWine();
 		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
