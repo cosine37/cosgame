@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class MiningVillage extends Card{
 	public MiningVillage() {
 		super();
-		this.name = "MiningVillage";
+		this.name = "Mining Village";
 		this.image = "/image/Dominion/cards/Intrigue/MiningVillage.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 1;

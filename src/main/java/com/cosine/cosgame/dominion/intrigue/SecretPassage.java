@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class SecretPassage extends Card{
 	public SecretPassage() {
 		super();
-		this.name = "SecretPassage";
+		this.name = "Secret Passage";
 		this.image = "/image/Dominion/cards/Intrigue/SecretPassage.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 2;

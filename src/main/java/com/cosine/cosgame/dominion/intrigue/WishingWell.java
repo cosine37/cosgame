@@ -10,7 +10,7 @@ import com.cosine.cosgame.dominion.CardFactory;
 public class WishingWell extends Card{
 	public WishingWell() {
 		super();
-		this.name = "WishingWell";
+		this.name = "Wishing Well";
 		this.image = "/image/Dominion/cards/Intrigue/WishingWell.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 1;

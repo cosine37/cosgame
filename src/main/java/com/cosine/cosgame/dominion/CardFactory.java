@@ -39,14 +39,14 @@ public class CardFactory {
 		if (cardname.equals("Cellar")) return new Cellar();
 		if (cardname.equals("Chapel")) return new Chapel();
 		if (cardname.equals("Poacher")) return new Poacher();
-		if (cardname.equals("ThroneRoom")) return new ThroneRoom();
+		if (cardname.equals("Throne Room")) return new ThroneRoom();
 		if (cardname.equals("Workshop")) return new Workshop();
 		if (cardname.equals("Artisan")) return new Artisan();
 		if (cardname.equals("Remodel")) return new Remodel();
 		if (cardname.equals("Mine")) return new Mine();
 		if (cardname.equals("Library")) return new Library();
 		if (cardname.equals("Merchant")) return new Merchant();
-		if (cardname.equals("CouncilRoom")) return new CouncilRoom();
+		if (cardname.equals("Council Room")) return new CouncilRoom();
 		if (cardname.equals("Sentry")) return new Sentry();
 		if (cardname.equals("Harbinger")) return new Harbinger();
 		if (cardname.equals("Witch")) return new Witch();
@@ -54,13 +54,13 @@ public class CardFactory {
 		if (cardname.equals("Bureaucrat")) return new Bureaucrat();
 		if (cardname.equals("Militia")) return new Militia();
 		
-		if (cardname.equals("ShantyTown")) return new ShantyTown();
+		if (cardname.equals("Shanty Town")) return new ShantyTown();
 		if (cardname.equals("Duke")) return new Duke();
 		if (cardname.equals("Harem")) return new Harem();
 		if (cardname.equals("Steward")) return new Steward();
 		if (cardname.equals("Nobles")) return new Nobles();
 		if (cardname.equals("Pawn")) return new Pawn();
-		if (cardname.equals("TradingPost")) return new TradingPost();
+		if (cardname.equals("Trading Post")) return new TradingPost();
 		if (cardname.equals("Upgrade")) return new Upgrade();
 		if (cardname.equals("Baron")) return new Baron();
 		if (cardname.equals("Ironworks")) return new Ironworks();
@@ -69,23 +69,23 @@ public class CardFactory {
 		if (cardname.equals("Conspirator")) return new Conspirator();
 		if (cardname.equals("Courtier")) return new Courtier();
 		if (cardname.equals("Lurker")) return new Lurker();
-		if (cardname.equals("MiningVillage")) return new MiningVillage();
+		if (cardname.equals("Mining Village")) return new MiningVillage();
 		if (cardname.equals("Mill")) return new Mill();
-		if (cardname.equals("WishingWell")) return new WishingWell();
+		if (cardname.equals("Wishing Well")) return new WishingWell();
 		if (cardname.equals("Bridge")) return new Bridge();
-		if (cardname.equals("SecretPassage")) return new SecretPassage();
+		if (cardname.equals("Secret Passage")) return new SecretPassage();
 		
 		if (cardname.equals("Caravan")) return new Caravan();
-		if (cardname.equals("FishingVillage")) return new FishingVillage();
-		if (cardname.equals("MerchantShip")) return new MerchantShip();
+		if (cardname.equals("Fishing Village")) return new FishingVillage();
+		if (cardname.equals("Merchant Ship")) return new MerchantShip();
 		if (cardname.equals("Wharf")) return new Wharf();
 		if (cardname.equals("Tactician")) return new Tactician();
 		if (cardname.equals("Island")) return new Island();
 		if (cardname.equals("Warehouse")) return new Warehouse();
-		if (cardname.equals("TreasureMap")) return new TreasureMap();
+		if (cardname.equals("Treasure Map")) return new TreasureMap();
 		if (cardname.equals("Explorer")) return new Explorer();
-		if (cardname.equals("NativeVillage")) return new NativeVillage();
-		if (cardname.equals("PearlDiver")) return new PearlDiver();
+		if (cardname.equals("Native Village")) return new NativeVillage();
+		if (cardname.equals("Pearl Diver")) return new PearlDiver();
 		if (cardname.equals("Bazaar")) return new Bazaar();
 		if (cardname.equals("Lighthouse")) return new Lighthouse();
 		if (cardname.equals("Haven")) return new Haven();
@@ -100,25 +100,25 @@ public class CardFactory {
 		if (cardname.equals("City")) return new City();
 		if (cardname.equals("Expand")) return new Expand();
 		
-		if (cardname.equals("PendantForWine")) return new PendantForWine();
-		if (cardname.equals("ArmyDrummer")) return new ArmyDrummer();
+		if (cardname.equals("Pendant for Wine")) return new PendantForWine();
+		if (cardname.equals("Army Drummer")) return new ArmyDrummer();
 		if (cardname.equals("Exile")) return new Exile();
-		if (cardname.equals("TempleFair")) return new TempleFair();
-		if (cardname.equals("LanternExhibition")) return new LanternExhibition();
-		if (cardname.equals("CorruptedOfficial")) return new CorruptedOfficial();
-		if (cardname.equals("DragonBoat")) return new DragonBoat();
-		if (cardname.equals("TombSweeping")) return new TombSweeping();
+		if (cardname.equals("Temple Fair")) return new TempleFair();
+		if (cardname.equals("Lantern Exhibition")) return new LanternExhibition();
+		if (cardname.equals("Corrupted Official")) return new CorruptedOfficial();
+		if (cardname.equals("Dragon Boat")) return new DragonBoat();
+		if (cardname.equals("Tomb Sweeping")) return new TombSweeping();
 		if (cardname.equals("Executioner")) return new Executioner();
-		if (cardname.equals("PaperMaker")) return new PaperMaker();
+		if (cardname.equals("Paper Maker")) return new PaperMaker();
 		if (cardname.equals("Quadrangle")) return new Quadrangle();
-		if (cardname.equals("FieldReaper")) return new FieldReaper();
-		if (cardname.equals("FireworkShow")) return new FireworkShow();
-		if (cardname.equals("ImperialExam")) return new ImperialExam();
-		if (cardname.equals("SwallowFleet")) return new SwallowFleet();
-		if (cardname.equals("PiscesJade")) return new PiscesJade();
+		if (cardname.equals("Field Reaper")) return new FieldReaper();
+		if (cardname.equals("Firework Show")) return new FireworkShow();
+		if (cardname.equals("Imperial Exam")) return new ImperialExam();
+		if (cardname.equals("Swallow Fleet")) return new SwallowFleet();
+		if (cardname.equals("Pisces Jade")) return new PiscesJade();
 		if (cardname.equals("Compass")) return new Compass();
 		
-		if (cardname.equals("CatanIsland")) return new CatanIsland();
+		if (cardname.equals("Catan Island")) return new CatanIsland();
 		
 		return null;
 	}

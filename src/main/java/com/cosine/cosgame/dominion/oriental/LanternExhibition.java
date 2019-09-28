@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Player;
 public class LanternExhibition extends Card{
 	public LanternExhibition() {
 		super();
-		this.name = "LanternExhibition";
+		this.name = "Lantern Exhibition";
 		this.image = "/image/Dominion/cards/Oriental/LanternExhibition.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 6;

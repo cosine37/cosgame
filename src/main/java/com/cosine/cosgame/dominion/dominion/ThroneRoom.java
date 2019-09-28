@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.CardFactory;
 public class ThroneRoom extends Card{
 	public ThroneRoom() {
 		super();
-		this.name = "ThroneRoom";
+		this.name = "Throne Room";
 		this.image = "/image/Dominion/cards/Dominion/ThroneRoom.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;

@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Card;
 public class PiscesJade extends Card{
 	public PiscesJade() {
 		super();
-		this.name = "PiscesJade";
+		this.name = "Pisces Jade";
 		this.image = "/image/Dominion/cards/Oriental/PiscesJade.png";
 		this.types[INDEX_TREASURE] = true;
 		this.coin = 2;

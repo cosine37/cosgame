@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class NativeVillage extends Card{
 	public NativeVillage() {
 		super();
-		this.name = "NativeVillage";
+		this.name = "Native Village";
 		this.image = "/image/Dominion/cards/Seaside/NativeVillage.png";
 		this.types[INDEX_ACTION] = true;
 		this.action =2;

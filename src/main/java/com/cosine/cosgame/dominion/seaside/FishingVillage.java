@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class FishingVillage extends Card{
 	public FishingVillage() {
 		super();
-		this.name = "FishingVillage";
+		this.name = "Fishing Village";
 		this.image = "/image/Dominion/cards/Seaside/FishingVillage.png";
 		this.types[INDEX_ACTION] = true;
 		this.types[INDEX_DURATION] = true;

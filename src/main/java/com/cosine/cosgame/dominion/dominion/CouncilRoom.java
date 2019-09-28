@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Player;
 public class CouncilRoom extends Card{
 	public CouncilRoom() {
 		super();
-		this.name = "CouncilRoom";
+		this.name = "Council Room";
 		this.image = "/image/Dominion/cards/Dominion/CouncilRoom.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 5;

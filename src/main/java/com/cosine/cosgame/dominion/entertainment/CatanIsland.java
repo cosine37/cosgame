@@ -8,7 +8,7 @@ import com.cosine.cosgame.dominion.Card;
 public class CatanIsland extends Card {
 	public CatanIsland() {
 		super();
-		this.name = "CatanIsland";
+		this.name = "Catan Island";
 		this.image = "/image/Dominion/cards/Entertainments/CatanIsland.png";
 		this.types[INDEX_ACTION] = true;
 		this.types[INDEX_VICTORY] = true;

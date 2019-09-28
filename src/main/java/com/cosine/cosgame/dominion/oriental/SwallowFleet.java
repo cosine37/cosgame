@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Card;
 public class SwallowFleet extends Card{
 	public SwallowFleet() {
 		super();
-		this.name = "SwallowFleet";
+		this.name = "Swallow Fleet";
 		this.image = "/image/Dominion/cards/Oriental/SwallowFleet.png";
 		this.types[INDEX_ACTION] = true;
 		this.types[INDEX_DURATION] = true;

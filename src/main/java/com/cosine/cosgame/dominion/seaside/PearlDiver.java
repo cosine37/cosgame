@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class PearlDiver extends Card{
 	public PearlDiver() {
 		super();
-		this.name = "PearlDiver";
+		this.name = "Pearl Diver";
 		this.image = "/image/Dominion/cards/Seaside/PearlDiver.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 1;

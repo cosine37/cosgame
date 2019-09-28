@@ -11,7 +11,7 @@ import com.cosine.cosgame.dominion.Player;
 public class ImperialExam extends Card{
 	public ImperialExam() {
 		super();
-		this.name = "ImperialExam";
+		this.name = "Imperial Exam";
 		this.image = "/image/Dominion/cards/Oriental/ImperialExam.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 1;

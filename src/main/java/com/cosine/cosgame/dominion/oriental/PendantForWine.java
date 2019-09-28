@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class PendantForWine extends Card{
 	public PendantForWine() {
 		super();
-		this.name = "PendantForWine";
+		this.name = "Pendant for Wine";
 		this.image = "/image/Dominion/cards/Oriental/PendantForWine.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;

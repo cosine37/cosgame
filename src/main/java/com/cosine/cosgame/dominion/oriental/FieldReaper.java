@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class FieldReaper extends Card{
 	public FieldReaper() {
 		super();
-		this.name = "FieldReaper";
+		this.name = "Field Reaper";
 		this.image = "/image/Dominion/cards/Oriental/FieldReaper.png";
 		this.types[INDEX_ACTION] = true;
 		this.buy = 1;

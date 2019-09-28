@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Player;
 public class TempleFair extends Card{
 	public TempleFair() {
 		super();
-		this.name = "TempleFair";
+		this.name = "Temple Fair";
 		this.image = "/image/Dominion/cards/Oriental/TempleFair.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;

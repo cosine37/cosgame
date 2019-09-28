@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class CorruptedOfficial extends Card{
 	public CorruptedOfficial() {
 		super();
-		this.name = "CorruptedOfficial";
+		this.name = "Corrupted Official";
 		this.image = "/image/Dominion/cards/Oriental/CorruptedOfficial.png";
 		this.types[INDEX_ACTION] = true;
 		this.types[INDEX_CURSED] = true;

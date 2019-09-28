@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class TreasureMap extends Card{
 	public TreasureMap() {
 		super();
-		this.name = "TreasureMap";
+		this.name = "Treasure Map";
 		this.image = "/image/Dominion/cards/Seaside/TreasureMap.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;

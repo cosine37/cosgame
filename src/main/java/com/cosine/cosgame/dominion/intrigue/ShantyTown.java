@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class ShantyTown extends Card{
 	public ShantyTown() {
 		super();
-		this.name = "ShantyTown";
+		this.name = "Shanty Town";
 		this.image = "/image/Dominion/cards/Intrigue/ShantyTown.png";
 		this.types[INDEX_ACTION] = true;
 		this.action = 2;

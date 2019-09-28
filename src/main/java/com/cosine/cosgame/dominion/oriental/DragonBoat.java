@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class DragonBoat extends Card{
 	public DragonBoat() {
 		super();
-		this.name = "DragonBoat";
+		this.name = "Dragon Boat";
 		this.image = "/image/Dominion/cards/Oriental/DragonBoat.png";
 		this.types[INDEX_ACTION] = true;
 		this.coin = 1;

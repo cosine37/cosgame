@@ -10,7 +10,7 @@ import com.cosine.cosgame.dominion.CardFactory;
 public class PaperMaker extends Card{
 	public PaperMaker() {
 		super();
-		this.name = "PaperMaker";
+		this.name = "Paper Maker";
 		this.image = "/image/Dominion/cards/Oriental/PaperMaker.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 1;

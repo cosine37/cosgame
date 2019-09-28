@@ -7,7 +7,7 @@ import com.cosine.cosgame.dominion.Player;
 public class ArmyDrummer extends Card{
 	public ArmyDrummer() {
 		super();
-		this.name = "ArmyDrummer";
+		this.name = "Army Drummer";
 		this.image = "/image/Dominion/cards/Oriental/ArmyDrummer.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 4;

@@ -12,7 +12,7 @@ import com.cosine.cosgame.dominion.Trash;
 public class TombSweeping extends Card{
 	public TombSweeping() {
 		super();
-		this.name = "TombSweeping";
+		this.name = "Tomb Sweeping";
 		this.image = "/image/Dominion/cards/Oriental/TombSweeping.png";
 		this.types[INDEX_ACTION] = true;
 		this.action = 1;

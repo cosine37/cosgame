@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class FireworkShow extends Card{
 	public FireworkShow() {
 		super();
-		this.name = "FireworkShow";
+		this.name = "Firework Show";
 		this.image = "/image/Dominion/cards/Oriental/FireworkShow.png";
 		this.types[INDEX_ACTION] = true;
 		this.coin = 1;

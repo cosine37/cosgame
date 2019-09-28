@@ -9,7 +9,7 @@ import com.cosine.cosgame.dominion.Card;
 public class TradingPost extends Card{
 	public TradingPost() {
 		super();
-		this.name = "TradingPost";
+		this.name = "Trading Post";
 		this.image = "/image/Dominion/cards/Intrigue/TradingPost.png";
 		this.types[INDEX_ACTION] = true;
 		this.price = 5;

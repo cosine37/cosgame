@@ -6,7 +6,7 @@ import com.cosine.cosgame.dominion.Card;
 public class MerchantShip extends Card{
 	public MerchantShip() {
 		super();
-		this.name = "MerchantShip";
+		this.name = "Merchant Ship";
 		this.image = "/image/Dominion/cards/Seaside/MerchantShip.png";
 		this.types[INDEX_ACTION] = true;
 		this.types[INDEX_DURATION] = true;

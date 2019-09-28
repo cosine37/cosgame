@@ -458,7 +458,7 @@ public class Card {
 				if (n<x) x = n;
 				for (int i=0;i<x;i++) {
 					Ask ask = new Ask();
-					ask.setCardName("PiscesJade");
+					ask.setCardName("Pisces Jade");
 					ask.setType(Ask.OPTION);
 					ask.setMsg("You may gain a Curse to gain another copy of "+name);
 					List<String> options = new ArrayList<>();
