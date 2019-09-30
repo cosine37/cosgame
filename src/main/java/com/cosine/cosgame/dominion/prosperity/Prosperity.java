@@ -9,6 +9,7 @@ public class Prosperity extends Expansion {
 	Pile workersVillagePile;
 	Pile cityPile;
 	Pile expandPile;
+	Pile bankPile;
 	
 	public Prosperity(){
 		super();
@@ -21,11 +22,13 @@ public class Prosperity extends Expansion {
 		workersVillagePile = new Pile(WorkersVillage.class, 10);
 		cityPile = new Pile(City.class, 10);
 		expandPile = new Pile(Expand.class, 10);
+		bankPile = new Pile(Bank.class, 10);
 		
 		piles.add(monumentPile);
 		piles.add(forgePile);
 		piles.add(workersVillagePile);
 		piles.add(cityPile);
 		piles.add(expandPile);
+		piles.add(bankPile);
 	}
 }

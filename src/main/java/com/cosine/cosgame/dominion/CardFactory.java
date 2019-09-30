@@ -99,6 +99,7 @@ public class CardFactory {
 		if (cardname.equals("Worker's Village")) return new WorkersVillage();
 		if (cardname.equals("City")) return new City();
 		if (cardname.equals("Expand")) return new Expand();
+		if (cardname.equals("Bank")) return new Bank();
 		
 		if (cardname.equals("Pendant for Wine")) return new PendantForWine();
 		if (cardname.equals("Army Drummer")) return new ArmyDrummer();
