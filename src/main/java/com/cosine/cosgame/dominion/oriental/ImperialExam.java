@@ -25,7 +25,7 @@ public class ImperialExam extends Card{
 		List<String> options = new ArrayList<>();
 		options.add("$4 card on your deck");
 		options.add("$4 card on your Seclusion mat");
-		options.add("$5 card and trash this");
+		options.add("Nothing");
 		ask.setMsg("Choose one:");
 		ask.setOptions(options);
 		ask.setAns(-1);
@@ -53,16 +53,7 @@ public class ImperialExam extends Card{
 				ask.setLower(0);
 				ask.setResLevel(2);
 			} else if (ask.getAns() == 2) {
-				Card card = player.getPlay().remove(player.getPlay().size()-1);
-				log(player.getName()+ " trashes Imperial Exam", 1);
-				board.getTrash().add(card);
 				ask = new Ask();
-				ask.setCardName(name);
-				ask.setType(Ask.GAIN);
-				ask.setMsg("Gain a card costing up to $5");
-				ask.setUpper(5);
-				ask.setLower(0);
-				ask.setResLevel(3);
 			} else {
 				ask = new Ask();
 			}
@@ -75,11 +66,6 @@ public class ImperialExam extends Card{
 			String gainedCardName = ask.getSelectedCards().get(0);
 			log(player.getName() + " gains a " + gainedCardName, 1);
 			board.gainToPlayerFromPileToSeclusion(player, board.getPileByTop(gainedCardName));
-			ask = new Ask();
-		} else if (ask.getResLevel() == 3) {
-			String gainedCardName = ask.getSelectedCards().get(0);
-			log(player.getName() + " gains a " + gainedCardName, 1);
-			board.gainToPlayerFromPile(player, board.getPileByTop(gainedCardName));
 			ask = new Ask();
 		}
 		return ask;

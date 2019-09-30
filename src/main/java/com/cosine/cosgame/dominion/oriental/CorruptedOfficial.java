@@ -40,6 +40,10 @@ public class CorruptedOfficial extends Card{
 			log(player.getName() + " gets +1 Action, +1 Buy, + $4", 1);
 			log(player.getName() + " gains a CorruptedOfficial", 1);
 			board.gainToPlayerFromPile(player, board.getPileByTop(name));
+		} else {
+			player.draw(1);
+			player.addAction(1);
+			log(player.getName() + " gets +1 Card, +1 Action", 1);
 		}
 		return ask;
 	}
