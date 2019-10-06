@@ -91,4 +91,5 @@ public class Dominion extends Expansion{
 		piles.add(bureaucratPile);
 		piles.add(militiaPile);
 	}
+	
 }

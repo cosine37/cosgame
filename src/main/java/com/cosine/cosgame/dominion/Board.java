@@ -102,6 +102,7 @@ public class Board {
 	public void initialize(String boardId, int numPlayers) {
 		this.boardId = boardId;
 		this.numPlayers = numPlayers;
+		cardList = new CardList(numPlayers);
 		players = new ArrayList<Player>();
 		Player lp = new Player(this.lord);
 		players.add(lp);
@@ -129,6 +130,7 @@ public class Board {
 	
 	public void setup() {
 		baseSetup();
+		kindomSetup();
 		endType = "";
 		endPlayer = "";
 		boolean useShelters = false;
@@ -365,6 +367,24 @@ public class Board {
 		basePile = base.getPiles();
 	}
 	
+	public void kindomSetup() {
+		// resize victory cards if numPlayers is 2
+		if (numPlayers>2) return;
+		for (int i=0;i<kindom.size();i++) {
+			if (kindom.get(i).getTop().isVictory()) {
+				if (kindom.get(i).getTop().isKinght()) {
+					continue;
+				}
+				if (kindom.get(i).getTop().isCastle()) {
+					
+					continue;
+				}
+				kindom.get(i).resizeCards(8);
+				
+			}
+		}
+	}
+	
 	public void randomize() {
 		kindom = cardList.genKindomPiles();
 	}
@@ -409,6 +429,10 @@ public class Board {
 		if (status == 2) ans = "In Game";
 		if (status == 3) ans = "End Game";
 		return ans;
+	}
+	
+	public void setNumPlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
 	}
 	
 	public int getNumPlayers() {

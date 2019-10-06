@@ -12,11 +12,13 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 			$window.location.href = x + "/" + d;
 		}
 		
+		$scope.numPlayers = 2;
+		
 		$scope.showCardList = false;
 		
 		$scope.isLord = false;
 		$scope.showBigImage = false;
-		//$scope.includeAll = true;
+		
 		var s = "";
 		
 		$scope.kindom = [];
@@ -44,6 +46,13 @@ app.controller("dominionBoardCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.numPlayerOptions = [2,3,4];
+		
+		$scope.changeNumPlayer = function(){
+			var data = {"numPlayers": $scope.numPlayers};
+			$http({url: "/dominiongame/setnumplayers", method: "POST", params: data}).then(function(response){
+				
+			});
+		}
 		
 		$scope.showKick = function(index){
 			if (index == 0) return false;

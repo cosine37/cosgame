@@ -17,6 +17,7 @@ public class CardList {
 	public static final int FORRANDOMIZE = 0;
 	public static final int INCLUDE = 2;
 	
+	int numPlayers;
 	int numKindom;
 	
 	List<Expansion> expansions = new ArrayList<>();
@@ -25,15 +26,23 @@ public class CardList {
 	
 	List<Integer> expansionCards;
 	
-	public CardList() {
-		numKindom = 10;
-		
-		Expansion dominion = new Dominion();
-		Expansion intrigue = new Intrigue();
-		Expansion seaside = new Seaside();
-		Expansion prosperity = new Prosperity();
-		Expansion oriental = new Oriental();
-		Expansion entertainments = new Entertainments();
+	Expansion dominion;
+	Expansion intrigue;
+	Expansion seaside;
+	Expansion prosperity;
+	Expansion oriental;
+	Expansion entertainments;
+	
+	void createExpansions(int numPlayers) {
+		dominion = new Dominion();
+		intrigue = new Intrigue();
+		seaside = new Seaside();
+		prosperity = new Prosperity();
+		oriental = new Oriental();
+		entertainments = new Entertainments();
+	}
+	
+	void setupExpansions() {
 		dominion.sortPiles();
 		intrigue.sortPiles();
 		seaside.sortPiles();
@@ -58,6 +67,18 @@ public class CardList {
 		}
 		
 		expansionCards = new ArrayList<>();
+	}
+	
+	public CardList() {
+		numKindom = 10;
+		createExpansions(4);
+		setupExpansions();
+	}
+	
+	public CardList(int numPlayers) {
+		numKindom = 10;
+		createExpansions(numPlayers);
+		setupExpansions();
 	}
 	
 	public List<Expansion> getExpansions(){
@@ -191,7 +212,6 @@ public class CardList {
 					kindom.add(expansions.get(i).getPiles().get(j));
 				} else if (selected.get(i).get(j) == FORRANDOMIZE) {
 					singleExp.add(expansions.get(i).getPiles().get(j));
-					//buffer.add(expansions.get(i).getPiles().get(j));
 				}
 			}
 			for (j=0;j<expCount.get(i);j++) {

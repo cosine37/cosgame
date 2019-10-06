@@ -98,6 +98,12 @@ public class Pile {
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
+	
+	public void resizeCards(int x) {
+		while (cards.size() > x) {
+			cards.remove(0);
+		}
+	}
 
 	public int getNumCards() {
 		if (cards.size() == 1) {

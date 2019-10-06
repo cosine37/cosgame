@@ -54,6 +54,10 @@ public class Card {
 	protected static final int INDEX_REACTION = 11;
 	protected static final int INDEX_DURATION = 12;
 	
+	// Unique types
+	protected static final int INDEX_KINGHT = 21;
+	protected static final int INDEX_CASTLE = 22;
+	
 	// categories
 	protected static final int INDEX_ATTACKBLOCK = 31;
 	
@@ -368,6 +372,14 @@ public class Card {
 	
 	public boolean isDuration() {
 		return types[INDEX_DURATION];
+	}
+	
+	public boolean isKinght() {
+		return types[INDEX_KINGHT];
+	}
+	
+	public boolean isCastle() {
+		return types[INDEX_CASTLE];
 	}
 	
 	public boolean isAttackBlock() {

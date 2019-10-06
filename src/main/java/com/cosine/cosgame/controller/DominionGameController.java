@@ -96,6 +96,18 @@ public class DominionGameController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/dominiongame/setnumplayers", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setNumPlayers(HttpServletRequest request, @RequestParam int numPlayers){
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		Board board = new Board();
+		board.getBoardFromDB(boardId);
+		board.setNumPlayers(numPlayers);
+		board.updateDB("numPlayers", board.getNumPlayers());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/dominiongame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addbot(HttpServletRequest request){
 		HttpSession session = request.getSession(true);

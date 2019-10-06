@@ -20,7 +20,7 @@
 					<tr>
 						<td><p>Number of players:</p></td>
 						<td>
-							<select ng-init="numPlayers = numPlayerOptions[0]" ng-model="numPlayers" ng-options="x for x in numPlayerOptions">
+							<select ng-init="numPlayers = numPlayerOptions[0]" ng-model="numPlayers" ng-options="x for x in numPlayerOptions" ng-change="changeNumPlayer()">
 						</td>
 					</tr>
 					<tr>
