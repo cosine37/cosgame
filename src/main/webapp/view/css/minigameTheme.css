@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.tabs{
+	background: linear-gradient(black, green, green, green, black);
+}
+.nav-tabs .nav-link.active{
+	background: green;
+	color: white;
+}
+.table{
+	width: 60%;
+}
+.gametitle{
+	color: blue;
+	text-decoration: underline;
+}

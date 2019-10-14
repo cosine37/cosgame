@@ -5,7 +5,7 @@
 <title>Cosgame</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
-<link rel="stylesheet" type="text/css" href="/view/css/indexTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/minigameTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -25,10 +25,10 @@
 	</div>
 	
 	<div id="tabs" class="tabs">
-		<button style="padding-top: 0px; color: rgb(0,100,100); font-size: 24px; background-color:white">Home</button>
+		<button ng-click="goto('index')">Home</button>
 		<button ng-click="goto('dominion')">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>
-		<button ng-click="goto('minigame')">Minigames</button>
+		<button style="padding-top: 0px; color: green; font-size: 24px; background-color:white">Minigames</button>
 		<button>Others</button>
 	</div>
 	
@@ -37,7 +37,7 @@
 			<div id="sidebar" class="sidebar">
 				<ul class="nav nav-tabs flex-column" role="tablist">
 				    <li class="nav-item">
-				      <a class="nav-link active" data-toggle="tab" href="#newstab">News</a>
+				      <a class="nav-link active" data-toggle="tab" href="#listtab">List</a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#abouttab">About</a>
@@ -46,8 +46,13 @@
 			</div>
 			
 			<div class="tab-content">
-				<div id="newstab" class="content container tab-pane active">
-					<h1>Welcome to Cosgame</h1>
+				<div id="listtab" class="content container tab-pane active">
+					<h1>List of Minigames</h1>
+					<table  class="table">
+						<tr>
+							<td><h5 class="gametitle">XuTangBo</h5></td>
+						</tr>
+					</table>
 				</div>
 				
 				<div id="abouttab" class="content container tab-pane fade">
