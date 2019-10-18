@@ -1,0 +1,18 @@
+@charset "UTF-8";
+.title{
+	font-size: 32px;
+}
+.neck{
+	
+}
+.left{
+	float: left;
+	width: 40%;
+}
+.right{
+	float: left;
+	width: 60%;
+}
+.bottom{
+	clear: both;
+}
