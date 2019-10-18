@@ -3,6 +3,7 @@ package com.cosine.cosgame.minigame.xutangbo;
 public class Move {
 	
 	// standard moves
+	public final int UNDEFINED = -2;
 	public final int BAOSI = -1;
 	public final int XU = 0;
 	public final int BI = 1;
@@ -21,6 +22,7 @@ public class Move {
 	public static final String[] MOVENAMES = {"xu", "bi", "tang", "bo", "datang", "zhongbo", "qianglietang", "dabo", "boba", "jiujibo"};
 	public static final String[] MOVENAMESCN = {"xu", "bi", "tang", "bo", "datang", "zhongbo", "qianglietang", "dabo", "boba", "jiujibo"};
 	public static final String B = "baosi";
+	public static final String U = "undefined";
 	
 	public static final int[] ENERGY = {0, 0, 0, 1, 1, 2, 2, 3, 4, 5};
 	public static final int[] POWER = {0, 1, 0, 2, 0, 4, 0, 6, 8, 10};
@@ -30,7 +32,7 @@ public class Move {
 	
 	
 	public Move() {
-		
+		moveid = UNDEFINED;
 	}
 	
 	public Move(int moveid) {
@@ -46,10 +48,14 @@ public class Move {
 	}
 	
 	public String getMoveName() {
+		if (moveid == UNDEFINED) return U;
+		if (moveid == BAOSI) return B;
 		return MOVENAMES[moveid];
 	}
 	
 	public String getMoveNameCN() {
+		if (moveid == UNDEFINED) return U;
+		if (moveid == BAOSI) return B;
 		return MOVENAMESCN[moveid];
 	}
 	
@@ -64,7 +70,5 @@ public class Move {
 	public int getDefence() {
 		return DEFENCE[moveid];
 	}
-	
-	
 	
 }

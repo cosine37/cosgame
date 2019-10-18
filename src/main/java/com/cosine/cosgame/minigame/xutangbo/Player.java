@@ -1,5 +1,7 @@
 package com.cosine.cosgame.minigame.xutangbo;
 
+import org.bson.Document;
+
 public class Player {
 	public static final int INACTIVE = 0;
 	public static final int ALIVE = 1;
@@ -14,7 +16,12 @@ public class Player {
 	Move curMove;
 	
 	public Player() {
-		
+		curMove = new Move();
+	}
+	
+	public Player(String name) {
+		this();
+		this.name = name;
 	}
 	
 	public String getName() {
@@ -61,4 +68,21 @@ public class Player {
 		status = DEAD;
 	}
 	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("status", status);
+		doc.append("energy", energy);
+		doc.append("bi", bi);
+		doc.append("curMove", curMove.getMoveid());
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		status = doc.getInteger("status");
+		energy = doc.getInteger("energy");
+		bi = doc.getInteger("bi");
+		curMove = new Move(doc.getInteger("curMove",-1));
+	}
 }
