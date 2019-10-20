@@ -2,6 +2,8 @@ package com.cosine.cosgame.minigame.xutangbo;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.util.TextGenerator;
+
 public class Player {
 	public static final int INACTIVE = 0;
 	public static final int ALIVE = 1;
@@ -11,17 +13,27 @@ public class Player {
 	int energy;
 	int bi;
 	
+	boolean bot;
+	
 	String name;
 	
 	Move curMove;
 	
 	public Player() {
 		curMove = new Move();
+		bot = false;
 	}
 	
 	public Player(String name) {
 		this();
 		this.name = name;
+	}
+	
+	public void botSetup() {
+		TextGenerator generator = new TextGenerator();
+		generator.readName();
+		name = generator.generateName() + "(bot)";
+		bot = true;
 	}
 	
 	public String getName() {
@@ -30,6 +42,14 @@ public class Player {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean getBot() {
+		return bot;
+	}
+	
+	public void setBot(boolean bot) {
+		this.bot = bot;
 	}
 
 	public int getStatus() {

@@ -56,6 +56,39 @@ public class Game {
 		players.add(p);
 	}
 	
+	public void addBot() {
+		Player p = new Player();
+		p.botSetup();
+		players.add(p);
+	}
+	
+	public void addBotToDB() {
+		Player p = new Player();
+		p.botSetup();
+		players.add(p);
+		updatePlayernamesDB();
+		updatePlayerDB(p);
+	}
+	
+	public void kickFromDB(String kickedName) {
+		if (kickedName.equals(lord)) {
+			
+		} else {
+			dbutil.removeKey("id", id, "player_" + kickedName);
+			for (int i=0;i<players.size();i++) {
+				if (players.get(i).getName().equals(kickedName)) {
+					players.remove(i);
+					break;
+				}
+			}
+			updatePlayernamesDB();
+		}
+	}
+	
+	public void start() {
+		status = INGAME;
+	}
+	
 	public Player getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().equals(name)) {
@@ -166,7 +199,6 @@ public class Game {
 	
 	public void storeGameToDB() {
 		Document doc = toDocument();
-		System.out.println(doc.toJson());
 		dbutil.insert(doc);
 	}
 	
@@ -175,11 +207,22 @@ public class Game {
 		setFromDoc(doc);
 	}
 	
-	public void updateDB(String key, Document value) {
+	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
 	}
 	
-	public void updatePlayerDB(String name, Player p) {
-		updateDB(name,p.toDocument());
+	public void updatePlayerDB(Player p) {
+		updateDB("player_" + p.getName(),p.toDocument());
 	}
+	
+	public void updatePlayernamesDB() {
+		List<Document> dop = new ArrayList<>();
+		for (int i=0;i<players.size();i++) {
+			Document d = new Document();
+			d.append("name", players.get(i).getName());
+			dop.add(d);
+		}
+		updateDB("playernames", dop);
+	}
+	
 }
