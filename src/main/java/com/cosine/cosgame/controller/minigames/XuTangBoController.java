@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.minigame.xutangbo.Game;
+import com.cosine.cosgame.minigame.xutangbo.GameEntity;
 import com.cosine.cosgame.minigame.xutangbo.Mega;
 import com.cosine.cosgame.minigame.xutangbo.Player;
 import com.cosine.cosgame.util.StringEntity;
@@ -57,6 +58,21 @@ public class XuTangBoController {
 		}
 		StringEntity entity = new StringEntity();
 		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/minigame/xutangbo/getgame", method = RequestMethod.GET)
+	public ResponseEntity<GameEntity> xutangboGetGame(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String id = (String) session.getAttribute("xtbgameid");
+		Game game = new Game();
+		game.getGameFromDB(id);
+		List<Player> players = game.getPlayers();
+		List<String> value = new ArrayList<>();
+		for (int i=0;i<players.size();i++) {
+			value.add(players.get(i).getName());
+		}
+		GameEntity entity = new GameEntity(game);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

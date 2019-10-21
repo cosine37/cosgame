@@ -19,7 +19,7 @@ function RuleOrGame(props){
 class Middle extends React.Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {games: [], ingame: false, start: false, players: []};
+	    this.state = {games: [], ingame: false, start: false, game: {players: []}};
 	    this.create = this.create.bind(this);
 	    this.enter = this.enter.bind(this);
 	    this.addBot = this.addBot.bind(this);
@@ -51,9 +51,9 @@ class Middle extends React.Component {
 	
 	getGame(){
 		var that = this;
-		$.get("/minigame/xutangbo/players", function(data,status){
+		$.get("/minigame/xutangbo/getgame", function(data,status){
 			that.setState(prevState => ({
-				players: data.value
+				game: data
 			}));
 		});
 	}
@@ -95,26 +95,55 @@ class Middle extends React.Component {
 		});
 	}
 	
+	gameLayout(){
+		return (
+			<div id="right" className="right">
+				<div id="playersinfo" className="playersinfo">
+					<h2>Player info</h2>
+					<table>
+						{this.state.game.players.map(player => (
+							<tr>
+								<td>{player.name}</td>
+								<td>energy: {player.energy}</td>
+								<td>bi: {player.energy}</td>
+							</tr>
+						))}
+					</table>
+				</div>
+				<div id="logs" className="logs">logs</div>
+				<div id="moves" className="moves">
+					<h2>Moves</h2>
+					<button>bi</button>
+					<button>蓄</button>
+					<button>镗</button>
+					<button>波</button>
+					<button>大镗</button>
+					<button>中波</button>
+					<button>强烈镗</button>
+					<button>大波</button>
+					<button>波霸</button>
+					<button>究极波</button>
+				</div>
+			</div>
+		);
+	}
+	
 	render(){
 		var rightHTML;
 		if (this.state.start){
-			rightHTML = (
-				<div id="right" className="right">
-					<h2>game starts</h2>
-				</div>
-			);
+			rightHTML = this.gameLayout();
 		} else if (this.state.ingame){
 			rightHTML = (
 				<div id="right" className="right">
 					<h2>players</h2>
 					<button onClick={this.addBot}>Add bot</button>
-					{this.state.players.length > 1 &&
+					{this.state.game.players.length > 1 &&
 						<button onClick={this.start}>Start</button>
 					}
 					<table>
-						{this.state.players.map(player =>(
+						{this.state.game.players.map(player =>(
 							<tr>
-								<td>{player}</td>
+								<td>{player.name}</td>
 								<td><button onClick={() => this.kick(player)}>kick</button></td>
 							</tr>
 						))}

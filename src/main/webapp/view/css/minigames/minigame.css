@@ -16,3 +16,14 @@
 .bottom{
 	clear: both;
 }
+.playersinfo{
+	float: left;
+	width: 50%;
+}
+.logs{
+	float: left;
+	width: 50%;
+}
+.moves{
+	clear: both;
+}
