@@ -75,6 +75,13 @@ public class Player {
 	public void setBi(int bi) {
 		this.bi = bi;
 	}
+	
+	public void afterEffect() {
+		energy = energy - curMove.getEnergy();
+		if (curMove.getMoveid() == Move.BI) {
+			bi = bi-1;
+		}
+	}
 
 	public Move getCurMove() {
 		return curMove;
@@ -82,6 +89,15 @@ public class Player {
 
 	public void setCurMove(Move curMove) {
 		this.curMove = curMove;
+	}
+
+	public void setCurMove(int moveId) {
+		this.curMove = new Move(moveId);
+	}
+	
+	public void setCurMoveWithAI(Game game) {
+		AI ai = new AI(this,game);
+		curMove = new Move(ai.genMove());
 	}
 	
 	public void die() {
@@ -95,6 +111,7 @@ public class Player {
 		doc.append("energy", energy);
 		doc.append("bi", bi);
 		doc.append("curMove", curMove.getMoveid());
+		doc.append("bot", bot);
 		return doc;
 	}
 	
@@ -104,5 +121,6 @@ public class Player {
 		energy = doc.getInteger("energy");
 		bi = doc.getInteger("bi");
 		curMove = new Move(doc.getInteger("curMove",-1));
+		bot = doc.getBoolean("bot");
 	}
 }

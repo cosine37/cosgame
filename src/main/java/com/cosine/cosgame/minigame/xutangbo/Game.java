@@ -87,6 +87,30 @@ public class Game {
 	
 	public void start() {
 		status = INGAME;
+		for (int i=0;i<players.size();i++) {
+			players.get(i).setStatus(Player.ALIVE);
+		}
+		round = 0;
+		newRound();
+	}
+	
+	public void newRound() {
+		round = round+1;
+		step = 1;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getStatus() == Player.DEAD) continue;
+			players.get(i).setEnergy(0);
+			players.get(i).setBi(1);
+		}
+	}
+	
+	public void nextStep() {
+		step = step + 1;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getStatus() == Player.DEAD) continue;
+			players.get(i).afterEffect();
+			players.get(i).setCurMove(Move.UNDEFINED);
+		}
 	}
 	
 	public Player getPlayerByName(String name) {
@@ -101,16 +125,46 @@ public class Game {
 	public void judge() {
 		if (status == INGAME) {
 			int i;
+			// if every player has declared their moves;
+			boolean flag = false;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
+				if (players.get(i).getCurMove().getMoveid() == Move.UNDEFINED){
+					if (players.get(i).getBot()) {
+						players.get(i).setCurMoveWithAI(this);
+					} else {
+						flag = true;
+					}
+				}
+			}
+			if (flag) return;
+			
+			boolean newRound = false;
 			int maxPower = 0;
 			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
+				if (players.get(i).getCurMove().getEnergy() > players.get(i).getEnergy()) {
+					players.get(i).die();
+					newRound = true;
+				}
+			}
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
 				if (players.get(i).getCurMove().getPower() > maxPower) {
 					maxPower = players.get(i).getCurMove().getPower();
 				}
 			}
 			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
 				if (players.get(i).getCurMove().getDefence() < maxPower) {
 					players.get(i).die();
+					newRound = true;
 				}
+			}
+			if (newRound) {
+				newRound();
+			} else {
+				nextStep();
 			}
 		}
 	}
@@ -213,6 +267,12 @@ public class Game {
 	
 	public void updatePlayerDB(Player p) {
 		updateDB("player_" + p.getName(),p.toDocument());
+	}
+	
+	public void updateAllPlayersDB() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayerDB(players.get(i));
+		}
 	}
 	
 	public void updatePlayernamesDB() {

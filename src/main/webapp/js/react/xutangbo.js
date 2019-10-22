@@ -25,6 +25,7 @@ class Middle extends React.Component {
 	    this.addBot = this.addBot.bind(this);
 	    this.kick = this.kick.bind(this);
 	    this.start = this.start.bind(this);
+	    this.useMove = this.useMove.bind(this);
 	    this.getAllGames(0);
 	}
 	
@@ -92,6 +93,14 @@ class Middle extends React.Component {
 			that.setState(prevState => ({
 	    		start: true
 	  	  	}));
+			that.getGame();
+		});
+	}
+	
+	useMove(id){
+		var that = this;
+		$.post("/minigame/xutangbo/usemove", {moveId: id}, function(data,status){
+			that.getGame();
 		});
 	}
 	
@@ -105,7 +114,7 @@ class Middle extends React.Component {
 							<tr>
 								<td>{player.name}</td>
 								<td>energy: {player.energy}</td>
-								<td>bi: {player.energy}</td>
+								<td>bi: {player.bi}</td>
 							</tr>
 						))}
 					</table>
@@ -113,16 +122,16 @@ class Middle extends React.Component {
 				<div id="logs" className="logs">logs</div>
 				<div id="moves" className="moves">
 					<h2>Moves</h2>
-					<button>bi</button>
-					<button>蓄</button>
-					<button>镗</button>
-					<button>波</button>
-					<button>大镗</button>
-					<button>中波</button>
-					<button>强烈镗</button>
-					<button>大波</button>
-					<button>波霸</button>
-					<button>究极波</button>
+					<button onClick={() => this.useMove(1)}>bi</button>
+					<button onClick={() => this.useMove(0)}>蓄</button>
+					<button onClick={() => this.useMove(2)}>镗</button>
+					<button onClick={() => this.useMove(3)}>波</button>
+					<button onClick={() => this.useMove(4)}>大镗</button>
+					<button onClick={() => this.useMove(5)}>中波</button>
+					<button onClick={() => this.useMove(6)}>强烈镗</button>
+					<button onClick={() => this.useMove(7)}>大波</button>
+					<button onClick={() => this.useMove(8)}>波霸</button>
+					<button onClick={() => this.useMove(9)}>究极波</button>
 				</div>
 			</div>
 		);

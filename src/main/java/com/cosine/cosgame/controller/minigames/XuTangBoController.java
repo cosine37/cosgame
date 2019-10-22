@@ -106,6 +106,21 @@ public class XuTangBoController {
 		game.getGameFromDB(id);
 		game.start();
 		game.updateDB("status", game.getStatus());
+		game.updateAllPlayersDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/minigame/xutangbo/usemove", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> xutangboUseMove(HttpServletRequest request, @RequestParam int moveId) {
+		HttpSession session = request.getSession(true);
+		String id = (String) session.getAttribute("xtbgameid");
+		String username = (String) session.getAttribute("username");
+		Game game = new Game();
+		game.getGameFromDB(id);
+		game.getPlayerByName(username).setCurMove(moveId);
+		game.judge();
+		game.updateAllPlayersDB();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
