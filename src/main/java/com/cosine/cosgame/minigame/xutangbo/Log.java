@@ -7,6 +7,7 @@ public class Log {
 	public static final int COUNTER = 0;
 	public static final int USEMOVE = 1;
 	public static final int AFTEREFFECT = 2;
+	public static final int PUREMSG = 3;
 	
 	// SubTypes
 	public static final int GAINENERGY = 10;
@@ -22,6 +23,7 @@ public class Log {
 	int round;
 	int step;
 	int num;
+	String msg;
 	
 	public Log() {
 		
@@ -45,6 +47,8 @@ public class Log {
 			} else if (subType == USEBI) {
 				return name + " consumes a bi";
 			}
+		} else if (type == PUREMSG) {
+			return msg;
 		}
 		return "";
 	}
@@ -105,6 +109,14 @@ public class Log {
 		this.num = num;
 	}
 
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("type", type);
@@ -121,6 +133,8 @@ public class Log {
 			if (subType == USEENERGY) {
 				doc.append("num", num);
 			}
+		} else if (type == PUREMSG) {
+			doc.append("msg", msg);
 		}
 		return doc;
 	}
@@ -140,6 +154,8 @@ public class Log {
 			if (subType == USEENERGY) {
 				num = doc.getInteger("num");
 			}
+		} else if (type == PUREMSG) {
+			msg = doc.getString("msg");
 		}
 	}
 	

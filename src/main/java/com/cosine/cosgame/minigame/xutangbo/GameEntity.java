@@ -11,8 +11,10 @@ public class GameEntity {
 	int round;
 	int step;
 	List<String> logs;
+	boolean disableMove;
 	public GameEntity() {
 		players = new ArrayList<>();
+		disableMove = false;
 	}
 	public GameEntity(Game game) {
 		players = new ArrayList<>();
@@ -27,6 +29,19 @@ public class GameEntity {
 		round = game.getRound();
 		step = game.getStep();
 		logs = game.getLogs().getLogsAsStrings();
+	}
+	public void shouldDisableMove(String name) {
+		disableMove = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().equals(name)) {
+				if (players.get(i).getStatus() == Player.ALIVE) {
+					disableMove = false;
+				} else {
+					disableMove = true;
+				}
+			}
+		}
+		if (status == Game.ENDGAME) disableMove = true;
 	}
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -70,5 +85,12 @@ public class GameEntity {
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
 	}
+	public boolean isDisableMove() {
+		return disableMove;
+	}
+	public void setDisableMove(boolean disableMove) {
+		this.disableMove = disableMove;
+	}
+	
 	
 }

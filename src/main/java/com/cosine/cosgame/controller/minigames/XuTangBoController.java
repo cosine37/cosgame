@@ -65,6 +65,7 @@ public class XuTangBoController {
 	public ResponseEntity<GameEntity> xutangboGetGame(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		String id = (String) session.getAttribute("xtbgameid");
+		String username = (String) session.getAttribute("username");
 		Game game = new Game();
 		game.getGameFromDB(id);
 		List<Player> players = game.getPlayers();
@@ -73,6 +74,7 @@ public class XuTangBoController {
 			value.add(players.get(i).getName());
 		}
 		GameEntity entity = new GameEntity(game);
+		entity.shouldDisableMove(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
@@ -122,6 +124,7 @@ public class XuTangBoController {
 		game.getGameFromDB(id);
 		game.getPlayerByName(username).setCurMove(moveId);
 		game.judge();
+		game.updateDB("status", game.getStatus());
 		game.updateAllPlayersDB();
 		game.updateCounter();
 		game.updateLogs();

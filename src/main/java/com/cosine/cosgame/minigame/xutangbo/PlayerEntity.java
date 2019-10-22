@@ -3,6 +3,7 @@ package com.cosine.cosgame.minigame.xutangbo;
 public class PlayerEntity {
 	String name;
 	int status;
+	String statusStr;
 	int energy;
 	int bi;
 	String curMove;
@@ -15,6 +16,10 @@ public class PlayerEntity {
 		energy = p.getEnergy();
 		bi = p.getBi();
 		curMove = p.getCurMove().getMoveName();
+		statusStr = "";
+		if (status == Player.DEAD) {
+			statusStr = "(fainted)";
+		}
 	}
 	public String getName() {
 		return name;
@@ -45,6 +50,12 @@ public class PlayerEntity {
 	}
 	public void setCurMove(String curMove) {
 		this.curMove = curMove;
+	}
+	public String getStatusStr() {
+		return statusStr;
+	}
+	public void setStatusStr(String statusStr) {
+		this.statusStr = statusStr;
 	}
 	
 }

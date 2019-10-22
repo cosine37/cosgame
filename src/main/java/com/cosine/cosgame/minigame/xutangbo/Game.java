@@ -145,6 +145,7 @@ public class Game {
 			if (flag) return;
 			
 			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
 				logs.logMove(players.get(i).getName(), players.get(i).getCurMove().getMoveid());
 			}
 			
@@ -173,7 +174,25 @@ public class Game {
 				}
 			}
 			if (newRound) {
-				newRound();
+				int aliveCount = 0;
+				String winner = "";
+				for (i=0;i<players.size();i++) {
+					if (players.get(i).getStatus() == Player.ALIVE) {
+						aliveCount++;
+						winner = players.get(i).getName();
+					}
+				}
+				if (aliveCount < 2) {
+					logs.logMsg("Game ends");
+					if (aliveCount == 1) {
+						logs.logMsg(winner + " wins!");
+					} else {
+						logs.logMsg("Nobody wins...");
+					}
+					status = ENDGAME;
+				} else {
+					newRound();
+				}
 			} else {
 				for (i=0;i<players.size();i++) {
 					if (players.get(i).getStatus() == Player.DEAD) continue;

@@ -42,7 +42,7 @@ class Middle extends React.Component {
 	    		tgames.push(t);
 	    	}
 	    	that.setState(prevState => ({
-	    		games: tgames,
+	    		games: tgames
 	  	  	}));
 	    	if (flag == 1){
 	    		that.getGame();
@@ -112,7 +112,9 @@ class Middle extends React.Component {
 					<table>
 						{this.state.game.players.map(player => (
 							<tr>
-								<td>{player.name}</td>
+								<td>
+									{player.name} {player.statusStr}
+								</td>
 								<td>energy: {player.energy}</td>
 								<td>bi: {player.bi}</td>
 							</tr>
@@ -131,16 +133,16 @@ class Middle extends React.Component {
 				</div>
 				<div id="moves" className="moves">
 					<h2>Moves</h2>
-					<button onClick={() => this.useMove(1)}>bi</button>
-					<button onClick={() => this.useMove(0)}>蓄</button>
-					<button onClick={() => this.useMove(2)}>镗</button>
-					<button onClick={() => this.useMove(3)}>波</button>
-					<button onClick={() => this.useMove(4)}>大镗</button>
-					<button onClick={() => this.useMove(5)}>中波</button>
-					<button onClick={() => this.useMove(6)}>强烈镗</button>
-					<button onClick={() => this.useMove(7)}>大波</button>
-					<button onClick={() => this.useMove(8)}>波霸</button>
-					<button onClick={() => this.useMove(9)}>究极波</button>
+					<button onClick={() => this.useMove(1)} disabled={this.state.game.disableMove}>bi</button>
+					<button onClick={() => this.useMove(0)} disabled={this.state.game.disableMove}>蓄</button>
+					<button onClick={() => this.useMove(2)} disabled={this.state.game.disableMove}>镗</button>
+					<button onClick={() => this.useMove(3)} disabled={this.state.game.disableMove}>波</button>
+					<button onClick={() => this.useMove(4)} disabled={this.state.game.disableMove}>大镗</button>
+					<button onClick={() => this.useMove(5)} disabled={this.state.game.disableMove}>中波</button>
+					<button onClick={() => this.useMove(6)} disabled={this.state.game.disableMove}>强烈镗</button>
+					<button onClick={() => this.useMove(7)} disabled={this.state.game.disableMove}>大波</button>
+					<button onClick={() => this.useMove(8)} disabled={this.state.game.disableMove}>波霸</button>
+					<button onClick={() => this.useMove(9)} disabled={this.state.game.disableMove}>究极波</button>
 				</div>
 			</div>
 		);

@@ -73,6 +73,13 @@ public class Logs {
 		logs.add(log);
 	}
 	
+	public void logMsg(String msg) {
+		Log log = new Log();
+		log.setType(Log.PUREMSG);
+		log.setMsg(msg);
+		logs.add(log);
+	}
+	
 	public void addLog(Log log) {
 		logs.add(log);
 	}
