@@ -24,6 +24,8 @@ public class Game {
 	int round;
 	int step;
 	
+	Logs logs;
+	
 	public Game() {
 		players = new ArrayList<>();
 		status = INACTIVE;
@@ -31,6 +33,7 @@ public class Game {
 		step = 0;
 		id = "";
 		lord = "";
+		logs = new Logs();
 		
 		String dbname = "xtb";
 		String col = "game";
@@ -102,6 +105,7 @@ public class Game {
 			players.get(i).setEnergy(0);
 			players.get(i).setBi(1);
 		}
+		logs.logCount(round, step);
 	}
 	
 	public void nextStep() {
@@ -111,6 +115,7 @@ public class Game {
 			players.get(i).afterEffect();
 			players.get(i).setCurMove(Move.UNDEFINED);
 		}
+		logs.logCount(round, step);
 	}
 	
 	public Player getPlayerByName(String name) {
@@ -139,12 +144,17 @@ public class Game {
 			}
 			if (flag) return;
 			
+			for (i=0;i<players.size();i++) {
+				logs.logMove(players.get(i).getName(), players.get(i).getCurMove().getMoveid());
+			}
+			
 			boolean newRound = false;
 			int maxPower = 0;
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).getStatus() == Player.DEAD) continue;
 				if (players.get(i).getCurMove().getEnergy() > players.get(i).getEnergy()) {
 					players.get(i).die();
+					logs.logBaosi(players.get(i).getName());
 					newRound = true;
 				}
 			}
@@ -158,12 +168,17 @@ public class Game {
 				if (players.get(i).getStatus() == Player.DEAD) continue;
 				if (players.get(i).getCurMove().getDefence() < maxPower) {
 					players.get(i).die();
+					logs.logFaint(players.get(i).getName());
 					newRound = true;
 				}
 			}
 			if (newRound) {
 				newRound();
 			} else {
+				for (i=0;i<players.size();i++) {
+					if (players.get(i).getStatus() == Player.DEAD) continue;
+					logs.logAfterEffect(players.get(i).getName(), players.get(i).getCurMove().getMoveid());
+				}
 				nextStep();
 			}
 		}
@@ -217,6 +232,14 @@ public class Game {
 		this.step = step;
 	}
 
+	public Logs getLogs() {
+		return logs;
+	}
+
+	public void setLogs(Logs logs) {
+		this.logs = logs;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("id", id);
@@ -224,6 +247,7 @@ public class Game {
 		doc.append("status", status);
 		doc.append("round", round);
 		doc.append("step", step);
+		doc.append("logs", logs.toDocument());
 		List<Document> dop = new ArrayList<>();
 		for (int i=0;i<players.size();i++) {
 			Document d = new Document();
@@ -241,6 +265,9 @@ public class Game {
 		status = doc.getInteger("status");
 		round = doc.getInteger("round");
 		step = doc.getInteger("step");
+		List<Document> dol = (List<Document>)doc.get("logs");
+		logs = new Logs();
+		logs.setFromDoc(dol);
 		players = new ArrayList<>();
 		List<Document> dop = (List<Document>)doc.get("playernames");
 		for (int i=0;i<dop.size();i++) {
@@ -263,6 +290,15 @@ public class Game {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
+	}
+	
+	public void updateCounter() {
+		updateDB("round", round);
+		updateDB("step", step);
+	}
+	
+	public void updateLogs() {
+		updateDB("logs", logs.toDocument());
 	}
 	
 	public void updatePlayerDB(Player p) {

@@ -119,7 +119,16 @@ class Middle extends React.Component {
 						))}
 					</table>
 				</div>
-				<div id="logs" className="logs">logs</div>
+				<div id="logs" className="logs">
+					<h2>Logs</h2>
+					<table>
+						{this.state.game.logs.map(log => (
+							<tr>
+								<td>{log}</td>
+							</tr>
+						))}
+					</table>
+				</div>
 				<div id="moves" className="moves">
 					<h2>Moves</h2>
 					<button onClick={() => this.useMove(1)}>bi</button>

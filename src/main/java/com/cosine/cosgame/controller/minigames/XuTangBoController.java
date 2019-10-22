@@ -107,6 +107,8 @@ public class XuTangBoController {
 		game.start();
 		game.updateDB("status", game.getStatus());
 		game.updateAllPlayersDB();
+		game.updateCounter();
+		game.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -121,6 +123,8 @@ public class XuTangBoController {
 		game.getPlayerByName(username).setCurMove(moveId);
 		game.judge();
 		game.updateAllPlayersDB();
+		game.updateCounter();
+		game.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

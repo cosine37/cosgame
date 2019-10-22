@@ -10,6 +10,7 @@ public class GameEntity {
 	int status;
 	int round;
 	int step;
+	List<String> logs;
 	public GameEntity() {
 		players = new ArrayList<>();
 	}
@@ -25,6 +26,7 @@ public class GameEntity {
 		status = game.getStatus();
 		round = game.getRound();
 		step = game.getStep();
+		logs = game.getLogs().getLogsAsStrings();
 	}
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -62,6 +64,11 @@ public class GameEntity {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
+	}
 	
 }
