@@ -68,11 +68,11 @@ public class XuTangBoController {
 		String username = (String) session.getAttribute("username");
 		Game game = new Game();
 		game.getGameFromDB(id);
-		List<Player> players = game.getPlayers();
-		List<String> value = new ArrayList<>();
-		for (int i=0;i<players.size();i++) {
-			value.add(players.get(i).getName());
-		}
+		game.autoNextStep();
+		game.updateDB("status", game.getStatus());
+		game.updateAllPlayersDB();
+		game.updateCounter();
+		game.updateLogs();
 		GameEntity entity = new GameEntity(game);
 		entity.shouldDisableMove(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);

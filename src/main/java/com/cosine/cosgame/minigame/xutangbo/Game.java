@@ -127,6 +127,23 @@ public class Game {
 		return null;
 	}
 	
+	public void autoNextStep() {
+		if (status == INGAME) {
+			int i;
+			boolean flag = false;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getStatus() == Player.DEAD) continue;
+				if (players.get(i).getBot() == false) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag) return;
+			judge();
+		}
+		
+	}
+	
 	public void judge() {
 		if (status == INGAME) {
 			int i;
@@ -154,6 +171,11 @@ public class Game {
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).getStatus() == Player.DEAD) continue;
 				if (players.get(i).getCurMove().getEnergy() > players.get(i).getEnergy()) {
+					players.get(i).die();
+					logs.logBaosi(players.get(i).getName());
+					newRound = true;
+				}
+				if (players.get(i).getCurMove().getMoveid() == Move.BI && players.get(i).getBi() == 0) {
 					players.get(i).die();
 					logs.logBaosi(players.get(i).getName());
 					newRound = true;

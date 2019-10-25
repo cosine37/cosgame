@@ -26,6 +26,7 @@ class Middle extends React.Component {
 	    this.kick = this.kick.bind(this);
 	    this.start = this.start.bind(this);
 	    this.useMove = this.useMove.bind(this);
+	    this.getGame = this.getGame.bind(this);
 	    this.getAllGames(0);
 	}
 	
@@ -44,19 +45,24 @@ class Middle extends React.Component {
 	    	that.setState(prevState => ({
 	    		games: tgames
 	  	  	}));
+	    	/*
 	    	if (flag == 1){
 	    		that.getGame();
 	    	}
+	    	*/
 		});
 	}
 	
 	getGame(){
 		var that = this;
-		$.get("/minigame/xutangbo/getgame", function(data,status){
-			that.setState(prevState => ({
-				game: data
-			}));
-		});
+		if (this.state.ingame && this.state.game.status != 2){
+			$.get("/minigame/xutangbo/getgame", function(data,status){
+				that.setState(prevState => ({
+					game: data
+				}));
+			});
+		}
+		
 	}
 	
 	create(){
@@ -76,14 +82,14 @@ class Middle extends React.Component {
 	addBot(){
 		var that = this;
 		$.post("/minigame/xutangbo/addbot", function(data,status){
-			that.getGame();
+			//that.getGame();
 		});
 	}
 	
 	kick(name){
 		var that = this;
 		$.post("/minigame/xutangbo/kick", {kickedName: name}, function(data,status){
-			that.getGame();
+			//that.getGame();
 		});
 	}
 	
@@ -93,14 +99,14 @@ class Middle extends React.Component {
 			that.setState(prevState => ({
 	    		start: true
 	  	  	}));
-			that.getGame();
+			//that.getGame();
 		});
 	}
 	
 	useMove(id){
 		var that = this;
 		$.post("/minigame/xutangbo/usemove", {moveId: id}, function(data,status){
-			that.getGame();
+			//that.getGame();
 		});
 	}
 	
@@ -199,6 +205,11 @@ class Middle extends React.Component {
 				{rightHTML}
 			</div>
 		);
+	}
+	
+	componentDidMount(){
+		this.getGame();
+		setInterval((this.getGame), 200);
 	}
 }
 ReactDOM.render(
