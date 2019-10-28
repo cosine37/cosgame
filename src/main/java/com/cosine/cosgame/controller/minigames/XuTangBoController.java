@@ -75,6 +75,7 @@ public class XuTangBoController {
 		game.updateLogs();
 		GameEntity entity = new GameEntity(game);
 		entity.shouldDisableMove(username);
+		entity.setIsDead(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

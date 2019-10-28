@@ -1,25 +1,10 @@
-function ShowRule(props){
-	return <div>rules rules rules</div>
-}
-
-function ShowGame(props){
-	return <div>games games games</div>
-}
-
-function RuleOrGame(props){
-	if (props.tabName == 'rule'){
-		return ShowRule();
-	} else if (props.tabName == 'game'){
-		return ShowGame();
-	} else {
-		return <div></div>
-	}
-}
+var interval;
 
 class Middle extends React.Component {
+	
 	constructor(props) {
 	    super(props);
-	    this.state = {games: [], ingame: false, start: false, game: {players: []}};
+	    this.state = {games: [], ingame: false, start: false, game: {dead: false, players: []}};
 	    this.create = this.create.bind(this);
 	    this.enter = this.enter.bind(this);
 	    this.addBot = this.addBot.bind(this);
@@ -45,11 +30,6 @@ class Middle extends React.Component {
 	    	that.setState(prevState => ({
 	    		games: tgames
 	  	  	}));
-	    	/*
-	    	if (flag == 1){
-	    		that.getGame();
-	    	}
-	    	*/
 		});
 	}
 	
@@ -60,6 +40,10 @@ class Middle extends React.Component {
 				that.setState(prevState => ({
 					game: data
 				}));
+				if (that.state.game.dead){
+					clearInterval(interval);
+					interval = setInterval((that.getGame), 2000);
+				}
 			});
 		}
 		
@@ -209,7 +193,7 @@ class Middle extends React.Component {
 	
 	componentDidMount(){
 		this.getGame();
-		setInterval((this.getGame), 200);
+		interval = setInterval((this.getGame), 200);
 	}
 }
 ReactDOM.render(
