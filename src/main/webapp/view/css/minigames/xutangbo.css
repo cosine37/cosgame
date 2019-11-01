@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.logs{
+	border: 1px solid black;
+	overflow-y: scroll;
+	overflow:auto;
+	height: 350px;
+	padding-left: 10px;
+}
