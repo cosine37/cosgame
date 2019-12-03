@@ -61,6 +61,24 @@ public class XuTangBoController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/minigame/xutangbo/isintable", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> xutangboIsInTable(HttpServletRequest request){
+		HttpSession session = request.getSession(true);
+		String name = (String) session.getAttribute("username");
+		Mega mega = new Mega();
+		Game game = mega.getGameFromPlayerName(name);
+		List<String> value = new ArrayList<>();
+		if (game != null) {
+			value.add("yes");
+			session.setAttribute("xtbgameid", game.getId());
+		} else {
+			value.add("no");
+		}
+		StringEntity entity = new StringEntity();
+		entity.setValue(value);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/minigame/xutangbo/getgame", method = RequestMethod.GET)
 	public ResponseEntity<GameEntity> xutangboGetGame(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);

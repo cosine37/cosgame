@@ -37,4 +37,13 @@ public class Mega {
 		entity.setValue(value);
 		return entity;
 	}
+	
+	public Game getGameFromPlayerName(String name) {
+		for (int i=0;i<games.size();i++) {
+			if (games.get(i).hasPlayer(name)) {
+				return games.get(i);
+			}
+		}
+		return null;
+	}
 }

@@ -13,6 +13,22 @@ class Middle extends React.Component {
 	    this.useMove = this.useMove.bind(this);
 	    this.getGame = this.getGame.bind(this);
 	    this.getAllGames(0);
+	    this.getIsInTable();
+	}
+	
+	getIsInTable(){
+		var that = this;
+		$.get("/minigame/xutangbo/isintable", function(data,status){
+			$.get("/minigame/xutangbo/getgame", function(data,status){
+				that.setState(prevState => ({
+					game: data
+				}));
+				if (that.state.game.dead){
+					clearInterval(interval);
+					interval = setInterval((that.getGame), 2000);
+				}
+			});
+		});
 	}
 	
 	getAllGames(flag){
@@ -22,7 +38,7 @@ class Middle extends React.Component {
 	    	var groupSize = 3;
 	    	var tgames = [];
 	    	for (i=0; i<data.value.length/groupSize;i++){
-	    		var t = []
+	    		var t = [];
 	    		t.push(data.value[i*groupSize]);
 	    		t.push(data.value[i*groupSize+1]);
 	    		tgames.push(t);
@@ -35,7 +51,7 @@ class Middle extends React.Component {
 	
 	getGame(){
 		var that = this;
-		if (this.state.ingame && this.state.game.status != 2){
+		if (this.state.ingame){
 			$.get("/minigame/xutangbo/getgame", function(data,status){
 				that.setState(prevState => ({
 					game: data

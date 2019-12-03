@@ -11,6 +11,11 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/dominionMainController.js"></script>
+<script> 
+    $(function(){
+      $("#cards").load("/view/html/dominionCards.html"); 
+    });
+</script> 
 <body ng-app="dominionMainApp" ng-controller="dominionMainCtrl">
 	<div id="header" class="header">
 		<table style="width: 100%">
@@ -83,11 +88,11 @@
 				</div>
 				
 				<div id="rulestab" class="content container tab-pane fade">
-					rules
+					<div id="rules"></div>
 				</div>
 				
 				<div id="cardstab" class="content container tab-pane fade">
-					cards
+					<div id="cards"></div>
 				</div>
 			</div>
 		</div>
