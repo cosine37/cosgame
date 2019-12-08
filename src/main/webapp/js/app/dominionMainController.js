@@ -8,6 +8,11 @@ var app = angular.module("dominionMainApp", []);
 app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
 	
+		$scope.showedExpansion = 0;
+		$scope.setShowedExpansion = function(x){
+			$scope.showedExpansion = x;
+		}
+		
 		//TODO: customize this
 		$scope.numplayers = 2;
 	
@@ -19,6 +24,11 @@ app.controller("dominionMainCtrl", ['$scope', '$window', '$http', '$document', '
 		$http.post('/username').then(function(response){
 			$scope.username = response.data.value[0];
 		});
+		
+		$http.get('/dominioninfo/allcardintro').then(function(response){
+			$scope.expansionsinfo = response.data;
+
+		})
 		
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){

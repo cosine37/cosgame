@@ -1,2 +1,7 @@
-aaa,bbb,"abc,abc"
-"a,,,b",,
+Expansion,Dominion,,,,
+Card,Text,Price,Type,Image,FAQ
+Cellar,"+1 Action.  Discard any number of cards, then draw that many.",$2 ,Action,/image/Dominion/cards/Dominion/Cellar.png,"If this causes you to shuffle, you will shuffle in the cards you discarded.  You cannot discard the Cellar, as it is no longer in your hand once played."
+Chapel,Trash up to 4 cards from your hand.,$2 ,Action,/image/Dominion/cards/Dominion/Chapel.png,"You cannot trash the Chapel itself, since it is not in your hand after you play it."
+Expansion,Intrigue,,,,
+Card,Text,Price,Type,Image,FAQ
+Courtyard,+3 Cards Put a card from your hand onto your deck.,$2 ,Action,/image/Dominion/cards/Intrigue/Courtyard.png,The card you put on top does not have to be one of the 3 you just drew.

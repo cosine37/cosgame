@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpansionIntro {
+	String name;
 	String intro;
 	List<SingleCard> cards;
 	public ExpansionIntro() {
 		cards = new ArrayList<SingleCard>();
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getIntro() {
 		return intro;

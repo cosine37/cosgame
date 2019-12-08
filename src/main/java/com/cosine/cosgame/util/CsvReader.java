@@ -29,8 +29,8 @@ public class CsvReader {
 	
 	public void read() {
 		content = new ArrayList<>();
-		while (sc.hasNext()) {
-			String line = sc.next();
+		while (sc.hasNextLine()) {
+			String line = sc.nextLine();
 			List<String> lst = new ArrayList<>();
 			int quote = 0;
 			String s = "";
@@ -50,6 +50,9 @@ public class CsvReader {
 					}
 				}
 			}
+			if (!s.equals("")) {
+				lst.add(s);
+			}
 			content.add(lst);
 		}
 	}
@@ -61,5 +64,9 @@ public class CsvReader {
 			}
 			System.out.println();
 		}
+	}
+	
+	public List<List<String>> getContent(){
+		return content;
 	}
 }

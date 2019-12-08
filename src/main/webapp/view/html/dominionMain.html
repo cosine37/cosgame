@@ -12,9 +12,10 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/dominionMainController.js"></script>
 <script> 
-    $(function(){
-      $("#cards").load("/view/html/dominionCards.html"); 
-    });
+
+    //$(function(){
+    //  $("#cards").load("/view/html/dominionCards.html"); 
+    //});
 </script> 
 <body ng-app="dominionMainApp" ng-controller="dominionMainCtrl">
 	<div id="header" class="header">
@@ -92,7 +93,17 @@
 				</div>
 				
 				<div id="cardstab" class="content container tab-pane fade">
-					<div id="cards"></div>
+					<div id="cards">
+						<div id="expansionbuttons">
+							<button ng-repeat="e in expansionsinfo track by $index" ng-click="setShowedExpansion($index)">{{e.name}}</button>
+							<table>
+								<tr ng-repeat="c in expansionsinfo[showedExpansion].cards track by $index">
+									<td>{{c.name}}</td>
+								</tr>
+							</table>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
