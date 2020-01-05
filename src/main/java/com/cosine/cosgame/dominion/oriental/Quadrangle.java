@@ -12,18 +12,10 @@ public class Quadrangle extends Card{
 		super();
 		this.name = "Quadrangle";
 		this.image = "/image/Dominion/cards/Oriental/Quadrangle.png";
-		this.types[INDEX_VICTORY] = true;
-		this.types[INDEX_REACTION] = true;
+		this.types[INDEX_ACTION] = true;
 		this.price = 4;
-		this.score = 2;
+		this.action = 2;
+		this.memorial = 1;
 	}
 	
-	public Ask onDiscard(Player p) {
-		Ask ask = super.onDiscard(p);
-		p.addMemorial(2);
-		setBoard(p.getBoard());
-		log(p.getName() + " reveals the discarded "+name, 0);
-		log(p.getName() + " receives 2 Memorial tokens", 0);
-		return ask;
-	}
 }

@@ -87,6 +87,7 @@ public class Card {
 		vp = 0;
 		coffer = 0;
 		villager = 0;
+		memorial = 0;
 		
 		score = 0;
 		
@@ -116,6 +117,7 @@ public class Card {
 		player.addBuy(buy);
 		player.addCoin(coin);
 		player.addVp(vp);
+		player.addMemorial(memorial);
 		
 		boolean flag = false;
 		String s = player.getName() + " gets";
@@ -149,6 +151,13 @@ public class Card {
 				s = s+",";
 			}
 			s = s+" + "+vp+"vp";
+			flag = true;
+		}
+		if (memorial>0) {
+			if (flag) {
+				s = s+",";
+			}
+			s = s+" + "+memorial+" Memorial token(s)";
 			flag = true;
 		}
 		if (flag && isActionType()) {

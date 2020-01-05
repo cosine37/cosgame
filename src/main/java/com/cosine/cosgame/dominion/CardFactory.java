@@ -118,6 +118,7 @@ public class CardFactory {
 		if (cardname.equals("Swallow Fleet")) return new SwallowFleet();
 		if (cardname.equals("Pisces Jade")) return new PiscesJade();
 		if (cardname.equals("Compass")) return new Compass();
+		if (cardname.equals("Frontier State")) return new FrontierState();
 		
 		if (cardname.equals("Catan Island")) return new CatanIsland();
 		
