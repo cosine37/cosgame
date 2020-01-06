@@ -92,14 +92,34 @@
 					<div id="rules"></div>
 				</div>
 				
-				<div id="cardstab" class="content container tab-pane fade">
+				<div id="cardstab" class="content container tab-pane fade" style="height: 100%">
 					<div id="cards">
-						<div id="expansionbuttons">
+						<div id="expansionbuttons" style="width: 100%;">
 							<button ng-repeat="e in expansionsinfo track by $index" ng-click="setShowedExpansion($index)">{{e.name}}</button>
-							<table>
-								<tr ng-repeat="c in expansionsinfo[showedExpansion].cards track by $index">
-									<td>{{c.name}}</td>
-								</tr>
+							<h2 style="color:white">{{expansionsinfo[showedExpansion].name}}</h2>
+						</div>
+						<div id="expansioncontents" style="width: 100%; height: 600px; overflow-y: scroll; overflow:auto;">
+							<table class="table" style="width: 100%;">
+								<thread>
+									<tr>
+										<td>Name</td>
+										<td>Image</td>
+										<td>Text</td>
+										<td>Price</td>
+										<td>Type</td>
+										<td>FAQ</td>
+									</tr>
+								</thread>
+								<tbody>
+									<tr ng-repeat="c in expansionsinfo[showedExpansion].cards track by $index">
+										<td>{{c.name}}</td>
+										<td><img src="{{c.image}}" height="157px" width="105px"/></td>
+										<td>{{c.text}}</td>
+										<td>{{c.price}}</td>
+										<td>{{c.type}}</td>
+										<td>{{c.faq}}</td>
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>

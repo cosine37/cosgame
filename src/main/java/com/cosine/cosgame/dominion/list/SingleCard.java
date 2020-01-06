@@ -19,7 +19,9 @@ public class SingleCard {
 		price = info.get(2);
 		type = info.get(3);
 		image = info.get(4);
-		faq = info.get(5);
+		if (info.size() == 6) {
+			faq = info.get(5);
+		}
 	}
 
 	public String getName() {
