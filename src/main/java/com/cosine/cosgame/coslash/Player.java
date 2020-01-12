@@ -1,6 +1,9 @@
 package com.cosine.cosgame.coslash;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Player {
 	public static final int INACTIVE = 0;
@@ -18,10 +21,11 @@ public class Player {
 	  
 	int status;
 	int phase;
+	int identity;
 	String name;
 	Role role;
 	List<Card> hand;
-	Card weapen;
+	Card weapon;
 	Card shield;
 	Card atkhorse;
 	Card defhorse;
@@ -29,9 +33,9 @@ public class Player {
 	int hp;
 	List<Ask> asks;
 	
-	boolean hasJail; // 乐不思蜀
-	boolean hasBomb; // 闪电
-	boolean hasFoodless; // 兵粮寸断
+	Card jail; // 乐不思蜀
+	Card bomb; // 闪电
+	Card foodless; // 兵粮寸断
 	
 	public Player() {
 		
@@ -69,12 +73,12 @@ public class Player {
 		this.hand = hand;
 	}
 
-	public Card getWeapen() {
-		return weapen;
+	public Card getWeapon() {
+		return weapon;
 	}
 
-	public void setWeapen(Card weapen) {
-		this.weapen = weapen;
+	public void setWeapon(Card weapon) {
+		this.weapon = weapon;
 	}
 
 	public Card getShield() {
@@ -117,6 +121,22 @@ public class Player {
 		this.hp = hp;
 	}
 
+	public int getPhase() {
+		return phase;
+	}
+
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+
+	public int getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(int identity) {
+		this.identity = identity;
+	}
+
 	public List<Ask> getAsks() {
 		return asks;
 	}
@@ -125,6 +145,128 @@ public class Player {
 		this.asks = asks;
 	}
 	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("identity", identity);
+		doc.append("role", role.getName());
+		doc.append("status", status);
+		doc.append("phase", phase);
+		doc.append("maxHP", maxHP);
+		doc.append("hp", hp);
+		List<Document> doh = new ArrayList<>();
+		for (int i=0;i<hand.size();i++) {
+			Document dc = new Document();
+			dc.append("card", hand.get(i).toDocument());
+			doh.add(dc);
+		}
+		doc.append("hand", doh);
+		
+		List<Document> doa = new ArrayList<>();
+		for (int i=0;i<asks.size();i++) {
+			Document da = asks.get(i).toDocument();
+			doa.add(da);
+		}
+		doc.append("asks", doa);
+		
+		if (weapon == null) {
+			doc.append("weapon", null);
+		} else {
+			doc.append("weapon", weapon.toDocument());
+		}
+		if (shield == null) {
+			doc.append("shield", null);
+		} else {
+			doc.append("shield", shield.toDocument());
+		}
+		if (atkhorse == null) {
+			doc.append("atkhorse", null);
+		} else {
+			doc.append("atkhorse", atkhorse.toDocument());
+		}
+		if (defhorse == null) {
+			doc.append("defhorse", null);
+		} else {
+			doc.append("defhorse", defhorse.toDocument());
+		}
+		
+		if (jail == null) {
+			doc.append("jail", null);
+		} else {
+			doc.append("jail", jail.toDocument());
+		}
+		if (bomb == null) {
+			doc.append("bomb", null);
+		} else {
+			doc.append("bomb", bomb.toDocument());
+		}
+		if (foodless == null) {
+			doc.append("foodless", null);
+		} else {
+			doc.append("foodless", foodless.toDocument());
+		}
+		
+		return doc;
+	}
 	
+	public void setPlayerFromDoc(Document doc) {
+		name = doc.getString("name");
+		status = doc.getInteger("status");
+		identity = doc.getInteger("identity");
+		phase = doc.getInteger("phase");
+		role = RoleFactory.createRole(doc.getString("role"));
+		
+		List<Document> doh = (List<Document>)doc.get("hand");
+		hand = new ArrayList<>();
+		for (int i=0;i<doh.size();i++) {
+			Card c = CardFactory.createCard(doh.get(i));
+			hand.add(c);
+		}
+		
+		List<Document> doa = (List<Document>)doc.get("asks");
+		asks = new ArrayList<>();
+		for (int i=0;i<doa.size();i++) {
+			Ask a = new Ask();
+			a.setAskFromDoc(doa.get(i));
+			asks.add(a);
+		}
+		
+		if (doc.get("weapon") == null) {
+			weapon = null;
+		} else {
+			weapon = CardFactory.createCard((Document)doc.get("weapon"));
+		}
+		if (doc.get("shield") == null) {
+			shield = null;
+		} else {
+			shield = CardFactory.createCard((Document)doc.get("shield"));
+		}
+		if (doc.get("atkhorse") == null) {
+			atkhorse = null;
+		} else {
+			atkhorse = CardFactory.createCard((Document)doc.get("atkhorse"));
+		}
+		if (doc.get("defhorse") == null) {
+			defhorse = null;
+		} else {
+			defhorse = CardFactory.createCard((Document)doc.get("defhorse"));
+		}
+		
+		if (doc.get("jail") == null) {
+			jail = null;
+		} else {
+			jail = CardFactory.createCard((Document)doc.get("jail"));
+		}
+		if (doc.get("bomb") == null) {
+			bomb = null;
+		} else {
+			bomb = CardFactory.createCard((Document)doc.get("bomb"));
+		}
+		if (doc.get("foodless") == null) {
+			foodless = null;
+		} else {
+			foodless = CardFactory.createCard((Document)doc.get("foodless"));
+		}
+	}
 	
 }

@@ -1,9 +1,21 @@
 package com.cosine.cosgame.coslash;
 
+import org.bson.Document;
+
 public class Role {
-	public static final int NONE = 0;
-	public static final int CAPTAIN = 1;
-	public static final int VICE = 2;
-	public static final int VILLAIN = 3;
-	public static final int BETRAIER = 4;
+	String name;
+	
+	public Role() {
+		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 }
