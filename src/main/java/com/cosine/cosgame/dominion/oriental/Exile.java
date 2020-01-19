@@ -10,7 +10,7 @@ public class Exile extends Card{
 		this.image = "/image/Dominion/cards/Oriental/Exile.png";
 		this.types[INDEX_ACTION] = true;
 		this.card = 2;
-		this.price = 2;
+		this.price = 3;
 	}
 	
 	public Ask play() {

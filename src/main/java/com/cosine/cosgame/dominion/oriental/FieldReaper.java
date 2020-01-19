@@ -11,7 +11,7 @@ public class FieldReaper extends Card{
 		this.types[INDEX_ACTION] = true;
 		this.buy = 1;
 		this.coin = 2;
-		this.price = 5;
+		this.price = 4;
 	}
 	
 	public int inPlay() {

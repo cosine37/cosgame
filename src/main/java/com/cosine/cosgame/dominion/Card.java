@@ -455,9 +455,6 @@ public class Card {
 		// Memorials for Victory
 		if (types[INDEX_VICTORY]) {
 			int x = buff.getBuff(Buff.MEMORIALBUYVICTORY);
-			if (name.equals("Province") || name.equals("Colony")) {
-				x = x*2;
-			}
 			if (x == 1) {
 				log(p.getName() + " receives a memorial token", 1);
 				p.addMemorial(1);

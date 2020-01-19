@@ -34,5 +34,4 @@ public class ExpansionIntro {
 		cards.add(singleCard);
 	}
 	
-	
 }
