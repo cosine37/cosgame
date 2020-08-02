@@ -2,16 +2,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cosgame</title>
+<title>Cosgame Citadels</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
-<link rel="stylesheet" type="text/css" href="/view/css/minigameTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
-<script src="/js/app/indexController.js"></script>
-<body ng-app="indexApp" ng-controller="indexCtrl">
+<script src="/js/app/citadelsMainController.js"></script>
+<body ng-app="citadelsMainApp" ng-controller="citadelsMainCtrl">
 	<div id="header" class="header">
 		<table width="100%">
 			<tr>
@@ -26,11 +26,11 @@
 	
 	<div id="tabs" class="tabs">
 		<button ng-click="goto('index')">Home</button>
-		<button ng-click="goto('citadels')">Citadels</button>
+		<button style="padding-top: 0px; color: rgb(0,0,102); font-size: 24px; background-color:white">Citadels</button>
 		<button ng-click="goto('coslash')">Coslash</button>
 		<button ng-click="goto('dominion')">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>
-		<button style="padding-top: 0px; color: green; font-size: 24px; background-color:white">Minigames</button>
+		<button ng-click="goto('minigame')">Minigames</button>
 		<button>Others</button>
 	</div>
 	
@@ -42,30 +42,30 @@
 				      <a class="nav-link active" data-toggle="tab" href="#listtab">List</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#abouttab">About</a>
+				      <a class="nav-link" data-toggle="tab" href="#rulestab">Rules</a>
 				    </li>
 				  </ul>
 			</div>
 			
 			<div class="tab-content">
 				<div id="listtab" class="content container tab-pane active">
-					<h1>List of Minigames</h1>
+					<h1>Tables</h1>
 					<table class="table">
 						<tr>
-							<td><button class="table-button" ng-click="goto('minigame/xutangbo')"><h5 class="gametitle">XuTangBo</h5></button></td>
+							<td><button ng-click="goto('citadelsgame')">New Game</button></td>
 						</tr>
+					</table>
+					<table class="table">
 					</table>
 				</div>
 				
-				<div id="abouttab" class="content container tab-pane fade">
-					<h2>About</h2>
-					<p>Cosgame is developed by Cosine37.</p>
+				<div id="rulestab" class="content container tab-pane fade">
+					<h2>Rules</h2>
+					<p>Rules placeholder</p>
 				</div>
 				
 			</div>
 		</div>
-		
 	</div>
-	
 </body>
 </html>

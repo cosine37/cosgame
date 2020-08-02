@@ -19,7 +19,7 @@ import com.cosine.cosgame.util.StringEntity;
 @Controller
 public class CoslashController {
 	@RequestMapping(value="/coslash", method = RequestMethod.GET)
-	public String dominion() {
+	public String coslash() {
 		return "coslashMain";
 	}
 	

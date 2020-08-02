@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.tabs{
+	background: linear-gradient(black, rgb(0,0,102), rgb(0,0,102), rgb(0,0,102), black);
+}
+
+.nav-tabs .nav-link.active{
+	background: rgb(0,0,102);
+	color: white;
+}
