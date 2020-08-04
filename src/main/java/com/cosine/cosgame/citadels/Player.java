@@ -25,9 +25,20 @@ public class Player {
 		killed = false;
 	}
 
-	public void takeCoins(int n) {
+	public void addCoin(int n) {
 		int c = board.takeCoins(n);
 		coin = coin+c;
+	}
+	
+	public void draw(int x) {
+		int i;
+		for (i=0;i<x;i++) {
+			if (board.getDeck().size() > 0) {
+				hand.add(board.getDeck().remove(0));
+			} else {
+				break;
+			}
+		}
 	}
 	
 	public void addToHand(Card c) {
