@@ -171,5 +171,34 @@ public class Board {
 	public void setCoins(int coins) {
 		this.coins = coins;
 	}
+	
+	public BoardEntity toBoardEntity() {
+		BoardEntity entity = new BoardEntity();
+		int i,j;
+		List<String> playerNames = new ArrayList<>();
+		List<String> coins = new ArrayList<>();
+		List<List<String>> built = new ArrayList<>();
+		List<List<String>> hand = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+			coins.add(Integer.toString(players.get(i).getCoin()));
+			List<String> singleBuilt = new ArrayList<>();
+			List<String> singleHand = new ArrayList<>();
+			for (j=0;j<players.get(i).getBuilt().size();j++) {
+				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
+			}
+			built.add(singleBuilt);
+			for (j=0;j<players.get(i).getHand().size();j++) {
+				singleHand.add(players.get(i).getHand().get(j).getImg());
+			}
+			hand.add(singleHand);
+		}
+		entity.setBank(Integer.toString(this.coins));
+		entity.setPlayerNames(playerNames);
+		entity.setBuilt(built);
+		entity.setHand(hand);
+		entity.setCoins(coins);
+		return entity;
+	}
 
 }

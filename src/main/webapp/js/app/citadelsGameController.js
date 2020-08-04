@@ -17,6 +17,11 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.username = response.data.value[0];
 		});
 		
+		$http.post('/citadelsgame/start').then(function(response){
+			$scope.gamedata = JSON.stringify(response.data);
+			alert(JSON.stringify(response.data));
+		})
+		
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');

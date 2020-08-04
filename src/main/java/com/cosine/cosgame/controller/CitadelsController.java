@@ -1,12 +1,13 @@
 package com.cosine.cosgame.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cosine.cosgame.citadels.Board;
-import com.cosine.cosgame.dominion.BoardEntity;
+import com.cosine.cosgame.citadels.BoardEntity;
 
 @Controller
 public class CitadelsController {
@@ -20,13 +21,15 @@ public class CitadelsController {
 		return "citadelsGame";
 	}
 	
-	@RequestMapping(value="/citadelsgame/start", method = RequestMethod.GET)
+	@RequestMapping(value="/citadelsgame/start", method = RequestMethod.POST)
 	public ResponseEntity<BoardEntity> citadelsGameStart() {
 		Board board = new Board();
 		board.addPlayer("p1");
 		board.addPlayer("p2");
 		board.addPlayer("p3");
 		board.addPlayer("p4");
-		return null;
+		board.gameSetup();
+		BoardEntity entity = board.toBoardEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 }
