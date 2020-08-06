@@ -6,4 +6,13 @@ public class CitadelConsts {
 	public static final int RED = 2;
 	public static final int YELLOW = 3;
 	public static final int PURPLE = 4;
+	
+	public static final int ASSASSIN = 1;
+	public static final int THIEF = 2;
+	public static final int MAGICIAN = 3;
+	public static final int KING = 4;
+	public static final int BISHOP = 5;
+	public static final int MERCHANT = 6;
+	public static final int ARCHITECT = 7;
+	public static final int WARLORD = 8;
 }

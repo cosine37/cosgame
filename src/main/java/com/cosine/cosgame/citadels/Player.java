@@ -8,6 +8,7 @@ import org.bson.Document;
 public class Player {
 	String name;
 	Board board;
+	Role role;
 	List<Card> hand;
 	List<Card> built;
 	int coin;
@@ -15,7 +16,7 @@ public class Player {
 	boolean finished;
 	boolean allColors;
 	boolean killed;
-	int role;
+	int roleNum;
 	
 	public Player(String name) {
 		this.name = name;
@@ -176,13 +177,19 @@ public class Player {
 	public void setKilled(boolean killed) {
 		this.killed = killed;
 	}
-	public int getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(int role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+	public int getRoleNum() {
+		return roleNum;
+	}
+	public void setRoleNum(int roleNum) {
+		this.roleNum = roleNum;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -206,7 +213,7 @@ public class Player {
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
 		coin = doc.getInteger("coin", 0);
-		role = doc.getInteger("role", 0);
+		roleNum = doc.getInteger("role", 0);
 		firstFinished = doc.getBoolean("firstFinished", false);
 		
 		int i;

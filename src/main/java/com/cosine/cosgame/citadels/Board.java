@@ -11,6 +11,7 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Board {
 	List<Player> players;
 	List<Card> deck;
+	List<Role> roles;
 	boolean firstFinished;
 	int finishCount;
 	int coins;
@@ -26,6 +27,7 @@ public class Board {
 		id = "1";
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
+		roles = new ArrayList<>();
 		firstFinished = true;
 		finishCount = 8;
 		coins = 30;
@@ -155,6 +157,15 @@ public class Board {
 		setDeck();
 		shuffle();
 		deal();
+	}
+	
+	public Player getPlayerByRole(int roleNum) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getRoleNum() == roleNum) {
+				return players.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public List<Player> getPlayers() {
