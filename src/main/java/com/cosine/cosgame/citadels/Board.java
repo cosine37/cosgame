@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
+
 public class Board {
 	List<Player> players;
 	List<Card> deck;
@@ -12,8 +16,14 @@ public class Board {
 	int coins;
 	int killedRole;
 	int stealedRole;
+	int roundCount;
+	int phase;
+	int curPlayer;
+	String id;
+	MongoDBUtil dbutil;
 	
 	public Board() {
+		id = "1";
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		firstFinished = true;
@@ -21,6 +31,12 @@ public class Board {
 		coins = 30;
 		killedRole = 0;
 		stealedRole = 0;
+		
+		String dbname = "citadels";
+		String col = "board";
+		
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public int takeCoins(int n) {
@@ -171,7 +187,43 @@ public class Board {
 	public void setCoins(int coins) {
 		this.coins = coins;
 	}
-	
+	public int getKilledRole() {
+		return killedRole;
+	}
+	public void setKilledRole(int killedRole) {
+		this.killedRole = killedRole;
+	}
+	public int getStealedRole() {
+		return stealedRole;
+	}
+	public void setStealedRole(int stealedRole) {
+		this.stealedRole = stealedRole;
+	}
+	public int getRoundCount() {
+		return roundCount;
+	}
+	public void setRoundCount(int roundCount) {
+		this.roundCount = roundCount;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	public int getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(int curPlayer) {
+		this.curPlayer = curPlayer;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public BoardEntity toBoardEntity() {
 		BoardEntity entity = new BoardEntity();
 		int i,j;
@@ -200,5 +252,65 @@ public class Board {
 		entity.setCoins(coins);
 		return entity;
 	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("firstFinished", firstFinished);
+		doc.append("finishCount", finishCount);
+		doc.append("coins", coins);
+		doc.append("killedRole", killedRole);
+		doc.append("stealedRole", stealedRole);
+		doc.append("roundCount", roundCount);
+		doc.append("phase", phase);
+		doc.append("curPlayer", curPlayer);
+		int i;
+		List<Document> dop = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			dop.add(players.get(i).toDocument());
+		}
+		List<Document> dod = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			dod.add(deck.get(i).toDocument());
+		}
+		doc.append("players", dop);
+		doc.append("deck", dod);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		firstFinished = doc.getBoolean("firstFinished", false);
+		finishCount = doc.getInteger("finishCount", 0);
+		coins = doc.getInteger("coins", coins);
+		killedRole = doc.getInteger("killedRole", 0);
+		stealedRole = doc.getInteger("stealedRole", 0);
+		roundCount = doc.getInteger("roundCount", 0);
+		phase = doc.getInteger("phase", 0);
+		curPlayer = doc.getInteger("curPlayer", 0);
+		int i;
+		List<Document> dop = (List<Document>) doc.get("players");
+		players = new ArrayList<>();
+		for (i=0;i<dop.size();i++) {
+			Player p = new Player("name");
+			p.setFromDoc(dop.get(i));
+			players.add(p);
+		}
+		
+		List<Document> dod = (List<Document>) doc.get("deck");
+		deck = new ArrayList<>();
+		for (i=0;i<dod.size();i++) {
+			Card c = CardFactory.createCard(dod.get(i));
+			deck.add(c);
+		}
+	}
 
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
 }

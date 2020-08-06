@@ -3,6 +3,8 @@ package com.cosine.cosgame.citadels;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	Board board;
@@ -179,6 +181,49 @@ public class Player {
 	}
 	public void setRole(int role) {
 		this.role = role;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("coin", coin);
+		doc.append("role", role);
+		doc.append("fistFinished", firstFinished);
+		int i;
+		List<Document> doh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			doh.add(hand.get(i).toDocument());
+		}
+		List<Document> dob = new ArrayList<>();
+		for (i=0;i<built.size();i++) {
+			dob.add(built.get(i).toDocument());
+		}
+		doc.append("hand", doh);
+		doc.append("built", dob);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		coin = doc.getInteger("coin", 0);
+		role = doc.getInteger("role", 0);
+		firstFinished = doc.getBoolean("firstFinished", false);
+		
+		int i;
+		
+		List<Document> handDocList = (List<Document>) doc.get("hand");
+		hand = new ArrayList<>();
+		for (i=0;i<handDocList.size();i++) {
+			Card c = CardFactory.createCard(handDocList.get(i));
+			hand.add(c);
+		}
+			
+		List<Document> builtDocList = (List<Document>) doc.get("built");
+		built = new ArrayList<>();
+		for (i=0;i<builtDocList.size();i++) {
+			Card c = CardFactory.createCard(builtDocList.get(i));
+			built.add(c);
+		}
 	}
 	
 }

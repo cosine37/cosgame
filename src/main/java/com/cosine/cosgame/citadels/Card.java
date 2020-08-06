@@ -1,5 +1,7 @@
 package com.cosine.cosgame.citadels;
 
+import org.bson.Document;
+
 public class Card {
 	String name;
 	int cost;
@@ -56,4 +58,12 @@ public class Card {
 		this.board = board;
 	}
 	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("cost", cost);
+		doc.append("color", color);
+		doc.append("img", img);
+		return doc;
+	}
 }
