@@ -24,7 +24,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		setHand = function(){
 			
 		}
-			
+		
 		$scope.taketwo = function(){
 			$http.post('/citadelsgame/taketwocoins').then(function(response){
 				$scope.getBoard();

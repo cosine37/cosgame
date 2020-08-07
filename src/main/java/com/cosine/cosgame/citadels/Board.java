@@ -3,6 +3,7 @@ package com.cosine.cosgame.citadels;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Date;
 
 import org.bson.Document;
 
@@ -153,7 +154,13 @@ public class Board {
 		}
 	}
 	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	
 	public void gameSetup() {
+		genBoardId();
 		setDeck();
 		shuffle();
 		deal();
@@ -262,12 +269,6 @@ public class Board {
 				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
 			}
 			built.add(singleBuilt);
-			/*
-			for (j=0;j<players.get(i).getHand().size();j++) {
-				singleHand.add(players.get(i).getHand().get(j).getImg());
-			}
-			hand.add(singleHand);
-			*/
 		}
 		List<String> hand = new ArrayList<>();
 		List<String> buildable = new ArrayList<>();
@@ -307,12 +308,6 @@ public class Board {
 		doc.append("phase", phase);
 		doc.append("curPlayer", curPlayer);
 		int i;
-		/*
-		List<Document> dop = new ArrayList<>();
-		for (i=0;i<players.size();i++) {
-			dop.add(players.get(i).toDocument());
-		}
-		*/
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			dod.add(deck.get(i).toDocument());
@@ -330,6 +325,7 @@ public class Board {
 	}
 	
 	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
 		firstFinished = doc.getBoolean("firstFinished", false);
 		finishCount = doc.getInteger("finishCount", 0);
 		coins = doc.getInteger("coins", coins);
@@ -351,16 +347,6 @@ public class Board {
 			}
 			players.add(p);
 		}
-		/*
-		List<Document> dop = (List<Document>) doc.get("players");
-		players = new ArrayList<>();
-		for (i=0;i<dop.size();i++) {
-			Player p = new Player("name");
-			p.setBoard(this);
-			p.setFromDoc(dop.get(i));
-			players.add(p);
-		}
-		*/
 		List<Document> dod = (List<Document>) doc.get("deck");
 		deck = new ArrayList<>();
 		for (i=0;i<dod.size();i++) {
