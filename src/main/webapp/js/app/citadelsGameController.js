@@ -19,6 +19,16 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.gamedata = "nothing"
 		
+			
+		$scope.taketwo = function(){
+			$http.post('/citadelsgame/taketwocoins').then(function(response){
+				$http.get('/citadelsgame/getboard').then(function(response){
+					$scope.gamedata = JSON.stringify(response.data);
+					//alert(JSON.stringify(response.data));
+				});
+			});
+		}
+			
 		$scope.startGame = function(){
 			$http.post('/citadelsgame/start').then(function(response){
 				$http.get('/citadelsgame/getboard').then(function(response){

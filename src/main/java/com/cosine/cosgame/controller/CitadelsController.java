@@ -1,5 +1,8 @@
 package com.cosine.cosgame.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,14 +26,32 @@ public class CitadelsController {
 	}
 	
 	@RequestMapping(value="/citadelsgame/start", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> citadelsGameStart() {
+	public ResponseEntity<StringEntity> citadelsGameStart(HttpServletRequest request) {
 		Board board = new Board();
-		board.addPlayer("p1");
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		board.addPlayer(username);
 		board.addPlayer("p2");
 		board.addPlayer("p3");
 		board.addPlayer("p4");
 		board.gameSetup();
 		board.storeToDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/taketwocoins", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> takeTwoCoins(HttpServletRequest request) {
+		Board board = new Board();
+		board.getFromDB("1");
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).addCoin(2);
+			board.updatePlayer(username);
+			board.updateDB("coins", board.getCoins());
+		}
+		
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

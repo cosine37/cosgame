@@ -159,6 +159,15 @@ public class Board {
 		deal();
 	}
 	
+	public Player getPlayerByName(String name) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				return players.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public Player getPlayerByRole(int roleNum) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getRoleNum() == roleNum) {
@@ -276,15 +285,24 @@ public class Board {
 		doc.append("phase", phase);
 		doc.append("curPlayer", curPlayer);
 		int i;
+		/*
 		List<Document> dop = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			dop.add(players.get(i).toDocument());
 		}
+		*/
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			dod.add(deck.get(i).toDocument());
 		}
-		doc.append("players", dop);
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			String playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+			playerName = "player-" + playerName;
+			doc.append(playerName, players.get(i).toDocument());
+		}
+		doc.append("playerNames", playerNames);
 		doc.append("deck", dod);
 		return doc;
 	}
@@ -299,19 +317,47 @@ public class Board {
 		phase = doc.getInteger("phase", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
 		int i;
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		for (i=0;i<playerNames.size();i++) {
+			String playerName = playerNames.get(i);
+			Player p = new Player(playerName);
+			p.setBoard(this);
+			playerName = "player-" + playerName;
+			Document dop = (Document) doc.get(playerName);
+			if (dop != null) {
+				p.setFromDoc(dop);
+			}
+			players.add(p);
+		}
+		/*
 		List<Document> dop = (List<Document>) doc.get("players");
 		players = new ArrayList<>();
 		for (i=0;i<dop.size();i++) {
 			Player p = new Player("name");
+			p.setBoard(this);
 			p.setFromDoc(dop.get(i));
 			players.add(p);
 		}
-		
+		*/
 		List<Document> dod = (List<Document>) doc.get("deck");
 		deck = new ArrayList<>();
 		for (i=0;i<dod.size();i++) {
 			Card c = CardFactory.createCard(dod.get(i));
+			c.setBoard(this);
 			deck.add(c);
+		}
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = this.getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + name;
+			dbutil.update("id", id, playerName, dop);
 		}
 	}
 

@@ -195,7 +195,7 @@ public class Player {
 		doc.append("name", name);
 		doc.append("coin", coin);
 		doc.append("role", role);
-		doc.append("fistFinished", firstFinished);
+		doc.append("firstFinished", firstFinished);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -222,6 +222,8 @@ public class Player {
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++) {
 			Card c = CardFactory.createCard(handDocList.get(i));
+			c.setPlayer(this);
+			c.setBoard(this.board);
 			hand.add(c);
 		}
 			
@@ -229,6 +231,8 @@ public class Player {
 		built = new ArrayList<>();
 		for (i=0;i<builtDocList.size();i++) {
 			Card c = CardFactory.createCard(builtDocList.get(i));
+			c.setPlayer(this);
+			c.setBoard(this.board);
 			built.add(c);
 		}
 	}
