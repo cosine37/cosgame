@@ -62,6 +62,7 @@ public class Player {
 				hand.remove(x);
 				built.add(c);
 				coin = coin-cost;
+				board.addCoin(cost);
 				if (built.size() == board.getFinishCount()) {
 					finished = true;
 					if (board.isFirstFinished()) {

@@ -176,7 +176,9 @@ public class Board {
 		}
 		return null;
 	}
-	
+	public void addCoin(int x) {
+		this.coins = this.coins+x;
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -244,13 +246,13 @@ public class Board {
 		this.id = id;
 	}
 
-	public BoardEntity toBoardEntity() {
+	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<String> coins = new ArrayList<>();
 		List<List<String>> built = new ArrayList<>();
-		List<List<String>> hand = new ArrayList<>();
+		//List<List<String>> hand = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			coins.add(Integer.toString(players.get(i).getCoin()));
@@ -260,15 +262,35 @@ public class Board {
 				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
 			}
 			built.add(singleBuilt);
+			/*
 			for (j=0;j<players.get(i).getHand().size();j++) {
 				singleHand.add(players.get(i).getHand().get(j).getImg());
 			}
 			hand.add(singleHand);
+			*/
 		}
+		List<String> hand = new ArrayList<>();
+		List<String> buildable = new ArrayList<>();
+		Player p = this.getPlayerByName(name);
+		if (p!=null) {
+			for (i=0;i<p.getHand().size();i++) {
+				Card c = p.getHand().get(i);
+				hand.add(c.getImg());
+				String f;
+				if (p.getCoin() < c.getCost()) {
+					f = "n";
+				} else {
+					f = "y";
+				}
+				buildable.add(f);
+			}
+		}
+		
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
 		entity.setBuilt(built);
 		entity.setHand(hand);
+		entity.setBuildable(buildable);
 		entity.setCoins(coins);
 		return entity;
 	}

@@ -16,5 +16,8 @@
 	<button ng-click="taketwo()">take two</button>
 	<button ng-click="startGame()">start</button>
 	<p>{{gamedata}}</p>
+	<div id="hand">
+		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="buildable[$index] == 'n'">{{c}}</button>
+	</div>
 </body>
 </html>

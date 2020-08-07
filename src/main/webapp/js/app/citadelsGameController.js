@@ -18,23 +18,39 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		});
 		
 		$scope.gamedata = "nothing"
-		
+		$scope.hand = []
+		$scope.buildable = []
+			
+		setHand = function(){
+			
+		}
 			
 		$scope.taketwo = function(){
 			$http.post('/citadelsgame/taketwocoins').then(function(response){
-				$http.get('/citadelsgame/getboard').then(function(response){
-					$scope.gamedata = JSON.stringify(response.data);
-					//alert(JSON.stringify(response.data));
-				});
+				$scope.getBoard();
 			});
+		}
+		
+		$scope.build = function(x){
+			var data = {"index" : x}
+			$http({url: "/citadelsgame/build", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+			
 		}
 			
 		$scope.startGame = function(){
 			$http.post('/citadelsgame/start').then(function(response){
-				$http.get('/citadelsgame/getboard').then(function(response){
-					$scope.gamedata = JSON.stringify(response.data);
-					//alert(JSON.stringify(response.data));
-				});
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.getBoard = function(){
+			$http.get('/citadelsgame/getboard').then(function(response){
+				$scope.gamedata = JSON.stringify(response.data)
+				$scope.hand = response.data.hand
+				$scope.buildable = response.data.buildable
+				setHand()
 			});
 		}
 		

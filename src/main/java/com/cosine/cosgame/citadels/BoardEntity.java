@@ -5,7 +5,8 @@ import java.util.List;
 public class BoardEntity {
 	List<String> playerNames;
 	List<List<String>> built;
-	List<List<String>> hand;
+	List<String> hand;
+	List<String> buildable;
 	List<String> coins;
 	
 	String bank;
@@ -22,11 +23,17 @@ public class BoardEntity {
 	public void setBuilt(List<List<String>> built) {
 		this.built = built;
 	}
-	public List<List<String>> getHand() {
+	public List<String> getHand() {
 		return hand;
 	}
-	public void setHand(List<List<String>> hand) {
+	public void setHand(List<String> hand) {
 		this.hand = hand;
+	}
+	public List<String> getBuildable() {
+		return buildable;
+	}
+	public void setBuildable(List<String> buildable) {
+		this.buildable = buildable;
 	}
 	public List<String> getCoins() {
 		return coins;

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.citadels.Board;
 import com.cosine.cosgame.citadels.BoardEntity;
@@ -56,11 +57,28 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/citadelsgame/getboard", method = RequestMethod.GET)
-	public ResponseEntity<BoardEntity> citadelsGameGetBoard(){
+	@RequestMapping(value="/citadelsgame/build", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> build(HttpServletRequest request, @RequestParam int index) {
 		Board board = new Board();
 		board.getFromDB("1");
-		BoardEntity entity = board.toBoardEntity();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).build(index);
+			board.updatePlayer(username);
+			board.updateDB("coins", board.getCoins());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/getboard", method = RequestMethod.GET)
+	public ResponseEntity<BoardEntity> citadelsGameGetBoard(HttpServletRequest request){
+		Board board = new Board();
+		board.getFromDB("1");
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		BoardEntity entity = board.toBoardEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 }
