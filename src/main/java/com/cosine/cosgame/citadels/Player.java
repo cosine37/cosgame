@@ -11,41 +11,72 @@ public class Player {
 	Role role;
 	List<Card> hand;
 	List<Card> built;
+	List<Card> forChoose;
+	int numReveal;
+	int numChoose;
 	int coin;
 	boolean firstFinished;
 	boolean finished;
 	boolean allColors;
 	boolean killed;
 	int roleNum;
-	
 	int phase;
 	
 	public Player(String name) {
 		this.name = name;
 		hand = new ArrayList<>();
 		built = new ArrayList<>();
+		forChoose = new ArrayList<>();
 		coin = 0;
 		firstFinished = false;
 		finished = false;
 		killed = false;
+		numReveal = 2;
+		numChoose = 1;
+		phase = CitadelsConsts.OFFTURN;
 	}
 	
 	public void startTurn() {
 		if (phase == CitadelsConsts.OFFTURN) {
 			phase = CitadelsConsts.TAKEACTION;
+		} else {
+			// for debug purposes
+			//phase = CitadelsConsts.TAKEACTION;
+		}
+	}
+	
+	public void endTurn() {
+		if (phase == CitadelsConsts.BUILDDISTRICT) {
+			phase = CitadelsConsts.OFFTURN;
 		}
 	}
 	
 	public void takeActionOption(int option) {
 		if (phase == CitadelsConsts.TAKEACTION) {
 			if (option == 1) {
-				phase = CitadelsConsts.CHOOSECARD;
+				if (numReveal == numChoose) {
+					draw(numChoose);
+					phase = CitadelsConsts.BUILDDISTRICT;
+				} else {
+					forChoose = board.firstCards(numReveal);
+					phase = CitadelsConsts.CHOOSECARD;
+				}
 			} else if (option == 2) {
+				addCoin(2);
 				phase = CitadelsConsts.BUILDDISTRICT;
 			} else {
 				
 			}
 		}
+	}
+	
+	public void chooseCard(int index) {
+		if (numChoose == 1) {
+			hand.add(forChoose.remove(index));
+			board.bottomDeck(forChoose);
+			phase = CitadelsConsts.BUILDDISTRICT;
+		}
+		
 	}
 	
 	public void addCoin(int n) {
@@ -216,6 +247,24 @@ public class Player {
 	public void setPhase(int phase) {
 		this.phase = phase;
 	}
+	public List<Card> getForChoose() {
+		return forChoose;
+	}
+	public void setForChoose(List<Card> forChoose) {
+		this.forChoose = forChoose;
+	}
+	public int getNumReveal() {
+		return numReveal;
+	}
+	public void setNumReveal(int numReveal) {
+		this.numReveal = numReveal;
+	}
+	public int getNumChoose() {
+		return numChoose;
+	}
+	public void setNumChoose(int numChoose) {
+		this.numChoose = numChoose;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -233,8 +282,13 @@ public class Player {
 		for (i=0;i<built.size();i++) {
 			dob.add(built.get(i).toDocument());
 		}
+		List<Document> dof = new ArrayList<>();
+		for (i=0;i<forChoose.size();i++) {
+			dof.add(forChoose.get(i).toDocument());
+		}
 		doc.append("hand", doh);
 		doc.append("built", dob);
+		doc.append("forChoose", dof);
 		return doc;
 	}
 	
@@ -263,6 +317,14 @@ public class Player {
 			c.setPlayer(this);
 			c.setBoard(this.board);
 			built.add(c);
+		}
+		
+		List<Document> forChooseDocList = (List<Document>) doc.get("forChoose");
+		for (i=0;i<forChooseDocList.size();i++) {
+			Card c = CardFactory.createCard(forChooseDocList.get(i));
+			c.setPlayer(this);
+			c.setBoard(this.board);
+			forChoose.add(c);
 		}
 	}
 	

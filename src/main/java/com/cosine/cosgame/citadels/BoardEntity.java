@@ -8,8 +8,12 @@ public class BoardEntity {
 	List<String> hand;
 	List<String> buildable;
 	List<String> coins;
+	List<String> handSizes;
+	List<String> revealedCards;
 	
+	String phase;
 	String bank;
+	String deckSize;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -46,5 +50,29 @@ public class BoardEntity {
 	}
 	public void setBank(String bank) {
 		this.bank = bank;
+	}
+	public List<String> getHandSizes() {
+		return handSizes;
+	}
+	public void setHandSizes(List<String> handSizes) {
+		this.handSizes = handSizes;
+	}
+	public String getPhase() {
+		return phase;
+	}
+	public void setPhase(String phase) {
+		this.phase = phase;
+	}
+	public List<String> getRevealedCards() {
+		return revealedCards;
+	}
+	public void setRevealedCards(List<String> revealedCards) {
+		this.revealedCards = revealedCards;
+	}
+	public String getDeckSize() {
+		return deckSize;
+	}
+	public void setDeckSize(String deckSize) {
+		this.deckSize = deckSize;
 	}
 }

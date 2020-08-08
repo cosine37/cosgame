@@ -154,6 +154,29 @@ public class Board {
 		}
 	}
 	
+	public List<Card> firstCards(int x) {
+		List<Card> ans = new ArrayList<>();
+		int i;
+		for (i=0;i<x;i++) {
+			if (deck.size()>0) {
+				ans.add(deck.remove(0));
+			} else {
+				break;
+			}
+		}
+		return ans;
+	}
+	
+	public void bottomDeck(List<Card> cards) {
+		while (cards.size()>0) {
+			deck.add(cards.remove(0));
+		}
+	}
+	
+	public void bottomDeck(Card card) {
+		deck.add(card);
+	}
+	
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
@@ -258,13 +281,13 @@ public class Board {
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<String> coins = new ArrayList<>();
+		List<String> handSizes = new ArrayList<>();
 		List<List<String>> built = new ArrayList<>();
-		//List<List<String>> hand = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			coins.add(Integer.toString(players.get(i).getCoin()));
+			handSizes.add(Integer.toString(players.get(i).getHand().size()));
 			List<String> singleBuilt = new ArrayList<>();
-			List<String> singleHand = new ArrayList<>();
 			for (j=0;j<players.get(i).getBuilt().size();j++) {
 				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
 			}
@@ -272,8 +295,11 @@ public class Board {
 		}
 		List<String> hand = new ArrayList<>();
 		List<String> buildable = new ArrayList<>();
+		List<String> revealedCards = new ArrayList<>();
 		Player p = this.getPlayerByName(name);
+		String phase = "-1";
 		if (p!=null) {
+			phase = Integer.toString(p.getPhase());
 			for (i=0;i<p.getHand().size();i++) {
 				Card c = p.getHand().get(i);
 				hand.add(c.getImg());
@@ -285,14 +311,21 @@ public class Board {
 				}
 				buildable.add(f);
 			}
+			for (i=0;i<p.getForChoose().size();i++) {
+				Card c = p.getForChoose().get(i);
+				revealedCards.add(c.getImg());
+			}
 		}
-		
+		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
 		entity.setBuilt(built);
 		entity.setHand(hand);
 		entity.setBuildable(buildable);
+		entity.setRevealedCards(revealedCards);
 		entity.setCoins(coins);
+		entity.setHandSizes(handSizes);
+		entity.setPhase(phase);
 		return entity;
 	}
 	
@@ -358,6 +391,15 @@ public class Board {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
+	}
+	
+	public void updateDeck() {
+		List<Document> dod = new ArrayList<>();
+		int i;
+		for (i=0;i<deck.size();i++) {
+			dod.add(deck.get(i).toDocument());
+		}
+		dbutil.update("id", id, "deck", dod);
 	}
 	
 	public void updatePlayer(String name) {

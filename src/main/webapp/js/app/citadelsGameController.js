@@ -20,9 +20,39 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.gamedata = "nothing"
 		$scope.hand = []
 		$scope.buildable = []
+		$scope.phase = "-1"
+			
+		setButtons = function(){
+			
+		}
 			
 		setHand = function(){
 			
+		}
+		
+		$scope.startTurn = function(){
+			$http.post('/citadelsgame/startturn').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.endTurn = function(){
+			$http.post('/citadelsgame/endturn').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.seeCards = function(){
+			$http.post('/citadelsgame/seecards').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.chooseCard = function(x){
+			var data = {"index" : x}
+			$http({url: "/citadelsgame/choosecard", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
 		}
 		
 		$scope.taketwo = function(){
@@ -50,6 +80,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.gamedata = JSON.stringify(response.data)
 				$scope.hand = response.data.hand
 				$scope.buildable = response.data.buildable
+				$scope.phase = response.data.phase
+				$scope.revealedCards = response.data.revealedCards
+				setButtons()
 				setHand()
 			});
 		}

@@ -50,6 +50,37 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	//This controller is for debug purpose
+	@RequestMapping(value="/citadelsgame/startturn", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startTurn(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).startTurn();
+			board.updatePlayer(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/endturn", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> endTurn(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).endTurn();
+			board.updatePlayer(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/taketwocoins", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> takeTwoCoins(HttpServletRequest request) {
 		Board board = new Board();
@@ -58,9 +89,43 @@ public class CitadelsController {
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
 		if (board.getPlayerByName(username) != null) {
-			board.getPlayerByName(username).addCoin(2);
+			board.getPlayerByName(username).takeActionOption(2);
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
+		}
+		
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/seecards", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> seeCards(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).takeActionOption(1);
+			board.updatePlayer(username);
+			board.updateDeck();
+		}
+		
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/choosecard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseCard(HttpServletRequest request, @RequestParam int index){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			board.getPlayerByName(username).chooseCard(index);
+			board.updatePlayer(username);
+			board.updateDeck();
 		}
 		
 		StringEntity entity = new StringEntity();
