@@ -1,6 +1,6 @@
 package com.cosine.cosgame.citadels;
 
-public class CitadelConsts {
+public class CitadelsConsts {
 	public static final int GREEN = 0;
 	public static final int BLUE = 1;
 	public static final int RED = 2;
@@ -15,4 +15,10 @@ public class CitadelConsts {
 	public static final int MERCHANT = 6;
 	public static final int ARCHITECT = 7;
 	public static final int WARLORD = 8;
+	
+	public static final int OFFTURN = -1;
+	public static final int TAKEACTION = 0;
+	public static final int CHOOSECARD = 1;
+	public static final int BUILDDISTRICT = 2;
+	
 }

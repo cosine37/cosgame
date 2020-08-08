@@ -17,7 +17,7 @@ public class Role {
 	
 	public void whenReveal() {
 		if (num == board.getStealedRole()) {
-			Player p = board.getPlayerByRole(CitadelConsts.THIEF);
+			Player p = board.getPlayerByRole(CitadelsConsts.THIEF);
 			if (p != null) {
 				p.addCoin(player.getCoin());
 				player.setCoin(0);

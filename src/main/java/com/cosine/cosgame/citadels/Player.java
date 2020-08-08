@@ -18,6 +18,8 @@ public class Player {
 	boolean killed;
 	int roleNum;
 	
+	int phase;
+	
 	public Player(String name) {
 		this.name = name;
 		hand = new ArrayList<>();
@@ -27,7 +29,25 @@ public class Player {
 		finished = false;
 		killed = false;
 	}
-
+	
+	public void startTurn() {
+		if (phase == CitadelsConsts.OFFTURN) {
+			phase = CitadelsConsts.TAKEACTION;
+		}
+	}
+	
+	public void takeActionOption(int option) {
+		if (phase == CitadelsConsts.TAKEACTION) {
+			if (option == 1) {
+				phase = CitadelsConsts.CHOOSECARD;
+			} else if (option == 2) {
+				phase = CitadelsConsts.BUILDDISTRICT;
+			} else {
+				
+			}
+		}
+	}
+	
 	public void addCoin(int n) {
 		int c = board.takeCoins(n);
 		coin = coin+c;
@@ -190,12 +210,19 @@ public class Player {
 	public void setRoleNum(int roleNum) {
 		this.roleNum = roleNum;
 	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("coin", coin);
 		doc.append("role", role);
+		doc.append("phase", phase);
 		doc.append("firstFinished", firstFinished);
 		int i;
 		List<Document> doh = new ArrayList<>();
@@ -215,6 +242,7 @@ public class Player {
 		name = doc.getString("name");
 		coin = doc.getInteger("coin", 0);
 		roleNum = doc.getInteger("role", 0);
+		phase = doc.getInteger("phase", -1);
 		firstFinished = doc.getBoolean("firstFinished", false);
 		
 		int i;
