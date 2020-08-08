@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
+	AllRes allRes;
 	List<Player> players;
 	List<Card> deck;
 	List<Role> roles;
@@ -25,7 +26,7 @@ public class Board {
 	MongoDBUtil dbutil;
 	
 	public Board() {
-		id = "1";
+		allRes = new AllRes();
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		roles = new ArrayList<>();
@@ -60,79 +61,14 @@ public class Board {
 		players.add(p);
 	}
 	
-	public void setDeck() {
-		int i;
-		Card c;
-		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("路边摊", CitadelsConsts.GREEN, 1, "g1");
-			deck.add(c);
-		}
-		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("菜场", CitadelsConsts.GREEN, 2, "g22");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("超市", CitadelsConsts.GREEN, 3, "g3");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("商场", CitadelsConsts.GREEN, 4, "g4");
-			deck.add(c);
-		}
-		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("商业步行街", CitadelsConsts.GREEN, 5, "g5");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("幼儿园", CitadelsConsts.BLUE, 1, "b1");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("小学", CitadelsConsts.BLUE, 2, "b2");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("初中", CitadelsConsts.BLUE, 3, "b3");
-			deck.add(c);
-		}
-		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("高中", CitadelsConsts.BLUE, 5, "b5");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("岗亭", CitadelsConsts.RED, 1, "r1");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("监狱", CitadelsConsts.RED, 2, "r2");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3");
-			deck.add(c);
-		}
-		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("军区", CitadelsConsts.RED, 5, "r5");
-			deck.add(c);
-		}
-		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("法院", CitadelsConsts.YELLOW, 3, "y3");
-			deck.add(c);
-		}
-		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("电视台", CitadelsConsts.YELLOW, 4, "y4");
-			deck.add(c);
-		}
-		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("市政府", CitadelsConsts.YELLOW, 5, "y5");
-			deck.add(c);
-		}
-		
+	public void genDeck() {
+		deck = allRes.genDeck();
 	}
+	
+	public void genRoles() {
+		roles = allRes.genRoles();
+	}
+	
 	
 	public void shuffle() {
 		List<Card> shuffled = new ArrayList<>();
@@ -184,7 +120,8 @@ public class Board {
 	
 	public void gameSetup() {
 		genBoardId();
-		setDeck();
+		genRoles();
+		genDeck();
 		shuffle();
 		deal();
 	}
