@@ -304,10 +304,10 @@ public class Board {
 				Card c = p.getHand().get(i);
 				hand.add(c.getImg());
 				String f;
-				if (p.getCoin() < c.getCost()) {
-					f = "n";
-				} else {
+				if (p.canBuild(i)) {
 					f = "y";
+				} else {
+					f = "n";
 				}
 				buildable.add(f);
 			}

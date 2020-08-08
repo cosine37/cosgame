@@ -21,6 +21,9 @@ public class Player {
 	boolean killed;
 	int roleNum;
 	int phase;
+	int buildLimit;
+	int numBuilt;
+	int identicalLimit;
 	
 	public Player(String name) {
 		this.name = name;
@@ -33,6 +36,8 @@ public class Player {
 		killed = false;
 		numReveal = 2;
 		numChoose = 1;
+		buildLimit = 1;
+		identicalLimit = 0;
 		phase = CitadelsConsts.OFFTURN;
 	}
 	
@@ -56,14 +61,14 @@ public class Player {
 			if (option == 1) {
 				if (numReveal == numChoose) {
 					draw(numChoose);
-					phase = CitadelsConsts.BUILDDISTRICT;
+					startBuildPhase();
 				} else {
 					forChoose = board.firstCards(numReveal);
 					phase = CitadelsConsts.CHOOSECARD;
 				}
 			} else if (option == 2) {
 				addCoin(2);
-				phase = CitadelsConsts.BUILDDISTRICT;
+				startBuildPhase();
 			} else {
 				
 			}
@@ -74,9 +79,14 @@ public class Player {
 		if (numChoose == 1) {
 			hand.add(forChoose.remove(index));
 			board.bottomDeck(forChoose);
-			phase = CitadelsConsts.BUILDDISTRICT;
+			startBuildPhase();
 		}
 		
+	}
+	
+	public void startBuildPhase(){
+		phase = CitadelsConsts.BUILDDISTRICT;
+		numBuilt = 0;
 	}
 	
 	public void addCoin(int n) {
@@ -105,11 +115,38 @@ public class Player {
 		hand = temp;
 	}
 	
+	public boolean canBuild(int x) {
+		if (hand.size()>x) {
+			if (numBuilt >= buildLimit) {
+				return false;
+			}
+			Card c = hand.get(x);
+			int cost = c.getCost();
+			if (cost > coin) {
+				return false;
+			}
+			int identicalCount = 0;
+			int i;
+			for (i=0;i<built.size();i++) {
+				if (built.get(i).getImg().contentEquals(c.getImg())) {
+					identicalCount++;
+				}
+			}
+			if (identicalCount > identicalLimit) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public void build(int x) {
 		if (hand.size() > x) {
 			Card c = hand.get(x);
 			int cost = c.getCost();
-			if (cost <= coin) {
+			if (canBuild(x)) {
+				numBuilt++;
 				hand.remove(x);
 				built.add(c);
 				coin = coin-cost;
@@ -265,7 +302,18 @@ public class Player {
 	public void setNumChoose(int numChoose) {
 		this.numChoose = numChoose;
 	}
-
+	public int getNumBuilt() {
+		return numBuilt;
+	}
+	public void setNumBuilt(int numBuilt) {
+		this.numBuilt = numBuilt;
+	}
+	public int getBuildLimit() {
+		return buildLimit;
+	}
+	public void setBuildLimit(int buildLimit) {
+		this.buildLimit = buildLimit;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -273,6 +321,7 @@ public class Player {
 		doc.append("role", role);
 		doc.append("phase", phase);
 		doc.append("firstFinished", firstFinished);
+		doc.append("numBuilt", numBuilt);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -298,7 +347,7 @@ public class Player {
 		roleNum = doc.getInteger("role", 0);
 		phase = doc.getInteger("phase", -1);
 		firstFinished = doc.getBoolean("firstFinished", false);
-		
+		numBuilt = doc.getInteger("numBuilt", 0);
 		int i;
 		
 		List<Document> handDocList = (List<Document>) doc.get("hand");

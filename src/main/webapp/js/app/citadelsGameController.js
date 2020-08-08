@@ -20,6 +20,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.gamedata = "nothing"
 		$scope.hand = []
 		$scope.buildable = []
+		$scope.canclickhand = []
 		$scope.phase = "-1"
 			
 		setButtons = function(){
@@ -27,7 +28,15 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 			
 		setHand = function(){
-			
+			$scope.canclickhand = $scope.buildable
+			if ($scope.phase == "2"){
+				
+			} else {
+				var i
+				for (i=0;i<$scope.canclickhand.length;i++){
+					$scope.canclickhand[i] = 'n';
+				}
+			}
 		}
 		
 		$scope.startTurn = function(){

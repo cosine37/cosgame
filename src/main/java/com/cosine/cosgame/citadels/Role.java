@@ -6,13 +6,11 @@ public class Role {
 	String img;
 	int numSkills;
 	boolean destroyable;
-	int buildLimit;
 	Board board;
 	Player player;
 	
 	public Role() {
 		destroyable = true;
-		buildLimit = 1;
 	}
 	
 	public void whenReveal() {
@@ -80,12 +78,6 @@ public class Role {
 	}
 	public void setDestroyable(boolean destroyable) {
 		this.destroyable = destroyable;
-	}
-	public int getBuildLimit() {
-		return buildLimit;
-	}
-	public void setBuildLimit(int buildLimit) {
-		this.buildLimit = buildLimit;
 	}
 	public Board getBoard() {
 		return board;

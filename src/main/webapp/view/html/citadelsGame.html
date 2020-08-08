@@ -23,9 +23,11 @@
 		<button ng-click="endTurn()" ng-show="phase == '2'">end turn</button>
 	</div>
 	<div id="hand">
-		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="buildable[$index] == 'n'">{{c}}</button>
+		<p>hand</p>
+		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n'">{{c}}</button>
 	</div>
 	<div id="chooseCard" ng-show="phase == '1'">
+		<p>choose card</p>
 		<button ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)">{{c}}</button>
 	</div>
 </body>
