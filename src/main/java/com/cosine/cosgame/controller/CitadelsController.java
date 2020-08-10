@@ -29,6 +29,11 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelscreategame", method = RequestMethod.GET)
+	public String citadelsCreateGame() {
+		return "citadelsCreateGame";
+	}
+	
 	@RequestMapping(value="/citadelsgame", method = RequestMethod.GET)
 	public String citadelsGame() {
 		return "citadelsGame";
@@ -46,6 +51,14 @@ public class CitadelsController {
 		board.gameSetup();
 		session.setAttribute("boardId", board.getId());
 		board.storeToDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

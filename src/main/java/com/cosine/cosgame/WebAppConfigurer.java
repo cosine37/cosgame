@@ -14,7 +14,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
 		InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
 		
 		registration.addPathPatterns("/index","/dominion","/dominiongame","/dominionboard","/dominionlist","/dominionend",
-				"/mafia","/mafiarules","/mafiagame", "/minigame/**", "/citadels", "/citadelsgame/**");
+				"/mafia","/mafiarules","/mafiagame", "/minigame/**", "/citadels", "/citadelscreategame", "/citadelsgame/**");
 		//registration.excludePathPatterns("/login","/error","/view/css/**","/image/**","/js/**"); 
 	}
 }

@@ -22,7 +22,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.buildable = []
 		$scope.canclickhand = []
 		$scope.phase = "-1"
-			
+		
 		setButtons = function(){
 			
 		}
@@ -77,12 +77,6 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 			
 		}
-			
-		$scope.startGame = function(){
-			$http.post('/citadelsgame/start').then(function(response){
-				$scope.getBoard();
-			});
-		}
 		
 		$scope.getBoard = function(){
 			$http.get('/citadelsgame/getboard').then(function(response){
@@ -101,5 +95,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.getBoard();
 		
 }]);

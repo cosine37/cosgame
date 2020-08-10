@@ -21,6 +21,7 @@ public class Board {
 	int stealedRole;
 	int roundCount;
 	int phase;
+	int status;
 	int curPlayer;
 	String id;
 	MongoDBUtil dbutil;
@@ -212,6 +213,12 @@ public class Board {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -276,6 +283,7 @@ public class Board {
 		doc.append("stealedRole", stealedRole);
 		doc.append("roundCount", roundCount);
 		doc.append("phase", phase);
+		doc.append("status", status);
 		doc.append("curPlayer", curPlayer);
 		int i;
 		List<Document> dod = new ArrayList<>();
@@ -303,6 +311,7 @@ public class Board {
 		stealedRole = doc.getInteger("stealedRole", 0);
 		roundCount = doc.getInteger("roundCount", 0);
 		phase = doc.getInteger("phase", 0);
+		status = doc.getInteger("status", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");

@@ -10,11 +10,12 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/citadelsGameController.js"></script>
 <body ng-app="citadelsGameApp" ng-controller="citadelsGameCtrl">
-	<button ng-click="goto('citadels')">back</button>
+	<button ng-click="goto('citadelscreategame')">back</button>
 	<h1>Citadels Game</h1>
 	<p>{{username}}</p>
-	
+	<!-- 
 	<button ng-click="startGame()">start</button>
+	 -->
 	<p>{{gamedata}}</p>
 	<div id="buttons">
 		<button ng-click="startTurn()" ng-show="phase == '-1'">start turn</button>

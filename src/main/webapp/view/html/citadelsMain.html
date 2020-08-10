@@ -52,12 +52,13 @@
 					<h1>Tables</h1>
 					<table class="table">
 						<tr>
-							<td><button ng-click="goto('citadelsgame')">New Game</button></td>
+							<td><button ng-click="goto('citadelscreategame')">New Game</button></td>
 						</tr>
 					</table>
 					<table class="table">
 						<tr ng-repeat ="x in boards track by $index">
 							<td>{{x}}</td>
+							<td><button ng-click="goToBoard($index)">Goto</button></td>
 						</tr>
 					</table>
 				</div>

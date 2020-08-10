@@ -4,11 +4,9 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("citadelsMainApp", []);
-app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
+var app = angular.module("citadelsCreateGameApp", []);
+app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
-	
-		$scope.boards = []
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -19,14 +17,9 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.username = response.data.value[0];
 		});
 		
-		$http.get('/citadels/allboards').then(function(response){
-			$scope.boards = response.data.value
-		})
-		
-		$scope.goToBoard = function(index){
-			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/citadelsgame/setboardid", method: "POST", params: data}).then(function(response){
-				$scope.goto('citadelsgame')
+		$scope.startGame = function(){
+			$http.post('/citadelsgame/start').then(function(response){
+				$scope.goto('citadelsgame');
 			});
 		}
 		

@@ -7,6 +7,7 @@ public class CitadelsConsts {
 	public static final int YELLOW = 3;
 	public static final int PURPLE = 4;
 	
+	// role number
 	public static final int ASSASSIN = 1;
 	public static final int THIEF = 2;
 	public static final int MAGICIAN = 3;
@@ -16,9 +17,16 @@ public class CitadelsConsts {
 	public static final int ARCHITECT = 7;
 	public static final int WARLORD = 8;
 	
+	// player phase
 	public static final int OFFTURN = -1;
 	public static final int TAKEACTION = 0;
 	public static final int CHOOSECARD = 1;
 	public static final int BUILDDISTRICT = 2;
+	
+	// board status
+	public static final int PREGAME = 0;
+	public static final int CHOOSEROLE = 1;
+	public static final int TAKETURNS = 2;
+	public static final int ENDGAME = 3;
 	
 }
