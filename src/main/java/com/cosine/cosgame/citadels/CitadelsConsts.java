@@ -29,4 +29,10 @@ public class CitadelsConsts {
 	public static final int TAKETURNS = 2;
 	public static final int ENDGAME = 3;
 	
+	// role status, >=0 is the owner
+	public static final int SELECTABLE = -1;
+	public static final int NOTUSEDREVEALED = -2;
+	public static final int NOTUSEDHIDDEN = -3;
+	
+	
 }

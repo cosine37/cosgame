@@ -37,6 +37,9 @@ public class Board {
 		killedRole = 0;
 		stealedRole = 0;
 		
+		// TODO: When Start game, status is not CHOOSEROLE
+		status = CitadelsConsts.CHOOSEROLE;
+		
 		String dbname = "citadels";
 		String col = "board";
 		
@@ -69,7 +72,6 @@ public class Board {
 	public void genRoles() {
 		roles = allRes.genRoles();
 	}
-	
 	
 	public void shuffle() {
 		List<Card> shuffled = new ArrayList<>();
@@ -144,6 +146,61 @@ public class Board {
 		}
 		return null;
 	}
+	
+	public void discardRoles() {
+		int numPlayers = players.size();
+		int numReveal;
+		int numHidden;
+		if (numPlayers == 4) {
+			numReveal = 2;
+			numHidden = 1;
+		} else if (numPlayers == 5) {
+			numReveal = 1;
+			numHidden = 1;
+		} else if (numPlayers == 6) {
+			numReveal = 0;
+			numHidden = 1;
+		} else if (numPlayers == 7) {
+			numReveal = 0;
+			numHidden = 1;
+		} else {
+			numReveal = 0;
+			numHidden = 0;
+		}
+		List<Integer> tempNum = new ArrayList<>();
+		int i;
+		for (i=0;i<tempNum.size();i++) {
+			tempNum.add(i);
+		}
+		Random rand = new Random();
+		for (i=0;i<numReveal;i++) {
+			int x = rand.nextInt(tempNum.size());
+			int index = tempNum.remove(x);
+			roles.get(index).setOwner(CitadelsConsts.NOTUSEDREVEALED);
+		}
+		for (i=0;i<numHidden;i++) {
+			int x = rand.nextInt(tempNum.size());
+			int index = tempNum.remove(x);
+			roles.get(index).setOwner(CitadelsConsts.NOTUSEDHIDDEN);
+		}
+		
+	}
+	
+	public void newRound() {
+		int i;
+		for (i=0;i<roles.size();i++) {
+			roles.get(i).setOwner(-1);
+		}
+		for (i=0;i<players.size();i++) {
+			players.get(i).setRole(null);
+			players.get(i).setRoleNum(0);
+		}
+		discardRoles();
+		status = CitadelsConsts.CHOOSEROLE;
+	}
+	
+	
+	
 	public void addCoin(int x) {
 		this.coins = this.coins+x;
 	}
@@ -219,7 +276,12 @@ public class Board {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		int i,j;
@@ -241,6 +303,7 @@ public class Board {
 		List<String> buildable = new ArrayList<>();
 		List<String> revealedCards = new ArrayList<>();
 		Player p = this.getPlayerByName(name);
+		String status = Integer.toString(this.status);
 		String phase = "-1";
 		if (p!=null) {
 			phase = Integer.toString(p.getPhase());
@@ -270,6 +333,7 @@ public class Board {
 		entity.setCoins(coins);
 		entity.setHandSizes(handSizes);
 		entity.setPhase(phase);
+		entity.setStatus(status);
 		return entity;
 	}
 	
@@ -333,6 +397,14 @@ public class Board {
 			c.setBoard(this);
 			deck.add(c);
 		}
+		List<Document> dor = (List<Document>) doc.get("roles");
+		roles = new ArrayList<>();
+		for (i=0;i<dor.size();i++) {
+			Role r = RoleFactory.createRole(dor.get(i));
+			r.setBoard(this);
+			roles.add(r);
+		}
+		
 	}
 	
 	public void updateDB(String key, Object value) {

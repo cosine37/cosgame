@@ -1,9 +1,12 @@
 package com.cosine.cosgame.citadels;
 
+import org.bson.Document;
+
 public class Role {
 	int num;
 	String name;
 	String img;
+	int owner;
 	int numSkills;
 	boolean destroyable;
 	Board board;
@@ -91,6 +94,21 @@ public class Role {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+	public int getOwner() {
+		return owner;
+	}
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("num", num);
+		doc.append("img", img);
+		doc.append("name", name);
+		doc.append("owner", owner);
+		return doc;
 	}
 	
 }

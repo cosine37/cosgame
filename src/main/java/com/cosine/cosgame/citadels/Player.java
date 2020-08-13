@@ -41,6 +41,14 @@ public class Player {
 		phase = CitadelsConsts.OFFTURN;
 	}
 	
+	public void chooseRole(int index) {
+		if (board.getRoles().get(index).getOwner() == CitadelsConsts.SELECTABLE) {
+			role = board.getRoles().get(index);
+			roleNum = role.getNum();
+		}
+		
+	}
+	
 	public void startTurn() {
 		if (phase == CitadelsConsts.OFFTURN) {
 			phase = CitadelsConsts.TAKEACTION;

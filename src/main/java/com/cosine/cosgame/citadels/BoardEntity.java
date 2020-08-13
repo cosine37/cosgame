@@ -14,6 +14,7 @@ public class BoardEntity {
 	String phase;
 	String bank;
 	String deckSize;
+	String status;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -74,5 +75,11 @@ public class BoardEntity {
 	}
 	public void setDeckSize(String deckSize) {
 		this.deckSize = deckSize;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
