@@ -17,10 +17,29 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			$scope.username = response.data.value[0];
 		});
 		
-		$scope.startGame = function(){
-			$http.post('/citadelsgame/start').then(function(response){
-				$scope.goto('citadelsgame');
+		$scope.getBoard = function(){
+			$http.get('/citadelsgame/getboard').then(function(response){
+				$scope.gamedata = JSON.stringify(response.data)
+				$scope.playerNames = response.data.playerNames
+				$scope.crown = parseInt(response.data.crown)
 			});
+		}
+		
+		$scope.giveCrown = function(x){
+			var data = {"crownIndex" : x}
+			$http({url: "/citadelsgame/givecrown", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.startGame = function(){
+			$scope.goto('citadelsgame');
+		}
+		
+		$scope.addBot = function(){
+			$http.post('citadelsgame/addbot').then(function(response){
+				$scope.getBoard();
+			})
 		}
 		
 		$scope.logout = function(){
@@ -28,5 +47,7 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.getBoard();
 		
 }]);

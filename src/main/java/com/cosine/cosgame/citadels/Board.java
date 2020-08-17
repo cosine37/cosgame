@@ -14,6 +14,7 @@ public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Role> roles;
+	String lord;
 	boolean firstFinished;
 	int finishCount;
 	int coins;
@@ -23,6 +24,8 @@ public class Board {
 	int phase;
 	int status;
 	int curPlayer;
+	int curRoleNum;
+	int crown;
 	String id;
 	MongoDBUtil dbutil;
 	
@@ -34,11 +37,10 @@ public class Board {
 		firstFinished = true;
 		finishCount = 8;
 		coins = 30;
-		killedRole = 0;
-		stealedRole = 0;
+		killedRole = -1;
+		stealedRole = -1;
 		
-		// TODO: When Start game, status is not CHOOSEROLE
-		status = CitadelsConsts.CHOOSEROLE;
+		status = CitadelsConsts.PREGAME;
 		
 		String dbname = "citadels";
 		String col = "board";
@@ -122,7 +124,6 @@ public class Board {
 	}
 	
 	public void gameSetup() {
-		genBoardId();
 		genRoles();
 		genDeck();
 		shuffle();
@@ -193,16 +194,65 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).setRole(null);
-			players.get(i).setRoleNum(0);
+			players.get(i).setRoleNum(-1);
 		}
 		discardRoles();
 		status = CitadelsConsts.CHOOSEROLE;
+		killedRole = -1;
+		stealedRole = -1;
 	}
 	
+	public void nextRole() {
+		curRoleNum = curRoleNum+1;
+		if (curRoleNum>roles.size()) {
+			updateStatus();
+		}
+		if (curRoleNum == killedRole) {
+			nextRole();
+		}
+		int i;
+		for (i=0;i<roles.size();i++) {
+			Role r = roles.get(i);
+			if (r.getNum() == curRoleNum) {
+				if (r.getOwner() < 0) { // Not selected
+					nextRole();
+				} else {
+					curPlayer = r.getOwner();
+				}
+			}
+		}
+	}
 	
+	public void updateStatus() {
+		if (status == CitadelsConsts.CHOOSEROLE) {
+			int i;
+			boolean flag = true;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getRoleNum() == -1) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				status = CitadelsConsts.TAKETURNS;
+				curRoleNum = 0;
+				nextRole();
+			}
+		} else if (status == CitadelsConsts.TAKETURNS) {
+			if (curRoleNum>roles.size()) {
+				newRound();
+			}
+		}
+	}
 	
 	public void addCoin(int x) {
 		this.coins = this.coins+x;
+	}
+	public void addBot() {
+		String botName = "P" + Integer.toString(players.size());
+		Player bot = new Player(botName);
+		players.add(bot);
+		addPlayerToDB(botName);
 	}
 	public List<Player> getPlayers() {
 		return players;
@@ -282,6 +332,27 @@ public class Board {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	public int getCurRoleNum() {
+		return curRoleNum;
+	}
+
+	public void setCurRoleNum(int curRoleNum) {
+		this.curRoleNum = curRoleNum;
+	}
+
+	public int getCrown() {
+		return crown;
+	}
+
+	public void setCrown(int crown) {
+		this.crown = crown;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		int i,j;
@@ -323,6 +394,18 @@ public class Board {
 				revealedCards.add(c.getImg());
 			}
 		}
+		List<String> roleNums = new ArrayList<>();
+		List<String> roleOwners = new ArrayList<>();
+		for (i=0;i<roles.size();i++) {
+			roleNums.add(Integer.toString(roles.get(i).getNum()));
+			if (roles.get(i).getOwner() == CitadelsConsts.SELECTABLE) {
+				roleOwners.add("-1");
+			} else if (roles.get(i).getOwner() == CitadelsConsts.NOTUSEDREVEALED) {
+				roleOwners.add("-2");
+			} else {
+				roleOwners.add("-3");
+			}
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -334,6 +417,13 @@ public class Board {
 		entity.setHandSizes(handSizes);
 		entity.setPhase(phase);
 		entity.setStatus(status);
+		entity.setCurPlayer(Integer.toString(curPlayer));
+		entity.setCurRole(Integer.toString(curRoleNum));
+		entity.setRoundCount(Integer.toString(roundCount));
+		entity.setRoleNums(roleNums);
+		entity.setRoleOwners(roleOwners);
+		entity.setCrown(Integer.toString(crown));
+		entity.setLord(lord);
 		return entity;
 	}
 	
@@ -349,10 +439,17 @@ public class Board {
 		doc.append("phase", phase);
 		doc.append("status", status);
 		doc.append("curPlayer", curPlayer);
+		doc.append("curRoleNum", curRoleNum);
+		doc.append("crown", crown);
+		doc.append("lord", lord);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			dod.add(deck.get(i).toDocument());
+		}
+		List<Document> dor = new ArrayList<>();
+		for (i=0;i<roles.size();i++) {
+			dor.add(roles.get(i).toDocument());
 		}
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -363,6 +460,7 @@ public class Board {
 		}
 		doc.append("playerNames", playerNames);
 		doc.append("deck", dod);
+		doc.append("roles", dor);
 		return doc;
 	}
 	
@@ -376,7 +474,10 @@ public class Board {
 		roundCount = doc.getInteger("roundCount", 0);
 		phase = doc.getInteger("phase", 0);
 		status = doc.getInteger("status", 0);
-		curPlayer = doc.getInteger("curPlayer", 0);
+		curPlayer = doc.getInteger("curPlayer", -1);
+		curRoleNum = doc.getInteger("curRoleNum", -1);
+		crown = doc.getInteger("crown", -1);
+		lord = doc.getString("lord");
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		for (i=0;i<playerNames.size();i++) {
@@ -426,6 +527,14 @@ public class Board {
 			Document dop = p.toDocument();
 			String playerName = "player-" + name;
 			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = this.getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
 		}
 	}
 

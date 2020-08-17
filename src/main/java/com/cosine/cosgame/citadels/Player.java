@@ -46,6 +46,7 @@ public class Player {
 			role = board.getRoles().get(index);
 			roleNum = role.getNum();
 		}
+		board.updateStatus();
 		
 	}
 	
@@ -326,7 +327,7 @@ public class Player {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("coin", coin);
-		doc.append("role", role);
+		doc.append("role", roleNum);
 		doc.append("phase", phase);
 		doc.append("firstFinished", firstFinished);
 		doc.append("numBuilt", numBuilt);
@@ -352,7 +353,7 @@ public class Player {
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
 		coin = doc.getInteger("coin", 0);
-		roleNum = doc.getInteger("role", 0);
+		roleNum = doc.getInteger("role", -1);
 		phase = doc.getInteger("phase", -1);
 		firstFinished = doc.getBoolean("firstFinished", false);
 		numBuilt = doc.getInteger("numBuilt", 0);

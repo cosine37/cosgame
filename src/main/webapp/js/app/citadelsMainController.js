@@ -21,7 +21,13 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$http.get('/citadels/allboards').then(function(response){
 			$scope.boards = response.data.value
-		})
+		});
+		
+		$scope.newGame = function(){
+			$http.post("/citadelsgame/newboard").then(function(response){
+				$scope.goto('citadelscreategame');
+			});
+		}
 		
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}

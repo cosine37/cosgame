@@ -10,11 +10,18 @@ public class BoardEntity {
 	List<String> coins;
 	List<String> handSizes;
 	List<String> revealedCards;
+	List<String> roleNums;
+	List<String> roleOwners;
 	
 	String phase;
 	String bank;
 	String deckSize;
 	String status;
+	String roundCount;
+	String curPlayer;
+	String curRole;
+	String crown;
+	String lord;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -81,5 +88,47 @@ public class BoardEntity {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getRoundCount() {
+		return roundCount;
+	}
+	public void setRoundCount(String roundCount) {
+		this.roundCount = roundCount;
+	}
+	public String getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(String curPlayer) {
+		this.curPlayer = curPlayer;
+	}
+	public String getCurRole() {
+		return curRole;
+	}
+	public void setCurRole(String curRole) {
+		this.curRole = curRole;
+	}
+	public List<String> getRoleNums() {
+		return roleNums;
+	}
+	public void setRoleNums(List<String> roleNums) {
+		this.roleNums = roleNums;
+	}
+	public List<String> getRoleOwners() {
+		return roleOwners;
+	}
+	public void setRoleOwners(List<String> roleOwners) {
+		this.roleOwners = roleOwners;
+	}
+	public String getCrown() {
+		return crown;
+	}
+	public void setCrown(String crown) {
+		this.crown = crown;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
 	}
 }

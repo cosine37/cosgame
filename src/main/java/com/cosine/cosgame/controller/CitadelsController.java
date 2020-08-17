@@ -39,15 +39,56 @@ public class CitadelsController {
 		return "citadelsGame";
 	}
 	
+	@RequestMapping(value="/citadelsgame/newboard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> citadelsNewBoard(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		board.addPlayer(username);
+		board.setLord(username);
+		board.genBoardId();
+		session.setAttribute("boardId", board.getId());
+		board.storeToDB();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/givecrown", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> giveCrown(HttpServletRequest request, @RequestParam int crownIndex){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.setCrown(crownIndex);
+		board.updateDB("crown", board.getCrown());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.addBot();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/start", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> citadelsGameStart(HttpServletRequest request) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
-		board.addPlayer(username);
-		board.addPlayer("p2");
-		board.addPlayer("p3");
-		board.addPlayer("p4");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		//board.addPlayer(username);
+		//board.addPlayer("p2");
+		//board.addPlayer("p3");
+		//board.addPlayer("p4");
 		board.gameSetup();
 		session.setAttribute("boardId", board.getId());
 		board.storeToDB();

@@ -77,4 +77,9 @@ public class MongoDBUtil {
 		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
 		collection.updateOne(new Document(key, value), new Document("$unset", new Document(rkey, "")));
 	}
+	
+	public void push(String key, String value, String ukey, Object uvalue) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		collection.updateOne(new Document(key, value), new Document("$push", new Document(ukey, uvalue)));
+	}
 }

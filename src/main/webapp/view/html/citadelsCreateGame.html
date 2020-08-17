@@ -14,5 +14,14 @@
 <body ng-app="citadelsCreateGameApp" ng-controller="citadelsCreateGameCtrl">
 	<button ng-click="goto('citadels')">back</button>
 	<button ng-click="startGame()">start game</button>
+	<button ng-click="addBot()">add bot</button>
+	<p>{{gamedata}}</p>
+	<table>
+		<tr ng-repeat="name in playerNames track by $index">
+			<td>{{name}}</td>
+			<td ng-show="$index != crown"><button ng-click="giveCrown($index)">Give Crown</button></td>
+			<td ng-show="$index == crown">Has Crown</td>
+		</tr>
+	</table>
 </body>
 </html>
