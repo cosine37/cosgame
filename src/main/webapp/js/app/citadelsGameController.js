@@ -22,6 +22,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.buildable = []
 		$scope.canclickhand = []
 		$scope.phase = "-1"
+		$scope.selectedRole = -1
+		$scope.roleNums = []
+		$scope.roleOwners = []
 		
 		setButtons = function(){
 			
@@ -75,7 +78,23 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			$http({url: "/citadelsgame/build", method: "POST", params: data}).then(function(response){
 				$scope.getBoard();
 			});
-			
+		}
+		
+		$scope.curPlayerChooseRole = function(){
+			$http.post('/citadelsgame/curplayerchooserole').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setSelectedRole = function(x){
+			$scope.selectedRole = x;
+		}
+		
+		$scope.chooseRole = function(){
+			var data = {"index" : $scope.selectedRole}
+			$http({url: "/citadelsgame/chooserole", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
 		}
 		
 		$scope.getBoard = function(){
@@ -85,6 +104,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.buildable = response.data.buildable
 				$scope.phase = response.data.phase
 				$scope.revealedCards = response.data.revealedCards
+				$scope.status = response.data.status
+				$scope.roleNums = response.data.roleNums
+				$scope.roleOwners = response.data.roleOwners
 				setButtons()
 				setHand()
 			});

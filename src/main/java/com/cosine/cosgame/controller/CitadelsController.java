@@ -85,13 +85,13 @@ public class CitadelsController {
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		//board.addPlayer(username);
-		//board.addPlayer("p2");
-		//board.addPlayer("p3");
-		//board.addPlayer("p4");
 		board.gameSetup();
 		session.setAttribute("boardId", board.getId());
-		board.storeToDB();
+		board.updateDeck();
+		board.updateRoles();
+		board.updatePlayers();
+		board.updateDB("status", board.getStatus());
+		board.updateDB("curPlayer", board.getCurPlayer());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -104,7 +104,23 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	//This controller is for debug purpose
+	//This controller is for debugging purpose
+	@RequestMapping(value="/citadelsgame/curplayerchooserole", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> curPlayerChooseRole(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.botChooseRole();
+		board.updateCurPlayer();
+		board.updateRoles();
+		board.updateDB("status", board.getStatus());
+		board.updateDB("curPlayer", board.getCurPlayer());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	//This controller is for debugging purpose
 	@RequestMapping(value="/citadelsgame/startturn", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startTurn(HttpServletRequest request){
 		Board board = new Board();
@@ -131,6 +147,23 @@ public class CitadelsController {
 			board.getPlayerByName(username).endTurn();
 			board.updatePlayer(username);
 		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="citadelsgame/chooserole", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseRole(HttpServletRequest request, @RequestParam int index){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.botChooseRole();
+		board.getPlayerByName(username).chooseRole(index);
+		board.updatePlayer(username);
+		board.updateRoles();
+		board.updateDB("status", board.getStatus());
+		board.updateDB("curPlayer", board.getCurPlayer());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

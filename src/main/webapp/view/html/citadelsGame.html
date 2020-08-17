@@ -22,6 +22,7 @@
 		<button ng-click="taketwo()" ng-show="phase == '0'">take two</button>
 		<button ng-click="seeCards()" ng-show="phase == '0'">see cards</button>
 		<button ng-click="endTurn()" ng-show="phase == '2'">end turn</button>
+		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1'">bot choose</button>
 	</div>
 	<div id="hand">
 		<p>hand</p>
@@ -30,6 +31,17 @@
 	<div id="chooseCard" ng-show="phase == '1'">
 		<p>choose card</p>
 		<button ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)">{{c}}</button>
+	</div>
+	<div id="chooseRole" ng-show="phase == '1' && status =='1'">
+		<p>choose role</p>
+		
+		<div ng-repeat="r in roleNums track by $index">
+			<button ng-show="selectedRole != $index && roleOwners[$index] == '-1'" ng-click="setSelectedRole($index)">{{r}}</button>
+			<button ng-show="selectedRole != $index && roleOwners[$index] == '-3'" ng-click="setSelectedRole($index)" disabled>{{r}}</button>
+			<p ng-show="selectedRole == $index">{{r}}</p>
+			<p ng-show="roleOwners[$index] == '-2'"><del>{{r}}</del></p>
+		</div>
+		<button ng-click=chooseRole()>Confirm</button>
 	</div>
 </body>
 </html>

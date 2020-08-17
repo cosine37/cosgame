@@ -24,6 +24,7 @@ public class Player {
 	int buildLimit;
 	int numBuilt;
 	int identicalLimit;
+	boolean bot;
 	
 	public Player(String name) {
 		this.name = name;
@@ -38,6 +39,7 @@ public class Player {
 		numChoose = 1;
 		buildLimit = 1;
 		identicalLimit = 0;
+		bot = false;
 		phase = CitadelsConsts.OFFTURN;
 	}
 	
@@ -45,8 +47,10 @@ public class Player {
 		if (board.getRoles().get(index).getOwner() == CitadelsConsts.SELECTABLE) {
 			role = board.getRoles().get(index);
 			roleNum = role.getNum();
+			role.setOwner(board.getPlayerIndex(this));
 		}
-		board.updateStatus();
+		phase = CitadelsConsts.OFFTURN;
+		board.nextPlayerChooseRole();
 		
 	}
 	
@@ -220,7 +224,6 @@ public class Player {
 		}
 		return ans;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -323,6 +326,13 @@ public class Player {
 	public void setBuildLimit(int buildLimit) {
 		this.buildLimit = buildLimit;
 	}
+	public boolean isBot() {
+		return bot;
+	}
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -331,6 +341,7 @@ public class Player {
 		doc.append("phase", phase);
 		doc.append("firstFinished", firstFinished);
 		doc.append("numBuilt", numBuilt);
+		doc.append("bot", bot);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -357,6 +368,9 @@ public class Player {
 		phase = doc.getInteger("phase", -1);
 		firstFinished = doc.getBoolean("firstFinished", false);
 		numBuilt = doc.getInteger("numBuilt", 0);
+		bot = doc.getBoolean("bot", false);
+		role = board.getRoleByNum(roleNum);
+		
 		int i;
 		
 		List<Document> handDocList = (List<Document>) doc.get("hand");

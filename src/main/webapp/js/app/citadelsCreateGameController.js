@@ -33,7 +33,9 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		}
 		
 		$scope.startGame = function(){
-			$scope.goto('citadelsgame');
+			$http.post('citadelsgame/start').then(function(response){
+				$scope.goto('citadelsgame');
+			})
 		}
 		
 		$scope.addBot = function(){

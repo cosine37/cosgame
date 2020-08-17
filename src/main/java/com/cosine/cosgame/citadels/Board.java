@@ -128,6 +128,18 @@ public class Board {
 		genDeck();
 		shuffle();
 		deal();
+		curPlayer = crown;
+		newRound();
+		
+	}
+	
+	public Role getRoleByNum(int num) {
+		for (int i=0;i<roles.size();i++) {
+			if (roles.get(i).getNum() == num) {
+				return roles.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public Player getPlayerByName(String name) {
@@ -146,6 +158,19 @@ public class Board {
 			}
 		}
 		return null;
+	}
+	
+	public int getPlayerIndex(String name) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int getPlayerIndex(Player p) {
+		return getPlayerIndex(p.getName());
 	}
 	
 	public void discardRoles() {
@@ -170,7 +195,7 @@ public class Board {
 		}
 		List<Integer> tempNum = new ArrayList<>();
 		int i;
-		for (i=0;i<tempNum.size();i++) {
+		for (i=0;i<roles.size();i++) {
 			tempNum.add(i);
 		}
 		Random rand = new Random();
@@ -200,6 +225,15 @@ public class Board {
 		status = CitadelsConsts.CHOOSEROLE;
 		killedRole = -1;
 		stealedRole = -1;
+	}
+	
+	public void nextPlayerChooseRole() {
+		curPlayer = curPlayer + 1;
+		if (curPlayer >= players.size()) {
+			curPlayer = 0;
+		}
+		players.get(curPlayer).setPhase(CitadelsConsts.CHOOSEROLE);
+		updateStatus();
 	}
 	
 	public void nextRole() {
@@ -245,14 +279,40 @@ public class Board {
 		}
 	}
 	
+	public void botChooseRole() {
+		Player p = players.get(curPlayer);
+		//System.out.println(p.getName());
+		if (p.isBot()) {
+			int i;
+			List<Integer> choices = new ArrayList<>();
+			for (i=0;i<roles.size();i++) {
+				choices.add(i);
+			}
+			int x;
+			while (p.getRoleNum() == -1) {
+				Random rand = new Random();
+				x = choices.remove(rand.nextInt(choices.size()));
+				if (roles.get(x).getOwner() == CitadelsConsts.SELECTABLE) {
+					p.chooseRole(x);
+					//System.out.println(p.getName()+" chooses "+x);
+					break;
+				}
+			}
+		}
+	}
+	
 	public void addCoin(int x) {
 		this.coins = this.coins+x;
 	}
 	public void addBot() {
 		String botName = "P" + Integer.toString(players.size());
 		Player bot = new Player(botName);
+		bot.setBot(true);
 		players.add(bot);
 		addPlayerToDB(botName);
+	}
+	public boolean isLord(String name) {
+		return name.contentEquals(this.lord);
 	}
 	public List<Player> getPlayers() {
 		return players;
@@ -521,8 +581,34 @@ public class Board {
 		dbutil.update("id", id, "deck", dod);
 	}
 	
+	public void updateRoles() {
+		List<Document> dor = new ArrayList<>();
+		int i;
+		for (i=0;i<roles.size();i++) {
+			dor.add(roles.get(i).toDocument());
+		}
+		dbutil.update("id", id, "roles", dor);
+	}
+	
+	public void updatePlayers() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
+		}
+	}
+	
 	public void updatePlayer(String name) {
 		Player p = this.getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + name;
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updateCurPlayer() {
+		String name = players.get(curPlayer).getName();
+		Player p = players.get(curPlayer);
 		if (p != null) {
 			Document dop = p.toDocument();
 			String playerName = "player-" + name;
