@@ -19,9 +19,27 @@
 	<table>
 		<tr ng-repeat="name in playerNames track by $index">
 			<td>{{name}}</td>
+			<!-- 
 			<td ng-show="$index != crown"><button ng-click="giveCrown($index)">Give Crown</button></td>
+			 -->
 			<td ng-show="$index == crown">Has Crown</td>
 		</tr>
 	</table>
+	<div id="config">
+		<h3>Config</h3>
+		<button ng-click="randomCrown()">random Crown</button>
+		Players
+		<table>
+			<tr ng-repeat="name in playerNames track by $index">
+				<td>{{name}}</td>
+				<td ng-show="$index != tcrown"><button ng-click="setTCrown($index)">Give Crown</button></td>
+				<td ng-show="$index == tcrown">Has Crown</td>
+			</tr>
+		</table>
+		<button ng-click="giveCrown()">give Crown</button>
+	</div>
+	
+	<button ng-click="setEndNum(7)">7 end</button>
+	<button ng-click="setEndNum(8)">8 end</button>
 </body>
 </html>

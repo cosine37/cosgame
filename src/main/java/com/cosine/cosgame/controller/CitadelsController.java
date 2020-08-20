@@ -66,6 +66,18 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setendnum", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setendnum(HttpServletRequest request, @RequestParam int endnum){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.setFinishCount(endnum);
+		board.updateDB("finishCount", board.getFinishCount());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
 		Board board = new Board();
