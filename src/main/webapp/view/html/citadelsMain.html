@@ -58,7 +58,8 @@
 					<table class="table">
 						<tr ng-repeat ="x in boards track by $index">
 							<td>{{x}}</td>
-							<td><button ng-click="goToBoard($index)">Goto</button></td>
+							<td>{{statuses[$index]}}</td>
+							<td><button ng-show="statuses[$index] == 'pre-game'" ng-click="goToBoard($index)">Join</button></td>
 						</tr>
 					</table>
 				</div>

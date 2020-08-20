@@ -9,6 +9,7 @@ import com.cosine.cosgame.util.StringEntity;
 public class CitadelsMeta {
 	List<Board> boards;
 	List<String> boardIds;
+	List<Integer> boardStatuses;
 	MongoDBUtil dbutil;
 	
 	public CitadelsMeta() {
@@ -18,6 +19,7 @@ public class CitadelsMeta {
 		dbutil.setCol(col);
 		
 		boardIds = dbutil.getValues("id");
+		boardStatuses = dbutil.getIntValues("status");
 	}
 	
 	public StringEntity getBoardIdsAsStringEntity() {
@@ -25,6 +27,7 @@ public class CitadelsMeta {
 		List<String> value = new ArrayList<String>();
 		for (int i=0;i<boardIds.size();i++) {
 			value.add(boardIds.get(i));
+			value.add(Integer.toString(boardStatuses.get(i)));
 		}
 		entity.setValue(value);
 		return entity;

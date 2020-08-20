@@ -68,6 +68,17 @@ public class MongoDBUtil {
 		return ans;
 	}
 	
+	public List<Integer> getIntValues(String key){
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		List<Integer> ans = new ArrayList<Integer>();
+		FindIterable<Document> docs = collection.find();
+		for (Document doc : docs) {
+			ans.add(doc.getInteger(key, 0));
+		}
+		return ans;
+	}
+	
+	
 	public void update(String key, String value, String ukey, Object uvalue) {
 		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
 		collection.updateOne(new Document(key, value), new Document("$set", new Document(ukey, uvalue)));
