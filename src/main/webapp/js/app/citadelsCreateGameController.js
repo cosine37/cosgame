@@ -9,6 +9,8 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 	function($scope, $window, $http, $document){
 		//$scope.crown = 0
 	
+		$scope.showConfig = 'n'
+	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -20,11 +22,15 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.getBoard = function(){
 			$http.get('/citadelsgame/getboard').then(function(response){
-				$scope.gamedata = JSON.stringify(response.data)
-				$scope.playerNames = response.data.playerNames
-				$scope.crown = parseInt(response.data.crown)
-				$scope.tcrown = $scope.crown
-				//$scope.crown = response.data.crown
+				if (response.data.id == "NE"){
+					$scope.goto('citadels');
+				} else {
+					$scope.gamedata = JSON.stringify(response.data)
+					$scope.playerNames = response.data.playerNames
+					$scope.crown = parseInt(response.data.crown)
+					$scope.tcrown = $scope.crown
+					$scope.isLord = response.data.isLord
+				}
 			});
 		}
 		
@@ -54,12 +60,6 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			})
 		}
 		
-		$scope.logout = function(){
-			$http({url: "/logout", method: "POST"}).then(function(response){
-				$scope.goto('login');
-			});
-		}
-		
 		$scope.setTCrown = function(x){
 			$scope.tcrown = x;
 		}
@@ -70,6 +70,27 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			$scope.setTCrown(x);
 		}
 		
+		$scope.kick = function(x){
+			var data = {"index" : x}
+			$http({url: "/citadelsgame/kick", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.dismiss = function(x){
+			$http.post("/citadelsgame/dismiss").then(function(response){
+				$scope.goto('citadels');
+			});
+		}
+		
+		
+		$scope.showConfigDiv = function(){
+			$scope.showConfig = 'y'
+		}
+		
+		$scope.hideConfigDiv = function(){
+			$scope.showConfig = 'n'
+		}
 		
 		$scope.debug = function(){
 			alert($scope.tcrown)

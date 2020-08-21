@@ -415,6 +415,11 @@ public class Board {
 	}
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
+		
+		if (id.contentEquals("NE")) {
+			entity.setId(id);
+			return entity;
+		}
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<String> coins = new ArrayList<>();
@@ -466,6 +471,10 @@ public class Board {
 				roleOwners.add("-3");
 			}
 		}
+		String isLord = "n";
+		if (name.contentEquals(lord)) {
+			isLord = "y";
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -484,6 +493,8 @@ public class Board {
 		entity.setRoleOwners(roleOwners);
 		entity.setCrown(Integer.toString(crown));
 		entity.setLord(lord);
+		entity.setIsLord(isLord);
+		entity.setId(id);
 		return entity;
 	}
 	
@@ -623,6 +634,33 @@ public class Board {
 			updatePlayer(name);
 		}
 	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
 
 	public void storeToDB() {
 		Document doc = toDocument();
@@ -632,5 +670,14 @@ public class Board {
 	public void getFromDB(String id) {
 		Document doc = dbutil.read("id", id);
 		setFromDoc(doc);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

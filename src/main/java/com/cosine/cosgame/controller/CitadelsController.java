@@ -123,6 +123,34 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/kick", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.removePlayerFromDB(index);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/dismiss", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.dismiss();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);
@@ -252,9 +280,7 @@ public class CitadelsController {
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
-		//System.out.println(boardId);
 		board.getFromDB(boardId);
-		//System.out.println(board.getPlayerByName(username).getCoin());
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).build(index);
 			System.out.println(board.getPlayerByName(username).getCoin());
@@ -271,8 +297,12 @@ public class CitadelsController {
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
-		board.getFromDB(boardId);
-		//System.out.println(board.getPlayerByName(username).getCoin());
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+		} else {
+			board.setId("NE");
+		}
+		
 		BoardEntity entity = board.toBoardEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

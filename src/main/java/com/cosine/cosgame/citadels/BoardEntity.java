@@ -22,6 +22,8 @@ public class BoardEntity {
 	String curRole;
 	String crown;
 	String lord;
+	String isLord;
+	String id;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -130,5 +132,17 @@ public class BoardEntity {
 	}
 	public void setLord(String lord) {
 		this.lord = lord;
+	}
+	public String getIsLord() {
+		return isLord;
+	}
+	public void setIsLord(String isLord) {
+		this.isLord = isLord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 }
