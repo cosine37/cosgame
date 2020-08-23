@@ -166,11 +166,14 @@ public class CitadelsController {
 		HttpSession session = request.getSession(true);
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
+		String name = board.getPlayers().get(board.getCurPlayer()).getName();
 		board.botChooseRole();
-		board.updateCurPlayer();
+		board.updatePlayer(name);
 		board.updateRoles();
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
+		board.updateDB("curRoleNum", board.getCurRoleNum());
+		board.updateCurPlayer();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -213,12 +216,14 @@ public class CitadelsController {
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		board.botChooseRole();
+		//board.botChooseRole();
 		board.getPlayerByName(username).chooseRole(index);
 		board.updatePlayer(username);
 		board.updateRoles();
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
+		board.updateDB("curRoleNum", board.getCurRoleNum());
+		board.updateCurPlayer();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
