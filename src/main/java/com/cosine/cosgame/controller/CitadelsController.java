@@ -39,6 +39,11 @@ public class CitadelsController {
 		return "citadelsGame";
 	}
 	
+	@RequestMapping(value="/citadelsendgame", method = RequestMethod.GET)
+	public String citadelsEndGame() {
+		return "citadelsEndGame";
+	}
+	
 	@RequestMapping(value="/citadelsgame/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> citadelsNewBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -297,6 +302,7 @@ public class CitadelsController {
 			System.out.println(board.getPlayerByName(username).getCoin());
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
+			board.updateDB("firstFinished", board.isFirstFinished());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -316,6 +322,7 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateDB("roundCount", board.getRoundCount());
+		board.updateDB("firstFinished", board.isFirstFinished());
 		board.updateRoles();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

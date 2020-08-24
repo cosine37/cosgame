@@ -49,11 +49,17 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		}
 		
 		$scope.startGame = function(){
+			/*
 			if ($scope.playerNames.length < 4){
 				alert("No enough players.  The players size must between 4~7")
-			} else ($scope.playerNames.length < 7){
-				
+			} else if ($scope.playerNames.length > 7){
+				alert("Too much players.  The players size must between 4~7")
+			} else {
+				$http.post('citadelsgame/start').then(function(response){
+					$scope.goto('citadelsgame');
+				})
 			}
+			*/
 			$http.post('citadelsgame/start').then(function(response){
 				$scope.goto('citadelsgame');
 			})

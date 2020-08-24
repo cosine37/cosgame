@@ -24,6 +24,7 @@ public class BoardEntity {
 	String lord;
 	String isLord;
 	String id;
+	String lastRound;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -144,5 +145,11 @@ public class BoardEntity {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getLastRound() {
+		return lastRound;
+	}
+	public void setLastRound(String lastRound) {
+		this.lastRound = lastRound;
 	}
 }

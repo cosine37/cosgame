@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>Cosgame Citadels</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -15,7 +17,9 @@
 	<p>{{username}}</p>
 	<p>{{gamedata}}</p>
 	<div id="buttons">
+		<!-- 
 		<button ng-click="startTurn()" ng-show="phase == '-1' && status == '2'">start turn</button>
+		 -->
 		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">take two</button>
 		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">see cards</button>
 		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2'">end turn</button>

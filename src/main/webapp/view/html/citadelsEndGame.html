@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsEndGameController.js"></script>
+<body ng-app="citadelsEndGameApp" ng-controller="citadelsEndGameCtrl">
+	<h2>Game Ends</h2>
+	<p>{{gamedata}}</p>
+	<button ng-click="goto('citadels')" ng-show="isLord == 'n'">Back</button>
+	<button ng-click="dismiss()" ng-show="isLord == 'y'">Dismiss and Back</button>
+</body>
+</html>

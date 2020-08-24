@@ -280,7 +280,12 @@ public class Board {
 			}
 		} else if (status == CitadelsConsts.TAKETURNS) {
 			if (curRoleNum>roles.size()) {
-				newRound();
+				if (firstFinished) {
+					newRound();
+				} else {
+					status = CitadelsConsts.ENDGAME;
+				}
+				
 			}
 		}
 	}
@@ -487,6 +492,10 @@ public class Board {
 		if (name.contentEquals(lord)) {
 			isLord = "y";
 		}
+		String lastRound = "y";
+		if (firstFinished) {
+			lastRound = "n";
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -507,6 +516,7 @@ public class Board {
 		entity.setLord(lord);
 		entity.setIsLord(isLord);
 		entity.setId(id);
+		entity.setLastRound(lastRound);
 		return entity;
 	}
 	

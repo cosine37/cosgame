@@ -169,6 +169,7 @@ public class Player {
 					finished = true;
 					if (board.isFirstFinished()) {
 						firstFinished = true;
+						board.setFirstFinished(false);
 					}
 				}
 			}

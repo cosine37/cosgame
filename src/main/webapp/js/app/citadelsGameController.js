@@ -105,17 +105,28 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.getBoard = function(){
 			$http.get('/citadelsgame/getboard').then(function(response){
-				$scope.gamedata = JSON.stringify(response.data)
-				$scope.hand = response.data.hand
-				$scope.buildable = response.data.buildable
-				$scope.phase = response.data.phase
-				$scope.revealedCards = response.data.revealedCards
-				$scope.status = response.data.status
-				$scope.roleNums = response.data.roleNums
-				$scope.roleOwners = response.data.roleOwners
-				$scope.selectedRole = -1
-				setButtons()
-				setHand()
+				if (response.data.id == "NE"){
+					$scope.goto('citadels');
+				} else {
+					$scope.gamedata = JSON.stringify(response.data)
+					$scope.hand = response.data.hand
+					$scope.buildable = response.data.buildable
+					$scope.phase = response.data.phase
+					$scope.revealedCards = response.data.revealedCards
+					$scope.status = response.data.status
+					$scope.roleNums = response.data.roleNums
+					$scope.roleOwners = response.data.roleOwners
+					$scope.selectedRole = -1
+					if ($scope.status == '3'){
+						alert("game ends");
+						$scope.goto('citadelsendgame');
+					} else {
+						setButtons()
+						setHand()
+					}
+				}
+				
+				
 			});
 		}
 		
