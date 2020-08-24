@@ -13,26 +13,24 @@
 	<button ng-click="goto('citadelscreategame')">back</button>
 	<h1>Citadels Game</h1>
 	<p>{{username}}</p>
-	<!-- 
-	<button ng-click="startGame()">start</button>
-	 -->
 	<p>{{gamedata}}</p>
 	<div id="buttons">
-		<button ng-click="startTurn()" ng-show="phase == '-1'">start turn</button>
-		<button ng-click="taketwo()" ng-show="phase == '0'">take two</button>
-		<button ng-click="seeCards()" ng-show="phase == '0'">see cards</button>
-		<button ng-click="endTurn()" ng-show="phase == '2'">end turn</button>
+		<button ng-click="startTurn()" ng-show="phase == '-1' && status == '2'">start turn</button>
+		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">take two</button>
+		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">see cards</button>
+		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2'">end turn</button>
 		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1'">bot choose</button>
+		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2'">bot next move</button>
 	</div>
 	<div id="hand">
 		<p>hand</p>
 		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n'">{{c}}</button>
 	</div>
-	<div id="chooseCard" ng-show="phase == '1'">
+	<div id="chooseCard" ng-show="phase == '1' && status == '2'">
 		<p>choose card</p>
 		<button ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)">{{c}}</button>
 	</div>
-	<div id="chooseRole" ng-show="phase == '1' && status =='1'">
+	<div id="chooseRole" ng-show="phase == '1' && status == '1'">
 		<p>choose role</p>
 		
 		<div ng-repeat="r in roleNums track by $index">

@@ -86,6 +86,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.botNextMove = function(){
+			$http.post('/citadelsgame/botnextmove').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.setSelectedRole = function(x){
 			$scope.selectedRole = x;
 		}
@@ -107,6 +113,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.status = response.data.status
 				$scope.roleNums = response.data.roleNums
 				$scope.roleOwners = response.data.roleOwners
+				$scope.selectedRole = -1
 				setButtons()
 				setHand()
 			});

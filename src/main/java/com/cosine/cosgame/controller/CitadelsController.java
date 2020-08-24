@@ -104,6 +104,7 @@ public class CitadelsController {
 		board.updatePlayers();
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
+		board.updateDB("roundCount", board.getRoundCount());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -204,6 +205,12 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).endTurn();
 			board.updatePlayer(username);
+			board.updateCurPlayer();
+			board.updateDB("status", board.getStatus());
+			board.updateDB("curPlayer", board.getCurPlayer());
+			board.updateDB("roundCount", board.getRoundCount());
+			board.updateDB("curRoleNum", board.getCurRoleNum());
+			board.updateRoles();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -216,7 +223,6 @@ public class CitadelsController {
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		//board.botChooseRole();
 		board.getPlayerByName(username).chooseRole(index);
 		board.updatePlayer(username);
 		board.updateRoles();
@@ -292,6 +298,25 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
 		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/botnextmove", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> botnextmove(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		String name = board.getPlayers().get(board.getCurPlayer()).getName();
+		board.botNextMove();
+		board.updatePlayer(name);
+		board.updateDB("status", board.getStatus());
+		board.updateCurPlayer();
+		board.updateDB("curPlayer", board.getCurPlayer());
+		board.updateDB("curRoleNum", board.getCurRoleNum());
+		board.updateDB("roundCount", board.getRoundCount());
+		board.updateRoles();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

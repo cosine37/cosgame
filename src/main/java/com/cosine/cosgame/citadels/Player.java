@@ -66,6 +66,7 @@ public class Player {
 	public void endTurn() {
 		if (phase == CitadelsConsts.BUILDDISTRICT) {
 			phase = CitadelsConsts.OFFTURN;
+			board.nextRole();
 		}
 	}
 	
@@ -171,6 +172,27 @@ public class Player {
 					}
 				}
 			}
+		}
+	}
+	
+	public void botNextMove() { // for bot to take action & build
+		if (phase == CitadelsConsts.TAKEACTION) {
+			if (hand.size() > 1) {
+				takeActionOption(2);
+			} else {
+				takeActionOption(1);
+			}
+		} else if (phase == CitadelsConsts.CHOOSECARD) {
+			chooseCard(0);
+		} else if (phase == CitadelsConsts.BUILDDISTRICT) {
+			int i;
+			for (i=0;i<hand.size();i++) {
+				if (canBuild(i)) {
+					build(i);
+					break;
+				}
+			}
+			endTurn();
 		}
 	}
 	

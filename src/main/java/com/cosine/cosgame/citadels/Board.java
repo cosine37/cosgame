@@ -222,9 +222,11 @@ public class Board {
 			players.get(i).setRoleNum(-1);
 		}
 		discardRoles();
+		roundCount = roundCount+1;
 		status = CitadelsConsts.CHOOSEROLE;
 		killedRole = -1;
 		stealedRole = -1;
+		curPlayer = crown;
 		players.get(crown).setPhase(CitadelsConsts.CHOOSEROLE);
 	}
 	
@@ -253,6 +255,10 @@ public class Board {
 					nextRole();
 				} else {
 					curPlayer = r.getOwner();
+					players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
+					System.out.println("curPlayer: " + players.get(curPlayer).getName());
+					System.out.println("phase: " + players.get(curPlayer).getPhase());
+					break;
 				}
 			}
 		}
@@ -261,7 +267,13 @@ public class Board {
 	public void updateStatus() {
 		if (status == CitadelsConsts.CHOOSEROLE) {
 			int i;
-			if (players.get(curPlayer).getRoleNum() != -1) {
+			int count = 0;
+			for (i=0;i<roles.size();i++) {
+				if (roles.get(i).getOwner() >= 0) {
+					count++;
+				}
+			}
+			if (count == players.size()) {
 				status = CitadelsConsts.TAKETURNS;
 				curRoleNum = 0;
 				nextRole();
@@ -275,7 +287,6 @@ public class Board {
 	
 	public void botChooseRole() {
 		Player p = players.get(curPlayer);
-		//System.out.println(p.getName());
 		if (p.isBot() && p.getPhase() == CitadelsConsts.CHOOSEROLE) {
 			int i;
 			List<Integer> choices = new ArrayList<>();
@@ -283,15 +294,22 @@ public class Board {
 				choices.add(i);
 			}
 			int x;
+			p.setRoleNum(-1);
 			while (p.getRoleNum() == -1) {
 				Random rand = new Random();
 				x = choices.remove(rand.nextInt(choices.size()));
 				if (roles.get(x).getOwner() == CitadelsConsts.SELECTABLE) {
 					p.chooseRole(x);
-					//System.out.println(p.getName()+" chooses "+p.getRoleNum());
 					break;
 				}
 			}
+		}
+	}
+	
+	public void botNextMove() {
+		Player p = players.get(curPlayer);
+		if (p.isBot() && p.getPhase() != CitadelsConsts.OFFTURN && status == CitadelsConsts.TAKETURNS) {
+			p.botNextMove();
 		}
 	}
 	
