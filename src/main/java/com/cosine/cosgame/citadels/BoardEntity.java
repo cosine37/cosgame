@@ -12,6 +12,7 @@ public class BoardEntity {
 	List<String> revealedCards;
 	List<String> roleNums;
 	List<String> roleOwners;
+	List<String> roleRevealed;
 	
 	String phase;
 	String bank;
@@ -151,5 +152,11 @@ public class BoardEntity {
 	}
 	public void setLastRound(String lastRound) {
 		this.lastRound = lastRound;
+	}
+	public List<String> getRoleRevealed() {
+		return roleRevealed;
+	}
+	public void setRoleRevealed(List<String> roleRevealed) {
+		this.roleRevealed = roleRevealed;
 	}
 }

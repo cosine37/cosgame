@@ -25,6 +25,27 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.selectedRole = -1
 		$scope.roleNums = []
 		$scope.roleOwners = []
+		$scope.roleRevealed = []
+		$scope.playerNames = []
+		$scope.playerStyle = []
+		
+		setPlayerStyle = function(){
+			$scope.playerStyle = []
+			var i
+			for (i=0;i<$scope.playerNames.length;i++){
+				myStyle = {
+						"background-color" : "yellow",
+				}
+				otherStyle = {
+						
+				}
+				if ($scope.playerNames[i] == $scope.username){
+					$scope.playerStyle.push(myStyle)
+				} else {
+					$scope.playerStyle.push(otherStyle)
+				}
+			}
+		}
 		
 		setButtons = function(){
 			
@@ -116,11 +137,29 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.status = response.data.status
 					$scope.roleNums = response.data.roleNums
 					$scope.roleOwners = response.data.roleOwners
+					$scope.built = response.data.built
+					$scope.coins = response.data.coins
+					$scope.handSizes = response.data.handSizes
+					$scope.playerNames = response.data.playerNames
+					$scope.deckSize = response.data.deckSize
+					$scope.roleRevealed = response.data.roleRevealed
+					$scope.curPlayer = response.data.curPlayer
 					$scope.selectedRole = -1
+					$scope.bank = response.data.bank
+					$scope.deckSize = response.data.deckSize
+					$scope.crown = response.data.crown
+					
 					if ($scope.status == '3'){
+						$scope.statusDisplay = "End Game"
 						alert("game ends");
 						$scope.goto('citadelsendgame');
 					} else {
+						if ($scope.status == '2'){
+							$scope.statusDisplay = "Take Turns"
+						} else if ($scope.status == '1'){
+							$scope.statusDisplay = "Choose Role"
+						}
+						setPlayerStyle()
 						setButtons()
 						setHand()
 					}

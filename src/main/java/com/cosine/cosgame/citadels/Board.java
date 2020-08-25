@@ -35,7 +35,7 @@ public class Board {
 		deck = new ArrayList<>();
 		roles = new ArrayList<>();
 		firstFinished = true;
-		finishCount = 8;
+		finishCount = 7;
 		coins = 30;
 		killedRole = -1;
 		stealedRole = -1;
@@ -496,6 +496,19 @@ public class Board {
 		if (firstFinished) {
 			lastRound = "n";
 		}
+		List<String> roleRevealed = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (this.status == CitadelsConsts.TAKETURNS) {
+				if (players.get(i).getRoleNum() <= curRoleNum) {
+					roleRevealed.add(Integer.toString(players.get(i).getRoleNum()));
+				} else {
+					roleRevealed.add("-1");
+				}
+			} else {
+				roleRevealed.add("-1");
+			}
+			
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -517,6 +530,7 @@ public class Board {
 		entity.setIsLord(isLord);
 		entity.setId(id);
 		entity.setLastRound(lastRound);
+		entity.setRoleRevealed(roleRevealed);
 		return entity;
 	}
 	
