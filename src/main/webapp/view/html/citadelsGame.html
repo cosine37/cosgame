@@ -6,37 +6,47 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/citadelsGameController.js"></script>
+
 <body ng-app="citadelsGameApp" ng-controller="citadelsGameCtrl">
 	<button ng-click="goto('citadelscreategame')">back</button>
 	<h1>Citadels Game</h1>
-	<p>Coins in bank: {{bank}}</p>
-	<p>Number of cards in deck: {{deckSize}}</p>
-	<p>Status: {{statusDisplay}}</p>
-	<div id="playerInfo">
-		<h3>Players</h3>
-		<table>
-			<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]">
-				<td ng-show="crown == $index">♚</td>
-				<td ng-show="crown != $index"></td>
-			
-				<td>{{pn}}</td>
-				<td>role: {{roleRevealed[$index]}}</td>
-				<td>handsize: {{handSizes[$index]}}</td>
-				<td>coin: {{coins[$index]}}</td>
-				<td>built: {{built[$index]}}</td>
+	<div id="publicinfo" style="display:block">
+		<p>Coins in bank: {{bank}}</p>
+		<p>Number of cards in deck: {{deckSize}}</p>
+		<p>Status: {{statusDisplay}}</p>
+		<div id="playerInfo" style="float:left">
+			<h3>Players</h3>
+			<table>
+				<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]">
+					<td ng-show="crown == $index">♚</td>
+					<td ng-show="crown != $index"></td>
 				
-				<td ng-show="curPlayer == $index">◀</td>
-				<td ng-show="curPlayer != $index"></td>
-			</tr>
-		</table>
+					<td>{{pn}}</td>
+					<td>role: {{roleRevealed[$index]}}</td>
+					<td>handsize: {{handSizes[$index]}}</td>
+					<td>coin: {{coins[$index]}}</td>
+					<td>built: {{built[$index]}}</td>
+					
+					<td ng-show="curPlayer == $index">◀</td>
+					<td ng-show="curPlayer != $index"></td>
+				</tr>
+			</table>
+		</div>
+		<div id="logs" style="float:left">
+			<h3>Logs</h3>
+			<div id="logcontent" class="logcontent">
+				<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
+			</div>
+		</div>
 	</div>
 	
-	<div id="hand">
+	<div id="hand" style="clear:both">
 		<p>hand</p>
 		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n' ">{{c}}</button>
 	</div>

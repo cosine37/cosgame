@@ -44,6 +44,12 @@ public class CitadelsController {
 		return "citadelsEndGame";
 	}
 	
+	@RequestMapping(value="/citadelsgame/empty", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> empty(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> citadelsNewBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -110,6 +116,7 @@ public class CitadelsController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("roundCount", board.getRoundCount());
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -180,6 +187,7 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateCurPlayer();
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -195,6 +203,7 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).startTurn();
 			board.updatePlayer(username);
+			board.updateLogs();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -216,6 +225,7 @@ public class CitadelsController {
 			board.updateDB("roundCount", board.getRoundCount());
 			board.updateDB("curRoleNum", board.getCurRoleNum());
 			board.updateRoles();
+			board.updateLogs();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -235,6 +245,7 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateCurPlayer();
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -250,6 +261,7 @@ public class CitadelsController {
 			board.getPlayerByName(username).takeActionOption(2);
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
+			board.updateLogs();
 		}
 		
 		StringEntity entity = new StringEntity();
@@ -267,6 +279,7 @@ public class CitadelsController {
 			board.getPlayerByName(username).takeActionOption(1);
 			board.updatePlayer(username);
 			board.updateDeck();
+			board.updateLogs();
 		}
 		
 		StringEntity entity = new StringEntity();
@@ -284,6 +297,7 @@ public class CitadelsController {
 			board.getPlayerByName(username).chooseCard(index);
 			board.updatePlayer(username);
 			board.updateDeck();
+			board.updateLogs();
 		}
 		
 		StringEntity entity = new StringEntity();
@@ -303,6 +317,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
 			board.updateDB("firstFinished", board.isFirstFinished());
+			board.updateLogs();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -324,6 +339,7 @@ public class CitadelsController {
 		board.updateDB("roundCount", board.getRoundCount());
 		board.updateDB("firstFinished", board.isFirstFinished());
 		board.updateRoles();
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

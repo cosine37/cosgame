@@ -13,6 +13,7 @@ public class BoardEntity {
 	List<String> roleNums;
 	List<String> roleOwners;
 	List<String> roleRevealed;
+	List<String> logs;
 	
 	String phase;
 	String bank;
@@ -158,5 +159,11 @@ public class BoardEntity {
 	}
 	public void setRoleRevealed(List<String> roleRevealed) {
 		this.roleRevealed = roleRevealed;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 }

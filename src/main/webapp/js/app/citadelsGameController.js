@@ -148,6 +148,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.bank = response.data.bank
 					$scope.deckSize = response.data.deckSize
 					$scope.crown = response.data.crown
+					$scope.logs = response.data.logs
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"
@@ -163,6 +164,11 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 						setButtons()
 						setHand()
 					}
+					$http.post('/citadelsgame/empty').then(function(response){
+						var logcontent = document.getElementById("logcontent");
+						logcontent.scrollTop = logcontent.scrollHeight;
+					})
+					
 				}
 				
 				

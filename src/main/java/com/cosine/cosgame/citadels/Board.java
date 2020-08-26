@@ -28,6 +28,7 @@ public class Board {
 	int crown;
 	String id;
 	MongoDBUtil dbutil;
+	Logger logger;
 	
 	public Board() {
 		allRes = new AllRes();
@@ -44,6 +45,8 @@ public class Board {
 		
 		String dbname = "citadels";
 		String col = "board";
+		
+		logger = new Logger();
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
@@ -228,6 +231,7 @@ public class Board {
 		stealedRole = -1;
 		curPlayer = crown;
 		players.get(crown).setPhase(CitadelsConsts.CHOOSEROLE);
+		log("Round " + Integer.toString(roundCount));
 	}
 	
 	public void nextPlayerChooseRole() {
@@ -275,14 +279,17 @@ public class Board {
 			}
 			if (count == players.size()) {
 				status = CitadelsConsts.TAKETURNS;
+				log("All roles have been chosen.");
 				curRoleNum = 0;
 				nextRole();
 			}
 		} else if (status == CitadelsConsts.TAKETURNS) {
 			if (curRoleNum>roles.size()) {
+				log("End of Round " + Integer.toString(roundCount) + ".");
 				if (firstFinished) {
 					newRound();
 				} else {
+					log("Game ends.");
 					status = CitadelsConsts.ENDGAME;
 				}
 				
@@ -330,6 +337,11 @@ public class Board {
 	}
 	public boolean isLord(String name) {
 		return name.contentEquals(this.lord);
+	}
+	public void log(String s) {
+		if (status == CitadelsConsts.CHOOSEROLE || status == CitadelsConsts.TAKETURNS) {
+			logger.log(s);
+		}
 	}
 	public List<Player> getPlayers() {
 		return players;
@@ -531,6 +543,7 @@ public class Board {
 		entity.setId(id);
 		entity.setLastRound(lastRound);
 		entity.setRoleRevealed(roleRevealed);
+		entity.setLogs(logger.getLogs());
 		return entity;
 	}
 	
@@ -568,6 +581,7 @@ public class Board {
 		doc.append("playerNames", playerNames);
 		doc.append("deck", dod);
 		doc.append("roles", dor);
+		doc.append("logs", logger.getLogs());
 		return doc;
 	}
 	
@@ -612,11 +626,15 @@ public class Board {
 			r.setBoard(this);
 			roles.add(r);
 		}
-		
+		logger.setLogs((List<String>) doc.get("logs"));
 	}
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
+	}
+	
+	public void updateLogs() {
+		dbutil.update("id", id, "logs", logger.getLogs());
 	}
 	
 	public void updateDeck() {
