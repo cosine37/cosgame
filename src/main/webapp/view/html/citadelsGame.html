@@ -45,8 +45,11 @@
 			</div>
 		</div>
 	</div>
-	
-	<div id="hand" style="clear:both">
+	<div id="skills" style="clear:both">
+		<p>skills</p>
+		<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)">{{b}}</button>
+	</div>
+	<div id="hand">
 		<p>hand</p>
 		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n' ">{{c}}</button>
 	</div>

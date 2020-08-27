@@ -28,6 +28,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.roleRevealed = []
 		$scope.playerNames = []
 		$scope.playerStyle = []
+		$scope.skillButtons = []
 		
 		setPlayerStyle = function(){
 			$scope.playerStyle = []
@@ -63,53 +64,58 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		adjustLogs = function(){
+			var logcontent = document.getElementById("logcontent");
+			logcontent.scrollTop = logcontent.scrollHeight;
+		}
+		
 		$scope.startTurn = function(){
 			$http.post('/citadelsgame/startturn').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.endTurn = function(){
 			$http.post('/citadelsgame/endturn').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.seeCards = function(){
 			$http.post('/citadelsgame/seecards').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.chooseCard = function(x){
 			var data = {"index" : x}
 			$http({url: "/citadelsgame/choosecard", method: "POST", params: data}).then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.taketwo = function(){
 			$http.post('/citadelsgame/taketwocoins').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.build = function(x){
 			var data = {"index" : x}
 			$http({url: "/citadelsgame/build", method: "POST", params: data}).then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.curPlayerChooseRole = function(){
 			$http.post('/citadelsgame/curplayerchooserole').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
 		$scope.botNextMove = function(){
 			$http.post('/citadelsgame/botnextmove').then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
@@ -117,10 +123,17 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.selectedRole = x;
 		}
 		
+		$scope.chooseSkill = function(x){
+			var data = {"index" : x}
+			$http({url: "/citadelsgame/chooseskill", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.chooseRole = function(){
 			var data = {"index" : $scope.selectedRole}
 			$http({url: "/citadelsgame/chooserole", method: "POST", params: data}).then(function(response){
-				$scope.getBoard();
+				$scope.getBoard()
 			});
 		}
 		
@@ -149,6 +162,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.deckSize = response.data.deckSize
 					$scope.crown = response.data.crown
 					$scope.logs = response.data.logs
+					$scope.skillButtons = response.data.skillButtons
+					$scope.askType = response.data.askType
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"
@@ -165,12 +180,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 						setHand()
 					}
 					$http.post('/citadelsgame/empty').then(function(response){
-						var logcontent = document.getElementById("logcontent");
-						logcontent.scrollTop = logcontent.scrollHeight;
-					})
-					
+						adjustLogs()
+					});
 				}
-				
 				
 			});
 		}
@@ -181,6 +193,6 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.getBoard()
 		
 }]);

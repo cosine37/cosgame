@@ -3,6 +3,8 @@ package com.cosine.cosgame.citadels;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cosine.cosgame.citadels.roles.Assassin;
+
 public class AllRes {
 	List<Card> baseCards;
 	List<Card> specialCards;
@@ -20,9 +22,12 @@ public class AllRes {
 	void setAllRoles() {
 		int i;
 		Role r;
-		for (i=1;i<=8;i++) {
+		r = new Assassin();
+		allRoles.add(r);
+		for (i=2;i<=8;i++) {
 			r = new Role();
 			r.setNum(i);
+			r.setImg("0");
 			allRoles.add(r);
 		}
 	}

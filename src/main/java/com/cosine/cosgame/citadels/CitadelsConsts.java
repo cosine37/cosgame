@@ -34,5 +34,8 @@ public class CitadelsConsts {
 	public static final int NOTUSEDREVEALED = -2;
 	public static final int NOTUSEDHIDDEN = -3;
 	
+	// ask types
+	public static final int NOASK = 0;
+	//public static final int CHOOSEROLE = 1;
 	
 }

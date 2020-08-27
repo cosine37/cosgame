@@ -25,6 +25,7 @@ public class Player {
 	int numBuilt;
 	int identicalLimit;
 	boolean bot;
+	Ask ask;
 	
 	public Player(String name) {
 		this.name = name;
@@ -41,6 +42,7 @@ public class Player {
 		identicalLimit = 0;
 		bot = false;
 		phase = CitadelsConsts.OFFTURN;
+		ask = new Ask();
 	}
 	
 	public void chooseRole(int index) {
@@ -364,6 +366,12 @@ public class Player {
 	public void setBot(boolean bot) {
 		this.bot = bot;
 	}
+	public Ask getAsk() {
+		return ask;
+	}
+	public void setAsk(Ask ask) {
+		this.ask = ask;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -390,6 +398,8 @@ public class Player {
 		doc.append("hand", doh);
 		doc.append("built", dob);
 		doc.append("forChoose", dof);
+		Document doa = ask.toDocument();
+		doc.append("ask", doa);
 		return doc;
 	}
 	
@@ -430,6 +440,9 @@ public class Player {
 			c.setBoard(this.board);
 			forChoose.add(c);
 		}
+		Document doa = (Document) doc.get("ask");
+		ask = new Ask();
+		ask.setFromDoc(doa);
 	}
 	
 }

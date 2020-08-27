@@ -1,19 +1,24 @@
 package com.cosine.cosgame.citadels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 public class Role {
-	int num;
-	String name;
-	String img;
-	int owner;
-	int numSkills;
-	boolean destroyable;
-	Board board;
-	Player player;
+	protected int num;
+	protected String name;
+	protected String img;
+	protected int owner;
+	protected int numSkills;
+	protected boolean destroyable;
+	protected Board board;
+	protected Player player;
+	protected List<String> buttonNames;
 	
 	public Role() {
 		destroyable = true;
+		buttonNames = new ArrayList<>();
 	}
 	
 	public void whenReveal() {
@@ -24,6 +29,11 @@ public class Role {
 				player.setCoin(0);
 			}
 		}
+	}
+	
+	public Ask chooseSkill(int x) {
+		Ask ask = new Ask();
+		return ask;
 	}
 	
 	public void useSkill(int x, int p1, int p2, int p3, int p4) {
@@ -100,6 +110,12 @@ public class Role {
 	}
 	public void setOwner(int owner) {
 		this.owner = owner;
+	}
+	public List<String> getButtonNames() {
+		return buttonNames;
+	}
+	public void setButtonNames(List<String> buttonNames) {
+		this.buttonNames = buttonNames;
 	}
 
 	public Document toDocument() {

@@ -14,6 +14,7 @@ public class BoardEntity {
 	List<String> roleOwners;
 	List<String> roleRevealed;
 	List<String> logs;
+	List<String> skillButtons;
 	
 	String phase;
 	String bank;
@@ -27,6 +28,7 @@ public class BoardEntity {
 	String isLord;
 	String id;
 	String lastRound;
+	String askType;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -165,5 +167,17 @@ public class BoardEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public List<String> getSkillButtons() {
+		return skillButtons;
+	}
+	public void setSkillButtons(List<String> skillButtons) {
+		this.skillButtons = skillButtons;
+	}
+	public String getAskType() {
+		return askType;
+	}
+	public void setAskType(String askType) {
+		this.askType = askType;
 	}
 }

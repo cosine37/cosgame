@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.citadels.Ask;
 import com.cosine.cosgame.citadels.Board;
 import com.cosine.cosgame.citadels.BoardEntity;
 import com.cosine.cosgame.citadels.CitadelsMeta;
+import com.cosine.cosgame.citadels.Player;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -261,6 +263,26 @@ public class CitadelsController {
 			board.getPlayerByName(username).takeActionOption(2);
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
+			board.updateLogs();
+		}
+		
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/chooseskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseSkill(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = p.getRole().chooseSkill(index);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			
 			board.updateLogs();
 		}
 		

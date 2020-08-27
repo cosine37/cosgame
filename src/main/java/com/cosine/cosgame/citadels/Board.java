@@ -260,8 +260,6 @@ public class Board {
 				} else {
 					curPlayer = r.getOwner();
 					players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
-					System.out.println("curPlayer: " + players.get(curPlayer).getName());
-					System.out.println("phase: " + players.get(curPlayer).getPhase());
 					break;
 				}
 			}
@@ -519,7 +517,10 @@ public class Board {
 			} else {
 				roleRevealed.add("-1");
 			}
-			
+		}
+		List<String> skillButtons = new ArrayList<>();
+		if (p.getRole() != null) {
+			skillButtons = p.getRole().getButtonNames();
 		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
@@ -544,6 +545,8 @@ public class Board {
 		entity.setLastRound(lastRound);
 		entity.setRoleRevealed(roleRevealed);
 		entity.setLogs(logger.getLogs());
+		entity.setAskType(Integer.toString(p.getAsk().getAskType()));
+		entity.setSkillButtons(skillButtons);
 		return entity;
 	}
 	
@@ -600,6 +603,13 @@ public class Board {
 		crown = doc.getInteger("crown", -1);
 		lord = doc.getString("lord");
 		int i;
+		List<Document> dor = (List<Document>) doc.get("roles");
+		roles = new ArrayList<>();
+		for (i=0;i<dor.size();i++) {
+			Role r = RoleFactory.createRole(dor.get(i));
+			r.setBoard(this);
+			roles.add(r);
+		}
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		for (i=0;i<playerNames.size();i++) {
 			String playerName = playerNames.get(i);
@@ -618,13 +628,6 @@ public class Board {
 			Card c = CardFactory.createCard(dod.get(i));
 			c.setBoard(this);
 			deck.add(c);
-		}
-		List<Document> dor = (List<Document>) doc.get("roles");
-		roles = new ArrayList<>();
-		for (i=0;i<dor.size();i++) {
-			Role r = RoleFactory.createRole(dor.get(i));
-			r.setBoard(this);
-			roles.add(r);
 		}
 		logger.setLogs((List<String>) doc.get("logs"));
 	}
