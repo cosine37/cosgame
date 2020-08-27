@@ -3,6 +3,8 @@ package com.cosine.cosgame.citadels;
 import org.bson.Document;
 
 import com.cosine.cosgame.citadels.roles.Assassin;
+import com.cosine.cosgame.citadels.roles.Bishop;
+import com.cosine.cosgame.citadels.roles.Merchant;
 import com.cosine.cosgame.citadels.roles.Thief;
 
 public class RoleFactory {
@@ -10,18 +12,21 @@ public class RoleFactory {
 		Role role;
 		if (img.contentEquals("001")) {
 			role = new Assassin();
-			role.setOwner(owner);
 		} else if (img.contentEquals("002")) {
 			role = new Thief();
-			role.setOwner(owner);
-		} else {
+		} else if (img.contentEquals("005")) {
+			role = new Bishop();
+		} else if (img.contentEquals("006")) {
+			role = new Merchant();
+		} 
+		
+		else {
 			role = new Role();
 			role.setNum(num);
 			role.setName(name);
 			role.setImg(img);
-			role.setOwner(owner);
 		}
-		
+		role.setOwner(owner);
 		return role;
 	}
 	

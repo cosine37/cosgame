@@ -21,7 +21,7 @@ public class Assassin extends Role {
 		int i;
 		Ask ask = super.chooseSkill(x);
 		if (x == 0) {
-			ask.setAskId(1001);
+			ask.setAskId(1011);
 			ask.setAskType(CitadelsConsts.CHOOSEROLE);
 			ask.setMsg("Please choose a role to kill");
 			List<String> available = new ArrayList<>();

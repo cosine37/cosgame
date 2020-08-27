@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.citadels.roles.Assassin;
+import com.cosine.cosgame.citadels.roles.Bishop;
+import com.cosine.cosgame.citadels.roles.Merchant;
 import com.cosine.cosgame.citadels.roles.Thief;
 
 public class AllRes {
@@ -27,7 +29,17 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Thief();
 		allRoles.add(r);
-		for (i=3;i<=8;i++) {
+		for (i=3;i<=4;i++) {
+			r = new Role();
+			r.setNum(i);
+			r.setImg("0");
+			allRoles.add(r);
+		}
+		r = new Bishop();
+		allRoles.add(r);
+		r = new Merchant();
+		allRoles.add(r);
+		for (i=7;i<=8;i++) {
 			r = new Role();
 			r.setNum(i);
 			r.setImg("0");

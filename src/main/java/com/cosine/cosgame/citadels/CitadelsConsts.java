@@ -6,6 +6,7 @@ public class CitadelsConsts {
 	public static final int RED = 2;
 	public static final int YELLOW = 3;
 	public static final int PURPLE = 4;
+	public static final String[] COLORNAME = {"green", "blue", "red", "yellow", "purple"};
 	
 	// role number
 	public static final int ASSASSIN = 1;

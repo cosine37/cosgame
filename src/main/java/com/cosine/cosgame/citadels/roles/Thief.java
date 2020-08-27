@@ -21,7 +21,7 @@ public class Thief extends Role {
 		int i;
 		Ask ask = super.chooseSkill(x);
 		if (x == 0) {
-			ask.setAskId(1002);
+			ask.setAskId(1021);
 			ask.setAskType(CitadelsConsts.CHOOSEROLE);
 			ask.setMsg("Please choose a role to steal");
 			List<String> available = new ArrayList<>();

@@ -120,7 +120,9 @@ public class Player {
 		
 	}
 	
-	public void startBuildPhase(){
+	public void startBuildPhase(){ // equiv. to aftertakeaction
+		// TODO: some extra handle for witch & bewitched players
+		role.afterTakeAction();
 		phase = CitadelsConsts.BUILDDISTRICT;
 		numBuilt = 0;
 	}

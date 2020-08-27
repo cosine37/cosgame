@@ -15,8 +15,12 @@ public class Role {
 	protected Board board;
 	protected Player player;
 	protected List<String> buttonNames;
+	protected int color;
+	
+	
 	
 	public Role() {
+		color = -1;
 		destroyable = true;
 		buttonNames = new ArrayList<>();
 	}
@@ -63,10 +67,25 @@ public class Role {
 		return useSkill(x, 0, 0, 0, 0);
 	}
 	
+	public Ask benefit() {
+		Ask ask = new Ask();
+		int i,ans;
+		ans = 0;
+		for (i=0;i<player.getBuilt().size();i++) {
+			if (player.getBuilt().get(i).getColor() == color) {
+				ans++;
+			}
+		}
+		board.log(player.getName() + " receives " + Integer.toString(ans) + " coins from " + CitadelsConsts.COLORNAME[color] + " buildings.");
+		player.addCoin(ans);
+		return ask;
+	}
+	
 	
 	// for No.6, No.7
-	public void afterTakeAction() {
-		
+	public Ask afterTakeAction() {
+		Ask ask = new Ask();
+		return ask;
 	}
 
 	public int getNum() {
