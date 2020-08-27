@@ -23,8 +23,9 @@ public class Role {
 	
 	public void whenReveal() {
 		if (num == board.getStealedRole()) {
-			Player p = board.getPlayerByRole(CitadelsConsts.THIEF);
+			Player p = board.getPlayerByRoleImg("002"); // Thief handle
 			if (p != null) {
+				board.log(player.getName() + "'s coin has been stealed");
 				p.addCoin(player.getCoin());
 				player.setCoin(0);
 			}
@@ -36,24 +37,30 @@ public class Role {
 		return ask;
 	}
 	
-	public void useSkill(int x, int p1, int p2, int p3, int p4) {
+	public Ask useSkill(int x, int p1, int p2, int p3, int p4) {
+		Ask ask = new Ask();
 		
+		if (player != null) {
+			player.useRoleSkill(x);
+		}
+		
+		return ask;
 	}
 	
-	public void useSkill(int x, int p1, int p2, int p3) {
-		useSkill(x, p1, p2, p3, 0);
+	public Ask useSkill(int x, int p1, int p2, int p3) {
+		return useSkill(x, p1, p2, p3, 0);
 	}
 	
-	public void useSkill(int x, int p1, int p2) {
-		useSkill(x, p1, p2, 0, 0);
+	public Ask useSkill(int x, int p1, int p2) {
+		return useSkill(x, p1, p2, 0, 0);
 	}
 	
-	public void useSkill(int x, int p1) {
-		useSkill(x, p1, 0, 0, 0);
+	public Ask useSkill(int x, int p1) {
+		return useSkill(x, p1, 0, 0, 0);
 	}
 	
-	public void useSkill(int x) {
-		useSkill(x, 0, 0, 0, 0);
+	public Ask useSkill(int x) {
+		return useSkill(x, 0, 0, 0, 0);
 	}
 	
 	

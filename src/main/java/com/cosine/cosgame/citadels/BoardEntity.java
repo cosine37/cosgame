@@ -15,6 +15,8 @@ public class BoardEntity {
 	List<String> roleRevealed;
 	List<String> logs;
 	List<String> skillButtons;
+	List<String> askLs;
+	List<String> canUseRoleSkill;
 	
 	String phase;
 	String bank;
@@ -29,6 +31,8 @@ public class BoardEntity {
 	String id;
 	String lastRound;
 	String askType;
+	String killedRole;
+	String stealedRole;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -179,5 +183,29 @@ public class BoardEntity {
 	}
 	public void setAskType(String askType) {
 		this.askType = askType;
+	}
+	public List<String> getAskLs() {
+		return askLs;
+	}
+	public void setAskLs(List<String> askLs) {
+		this.askLs = askLs;
+	}
+	public List<String> getCanUseRoleSkill() {
+		return canUseRoleSkill;
+	}
+	public void setCanUseRoleSkill(List<String> canUseRoleSkill) {
+		this.canUseRoleSkill = canUseRoleSkill;
+	}
+	public String getKilledRole() {
+		return killedRole;
+	}
+	public void setKilledRole(String killedRole) {
+		this.killedRole = killedRole;
+	}
+	public String getStealedRole() {
+		return stealedRole;
+	}
+	public void setStealedRole(String stealedRole) {
+		this.stealedRole = stealedRole;
 	}
 }

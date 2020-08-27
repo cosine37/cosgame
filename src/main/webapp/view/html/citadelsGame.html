@@ -47,7 +47,7 @@
 	</div>
 	<div id="skills" style="clear:both">
 		<p>skills</p>
-		<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)">{{b}}</button>
+		<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
 	</div>
 	<div id="hand">
 		<p>hand</p>
@@ -60,7 +60,7 @@
 	<div id="chooseRole" ng-show="phase == '1' && status == '1'">
 		<p>choose role</p>
 		
-		<div ng-repeat="r in roleNums track by $index">
+		<div ng-repeat="r in roleNums track by $index" style="float:left">
 			<button ng-show="selectedRole != $index && roleOwners[$index] == '-1'" ng-click="setSelectedRole($index)">{{r}}</button>
 			<button ng-show="selectedRole != $index && roleOwners[$index] == '-3'" ng-click="setSelectedRole($index)" disabled>{{r}}</button>
 			<p ng-show="selectedRole == $index">{{r}}</p>
@@ -68,7 +68,7 @@
 		</div>
 		<button ng-click=chooseRole()>Confirm</button>
 	</div>
-	<div id="buttons">
+	<div id="buttons" style="clear:both">
 		<!-- 
 		<button ng-click="startTurn()" ng-show="phase == '-1' && status == '2'">start turn</button>
 		 -->
@@ -77,6 +77,15 @@
 		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2'">end turn</button>
 		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1'">bot choose</button>
 		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2'">bot next move</button>
+	</div>
+	<div id="chooseRoleSkill" ng-show="askType == '1'">
+		<div ng-repeat="r in roleNums track by $index" style="float:left">
+			<button ng-show="selectedRoleSkill != $index && askLs[$index] == 'y'" ng-click="setSelectedRoleSkill($index)">{{r}}</button>
+			<button ng-show="selectedRoleSkill != $index && askLs[$index] == 'n'" ng-click="setSelectedRoleSkill($index)" disabled>{{r}}</button>
+			<p ng-show="selectedRoleSkill == $index">{{r}}</p>
+			<p ng-show="askLs[$index] == 'r'"><del>{{r}}</del></p>
+		</div>
+		<button ng-click=useSkill(0)>Use skill</button>
 	</div>
 	<p>{{gamedata}}</p>
 </body>

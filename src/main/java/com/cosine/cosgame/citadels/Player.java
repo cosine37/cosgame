@@ -26,6 +26,7 @@ public class Player {
 	int identicalLimit;
 	boolean bot;
 	Ask ask;
+	List<String> canUseRoleSkill;
 	
 	public Player(String name) {
 		this.name = name;
@@ -43,6 +44,7 @@ public class Player {
 		bot = false;
 		phase = CitadelsConsts.OFFTURN;
 		ask = new Ask();
+		canUseRoleSkill = new ArrayList<>();
 	}
 	
 	public void chooseRole(int index) {
@@ -50,11 +52,22 @@ public class Player {
 			role = board.getRoles().get(index);
 			roleNum = role.getNum();
 			role.setOwner(board.getPlayerIndex(this));
+			role.setPlayer(this);
+			canUseRoleSkill = new ArrayList<>();
+			for (int i=0;i<role.getNumSkills();i++) {
+				canUseRoleSkill.add("y");
+			}
 			board.log(name + " chooses a role.");
 		}
 		phase = CitadelsConsts.OFFTURN;
 		board.nextPlayerChooseRole();
 		
+	}
+	
+	public void useRoleSkill(int index) {
+		if (index < canUseRoleSkill.size()) {
+			canUseRoleSkill.set(index, "n");
+		}
 	}
 	
 	public void startTurn() {
@@ -372,6 +385,12 @@ public class Player {
 	public void setAsk(Ask ask) {
 		this.ask = ask;
 	}
+	public List<String> getCanUseRoleSkill() {
+		return canUseRoleSkill;
+	}
+	public void setCanUseRoleSkill(List<String> canUseRoleSkill) {
+		this.canUseRoleSkill = canUseRoleSkill;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -382,6 +401,7 @@ public class Player {
 		doc.append("firstFinished", firstFinished);
 		doc.append("numBuilt", numBuilt);
 		doc.append("bot", bot);
+		doc.append("canUseRoleSkill", canUseRoleSkill);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -412,6 +432,10 @@ public class Player {
 		numBuilt = doc.getInteger("numBuilt", 0);
 		bot = doc.getBoolean("bot", false);
 		role = board.getRoleByNum(roleNum);
+		if (role != null) {
+			role.setPlayer(this);
+		}
+		canUseRoleSkill = (List<String>) doc.get("canUseRoleSkill");
 		
 		int i;
 		

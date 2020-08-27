@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.citadels.roles.Assassin;
+import com.cosine.cosgame.citadels.roles.Thief;
 
 public class AllRes {
 	List<Card> baseCards;
@@ -24,7 +25,9 @@ public class AllRes {
 		Role r;
 		r = new Assassin();
 		allRoles.add(r);
-		for (i=2;i<=8;i++) {
+		r = new Thief();
+		allRoles.add(r);
+		for (i=3;i<=8;i++) {
 			r = new Role();
 			r.setNum(i);
 			r.setImg("0");

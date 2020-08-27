@@ -226,6 +226,9 @@ public class CitadelsController {
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("roundCount", board.getRoundCount());
 			board.updateDB("curRoleNum", board.getCurRoleNum());
+			board.updateDB("killedRole", board.getKilledRole());
+			board.updateDB("stealedRole", board.getStealedRole());
+			board.updateThief();
 			board.updateRoles();
 			board.updateLogs();
 		}
@@ -282,10 +285,28 @@ public class CitadelsController {
 			Ask ask = p.getRole().chooseSkill(index);
 			p.setAsk(ask);
 			board.updatePlayer(username);
-			
 			board.updateLogs();
 		}
-		
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/useskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useSkill(HttpServletRequest request, @RequestParam int skillIndex, @RequestParam int roleIndex) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = p.getRole().useSkill(skillIndex, roleIndex, 0, 0, 0);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateDB("killedRole", board.getKilledRole());
+			board.updateDB("stealedRole", board.getStealedRole());
+			board.updateLogs();
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -359,7 +380,10 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateDB("roundCount", board.getRoundCount());
+		board.updateDB("killedRole", board.getKilledRole());
+		board.updateDB("stealedRole", board.getStealedRole());
 		board.updateDB("firstFinished", board.isFirstFinished());
+		board.updateThief();
 		board.updateRoles();
 		board.updateLogs();
 		StringEntity entity = new StringEntity();

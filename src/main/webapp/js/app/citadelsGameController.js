@@ -23,6 +23,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.canclickhand = []
 		$scope.phase = "-1"
 		$scope.selectedRole = -1
+		$scope.selectedRoleSkill = -1
 		$scope.roleNums = []
 		$scope.roleOwners = []
 		$scope.roleRevealed = []
@@ -123,9 +124,23 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.selectedRole = x;
 		}
 		
+		$scope.setSelectedRoleSkill = function(x){
+			$scope.selectedRoleSkill = x;
+		}
+		
 		$scope.chooseSkill = function(x){
 			var data = {"index" : x}
 			$http({url: "/citadelsgame/chooseskill", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.useSkill = function(x){
+			var data = {
+					"skillIndex" : x,
+					"roleIndex" : $scope.selectedRoleSkill
+					}
+			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 			});
 		}
@@ -158,12 +173,15 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.roleRevealed = response.data.roleRevealed
 					$scope.curPlayer = response.data.curPlayer
 					$scope.selectedRole = -1
+					$scope.selectedRoleSkill = -1
 					$scope.bank = response.data.bank
 					$scope.deckSize = response.data.deckSize
 					$scope.crown = response.data.crown
 					$scope.logs = response.data.logs
 					$scope.skillButtons = response.data.skillButtons
 					$scope.askType = response.data.askType
+					$scope.askLs = response.data.askLs
+					$scope.canUseRoleSkill = response.data.canUseRoleSkill
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"

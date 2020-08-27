@@ -163,6 +163,15 @@ public class Board {
 		return null;
 	}
 	
+	public Player getPlayerByRoleImg(String img) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getRole().getImg().contentEquals(img)) {
+				return players.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public int getPlayerIndex(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().contentEquals(name)) {
@@ -249,6 +258,7 @@ public class Board {
 			updateStatus();
 		}
 		if (curRoleNum == killedRole) {
+			log("Role #" + Integer.toString(killedRole) + " has been killed");
 			nextRole();
 		}
 		int i;
@@ -259,6 +269,7 @@ public class Board {
 					nextRole();
 				} else {
 					curPlayer = r.getOwner();
+					players.get(curPlayer).getRole().whenReveal();
 					players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
 					break;
 				}
@@ -522,6 +533,10 @@ public class Board {
 		if (p.getRole() != null) {
 			skillButtons = p.getRole().getButtonNames();
 		}
+		List<String> askLs = new ArrayList<>();
+		if (p.getAsk() != null) {
+			askLs = p.getAsk().getLs();
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -547,6 +562,10 @@ public class Board {
 		entity.setLogs(logger.getLogs());
 		entity.setAskType(Integer.toString(p.getAsk().getAskType()));
 		entity.setSkillButtons(skillButtons);
+		entity.setAskLs(askLs);
+		entity.setCanUseRoleSkill(p.getCanUseRoleSkill());
+		entity.setKilledRole(Integer.toString(killedRole));
+		entity.setStealedRole(Integer.toString(stealedRole));
 		return entity;
 	}
 	
@@ -668,6 +687,16 @@ public class Board {
 	public void updatePlayer(String name) {
 		Player p = this.getPlayerByName(name);
 		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + name;
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updateThief() {
+		Player p = this.getPlayerByRole(2);
+		if (p != null) {
+			String name = p.getName();
 			Document dop = p.toDocument();
 			String playerName = "player-" + name;
 			dbutil.update("id", id, playerName, dop);

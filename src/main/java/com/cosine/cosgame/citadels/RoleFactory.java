@@ -3,12 +3,16 @@ package com.cosine.cosgame.citadels;
 import org.bson.Document;
 
 import com.cosine.cosgame.citadels.roles.Assassin;
+import com.cosine.cosgame.citadels.roles.Thief;
 
 public class RoleFactory {
 	public static Role createRole(int num, String name, String img, int owner) {
 		Role role;
 		if (img.contentEquals("001")) {
 			role = new Assassin();
+			role.setOwner(owner);
+		} else if (img.contentEquals("002")) {
+			role = new Thief();
 			role.setOwner(owner);
 		} else {
 			role = new Role();
