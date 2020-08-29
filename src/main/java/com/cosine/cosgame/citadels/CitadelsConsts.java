@@ -39,5 +39,7 @@ public class CitadelsConsts {
 	public static final int NOASK = 0;
 	//public static final int CHOOSEROLE = 1;
 	public static final int CHOOSEBUILT = 2;
+	public static final int CHOOSEPLAYER = 3;
+	public static final int CHOOSECARDS = 4;
 	
 }

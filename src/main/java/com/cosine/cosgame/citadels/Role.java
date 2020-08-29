@@ -41,6 +41,16 @@ public class Role {
 		return ask;
 	}
 	
+	public Ask useSkillOnHand(int x, String handChoices) {
+		Ask ask = new Ask();
+		
+		if (player != null) {
+			player.useRoleSkill(x);
+		}
+		
+		return ask;
+	}
+	
 	public Ask useSkill(int x, int p1, int p2, int p3, int p4) {
 		Ask ask = new Ask();
 		

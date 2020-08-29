@@ -228,6 +228,7 @@ public class CitadelsController {
 			board.updateDB("curRoleNum", board.getCurRoleNum());
 			board.updateDB("killedRole", board.getKilledRole());
 			board.updateDB("stealedRole", board.getStealedRole());
+			board.updateDB("crown", board.getCrown());
 			board.updateThief();
 			board.updateRoles();
 			board.updateLogs();
@@ -315,6 +316,25 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/useskillonhand", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useSkillOnHand(HttpServletRequest request, @RequestParam int skillIndex, @RequestParam String handChoices) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = p.getRole().useSkillOnHand(skillIndex, handChoices);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateLogs();
+			board.updateDeck();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/seecards", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> seeCards(HttpServletRequest request) {
 		Board board = new Board();
@@ -388,6 +408,7 @@ public class CitadelsController {
 		board.updateDB("killedRole", board.getKilledRole());
 		board.updateDB("stealedRole", board.getStealedRole());
 		board.updateDB("firstFinished", board.isFirstFinished());
+		board.updateDB("crown", board.getCrown());
 		board.updateThief();
 		board.updateRoles();
 		board.updateLogs();

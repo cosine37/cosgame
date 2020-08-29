@@ -3,12 +3,7 @@ package com.cosine.cosgame.citadels;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cosine.cosgame.citadels.roles.Architect;
-import com.cosine.cosgame.citadels.roles.Assassin;
-import com.cosine.cosgame.citadels.roles.Bishop;
-import com.cosine.cosgame.citadels.roles.Merchant;
-import com.cosine.cosgame.citadels.roles.Thief;
-import com.cosine.cosgame.citadels.roles.Warlord;
+import com.cosine.cosgame.citadels.roles.*;
 
 public class AllRes {
 	List<Card> baseCards;
@@ -25,18 +20,15 @@ public class AllRes {
 	}
 	
 	void setAllRoles() {
-		int i;
 		Role r;
 		r = new Assassin();
 		allRoles.add(r);
 		r = new Thief();
 		allRoles.add(r);
-		for (i=3;i<=4;i++) {
-			r = new Role();
-			r.setNum(i);
-			r.setImg("0");
-			allRoles.add(r);
-		}
+		r = new Magician();
+		allRoles.add(r);
+		r = new King();
+		allRoles.add(r);
 		r = new Bishop();
 		allRoles.add(r);
 		r = new Merchant();
@@ -45,13 +37,6 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Warlord();
 		allRoles.add(r);
-		/*
-		for (i=8;i<=8;i++) {
-			r = new Role();
-			r.setNum(i);
-			r.setImg("0");
-			allRoles.add(r);
-		}*/
 	}
 	
 	public void setSpecialCards() {

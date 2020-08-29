@@ -27,7 +27,7 @@
 					<td ng-show="crown == $index">♚</td>
 					<td ng-show="crown != $index"></td>
 				
-					<td>{{pn}}</td>
+					<td><button ng-disabled="askType != '3' || askLs[playerIndex] == 'n'" ng-click="choosePlayer(playerIndex)">{{pn}}</button></td>
 					<td>role: {{roleRevealed[$index]}}</td>
 					<td>handsize: {{handSizes[$index]}}</td>
 					<td>coin: {{coins[$index]}}</td>
@@ -50,9 +50,15 @@
 		<p ng-show="askType!='0'">{{askMsg}}</p>
 		<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2' && askType == '0'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
 	</div>
-	<div id="hand">
+	<div id="hand" ng-show="askType!=4">
 		<p>hand</p>
 		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n' || askType != '0'">{{c}}</button>
+	</div>
+	<div id="chooseHand" ng-show="askType==4">
+		<p>chooseHand</p>
+		<button ng-repeat="c in hand track by $index" ng-click="clickHandCard($index)" ng-style="chooseHandStyle($index)">{{c}}</button>
+		<p></p>
+		<button ng-click="useSkillOnHand(1)">Confirm</button>
 	</div>
 	<div id="chooseCard" ng-show="phase == '1' && status == '2'">
 		<p>choose card</p>

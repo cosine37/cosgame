@@ -30,6 +30,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.playerNames = []
 		$scope.playerStyle = []
 		$scope.skillButtons = []
+		$scope.chooseHand = []
 		
 		setPlayerStyle = function(){
 			$scope.playerStyle = []
@@ -62,6 +63,10 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 				for (i=0;i<$scope.canclickhand.length;i++){
 					$scope.canclickhand[i] = 'n';
 				}
+			}
+			$scope.chooseHand = []
+			for (i=0;i<$scope.hand.length;i++){
+				$scope.chooseHand.push("n");
 			}
 		}
 		
@@ -161,6 +166,56 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.choosePlayer = function(playerIndex){
+			var x = 0;
+			var data = {
+					"skillIndex" : x,
+					"roleIndex" : 0,
+					"playerIndex" : playerIndex,
+					"builtIndex" : 0
+			}
+			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.clickHandCard = function(index){
+			if ($scope.chooseHand[index] == "y"){
+				$scope.chooseHand[index] = "n"
+			} else {
+				$scope.chooseHand[index] = "y"
+			}
+			
+		}
+		
+		$scope.chooseHandStyle = function(index){
+			var selectedStyle = {
+					"color" : "blue"
+			}
+			var notSelectedStyle = {
+					"color" : "black"
+			}
+			if ($scope.chooseHand[index] == "y"){
+				return selectedStyle
+			} else {
+				return notSelectedStyle
+			}
+		}
+		
+		$scope.useSkillOnHand = function(x){
+			var handChoices = ""
+			for (var i=0;i<$scope.chooseHand.length;i++){
+				handChoices = handChoices + $scope.chooseHand[i]
+			}
+			var data={
+					"skillIndex": x,
+					"handChoices": handChoices
+			}
+			$http({url: "/citadelsgame/useskillonhand", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.chooseRole = function(){
 			if ($scope.selectedRole == -1){
 				alert("Please choose a role!")
@@ -220,6 +275,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 						setButtons()
 						setHand()
 					}
+					
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs()
 					});
