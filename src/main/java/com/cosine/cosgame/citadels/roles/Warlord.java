@@ -17,8 +17,8 @@ public class Warlord extends Role {
 		numSkills = 2;
 		img = "008";
 		color = CitadelsConsts.RED;
-		buttonNames.add("benefit");
-		buttonNames.add("destroy");
+		buttonNames.add("收益");
+		buttonNames.add("拆除");
 	}
 	
 	public Ask chooseSkill(int x) {
@@ -28,7 +28,7 @@ public class Warlord extends Role {
 		} else if (x == 1) {
 			ask.setAskId(1081);
 			ask.setAskType(CitadelsConsts.CHOOSEBUILT);
-			ask.setMsg("Please choose a building");
+			ask.setMsg("请选择一个你要拆除的建筑。");
 			List<List<String>> builtInfo = new ArrayList<>();
 			int i,j;
 			for (i=0;i<board.getPlayers().size();i++) {
@@ -83,12 +83,13 @@ public class Warlord extends Role {
 				int spent = c.getCost() - 1;
 				int temp = player.getCoin() - spent;
 				player.setCoin(temp);
-				board.log(player.getName() + " spends " + Integer.toString(spent) + " coins to destroy " + victimName + "'s " + builtName);
+				board.log(player.getName() + "花费了" + Integer.toString(spent) + "￥拆除了" + victimName + "的" + builtName+"。");
+				board.bottomDeck(c);
 			}
 		} if (x == 99) {
 			player.useRoleSkill(1);
 			ask = new Ask();
-			board.log(player.getName() + " tries the best to destroy a building but nothing can be destroyed.");
+			board.log(player.getName() + "使出浑身解数想要拆除一个建筑，但是没有可以拆除的建筑。");
 		}
 		return ask;
 	}

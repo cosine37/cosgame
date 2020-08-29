@@ -215,6 +215,7 @@ public class Board {
 			int x = rand.nextInt(tempNum.size());
 			int index = tempNum.remove(x);
 			roles.get(index).setOwner(CitadelsConsts.NOTUSEDREVEALED);
+			log("本回合没有" + Integer.toString(roles.get(index).getNum()) + " 号"+roles.get(index).getName()+"。");
 		}
 		for (i=0;i<numHidden;i++) {
 			int x = rand.nextInt(tempNum.size());
@@ -225,6 +226,7 @@ public class Board {
 	}
 	
 	public void newRound() {
+		status = CitadelsConsts.CHOOSEROLE;
 		int i;
 		for (i=0;i<roles.size();i++) {
 			roles.get(i).setOwner(-1);
@@ -233,14 +235,13 @@ public class Board {
 			players.get(i).setRole(null);
 			players.get(i).setRoleNum(-1);
 		}
-		discardRoles();
 		roundCount = roundCount+1;
-		status = CitadelsConsts.CHOOSEROLE;
+		log("回合 " + Integer.toString(roundCount)+" 开始");
+		discardRoles();
 		killedRole = -1;
 		stealedRole = -1;
 		curPlayer = crown;
 		players.get(crown).setPhase(CitadelsConsts.CHOOSEROLE);
-		log("Round " + Integer.toString(roundCount));
 	}
 	
 	public void nextPlayerChooseRole() {
@@ -255,24 +256,53 @@ public class Board {
 	public void nextRole() {
 		curRoleNum = curRoleNum+1;
 		if (curRoleNum>roles.size()) {
+			log("所有角色行动完毕。");
 			updateStatus();
 		}
+		/*
 		if (curRoleNum == killedRole) {
 			log("Role #" + Integer.toString(killedRole) + " has been killed");
 			nextRole();
 		}
+		*/
 		int i;
 		for (i=0;i<roles.size();i++) {
 			Role r = roles.get(i);
 			if (r.getNum() == curRoleNum) {
-				if (r.getOwner() < 0) { // Not selected
+				log("轮到选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"的玩家行动了。");
+				if (curRoleNum == killedRole) {
+					log(Integer.toString(curRoleNum)+"号 "+r.getName()+"被1号 送葬者带走了。");
+					if (r.getOwner() < 0) {
+						log("然而，没有玩家选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"，这就尴尬了。");
+					} else {
+						String playerName = players.get(r.getOwner()).getName();
+						log(playerName + "失去所有角色技能并跳过回合。");
+					}
 					nextRole();
+					return;
 				} else {
-					curPlayer = r.getOwner();
-					players.get(curPlayer).getRole().whenReveal();
-					players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
-					break;
+					if (curRoleNum == stealedRole) {
+						log(Integer.toString(curRoleNum)+"号 "+r.getName()+"被2号 盗贼盯上了。");
+					}
+					if (r.getOwner() < 0) { // Not selected
+						if (curRoleNum == stealedRole) {
+							log("然而，没有玩家选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"，这就尴尬了。");
+						} else {
+							log("没有玩家选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"。");
+						}
+						
+						nextRole();
+						return;
+					} else {
+						curPlayer = r.getOwner();
+						String playerName = players.get(curPlayer).getName();
+						log(playerName + "开始回合。");
+						players.get(curPlayer).getRole().whenReveal();
+						players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
+						break;
+					}
 				}
+				
 			}
 		}
 	}
@@ -288,17 +318,17 @@ public class Board {
 			}
 			if (count == players.size()) {
 				status = CitadelsConsts.TAKETURNS;
-				log("All roles have been chosen.");
+				log("所有玩家都选择了角色。");
 				curRoleNum = 0;
 				nextRole();
 			}
 		} else if (status == CitadelsConsts.TAKETURNS) {
 			if (curRoleNum>roles.size()) {
-				log("End of Round " + Integer.toString(roundCount) + ".");
+				log("回合 " + Integer.toString(roundCount) + "结束。");
 				if (firstFinished) {
 					newRound();
 				} else {
-					log("Game ends.");
+					log("游戏结束.");
 					status = CitadelsConsts.ENDGAME;
 				}
 				
@@ -351,6 +381,7 @@ public class Board {
 		if (status == CitadelsConsts.CHOOSEROLE || status == CitadelsConsts.TAKETURNS) {
 			logger.log(s);
 		}
+		
 	}
 	public List<Player> getPlayers() {
 		return players;
@@ -450,6 +481,13 @@ public class Board {
 	}
 	public void setLord(String lord) {
 		this.lord = lord;
+	}
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();

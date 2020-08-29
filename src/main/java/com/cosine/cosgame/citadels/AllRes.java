@@ -103,7 +103,7 @@ public class AllRes {
 			baseCards.add(c);
 		}
 		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("法院", CitadelsConsts.YELLOW, 3, "y3");
+			c = CardFactory.createCard("居委会", CitadelsConsts.YELLOW, 3, "y3");
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {

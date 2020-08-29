@@ -57,7 +57,7 @@ public class Player {
 			for (int i=0;i<role.getNumSkills();i++) {
 				canUseRoleSkill.add("y");
 			}
-			board.log(name + " chooses a role.");
+			board.log(name + "选择了一个角色。");
 		}
 		phase = CitadelsConsts.OFFTURN;
 		board.nextPlayerChooseRole();
@@ -73,7 +73,7 @@ public class Player {
 	public void startTurn() {
 		if (phase == CitadelsConsts.OFFTURN) {
 			phase = CitadelsConsts.TAKEACTION;
-			board.log(name + " starts the turn.");
+			board.log(name + "开始了回合。");
 		} else {
 			// for debug purposes
 			//phase = CitadelsConsts.TAKEACTION;
@@ -83,7 +83,7 @@ public class Player {
 	public void endTurn() {
 		if (phase == CitadelsConsts.BUILDDISTRICT) {
 			phase = CitadelsConsts.OFFTURN;
-			board.log(name + " finishes the turn.");
+			board.log(name + "结束了回合。");
 			board.nextRole();
 		}
 	}
@@ -93,16 +93,16 @@ public class Player {
 			if (option == 1) {
 				if (numReveal == numChoose) {
 					draw(numChoose);
-					board.log(name + " draws " + Integer.toString(numChoose) + " cards.");
+					board.log(name + "摸" + Integer.toString(numChoose) + "张牌。");
 					startBuildPhase();
 				} else {
 					forChoose = board.firstCards(numReveal);
-					board.log(name + " looks at " + Integer.toString(numChoose) + " cards.");
+					board.log(name + "观看" + Integer.toString(numChoose) + "张牌");
 					phase = CitadelsConsts.CHOOSECARD;
 				}
 			} else if (option == 2) {
 				addCoin(2);
-				board.log(name + " takes 2 coins.");
+				board.log(name + "获得2￥。");
 				startBuildPhase();
 			} else {
 				
@@ -114,7 +114,7 @@ public class Player {
 		if (numChoose == 1) {
 			hand.add(forChoose.remove(index));
 			board.bottomDeck(forChoose);
-			board.log(name + " chooses a card.");
+			board.log(name + "选择了1张牌加入手牌。");
 			startBuildPhase();
 		}
 		
@@ -184,7 +184,7 @@ public class Player {
 			Card c = hand.get(x);
 			int cost = c.getCost();
 			if (canBuild(x)) {
-				board.log(name + " builds " + c.getName());
+				board.log(name + "建造了 " + c.getName()+"。");
 				numBuilt++;
 				hand.remove(x);
 				built.add(c);
@@ -195,7 +195,7 @@ public class Player {
 					if (board.isFirstFinished()) {
 						firstFinished = true;
 						board.setFirstFinished(false);
-						board.log(name + " finishes the city. Game will end after this round");
+						board.log(name + "达成了建筑数量目标，游戏将在本回合结束后结束。");
 					}
 				}
 			}

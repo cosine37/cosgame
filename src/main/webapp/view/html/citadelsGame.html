@@ -73,15 +73,15 @@
 			<p ng-show="selectedRole == $index">{{r}}</p>
 			<p ng-show="roleOwners[$index] == '-2'"><del>{{r}}</del></p>
 		</div>
-		<button ng-click=chooseRole()>Confirm</button>
+		<button ng-click=chooseRole()>确定所选角色</button>
 	</div>
 	<div id="buttons" style="clear:both">
 		<!-- 
 		<button ng-click="startTurn()" ng-show="phase == '-1' && status == '2'">start turn</button>
 		 -->
-		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">take two</button>
-		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">see cards</button>
-		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">end turn</button>
+		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
+		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
+		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
 		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1'">bot choose</button>
 		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2'">bot next move</button>
 	</div>
@@ -92,7 +92,7 @@
 			<p ng-show="selectedRoleSkill == $index">{{r}}</p>
 			<p ng-show="askLs[$index] == 'r'"><del>{{r}}</del></p>
 		</div>
-		<button ng-click=useSkill(0)>Use skill</button>
+		<button ng-click=useSkill(0)>确定目标角色</button>
 	</div>
 	<p>{{gamedata}}</p>
 </body>

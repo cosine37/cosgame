@@ -16,8 +16,8 @@ public class Magician extends Role {
 		name = "魔术师";
 		numSkills = 2;
 		img = "003";
-		buttonNames.add("exchange hand");
-		buttonNames.add("exchange card");
+		buttonNames.add("与玩家交换");
+		buttonNames.add("与牌堆交换");
 	}
 	
 	public Ask chooseSkill(int x) {
@@ -25,7 +25,7 @@ public class Magician extends Role {
 		if (x == 0) {
 			ask.setAskId(1031);
 			ask.setAskType(CitadelsConsts.CHOOSEPLAYER);
-			ask.setMsg("Choose a player you want to exchange hand with.");
+			ask.setMsg("选择一个玩家交换手牌。");
 			List<String> ls = new ArrayList<>();
 			int i;
 			for (i=0;i<board.getPlayers().size();i++) {
@@ -40,7 +40,7 @@ public class Magician extends Role {
 		} else if (x == 1) {
 			ask.setAskId(1032);
 			ask.setAskType(CitadelsConsts.CHOOSECARDS);
-			ask.setMsg("Please choose card(s) from your hand you want to exchange from deck.");
+			ask.setMsg("选择你要和牌堆交换的手牌。");
 		}
 		return ask;
 	}
@@ -55,7 +55,7 @@ public class Magician extends Role {
 			player.setHand(thand);
 			victim.setHand(mhand);
 			player.getCanUseRoleSkill().set(1, "n");
-			board.log(player.getName() + " exchanges hand with " + victim.getName() + ".");
+			board.log(player.getName() + "和" + victim.getName() + "交换了手牌。");
 		}
 		return ask;
 	}
@@ -76,7 +76,7 @@ public class Magician extends Role {
 			board.bottomDeck(toReturn);
 			player.draw(count);
 			player.getCanUseRoleSkill().set(0, "n");
-			board.log(player.getName() + " exchanges " + Integer.toString(count) + " cards with deck.");
+			board.log(player.getName() + "和牌库交换了" + Integer.toString(count) + "张牌。");
 		}
 		return ask;
 	}

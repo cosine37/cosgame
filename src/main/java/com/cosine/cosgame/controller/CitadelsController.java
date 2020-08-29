@@ -111,7 +111,6 @@ public class CitadelsController {
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
 		board.gameSetup();
-		session.setAttribute("boardId", board.getId());
 		board.updateDeck();
 		board.updateRoles();
 		board.updatePlayers();

@@ -16,7 +16,7 @@ public class Bishop extends Role {
 		img = "005";
 		destroyable = false;
 		color = CitadelsConsts.BLUE;
-		buttonNames.add("benefit");
+		buttonNames.add("收益");
 	}
 	
 	public Ask chooseSkill(int x) {

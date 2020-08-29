@@ -15,7 +15,7 @@ public class Merchant extends Role {
 		numSkills = 1;
 		img = "006";
 		color = CitadelsConsts.GREEN;
-		buttonNames.add("benefit");
+		buttonNames.add("收益");
 	}
 	
 	public Ask chooseSkill(int x) {
@@ -39,7 +39,7 @@ public class Merchant extends Role {
 	public Ask afterTakeAction() {
 		Ask ask = super.afterTakeAction();
 		player.addCoin(1);
-		board.log(player.getName() + " receives 1 extra coin.");
+		board.log(player.getName() + "额外获得了1￥。");
 		return ask;
 	}
 }

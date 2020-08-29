@@ -19,7 +19,7 @@ public class Architect extends Role {
 	public Ask afterTakeAction() {
 		Ask ask = super.afterTakeAction();
 		player.draw(2);
-		board.log(player.getName() + " draws 2 extra cards.");
+		board.log(player.getName() + "额外摸了两张牌。");
 		return ask;
 	}
 	

@@ -15,7 +15,7 @@ public class King extends Role {
 		numSkills = 1;
 		img = "004";
 		color = CitadelsConsts.YELLOW;
-		buttonNames.add("benefit");
+		buttonNames.add("收益");
 	}
 	
 	public Ask chooseSkill(int x) {
@@ -40,6 +40,6 @@ public class King extends Role {
 		super.whenReveal();
 		int playerIndex = board.getPlayerIndex(player);
 		board.setCrown(playerIndex);
-		board.log(player.getName() + " takes the crown");
+		board.log(player.getName() + "获得了市长标记。");
 	}
 }

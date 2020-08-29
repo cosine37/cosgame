@@ -29,8 +29,14 @@ public class Role {
 		if (num == board.getStealedRole()) {
 			Player p = board.getPlayerByRoleImg("002"); // Thief handle
 			if (p != null) {
-				board.log(player.getName() + "'s coin has been stealed");
+				int x = player.getCoin();
+				board.log(player.getName() + "的所有￥被" + p.getName() + "偷窃了。");
 				p.addCoin(player.getCoin());
+				if (x==0) {
+					board.log("然而"+player.getName()+"没有￥，"+ p.getName() + "什么都没偷到，这就尴尬了。");
+				} else {
+					board.log(p.getName() + "获得了" + Integer.toString(player.getCoin()) + "￥。");
+				}
 				player.setCoin(0);
 			}
 		}
@@ -90,7 +96,7 @@ public class Role {
 				ans++;
 			}
 		}
-		board.log(player.getName() + " receives " + Integer.toString(ans) + " coins from " + CitadelsConsts.COLORNAME[color] + " buildings.");
+		board.log(player.getName() + "从已建成的" + CitadelsConsts.COLORNAME[color] + "类建筑获得了" + Integer.toString(ans) + "￥。");
 		player.addCoin(ans);
 		return ask;
 	}
