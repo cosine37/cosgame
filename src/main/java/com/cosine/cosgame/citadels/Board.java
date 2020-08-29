@@ -324,7 +324,7 @@ public class Board {
 			}
 		} else if (status == CitadelsConsts.TAKETURNS) {
 			if (curRoleNum>roles.size()) {
-				log("回合 " + Integer.toString(roundCount) + "结束。");
+				log("回合 " + Integer.toString(roundCount) + " 结束。");
 				if (firstFinished) {
 					newRound();
 				} else {

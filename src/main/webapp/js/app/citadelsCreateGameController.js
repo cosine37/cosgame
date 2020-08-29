@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("citadelsCreateGameApp", []);
-app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		//$scope.crown = 0
 	
 		$scope.showConfig = 'n'
@@ -30,6 +30,10 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.crown = parseInt(response.data.crown)
 					$scope.tcrown = $scope.crown
 					$scope.isLord = response.data.isLord
+					$scope.status = response.data.status
+					if ($scope.status != "0"){
+						$scope.goto('citadelsgame');
+					}
 				}
 			});
 		}
@@ -107,6 +111,12 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			alert($scope.tcrown)
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			$scope.getBoard();
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1000);
+		}
 		
+		$scope.offturnHandle();
 }]);

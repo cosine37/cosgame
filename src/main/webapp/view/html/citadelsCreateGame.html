@@ -16,7 +16,9 @@
 	<button ng-click="startGame()" ng-show="isLord == 'y'">start game</button>
 	<button ng-click="addBot()" ng-show="isLord == 'y'">add bot</button>
 	<button ng-click="dismiss()" ng-show="isLord == 'y'">dismiss</button>
+	<!-- 
 	<p>{{gamedata}}</p>
+	 -->
 	<table>
 		<tr ng-repeat="name in playerNames track by $index">
 			<td>{{name}}</td>

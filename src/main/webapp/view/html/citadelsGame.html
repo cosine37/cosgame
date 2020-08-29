@@ -82,8 +82,8 @@
 		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
 		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
 		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
-		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1'">bot choose</button>
-		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2'">bot next move</button>
+		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
+		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
 	</div>
 	<div id="chooseRoleSkill" ng-show="askType == '1'">
 		<div ng-repeat="r in roleNums track by $index" style="float:left">
@@ -94,6 +94,8 @@
 		</div>
 		<button ng-click=useSkill(0)>确定目标角色</button>
 	</div>
+	<!-- 
 	<p>{{gamedata}}</p>
+	 -->
 </body>
 </html>

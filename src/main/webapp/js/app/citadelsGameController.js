@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("citadelsGameApp", []);
-app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$timeout',
+	function($scope, $window, $http, $document, $timeout){
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -260,6 +260,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.askMsg = response.data.askMsg;
 					$scope.askBuiltInfo = response.data.askBuiltInfo
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
+					$scope.isLord = response.data.isLord
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"
@@ -290,6 +291,15 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getBoard()
+		$scope.offturnHandle = function(){
+			if ($scope.phase == "-1"){
+				$scope.getBoard();
+			}
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1000);
+		}
+		
+		$scope.offturnHandle();
 		
 }]);
