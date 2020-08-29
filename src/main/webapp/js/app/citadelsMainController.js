@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("citadelsMainApp", []);
-app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 	
 		$scope.boards = []
 		$scope.statuses = []
@@ -21,25 +21,28 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.username = response.data.value[0];
 		});
 		
-		$http.get('/citadels/allboards').then(function(response){
-			var n = response.data.value.length / 2;
-			$scope.boards = []
-			$scope.statuses = []
-			for (var i=0;i<n;i++){
-				$scope.boards.push(response.data.value[i*2])
-				var x = response.data.value[i*2+1]
-				var t = ''
-				if (x == '0'){
-					t = 'pre-game'
-				} else if (x == '3'){
-					t = 'end game'
-				} else {
-					t = 'in game'
+		$scope.getAllBoards = function(){
+			$http.get('/citadels/allboards').then(function(response){
+				var n = response.data.value.length / 2;
+				$scope.boards = []
+				$scope.statuses = []
+				for (var i=0;i<n;i++){
+					$scope.boards.push(response.data.value[i*2])
+					var x = response.data.value[i*2+1]
+					var t = ''
+					if (x == '0'){
+						t = 'pre-game'
+					} else if (x == '3'){
+						t = 'end game'
+					} else {
+						t = 'in game'
+					}
+						
+					$scope.statuses.push(t)
 				}
-					
-				$scope.statuses.push(t)
-			}
-		});
+			});
+		}
+		
 		
 		$scope.newGame = function(){
 			$http.post("/citadelsgame/newboard").then(function(response){
@@ -61,5 +64,14 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.offturnHandle = function(){
+			$scope.getAllBoards();
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1000);
+		}
+		
+		$scope.offturnHandle();
 		
 }]);
