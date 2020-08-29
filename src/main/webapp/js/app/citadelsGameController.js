@@ -135,10 +135,26 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.chooseBuilt = function(playerIndex, builtIndex){
+			
+			var data = {
+					"skillIndex" : 1,
+					"roleIndex" : 0,
+					"playerIndex" : playerIndex,
+					"builtIndex" : builtIndex
+			}
+			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			})
+			
+		}
+		
 		$scope.useSkill = function(x){
 			var data = {
 					"skillIndex" : x,
-					"roleIndex" : $scope.selectedRoleSkill
+					"roleIndex" : $scope.selectedRoleSkill,
+					"playerIndex" : -1,
+					"builtIndex" : 0
 					}
 			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
@@ -146,10 +162,15 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.chooseRole = function(){
-			var data = {"index" : $scope.selectedRole}
-			$http({url: "/citadelsgame/chooserole", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
-			});
+			if ($scope.selectedRole == -1){
+				alert("Please choose a role!")
+			} else {
+				var data = {"index" : $scope.selectedRole}
+				$http({url: "/citadelsgame/chooserole", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			}
+			
 		}
 		
 		$scope.getBoard = function(){
@@ -181,6 +202,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.skillButtons = response.data.skillButtons
 					$scope.askType = response.data.askType
 					$scope.askLs = response.data.askLs
+					$scope.askMsg = response.data.askMsg;
+					$scope.askBuiltInfo = response.data.askBuiltInfo
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
 					
 					if ($scope.status == '3'){

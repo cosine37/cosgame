@@ -38,5 +38,6 @@ public class CitadelsConsts {
 	// ask types
 	public static final int NOASK = 0;
 	//public static final int CHOOSEROLE = 1;
+	public static final int CHOOSEBUILT = 2;
 	
 }

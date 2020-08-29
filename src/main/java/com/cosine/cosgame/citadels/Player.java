@@ -436,6 +436,7 @@ public class Player {
 		role = board.getRoleByNum(roleNum);
 		if (role != null) {
 			role.setPlayer(this);
+			role.alterPlayerAbility();
 		}
 		canUseRoleSkill = (List<String>) doc.get("canUseRoleSkill");
 		

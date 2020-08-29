@@ -459,6 +459,7 @@ public class Board {
 			return entity;
 		}
 		int i,j;
+		Player p = this.getPlayerByName(name);
 		List<String> playerNames = new ArrayList<>();
 		List<String> coins = new ArrayList<>();
 		List<String> handSizes = new ArrayList<>();
@@ -476,7 +477,7 @@ public class Board {
 		List<String> hand = new ArrayList<>();
 		List<String> buildable = new ArrayList<>();
 		List<String> revealedCards = new ArrayList<>();
-		Player p = this.getPlayerByName(name);
+		
 		String status = Integer.toString(this.status);
 		String phase = "-1";
 		if (p!=null) {
@@ -534,8 +535,10 @@ public class Board {
 			skillButtons = p.getRole().getButtonNames();
 		}
 		List<String> askLs = new ArrayList<>();
+		List<List<String>> askBuiltInfo = new ArrayList<>();
 		if (p.getAsk() != null) {
 			askLs = p.getAsk().getLs();
+			askBuiltInfo = p.getAsk().getBuiltInfo();
 		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
@@ -562,7 +565,9 @@ public class Board {
 		entity.setLogs(logger.getLogs());
 		entity.setAskType(Integer.toString(p.getAsk().getAskType()));
 		entity.setSkillButtons(skillButtons);
+		entity.setAskMsg(p.getAsk().getMsg());
 		entity.setAskLs(askLs);
+		entity.setAskBuiltInfo(askBuiltInfo);
 		entity.setCanUseRoleSkill(p.getCanUseRoleSkill());
 		entity.setKilledRole(Integer.toString(killedRole));
 		entity.setStealedRole(Integer.toString(stealedRole));
@@ -689,6 +694,15 @@ public class Board {
 		if (p != null) {
 			Document dop = p.toDocument();
 			String playerName = "player-" + name;
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(int index) {
+		if (index < players.size() && index>=0) {
+			Player p = players.get(index);
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
 			dbutil.update("id", id, playerName, dop);
 		}
 	}

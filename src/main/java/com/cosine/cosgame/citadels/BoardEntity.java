@@ -5,6 +5,7 @@ import java.util.List;
 public class BoardEntity {
 	List<String> playerNames;
 	List<List<String>> built;
+	List<List<String>> askBuiltInfo;
 	List<String> hand;
 	List<String> buildable;
 	List<String> coins;
@@ -31,6 +32,7 @@ public class BoardEntity {
 	String id;
 	String lastRound;
 	String askType;
+	String askMsg;
 	String killedRole;
 	String stealedRole;
 
@@ -207,5 +209,17 @@ public class BoardEntity {
 	}
 	public void setStealedRole(String stealedRole) {
 		this.stealedRole = stealedRole;
+	}
+	public List<List<String>> getAskBuiltInfo() {
+		return askBuiltInfo;
+	}
+	public void setAskBuiltInfo(List<List<String>> askBuiltInfo) {
+		this.askBuiltInfo = askBuiltInfo;
+	}
+	public String getAskMsg() {
+		return askMsg;
+	}
+	public void setAskMsg(String askMsg) {
+		this.askMsg = askMsg;
 	}
 }

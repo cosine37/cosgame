@@ -51,6 +51,10 @@ public class Role {
 		return ask;
 	}
 	
+	public void alterPlayerAbility() {
+		
+	}
+	
 	public Ask useSkill(int x, int p1, int p2, int p3) {
 		return useSkill(x, p1, p2, p3, 0);
 	}

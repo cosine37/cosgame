@@ -2,10 +2,12 @@ package com.cosine.cosgame.citadels;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.roles.Architect;
 import com.cosine.cosgame.citadels.roles.Assassin;
 import com.cosine.cosgame.citadels.roles.Bishop;
 import com.cosine.cosgame.citadels.roles.Merchant;
 import com.cosine.cosgame.citadels.roles.Thief;
+import com.cosine.cosgame.citadels.roles.Warlord;
 
 public class RoleFactory {
 	public static Role createRole(int num, String name, String img, int owner) {
@@ -18,7 +20,11 @@ public class RoleFactory {
 			role = new Bishop();
 		} else if (img.contentEquals("006")) {
 			role = new Merchant();
-		} 
+		} else if (img.contentEquals("007")) {
+			role = new Architect();
+		} else if (img.contentEquals("008")) {
+			role = new Warlord();
+		}
 		
 		else {
 			role = new Role();

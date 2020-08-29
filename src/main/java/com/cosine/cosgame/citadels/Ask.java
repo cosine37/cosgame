@@ -9,12 +9,14 @@ public class Ask {
 	int askId;
 	int askType;
 	List<String> ls;
+	List<List<String>> builtInfo;
 	String msg;
 	
 	public Ask() {
 		askId = 0;
 		askType = 0;
 		ls = new ArrayList<>();
+		builtInfo = new ArrayList<>();
 		msg = "";
 	}
 	
@@ -43,12 +45,20 @@ public class Ask {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	public List<List<String>> getBuiltInfo() {
+		return builtInfo;
+	}
+
+	public void setBuiltInfo(List<List<String>> builtInfo) {
+		this.builtInfo = builtInfo;
+	}
 	public Document toDocument() {
 		Document doa = new Document();
 		doa.append("askId", askId);
 		doa.append("askType", askType);
 		doa.append("ls", ls);
 		doa.append("msg", msg);
+		doa.append("builtInfo", builtInfo);
 		return doa;
 	}
 	
@@ -56,6 +66,7 @@ public class Ask {
 		askId = doa.getInteger("askId", 0);
 		askType = doa.getInteger("askType", 0);
 		ls = (List<String>) doa.get("ls");
+		builtInfo = (List<List<String>>) doa.get("builtInfo");
 		msg = doa.getString("msg");
 	}
 }
