@@ -97,7 +97,7 @@ public class Player {
 					startBuildPhase();
 				} else {
 					forChoose = board.firstCards(numReveal);
-					board.log(name + "观看" + Integer.toString(numChoose) + "张牌");
+					board.log(name + "观看" + Integer.toString(numReveal) + "张牌");
 					phase = CitadelsConsts.CHOOSECARD;
 				}
 			} else if (option == 2) {
@@ -243,12 +243,18 @@ public class Player {
 		return ans;
 	}
 	
-	public int calcScore() {
+	public int netScore() {
 		int ans = 0;
 		int i;
 		for (i=0;i<built.size();i++) {
 			ans = ans + built.get(i).getScore();
 		}
+		return ans;
+	}
+	
+	public int calcScore() {
+		int i;
+		int ans = netScore();
 		if (finished) {
 			if (firstFinished) {
 				ans = ans+4;
@@ -273,6 +279,7 @@ public class Player {
 		}
 		return ans;
 	}
+	
 	public String getName() {
 		return name;
 	}

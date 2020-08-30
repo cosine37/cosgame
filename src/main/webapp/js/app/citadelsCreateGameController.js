@@ -112,7 +112,9 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		}
 		
 		$scope.offturnHandle = function(){
-			$scope.getBoard();
+			if ($scope.showConfig == 'n'){
+				$scope.getBoard();
+			}
 			$timeout(function(){
 			    $scope.offturnHandle();
 			},1000);

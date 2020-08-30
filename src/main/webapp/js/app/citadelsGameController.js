@@ -261,6 +261,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.askBuiltInfo = response.data.askBuiltInfo
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
 					$scope.isLord = response.data.isLord
+					$scope.scores = response.data.scores
+					$scope.netScores = response.data.netScores;
+					$scope.yourRole = response.data.yourRole
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"
@@ -292,7 +295,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.offturnHandle = function(){
-			if ($scope.phase == "-1"){
+			if ($scope.phase == "-1" && $scope.status !='3'){
 				$scope.getBoard();
 			}
 			$timeout(function(){

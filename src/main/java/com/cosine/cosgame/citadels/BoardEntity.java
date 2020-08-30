@@ -18,6 +18,8 @@ public class BoardEntity {
 	List<String> skillButtons;
 	List<String> askLs;
 	List<String> canUseRoleSkill;
+	List<String> scores;
+	List<String> netScores;
 	
 	String phase;
 	String bank;
@@ -35,6 +37,7 @@ public class BoardEntity {
 	String askMsg;
 	String killedRole;
 	String stealedRole;
+	String yourRole;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -221,5 +224,23 @@ public class BoardEntity {
 	}
 	public void setAskMsg(String askMsg) {
 		this.askMsg = askMsg;
+	}
+	public List<String> getScores() {
+		return scores;
+	}
+	public void setScores(List<String> scores) {
+		this.scores = scores;
+	}
+	public List<String> getNetScores() {
+		return netScores;
+	}
+	public void setNetScores(List<String> netScores) {
+		this.netScores = netScores;
+	}
+	public String getYourRole() {
+		return yourRole;
+	}
+	public void setYourRole(String yourRole) {
+		this.yourRole = yourRole;
 	}
 }

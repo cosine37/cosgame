@@ -14,7 +14,7 @@
 <script src="/js/app/citadelsGameController.js"></script>
 
 <body ng-app="citadelsGameApp" ng-controller="citadelsGameCtrl">
-	<button ng-click="goto('citadelscreategame')">back</button>
+	<button ng-click="goto('citadels')">back</button>
 	<h1>Citadels Game</h1>
 	<div id="publicinfo" style="display:block">
 		<p>Coins in bank: {{bank}}</p>
@@ -28,6 +28,7 @@
 					<td ng-show="crown != $index"></td>
 				
 					<td><button ng-disabled="askType != '3' || askLs[playerIndex] == 'n'" ng-click="choosePlayer(playerIndex)">{{pn}}</button></td>
+					<td>score: {{scores[$index]}}</td>
 					<td>role: {{roleRevealed[$index]}}</td>
 					<td>handsize: {{handSizes[$index]}}</td>
 					<td>coin: {{coins[$index]}}</td>
@@ -53,6 +54,9 @@
 	<div id="hand" ng-show="askType!=4">
 		<p>hand</p>
 		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n' || askType != '0'">{{c}}</button>
+	</div>
+	<div>
+		<p>你的角色： {{yourRole}}</p>
 	</div>
 	<div id="chooseHand" ng-show="askType==4">
 		<p>chooseHand</p>

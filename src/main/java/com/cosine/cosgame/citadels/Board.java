@@ -578,6 +578,20 @@ public class Board {
 			askLs = p.getAsk().getLs();
 			askBuiltInfo = p.getAsk().getBuiltInfo();
 		}
+		List<String> scores = new ArrayList<>();
+		List<String> netScores = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			int score = players.get(i).calcScore();
+			scores.add(Integer.toString(score));
+			int netScore = players.get(i).netScore();
+			netScores.add(Integer.toString(netScore));
+		}
+		String yourRole;
+		if (p.getRole() != null) {
+			yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+		} else {
+			yourRole = "未选择";
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -609,6 +623,9 @@ public class Board {
 		entity.setCanUseRoleSkill(p.getCanUseRoleSkill());
 		entity.setKilledRole(Integer.toString(killedRole));
 		entity.setStealedRole(Integer.toString(stealedRole));
+		entity.setScores(scores);
+		entity.setNetScores(netScores);
+		entity.setYourRole(yourRole);
 		return entity;
 	}
 	
