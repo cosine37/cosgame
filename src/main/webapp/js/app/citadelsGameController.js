@@ -82,9 +82,23 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.endTurn = function(){
-			$http.post('/citadelsgame/endturn').then(function(response){
-				$scope.getBoard()
-			});
+			var i
+			var flag = true
+			for (i=0;i<$scope.canUseRoleSkill.length;i++){
+				if ($scope.canUseRoleSkill[i] == 'n'){
+					flag = false;
+					break;
+				}
+			}
+			var wouldEnd = true;
+			if (flag){
+				wouldEnd = confirm("你还有未使用的角色技能，确定继续吗？")
+			}
+			if (wouldEnd){
+				$http.post('/citadelsgame/endturn').then(function(response){
+					$scope.getBoard()
+				});
+			}
 		}
 		
 		$scope.seeCards = function(){

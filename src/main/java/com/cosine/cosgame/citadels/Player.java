@@ -407,6 +407,7 @@ public class Player {
 		doc.append("coin", coin);
 		doc.append("role", roleNum);
 		doc.append("phase", phase);
+		doc.append("finished", finished);
 		doc.append("firstFinished", firstFinished);
 		doc.append("numBuilt", numBuilt);
 		doc.append("bot", bot);
@@ -437,6 +438,7 @@ public class Player {
 		coin = doc.getInteger("coin", 0);
 		roleNum = doc.getInteger("role", -1);
 		phase = doc.getInteger("phase", -1);
+		finished = doc.getBoolean("finished", false);
 		firstFinished = doc.getBoolean("firstFinished", false);
 		numBuilt = doc.getInteger("numBuilt", 0);
 		bot = doc.getBoolean("bot", false);

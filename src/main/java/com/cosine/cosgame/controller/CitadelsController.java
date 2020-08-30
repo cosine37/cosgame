@@ -187,6 +187,7 @@ public class CitadelsController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
+		board.updateDB("crown", board.getCrown());
 		board.updateCurPlayer();
 		board.updateLogs();
 		StringEntity entity = new StringEntity();
@@ -249,6 +250,7 @@ public class CitadelsController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
+		board.updateDB("crown", board.getCrown());
 		board.updateCurPlayer();
 		board.updateLogs();
 		StringEntity entity = new StringEntity();
