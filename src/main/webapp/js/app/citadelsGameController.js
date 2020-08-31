@@ -83,10 +83,10 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		
 		$scope.endTurn = function(){
 			var i
-			var flag = true
+			var flag = false
 			for (i=0;i<$scope.canUseRoleSkill.length;i++){
-				if ($scope.canUseRoleSkill[i] == 'n'){
-					flag = false;
+				if ($scope.canUseRoleSkill[i] == 'y'){
+					flag = true;
 					break;
 				}
 			}
@@ -281,7 +281,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"
-						alert("game ends");
+						alert("游戏结束");
 						$scope.goto('citadelsendgame');
 					} else {
 						if ($scope.status == '2'){

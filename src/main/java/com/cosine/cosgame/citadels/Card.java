@@ -3,12 +3,16 @@ package com.cosine.cosgame.citadels;
 import org.bson.Document;
 
 public class Card {
-	String name;
-	int cost;
-	String img;
-	int color;
-	Player player;
-	Board board;
+	protected String name;
+	protected int cost;
+	protected String img;
+	protected int color;
+	protected Player player;
+	protected Board board;
+	
+	public Card() {
+		
+	}
 	
 	public Card(String name) {
 		this.name = name;

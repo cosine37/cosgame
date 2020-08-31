@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.citadels.roles.*;
+import com.cosine.cosgame.citadels.specialcards.*;
 
 public class AllRes {
 	List<Card> baseCards;
@@ -40,7 +41,11 @@ public class AllRes {
 	}
 	
 	public void setSpecialCards() {
-		
+		Card c;
+		c = new DinosaurPark();
+		specialCards.add(c);
+		c = new SECenter();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {
@@ -121,7 +126,16 @@ public class AllRes {
 	}
 	
 	public List<Card> genDeck(){
-		return baseCards;
+		List<Card> deck = new ArrayList<>();
+		int i;
+		for (i=0;i<baseCards.size();i++) {
+			deck.add(baseCards.get(i));
+		}
+		
+		for (i=0;i<specialCards.size();i++) {
+			deck.add(specialCards.get(i));
+		}
+		return deck;
 	}
 	
 }

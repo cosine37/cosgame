@@ -88,6 +88,7 @@ public class Board {
 		for (int i=0;i<shuffled.size();i++) {
 			deck.add(shuffled.get(i));
 		}
+		
 	}
 	
 	public void deal() {
@@ -498,6 +499,7 @@ public class Board {
 		}
 		int i,j;
 		Player p = this.getPlayerByName(name);
+		int playerIndex = this.getPlayerIndex(name);
 		List<String> playerNames = new ArrayList<>();
 		List<String> coins = new ArrayList<>();
 		List<String> handSizes = new ArrayList<>();
@@ -587,11 +589,28 @@ public class Board {
 			netScores.add(Integer.toString(netScore));
 		}
 		String yourRole;
+		if (p.getRole() == null) {
+			yourRole = "未选择";
+		} else if (this.status == CitadelsConsts.CHOOSEROLE) {
+			if (this.crown < playerIndex && curPlayer > playerIndex) {
+				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+			} else if (this.crown > playerIndex && curPlayer > playerIndex && this.crown > curPlayer) {
+				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+			} else if (this.crown < playerIndex && curPlayer < playerIndex && this.crown > curPlayer) {
+				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+			} else {
+				yourRole = "未选择";
+			}
+		} else {
+			yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+		}
+		
+		/*
 		if (p.getRole() != null) {
 			yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
 		} else {
 			yourRole = "未选择";
-		}
+		}*/
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);

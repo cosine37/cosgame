@@ -2,12 +2,24 @@ package com.cosine.cosgame.citadels;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.specialcards.*;
+
 public class CardFactory {
 	public static Card createCard(String name, int color, int cost, String img) {
-		Card card = new Card(name);
-		card.setCost(cost);
-		card.setColor(color);
-		card.setImg(img);
+		Card card;
+		if (img.contentEquals("p601")) {
+			card = new DinosaurPark();
+		} else if (img.contentEquals("p602")) {
+			card = new SECenter();
+		}
+		
+		else {
+			card = new Card(name);
+			card.setCost(cost);
+			card.setColor(color);
+			card.setImg(img);
+		}
+		
 		return card;
 	}
 	
