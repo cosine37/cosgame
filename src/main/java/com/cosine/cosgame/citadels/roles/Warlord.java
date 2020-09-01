@@ -40,8 +40,10 @@ public class Warlord extends Role {
 						if (temp < 0) temp = 0;
 						if (player.getCoin() < temp) {
 							singleBuiltInfo.add("-1");
-						} else {
+						} else if (p.getBuilt().get(j).destroyable()){
 							singleBuiltInfo.add(Integer.toString(temp));
+						} else {
+							singleBuiltInfo.add("-1");
 						}
 					} else {
 						singleBuiltInfo.add("-1");

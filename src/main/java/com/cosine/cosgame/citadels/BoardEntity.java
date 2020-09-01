@@ -38,6 +38,7 @@ public class BoardEntity {
 	String killedRole;
 	String stealedRole;
 	String yourRole;
+	String chooseOrDiscard;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -242,5 +243,11 @@ public class BoardEntity {
 	}
 	public void setYourRole(String yourRole) {
 		this.yourRole = yourRole;
+	}
+	public String getChooseOrDiscard() {
+		return chooseOrDiscard;
+	}
+	public void setChooseOrDiscard(String chooseOrDiscard) {
+		this.chooseOrDiscard = chooseOrDiscard;
 	}
 }

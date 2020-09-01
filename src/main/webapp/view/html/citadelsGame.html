@@ -65,7 +65,8 @@
 		<button ng-click="useSkillOnHand(1)">Confirm</button>
 	</div>
 	<div id="chooseCard" ng-show="phase == '1' && status == '2'">
-		<p>choose card</p>
+		<p ng-show="chooseOrDiscard == 'choose'">请选择1张牌加入手牌。</p>
+		<p ng-show="chooseOrDiscard == 'discard'">请选择1张你不需要的牌置于牌堆底，剩余的牌将加入你的手牌。</p>
 		<button ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)">{{c}}</button>
 	</div>
 	<div id="chooseRole" ng-show="phase == '1' && status == '1'">

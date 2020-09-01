@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.specialcards.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -88,7 +89,6 @@ public class Board {
 		for (int i=0;i<shuffled.size();i++) {
 			deck.add(shuffled.get(i));
 		}
-		
 	}
 	
 	public void deal() {
@@ -605,12 +605,13 @@ public class Board {
 			yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
 		}
 		
-		/*
-		if (p.getRole() != null) {
-			yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+		String chooseOrDiscard;
+		if (p.getNumChoose() == 2 && p.getNumReveal() ==3) {
+			chooseOrDiscard = "discard";
 		} else {
-			yourRole = "未选择";
-		}*/
+			chooseOrDiscard = "choose";
+		}
+		
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -645,6 +646,7 @@ public class Board {
 		entity.setScores(scores);
 		entity.setNetScores(netScores);
 		entity.setYourRole(yourRole);
+		entity.setChooseOrDiscard(chooseOrDiscard);
 		return entity;
 	}
 	

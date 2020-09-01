@@ -31,6 +31,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.playerStyle = []
 		$scope.skillButtons = []
 		$scope.chooseHand = []
+		$scope.chooseOrDiscard = "choose"
 		
 		setPlayerStyle = function(){
 			$scope.playerStyle = []
@@ -276,8 +277,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
 					$scope.isLord = response.data.isLord
 					$scope.scores = response.data.scores
-					$scope.netScores = response.data.netScores;
+					$scope.netScores = response.data.netScores
 					$scope.yourRole = response.data.yourRole
+					$scope.chooseOrDiscard = response.data.chooseOrDiscard
 					
 					if ($scope.status == '3'){
 						$scope.statusDisplay = "End Game"

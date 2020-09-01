@@ -18,6 +18,14 @@ public class Card {
 		this.name = name;
 	}
 	
+	public void alterPlayerAbility() {
+		
+	}
+	
+	public boolean destroyable() {
+		return true;
+	}
+	
 	public int getColorForScore() {
 		return color;
 	}

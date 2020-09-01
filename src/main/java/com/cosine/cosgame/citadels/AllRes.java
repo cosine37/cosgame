@@ -46,6 +46,14 @@ public class AllRes {
 		specialCards.add(c);
 		c = new SECenter();
 		specialCards.add(c);
+		c = new PlanningHall();
+		specialCards.add(c);
+		c = new FormerResidence();
+		specialCards.add(c);
+		c = new FormerResidence();
+		specialCards.add(c);
+		c = new Library();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {

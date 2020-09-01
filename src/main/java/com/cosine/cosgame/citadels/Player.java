@@ -116,6 +116,14 @@ public class Player {
 			board.bottomDeck(forChoose);
 			board.log(name + "选择了1张牌加入手牌。");
 			startBuildPhase();
+		} else if (numChoose == 2 && numReveal == 3) {
+			for (int i=forChoose.size()-1;i>=0;i--) {
+				if (i==index) continue;
+				hand.add(forChoose.remove(i));
+			}
+			board.bottomDeck(forChoose);
+			board.log(name + "选择了2张牌加入手牌。");
+			startBuildPhase();
 		}
 		
 	}
@@ -466,6 +474,7 @@ public class Player {
 			Card c = CardFactory.createCard(builtDocList.get(i));
 			c.setPlayer(this);
 			c.setBoard(this.board);
+			c.alterPlayerAbility();
 			built.add(c);
 		}
 		

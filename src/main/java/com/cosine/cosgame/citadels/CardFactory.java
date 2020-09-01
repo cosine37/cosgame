@@ -11,6 +11,12 @@ public class CardFactory {
 			card = new DinosaurPark();
 		} else if (img.contentEquals("p602")) {
 			card = new SECenter();
+		} else if (img.contentEquals("p401")) {
+			card = new PlanningHall();
+		} else if (img.contentEquals("p301")) {
+			card = new FormerResidence();
+		} else if (img.contentEquals("p603")) {
+			card = new Library();
 		}
 		
 		else {
