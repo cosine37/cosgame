@@ -27,7 +27,9 @@ public class CitadelsController {
 	@RequestMapping(value="/citadels/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		CitadelsMeta meta = new CitadelsMeta();
-		StringEntity entity = meta.getBoardIdsAsStringEntity();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

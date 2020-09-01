@@ -68,6 +68,16 @@ public class MongoDBUtil {
 		return ans;
 	}
 	
+	public List<List<String>> getListValues(String key) {
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+		List<List<String>> ans = new ArrayList<>();
+		FindIterable<Document> docs = collection.find();
+		for (Document doc : docs) {
+			ans.add((List<String>) doc.get(key));
+		}
+		return ans;
+	}
+	
 	public List<Integer> getIntValues(String key){
 		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
 		List<Integer> ans = new ArrayList<Integer>();

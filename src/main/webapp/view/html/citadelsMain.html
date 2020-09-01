@@ -41,7 +41,7 @@
 			<div id="sidebar" class="sidebar">
 				<ul class="nav nav-tabs flex-column" role="tablist">
 				    <li class="nav-item">
-				      <a class="nav-link active" data-toggle="tab" href="#listtab">List</a>
+				      <a class="nav-link active" data-toggle="tab" href="#listtab">Table</a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rulestab">Rules</a>
@@ -58,10 +58,20 @@
 						</tr>
 					</table>
 					<table class="table">
+						<tr>
+							<td>ID</td>
+							<td>Lord</td>
+							<td>Status</td>
+							<td></td>
+						</tr>
 						<tr ng-repeat ="x in boards track by $index">
 							<td>{{x}}</td>
+							<td>{{lords[$index]}}</td>
 							<td>{{statuses[$index]}}</td>
-							<td><button ng-show="statuses[$index] == 'pre-game'" ng-click="goToBoard($index)">Join</button></td>
+							<td>
+								<button ng-show="statuses[$index] == 'pre-game'" ng-click="goToBoard($index)">Join</button>
+								<button ng-show="statuses[$index] == 'in game' && canBack[$index] == 'y'" ng-click="backToBoard($index)">Back</button>
+							</td>
 						</tr>
 					</table>
 				</div>

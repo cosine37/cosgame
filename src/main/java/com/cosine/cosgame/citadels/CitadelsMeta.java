@@ -10,6 +10,8 @@ public class CitadelsMeta {
 	List<Board> boards;
 	List<String> boardIds;
 	List<Integer> boardStatuses;
+	List<List<String>> playerNames;
+	List<String> lords;
 	MongoDBUtil dbutil;
 	
 	public CitadelsMeta() {
@@ -20,14 +22,24 @@ public class CitadelsMeta {
 		
 		boardIds = dbutil.getValues("id");
 		boardStatuses = dbutil.getIntValues("status");
+		playerNames = dbutil.getListValues("playerNames");
+		lords = dbutil.getValues("lord");
 	}
 	
-	public StringEntity getBoardIdsAsStringEntity() {
+	public StringEntity getBoardIdsAsStringEntity(String name) {
 		StringEntity entity = new StringEntity();
 		List<String> value = new ArrayList<String>();
 		for (int i=0;i<boardIds.size();i++) {
 			value.add(boardIds.get(i));
+			value.add(lords.get(i));
 			value.add(Integer.toString(boardStatuses.get(i)));
+			String canBack="n";
+			for (int j=0;j<playerNames.get(i).size();j++) {
+				if (playerNames.get(i).get(j).contentEquals(name)) {
+					canBack="y";
+				}
+			}
+			value.add(canBack);
 		}
 		entity.setValue(value);
 		return entity;
