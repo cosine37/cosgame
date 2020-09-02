@@ -24,9 +24,11 @@ public class Player {
 	int buildLimit;
 	int numBuilt;
 	int identicalLimit;
+	int greatWallIndex;
 	boolean bot;
 	Ask ask;
 	List<String> canUseRoleSkill;
+	List<String> canUseCardSkill;
 	
 	public Player(String name) {
 		this.name = name;
@@ -41,10 +43,12 @@ public class Player {
 		numChoose = 1;
 		buildLimit = 1;
 		identicalLimit = 0;
+		greatWallIndex = -1;
 		bot = false;
 		phase = CitadelsConsts.OFFTURN;
 		ask = new Ask();
 		canUseRoleSkill = new ArrayList<>();
+		canUseCardSkill = new ArrayList<>();
 	}
 	
 	public void chooseRole(int index) {
@@ -67,6 +71,12 @@ public class Player {
 	public void useRoleSkill(int index) {
 		if (index < canUseRoleSkill.size()) {
 			canUseRoleSkill.set(index, "n");
+		}
+	}
+	
+	public void useCardSkill(int index) {
+		if (index < canUseCardSkill.size()) {
+			canUseCardSkill.set(index, "n");
 		}
 	}
 	
@@ -128,9 +138,18 @@ public class Player {
 		
 	}
 	
+	public void buildCanUseCardSkill() {
+		canUseCardSkill = new ArrayList<>();
+		for (int i=0;i<built.size();i++) {
+			Card c = built.get(i);
+			canUseCardSkill.add(c.canUseSkill());
+		}
+	}
+	
 	public void startBuildPhase(){ // equiv. to aftertakeaction
 		// TODO: some extra handle for witch & bewitched players
 		role.afterTakeAction();
+		buildCanUseCardSkill();
 		phase = CitadelsConsts.BUILDDISTRICT;
 		numBuilt = 0;
 	}
@@ -194,8 +213,10 @@ public class Player {
 			if (canBuild(x)) {
 				board.log(name + "建造了 " + c.getName()+"。");
 				numBuilt++;
+				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
 				built.add(c);
+				canUseCardSkill.add(c.canUseSkillSameRound());
 				coin = coin-cost;
 				board.addCoin(cost);
 				if (built.size() == board.getFinishCount()) {
@@ -408,6 +429,18 @@ public class Player {
 	public void setCanUseRoleSkill(List<String> canUseRoleSkill) {
 		this.canUseRoleSkill = canUseRoleSkill;
 	}
+	public List<String> getCanUseCardSkill() {
+		return canUseCardSkill;
+	}
+	public void setCanUseCardSkill(List<String> canUseCardSkill) {
+		this.canUseCardSkill = canUseCardSkill;
+	}
+	public int getGreatWallIndex() {
+		return greatWallIndex;
+	}
+	public void setGreatWallIndex(int greatWallIndex) {
+		this.greatWallIndex = greatWallIndex;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -420,6 +453,7 @@ public class Player {
 		doc.append("numBuilt", numBuilt);
 		doc.append("bot", bot);
 		doc.append("canUseRoleSkill", canUseRoleSkill);
+		doc.append("canUseCardSkill", canUseCardSkill);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -456,6 +490,7 @@ public class Player {
 			role.alterPlayerAbility();
 		}
 		canUseRoleSkill = (List<String>) doc.get("canUseRoleSkill");
+		canUseCardSkill = (List<String>) doc.get("canUseCardSkill");
 		
 		int i;
 		
@@ -474,8 +509,9 @@ public class Player {
 			Card c = CardFactory.createCard(builtDocList.get(i));
 			c.setPlayer(this);
 			c.setBoard(this.board);
-			c.alterPlayerAbility();
 			built.add(c);
+			c.alterPlayerAbility();
+			
 		}
 		
 		List<Document> forChooseDocList = (List<Document>) doc.get("forChoose");

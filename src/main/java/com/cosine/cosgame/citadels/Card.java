@@ -1,5 +1,8 @@
 package com.cosine.cosgame.citadels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 public class Card {
@@ -7,14 +10,20 @@ public class Card {
 	protected int cost;
 	protected String img;
 	protected int color;
+	protected int builtRound;
 	protected Player player;
 	protected Board board;
+	protected int numSkills;
+	protected List<String> skillNames;
 	
 	public Card() {
-		
+		builtRound = -1;
+		numSkills = 0;
+		skillNames = new ArrayList<>();
 	}
 	
 	public Card(String name) {
+		this();
 		this.name = name;
 	}
 	
@@ -24,6 +33,33 @@ public class Card {
 	
 	public boolean destroyable() {
 		return true;
+	}
+	
+	public boolean omniColor() {
+		return false;
+	}
+	
+	public String canUseSkill() {
+		return "n";
+	}
+	
+	public String canUseSkillSameRound() {
+		return "n";
+	}
+	
+	public Ask chooseSkill(int index, int x) {
+		Ask ask = new Ask();
+		return ask;
+	}
+	
+	public Ask useSkill(int index, int x) {
+		Ask ask = new Ask();
+		
+		if (player != null) {
+			player.useCardSkill(index);
+		}
+		
+		return ask;
 	}
 	
 	public int getColorForScore() {
@@ -69,13 +105,32 @@ public class Card {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
+	public int getBuiltRound() {
+		return builtRound;
+	}
+	public void setBuiltRound(int builtRound) {
+		this.builtRound = builtRound;
+	}
+	public int getNumSkills() {
+		return numSkills;
+	}
+	public void setNumSkills(int numSkills) {
+		this.numSkills = numSkills;
+	}
+	public List<String> getSkillNames() {
+		return skillNames;
+	}
+	public void setSkillNames(List<String> skillNames) {
+		this.skillNames = skillNames;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("cost", cost);
 		doc.append("color", color);
 		doc.append("img", img);
+		doc.append("builtRound", builtRound);
 		return doc;
 	}
 }

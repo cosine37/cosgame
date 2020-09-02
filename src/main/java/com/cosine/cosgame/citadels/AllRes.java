@@ -54,77 +54,87 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Library();
 		specialCards.add(c);
+		c = new GlobalHarbor();
+		specialCards.add(c);
+		c = new Inn();
+		specialCards.add(c);
+		c = new GreatWall();
+		specialCards.add(c);
+		c = new Subway();
+		specialCards.add(c);
+		c = new SouthStreet();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {
 		int i;
 		Card c;
 		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("路边摊", CitadelsConsts.GREEN, 1, "g1");
+			c = CardFactory.createCard("路边摊", CitadelsConsts.GREEN, 1, "g1", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21");
+			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("菜场", CitadelsConsts.GREEN, 2, "g22");
+			c = CardFactory.createCard("菜场", CitadelsConsts.GREEN, 2, "g22", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("超市", CitadelsConsts.GREEN, 3, "g3");
+			c = CardFactory.createCard("超市", CitadelsConsts.GREEN, 3, "g3", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("商场", CitadelsConsts.GREEN, 4, "g4");
+			c = CardFactory.createCard("商场", CitadelsConsts.GREEN, 4, "g4", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("商业步行街", CitadelsConsts.GREEN, 5, "g5");
+			c = CardFactory.createCard("商业步行街", CitadelsConsts.GREEN, 5, "g5", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("幼儿园", CitadelsConsts.BLUE, 1, "b1");
+			c = CardFactory.createCard("幼儿园", CitadelsConsts.BLUE, 1, "b1", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("小学", CitadelsConsts.BLUE, 2, "b2");
+			c = CardFactory.createCard("小学", CitadelsConsts.BLUE, 2, "b2", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("初中", CitadelsConsts.BLUE, 3, "b3");
+			c = CardFactory.createCard("初中", CitadelsConsts.BLUE, 3, "b3", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("高中", CitadelsConsts.BLUE, 5, "b5");
+			c = CardFactory.createCard("高中", CitadelsConsts.BLUE, 5, "b5", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("岗亭", CitadelsConsts.RED, 1, "r1");
+			c = CardFactory.createCard("岗亭", CitadelsConsts.RED, 1, "r1", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("监狱", CitadelsConsts.RED, 2, "r2");
+			c = CardFactory.createCard("监狱", CitadelsConsts.RED, 2, "r2", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3");
+			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("军区", CitadelsConsts.RED, 5, "r5");
+			c = CardFactory.createCard("军区", CitadelsConsts.RED, 5, "r5", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("居委会", CitadelsConsts.YELLOW, 3, "y3");
+			c = CardFactory.createCard("居委会", CitadelsConsts.YELLOW, 3, "y3", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("电视台", CitadelsConsts.YELLOW, 4, "y4");
+			c = CardFactory.createCard("电视台", CitadelsConsts.YELLOW, 4, "y4", -1);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("市政府", CitadelsConsts.YELLOW, 5, "y5");
+			c = CardFactory.createCard("市政府", CitadelsConsts.YELLOW, 5, "y5", -1);
 			baseCards.add(c);
 		}
 	}

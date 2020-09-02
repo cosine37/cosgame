@@ -155,17 +155,48 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			});
 		}
 		
-		$scope.chooseBuilt = function(playerIndex, builtIndex){
-			
-			var data = {
-					"skillIndex" : 1,
-					"roleIndex" : 0,
-					"playerIndex" : playerIndex,
-					"builtIndex" : builtIndex
+		$scope.disableBuilt = function(playerIndex, builtIndex){
+			if ($scope.askType == '2' && $scope.phase == '2'){
+				if ($scope.askBuiltInfo[playerIndex][builtIndex] == '-1'){
+					return true
+				} else {
+					return false
+				}
+			} else if ($scope.askType == '0' && $scope.phase == '2' && $scope.username == $scope.playerNames[playerIndex]){
+				if ($scope.canUseCardSkill[builtIndex] == 'y'){
+					return false
+				} else {
+					return true;
+				}
+				
+			} else {
+				return true;
 			}
-			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
-			})
+		}
+		
+		$scope.chooseBuilt = function(playerIndex, builtIndex){
+			if ($scope.askType == '0' && $scope.phase == '2' && $scope.username == $scope.playerNames[playerIndex]){ //use skill
+				var data = {
+						"builtIndex" : builtIndex
+				}
+				$http({url: "/citadelsgame/choosecardskill", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				})
+			} else if ($scope.askType == '2' && $scope.phase == '2'){ // destroy
+				var wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
+				if (wouldChoose){
+					var data = {
+							"skillIndex" : 1,
+							"roleIndex" : 0,
+							"playerIndex" : playerIndex,
+							"builtIndex" : builtIndex
+					}
+					$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
+						$scope.getBoard()
+					})
+				}
+			}
+			
 			
 		}
 		
@@ -200,7 +231,19 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			} else {
 				$scope.chooseHand[index] = "y"
 			}
-			
+		}
+		
+		$scope.chooseOneFromHand = function(x){
+			if ($scope.askId == '99502'){ // South Street
+				var builtIndex = parseInt($scope.askBuiltIndex)
+				var data = {
+						"builtIndex" : builtIndex,
+						"x" : x
+				}
+				$http({url: "/citadelsgame/usecardskill", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			}
 		}
 		
 		$scope.chooseHandStyle = function(index){
@@ -270,11 +313,14 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.crown = response.data.crown
 					$scope.logs = response.data.logs
 					$scope.skillButtons = response.data.skillButtons
+					$scope.askId = response.data.askId
 					$scope.askType = response.data.askType
 					$scope.askLs = response.data.askLs
-					$scope.askMsg = response.data.askMsg;
+					$scope.askMsg = response.data.askMsg
+					$scope.askBuiltIndex = response.data.askBuiltIndex
 					$scope.askBuiltInfo = response.data.askBuiltInfo
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
+					$scope.canUseCardSkill = response.data.canUseCardSkill
 					$scope.isLord = response.data.isLord
 					$scope.scores = response.data.scores
 					$scope.netScores = response.data.netScores

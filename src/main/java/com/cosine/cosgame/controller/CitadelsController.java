@@ -319,6 +319,8 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	
+	
 	@RequestMapping(value="/citadelsgame/useskillonhand", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> useSkillOnHand(HttpServletRequest request, @RequestParam int skillIndex, @RequestParam String handChoices) {
 		Board board = new Board();
@@ -329,6 +331,44 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			Player p = board.getPlayerByName(username);
 			Ask ask = p.getRole().useSkillOnHand(skillIndex, handChoices);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateLogs();
+			board.updateDeck();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/choosecardskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseCardSkill(HttpServletRequest request, @RequestParam int builtIndex){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = p.getBuilt().get(builtIndex).chooseSkill(builtIndex, 0);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateLogs();
+			board.updateDeck();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/usecardskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useCardSkill(HttpServletRequest request, @RequestParam int builtIndex, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = p.getBuilt().get(builtIndex).useSkill(builtIndex, x);
 			p.setAsk(ask);
 			board.updatePlayer(username);
 			board.updateLogs();

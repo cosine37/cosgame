@@ -8,6 +8,7 @@ import org.bson.Document;
 public class Ask {
 	int askId;
 	int askType;
+	int askBuiltIndex;
 	List<String> ls;
 	List<List<String>> builtInfo;
 	String msg;
@@ -31,6 +32,12 @@ public class Ask {
 	}
 	public void setAskType(int askType) {
 		this.askType = askType;
+	}
+	public int getAskBuiltIndex() {
+		return askBuiltIndex;
+	}
+	public void setAskBuiltIndex(int askBuiltIndex) {
+		this.askBuiltIndex = askBuiltIndex;
 	}
 	public List<String> getLs() {
 		return ls;
@@ -56,6 +63,7 @@ public class Ask {
 		Document doa = new Document();
 		doa.append("askId", askId);
 		doa.append("askType", askType);
+		doa.append("askBuiltIndex", askBuiltIndex);
 		doa.append("ls", ls);
 		doa.append("msg", msg);
 		doa.append("builtInfo", builtInfo);
@@ -65,6 +73,7 @@ public class Ask {
 	public void setFromDoc(Document doa) {
 		askId = doa.getInteger("askId", 0);
 		askType = doa.getInteger("askType", 0);
+		askBuiltIndex = doa.getInteger("askBuiltIndex", 0);
 		ls = (List<String>) doa.get("ls");
 		builtInfo = (List<List<String>>) doa.get("builtInfo");
 		msg = doa.getString("msg");

@@ -18,6 +18,7 @@ public class BoardEntity {
 	List<String> skillButtons;
 	List<String> askLs;
 	List<String> canUseRoleSkill;
+	List<String> canUseCardSkill;
 	List<String> scores;
 	List<String> netScores;
 	
@@ -35,6 +36,8 @@ public class BoardEntity {
 	String lastRound;
 	String askType;
 	String askMsg;
+	String askId;
+	String askBuiltIndex;
 	String killedRole;
 	String stealedRole;
 	String yourRole;
@@ -184,11 +187,23 @@ public class BoardEntity {
 	public void setSkillButtons(List<String> skillButtons) {
 		this.skillButtons = skillButtons;
 	}
+	public String getAskId() {
+		return askId;
+	}
+	public void setAskId(String askId) {
+		this.askId = askId;
+	}
 	public String getAskType() {
 		return askType;
 	}
 	public void setAskType(String askType) {
 		this.askType = askType;
+	}
+	public String getAskBuiltIndex() {
+		return askBuiltIndex;
+	}
+	public void setAskBuiltIndex(String askBuiltIndex) {
+		this.askBuiltIndex = askBuiltIndex;
 	}
 	public List<String> getAskLs() {
 		return askLs;
@@ -201,6 +216,12 @@ public class BoardEntity {
 	}
 	public void setCanUseRoleSkill(List<String> canUseRoleSkill) {
 		this.canUseRoleSkill = canUseRoleSkill;
+	}
+	public List<String> getCanUseCardSkill() {
+		return canUseCardSkill;
+	}
+	public void setCanUseCardSkill(List<String> canUseCardSkill) {
+		this.canUseCardSkill = canUseCardSkill;
 	}
 	public String getKilledRole() {
 		return killedRole;

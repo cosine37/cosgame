@@ -89,6 +89,8 @@ public class Board {
 		for (int i=0;i<shuffled.size();i++) {
 			deck.add(shuffled.get(i));
 		}
+		//test special cards addition here
+		
 	}
 	
 	public void deal() {
@@ -635,12 +637,15 @@ public class Board {
 		entity.setLastRound(lastRound);
 		entity.setRoleRevealed(roleRevealed);
 		entity.setLogs(logger.getLogs());
+		entity.setAskId(Integer.toString(p.getAsk().getAskId()));
 		entity.setAskType(Integer.toString(p.getAsk().getAskType()));
+		entity.setAskBuiltIndex(Integer.toString(p.getAsk().getAskBuiltIndex()));
 		entity.setSkillButtons(skillButtons);
 		entity.setAskMsg(p.getAsk().getMsg());
 		entity.setAskLs(askLs);
 		entity.setAskBuiltInfo(askBuiltInfo);
 		entity.setCanUseRoleSkill(p.getCanUseRoleSkill());
+		entity.setCanUseCardSkill(p.getCanUseCardSkill());
 		entity.setKilledRole(Integer.toString(killedRole));
 		entity.setStealedRole(Integer.toString(stealedRole));
 		entity.setScores(scores);

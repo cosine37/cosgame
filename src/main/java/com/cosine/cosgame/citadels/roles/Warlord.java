@@ -37,6 +37,9 @@ public class Warlord extends Role {
 				for (j=0;j<p.getBuilt().size();j++) {
 					if (p.getRole().isDestroyable() || p.getRole().getNum() == board.getKilledRole()) {
 						int temp = p.getBuilt().get(j).getCost()-1;
+						if (player.getGreatWallIndex() >= 0 && player.getGreatWallIndex() != j) {
+							temp = temp+1;
+						}
 						if (temp < 0) temp = 0;
 						if (player.getCoin() < temp) {
 							singleBuiltInfo.add("-1");
@@ -80,9 +83,13 @@ public class Warlord extends Role {
 			Player p = board.getPlayers().get(playerIndex);
 			if (builtIndex < p.getBuilt().size()) {
 				Card c = p.getBuilt().remove(builtIndex);
+				p.getCanUseCardSkill().remove(builtIndex);
 				String victimName = p.getName();
 				String builtName = c.getName();
 				int spent = c.getCost() - 1;
+				if (p.getGreatWallIndex() >= 0 && p.getGreatWallIndex() != builtIndex) {
+					spent = spent+1;
+				}
 				int temp = player.getCoin() - spent;
 				player.setCoin(temp);
 				board.log(player.getName() + "花费了" + Integer.toString(spent) + "￥拆除了" + victimName + "的" + builtName+"。");
