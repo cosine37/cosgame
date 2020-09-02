@@ -2,6 +2,7 @@ package com.cosine.cosgame.citadels;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
@@ -42,6 +43,20 @@ public class CardFactory {
 			card = new Canal();
 		} else if (img.contentEquals("p506")) {
 			card = new DevZone();
+		} else if (img.contentEquals("p302")) {
+			card = new Statue();
+		} else if (img.contentEquals("p507")) {
+			card = new Condo();
+		} else if (img.contentEquals("p508")) {
+			card = new MtMao();
+		} else if (img.contentEquals("p403")) {
+			card = new TianningTemple();
+		} else if (img.contentEquals("p202")) {
+			card = new PeoplesPark();
+		} else if (img.contentEquals("p608")) {
+			card = new Bank();
+		} else if (img.contentEquals("p001")) {
+			card = new Comb();
 		}
 		
 		else {

@@ -8,6 +8,7 @@ import java.util.Date;
 import org.bson.Document;
 
 import com.cosine.cosgame.citadels.specialcards.*;
+import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 

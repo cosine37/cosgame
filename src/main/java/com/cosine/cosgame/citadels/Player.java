@@ -14,6 +14,7 @@ public class Player {
 	List<Card> forChoose;
 	int numReveal;
 	int numChoose;
+	int numTakeCoin;
 	int coin;
 	boolean firstFinished;
 	boolean finished;
@@ -42,6 +43,7 @@ public class Player {
 		killed = false;
 		numReveal = 2;
 		numChoose = 1;
+		numTakeCoin = 2;
 		buildLimit = 1;
 		identicalLimit = 0;
 		greatWallIndex = -1;
@@ -119,8 +121,8 @@ public class Player {
 					phase = CitadelsConsts.CHOOSECARD;
 				}
 			} else if (option == 2) {
-				addCoin(2);
-				board.log(name + "获得2￥。");
+				addCoin(numTakeCoin);
+				board.log(name + "获得" + Integer.toString(numTakeCoin) + "￥。");
 				startBuildPhase();
 			} else {
 				
@@ -190,10 +192,14 @@ public class Player {
 	
 	public boolean canBuild(int x) {
 		if (hand.size()>x) {
-			if (numBuilt >= buildLimit) {
+			Card c = hand.get(x);
+			if (!c.isBuildable()) {
 				return false;
 			}
-			Card c = hand.get(x);
+			if (numBuilt + c.getBuildCount() > buildLimit) {
+				return false;
+			}
+			
 			int costReduce = costReducers.get(c.getColor());
 			int cost = c.getCost() - costReduce;
 			if (cost<0) cost = 0;
@@ -224,7 +230,7 @@ public class Player {
 			if (cost<0) cost = 0;
 			if (canBuild(x)) {
 				board.log(name + "花费了" + Integer.toString(cost) + "￥建造了 " + c.getName()+"。");
-				numBuilt++;
+				numBuilt = numBuilt + c.getBuildCount();
 				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
 				built.add(c);
@@ -291,7 +297,7 @@ public class Player {
 			ans = ans + built.get(i).getScore();
 		}
 		if (board.getStatus() == CitadelsConsts.ENDGAME) {
-			ans = ans + extraScore();
+			ans = ans + extraScore() + secretScore();
 		}
 		return ans;
 	}
@@ -328,6 +334,14 @@ public class Player {
 		int ans = 0;
 		for (int i=0;i<built.size();i++) {
 			ans = ans+built.get(i).getExtraScore();
+		}
+		return ans;
+	}
+	
+	public int secretScore() {
+		int ans = 0;
+		for (int i=0;i<hand.size();i++) {
+			ans = ans+hand.get(i).getSecretScore();
 		}
 		return ans;
 	}
@@ -422,6 +436,13 @@ public class Player {
 	public void setNumChoose(int numChoose) {
 		this.numChoose = numChoose;
 	}
+	public int getNumTakeCoin() {
+		return numTakeCoin;
+	}
+	public void setNumTakeCoin(int numTakeCoin) {
+		this.numTakeCoin = numTakeCoin;
+	}
+
 	public int getNumBuilt() {
 		return numBuilt;
 	}

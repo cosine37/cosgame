@@ -344,7 +344,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					}
 					
 					for (i=0;i<$scope.scores.length;i++){
-						if ($scope.extraScores[i] != "0"){ 
+						if ($scope.extraScores[i] != "0" && $scope.status != '3'){ 
 							$scope.scores[i] = $scope.scores[i] + "(+" + $scope.extraScores[i] + ")"
 						}
 					}

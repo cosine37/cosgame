@@ -16,12 +16,16 @@ public class Card {
 	protected int numSkills;
 	protected List<String> skillNames;
 	protected int expansion;
+	protected int buildCount;
+	protected boolean buildable;
 	
 	public Card() {
 		builtRound = -1;
 		numSkills = 0;
 		skillNames = new ArrayList<>();
 		expansion = 0;
+		buildCount = 1;
+		buildable = true;
 	}
 	
 	public Card(String name) {
@@ -75,6 +79,9 @@ public class Card {
 		return cost;
 	}
 	public int getExtraScore() {
+		return 0;
+	}
+	public int getSecretScore() {
 		return 0;
 	}
 	public String getName() {
@@ -136,6 +143,18 @@ public class Card {
 	}
 	public void setExpansion(int expansion) {
 		this.expansion = expansion;
+	}
+	public int getBuildCount() {
+		return buildCount;
+	}
+	public void setBuildCount(int buildCount) {
+		this.buildCount = buildCount;
+	}
+	public boolean isBuildable() {
+		return buildable;
+	}
+	public void setBuildable(boolean buildable) {
+		this.buildable = buildable;
 	}
 
 	public Document toDocument() {

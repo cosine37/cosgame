@@ -2,8 +2,10 @@ package com.cosine.cosgame.citadels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.citadels.roles.*;
+import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
@@ -78,6 +80,20 @@ public class AllRes {
 		c = new Canal();
 		specialCards.add(c);
 		c = new DevZone();
+		specialCards.add(c);
+		c = new Statue();
+		specialCards.add(c);
+		c = new Condo();
+		specialCards.add(c);
+		c = new MtMao();
+		specialCards.add(c);
+		c = new TianningTemple();
+		specialCards.add(c);
+		c = new PeoplesPark();
+		specialCards.add(c);
+		c = new Bank();
+		specialCards.add(c);
+		c = new Comb();
 		specialCards.add(c);
 	}
 	
@@ -164,9 +180,16 @@ public class AllRes {
 		for (i=0;i<baseCards.size();i++) {
 			deck.add(baseCards.get(i));
 		}
-		
+		/*
 		for (i=0;i<specialCards.size();i++) {
 			deck.add(specialCards.get(i));
+		}
+		*/
+		int specialCount = 18;
+		for (i=0;i<specialCount;i++) {
+			Random rand = new Random();
+			int size = specialCards.size();
+			deck.add(specialCards.remove(rand.nextInt(size)));
 		}
 		return deck;
 	}
