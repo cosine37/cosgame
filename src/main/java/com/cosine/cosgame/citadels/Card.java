@@ -15,11 +15,13 @@ public class Card {
 	protected Board board;
 	protected int numSkills;
 	protected List<String> skillNames;
+	protected int expansion;
 	
 	public Card() {
 		builtRound = -1;
 		numSkills = 0;
 		skillNames = new ArrayList<>();
+		expansion = 0;
 	}
 	
 	public Card(String name) {
@@ -28,6 +30,10 @@ public class Card {
 	}
 	
 	public void alterPlayerAbility() {
+		
+	}
+	
+	public void endTurnEffect() {
 		
 	}
 	
@@ -68,7 +74,9 @@ public class Card {
 	public int getScore() {
 		return cost;
 	}
-
+	public int getExtraScore() {
+		return 0;
+	}
 	public String getName() {
 		return name;
 	}
@@ -122,6 +130,12 @@ public class Card {
 	}
 	public void setSkillNames(List<String> skillNames) {
 		this.skillNames = skillNames;
+	}
+	public int getExpansion() {
+		return expansion;
+	}
+	public void setExpansion(int expansion) {
+		this.expansion = expansion;
 	}
 
 	public Document toDocument() {

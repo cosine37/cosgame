@@ -8,6 +8,7 @@ import java.util.Date;
 import org.bson.Document;
 
 import com.cosine.cosgame.citadels.specialcards.*;
+import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -90,7 +91,7 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//test special cards addition here
-		
+
 	}
 	
 	public void deal() {
@@ -584,11 +585,14 @@ public class Board {
 		}
 		List<String> scores = new ArrayList<>();
 		List<String> netScores = new ArrayList<>();
+		List<String> extraScores = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			int score = players.get(i).calcScore();
 			scores.add(Integer.toString(score));
 			int netScore = players.get(i).netScore();
 			netScores.add(Integer.toString(netScore));
+			int extraScore = players.get(i).extraScore();
+			extraScores.add(Integer.toString(extraScore));
 		}
 		String yourRole;
 		if (p.getRole() == null) {
@@ -650,6 +654,7 @@ public class Board {
 		entity.setStealedRole(Integer.toString(stealedRole));
 		entity.setScores(scores);
 		entity.setNetScores(netScores);
+		entity.setExtraScores(extraScores);
 		entity.setYourRole(yourRole);
 		entity.setChooseOrDiscard(chooseOrDiscard);
 		return entity;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.citadels.roles.*;
+import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class AllRes {
@@ -63,6 +64,20 @@ public class AllRes {
 		c = new Subway();
 		specialCards.add(c);
 		c = new SouthStreet();
+		specialCards.add(c);
+		c = new BaolinTemple();
+		specialCards.add(c);
+		c = new CRHStation();
+		specialCards.add(c);
+		c = new DrownedCity();
+		specialCards.add(c);
+		c = new HongmeiPark();
+		specialCards.add(c);
+		c = new QingguoLane();
+		specialCards.add(c);
+		c = new Canal();
+		specialCards.add(c);
+		c = new DevZone();
 		specialCards.add(c);
 	}
 	

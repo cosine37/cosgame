@@ -2,6 +2,7 @@ package com.cosine.cosgame.citadels;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class CardFactory {
@@ -27,6 +28,20 @@ public class CardFactory {
 			card = new Subway();
 		} else if (img.contentEquals("p502")) {
 			card = new SouthStreet();
+		} else if (img.contentEquals("p503")) {
+			card = new BaolinTemple();
+		} else if (img.contentEquals("p504")) {
+			card = new CRHStation();
+		} else if (img.contentEquals("p505")) {
+			card = new DrownedCity();
+		} else if (img.contentEquals("p606")) {
+			card = new HongmeiPark();
+		} else if (img.contentEquals("p402")) {
+			card = new QingguoLane();
+		} else if (img.contentEquals("p607")) {
+			card = new Canal();
+		} else if (img.contentEquals("p506")) {
+			card = new DevZone();
 		}
 		
 		else {

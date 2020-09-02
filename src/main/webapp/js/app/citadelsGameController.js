@@ -324,6 +324,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.isLord = response.data.isLord
 					$scope.scores = response.data.scores
 					$scope.netScores = response.data.netScores
+					$scope.extraScores = response.data.extraScores
 					$scope.yourRole = response.data.yourRole
 					$scope.chooseOrDiscard = response.data.chooseOrDiscard
 					
@@ -340,6 +341,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 						setPlayerStyle()
 						setButtons()
 						setHand()
+					}
+					
+					for (i=0;i<$scope.scores.length;i++){
+						if ($scope.extraScores[i] != "0"){ 
+							$scope.scores[i] = $scope.scores[i] + "(+" + $scope.extraScores[i] + ")"
+						}
 					}
 					
 					$http.post('/citadelsgame/empty').then(function(response){

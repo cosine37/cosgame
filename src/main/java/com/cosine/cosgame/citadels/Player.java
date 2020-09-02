@@ -29,6 +29,7 @@ public class Player {
 	Ask ask;
 	List<String> canUseRoleSkill;
 	List<String> canUseCardSkill;
+	List<Integer> costReducers;
 	
 	public Player(String name) {
 		this.name = name;
@@ -49,6 +50,10 @@ public class Player {
 		ask = new Ask();
 		canUseRoleSkill = new ArrayList<>();
 		canUseCardSkill = new ArrayList<>();
+		costReducers = new ArrayList<>();
+		for (int i=0;i<5;i++) {
+			costReducers.add(0);
+		}
 	}
 	
 	public void chooseRole(int index) {
@@ -94,6 +99,9 @@ public class Player {
 		if (phase == CitadelsConsts.BUILDDISTRICT) {
 			phase = CitadelsConsts.OFFTURN;
 			board.log(name + "结束了回合。");
+			for (int i=0;i<built.size();i++) {
+				built.get(i).endTurnEffect();
+			}
 			board.nextRole();
 		}
 	}
@@ -186,7 +194,9 @@ public class Player {
 				return false;
 			}
 			Card c = hand.get(x);
-			int cost = c.getCost();
+			int costReduce = costReducers.get(c.getColor());
+			int cost = c.getCost() - costReduce;
+			if (cost<0) cost = 0;
 			if (cost > coin) {
 				return false;
 			}
@@ -209,9 +219,11 @@ public class Player {
 	public void build(int x) {
 		if (hand.size() > x) {
 			Card c = hand.get(x);
-			int cost = c.getCost();
+			int costReduce = costReducers.get(c.getColor());
+			int cost = c.getCost() - costReduce;
+			if (cost<0) cost = 0;
 			if (canBuild(x)) {
-				board.log(name + "建造了 " + c.getName()+"。");
+				board.log(name + "花费了" + Integer.toString(cost) + "￥建造了 " + c.getName()+"。");
 				numBuilt++;
 				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
@@ -278,6 +290,9 @@ public class Player {
 		for (i=0;i<built.size();i++) {
 			ans = ans + built.get(i).getScore();
 		}
+		if (board.getStatus() == CitadelsConsts.ENDGAME) {
+			ans = ans + extraScore();
+		}
 		return ans;
 	}
 	
@@ -305,6 +320,14 @@ public class Player {
 		}
 		if (allColors) {
 			ans = ans+3;
+		}
+		return ans;
+	}
+	
+	public int extraScore() {
+		int ans = 0;
+		for (int i=0;i<built.size();i++) {
+			ans = ans+built.get(i).getExtraScore();
 		}
 		return ans;
 	}
@@ -440,6 +463,18 @@ public class Player {
 	}
 	public void setGreatWallIndex(int greatWallIndex) {
 		this.greatWallIndex = greatWallIndex;
+	}
+	public List<Integer> getCostReducers() {
+		return costReducers;
+	}
+	public void setCostReducers(List<Integer> costReducers) {
+		this.costReducers = costReducers;
+	}
+	public int getIdenticalLimit() {
+		return identicalLimit;
+	}
+	public void setIdenticalLimit(int identicalLimit) {
+		this.identicalLimit = identicalLimit;
 	}
 
 	public Document toDocument() {

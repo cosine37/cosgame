@@ -21,6 +21,7 @@ public class BoardEntity {
 	List<String> canUseCardSkill;
 	List<String> scores;
 	List<String> netScores;
+	List<String> extraScores;
 	
 	String phase;
 	String bank;
@@ -258,6 +259,12 @@ public class BoardEntity {
 	}
 	public void setNetScores(List<String> netScores) {
 		this.netScores = netScores;
+	}
+	public List<String> getExtraScores() {
+		return extraScores;
+	}
+	public void setExtraScores(List<String> extraScores) {
+		this.extraScores = extraScores;
 	}
 	public String getYourRole() {
 		return yourRole;

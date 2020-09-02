@@ -116,6 +116,7 @@ public class CitadelsController {
 		board.updateDeck();
 		board.updateRoles();
 		board.updatePlayers();
+		board.updateDB("coins", board.getCoins());
 		board.updateDB("status", board.getStatus());
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("roundCount", board.getRoundCount());
@@ -231,8 +232,10 @@ public class CitadelsController {
 			board.updateDB("killedRole", board.getKilledRole());
 			board.updateDB("stealedRole", board.getStealedRole());
 			board.updateDB("crown", board.getCrown());
+			board.updateDB("coins", board.getCoins());
 			board.updateThief();
 			board.updateRoles();
+			board.updateDeck();
 			board.updateLogs();
 		}
 		StringEntity entity = new StringEntity();
@@ -292,6 +295,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -314,6 +318,7 @@ public class CitadelsController {
 			board.updateDB("stealedRole", board.getStealedRole());
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -335,6 +340,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -354,6 +360,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -373,6 +380,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -451,6 +459,7 @@ public class CitadelsController {
 		board.updateDB("killedRole", board.getKilledRole());
 		board.updateDB("stealedRole", board.getStealedRole());
 		board.updateDB("firstFinished", board.isFirstFinished());
+		board.updateDB("coins", board.getCoins());
 		board.updateDB("crown", board.getCrown());
 		board.updateThief();
 		board.updateRoles();
