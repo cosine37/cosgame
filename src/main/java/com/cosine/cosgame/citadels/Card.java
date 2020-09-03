@@ -41,6 +41,14 @@ public class Card {
 		
 	}
 	
+	public void afterTakeActionEffect() {
+		
+	}
+	
+	public void onBuild() {
+		
+	}
+	
 	public boolean destroyable() {
 		return true;
 	}

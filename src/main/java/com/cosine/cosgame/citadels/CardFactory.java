@@ -4,6 +4,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
+import com.cosine.cosgame.citadels.sckx.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class CardFactory {
@@ -57,7 +58,15 @@ public class CardFactory {
 			card = new Bank();
 		} else if (img.contentEquals("p001")) {
 			card = new Comb();
-		}
+		} else if (img.contentEquals("p608")) {
+			card = new Bank();
+		} else if (img.contentEquals("p609")) {
+			card = new CultPalace();
+		} else if (img.contentEquals("p404")) {
+			card = new CommodityMarket();
+		} else if (img.contentEquals("p610")) {
+			card = new GreatA3Factory();
+		} 
 		
 		else {
 			card = new Card(name);

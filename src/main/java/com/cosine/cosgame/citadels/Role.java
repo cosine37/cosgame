@@ -165,6 +165,12 @@ public class Role {
 	public void setButtonNames(List<String> buttonNames) {
 		this.buttonNames = buttonNames;
 	}
+	public int getColor() {
+		return color;
+	}
+	public void setColor(int color) {
+		this.color = color;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();

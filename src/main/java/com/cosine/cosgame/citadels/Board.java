@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.cosine.cosgame.citadels.specialcards.*;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
+import com.cosine.cosgame.citadels.sckx.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -92,7 +93,6 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//test special cards addition here
-
 	}
 	
 	public void deal() {

@@ -159,6 +159,10 @@ public class Player {
 	public void startBuildPhase(){ // equiv. to aftertakeaction
 		// TODO: some extra handle for witch & bewitched players
 		role.afterTakeAction();
+		for (int i=0;i<built.size();i++) {
+			Card c = built.get(i);
+			c.afterTakeActionEffect();
+		}
 		buildCanUseCardSkill();
 		phase = CitadelsConsts.BUILDDISTRICT;
 		numBuilt = 0;
@@ -234,6 +238,7 @@ public class Player {
 				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
 				built.add(c);
+				c.onBuild();
 				canUseCardSkill.add(c.canUseSkillSameRound());
 				coin = coin-cost;
 				board.addCoin(cost);

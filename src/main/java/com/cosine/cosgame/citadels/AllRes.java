@@ -7,6 +7,7 @@ import java.util.Random;
 import com.cosine.cosgame.citadels.roles.*;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
+import com.cosine.cosgame.citadels.sckx.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class AllRes {
@@ -95,6 +96,13 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Comb();
 		specialCards.add(c);
+		c = new CultPalace();
+		specialCards.add(c);
+		c = new CommodityMarket();
+		specialCards.add(c);
+		c = new GreatA3Factory();
+		specialCards.add(c);
+		
 	}
 	
 	public void setBaseCards() {
