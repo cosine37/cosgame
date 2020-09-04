@@ -34,11 +34,11 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '
 					var x = response.data.value[i*4+2]
 					var t = ''
 					if (x == '0'){
-						t = 'pre-game'
+						t = '准备中'
 					} else if (x == '3'){
-						t = 'end game'
+						t = '游戏结束'
 					} else {
-						t = 'in game'
+						t = '游戏中'
 					}
 					$scope.statuses.push(t)
 					var y = response.data.value[i*4+3]

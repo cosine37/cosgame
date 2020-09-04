@@ -18,7 +18,13 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		});
 		
 		$scope.gamedata = "nothing"
+		$scope.roleStyle = []
 		$scope.hand = []
+		$scope.handStyle = []
+		$scope.handDisabled = []
+		$scope.built = []
+		$scope.builtStyle = []
+		$scope.builtDisabled = []
 		$scope.buildable = []
 		$scope.canclickhand = []
 		$scope.phase = "-1"
@@ -31,14 +37,42 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.playerStyle = []
 		$scope.skillButtons = []
 		$scope.chooseHand = []
+		$scope.playerRoleStyle=[]
+		$scope.roleStyle=[]
+		$scope.roleStyleSkills=[]
 		$scope.chooseOrDiscard = "choose"
+		$scope.showBigImage = false
+		$scope.bigImage = ""
+		$scope.bigImageStyle = {}
+		$scope.bigImageDivStyle = {}
+		$scope.showRoleSelection = false
 		
+		$scope.roleTable = []
+		var tr1 = [0,1,2,3]
+		var tr2 = [4,5,6,7]
+		$scope.roleTable.push(tr1)
+		$scope.roleTable.push(tr2)
+		
+		getRoleImageByNum = function(x){
+			var ans=""
+			for (i=0;i<$scope.roleNums.length;i++){
+				if ($scope.roleNums[i] == x){
+					ans = $scope.roleImgs[i]
+					break
+				}
+			}
+			return ans
+		}
+			
 		setPlayerStyle = function(){
 			$scope.playerStyle = []
+			$scope.builtDisabled = []
+			$scope.builtStyle = []
+			$scope.playerRoleStyle = []
 			var i
 			for (i=0;i<$scope.playerNames.length;i++){
 				myStyle = {
-						"background-color" : "yellow",
+						"background-color" : "#dddddd",
 				}
 				otherStyle = {
 						
@@ -48,7 +82,73 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				} else {
 					$scope.playerStyle.push(otherStyle)
 				}
+				
+				var imgUrl
+				if ($scope.roleRevealed[i] == "-1"){
+					imgUrl = "url('/image/Citadels/role.png')"
+				} else {
+					imgUrl = "url('/image/Citadels/Roles/" + getRoleImageByNum($scope.roleRevealed[i]) + ".png')"
+				}
+				var singleRoleStyle = {
+					"background": imgUrl,
+					"background-size": "cover",
+					"float": "left",
+				}
+				if ($scope.roleRevealed[i] == $scope.killedRole && $scope.killedRole != -1){
+					singleRoleStyle = {
+						"background": imgUrl,
+						"background-color" : "grey",
+						"background-blend-mode" : "screen",
+						"background-size": "cover",
+						"float": "left",
+					}
+				}
+				$scope.playerRoleStyle.push(singleRoleStyle)
+				
+				var singleBuiltDisabled = []
+				var singleBuiltStyle = []
+				
+				for (j=0;j<$scope.built[i].length;j++){
+					var x = $scope.disableBuilt(i,j)
+					singleBuiltDisabled.push(x)
+					var imgUrl = "url('/image/Citadels/Cards/" + $scope.built[i][j] + ".png')"
+					var imgUrlGradient = "url('/image/Citadels/Cards/" + $scope.built[i][j] + ".png'), linear-gradient(#f00, #00f)"
+					var marginLeft = "0px"
+					if ($scope.built[i].length == 7 && j != 0){
+						marginLeft = "-12px"
+					} else if ($scope.built[i].length == 8 && j != 0){
+						marginLeft = "-21px"
+					} else if ($scope.built[i].length == 9 && j != 0){
+						marginLeft = "-28px"
+					} else if ($scope.built[i].length == 10 && j != 0){
+						marginLeft = "-33px"
+					} else if ($scope.built[i].length == 11 && j != 0){
+						marginLeft = "-37px"
+					} 
+					var singleStyle = {
+						"background": imgUrlGradient,
+						"background-size": "cover",
+						"float": "left",
+						"position": "relative",
+						"margin-left": marginLeft,
+						"background-blend-mode" : "lighten"
+					}
+					if (x){
+						singleStyle = {
+							"background": imgUrl,
+							"background-size": "cover",
+							"float": "left",
+							"position": "relative",
+							"margin-left": marginLeft
+						}
+					}
+					singleBuiltStyle.push(singleStyle)
+				}
+				$scope.builtDisabled.push(singleBuiltDisabled)
+				$scope.builtStyle.push(singleBuiltStyle)
+				
 			}
+			//alert($scope.builtStyle[0][1].background)
 		}
 		
 		setButtons = function(){
@@ -68,6 +168,65 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			$scope.chooseHand = []
 			for (i=0;i<$scope.hand.length;i++){
 				$scope.chooseHand.push("n");
+			}
+			$scope.handDisabled = []
+			for (i=0;i<$scope.hand.length;i++){
+				var x = 'n'
+				if ($scope.phase != '2'){
+					x = 'y'
+				}
+				if ($scope.canclickhand[i] == 'n'){
+					x = 'y'
+				}
+				if ($scope.askType != "0"){
+					x = 'y'
+				}
+				$scope.handDisabled.push(x)
+			}
+			
+			$scope.handStyle = []
+			for (i=0;i<$scope.hand.length;i++){
+				var imgUrl = "url('/image/Citadels/Cards/" + $scope.hand[i] + ".png')"
+				var marginLeft = "0px"
+				if ($scope.hand.length == 6 && i != 0){
+					marginLeft = "-10px"
+				}
+				if ($scope.hand.length >= 7 && i != 0){
+					marginLeft = "-25px"
+				}
+				if ($scope.hand.length >= 8 && i != 0){
+					marginLeft = "-36px"
+				}
+				if ($scope.hand.length >= 9 && i != 0){
+					marginLeft = "-45px"
+				}
+				if ($scope.hand.length >= 10 && i != 0){
+					marginLeft = "-60px"
+				}
+				if ($scope.hand.length >= 12 && i != 0){
+					marginLeft = "-75px"
+				}
+				if ($scope.hand.length >= 18 && i != 0){
+					marginLeft = "-85px"
+				}
+				var singleHandStyle = {
+						"background": imgUrl,
+						"margin-left" : marginLeft,
+						"background-size": "cover",
+						"float": "left"
+					}
+				if ($scope.handDisabled[i] == 'y'){
+					singleHandStyle = {
+							"background": imgUrl,
+							"background-color" : "grey",
+							"background-blend-mode" : "screen",
+							"margin-left" : marginLeft,
+							"background-size": "cover",
+							"float" : "left",
+						}
+				}
+				$scope.handStyle.push(singleHandStyle)
+				
 			}
 		}
 		
@@ -122,6 +281,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.build = function(x){
+			if ($scope.handDisabled[x] == 'y'){
+				return
+			}
 			var data = {"index" : x}
 			$http({url: "/citadelsgame/build", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
@@ -141,11 +303,16 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.setSelectedRole = function(x){
-			$scope.selectedRole = x;
+			if ($scope.roleOwners[x] == '-1'){
+				$scope.selectedRole = x;
+			}
 		}
 		
 		$scope.setSelectedRoleSkill = function(x){
-			$scope.selectedRoleSkill = x;
+			if ($scope.askLs[x] == 'y'){
+				$scope.selectedRoleSkill = x;
+			}
+			
 		}
 		
 		$scope.chooseSkill = function(x){
@@ -175,6 +342,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.chooseBuilt = function(playerIndex, builtIndex){
+			if ($scope.builtDisabled[playerIndex][builtIndex]){
+				return
+			}
 			if ($scope.askType == '0' && $scope.phase == '2' && $scope.username == $scope.playerNames[playerIndex]){ //use skill
 				var data = {
 						"builtIndex" : builtIndex
@@ -247,17 +417,91 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.chooseHandStyle = function(index){
+			var imgUrl = "url('/image/Citadels/Cards/" + $scope.hand[index] + ".png')"
+			var selectedImgUrl = "url('/image/Citadels/Cards/" + $scope.hand[index] + ".png'), linear-gradient(#f00, #f00)"
+			var marginLeft = "0px"
+			if ($scope.hand.length == 6 && index != 0){
+				marginLeft = "-10px"
+			}
+			if ($scope.hand.length >= 7 && index != 0){
+				marginLeft = "-25px"
+			}
+			if ($scope.hand.length >= 8 && index != 0){
+				marginLeft = "-36px"
+			}
+			if ($scope.hand.length >= 9 && index != 0){
+				marginLeft = "-45px"
+			}
+			if ($scope.hand.length >= 10 && index != 0){
+				marginLeft = "-60px"
+			}
+			if ($scope.hand.length >= 12 && index != 0){
+				marginLeft = "-75px"
+			}
+			if ($scope.hand.length >= 18 && index != 0){
+				marginLeft = "-85px"
+			}
 			var selectedStyle = {
-					"color" : "blue"
+				"background": selectedImgUrl,
+				"background-size": "cover",
+				"float": "left",
+				"margin-left" :marginLeft,
+				"background-blend-mode" : "lighten"
 			}
 			var notSelectedStyle = {
-					"color" : "black"
+				"background": imgUrl,
+				"background-size": "cover",
+				"float": "left",
+				"margin-left" :marginLeft
 			}
 			if ($scope.chooseHand[index] == "y"){
 				return selectedStyle
 			} else {
 				return notSelectedStyle
 			}
+		}
+		
+		$scope.chooseOneFromHandStyle = function(index){
+			var imgUrl = "url('/image/Citadels/Cards/" + $scope.hand[index] + ".png')"
+			var marginLeft = "0px"
+			if ($scope.hand.length == 6 && index != 0){
+				marginLeft = "-10px"
+			}
+			if ($scope.hand.length >= 7 && index != 0){
+				marginLeft = "-25px"
+			}
+			if ($scope.hand.length >= 8 && index != 0){
+				marginLeft = "-36px"
+			}
+			if ($scope.hand.length >= 9 && index != 0){
+				marginLeft = "-45px"
+			}
+			if ($scope.hand.length >= 10 && index != 0){
+				marginLeft = "-60px"
+			}
+			if ($scope.hand.length >= 12 && index != 0){
+				marginLeft = "-75px"
+			}
+			if ($scope.hand.length >= 18 && index != 0){
+				marginLeft = "-85px"
+			}
+			var notSelectedStyle = {
+				"background": imgUrl,
+				"background-size": "cover",
+				"float": "left",
+				"margin-left" :marginLeft
+			}
+			return notSelectedStyle
+		}
+		
+		$scope.revealedStyle = function(index){
+			var imgUrl = "url('/image/Citadels/Cards/" + $scope.revealedCards[index] + ".png')"
+			var notSelectedStyle = {
+				"background": imgUrl,
+				"background-size": "cover",
+				"float": "left"
+			}
+			return notSelectedStyle
 		}
 		
 		$scope.useSkillOnHand = function(x){
@@ -286,6 +530,123 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			
 		}
 		
+		setBigImageStyle = function(){
+			$scope.bigImageStyle = {
+				"height": "609px", 
+				"width": "392px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-196px",
+				"margin-top": "-280px",
+				"background": "url(" + $scope.bigImage + ")", 
+				"background-size": "cover"
+			}
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
+			}
+		}
+		
+		setChooseRoleStyle = function(){
+			$scope.chooseRoleDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150)"
+			}
+			$scope.roleStyle=[]
+			$scope.roleStyleSkills=[]
+			for (i=0;i<$scope.roleImgs.length;i++){
+				var imgUrl = "url('/image/Citadels/Roles/" + $scope.roleImgs[i] + ".png')"
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover",
+					"float": "left"
+				}
+				if ($scope.roleOwners[i] == '-2'){
+					singleStyle = {
+						"background": imgUrl,
+						"background-color" : "rgb(204, 204, 0)",
+						"background-blend-mode" : "screen",
+						"background-size": "cover",
+						"float": "left"
+					}
+				}
+				
+				if ($scope.askLs[i] == 'y'){
+					$scope.roleStyleSkills.push(singleStyle)
+				} else {
+					if ($scope.roleOwners[i] != '-2'){
+						cannotChooseStyle = {
+							"background": imgUrl,
+							"background-color" : "grey",
+							"background-blend-mode" : "screen",
+							"background-size": "cover",
+							"float": "left"
+						}
+					} else {
+						cannotChooseStyle = singleStyle
+					}
+					
+					$scope.roleStyleSkills.push(cannotChooseStyle)
+				}
+				
+				if ($scope.roleOwners[i] == '-3'){
+					singleStyle = {
+						"background": imgUrl,
+						"background-color" : "grey",
+						"background-blend-mode" : "screen",
+						"background-size": "cover",
+						"float": "left"
+					}
+				}
+				$scope.roleStyle.push(singleStyle)
+			}
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false
+		}
+		
+		$scope.showHand = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.hand[index] + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.showRevealedCard = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.revealedCards[index] + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.showBuilt = function(playerIndex, builtIndex){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.built[playerIndex][builtIndex] + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.showPlayerRole = function(playerIndex){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Roles/" + getRoleImageByNum($scope.roleRevealed[playerIndex]) + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.unshowRoleSelection = function(){
+			$scope.showRoleSelection = false
+		}
+		
+		$scope.openRoleSelection = function(){
+			$scope.showRoleSelection = true
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/citadelsgame/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -299,6 +660,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.status = response.data.status
 					$scope.roleNums = response.data.roleNums
 					$scope.roleOwners = response.data.roleOwners
+					$scope.roleImgs = response.data.roleImgs
 					$scope.built = response.data.built
 					$scope.coins = response.data.coins
 					$scope.handSizes = response.data.handSizes
@@ -327,26 +689,57 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.extraScores = response.data.extraScores
 					$scope.yourRole = response.data.yourRole
 					$scope.chooseOrDiscard = response.data.chooseOrDiscard
+					$scope.roundCount = response.data.roundCount
+					$scope.killedRole = response.data.killedRole
+					$scope.stealedRole = response.data.stealedRole
+					
+					for (i=0;i<$scope.scores.length;i++){
+						if ($scope.extraScores[i] != "0" && $scope.status != '3'){ 
+							$scope.scores[i] = $scope.scores[i] + "(+" + $scope.extraScores[i] + ")"
+						}
+					}
+					
+					if ($scope.askType == '0'){
+						if ($scope.phase == '-1'){
+							$scope.askMsg = "现在不是你的回合"
+						} else if ($scope.status == '1'){
+							$scope.askMsg = "请选择角色"
+						} else if ($scope.phase == '0'){
+							$scope.askMsg = "请选择获得￥或者获得牌"
+						} else if ($scope.phase == '1'){
+							if ($scope.chooseOrDiscard == 'choose'){
+								$scope.askMsg = "请选择一张展示的牌加入手牌"
+							} else if ($scope.chooseOrDiscard == 'discard'){
+								$scope.askMsg = "请选择1张你不需要的展示的牌置于牌堆底，剩余的牌将加入你的手牌。"
+							}
+						} else if ($scope.phase == '2'){
+							$scope.askMsg = "你可以建造建筑或使用技能"
+						}
+					}
 					
 					if ($scope.status == '3'){
-						$scope.statusDisplay = "End Game"
+						$scope.statusDisplay = "游戏结束"
 						alert("游戏结束");
 						$scope.goto('citadelsendgame');
 					} else {
 						if ($scope.status == '2'){
-							$scope.statusDisplay = "Take Turns"
+							$scope.statusDisplay = "进行回合"
 						} else if ($scope.status == '1'){
-							$scope.statusDisplay = "Choose Role"
+							$scope.statusDisplay = "选择角色"
 						}
 						setPlayerStyle()
 						setButtons()
 						setHand()
 					}
 					
-					for (i=0;i<$scope.scores.length;i++){
-						if ($scope.extraScores[i] != "0" && $scope.status != '3'){ 
-							$scope.scores[i] = $scope.scores[i] + "(+" + $scope.extraScores[i] + ")"
-						}
+					if ($scope.status == '1'){
+						setChooseRoleStyle()
+						$scope.showRoleSelection = true;
+					}
+					
+					if ($scope.status == '2' && $scope.askType == '1'){
+						setChooseRoleStyle()
+						$scope.showRoleSelection = true;
 					}
 					
 					$http.post('/citadelsgame/empty').then(function(response){

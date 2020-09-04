@@ -54,14 +54,14 @@
 					<h1>Tables</h1>
 					<table class="table">
 						<tr>
-							<td><button ng-click="newGame()">New Game</button></td>
+							<td><button ng-click="newGame()">新游戏</button></td>
 						</tr>
 					</table>
 					<table class="table">
 						<tr>
-							<td>ID</td>
-							<td>Lord</td>
-							<td>Status</td>
+							<td>房间号</td>
+							<td>房主</td>
+							<td>状态</td>
 							<td></td>
 						</tr>
 						<tr ng-repeat ="x in boards track by $index">
@@ -69,8 +69,8 @@
 							<td>{{lords[$index]}}</td>
 							<td>{{statuses[$index]}}</td>
 							<td>
-								<button ng-show="statuses[$index] == 'pre-game'" ng-click="goToBoard($index)">Join</button>
-								<button ng-show="statuses[$index] == 'in game' && canBack[$index] == 'y'" ng-click="backToBoard($index)">Back</button>
+								<button ng-show="statuses[$index] == '准备中'" ng-click="goToBoard($index)">加入</button>
+								<button ng-show="statuses[$index] == '游戏中' && canBack[$index] == 'y'" ng-click="backToBoard($index)">回桌</button>
 							</td>
 						</tr>
 					</table>

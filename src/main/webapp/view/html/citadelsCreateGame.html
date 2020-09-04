@@ -6,40 +6,40 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsOther.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/citadelsCreateGameController.js"></script>
 <body ng-app="citadelsCreateGameApp" ng-controller="citadelsCreateGameCtrl">
-	<button ng-click="goto('citadels')">back</button>
-	<button ng-click="startGame()" ng-show="isLord == 'y'">start game</button>
-	<button ng-click="addBot()" ng-show="isLord == 'y'">add bot</button>
-	<button ng-click="dismiss()" ng-show="isLord == 'y'">dismiss</button>
+	<button ng-click="goto('citadels')">退出</button>
+	<button ng-click="startGame()" ng-show="isLord == 'y'">开始游戏</button>
+	<button ng-click="addBot()" ng-show="isLord == 'y'">加入AI</button>
+	<button ng-click="dismiss()" ng-show="isLord == 'y'">解散</button>
 	<!-- 
 	<p>{{gamedata}}</p>
 	 -->
 	<table>
-		<tr ng-repeat="name in playerNames track by $index">
+		<tr style="height: 40px" ng-repeat="name in playerNames track by $index">
 			<td>{{name}}</td>
-			<td><p ng-show="$index == crown">Has Crown</p></td>
-			<td><button ng-show="isLord == 'y'" ng-click="kick($index)">Kick</button></td>
+			<td><img ng-show="$index == crown" class="icon" src="/image/Citadels/mayor.png"></td>
+			<td><button ng-show="isLord == 'y'" ng-click="kick($index)">踢</button></td>
 		</tr>
 	</table>
-	<button ng-click="showConfigDiv()" ng-show="isLord == 'y' && showConfig == 'n'">show config</button>
-	<button ng-click="hideConfigDiv()" ng-show="isLord == 'y' && showConfig == 'y'">hide config</button>
+	<button ng-click="showConfigDiv()" ng-show="isLord == 'y' && showConfig == 'n'">显示设置</button>
+	<button ng-click="hideConfigDiv()" ng-show="isLord == 'y' && showConfig == 'y'">隐藏设置</button>
 	<div id="config" ng-show = "showConfig == 'y'">
-		<h3>Config</h3>
-		<button ng-click="randomCrown()">random Crown</button>
-		Players
+		<h3>设置</h3>
+		<button ng-click="randomCrown()">随机市长标记</button>
 		<table>
-			<tr ng-repeat="name in playerNames track by $index">
+			<tr style="height: 40px" ng-repeat="name in playerNames track by $index">
 				<td>{{name}}</td>
-				<td ng-show="$index != tcrown"><button ng-click="setTCrown($index)">Give Crown</button></td>
-				<td ng-show="$index == tcrown">Has Crown</td>
+				<td ng-show="$index != tcrown"><button ng-click="setTCrown($index)">获得市长标记</button></td>
+				<td ng-show="$index == tcrown"><img class="icon" src="/image/Citadels/mayor.png"></td>
 			</tr>
 		</table>
-		<button ng-click="giveCrown()">Update Crown</button>
+		<button ng-click="giveCrown()">更新市长标记</button>
 		<button ng-click="setEndNum(7)">7 end</button>
 		<button ng-click="setEndNum(8)">8 end</button>
 	</div>

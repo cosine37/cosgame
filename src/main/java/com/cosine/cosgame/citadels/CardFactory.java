@@ -58,8 +58,6 @@ public class CardFactory {
 			card = new Bank();
 		} else if (img.contentEquals("p001")) {
 			card = new Comb();
-		} else if (img.contentEquals("p608")) {
-			card = new Bank();
 		} else if (img.contentEquals("p609")) {
 			card = new CultPalace();
 		} else if (img.contentEquals("p404")) {

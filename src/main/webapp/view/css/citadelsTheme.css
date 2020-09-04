@@ -7,3 +7,18 @@
 	background: rgb(0,0,102);
 	color: white;
 }
+
+.tabcontent button{
+	outline: none;
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(0,0,102);
+	border-radius: 8px;
+	
+	background: rgb(0,0,102);
+}

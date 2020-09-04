@@ -5,3 +5,100 @@
 	height: 350px;
 	padding-left: 10px;
 }
+
+.cardicon {
+	height: 35px;
+	width: 23px;
+}
+
+.hand {
+	float: left;
+	height: 160px;
+	width: 105px;
+	position: relative;
+}
+
+.handdiv{
+	float: left;
+	height: 170px;
+	width: 600px;
+	border-style: solid;
+	border-color: black;
+}
+
+.revealdiv{
+	float: left;
+	height: 170px;
+	width: 330px;
+	border-style: solid;
+	border-color: black;
+}
+.qsmark{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	left: 2px;
+}
+.checked{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	right: 2px;
+	height: 60px;
+	width: 60px;
+}
+.revealed{
+	position: absolute;
+	user-select:none;
+	float: left;
+	top: 30px;
+	left: 65px;
+	height: 100px;
+	width: 100px;
+}
+
+.skip{
+	position: absolute;
+	user-select:none;
+	float: left;
+	top: 5px;
+	left: 20px;
+	height: 60px;
+	width: 60px;
+}
+
+.targeted{
+	position: absolute;
+	user-select:none;
+	float: left;
+	left: 50%;
+	top: 50%;
+	margin-left: -70px;
+	margin-top: -80px;
+	height: 140px;
+	width: 140px;
+}
+
+.built {
+	float: left;
+	height: 112px;
+	width: 74px;
+	position: relative;
+}
+
+.roleSelect {
+	float: left;
+	height: 352px;
+	width: 231px;
+	position: relative;
+}
+
+/*
+.built {
+	float: left;
+	height: 128px;
+	width: 84px;
+}
+*/

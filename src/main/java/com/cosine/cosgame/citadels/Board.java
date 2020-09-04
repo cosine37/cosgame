@@ -544,6 +544,7 @@ public class Board {
 		}
 		List<String> roleNums = new ArrayList<>();
 		List<String> roleOwners = new ArrayList<>();
+		List<String> roleImgs = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
 			roleNums.add(Integer.toString(roles.get(i).getNum()));
 			if (roles.get(i).getOwner() == CitadelsConsts.SELECTABLE) {
@@ -553,6 +554,7 @@ public class Board {
 			} else {
 				roleOwners.add("-3");
 			}
+			roleImgs.add(roles.get(i).getImg());
 		}
 		String isLord = "n";
 		if (name.contentEquals(lord)) {
@@ -635,6 +637,7 @@ public class Board {
 		entity.setRoundCount(Integer.toString(roundCount));
 		entity.setRoleNums(roleNums);
 		entity.setRoleOwners(roleOwners);
+		entity.setRoleImgs(roleImgs);
 		entity.setCrown(Integer.toString(crown));
 		entity.setLord(lord);
 		entity.setIsLord(isLord);

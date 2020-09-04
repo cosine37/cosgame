@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsGame.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsOther.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -14,25 +15,54 @@
 <script src="/js/app/citadelsGameController.js"></script>
 
 <body ng-app="citadelsGameApp" ng-controller="citadelsGameCtrl">
-	<button ng-click="goto('citadels')">back</button>
-	<h1>Citadels Game</h1>
+	
 	<div id="publicinfo" style="display:block">
-		<p>Coins in bank: {{bank}}</p>
-		<p>Number of cards in deck: {{deckSize}}</p>
-		<p>Status: {{statusDisplay}}</p>
+		
 		<div id="playerInfo" style="float:left">
-			<h3>Players</h3>
 			<table>
 				<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]" ng-init="playerIndex = $index">
-					<td ng-show="crown == $index">♚</td>
-					<td ng-show="crown != $index"></td>
-				
-					<td><button ng-disabled="askType != '3' || askLs[playerIndex] == 'n'" ng-click="choosePlayer(playerIndex)">{{pn}}</button></td>
-					<td>score: {{scores[$index]}}</td>
-					<td>role: {{roleRevealed[$index]}}</td>
-					<td>handsize: {{handSizes[$index]}}</td>
-					<td>coin: {{coins[$index]}}</td>
-					<td><button ng-repeat="b in built[playerIndex] track by $index" ng-click="chooseBuilt(playerIndex, $index)" ng-disabled="disableBuilt(playerIndex,$index)">{{b}}</button></td>
+					<td>
+						<div class="built" ng-style="playerRoleStyle[playerIndex]">
+							<div ng-show="roleRevealed[playerIndex] == killedRole && roleRevealed[playerIndex] != '-1'">
+								<img src="/image/Citadels/skip.png" class="skip">
+							</div>
+							<div class="qsmark" ng-show="roleRevealed[playerIndex] != '-1'">
+								<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showPlayerRole(playerIndex);$event.stopPropagation();"/>
+							</div>
+						</div>
+						<div style="float:left">
+							<table>
+								<tr>
+									<td style="width: 80px">
+										<button ng-disabled="askType != '3' || askLs[playerIndex] == 'n'" ng-click="choosePlayer(playerIndex)">{{pn}}</button>
+									</td>
+									<td style="width: 50px" ng-show="crown == playerIndex"><img class="icon" src="/image/Citadels/mayor.png"></td>
+									<td style="width: 50px" ng-show="crown != playerIndex"></td>
+								</tr>
+								<tr>
+									<td><img class="icon" src="/image/Citadels/coin.png">   {{coins[$index]}}</td>
+									<td><img class="icon" src="/image/Citadels/card.png">   {{handSizes[$index]}}</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="font-weight: bold"><img class="icon" src="/image/Citadels/score.png"> {{scores[$index]}}</td>
+								</tr>
+							</table>
+						</div>
+						
+						
+						
+					</td>
+					
+					<td style="width: 451px">
+						<div class="built" ng-repeat="b in built[playerIndex] track by $index"
+							ng-click="chooseBuilt(playerIndex, $index)"
+							ng-disabled="builtDisabled[playerIndex][$index]"
+							ng-style="builtStyle[playerIndex][$index]">
+							<div class="qsmark">
+								<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showBuilt(playerIndex, $index);$event.stopPropagation();"/>
+							</div>
+						</div>
+					</td>
 					
 					<td ng-show="curPlayer == $index">◀</td>
 					<td ng-show="curPlayer != $index"></td>
@@ -40,72 +70,132 @@
 			</table>
 		</div>
 		<div id="logs" style="float:left">
-			<h3>Logs</h3>
+			<div id="cacheinfo">
+				<table>
+					<tr>
+						<td>回合：{{roundCount}}</td>
+						<td>{{statusDisplay}}</td>
+					</tr>
+					<tr>
+						<td style="width: 90px"><img class="icon" src="/image/Citadels/coin.png">    {{bank}}</td>
+						<td style="width: 90px"><img class="icon" src="/image/Citadels/deck.png">    {{deckSize}}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<h3>信息</h3>
 			<div id="logcontent" class="logcontent">
 				<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
 			</div>
 		</div>
 	</div>
-	<div id="skills" style="clear:both">
-		<p>skills</p>
-		<p ng-show="askType!='0'">{{askMsg}}</p>
-		<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2' && askType == '0'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
-	</div>
-	<div id="hand" ng-show="askType!=4 && askType!=5">
-		<p>hand</p>
-		<button ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="canclickhand[$index] == 'n' || askType != '0'">{{c}}</button>
-	</div>
-	<div id="chooseHand" ng-show="askType==4">
-		<p>chooseHand</p>
-		<button ng-repeat="c in hand track by $index" ng-click="clickHandCard($index)" ng-style="chooseHandStyle($index)">{{c}}</button>
-		<p></p>
-		<button ng-click="useSkillOnHand(1)">Confirm</button>
+	<div id="ownArea" style="clear:both">
+		<p>{{askMsg}}</p>
+		<div id="skills" style="float:left">
+			<p>skills</p>
+			<p>你的角色： {{yourRole}}</p>
+			<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2' && askType == '0'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
+			<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
+			<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
+			<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
+			<button ng-click="openRoleSelection()" ng-show="phase == '1' && status == '1'">选择角色</button>
+			<button ng-click="openRoleSelection()" ng-show="askType == '1'">选择角色</button>
+			<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
+			<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
+			<button ng-click="useSkillOnHand(1)" ng-show="askType==4">Confirm</button>
+		</div>
+		<div id="hand" class="handdiv" ng-show="askType!=4 && askType!=5">
+			<div class="hand" ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="handDisabled[$index] == 'y'" ng-style="handStyle[$index]">
+				<div class="qsmark">
+					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showHand($index);$event.stopPropagation();"/>
+				</div>
+			</div>
+		</div>
+		<div id="chooseHand" class="handdiv" ng-show="askType==4">
+			<div class="hand" ng-repeat="c in hand track by $index" ng-click="clickHandCard($index)" ng-disabled="handDisabled[$index] == 'y'" ng-style="chooseHandStyle($index)">
+				<div class="qsmark">
+					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showHand($index);$event.stopPropagation();"/>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="chooseOneFromHand" class="handdiv" ng-show="askType==5">
+			<div class="hand" ng-repeat="c in hand track by $index" ng-click="chooseOneFromHand($index)" ng-style="chooseOneFromHandStyle($index)">
+				<div class="qsmark">
+					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showHand($index);$event.stopPropagation();"/>
+				</div>
+			</div>
+		</div>
+		<div id="chooseCard" class="revealdiv">
+			<div class="hand" ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)" ng-style="revealedStyle($index)">
+				<div class="qsmark">
+					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showRevealedCard($index);$event.stopPropagation();"/>
+				</div>
+			</div>
+			
+		</div>
+		<button ng-click="goto('citadels')">back</button>
 	</div>
 	
-	<div id="chooseOneFromHand" ng-show="askType==5">
-		<p>choose one from hand</p>
-		<button ng-repeat="c in hand track by $index" ng-click="chooseOneFromHand($index)">{{c}}</button>
+	<div id="chooseRole" ng-show="phase == '1' && status == '1' && showRoleSelection" ng-style="chooseRoleDivStyle">
+		<h2 style="color:white; text-align:center">请选择角色</h2>
+		<table style="position:absolute;left: 50%;width:930px;margin-left:-465px">
+			<tr ng-repeat="roleRow in roleTable">
+				<td ng-repeat="roleId in roleRow">
+					<div class="roleSelect" ng-style="roleStyle[roleId]" ng-click="setSelectedRole(roleId)">
+						<div ng-show="roleOwners[roleId] == '-2'">
+							<img src="/image/Citadels/revealed.png" class="revealed">
+						</div>
+						<div ng-show="roleOwners[roleId] == '-3'">
+							<img src="/image/Citadels/cannotchoose.png" class="revealed">
+						</div>
+						<div ng-show="selectedRole == roleId">
+							<img src="/image/Citadels/checked.png" class="checked">
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align:center">
+					<button ng-click="unshowRoleSelection()">查看桌面</button>
+					<button ng-click="chooseRole()">确定所选角色</button>
+				</td>
+			</tr>
+		</table>
 	</div>
-	<div>
-		<p>你的角色： {{yourRole}}</p>
+	<div id="chooseRoleSkill" ng-show="askType == '1' && showRoleSelection" ng-style="chooseRoleDivStyle">
+		<h2 style="color:white; text-align:center">请选择技能使用目标</h2>
+		<table style="position:absolute;left: 50%;width:930px;margin-left:-465px">
+			<tr ng-repeat="roleRow in roleTable">
+				<td ng-repeat="roleId in roleRow">
+					<div class="roleSelect" ng-style="roleStyleSkills[roleId]" ng-click="setSelectedRoleSkill(roleId)">
+						<div ng-show="roleOwners[roleId] == '-2'">
+							<img src="/image/Citadels/revealed.png" class="revealed">
+						</div>
+						<div ng-show="askLs[roleId] == 'n'">
+							<img src="/image/Citadels/cannotchoose.png" class="revealed">
+						</div>
+						<div ng-show="selectedRoleSkill == roleId">
+							<img src="/image/Citadels/target.png" class="targeted">
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="text-align:center">
+					<button ng-click="unshowRoleSelection()">查看桌面</button>
+					<button ng-click="useSkill(0)">确定目标角色</button>
+				</td>
+			</tr>
+		</table>
 	</div>
-	<div id="chooseCard" ng-show="phase == '1' && status == '2'">
-		<p ng-show="chooseOrDiscard == 'choose'">请选择1张牌加入手牌。</p>
-		<p ng-show="chooseOrDiscard == 'discard'">请选择1张你不需要的牌置于牌堆底，剩余的牌将加入你的手牌。</p>
-		<button ng-repeat="c in revealedCards track by $index" ng-click="chooseCard($index)">{{c}}</button>
-	</div>
-	<div id="chooseRole" ng-show="phase == '1' && status == '1'">
-		<p>choose role</p>
-		
-		<div ng-repeat="r in roleNums track by $index" style="float:left">
-			<button ng-show="selectedRole != $index && roleOwners[$index] == '-1'" ng-click="setSelectedRole($index)">{{r}}</button>
-			<button ng-show="selectedRole != $index && roleOwners[$index] == '-3'" ng-click="setSelectedRole($index)" disabled>{{r}}</button>
-			<p ng-show="selectedRole == $index">{{r}}</p>
-			<p ng-show="roleOwners[$index] == '-2'"><del>{{r}}</del></p>
+	
+	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()"  style="clear:both">
+		<div ng-style="bigImageStyle">
+			
 		</div>
-		<button ng-click=chooseRole()>确定所选角色</button>
 	</div>
-	<div id="buttons" style="clear:both">
-		<!-- 
-		<button ng-click="startTurn()" ng-show="phase == '-1' && status == '2'">start turn</button>
-		 -->
-		<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
-		<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
-		<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
-		<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
-		<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
-	</div>
-	<div id="chooseRoleSkill" ng-show="askType == '1'">
-		<div ng-repeat="r in roleNums track by $index" style="float:left">
-			<button ng-show="selectedRoleSkill != $index && askLs[$index] == 'y'" ng-click="setSelectedRoleSkill($index)">{{r}}</button>
-			<button ng-show="selectedRoleSkill != $index && askLs[$index] == 'n'" ng-click="setSelectedRoleSkill($index)" disabled>{{r}}</button>
-			<p ng-show="selectedRoleSkill == $index">{{r}}</p>
-			<p ng-show="askLs[$index] == 'r'"><del>{{r}}</del></p>
-		</div>
-		<button ng-click=useSkill(0)>确定目标角色</button>
-	</div>
-	<!-- 
-	<p>{{gamedata}}</p>
-	 -->
+
 </body>
 </html>

@@ -13,6 +13,7 @@ public class BoardEntity {
 	List<String> revealedCards;
 	List<String> roleNums;
 	List<String> roleOwners;
+	List<String> roleImgs;
 	List<String> roleRevealed;
 	List<String> logs;
 	List<String> skillButtons;
@@ -139,6 +140,12 @@ public class BoardEntity {
 	}
 	public void setRoleOwners(List<String> roleOwners) {
 		this.roleOwners = roleOwners;
+	}
+	public List<String> getRoleImgs() {
+		return roleImgs;
+	}
+	public void setRoleImgs(List<String> roleImgs) {
+		this.roleImgs = roleImgs;
 	}
 	public String getCrown() {
 		return crown;
