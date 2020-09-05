@@ -663,6 +663,7 @@ public class Board {
 		entity.setExtraScores(extraScores);
 		entity.setYourRole(yourRole);
 		entity.setChooseOrDiscard(chooseOrDiscard);
+		entity.setFinishCount(Integer.toString(finishCount));
 		return entity;
 	}
 	

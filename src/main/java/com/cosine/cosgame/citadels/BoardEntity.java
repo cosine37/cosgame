@@ -44,6 +44,7 @@ public class BoardEntity {
 	String stealedRole;
 	String yourRole;
 	String chooseOrDiscard;
+	String finishCount;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -284,5 +285,11 @@ public class BoardEntity {
 	}
 	public void setChooseOrDiscard(String chooseOrDiscard) {
 		this.chooseOrDiscard = chooseOrDiscard;
+	}
+	public String getFinishCount() {
+		return finishCount;
+	}
+	public void setFinishCount(String finishCount) {
+		this.finishCount = finishCount;
 	}
 }

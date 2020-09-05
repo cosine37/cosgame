@@ -290,12 +290,14 @@ public class CitadelsController {
 		board.getFromDB(boardId);
 		if (board.getPlayerByName(username) != null) {
 			Player p = board.getPlayerByName(username);
-			Ask ask = p.getRole().chooseSkill(index);
-			p.setAsk(ask);
-			board.updatePlayer(username);
-			board.updateLogs();
-			board.updateDeck();
-			board.updateDB("coins", board.getCoins());
+			if (board.getPlayerByName(username).getCanUseRoleSkill().get(index).contentEquals("y")) {
+				Ask ask = p.getRole().chooseSkill(index);
+				p.setAsk(ask);
+				board.updatePlayer(username);
+				board.updateLogs();
+				board.updateDeck();
+				board.updateDB("coins", board.getCoins());
+			}
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

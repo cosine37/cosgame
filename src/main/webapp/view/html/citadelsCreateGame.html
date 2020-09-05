@@ -24,7 +24,14 @@
 		<tr style="height: 40px" ng-repeat="name in playerNames track by $index">
 			<td>{{name}}</td>
 			<td><img ng-show="$index == crown" class="icon" src="/image/Citadels/mayor.png"></td>
-			<td><button ng-show="isLord == 'y'" ng-click="kick($index)">踢</button></td>
+			<td><button ng-show="isLord == 'y' && index != 0" ng-click="kick($index)">踢</button></td>
+		</tr>
+	</table>
+	<h4>规则变体</h4>
+	<table>
+		<tr>
+			<td>结束条件：</td>
+			<td>一名玩家造完{{finishCount}}个建筑</td>
 		</tr>
 	</table>
 	<button ng-click="showConfigDiv()" ng-show="isLord == 'y' && showConfig == 'n'">显示设置</button>

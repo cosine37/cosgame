@@ -31,6 +31,7 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.tcrown = $scope.crown
 					$scope.isLord = response.data.isLord
 					$scope.status = response.data.status
+					$scope.finishCount = response.data.finishCount
 					if ($scope.status != "0"){
 						$scope.goto('citadelsgame');
 					}

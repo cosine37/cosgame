@@ -762,7 +762,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			}
 			$timeout(function(){
 			    $scope.offturnHandle();
-			},1000);
+			},1500);
 		}
 		
 		$scope.offturnHandle();

@@ -80,7 +80,7 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '
 			$scope.getAllBoards();
 			$timeout(function(){
 			    $scope.offturnHandle();
-			},1000);
+			},4000);
 		}
 		
 		$scope.offturnHandle();
