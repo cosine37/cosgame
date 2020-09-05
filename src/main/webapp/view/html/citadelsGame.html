@@ -75,10 +75,12 @@
 					<tr>
 						<td>回合：{{roundCount}}</td>
 						<td>{{statusDisplay}}</td>
+						<td><button ng-click="goto('citadels')">退出</button></td>
 					</tr>
 					<tr>
 						<td style="width: 90px"><img class="icon" src="/image/Citadels/coin.png">    {{bank}}</td>
 						<td style="width: 90px"><img class="icon" src="/image/Citadels/deck.png">    {{deckSize}}</td>
+						<td></td>
 					</tr>
 				</table>
 			</div>
@@ -91,18 +93,28 @@
 	</div>
 	<div id="ownArea" style="clear:both">
 		<p>{{askMsg}}</p>
-		<div id="skills" style="float:left">
-			<p>skills</p>
+		<div id="skills" style="float:left;width: 250px">
 			<p>你的角色： {{yourRole}}</p>
-			<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2' && askType == '0'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
-			<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
-			<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
-			<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
-			<button ng-click="openRoleSelection()" ng-show="phase == '1' && status == '1'">选择角色</button>
-			<button ng-click="openRoleSelection()" ng-show="askType == '1'">选择角色</button>
-			<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
-			<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
-			<button ng-click="useSkillOnHand(1)" ng-show="askType==4">Confirm</button>
+			<table>
+				<tr>
+					<td>
+						<button ng-repeat="b in skillButtons track by $index" ng-click="chooseSkill($index)" ng-show="phase == '2' && askType == '0'" ng-disabled="canUseRoleSkill[$index] == 'n'">{{b}}</button>
+						<button ng-click="taketwo()" ng-show="phase == '0' && status == '2'">获得￥</button>
+						<button ng-click="seeCards()" ng-show="phase == '0' && status == '2'">获得牌</button>
+						<button ng-click="openRoleSelection()" ng-show="phase == '1' && status == '1'">选择角色</button>
+						<button ng-click="openRoleSelection()" ng-show="askType == '1'">选择角色</button>
+						<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
+						<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
+						<button ng-click="useSkillOnHand(1)" ng-show="askType==4">确定</button>
+					</td> 
+				</tr>
+				<tr>
+					<td>
+						<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
+					</td>
+				</tr>
+			</table>
+			
 		</div>
 		<div id="hand" class="handdiv" ng-show="askType!=4 && askType!=5">
 			<div class="hand" ng-repeat="c in hand track by $index" ng-click="build($index)" ng-disabled="handDisabled[$index] == 'y'" ng-style="handStyle[$index]">
@@ -135,7 +147,7 @@
 			</div>
 			
 		</div>
-		<button ng-click="goto('citadels')">back</button>
+		
 	</div>
 	
 	<div id="chooseRole" ng-show="phase == '1' && status == '1' && showRoleSelection" ng-style="chooseRoleDivStyle">

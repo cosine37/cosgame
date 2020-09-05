@@ -7,33 +7,54 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/citadelsOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsEndGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/citadelsEndGameController.js"></script>
 <body ng-app="citadelsEndGameApp" ng-controller="citadelsEndGameCtrl">
-	<h2>Game Ends</h2>
-	<h2>获胜者</h2>
-	<h4 ng-repeat="w in winner">{{w}}</h4>
-	<p></p>
-	<table>
-		<tr>
-			<td>排名</td>
-			<td>玩家</td>
-			<td>分数</td>
-			<td>建筑净分</td>
-			<td>￥</td>
-		</tr>
-		<tr ng-repeat="pn in playerNames track by $index">
-			<td>{{rankings[$index]}}</td>
-			<td>{{pn}}</td>
-			<td>{{scores[$index]}}</td>
-			<td>{{netScores[$index]}}</td>
-			<td>{{coins[$index]}}</td>
-		</tr>
-	</table>
-	<button ng-click="goto('citadels')" ng-show="isLord == 'n'">Back</button>
-	<button ng-click="dismiss()" ng-show="isLord == 'y'">Dismiss and Back</button>
+	<div class="winnerInfo">
+		<table style="text-align:center; color:white">
+			<tr>
+				<td colspan="5"><h2>游戏结束</h2></td>
+			</tr>
+			<tr>
+				<td colspan="5"><h3>获胜者</h3></td>
+			</tr>
+			<tr>
+				<td colspan="5"><h4 ng-repeat="w in winner">{{w}}</h4></td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<img src="/image/Citadels/winner.png" ng-show="showCup" class="cup">
+					<img src="/image/Citadels/loser.jpg" ng-show="showCup == false" class="cup">
+				</td>
+			</tr>
+			<tr style="border-bottom: 1pt solid black">
+				<td>排名</td>
+				<td>玩家</td>
+				<td>分数</td>
+				<td>建筑净分</td>
+				<td>￥</td>
+			</tr>
+			<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]">
+				<td>{{rankings[$index]}}</td>
+				<td>{{pn}}</td>
+				<td>{{scores[$index]}}</td>
+				<td>{{netScores[$index]}}</td>
+				<td>{{coins[$index]}}</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<button ng-click="goto('citadels')" ng-show="isLord == 'n'">退出</button>
+					<button ng-click="dismiss()" ng-show="isLord == 'y'">解散并退出</button>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	
+	
 </body>
 </html>

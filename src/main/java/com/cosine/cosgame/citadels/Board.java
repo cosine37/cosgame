@@ -607,6 +607,8 @@ public class Board {
 				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
 			} else if (this.crown < playerIndex && curPlayer < playerIndex && this.crown > curPlayer) {
 				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
+			} else if (this.crown == playerIndex && curPlayer != playerIndex){
+				yourRole = Integer.toString(p.getRole().getNum()) + "号 " + p.getRole().getName();
 			} else {
 				yourRole = "未选择";
 			}

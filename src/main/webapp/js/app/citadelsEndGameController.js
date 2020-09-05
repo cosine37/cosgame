@@ -27,8 +27,13 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 		
 		$scope.winner = []
 		$scope.rankings = []
+		$scope.playerStyle = []
+		$scope.showCup = false;
 		
 		setWinner = function(){
+			if ($scope.playerNames[0] == $scope.username){
+				$scope.showCup = true;
+			}
 			$scope.winner.push($scope.playerNames[0])
 			var i
 			for (i=1;i<$scope.scores.length;i++){
@@ -36,6 +41,9 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 					&& $scope.netScores[i] == $scope.netScores[0]
 					&& $scope.coins[i] == $scope.coins[0]){
 					$scope.winner.push($scope.playerNames[i])
+					if ($scope.playerNames[i] == $scope.username){
+						$scope.showCup = true;
+					}
 				} else {
 					break;
 				}
@@ -54,7 +62,6 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 				} else {
 					$scope.rankings.push(curRank)
 				}
-				
 			}
 		}
 		
@@ -98,6 +105,21 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 					}
 				}
 			}
+			$scope.playerStyle = []
+			for (i=0;i<$scope.playerNames.length;i++){
+				myStyle = {
+					"background-color" : "#dddddd",
+					"color" : "rgb(0,0,102)"
+				}
+				otherStyle = {
+					"color" : "white"
+				}
+				if ($scope.playerNames[i] == $scope.username){
+					$scope.playerStyle.push(myStyle);
+				} else {
+					$scope.playerStyle.push(otherStyle);
+				}
+			}
 		}
 		
 		$scope.getBoard = function(){
@@ -116,6 +138,7 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 				}
 			});
 		}
+		
 		
 		$scope.getBoard();
 		
