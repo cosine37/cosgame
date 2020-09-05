@@ -64,7 +64,11 @@ public class CardFactory {
 			card = new CommodityMarket();
 		} else if (img.contentEquals("p610")) {
 			card = new GreatA3Factory();
-		} 
+		} else if (img.contentEquals("p611")) {
+			card = new Hotel();
+		} else if (img.contentEquals("p405")) {
+			card = new ZijingPark();
+		}
 		
 		else {
 			card = new Card(name);

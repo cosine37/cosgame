@@ -18,8 +18,11 @@ public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Role> roles;
+	List<Integer> trackCrownPlayers;
 	String lord;
 	boolean firstFinished;
+	boolean crownMoved;
+	boolean regicide;
 	int finishCount;
 	int coins;
 	int killedRole;
@@ -51,6 +54,8 @@ public class Board {
 		String col = "board";
 		
 		logger = new Logger();
+		
+		trackCrownPlayers = new ArrayList<>();
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
@@ -217,8 +222,18 @@ public class Board {
 		}
 		Random rand = new Random();
 		for (i=0;i<numReveal;i++) {
-			int x = rand.nextInt(tempNum.size());
-			int index = tempNum.remove(x);
+			int x;
+			int index;
+			while (true) {
+				x = rand.nextInt(tempNum.size());
+				index = tempNum.get(x);
+				if (roles.get(index).getNum() != 4) {
+					index = tempNum.remove(x);
+					break;
+				}
+				index = tempNum.remove(x);
+			}
+			
 			roles.get(index).setOwner(CitadelsConsts.NOTUSEDREVEALED);
 			log("本回合没有" + Integer.toString(roles.get(index).getNum()) + " 号"+roles.get(index).getName()+"。");
 		}
@@ -264,12 +279,6 @@ public class Board {
 			log("所有角色行动完毕。");
 			updateStatus();
 		}
-		/*
-		if (curRoleNum == killedRole) {
-			log("Role #" + Integer.toString(killedRole) + " has been killed");
-			nextRole();
-		}
-		*/
 		int i;
 		for (i=0;i<roles.size();i++) {
 			Role r = roles.get(i);
@@ -282,6 +291,13 @@ public class Board {
 					} else {
 						String playerName = players.get(r.getOwner()).getName();
 						log(playerName + "失去所有角色技能并跳过回合。");
+						if (r.getImg().contentEquals("004")) {
+							Player assassinPlayer = this.getPlayerByRole(1);
+							if (assassinPlayer.getRole().getImg().contentEquals("001") && regicide) {
+								int x = this.getPlayerIndex(assassinPlayer);
+								this.moveCrownTo(x);
+							}
+						}
 					}
 					nextRole();
 					return;
@@ -312,6 +328,31 @@ public class Board {
 		}
 	}
 	
+	public void moveCrownTo(int x) {
+		trackCrownPlayers = new ArrayList<>();
+		if (crown == x) {
+			crownMoved = false;
+		} else {
+			crown = x;
+			log(players.get(x).getName() + "获得了市长标记。");
+			int i,j;
+			boolean flag;
+			for (i=0;i<players.size();i++) {
+				flag = false;
+				for (j=0;j<players.get(i).getBuilt().size();j++) {
+					if (players.get(i).getBuilt().get(j).isTrackCrown()) {
+						flag = true;
+						players.get(i).getBuilt().get(j).crownMovement();
+					}
+				}
+				if (flag) {
+					trackCrownPlayers.add(i);
+				}
+			}
+			crownMoved = true;
+		}
+	}
+	
 	public void updateStatus() {
 		if (status == CitadelsConsts.CHOOSEROLE) {
 			int i;
@@ -330,6 +371,13 @@ public class Board {
 		} else if (status == CitadelsConsts.TAKETURNS) {
 			if (curRoleNum>roles.size()) {
 				log("回合 " + Integer.toString(roundCount) + " 结束。");
+				if (killedRole == 4 && regicide == false) {
+					Player p = this.getPlayerByRoleImg("004");
+					if (p != null) {
+						int x = this.getPlayerIndex(p);
+						this.moveCrownTo(x);
+					}
+				}
 				if (firstFinished) {
 					newRound();
 				} else {
@@ -490,9 +538,20 @@ public class Board {
 	public Logger getLogger() {
 		return logger;
 	}
-
 	public void setLogger(Logger logger) {
 		this.logger = logger;
+	}
+	public boolean isCrownMoved() {
+		return crownMoved;
+	}
+	public void setCrownMoved(boolean crownMoved) {
+		this.crownMoved = crownMoved;
+	}
+	public boolean isRegicide() {
+		return regicide;
+	}
+	public void setRegicide(boolean regicide) {
+		this.regicide = regicide;
 	}
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -622,7 +681,12 @@ public class Board {
 		} else {
 			chooseOrDiscard = "choose";
 		}
-		
+		String regicide;
+		if (this.regicide) {
+			regicide = "y";
+		} else {
+			regicide = "n";
+		}
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -664,6 +728,7 @@ public class Board {
 		entity.setYourRole(yourRole);
 		entity.setChooseOrDiscard(chooseOrDiscard);
 		entity.setFinishCount(Integer.toString(finishCount));
+		entity.setRegicide(regicide);
 		return entity;
 	}
 	
@@ -682,6 +747,7 @@ public class Board {
 		doc.append("curRoleNum", curRoleNum);
 		doc.append("crown", crown);
 		doc.append("lord", lord);
+		doc.append("regicide", regicide);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
@@ -719,6 +785,7 @@ public class Board {
 		curRoleNum = doc.getInteger("curRoleNum", -1);
 		crown = doc.getInteger("crown", -1);
 		lord = doc.getString("lord");
+		regicide = doc.getBoolean("regicide", false);
 		int i;
 		List<Document> dor = (List<Document>) doc.get("roles");
 		roles = new ArrayList<>();
@@ -807,6 +874,12 @@ public class Board {
 			Document dop = p.toDocument();
 			String playerName = "player-" + name;
 			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updateTrackCrownPlayers() {
+		for (int i=0;i<trackCrownPlayers.size();i++) {
+			updatePlayer(i);
 		}
 	}
 	

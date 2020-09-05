@@ -32,6 +32,12 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.isLord = response.data.isLord
 					$scope.status = response.data.status
 					$scope.finishCount = response.data.finishCount
+					$scope.regicide = response.data.regicide
+					if ($scope.regicide == "y"){
+						$scope.regicideDisplay = "送葬者获得市长标记"
+					} else {
+						$scope.regicideDisplay = "回合结束时市长获得市长标记"
+					}
 					if ($scope.status != "0"){
 						$scope.goto('citadelsgame');
 					}
@@ -49,6 +55,12 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.setEndNum = function(x){
 			var data = {"endnum" : x}
 			$http({url: "/citadelsgame/setendnum", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setRegicide = function(){
+			$http.post('/citadelsgame/setregicide').then(function(response){
 				$scope.getBoard();
 			});
 		}

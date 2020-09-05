@@ -18,6 +18,7 @@ public class Card {
 	protected int expansion;
 	protected int buildCount;
 	protected boolean buildable;
+	protected boolean trackCrown;
 	
 	public Card() {
 		builtRound = -1;
@@ -26,6 +27,7 @@ public class Card {
 		expansion = 0;
 		buildCount = 1;
 		buildable = true;
+		trackCrown = false;
 	}
 	
 	public Card(String name) {
@@ -46,6 +48,10 @@ public class Card {
 	}
 	
 	public void onBuild() {
+		
+	}
+	
+	public void crownMovement() {
 		
 	}
 	
@@ -163,6 +169,12 @@ public class Card {
 	}
 	public void setBuildable(boolean buildable) {
 		this.buildable = buildable;
+	}
+	public boolean isTrackCrown() {
+		return trackCrown;
+	}
+	public void setTrackCrown(boolean trackCrown) {
+		this.trackCrown = trackCrown;
 	}
 
 	public Document toDocument() {

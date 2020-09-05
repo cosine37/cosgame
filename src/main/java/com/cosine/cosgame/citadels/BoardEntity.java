@@ -45,6 +45,7 @@ public class BoardEntity {
 	String yourRole;
 	String chooseOrDiscard;
 	String finishCount;
+	String regicide;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -291,5 +292,11 @@ public class BoardEntity {
 	}
 	public void setFinishCount(String finishCount) {
 		this.finishCount = finishCount;
+	}
+	public String getRegicide() {
+		return regicide;
+	}
+	public void setRegicide(String regicide) {
+		this.regicide = regicide;
 	}
 }

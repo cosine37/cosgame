@@ -93,6 +93,22 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setregicide", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setRegicide(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.isRegicide()) {
+			board.setRegicide(false);
+		} else {
+			board.setRegicide(true);
+		}
+		board.updateDB("regicide", board.isRegicide());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
 		Board board = new Board();
@@ -191,6 +207,9 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateDB("crown", board.getCrown());
+		if (board.isCrownMoved()) {
+			board.updateTrackCrownPlayers();
+		}
 		board.updateCurPlayer();
 		board.updateLogs();
 		StringEntity entity = new StringEntity();
@@ -233,6 +252,9 @@ public class CitadelsController {
 			board.updateDB("stealedRole", board.getStealedRole());
 			board.updateDB("crown", board.getCrown());
 			board.updateDB("coins", board.getCoins());
+			if (board.isCrownMoved()) {
+				board.updateTrackCrownPlayers();
+			}
 			board.updateThief();
 			board.updateRoles();
 			board.updateDeck();
@@ -256,6 +278,9 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateDB("crown", board.getCrown());
+		if (board.isCrownMoved()) {
+			board.updateTrackCrownPlayers();
+		}
 		board.updateCurPlayer();
 		board.updateLogs();
 		StringEntity entity = new StringEntity();
@@ -436,7 +461,11 @@ public class CitadelsController {
 			System.out.println(board.getPlayerByName(username).getCoin());
 			board.updatePlayer(username);
 			board.updateDB("coins", board.getCoins());
+			board.updateDB("crown", board.getCrown());
 			board.updateDB("firstFinished", board.isFirstFinished());
+			if (board.isCrownMoved()) {
+				board.updateTrackCrownPlayers();
+			}
 			board.updateDeck();
 			board.updateLogs();
 		}
@@ -463,6 +492,9 @@ public class CitadelsController {
 		board.updateDB("firstFinished", board.isFirstFinished());
 		board.updateDB("coins", board.getCoins());
 		board.updateDB("crown", board.getCrown());
+		if (board.isCrownMoved()) {
+			board.updateTrackCrownPlayers();
+		}
 		board.updateThief();
 		board.updateRoles();
 		board.updateLogs();

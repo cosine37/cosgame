@@ -102,7 +102,10 @@ public class AllRes {
 		specialCards.add(c);
 		c = new GreatA3Factory();
 		specialCards.add(c);
-		
+		c = new Hotel();
+		specialCards.add(c);
+		c = new ZijingPark();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {

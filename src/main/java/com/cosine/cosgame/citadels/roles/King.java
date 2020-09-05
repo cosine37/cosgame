@@ -39,7 +39,6 @@ public class King extends Role {
 	public void whenReveal() {
 		super.whenReveal();
 		int playerIndex = board.getPlayerIndex(player);
-		board.setCrown(playerIndex);
-		board.log(player.getName() + "获得了市长标记。");
+		board.moveCrownTo(playerIndex);
 	}
 }
