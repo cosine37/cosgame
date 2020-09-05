@@ -226,8 +226,21 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 						}
 				}
 				$scope.handStyle.push(singleHandStyle)
-				
 			}
+			$scope.tempRevealedTopStyle = []
+			for (i=0;i<$scope.tempRevealedTop.length;i++){
+				var imgUrl = "url('/image/Citadels/Cards/" + $scope.tempRevealedTop[i] + ".png')"
+				singleHandStyle = {
+					"background": imgUrl,
+					"background-color" : "grey",
+					"background-blend-mode" : "screen",
+					"margin-left" : marginLeft,
+					"background-size": "cover",
+					"float" : "left"
+				}
+				$scope.tempRevealedTopStyle.push(singleHandStyle)
+			}
+			
 		}
 		
 		adjustLogs = function(){
@@ -627,6 +640,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			setBigImageStyle()
 		}
 		
+		$scope.showTempRevealedCard = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.tempRevealedTop[index] + ".png"
+			setBigImageStyle()
+		}
+		
 		$scope.showBuilt = function(playerIndex, builtIndex){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Cards/" + $scope.built[playerIndex][builtIndex] + ".png"
@@ -692,6 +711,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.roundCount = response.data.roundCount
 					$scope.killedRole = response.data.killedRole
 					$scope.stealedRole = response.data.stealedRole
+					$scope.tempRevealedTop = response.data.tempRevealedTop;
 					
 					for (i=0;i<$scope.scores.length;i++){
 						if ($scope.extraScores[i] != "0" && $scope.status != '3'){ 

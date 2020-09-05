@@ -146,6 +146,15 @@
 				</div>
 			</div>
 			
+			<div class="hand" ng-repeat="c in tempRevealedTop track by $index" ng-style="tempRevealedTopStyle[$index]">
+				<div class="qsmark">
+					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showTempRevealedCard($index);$event.stopPropagation();"/>
+				</div>
+				<div>
+					<img src="/image/Citadels/shown.png" class="shown">
+				</div>
+			</div>
+			
 		</div>
 		
 	</div>

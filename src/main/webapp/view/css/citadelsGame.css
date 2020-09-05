@@ -69,6 +69,16 @@
 	width: 60px;
 }
 
+.shown{
+	position: absolute;
+	user-select:none;
+	float: left;
+	top: 5px;
+	left: 25px;
+	height: 80px;
+	width: 80px;
+}
+
 .targeted{
 	position: absolute;
 	user-select:none;

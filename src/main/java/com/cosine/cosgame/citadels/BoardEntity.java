@@ -23,6 +23,7 @@ public class BoardEntity {
 	List<String> scores;
 	List<String> netScores;
 	List<String> extraScores;
+	List<String> tempRevealedTop;
 	
 	String phase;
 	String bank;
@@ -298,5 +299,11 @@ public class BoardEntity {
 	}
 	public void setRegicide(String regicide) {
 		this.regicide = regicide;
+	}
+	public List<String> getTempRevealedTop() {
+		return tempRevealedTop;
+	}
+	public void setTempRevealedTop(List<String> tempRevealedTop) {
+		this.tempRevealedTop = tempRevealedTop;
 	}
 }

@@ -68,6 +68,12 @@ public class CardFactory {
 			card = new Hotel();
 		} else if (img.contentEquals("p405")) {
 			card = new ZijingPark();
+		} else if (img.contentEquals("p303")) {
+			card = new MacawTown();
+		} else if (img.contentEquals("p509")) {
+			card = new TianmuLake();
+		} else if (img.contentEquals("p612")) {
+			card = new Dragon9Hill();
 		}
 		
 		else {

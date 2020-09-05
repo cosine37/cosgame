@@ -19,6 +19,7 @@ public class Board {
 	List<Card> deck;
 	List<Role> roles;
 	List<Integer> trackCrownPlayers;
+	List<String> tempRevealedTop;
 	String lord;
 	boolean firstFinished;
 	boolean crownMoved;
@@ -56,6 +57,7 @@ public class Board {
 		logger = new Logger();
 		
 		trackCrownPlayers = new ArrayList<>();
+		tempRevealedTop = new ArrayList<>();
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
@@ -97,7 +99,7 @@ public class Board {
 		for (int i=0;i<shuffled.size();i++) {
 			deck.add(shuffled.get(i));
 		}
-		//test special cards addition here
+		//TODO: test special cards addition here
 	}
 	
 	public void deal() {
@@ -274,6 +276,7 @@ public class Board {
 	}
 	
 	public void nextRole() {
+		tempRevealedTop = new ArrayList<>();
 		curRoleNum = curRoleNum+1;
 		if (curRoleNum>roles.size()) {
 			log("所有角色行动完毕。");
@@ -553,6 +556,13 @@ public class Board {
 	public void setRegicide(boolean regicide) {
 		this.regicide = regicide;
 	}
+	public List<String> getTempRevealedTop() {
+		return tempRevealedTop;
+	}
+	public void setTempRevealedTop(List<String> tempRevealedTop) {
+		this.tempRevealedTop = tempRevealedTop;
+	}
+
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		
@@ -729,6 +739,7 @@ public class Board {
 		entity.setChooseOrDiscard(chooseOrDiscard);
 		entity.setFinishCount(Integer.toString(finishCount));
 		entity.setRegicide(regicide);
+		entity.setTempRevealedTop(tempRevealedTop);
 		return entity;
 	}
 	
@@ -748,6 +759,7 @@ public class Board {
 		doc.append("crown", crown);
 		doc.append("lord", lord);
 		doc.append("regicide", regicide);
+		doc.append("tempRevealedTop", tempRevealedTop);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
@@ -786,6 +798,7 @@ public class Board {
 		crown = doc.getInteger("crown", -1);
 		lord = doc.getString("lord");
 		regicide = doc.getBoolean("regicide", false);
+		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");
 		int i;
 		List<Document> dor = (List<Document>) doc.get("roles");
 		roles = new ArrayList<>();

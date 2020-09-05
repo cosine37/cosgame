@@ -3,3 +3,15 @@
 	background: rgb(0,100,100);
 	color: white;
 }
+
+.citadelstext{
+	font-weight: bold;
+	color: rgb(0,0,102);
+}
+
+.citadelshovertext{
+	font-weight: bold;
+	color: rgb(0,0,102);
+	text-decoration: underline;
+}
+

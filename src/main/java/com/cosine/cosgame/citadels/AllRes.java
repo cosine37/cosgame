@@ -106,6 +106,12 @@ public class AllRes {
 		specialCards.add(c);
 		c = new ZijingPark();
 		specialCards.add(c);
+		c = new MacawTown();
+		specialCards.add(c);
+		c = new TianmuLake();
+		specialCards.add(c);
+		c = new Dragon9Hill();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {

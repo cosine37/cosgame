@@ -252,6 +252,7 @@ public class CitadelsController {
 			board.updateDB("stealedRole", board.getStealedRole());
 			board.updateDB("crown", board.getCrown());
 			board.updateDB("coins", board.getCoins());
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			if (board.isCrownMoved()) {
 				board.updateTrackCrownPlayers();
 			}
@@ -297,6 +298,7 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).takeActionOption(2);
 			board.updatePlayer(username);
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
 			board.updateDeck();
 			board.updateLogs();
@@ -387,6 +389,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
@@ -407,6 +410,7 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();
@@ -441,6 +445,7 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).chooseCard(index);
 			board.updatePlayer(username);
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDeck();
 			board.updateLogs();
 		}
@@ -492,6 +497,7 @@ public class CitadelsController {
 		board.updateDB("firstFinished", board.isFirstFinished());
 		board.updateDB("coins", board.getCoins());
 		board.updateDB("crown", board.getCrown());
+		board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 		if (board.isCrownMoved()) {
 			board.updateTrackCrownPlayers();
 		}
