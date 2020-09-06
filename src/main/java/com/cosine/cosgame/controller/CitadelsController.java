@@ -353,8 +353,6 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	
-	
 	@RequestMapping(value="/citadelsgame/useskillonhand", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> useSkillOnHand(HttpServletRequest request, @RequestParam int skillIndex, @RequestParam String handChoices) {
 		Board board = new Board();
@@ -412,6 +410,22 @@ public class CitadelsController {
 			board.updateDeck();
 			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/cancelskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> cancelSkill(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			p.cancelSkill();
+			board.updatePlayer(username);
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

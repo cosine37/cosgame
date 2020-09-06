@@ -48,9 +48,6 @@
 								</tr>
 							</table>
 						</div>
-						
-						
-						
 					</td>
 					
 					<td style="width: 451px">
@@ -73,9 +70,16 @@
 			<div id="cacheinfo">
 				<table>
 					<tr>
+						<td colspan="2">结束条件：{{finishCount}}个建筑</td>
+						<td style="text-align:right"><button ng-click="goto('citadels')">退出</button></td>
+					</tr>
+					<tr>
+						<td colspan="3">市长被带走： {{regicideDisplay}}</td>
+					</tr>
+					<tr>
 						<td>回合：{{roundCount}}</td>
 						<td>{{statusDisplay}}</td>
-						<td><button ng-click="goto('citadels')">退出</button></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td style="width: 90px"><img class="icon" src="/image/Citadels/coin.png">    {{bank}}</td>
@@ -105,11 +109,13 @@
 						<button ng-click="openRoleSelection()" ng-show="askType == '1'">选择角色</button>
 						<button ng-click="curPlayerChooseRole()" ng-show="phase == '-1' && status =='1' && isLord == 'y'">bot choose</button>
 						<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
-						<button ng-click="useSkillOnHand(1)" ng-show="askType==4">确定</button>
+						<button ng-click="chooseAllHand()" ng-show="askType == '4'">全选</button>
+						<button ng-click="useSkillOnHand(1)" ng-show="askType == '4'">确定</button>
 					</td> 
 				</tr>
 				<tr>
 					<td>
+						<button ng-click="cancelSkill()" ng-show="askType != '0'">取消</button>
 						<button ng-click="endTurn()" ng-show="phase == '2' && status == '2' && askType == '0'">结束回合</button>
 					</td>
 				</tr>

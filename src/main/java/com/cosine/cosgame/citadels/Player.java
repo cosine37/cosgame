@@ -87,6 +87,10 @@ public class Player {
 		}
 	}
 	
+	public void cancelSkill() {
+		ask = new Ask();
+	}
+	
 	public void startTurn() {
 		if (phase == CitadelsConsts.OFFTURN) {
 			phase = CitadelsConsts.TAKEACTION;

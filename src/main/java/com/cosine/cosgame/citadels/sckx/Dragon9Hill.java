@@ -19,7 +19,6 @@ public class Dragon9Hill extends Card{
 	
 	public void onBuild() {
 		player.addCoin(1);
-		player.draw(1);
 		board.log("因为 九龙山 的效果，" + player.getName() + "获得了1￥。");
 	}
 	

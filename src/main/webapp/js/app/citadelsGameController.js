@@ -517,6 +517,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			return notSelectedStyle
 		}
 		
+		$scope.chooseAllHand = function(){
+			for (var i=0;i<$scope.chooseHand.length;i++){
+				$scope.chooseHand[i] = "y"
+			}
+		}
+		
 		$scope.useSkillOnHand = function(x){
 			var handChoices = ""
 			for (var i=0;i<$scope.chooseHand.length;i++){
@@ -527,6 +533,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					"handChoices": handChoices
 			}
 			$http({url: "/citadelsgame/useskillonhand", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.cancelSkill = function(){
+			$http.post('/citadelsgame/cancelskill').then(function(response){
 				$scope.getBoard()
 			});
 		}
@@ -712,6 +724,13 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.killedRole = response.data.killedRole
 					$scope.stealedRole = response.data.stealedRole
 					$scope.tempRevealedTop = response.data.tempRevealedTop;
+					$scope.finishCount = response.data.finishCount
+					$scope.regicide = response.data.regicide
+					if ($scope.regicide == "y"){
+						$scope.regicideDisplay = "送葬者获得市长标记"
+					} else {
+						$scope.regicideDisplay = "回合结束时市长获得市长标记"
+					}
 					
 					for (i=0;i<$scope.scores.length;i++){
 						if ($scope.extraScores[i] != "0" && $scope.status != '3'){ 
