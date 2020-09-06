@@ -697,6 +697,20 @@ public class Board {
 		} else {
 			regicide = "n";
 		}
+		List<List<String>> specialHands = new ArrayList<>();
+		if (this.status == CitadelsConsts.ENDGAME) {
+			for (i=0;i<players.size();i++) {
+				List<String> singleSpecialHand = new ArrayList<>();
+				for (j=0;j<players.get(i).getHand().size();j++) {
+					Card c = players.get(i).getHand().get(j);
+					if (c.getSecretScore() != 0) {
+						singleSpecialHand.add(c.getImg());
+					}
+				}
+				specialHands.add(singleSpecialHand);
+			}
+		}
+			
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
@@ -740,6 +754,7 @@ public class Board {
 		entity.setFinishCount(Integer.toString(finishCount));
 		entity.setRegicide(regicide);
 		entity.setTempRevealedTop(tempRevealedTop);
+		entity.setSpecialHands(specialHands);
 		return entity;
 	}
 	

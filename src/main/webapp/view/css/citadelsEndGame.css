@@ -2,11 +2,9 @@
 .winnerInfo{
 	position: absolute;
 	left: 50%;
-	top: 50%;
 	height: 600px;
-	width: 500px;
-	margin-left: -250px;
-	margin-top: -300px;
+	width: 850px;
+	margin-left: -425px;
 }
 
 .cupDiv{
@@ -20,13 +18,27 @@
 }
 
 .cup{
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 }
 
+.built {
+	float: left;
+	height: 112px;
+	width: 74px;
+	position: relative;
+}
+.qsmark{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	left: 2px;
+}
 body {
 	background-color: rgb(0,0,102);
 }
+
 
 button{
 	outline: none;

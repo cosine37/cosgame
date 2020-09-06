@@ -28,7 +28,10 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 		$scope.winner = []
 		$scope.rankings = []
 		$scope.playerStyle = []
+		$scope.builtStyle = []
+		$scope.specialHandsStyle = []
 		$scope.showCup = false;
+		$scope.showBigImage = false
 		
 		setWinner = function(){
 			if ($scope.playerNames[0] == $scope.username){
@@ -79,6 +82,11 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			temp=$scope.coins[i]
 			$scope.coins[i]=$scope.coins[j]
 			$scope.coins[j]=temp
+			
+			var tbuilt
+			tbuilt=$scope.built[i]
+			$scope.built[i]=$scope.built[j]
+			$scope.built[j]=tbuilt
 		}
 		
 		sortPlayers = function(){
@@ -122,6 +130,44 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			}
 		}
 		
+		setBigImageStyle = function(){
+			$scope.bigImageStyle = {
+				"height": "609px", 
+				"width": "392px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-196px",
+				"margin-top": "-280px",
+				"background": "url(" + $scope.bigImage + ")", 
+				"background-size": "cover"
+			}
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
+			}
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false
+		}
+		
+		$scope.showBuilt = function(playerIndex, builtIndex){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.built[playerIndex][builtIndex] + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.showSpecialHand = function(playerIndex, specialHandIndex){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Cards/" + $scope.specialHands[playerIndex][specialHandIndex] + ".png"
+			setBigImageStyle()
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/citadelsgame/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -133,6 +179,60 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 					$scope.netScores = response.data.netScores;
 					$scope.playerNames = response.data.playerNames
 					$scope.coins = response.data.coins;
+					$scope.built = response.data.built;
+					$scope.specialHands = response.data.specialHands;
+					$scope.builtStyle = []
+					$scope.specialHandsStyle = []
+					for (i=0;i<$scope.built.length;i++){
+						var singleBuiltStyle = []
+						for (j=0;j<$scope.built[i].length;j++){
+							var imgUrl = "url('/image/Citadels/Cards/" + $scope.built[i][j] + ".png')"
+							var marginLeft = "0px"
+							if ($scope.built[i].length == 7 && j != 0){
+								marginLeft = "-12px"
+							} else if ($scope.built[i].length == 8 && j != 0){
+								marginLeft = "-21px"
+							} else if ($scope.built[i].length == 9 && j != 0){
+								marginLeft = "-28px"
+							} else if ($scope.built[i].length == 10 && j != 0){
+								marginLeft = "-33px"
+							} else if ($scope.built[i].length == 11 && j != 0){
+								marginLeft = "-37px"
+							} 
+							singleStyle = {
+								"background": imgUrl,
+								"background-size": "cover",
+								"float": "left",
+								"position": "relative",
+								"margin-left": marginLeft
+							}
+							singleBuiltStyle.push(singleStyle)
+						}
+						$scope.builtStyle.push(singleBuiltStyle)
+					}
+					
+					for (i=0;i<$scope.specialHands.length;i++){
+						var singleSpecialHandStyle = []
+						for (j=0;j<$scope.specialHands[i].length;j++){
+							var imgUrl = "url('/image/Citadels/Cards/" + $scope.specialHands[i][j] + ".png')"
+							var marginLeft = "0px"
+							if ($scope.specialHands[i].length == 3 && j != 0){
+								marginLeft = "36px"
+							} else if ($scope.specialHands[i].length == 4 && j != 0){
+								marginLeft = "49px"
+							}
+							singleStyle = {
+								"background": imgUrl,
+								"background-size": "cover",
+								"float": "left",
+								"position": "relative",
+								"margin-left": marginLeft
+							}
+							singleSpecialHandStyle.push(singleStyle)
+						}
+						$scope.specialHandsStyle.push(singleSpecialHandStyle)
+					}
+					
 					sortPlayers()
 					setWinner()
 				}

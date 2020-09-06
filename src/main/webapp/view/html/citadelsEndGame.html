@@ -17,16 +17,16 @@
 	<div class="winnerInfo">
 		<table style="text-align:center; color:white">
 			<tr>
-				<td colspan="5"><h2>游戏结束</h2></td>
+				<td colspan="7"><h2>游戏结束</h2></td>
 			</tr>
 			<tr>
-				<td colspan="5"><h3>获胜者</h3></td>
+				<td colspan="7"><h3>获胜者</h3></td>
 			</tr>
 			<tr>
-				<td colspan="5"><h4 ng-repeat="w in winner">{{w}}</h4></td>
+				<td colspan="7"><h4 ng-repeat="w in winner">{{w}}</h4></td>
 			</tr>
 			<tr>
-				<td colspan="5">
+				<td colspan="7">
 					<img src="/image/Citadels/winner.png" ng-show="showCup" class="cup">
 					<img src="/image/Citadels/loser.jpg" ng-show="showCup == false" class="cup">
 				</td>
@@ -35,18 +35,36 @@
 				<td>排名</td>
 				<td>玩家</td>
 				<td>分数</td>
-				<td>建筑净分</td>
-				<td>￥</td>
+				<td>净分</td>
+				<td>￥</td>	
+				<td style="width:451px">建筑</td>
+				<td style="width:150px">特殊手牌</td>
+				
 			</tr>
-			<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]">
-				<td>{{rankings[$index]}}</td>
+			<tr ng-repeat="pn in playerNames track by $index" ng-style="playerStyle[$index]" ng-init="playerIndex = $index">
+				<td>{{rankings[playerIndex]}}</td>
 				<td>{{pn}}</td>
-				<td>{{scores[$index]}}</td>
-				<td>{{netScores[$index]}}</td>
+				<td>{{scores[playerIndex]}}</td>
+				<td>{{netScores[playerIndex]}}</td>
 				<td>{{coins[$index]}}</td>
+				<td>
+					<div ng-repeat="b in built[playerIndex] track by $index" class="built" ng-style="builtStyle[playerIndex][$index]">
+						<div class="qsmark">
+							<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showBuilt(playerIndex, $index);$event.stopPropagation();"/>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div ng-repeat="b in specialHands[playerIndex] track by $index" class="built" ng-style="specialHandsStyle[playerIndex][$index]">
+						<div class="qsmark">
+							<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showSpecialHand(playerIndex, $index);$event.stopPropagation();"/>
+						</div>
+					</div>
+				</td>
+				
 			</tr>
 			<tr>
-				<td colspan="5">
+				<td colspan="7">
 					<button ng-click="goto('citadels')" ng-show="isLord == 'n'">退出</button>
 					<button ng-click="dismiss()" ng-show="isLord == 'y'">解散并退出</button>
 				</td>
@@ -55,6 +73,11 @@
 		</table>
 	</div>
 	
+	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()"  style="clear:both">
+		<div ng-style="bigImageStyle">
+			
+		</div>
+	</div>
 	
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.List;
 public class BoardEntity {
 	List<String> playerNames;
 	List<List<String>> built;
+	List<List<String>> specialHands;
 	List<List<String>> askBuiltInfo;
 	List<String> hand;
 	List<String> buildable;
@@ -305,5 +306,11 @@ public class BoardEntity {
 	}
 	public void setTempRevealedTop(List<String> tempRevealedTop) {
 		this.tempRevealedTop = tempRevealedTop;
+	}
+	public List<List<String>> getSpecialHands() {
+		return specialHands;
+	}
+	public void setSpecialHands(List<List<String>> specialHands) {
+		this.specialHands = specialHands;
 	}
 }

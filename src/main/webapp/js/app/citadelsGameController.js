@@ -230,6 +230,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			$scope.tempRevealedTopStyle = []
 			for (i=0;i<$scope.tempRevealedTop.length;i++){
 				var imgUrl = "url('/image/Citadels/Cards/" + $scope.tempRevealedTop[i] + ".png')"
+				var marginLeft = "0px"
 				singleHandStyle = {
 					"background": imgUrl,
 					"background-color" : "grey",
