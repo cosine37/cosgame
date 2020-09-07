@@ -43,8 +43,10 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Warlord();
 		allRoles.add(r);
-		r = new FurnitureDealer();
+		r = new Journalist();
 		allRoles.add(r);
+		//r = new FurnitureDealer();
+		//allRoles.add(r);
 	}
 	
 	public void setSpecialCards() {

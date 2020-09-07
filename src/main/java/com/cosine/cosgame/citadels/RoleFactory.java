@@ -24,6 +24,8 @@ public class RoleFactory {
 			role = new Magician();
 		} else if (img.contentEquals("004")) {
 			role = new King();
+		} else if (img.contentEquals("109")) {
+			role = new Journalist();
 		} else if (img.contentEquals("119")) {
 			role = new FurnitureDealer();
 		}
