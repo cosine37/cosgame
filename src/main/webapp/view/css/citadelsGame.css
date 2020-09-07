@@ -40,6 +40,20 @@
 	bottom: 2px;
 	left: 2px;
 }
+.beautifyCheck{
+	position: absolute;
+	user-select:none;
+	float: left;
+	top: 2px;
+	left: 2px;
+}
+
+.beautify{
+	position: absolute;
+	user-select:none;
+	float: left;
+	left: 15px;
+}
 .checked{
 	position: absolute;
 	user-select:none;

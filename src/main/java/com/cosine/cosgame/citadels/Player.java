@@ -258,6 +258,14 @@ public class Player {
 		}
 	}
 	
+	public void beautify(int index) {
+		if (index < 0) return;
+		if (index >= built.size()) return;
+		if (built.get(index).getBeautifyLevel() == 0) {
+			built.get(index).beautify();
+		}
+	}
+	
 	public void botNextMove() { // for bot to take action & build
 		if (phase == CitadelsConsts.TAKEACTION) {
 			if (hand.size() > 1) {

@@ -15,6 +15,7 @@ public class AllRes {
 	List<Card> baseCards;
 	List<Card> specialCards;
 	List<Role> allRoles;
+	Board board;
 	
 	public AllRes() {
 		baseCards = new ArrayList<>();
@@ -45,8 +46,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Journalist();
 		allRoles.add(r);
-		//r = new FurnitureDealer();
-		//allRoles.add(r);
+		r = new FurnitureDealer();
+		allRoles.add(r);
 	}
 	
 	public void setSpecialCards() {
@@ -123,83 +124,84 @@ public class AllRes {
 		int i;
 		Card c;
 		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("路边摊", CitadelsConsts.GREEN, 1, "g1", -1);
+			c = CardFactory.createCard("路边摊", CitadelsConsts.GREEN, 1, "g1", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21", -1);
+			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("菜场", CitadelsConsts.GREEN, 2, "g22", -1);
+			c = CardFactory.createCard("菜场", CitadelsConsts.GREEN, 2, "g22", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("超市", CitadelsConsts.GREEN, 3, "g3", -1);
+			c = CardFactory.createCard("超市", CitadelsConsts.GREEN, 3, "g3", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("商场", CitadelsConsts.GREEN, 4, "g4", -1);
+			c = CardFactory.createCard("商场", CitadelsConsts.GREEN, 4, "g4", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("商业步行街", CitadelsConsts.GREEN, 5, "g5", -1);
+			c = CardFactory.createCard("商业步行街", CitadelsConsts.GREEN, 5, "g5", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("幼儿园", CitadelsConsts.BLUE, 1, "b1", -1);
+			c = CardFactory.createCard("幼儿园", CitadelsConsts.BLUE, 1, "b1", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("小学", CitadelsConsts.BLUE, 2, "b2", -1);
+			c = CardFactory.createCard("小学", CitadelsConsts.BLUE, 2, "b2", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("初中", CitadelsConsts.BLUE, 3, "b3", -1);
+			c = CardFactory.createCard("初中", CitadelsConsts.BLUE, 3, "b3", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("高中", CitadelsConsts.BLUE, 5, "b5", -1);
+			c = CardFactory.createCard("高中", CitadelsConsts.BLUE, 5, "b5", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("岗亭", CitadelsConsts.RED, 1, "r1", -1);
+			c = CardFactory.createCard("岗亭", CitadelsConsts.RED, 1, "r1", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("监狱", CitadelsConsts.RED, 2, "r2", -1);
+			c = CardFactory.createCard("监狱", CitadelsConsts.RED, 2, "r2", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3", -1);
+			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
-			c = CardFactory.createCard("军区", CitadelsConsts.RED, 5, "r5", -1);
+			c = CardFactory.createCard("军区", CitadelsConsts.RED, 5, "r5", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<5;i++) {
-			c = CardFactory.createCard("居委会", CitadelsConsts.YELLOW, 3, "y3", -1);
+			c = CardFactory.createCard("居委会", CitadelsConsts.YELLOW, 3, "y3", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("电视台", CitadelsConsts.YELLOW, 4, "y4", -1);
+			c = CardFactory.createCard("电视台", CitadelsConsts.YELLOW, 4, "y4", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("市政府", CitadelsConsts.YELLOW, 5, "y5", -1);
+			c = CardFactory.createCard("市政府", CitadelsConsts.YELLOW, 5, "y5", -1, 0);
 			baseCards.add(c);
 		}
 	}
 	
 	public List<Role> genRoles(int playerNum){
 		List<Role> ans = new ArrayList<>();
-		int totalRolesUsed = 8;
-		if (playerNum == 8 || playerNum == 1) {
-			totalRolesUsed = 9;
-		}
-		for (int i=0;i<totalRolesUsed;i++) {
+		for (int i=0;i<8;i++) {
 			ans.add(allRoles.get(i));
+		}
+		if (board.getNo9() == 0) {
+			ans.add(allRoles.get(8));
+		} else if (board.getNo9() == 1) {
+			ans.add(allRoles.get(9));
 		}
 		
 		return ans;
@@ -223,6 +225,10 @@ public class AllRes {
 			deck.add(specialCards.remove(rand.nextInt(size)));
 		}
 		return deck;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 }

@@ -19,6 +19,7 @@ public class Card {
 	protected int buildCount;
 	protected boolean buildable;
 	protected boolean trackCrown;
+	protected int beautifyLevel;
 	
 	public Card() {
 		builtRound = -1;
@@ -28,6 +29,7 @@ public class Card {
 		buildCount = 1;
 		buildable = true;
 		trackCrown = false;
+		beautifyLevel = 0;
 	}
 	
 	public Card(String name) {
@@ -76,6 +78,10 @@ public class Card {
 		return ask;
 	}
 	
+	public void beautify() {
+		beautifyLevel++;
+	}
+	
 	public Ask useSkill(int index, int x) {
 		Ask ask = new Ask();
 		
@@ -90,7 +96,7 @@ public class Card {
 		return color;
 	}
 	public int getScore() {
-		return cost;
+		return cost + beautifyLevel;
 	}
 	public int getExtraScore() {
 		return 0;
@@ -176,7 +182,13 @@ public class Card {
 	public void setTrackCrown(boolean trackCrown) {
 		this.trackCrown = trackCrown;
 	}
+	public int getBeautifyLevel() {
+		return beautifyLevel;
+	}
 
+	public void setBeautifyLevel(int beautifyLevel) {
+		this.beautifyLevel = beautifyLevel;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -184,6 +196,7 @@ public class Card {
 		doc.append("color", color);
 		doc.append("img", img);
 		doc.append("builtRound", builtRound);
+		doc.append("beautifyLevel", beautifyLevel);
 		return doc;
 	}
 }

@@ -9,6 +9,7 @@ public class Ask {
 	int askId;
 	int askType;
 	int askBuiltIndex;
+	int upperLimit;
 	List<String> ls;
 	List<List<String>> builtInfo;
 	String msg;
@@ -19,6 +20,7 @@ public class Ask {
 		ls = new ArrayList<>();
 		builtInfo = new ArrayList<>();
 		msg = "";
+		upperLimit = 0;
 	}
 	
 	public int getAskId() {
@@ -59,6 +61,12 @@ public class Ask {
 	public void setBuiltInfo(List<List<String>> builtInfo) {
 		this.builtInfo = builtInfo;
 	}
+	public int getUpperLimit() {
+		return upperLimit;
+	}
+	public void setUpperLimit(int upperLimit) {
+		this.upperLimit = upperLimit;
+	}
 	public Document toDocument() {
 		Document doa = new Document();
 		doa.append("askId", askId);
@@ -67,6 +75,7 @@ public class Ask {
 		doa.append("ls", ls);
 		doa.append("msg", msg);
 		doa.append("builtInfo", builtInfo);
+		doa.append("upperLimit", upperLimit);
 		return doa;
 	}
 	
@@ -77,5 +86,6 @@ public class Ask {
 		ls = (List<String>) doa.get("ls");
 		builtInfo = (List<List<String>>) doa.get("builtInfo");
 		msg = doa.getString("msg");
+		upperLimit = doa.getInteger("upperLimit", 0);
 	}
 }

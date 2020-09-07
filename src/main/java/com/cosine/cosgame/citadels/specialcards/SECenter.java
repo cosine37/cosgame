@@ -13,6 +13,6 @@ public class SECenter extends Card{
 	}
 	
 	public int getScore() {
-		return 8;
+		return super.getScore()+2;
 	}
 }

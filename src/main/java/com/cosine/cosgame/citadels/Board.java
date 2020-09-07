@@ -34,12 +34,14 @@ public class Board {
 	int curPlayer;
 	int curRoleNum;
 	int crown;
+	int no9;
 	String id;
 	MongoDBUtil dbutil;
 	Logger logger;
 	
 	public Board() {
 		allRes = new AllRes();
+		allRes.setBoard(this);
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		roles = new ArrayList<>();
@@ -48,6 +50,7 @@ public class Board {
 		coins = 30;
 		killedRole = -1;
 		stealedRole = -1;
+		no9 = -1;
 		
 		status = CitadelsConsts.PREGAME;
 		
@@ -79,6 +82,11 @@ public class Board {
 		Player p = new Player(name);
 		p.setBoard(this);
 		players.add(p);
+		if (players.size() == 8) {
+			if (no9 == -1) {
+				no9 = 0;
+			}
+		}
 	}
 	
 	public void genDeck() {
@@ -100,6 +108,8 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
+		Card c = new ZhonglianBuilding();
+		deck.add(0, c);
 	}
 	
 	public void deal() {
@@ -203,12 +213,21 @@ public class Board {
 		int numHidden;
 		if (numPlayers == 4) {
 			numReveal = 2;
+			if (roles.size() == 9) {
+				numReveal = 3;
+			}
 			numHidden = 1;
 		} else if (numPlayers == 5) {
 			numReveal = 1;
+			if (roles.size() == 9) {
+				numReveal = 2;
+			}
 			numHidden = 1;
 		} else if (numPlayers == 6) {
 			numReveal = 0;
+			if (roles.size() == 9) {
+				numReveal = 1;
+			}
 			numHidden = 1;
 		} else if (numPlayers == 7) {
 			numReveal = 0;
@@ -275,7 +294,7 @@ public class Board {
 			curPlayer = 0;
 		}
 		int numPlayers = players.size();
-		if (numPlayers == 7 || numPlayers == 8) {
+		if (numPlayers+1 == roles.size()) {
 			int selectableCount = 0;
 			for (int i=0;i<roles.size();i++) {
 				if (roles.get(i).getOwner() == CitadelsConsts.SELECTABLE) {
@@ -447,6 +466,11 @@ public class Board {
 		Player bot = new Player(botName);
 		bot.setBot(true);
 		players.add(bot);
+		if (players.size() == 8) {
+			if (no9 == -1) {
+				no9 = 0;
+			}
+		}
 		addPlayerToDB(botName);
 	}
 	public boolean isLord(String name) {
@@ -581,6 +605,12 @@ public class Board {
 	public void setTempRevealedTop(List<String> tempRevealedTop) {
 		this.tempRevealedTop = tempRevealedTop;
 	}
+	public int getNo9() {
+		return no9;
+	}
+	public void setNo9(int no9) {
+		this.no9 = no9;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -596,15 +626,19 @@ public class Board {
 		List<String> coins = new ArrayList<>();
 		List<String> handSizes = new ArrayList<>();
 		List<List<String>> built = new ArrayList<>();
+		List<List<String>> beautifyLevel = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			coins.add(Integer.toString(players.get(i).getCoin()));
 			handSizes.add(Integer.toString(players.get(i).getHand().size()));
 			List<String> singleBuilt = new ArrayList<>();
+			List<String> singleBeautifyLevel = new ArrayList<>();
 			for (j=0;j<players.get(i).getBuilt().size();j++) {
 				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
+				singleBeautifyLevel.add(Integer.toString(players.get(i).getBuilt().get(j).getBeautifyLevel()));
 			}
 			built.add(singleBuilt);
+			beautifyLevel.add(singleBeautifyLevel);
 		}
 		List<String> hand = new ArrayList<>();
 		List<String> buildable = new ArrayList<>();
@@ -734,6 +768,7 @@ public class Board {
 		entity.setBank(Integer.toString(this.coins));
 		entity.setPlayerNames(playerNames);
 		entity.setBuilt(built);
+		entity.setBeautifyLevel(beautifyLevel);
 		entity.setHand(hand);
 		entity.setBuildable(buildable);
 		entity.setRevealedCards(revealedCards);
@@ -757,6 +792,7 @@ public class Board {
 		entity.setAskId(Integer.toString(p.getAsk().getAskId()));
 		entity.setAskType(Integer.toString(p.getAsk().getAskType()));
 		entity.setAskBuiltIndex(Integer.toString(p.getAsk().getAskBuiltIndex()));
+		entity.setAskLimit(Integer.toString(p.getAsk().getUpperLimit()));
 		entity.setSkillButtons(skillButtons);
 		entity.setAskMsg(p.getAsk().getMsg());
 		entity.setAskLs(askLs);
@@ -774,6 +810,7 @@ public class Board {
 		entity.setRegicide(regicide);
 		entity.setTempRevealedTop(tempRevealedTop);
 		entity.setSpecialHands(specialHands);
+		entity.setNo9(Integer.toString(no9));
 		return entity;
 	}
 	
@@ -794,6 +831,7 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("regicide", regicide);
 		doc.append("tempRevealedTop", tempRevealedTop);
+		doc.append("no9", no9);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
@@ -832,6 +870,7 @@ public class Board {
 		crown = doc.getInteger("crown", -1);
 		lord = doc.getString("lord");
 		regicide = doc.getBoolean("regicide", false);
+		no9 = doc.getInteger("no9", -1);
 		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");
 		int i;
 		List<Document> dor = (List<Document>) doc.get("roles");

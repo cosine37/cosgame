@@ -37,6 +37,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.playerStyle = []
 		$scope.skillButtons = []
 		$scope.chooseHand = []
+		$scope.chooseBuilts = []
 		$scope.playerRoleStyle=[]
 		$scope.roleStyle=[]
 		$scope.roleStyleSkills=[]
@@ -68,6 +69,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			$scope.builtDisabled = []
 			$scope.builtStyle = []
 			$scope.playerRoleStyle = []
+			$scope.chooseBuilts = []
 			var i
 			for (i=0;i<$scope.playerNames.length;i++){
 				myStyle = {
@@ -106,6 +108,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				
 				var singleBuiltDisabled = []
 				var singleBuiltStyle = []
+				var singleChooseBuilts = []
 				
 				for (j=0;j<$scope.built[i].length;j++){
 					var x = $scope.disableBuilt(i,j)
@@ -142,7 +145,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 						}
 					}
 					singleBuiltStyle.push(singleStyle)
+					singleChooseBuilts.push("n")
 				}
+				$scope.chooseBuilts.push(singleChooseBuilts)
 				$scope.builtDisabled.push(singleBuiltDisabled)
 				$scope.builtStyle.push(singleBuiltStyle)
 				
@@ -336,7 +341,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.disableBuilt = function(playerIndex, builtIndex){
-			if ($scope.askType == '2' && $scope.phase == '2'){
+			if ($scope.askType == '2' && $scope.phase == '2'){ // destroy
 				if ($scope.askBuiltInfo[playerIndex][builtIndex] == '-1'){
 					return true
 				} else {
@@ -349,7 +354,15 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					return true;
 				}
 				
-			} else {
+			} else if ($scope.askType == '6' &&  $scope.phase == '2'){ // beautify
+				if ($scope.askBuiltInfo[playerIndex][builtIndex] == '-1'){
+					return true
+				} else {
+					return false
+				}
+			}
+			
+			else {
 				return true;
 			}
 		}
@@ -358,7 +371,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			if ($scope.builtDisabled[playerIndex][builtIndex]){
 				return
 			}
-			if ($scope.askType == '0' && $scope.phase == '2' && $scope.username == $scope.playerNames[playerIndex]){ //use skill
+			if ($scope.askType == '0' && $scope.phase == '2' && $scope.username == $scope.playerNames[playerIndex]){ //use built skill
 				var data = {
 						"builtIndex" : builtIndex
 				}
@@ -378,9 +391,25 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 						$scope.getBoard()
 					})
 				}
+			} else if ($scope.askType == '6' && $scope.phase == '2'){ // beautify
+				if ($scope.chooseBuilts[playerIndex][builtIndex] == "n"){
+					var limit = parseInt($scope.askLimit)
+					var i,j;
+					var count = 0;
+					for (i=0;i<$scope.chooseBuilts.length;i++){
+						for (j=0;j<$scope.chooseBuilts[i].length;j++){
+							if ($scope.chooseBuilts[i][j] == "y"){
+								count = count+1;
+							}
+						}
+					}
+					if (count<limit){
+						$scope.chooseBuilts[playerIndex][builtIndex] = "y"
+					}
+				} else {
+					$scope.chooseBuilts[playerIndex][builtIndex] = "n"
+				}
 			}
-			
-			
 		}
 		
 		$scope.useSkill = function(x){
@@ -533,6 +562,26 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					"handChoices": handChoices
 			}
 			$http({url: "/citadelsgame/useskillonhand", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.useBeautifySkill = function(x){
+			var builtIndex = 0;
+			for (i=0;i<$scope.chooseBuilts.length;i++){
+				for (j=0;j<$scope.chooseBuilts[i].length;j++){
+					if ($scope.chooseBuilts[i][j] == "y"){
+						builtIndex = builtIndex*100+j+1;
+					}
+				}
+			}
+			var data = {
+					"skillIndex" : x,
+					"roleIndex" : 0,
+					"playerIndex" : 0,
+					"builtIndex" : builtIndex
+					}
+			$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 			});
 		}
@@ -712,6 +761,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.askMsg = response.data.askMsg
 					$scope.askBuiltIndex = response.data.askBuiltIndex
 					$scope.askBuiltInfo = response.data.askBuiltInfo
+					$scope.askLimit = response.data.askLimit
 					$scope.canUseRoleSkill = response.data.canUseRoleSkill
 					$scope.canUseCardSkill = response.data.canUseCardSkill
 					$scope.isLord = response.data.isLord
@@ -726,6 +776,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.tempRevealedTop = response.data.tempRevealedTop;
 					$scope.finishCount = response.data.finishCount
 					$scope.regicide = response.data.regicide
+					$scope.beautifyLevel = response.data.beautifyLevel
 					if ($scope.regicide == "y"){
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {

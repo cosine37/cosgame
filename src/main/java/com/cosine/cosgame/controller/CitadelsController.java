@@ -109,6 +109,18 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setno9", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setNo9(HttpServletRequest request, @RequestParam int no9){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.setNo9(no9);
+		board.updateDB("no9", no9);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
 		Board board = new Board();
@@ -117,6 +129,7 @@ public class CitadelsController {
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
 		board.addBot();
+		board.updateDB("no9", board.getNo9());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -151,6 +164,7 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) == null) {
 			board.addPlayer(username);
 			board.addPlayerToDB(username);
+			board.updateDB("no9", board.getNo9());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

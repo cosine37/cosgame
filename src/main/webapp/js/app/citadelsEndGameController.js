@@ -87,6 +87,21 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			tbuilt=$scope.built[i]
 			$scope.built[i]=$scope.built[j]
 			$scope.built[j]=tbuilt
+			
+			var tbuiltStyle
+			tbuiltStyle=$scope.builtStyle[i]
+			$scope.builtStyle[i]=$scope.builtStyle[j]
+			$scope.builtStyle[j]=tbuiltStyle
+			
+			var thand
+			thand=$scope.specialHands[i]
+			$scope.specialHands[i]=$scope.specialHands[j]
+			$scope.specialHands[j]=thand
+			
+			var thandStyle
+			thandStyle=$scope.specialHandsStyle[i]
+			$scope.specialHandsStyle[i]=$scope.specialHandsStyle[j]
+			$scope.specialHandsStyle[j]=thandStyle
 		}
 		
 		sortPlayers = function(){
@@ -181,6 +196,7 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 					$scope.coins = response.data.coins;
 					$scope.built = response.data.built;
 					$scope.specialHands = response.data.specialHands;
+					$scope.beautifyLevel = response.data.beautifyLevel
 					$scope.builtStyle = []
 					$scope.specialHandsStyle = []
 					for (i=0;i<$scope.built.length;i++){

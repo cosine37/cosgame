@@ -37,6 +37,10 @@
 			<td>送葬者带走市长：</td>
 			<td>{{regicideDisplay}}</td>
 		</tr>
+		<tr>
+			<td>9号角色：</td>
+			<td>{{no9Display}}</td>
+		</tr>
 	</table>
 	<button ng-click="showConfigDiv()" ng-show="isLord == 'y' && showConfig == 'n'">显示设置</button>
 	<button ng-click="hideConfigDiv()" ng-show="isLord == 'y' && showConfig == 'y'">隐藏设置</button>
@@ -50,10 +54,22 @@
 				<td ng-show="$index == tcrown"><img class="icon" src="/image/Citadels/mayor.png"></td>
 			</tr>
 		</table>
-		<button ng-click="giveCrown()">更新市长标记</button>
-		<button ng-click="setEndNum(7)">7 end</button>
-		<button ng-click="setEndNum(8)">8 end</button>
-		<button ng-click="setRegicide()">变更市长被带走规则</button>
+		<div>
+			<button ng-click="giveCrown()">更新市长标记</button>
+		</div>
+		<div>
+			<button ng-click="setEndNum(7)">7 end</button>
+			<button ng-click="setEndNum(8)">8 end</button>
+		</div>
+		<div>
+			<button ng-click="setRegicide()">变更市长被带走规则</button>
+		</div>
+		<div>
+			<button ng-click="setNo9(-1)" ng-show="playerNames.length < 8">不使用9号</button>
+			<button ng-click="setNo9(0)">9号使用记者</button>
+			<button ng-click="setNo9(1)">9号使用家具商</button>
+		</div>
+		
 	</div>
 	
 </body>

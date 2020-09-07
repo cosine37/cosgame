@@ -8,7 +8,7 @@ import com.cosine.cosgame.citadels.sckx.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class CardFactory {
-	public static Card createCard(String name, int color, int cost, String img, int builtRound) {
+	public static Card createCard(String name, int color, int cost, String img, int builtRound, int beautifyLevel) {
 		Card card;
 		if (img.contentEquals("p601")) {
 			card = new DinosaurPark();
@@ -74,7 +74,9 @@ public class CardFactory {
 			card = new TianmuLake();
 		} else if (img.contentEquals("p612")) {
 			card = new Dragon9Hill();
-		}
+		} else if (img.contentEquals("p406")) {
+			card = new ZhonglianBuilding();
+		} 
 		
 		else {
 			card = new Card(name);
@@ -83,6 +85,7 @@ public class CardFactory {
 			card.setImg(img);
 		}
 		
+		card.setBeautifyLevel(beautifyLevel);
 		card.setBuiltRound(builtRound);
 		return card;
 	}
@@ -93,7 +96,8 @@ public class CardFactory {
 		int cost = doc.getInteger("cost", 0);
 		String img = doc.getString("img");
 		int builtRound = doc.getInteger("builtRound", -1);
-		return createCard(name, color, cost, img, builtRound);
+		int beautifyLevel = doc.getInteger("beautifyLevel", 0);
+		return createCard(name, color, cost, img, builtRound, beautifyLevel);
 	}
 
 }

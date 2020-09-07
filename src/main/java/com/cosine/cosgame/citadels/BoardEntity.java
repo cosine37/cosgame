@@ -7,6 +7,7 @@ public class BoardEntity {
 	List<List<String>> built;
 	List<List<String>> specialHands;
 	List<List<String>> askBuiltInfo;
+	List<List<String>> beautifyLevel;
 	List<String> hand;
 	List<String> buildable;
 	List<String> coins;
@@ -42,12 +43,14 @@ public class BoardEntity {
 	String askMsg;
 	String askId;
 	String askBuiltIndex;
+	String askLimit;
 	String killedRole;
 	String stealedRole;
 	String yourRole;
 	String chooseOrDiscard;
 	String finishCount;
 	String regicide;
+	String no9;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -312,5 +315,23 @@ public class BoardEntity {
 	}
 	public void setSpecialHands(List<List<String>> specialHands) {
 		this.specialHands = specialHands;
+	}
+	public List<List<String>> getBeautifyLevel() {
+		return beautifyLevel;
+	}
+	public void setBeautifyLevel(List<List<String>> beautifyLevel) {
+		this.beautifyLevel = beautifyLevel;
+	}
+	public String getAskLimit() {
+		return askLimit;
+	}
+	public void setAskLimit(String askLimit) {
+		this.askLimit = askLimit;
+	}
+	public String getNo9() {
+		return no9;
+	}
+	public void setNo9(String no9) {
+		this.no9 = no9;
 	}
 }

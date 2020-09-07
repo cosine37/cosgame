@@ -58,6 +58,21 @@
 							<div class="qsmark">
 								<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showBuilt(playerIndex, $index);$event.stopPropagation();"/>
 							</div>
+							<div class="beautifyCheck" ng-show="chooseBuilts[playerIndex][$index] == 'y'">
+								<img src="/image/Citadels/checked.png" height="18" width="18"/>
+							</div>
+							<div class="beautify" style="top: 5px"
+								ng-show="beautifyLevel[playerIndex][$index] == '1' || beautifyLevel[playerIndex][$index] == '2' || beautifyLevel[playerIndex][$index] == '3'">
+								<img src="/image/Citadels/beautify.png" height="18" width="18" />
+							</div>
+							<div class="beautify" style="top: 25px"
+								ng-show="beautifyLevel[playerIndex][$index] == '2' || beautifyLevel[playerIndex][$index] == '3'">
+								<img src="/image/Citadels/beautify.png" height="18" width="18" />
+							</div>
+							<div class="beautify" style="top: 45px"
+								ng-show="beautifyLevel[playerIndex][$index] == '3'">
+								<img src="/image/Citadels/beautify.png" height="18" width="18" />
+							</div>
 						</div>
 					</td>
 					
@@ -111,6 +126,7 @@
 						<button ng-click="botNextMove()" ng-show="phase == '-1' && status == '2' && isLord == 'y'">bot next move</button>
 						<button ng-click="chooseAllHand()" ng-show="askType == '4'">全选</button>
 						<button ng-click="useSkillOnHand(1)" ng-show="askType == '4'">确定</button>
+						<button ng-click="useBeautifySkill(0)" ng-show="askType == '6'">确定</button>
 					</td> 
 				</tr>
 				<tr>

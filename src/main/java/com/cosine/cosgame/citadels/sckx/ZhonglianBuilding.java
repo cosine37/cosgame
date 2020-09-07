@@ -1,0 +1,35 @@
+package com.cosine.cosgame.citadels.sckx;
+
+import com.cosine.cosgame.citadels.Card;
+import com.cosine.cosgame.citadels.CitadelsConsts;
+
+public class ZhonglianBuilding extends Card{
+	public ZhonglianBuilding() {
+		super();
+		name = "中联大厦";
+		cost = 4;
+		img = "p406";
+		color = CitadelsConsts.PURPLE;
+		expansion = 3;
+	}
+	
+	public void endTurnEffect() {
+		if (board.getCoins() != 0) {
+			board.takeCoins(1);
+			beautify();
+			if (beautifyLevel >= 4) {
+				for (int i=0;i<player.getBuilt().size();i++) {
+					if (player.getBuilt().get(i).getImg().contentEquals(img)) {
+						Card c = player.getBuilt().remove(i);
+						board.addCoin(c.getBeautifyLevel());
+						c.setBeautifyLevel(0);
+						board.bottomDeck(c);
+					}
+				}
+				board.log(player.getName() + "的 中联大厦 因年久失修被拆除。");
+			} else {
+				board.log(player.getName() + "的 中联大厦 价值上升。");
+			}
+		}
+	}
+}

@@ -33,10 +33,19 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.status = response.data.status
 					$scope.finishCount = response.data.finishCount
 					$scope.regicide = response.data.regicide
+					$scope.no9 = response.data.no9
 					if ($scope.regicide == "y"){
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {
 						$scope.regicideDisplay = "回合结束时市长获得市长标记"
+					}
+					$scope.no9Display = "不使用"
+					if ($scope.no9 == "-1"){
+						$scope.no9Display = "不使用"
+					} else if ($scope.no9 == "0"){
+						$scope.no9Display = "记者"
+					} else if ($scope.no9 == "1"){
+						$scope.no9Display = "家具商"
 					}
 					if ($scope.status != "0"){
 						$scope.goto('citadelsgame');
@@ -55,6 +64,14 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.setEndNum = function(x){
 			var data = {"endnum" : x}
 			$http({url: "/citadelsgame/setendnum", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setNo9 = function(x){
+			var y = parseInt(x)
+			var data = {"no9" : y}
+			$http({url: "/citadelsgame/setno9", method: "POST", params: data}).then(function(response){
 				$scope.getBoard();
 			});
 		}

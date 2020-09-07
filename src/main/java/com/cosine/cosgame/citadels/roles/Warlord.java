@@ -38,7 +38,7 @@ public class Warlord extends Role {
 					if (p.getBuilt().size() >= board.getFinishCount()) {
 						singleBuiltInfo.add("-1");
 					} else if (p.getRole().isDestroyable() || p.getRole().getNum() == board.getKilledRole()) {
-						int temp = p.getBuilt().get(j).getCost()-1;
+						int temp = p.getBuilt().get(j).getCost() + p.getBuilt().get(j).getBeautifyLevel()-1;
 						if (player.getGreatWallIndex() >= 0 && player.getGreatWallIndex() != j) {
 							temp = temp+1;
 						}
@@ -88,13 +88,16 @@ public class Warlord extends Role {
 				p.getCanUseCardSkill().remove(builtIndex);
 				String victimName = p.getName();
 				String builtName = c.getName();
-				int spent = c.getCost() - 1;
+				int spent = c.getCost() + c.getBeautifyLevel() - 1;
 				if (p.getGreatWallIndex() >= 0 && p.getGreatWallIndex() != builtIndex) {
 					spent = spent+1;
 				}
 				int temp = player.getCoin() - spent;
 				player.setCoin(temp);
+				board.addCoin(spent);
 				board.log(player.getName() + "花费了" + Integer.toString(spent) + "￥拆除了" + victimName + "的" + builtName+"。");
+				board.addCoin(c.getBeautifyLevel());
+				c.setBeautifyLevel(0);
 				board.bottomDeck(c);
 			}
 		} if (x == 99) {
