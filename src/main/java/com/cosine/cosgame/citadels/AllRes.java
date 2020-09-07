@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.cosine.cosgame.citadels.rdarkcity.*;
 import com.cosine.cosgame.citadels.roles.*;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
@@ -41,6 +42,8 @@ public class AllRes {
 		r = new Architect();
 		allRoles.add(r);
 		r = new Warlord();
+		allRoles.add(r);
+		r = new FurnitureDealer();
 		allRoles.add(r);
 	}
 	
@@ -187,8 +190,17 @@ public class AllRes {
 		}
 	}
 	
-	public List<Role> genRoles(){
-		return allRoles;
+	public List<Role> genRoles(int playerNum){
+		List<Role> ans = new ArrayList<>();
+		int totalRolesUsed = 8;
+		if (playerNum == 8 || playerNum == 1) {
+			totalRolesUsed = 9;
+		}
+		for (int i=0;i<totalRolesUsed;i++) {
+			ans.add(allRoles.get(i));
+		}
+		
+		return ans;
 	}
 	
 	public List<Card> genDeck(){

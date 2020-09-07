@@ -2,6 +2,7 @@ package com.cosine.cosgame.citadels;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.citadels.rdarkcity.*;
 import com.cosine.cosgame.citadels.roles.*;
 
 public class RoleFactory {
@@ -23,6 +24,8 @@ public class RoleFactory {
 			role = new Magician();
 		} else if (img.contentEquals("004")) {
 			role = new King();
+		} else if (img.contentEquals("119")) {
+			role = new FurnitureDealer();
 		}
 		
 		else {

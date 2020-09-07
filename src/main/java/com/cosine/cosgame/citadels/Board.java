@@ -86,7 +86,7 @@ public class Board {
 	}
 	
 	public void genRoles() {
-		roles = allRes.genRoles();
+		roles = allRes.genRoles(players.size());
 	}
 	
 	public void shuffle() {
@@ -213,6 +213,9 @@ public class Board {
 		} else if (numPlayers == 7) {
 			numReveal = 0;
 			numHidden = 1;
+		} else if (numPlayers == 8) {
+			numReveal = 0;
+			numHidden = 1;
 		} else {
 			numReveal = 0;
 			numHidden = 0;
@@ -251,7 +254,7 @@ public class Board {
 		status = CitadelsConsts.CHOOSEROLE;
 		int i;
 		for (i=0;i<roles.size();i++) {
-			roles.get(i).setOwner(-1);
+			roles.get(i).setOwner(CitadelsConsts.SELECTABLE);
 		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).setRole(null);
@@ -270,6 +273,22 @@ public class Board {
 		curPlayer = curPlayer + 1;
 		if (curPlayer >= players.size()) {
 			curPlayer = 0;
+		}
+		int numPlayers = players.size();
+		if (numPlayers == 7 || numPlayers == 8) {
+			int selectableCount = 0;
+			for (int i=0;i<roles.size();i++) {
+				if (roles.get(i).getOwner() == CitadelsConsts.SELECTABLE) {
+					selectableCount++;
+				}
+			}
+			if (selectableCount == 1) {
+				for (int i=0;i<roles.size();i++) {
+					if (roles.get(i).getOwner() == CitadelsConsts.NOTUSEDHIDDEN) {
+						roles.get(i).setOwner(CitadelsConsts.SELECTABLE);
+					}
+				}
+			}
 		}
 		players.get(curPlayer).setPhase(CitadelsConsts.CHOOSEROLE);
 		updateStatus();

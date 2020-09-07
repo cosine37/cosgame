@@ -45,13 +45,12 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.bigImage = ""
 		$scope.bigImageStyle = {}
 		$scope.bigImageDivStyle = {}
+		$scope.chooseRoleTableStyle = {}
+		$scope.chooseRoleNumCol = 4
 		$scope.showRoleSelection = false
 		
 		$scope.roleTable = []
-		var tr1 = [0,1,2,3]
-		var tr2 = [4,5,6,7]
-		$scope.roleTable.push(tr1)
-		$scope.roleTable.push(tr2)
+		
 		
 		getRoleImageByNum = function(x){
 			var ans=""
@@ -731,6 +730,36 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {
 						$scope.regicideDisplay = "回合结束时市长获得市长标记"
+					}
+					
+					if ($scope.roleImgs.length == 8){
+						$scope.roleTable = []
+						var tr1 = [0,1,2,3]
+						var tr2 = [4,5,6,7]
+						$scope.roleTable.push(tr1)
+						$scope.roleTable.push(tr2)
+						
+						$scope.chooseRoleTableStyle={
+							"position" : "absolute",
+							"width" : "930px",
+							"margin-left" : "-465px",
+							"left" : "50%"
+						}
+						$scope.chooseRoleNumCol = 4
+						
+					} else if ($scope.roleImgs.length == 9){
+						$scope.roleTable = []
+						var tr1 = [0,1,2,3,4]
+						var tr2 = [5,6,7,8]
+						$scope.roleTable.push(tr1)
+						$scope.roleTable.push(tr2)
+						$scope.chooseRoleTableStyle={
+							"position" : "absolute",
+							"width" : "1160px",
+							"margin-left" : "-580px",
+							"left" : "50%"
+						}
+						$scope.chooseRoleNumCol = 5
 					}
 					
 					for (i=0;i<$scope.scores.length;i++){

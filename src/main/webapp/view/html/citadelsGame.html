@@ -167,7 +167,7 @@
 	
 	<div id="chooseRole" ng-show="phase == '1' && status == '1' && showRoleSelection" ng-style="chooseRoleDivStyle">
 		<h2 style="color:white; text-align:center">请选择角色</h2>
-		<table style="position:absolute;left: 50%;width:930px;margin-left:-465px">
+		<table ng-style="chooseRoleTableStyle">
 			<tr ng-repeat="roleRow in roleTable">
 				<td ng-repeat="roleId in roleRow">
 					<div class="roleSelect" ng-style="roleStyle[roleId]" ng-click="setSelectedRole(roleId)">
@@ -183,8 +183,8 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="4" style="text-align:center">
+			<tr style="text-align:center">
+				<td colspan="{{chooseRoleNumCol}}" style="text-align:center">
 					<button ng-click="unshowRoleSelection()">查看桌面</button>
 					<button ng-click="chooseRole()">确定所选角色</button>
 				</td>
