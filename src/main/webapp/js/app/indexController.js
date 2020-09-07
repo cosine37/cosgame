@@ -18,6 +18,20 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.username = response.data.value[0];
 		});
 		
+		$scope.expandDisplay = "展开"
+		$scope.showCards = false;
+		
+		$scope.show = function(){
+			if ($scope.showCards){
+				$scope.showCards = false;
+				$scope.expandDisplay = "展开"
+			} else {
+				$scope.showCards = true;
+				$scope.expandDisplay = "收起"
+			}
+			
+		}
+		/*
 		$scope.show = function(x){
 			var imgs = ["p611", "p405", "p303", "p509", "p612"]
 			var imgUrl = "url('/image/Citadels/Cards/" + imgs[x] + ".png')"
@@ -33,7 +47,7 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.unshow = function(){
 			$scope.showHiddenImg = false;
 		}
-		
+		*/
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
