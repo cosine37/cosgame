@@ -241,16 +241,21 @@ public class AllRes {
 			deck.add(baseCards.get(i));
 		}
 		int specialCount = 18;
+		int duoColorCount = 0;
 		if (board.isUseDuoColor()) {
-			for (i=0;i<duoColorCards.size();i++) {
-				deck.add(duoColorCards.get(i));
-			}
+			duoColorCount = 3;
+			specialCount = 19;
 			Card c;
 			for (i=0;i<2;i++) {
 				c = CardFactory.createCard("奶茶店", CitadelsConsts.GREEN, 2, "g23", -1, 0);
 				deck.add(c);
 			}
-			specialCount = 20;
+		}
+		for (i=0;i<duoColorCount;i++) {
+			Random rand = new Random();
+			int size = duoColorCards.size();
+			deck.add(duoColorCards.remove(rand.nextInt(size)));
+			
 		}
 		for (i=0;i<specialCount;i++) {
 			Random rand = new Random();

@@ -132,7 +132,6 @@ public class CitadelsController {
 		} else {
 			board.setUseDuoColor(true);
 		}
-		System.out.println(board.isUseDuoColor());
 		board.updateDB("useDuoColor", board.isUseDuoColor());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
