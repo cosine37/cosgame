@@ -20,6 +20,8 @@ public class Player {
 	boolean finished;
 	boolean allColors;
 	boolean killed;
+	boolean beautify5Up;
+	boolean beautifyPurple;
 	int roleNum;
 	int phase;
 	int buildLimit;
@@ -52,6 +54,8 @@ public class Player {
 		ask = new Ask();
 		canUseRoleSkill = new ArrayList<>();
 		canUseCardSkill = new ArrayList<>();
+		beautify5Up = false;
+		beautifyPurple = false;
 		costReducers = new ArrayList<>();
 		for (int i=0;i<5;i++) {
 			costReducers.add(0);
@@ -115,6 +119,9 @@ public class Player {
 	public void takeActionOption(int option) {
 		if (phase == CitadelsConsts.TAKEACTION) {
 			if (option == 1) {
+				for (int i=0;i<built.size();i++) {
+					built.get(i).onSelectChooseCard();
+				}
 				if (numReveal == numChoose) {
 					draw(numChoose);
 					board.log(name + "摸" + Integer.toString(numChoose) + "张牌。");
@@ -242,10 +249,17 @@ public class Player {
 				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
 				built.add(c);
-				c.onBuild();
-				canUseCardSkill.add(c.canUseSkillSameRound());
 				coin = coin-cost;
 				board.addCoin(cost);
+				c.onBuild();
+				if (beautify5Up && c.getBeautifyLevel() < 3 && c.getCost() >= 5) {
+					x = board.takeCoins(1);
+					if (x>0) {
+						c.setBeautifyLevel(x);
+						board.log("因为 别墅区 的效果，" + c.getName() + " 升值了。");
+					}
+				}
+				canUseCardSkill.add(c.canUseSkillSameRound());
 				if (built.size() == board.getFinishCount()) {
 					finished = true;
 					if (board.isFirstFinished()) {
@@ -513,6 +527,18 @@ public class Player {
 	}
 	public void setIdenticalLimit(int identicalLimit) {
 		this.identicalLimit = identicalLimit;
+	}
+	public boolean isBeautify5Up() {
+		return beautify5Up;
+	}
+	public void setBeautify5Up(boolean beautify5Up) {
+		this.beautify5Up = beautify5Up;
+	}
+	public boolean isBeautifyPurple() {
+		return beautifyPurple;
+	}
+	public void setBeautifyPurple(boolean beautifyPurple) {
+		this.beautifyPurple = beautifyPurple;
 	}
 
 	public Document toDocument() {

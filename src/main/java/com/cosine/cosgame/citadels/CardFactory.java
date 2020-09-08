@@ -76,7 +76,13 @@ public class CardFactory {
 			card = new Dragon9Hill();
 		} else if (img.contentEquals("p406")) {
 			card = new ZhonglianBuilding();
-		} 
+		} else if (img.contentEquals("p304")) {
+			card = new GoldStore();
+		} else if (img.contentEquals("p510")) {
+			card = new QingfengPark();
+		} else if (img.contentEquals("p407")) {
+			card = new Villa();
+		}
 		
 		else {
 			card = new Card(name);

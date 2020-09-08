@@ -118,6 +118,10 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Dragon9Hill();
 		specialCards.add(c);
+		c = new ZhonglianBuilding();
+		specialCards.add(c);
+		c = new GoldStore();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {

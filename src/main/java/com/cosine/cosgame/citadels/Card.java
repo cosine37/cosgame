@@ -45,6 +45,10 @@ public class Card {
 		
 	}
 	
+	public void onSelectChooseCard() {
+		
+	}
+	
 	public void afterTakeActionEffect() {
 		
 	}

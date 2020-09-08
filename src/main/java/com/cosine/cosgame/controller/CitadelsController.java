@@ -454,6 +454,7 @@ public class CitadelsController {
 		board.getFromDB(boardId);
 		if (board.getPlayerByName(username) != null) {
 			board.getPlayerByName(username).takeActionOption(1);
+			board.updateDB("coins", board.getCoins());
 			board.updatePlayer(username);
 			board.updateDeck();
 			board.updateLogs();
@@ -474,6 +475,7 @@ public class CitadelsController {
 			board.getPlayerByName(username).chooseCard(index);
 			board.updatePlayer(username);
 			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
+			board.updateDB("coins", board.getCoins());
 			board.updateDeck();
 			board.updateLogs();
 		}
