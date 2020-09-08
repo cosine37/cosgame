@@ -102,6 +102,11 @@ app.controller("citadelsEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			thandStyle=$scope.specialHandsStyle[i]
 			$scope.specialHandsStyle[i]=$scope.specialHandsStyle[j]
 			$scope.specialHandsStyle[j]=thandStyle
+			
+			var tbeautifyLevel
+			tbeautifyLevel=$scope.beautifyLevel[i]
+			$scope.beautifyLevel[i]=$scope.beautifyLevel[j]
+			$scope.beautifyLevel[j]=tbeautifyLevel
 		}
 		
 		sortPlayers = function(){

@@ -34,10 +34,18 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.finishCount = response.data.finishCount
 					$scope.regicide = response.data.regicide
 					$scope.no9 = response.data.no9
+					$scope.useDuoColor = response.data.useDuoColor
 					if ($scope.regicide == "y"){
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {
 						$scope.regicideDisplay = "回合结束时市长获得市长标记"
+					}
+					if ($scope.useDuoColor == "y"){
+						$scope.duoColorButton = "不使用双类型建筑"
+						$scope.useDuoColorDisplay = "使用"
+					} else {
+						$scope.duoColorButton = "使用双类型建筑"
+						$scope.useDuoColorDisplay = "不使用"
 					}
 					$scope.no9Display = "不使用"
 					if ($scope.no9 == "-1"){
@@ -78,6 +86,12 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.setRegicide = function(){
 			$http.post('/citadelsgame/setregicide').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setUseDuoColor = function(){
+			$http.post('/citadelsgame/setuseduocolor').then(function(response){
 				$scope.getBoard();
 			});
 		}

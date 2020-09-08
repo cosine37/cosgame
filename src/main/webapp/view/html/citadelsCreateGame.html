@@ -38,9 +38,14 @@
 			<td>{{regicideDisplay}}</td>
 		</tr>
 		<tr>
+			<td>双类型建筑：</td>
+			<td>{{useDuoColorDisplay}}</td>
+		</tr>
+		<tr>
 			<td>9号角色：</td>
 			<td>{{no9Display}}</td>
 		</tr>
+		
 	</table>
 	<button ng-click="showConfigDiv()" ng-show="isLord == 'y' && showConfig == 'n'">显示设置</button>
 	<button ng-click="hideConfigDiv()" ng-show="isLord == 'y' && showConfig == 'y'">隐藏设置</button>
@@ -57,13 +62,17 @@
 		<div>
 			<button ng-click="giveCrown()">更新市长标记</button>
 		</div>
+		<p></p>
 		<div>
 			<button ng-click="setEndNum(7)">7 end</button>
 			<button ng-click="setEndNum(8)">8 end</button>
 		</div>
+		<p></p>
 		<div>
+			<button ng-click="setUseDuoColor()">{{duoColorButton}}</button>
 			<button ng-click="setRegicide()">变更市长被带走规则</button>
 		</div>
+		<p></p>
 		<div>
 			<button ng-click="setNo9(-1)" ng-show="playerNames.length < 8">不使用9号</button>
 			<button ng-click="setNo9(0)">9号使用记者</button>

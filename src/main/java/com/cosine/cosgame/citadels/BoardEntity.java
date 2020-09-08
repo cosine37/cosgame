@@ -51,6 +51,7 @@ public class BoardEntity {
 	String finishCount;
 	String regicide;
 	String no9;
+	String useDuoColor;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -333,5 +334,11 @@ public class BoardEntity {
 	}
 	public void setNo9(String no9) {
 		this.no9 = no9;
+	}
+	public String getUseDuoColor() {
+		return useDuoColor;
+	}
+	public void setUseDuoColor(String useDuoColor) {
+		this.useDuoColor = useDuoColor;
 	}
 }

@@ -24,6 +24,7 @@ public class Board {
 	boolean firstFinished;
 	boolean crownMoved;
 	boolean regicide;
+	boolean useDuoColor;
 	int finishCount;
 	int coins;
 	int killedRole;
@@ -108,10 +109,6 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		Card c = new QingfengPark();
-		deck.add(0,c);
-		c = new Villa();
-		deck.add(0,c);
 	}
 	
 	public void deal() {
@@ -613,6 +610,13 @@ public class Board {
 	public void setNo9(int no9) {
 		this.no9 = no9;
 	}
+	public boolean isUseDuoColor() {
+		return useDuoColor;
+	}
+
+	public void setUseDuoColor(boolean useDuoColor) {
+		this.useDuoColor = useDuoColor;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -752,6 +756,12 @@ public class Board {
 		} else {
 			regicide = "n";
 		}
+		String useDuoColor;
+		if (this.useDuoColor) {
+			useDuoColor = "y";
+		} else {
+			useDuoColor = "n";
+		}
 		List<List<String>> specialHands = new ArrayList<>();
 		if (this.status == CitadelsConsts.ENDGAME) {
 			for (i=0;i<players.size();i++) {
@@ -813,6 +823,7 @@ public class Board {
 		entity.setTempRevealedTop(tempRevealedTop);
 		entity.setSpecialHands(specialHands);
 		entity.setNo9(Integer.toString(no9));
+		entity.setUseDuoColor(useDuoColor);
 		return entity;
 	}
 	
@@ -834,6 +845,7 @@ public class Board {
 		doc.append("regicide", regicide);
 		doc.append("tempRevealedTop", tempRevealedTop);
 		doc.append("no9", no9);
+		doc.append("useDuoColor", useDuoColor);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
@@ -873,6 +885,7 @@ public class Board {
 		lord = doc.getString("lord");
 		regicide = doc.getBoolean("regicide", false);
 		no9 = doc.getInteger("no9", -1);
+		useDuoColor = doc.getBoolean("useDuoColor", false);
 		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");
 		int i;
 		List<Document> dor = (List<Document>) doc.get("roles");

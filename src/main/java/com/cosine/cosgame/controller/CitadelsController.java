@@ -121,6 +121,23 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setuseduocolor", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setUseDuoColor(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.isUseDuoColor()) {
+			board.setUseDuoColor(false);
+		} else {
+			board.setUseDuoColor(true);
+		}
+		System.out.println(board.isUseDuoColor());
+		board.updateDB("useDuoColor", board.isUseDuoColor());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
 		Board board = new Board();

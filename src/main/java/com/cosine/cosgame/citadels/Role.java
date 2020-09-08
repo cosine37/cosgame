@@ -96,6 +96,14 @@ public class Role {
 				ans++;
 			} else if (player.getBuilt().get(i).omniColor()) {
 				ans++;
+			} else if (player.getBuilt().get(i).getColor() > 9) { // duo color 
+				int c1 = player.getBuilt().get(i).getColor() / 10;
+				int c2 = player.getBuilt().get(i).getColor() % 10;
+				if (color == c1) {
+					ans++;
+				} else if (color == c2) {
+					ans++;
+				}
 			}
 		}
 		board.log(player.getName() + "从已建成的" + CitadelsConsts.COLORNAME[color] + "类建筑获得了" + Integer.toString(ans) + "￥。");

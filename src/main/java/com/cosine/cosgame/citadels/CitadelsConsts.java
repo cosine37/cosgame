@@ -7,6 +7,12 @@ public class CitadelsConsts {
 	public static final int YELLOW = 3;
 	public static final int PURPLE = 4;
 	public static final String[] COLORNAME = {"商业", "教育", "治安", "市政", "特殊"};
+	public static final int GREENBLUE = 10;
+	public static final int GREENRED = 20;
+	public static final int GREENYELLOW = 30;
+	public static final int BLUERED = 21;
+	public static final int BLUEYELLOW = 31;
+	public static final int REDYELLOW = 32;
 	
 	// role number
 	public static final int ASSASSIN = 1;

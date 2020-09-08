@@ -14,15 +14,18 @@ import com.cosine.cosgame.citadels.specialcards.*;
 public class AllRes {
 	List<Card> baseCards;
 	List<Card> specialCards;
+	List<Card> duoColorCards;
 	List<Role> allRoles;
 	Board board;
 	
 	public AllRes() {
 		baseCards = new ArrayList<>();
 		specialCards = new ArrayList<>();
+		duoColorCards = new ArrayList<>();
 		allRoles = new ArrayList<>();
 		setAllRoles();
 		setBaseCards();
+		setDuoColorCards();
 		setSpecialCards();
 	}
 	
@@ -122,6 +125,10 @@ public class AllRes {
 		specialCards.add(c);
 		c = new GoldStore();
 		specialCards.add(c);
+		c = new QingfengPark();
+		specialCards.add(c);
+		c = new Villa();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {
@@ -197,6 +204,22 @@ public class AllRes {
 		}
 	}
 	
+	public void setDuoColorCards() {
+		Card c;
+		c = CardFactory.createCard("少年宫", CitadelsConsts.GREENBLUE, 5, "gb5", -1, 0);
+		duoColorCards.add(c);
+		c = CardFactory.createCard("保安公司", CitadelsConsts.GREENRED, 5, "gr5", -1, 0);
+		duoColorCards.add(c);
+		c = CardFactory.createCard("世贸中心", CitadelsConsts.GREENYELLOW, 5, "gy5", -1, 0);
+		duoColorCards.add(c);
+		c = CardFactory.createCard("警校", CitadelsConsts.BLUERED, 5, "br5", -1, 0);
+		duoColorCards.add(c);
+		c = CardFactory.createCard("市委党校", CitadelsConsts.BLUEYELLOW, 5, "by5", -1, 0);
+		duoColorCards.add(c);
+		c = CardFactory.createCard("江南指挥部", CitadelsConsts.REDYELLOW, 5, "ry5", -1, 0);
+		duoColorCards.add(c);
+	}
+	
 	public List<Role> genRoles(int playerNum){
 		List<Role> ans = new ArrayList<>();
 		for (int i=0;i<8;i++) {
@@ -217,12 +240,18 @@ public class AllRes {
 		for (i=0;i<baseCards.size();i++) {
 			deck.add(baseCards.get(i));
 		}
-		/*
-		for (i=0;i<specialCards.size();i++) {
-			deck.add(specialCards.get(i));
-		}
-		*/
 		int specialCount = 18;
+		if (board.isUseDuoColor()) {
+			for (i=0;i<duoColorCards.size();i++) {
+				deck.add(duoColorCards.get(i));
+			}
+			Card c;
+			for (i=0;i<2;i++) {
+				c = CardFactory.createCard("奶茶店", CitadelsConsts.GREEN, 2, "g23", -1, 0);
+				deck.add(c);
+			}
+			specialCount = 20;
+		}
 		for (i=0;i<specialCount;i++) {
 			Random rand = new Random();
 			int size = specialCards.size();

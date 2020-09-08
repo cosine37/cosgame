@@ -215,7 +215,15 @@ public class Player {
 				return false;
 			}
 			
-			int costReduce = costReducers.get(c.getColor());
+			int color = c.getColor();
+			int costReduce;
+			if (color>9) {
+				int c1 = color/10;
+				int c2 = color%10;
+				costReduce = costReducers.get(c1) + costReducers.get(c2);
+			} else {
+				costReduce = costReducers.get(color);
+			}
 			int cost = c.getCost() - costReduce;
 			if (cost<0) cost = 0;
 			if (cost > coin) {
@@ -240,7 +248,15 @@ public class Player {
 	public void build(int x) {
 		if (hand.size() > x) {
 			Card c = hand.get(x);
-			int costReduce = costReducers.get(c.getColor());
+			int color = c.getColor();
+			int costReduce;
+			if (color>9) {
+				int c1 = color/10;
+				int c2 = color%10;
+				costReduce = costReducers.get(c1) + costReducers.get(c2);
+			} else {
+				costReduce = costReducers.get(color);
+			}
 			int cost = c.getCost() - costReduce;
 			if (cost<0) cost = 0;
 			if (canBuild(x)) {
@@ -305,7 +321,14 @@ public class Player {
 		int[] colors = {0,0,0,0,0};
 		for (int i=0;i<built.size();i++) {
 			int cc = built.get(i).getColor();
-			colors[cc]++;
+			if (cc>9) {
+				int c1 = cc/10;
+				int c2 = cc%10;
+				colors[c1]++;
+				colors[c2]++;
+			} else {
+				colors[cc]++;
+			}
 		}
 		int ans = -2;
 		for (int i=0;i<5;i++) {
@@ -346,7 +369,14 @@ public class Player {
 		int[] colors = {0,0,0,0,0};
 		for (i=0;i<built.size();i++) {
 			int cc = built.get(i).getColorForScore();
-			colors[cc]++;
+			if (cc>9) {
+				int c1 = cc/10;
+				int c2 = cc%10;
+				colors[c1]++;
+				colors[c2]++;
+			} else {
+				colors[cc]++;
+			}
 		}
 		allColors = true;
 		for (i=0;i<5;i++) {

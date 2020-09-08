@@ -85,7 +85,11 @@ public class CardFactory {
 		}
 		
 		else {
-			card = new Card(name);
+			if (color>9) {
+				card = new DuoColorCard(name);
+			} else {
+				card = new Card(name);
+			}
 			card.setCost(cost);
 			card.setColor(color);
 			card.setImg(img);
