@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Coslash</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/nothanksTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/nothanksMainController.js"></script>
+<body ng-app="nothanksMainApp" ng-controller="nothanksMainCtrl">
+	<div id="header" class="header">
+		<table width="100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+				<td align="right" style="padding-right: 30px">
+					<span style="margin-right: 10px; color: white">{{username}}</span>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button ng-click="goto('index')">主页</button>
+		<button ng-click="goto('citadels')">富饶龙城</button>
+		<button style="padding-top: 0px; color: rgb(12,137,24); font-size: 24px; background-color:white">不了谢谢</button>
+		<button ng-click="goto('splendor')">果香四溢</button>
+		<!-- 
+		<button style="padding-top: 0px; color: blue; font-size: 24px; background-color:white">Coslash</button>
+		<button ng-click="goto('dominion')">Dominion</button>
+		<button ng-click="goto('mafia')">Mafia</button>
+		<button ng-click="goto('minigame')">Minigames</button>
+		<button>Others</button>
+		 -->
+	</div>
+</body>
+</html>
