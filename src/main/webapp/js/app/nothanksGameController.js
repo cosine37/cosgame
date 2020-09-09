@@ -4,8 +4,8 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("nothanksMainApp", []);
-app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document',
+var app = angular.module("nothanksGameApp", []);
+app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 	
 		$scope.goto = function(d){
@@ -21,10 +21,6 @@ app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document',
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
 			});
-		}
-		
-		$scope.newGame = function(){
-			$scope.goto('nothankscreategame');
 		}
 		
 }]);

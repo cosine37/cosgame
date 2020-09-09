@@ -12,15 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cosine.cosgame.dominion.Board;
-import com.cosine.cosgame.dominion.DominionMega;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
 public class NothanksController {
 	@RequestMapping(value="/nothanks", method = RequestMethod.GET)
-	public String splendor() {
+	public String nothanks() {
 		return "nothanksMain";
+	}
+	
+	@RequestMapping(value="/nothankscreategame", method = RequestMethod.GET)
+	public String nothanksCreateGame() {
+		return "nothanksCreateGame";
+	}
+	
+	@RequestMapping(value="/nothanksgame", method = RequestMethod.GET)
+	public String nothanksGame() {
+		return "nothanksGame";
 	}
 	
 }

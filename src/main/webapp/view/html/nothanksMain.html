@@ -28,8 +28,9 @@
 		<button ng-click="goto('index')">主页</button>
 		<button ng-click="goto('citadels')">富饶龙城</button>
 		<button style="padding-top: 0px; color: rgb(12,137,24); font-size: 24px; background-color:white">不了谢谢</button>
-		<button ng-click="goto('splendor')">果香四溢</button>
 		<!-- 
+		<button ng-click="goto('splendor')">果香四溢</button>
+		
 		<button style="padding-top: 0px; color: blue; font-size: 24px; background-color:white">Coslash</button>
 		<button ng-click="goto('dominion')">Dominion</button>
 		<button ng-click="goto('mafia')">Mafia</button>
@@ -37,5 +38,38 @@
 		<button>Others</button>
 		 -->
 	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div class="container">
+			<div id="sidebar" class="sidebar">
+				<ul class="nav nav-tabs flex-column" role="tablist">
+				    <li class="nav-item">
+				      <a class="nav-link active" data-toggle="tab" href="#listtab">Table</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rulestab">Rules</a>
+				    </li>
+				  </ul>
+			</div>
+			
+			<div class="tab-content">
+				<div id="listtab" class="content container tab-pane active">
+					<h1>Tables</h1>
+					<table class="table">
+						<tr>
+							<td><button ng-click="newGame()">新游戏</button></td>
+						</tr>
+					</table>
+				</div>
+				
+				<div id="rulestab" class="content container tab-pane fade">
+					<h2>Rules</h2>
+					<p>Rules placeholder</p>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>
