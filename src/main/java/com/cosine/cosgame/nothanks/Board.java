@@ -1,9 +1,12 @@
 package com.cosine.cosgame.nothanks;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Player> players;
@@ -12,11 +15,19 @@ public class Board {
 	int curPlayer;
 	int numGoldInDeck;
 	AllRes allRes;
+	MongoDBUtil dbutil;
+	String id;
+	String lord;
 	
 	public Board() {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		allRes = new AllRes();
+		
+		String dbname = "nothanks";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public Package genPack() {
@@ -56,6 +67,18 @@ public class Board {
 		}
 		return p;
 	}
+	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		p.setBoard(this);
+		players.add(p);
+	}
+	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
 
 	public List<Player> getPlayers() {
 		return players;
@@ -87,16 +110,70 @@ public class Board {
 	public int getNumGoldInDeck() {
 		return numGoldInDeck;
 	}
-
 	public void setNumGoldInDeck(int numGoldInDeck) {
 		this.numGoldInDeck = numGoldInDeck;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+
+	public BoardEntity toBoardEntity(String name) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setStatus(Integer.toString(status));
+		entity.setDeckSize(Integer.toString(deck.size()));
+		int i;
+		List<String> handSizes = new ArrayList<>();
+		List<String> revealedMoney = new ArrayList<>();
+		List<String> hasPack = new ArrayList<>();
+		List<String> playerNames = new ArrayList<>();
+		String phase = "";
+		String packCardImg = "";
+		String packMoney = "";
+		for (i=0;i<players.size();i++) {
+			handSizes.add(Integer.toString(players.get(i).getHand().size()));
+			revealedMoney.add(Integer.toString(players.get(i).getRevealedMoney()));
+			playerNames.add(players.get(i).getName());
+			if (players.get(i).getName().contentEquals(name)) {
+				phase = Integer.toString(players.get(i).getPhase());
+				if (players.get(i).getPack() != null) {
+					packCardImg = players.get(i).getPack().getCard().getImg();
+				}
+				
+			}
+			if (players.get(i).getPack() != null) {
+				packMoney = Integer.toString(players.get(i).getPack().getMoney());
+				hasPack.add("y");
+			} else {
+				hasPack.add("n");
+			}
+		}
+		entity.setPhase(phase);
+		entity.setPackCardImg(packCardImg);
+		entity.setPackMoney(packMoney);
+		entity.setHasPack(hasPack);
+		entity.setHandSizes(handSizes);
+		entity.setRevealedMoney(revealedMoney);
+		entity.setPlayerNames(playerNames);
+		return entity;
 	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
+		doc.append("id", id);
 		doc.append("status", status);
 		doc.append("curPlayer", curPlayer);
 		doc.append("numGoldInDeck", numGoldInDeck);
+		doc.append("lord", lord);
 		List<String> playerNames = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -117,10 +194,11 @@ public class Board {
 	}
 	
 	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
 		status = doc.getInteger("status", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
 		numGoldInDeck = doc.getInteger("numGoldInDeck", -1);
-		
+		lord = doc.getString("lord");
 		int i;
 		
 		players = new ArrayList<>();
@@ -130,6 +208,7 @@ public class Board {
 			Document dop = (Document) doc.get(key);
 			Player p = new Player();
 			p.setFromDoc(dop);
+			players.add(p);
 		}
 		
 		deck = new ArrayList<>();
@@ -137,6 +216,29 @@ public class Board {
 		for (i=0;i<lod.size();i++) {
 			Card c = CardFactory.createCard(lod.get(i));
 			deck.add(c);
+		}
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

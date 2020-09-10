@@ -24,7 +24,9 @@ app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.newGame = function(){
-			$scope.goto('nothankscreategame');
+			$http.post('/nothanksgame/newboard').then(function(response){
+				$scope.goto('nothankscreategame');
+			});
 		}
 		
 }]);
