@@ -3,12 +3,15 @@ package com.cosine.cosgame.nothanks;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	List<Card> hand;
 	int revealedMoney;
 	Package pack;
 	Board board;
+	int phase;
 	boolean bot;
 	
 	public Player() {
@@ -116,5 +119,59 @@ public class Player {
 	public void setBot(boolean bot) {
 		this.bot = bot;
 	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("revealedMoney", revealedMoney);
+		doc.append("phase", phase);
+		doc.append("bot", bot);
+		if (pack != null) {
+			doc.append("packCard", pack.getCard().getNum());
+			doc.append("packMoney", pack.getMoney());
+		} else {
+			doc.append("packCard", -1);
+			doc.append("packMoney", -1);
+		}
+		int i;
+		List<Integer> loh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			loh.add(hand.get(i).getNum());
+		}
+		doc.append("hand", loh);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		revealedMoney = doc.getInteger("revealedMoney", 0);
+		phase = doc.getInteger("phase", -1);
+		bot = doc.getBoolean("bot", false);
+		int packCard = doc.getInteger("packCard", -1);
+		int packMoney = doc.getInteger("packMoney", -1);
+		if (packCard == -1) {
+			pack = null;
+		} else {
+			pack = new Package();
+			Card c = CardFactory.createCard(packCard);
+			pack.setCard(c);
+			pack.setMoney(packMoney);
+		}
+		int i;
+		hand = new ArrayList<>();
+		List<Integer> loh = (List<Integer>) doc.get("hand");
+		for (i=0;i<loh.size();i++) {
+			Card c = CardFactory.createCard(loh.get(i));
+			hand.add(c);
+		}
+	}
+	
+	
 	
 }

@@ -13,13 +13,7 @@ public class AllRes {
 	
 	public void genAllCards(){
 		for (int i=0;i<=12;i++) {
-			Card c = new Card();
-			c.setNum(i);
-			c.setImg(Integer.toString(i) + ".png");
-			c.setName(Integer.toString(i));
-			if (i==0) {
-				c.setName("?");
-			}
+			Card c = CardFactory.createCard(i);
 			cards.add(c);
 		}
 	}
@@ -30,10 +24,7 @@ public class AllRes {
 		numGold = 12%n + n*x;
 		
 		for (int i=0;i<numGold;i++) {
-			Card c = new Card();
-			c.setNum(-3);
-			c.setImg(Integer.toString(i) + ".png");
-			c.setName("Gold");
+			Card c = CardFactory.createCard(-3);
 			deck.add(c);
 		}
 		return deck;

@@ -3,6 +3,8 @@ package com.cosine.cosgame.nothanks;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Board {
 	List<Player> players;
 	List<Card> deck;
@@ -88,6 +90,54 @@ public class Board {
 
 	public void setNumGoldInDeck(int numGoldInDeck) {
 		this.numGoldInDeck = numGoldInDeck;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("status", status);
+		doc.append("curPlayer", curPlayer);
+		doc.append("numGoldInDeck", numGoldInDeck);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+		}
+		doc.append("playerNames", playerNames);
+		List<Integer> lod = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).getNum());
+		}
+		doc.append("deck", lod);
+		for (i=0;i<players.size();i++) {
+			String key = "player-" + players.get(i).getName();
+			Document dop = players.get(i).toDocument();
+			doc.append(key, dop);
+		}
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		status = doc.getInteger("status", -1);
+		curPlayer = doc.getInteger("curPlayer", -1);
+		numGoldInDeck = doc.getInteger("numGoldInDeck", -1);
+		
+		int i;
+		
+		players = new ArrayList<>();
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		for (i=0;i<playerNames.size();i++) {
+			String key = "player-" + playerNames.get(i);
+			Document dop = (Document) doc.get(key);
+			Player p = new Player();
+			p.setFromDoc(dop);
+		}
+		
+		deck = new ArrayList<>();
+		List<Integer> lod = (List<Integer>) doc.get("deck");
+		for (i=0;i<lod.size();i++) {
+			Card c = CardFactory.createCard(lod.get(i));
+			deck.add(c);
+		}
 	}
 	
 }
