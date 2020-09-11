@@ -22,3 +22,13 @@
 	
 	background: rgb(12,137,24);
 }
+
+.nothankstext{
+	font-weight: bold;
+	color: rgb(12,137,24);
+}
+
+.newsImg{
+	height: 320px;
+	width: 210px
+}
