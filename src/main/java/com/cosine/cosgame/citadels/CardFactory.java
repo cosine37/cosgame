@@ -82,6 +82,16 @@ public class CardFactory {
 			card = new QingfengPark();
 		} else if (img.contentEquals("p407")) {
 			card = new Villa();
+		} else if (img.contentEquals("p613")) {
+			card = new CharityHouse();
+		} else if (img.contentEquals("p408")) {
+			card = new HuPalace();
+		} else if (img.contentEquals("p512")) {
+			card = new AsiaCinema();
+		} else if (img.contentEquals("p513")) {
+			card = new MelonField();
+		} else if (img.contentEquals("p614")) {
+			card = new Insurance();
 		}
 		
 		else {

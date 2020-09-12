@@ -19,6 +19,7 @@ public class Card {
 	protected int buildCount;
 	protected boolean buildable;
 	protected boolean trackCrown;
+	protected boolean trackOtherAssassin;
 	protected int beautifyLevel;
 	
 	public Card() {
@@ -29,6 +30,7 @@ public class Card {
 		buildCount = 1;
 		buildable = true;
 		trackCrown = false;
+		trackOtherAssassin = false;
 		beautifyLevel = 0;
 	}
 	
@@ -53,11 +55,19 @@ public class Card {
 		
 	}
 	
+	public void insuredEffect() {
+		
+	}
+	
 	public void onBuild() {
 		
 	}
 	
 	public void crownMovement() {
+		
+	}
+	
+	public void onOtherAssassin() {
 		
 	}
 	
@@ -189,9 +199,14 @@ public class Card {
 	public int getBeautifyLevel() {
 		return beautifyLevel;
 	}
-
 	public void setBeautifyLevel(int beautifyLevel) {
 		this.beautifyLevel = beautifyLevel;
+	}
+	public boolean isTrackOtherAssassin() {
+		return trackOtherAssassin;
+	}
+	public void setTrackOtherAssassin(boolean trackOtherAssassin) {
+		this.trackOtherAssassin = trackOtherAssassin;
 	}
 	public Document toDocument() {
 		Document doc = new Document();

@@ -99,11 +99,18 @@ public class Warlord extends Role {
 				board.addCoin(c.getBeautifyLevel());
 				c.setBeautifyLevel(0);
 				board.bottomDeck(c);
+				
+				// insurance handle
+				if (p.isInsured()) {
+					for (int i=0;i<p.getBuilt().size();i++) {
+						p.getBuilt().get(i).insuredEffect();
+					}
+				}
 			}
 		} if (x == 99) {
 			player.useRoleSkill(1);
 			ask = new Ask();
-			board.log(player.getName() + "使出浑身解数想要拆除一个建筑，但是没有可以拆除的建筑。");
+			board.log(player.getName() + "使出浑身解数想要拆除，但是没有可以拆除的建筑。");
 		}
 		return ask;
 	}

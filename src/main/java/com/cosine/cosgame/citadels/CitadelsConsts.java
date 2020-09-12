@@ -10,6 +10,7 @@ public class CitadelsConsts {
 	public static final int GREENBLUE = 10;
 	public static final int GREENRED = 20;
 	public static final int GREENYELLOW = 30;
+	public static final int GREENPURPLE = 40;
 	public static final int BLUERED = 21;
 	public static final int BLUEYELLOW = 31;
 	public static final int REDYELLOW = 32;

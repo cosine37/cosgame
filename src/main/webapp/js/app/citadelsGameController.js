@@ -378,8 +378,11 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				$http({url: "/citadelsgame/choosecardskill", method: "POST", params: data}).then(function(response){
 					$scope.getBoard()
 				})
-			} else if ($scope.askType == '2' && $scope.phase == '2'){ // destroy
-				var wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
+			} else if ($scope.askType == '2' && $scope.phase == '2'){ // destroy & take beautify
+				var wouldChoose = true
+				if ($scope.askId == '1081'){ // destroy
+					wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
+				}
 				if (wouldChoose){
 					var data = {
 							"skillIndex" : 1,

@@ -21,7 +21,9 @@ public class Player {
 	boolean allColors;
 	boolean killed;
 	boolean beautify5Up;
+	boolean beautifyUpTo2;
 	boolean beautifyPurple;
+	boolean insured;
 	int roleNum;
 	int phase;
 	int buildLimit;
@@ -56,6 +58,7 @@ public class Player {
 		canUseCardSkill = new ArrayList<>();
 		beautify5Up = false;
 		beautifyPurple = false;
+		insured = false;
 		costReducers = new ArrayList<>();
 		for (int i=0;i<5;i++) {
 			costReducers.add(0);
@@ -273,6 +276,13 @@ public class Player {
 					if (x>0) {
 						c.setBeautifyLevel(x);
 						board.log("因为 别墅区 的效果，" + c.getName() + " 升值了。");
+					}
+				}
+				if (beautifyUpTo2 && c.getBeautifyLevel() < 3 && c.getCost() <= 2) {
+					x = board.takeCoins(1);
+					if (x>0) {
+						c.setBeautifyLevel(x);
+						board.log("因为 福利院 的效果，" + c.getName() + " 升值了。");
 					}
 				}
 				canUseCardSkill.add(c.canUseSkillSameRound());
@@ -569,6 +579,18 @@ public class Player {
 	}
 	public void setBeautifyPurple(boolean beautifyPurple) {
 		this.beautifyPurple = beautifyPurple;
+	}
+	public boolean isBeautifyUpTo2() {
+		return beautifyUpTo2;
+	}
+	public void setBeautifyUpTo2(boolean beautifyUpTo2) {
+		this.beautifyUpTo2 = beautifyUpTo2;
+	}
+	public boolean isInsured() {
+		return insured;
+	}
+	public void setInsured(boolean insured) {
+		this.insured = insured;
 	}
 
 	public Document toDocument() {

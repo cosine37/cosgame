@@ -19,6 +19,7 @@ public class Board {
 	List<Card> deck;
 	List<Role> roles;
 	List<Integer> trackCrownPlayers;
+	List<Integer> trackOtherAssassinPlayers;
 	List<String> tempRevealedTop;
 	String lord;
 	boolean firstFinished;
@@ -48,7 +49,7 @@ public class Board {
 		roles = new ArrayList<>();
 		firstFinished = true;
 		finishCount = 7;
-		coins = 30;
+		coins = 40;
 		killedRole = -1;
 		stealedRole = -1;
 		no9 = -1;
@@ -61,6 +62,7 @@ public class Board {
 		logger = new Logger();
 		
 		trackCrownPlayers = new ArrayList<>();
+		trackOtherAssassinPlayers = new ArrayList<>();
 		tempRevealedTop = new ArrayList<>();
 		
 		dbutil = new MongoDBUtil(dbname);
@@ -109,6 +111,7 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
+		
 	}
 	
 	public void deal() {
@@ -323,7 +326,6 @@ public class Board {
 		for (i=0;i<roles.size();i++) {
 			Role r = roles.get(i);
 			if (r.getNum() == curRoleNum) {
-				log("轮到选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"的玩家行动了。");
 				if (curRoleNum == killedRole) {
 					log(Integer.toString(curRoleNum)+"号 "+r.getName()+"被1号 送葬者带走了。");
 					if (r.getOwner() < 0) {
@@ -331,6 +333,8 @@ public class Board {
 					} else {
 						String playerName = players.get(r.getOwner()).getName();
 						log(playerName + "失去所有角色技能并跳过回合。");
+						
+						// regicide handle
 						if (r.getImg().contentEquals("004")) {
 							Player assassinPlayer = this.getPlayerByRole(1);
 							if (assassinPlayer.getRole().getImg().contentEquals("001") && regicide) {
@@ -338,6 +342,33 @@ public class Board {
 								this.moveCrownTo(x);
 							}
 						}
+						
+						//otherAssassinedPlayer
+						boolean flag;
+						trackOtherAssassinPlayers = new ArrayList<>();
+						for (int j=0;j<players.size();j++) {
+							flag = false;
+							if (players.get(j).getRole().getNum() == killedRole) {
+								continue;
+							}
+							for (int k=0;k<players.get(j).getBuilt().size();k++) {
+								if (players.get(j).getBuilt().get(k).isTrackOtherAssassin()) {
+									flag = true;
+									players.get(j).getBuilt().get(k).onOtherAssassin();
+								}
+							}
+							if (flag) {
+								trackOtherAssassinPlayers.add(j);
+							}
+						}
+						
+						//insuredPlayer
+						if (players.get(r.getOwner()).isInsured()) {
+							for (int j=0;j<players.get(r.getOwner()).getBuilt().size();j++) {
+								players.get(r.getOwner()).getBuilt().get(j).insuredEffect();
+							}
+						}
+						
 					}
 					nextRole();
 					return;
@@ -355,6 +386,7 @@ public class Board {
 						nextRole();
 						return;
 					} else {
+						log("轮到选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"的玩家行动了。");
 						curPlayer = r.getOwner();
 						String playerName = players.get(curPlayer).getName();
 						log(playerName + "开始回合。");
@@ -981,6 +1013,20 @@ public class Board {
 	public void updateTrackCrownPlayers() {
 		for (int i=0;i<trackCrownPlayers.size();i++) {
 			updatePlayer(i);
+		}
+	}
+	
+	public void updateOtherAssassinPlayers() {
+		for (int i=0;i<trackOtherAssassinPlayers.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void updateInsuredPlayers() {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isInsured()) {
+				updatePlayer(i);
+			}
 		}
 	}
 	

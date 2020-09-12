@@ -48,6 +48,7 @@
 				    <li class="nav-item">
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
+				    <!-- 
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">基本规则</a>
 				    </li>
@@ -63,6 +64,7 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#diycardstab" ng-click="hideTablesTab()">自创特殊建筑</a>
 				    </li>
+				     -->
 				  </ul>
 			</div>
 			
@@ -92,7 +94,7 @@
 						</tr>
 					</table>
 				</div>
-				
+				 <!-- 
 				<div id="rulestab" class="content container tab-pane fade">
 					<h2>规则</h2>
 					<table>
@@ -758,7 +760,12 @@
 								<button ng-click="showedCard='p610'" ng-disabled="showedCard == 'p610'">大成三厂</button>
 								<button ng-click="showedCard='p405'" ng-disabled="showedCard == 'p405'">紫荆公园</button>
 								<button ng-click="showedCard='p303'" ng-disabled="showedCard == 'p303'">澳门城</button>
+								<button ng-click="showedCard='p509'" ng-disabled="showedCard == 'p509'">天目湖</button>
 								<button ng-click="showedCard='p612'" ng-disabled="showedCard == 'p612'">九龙山</button>
+								<button ng-click="showedCard='p304'" ng-disabled="showedCard == 'p304'">常州金店</button>
+								<button ng-click="showedCard='p406'" ng-disabled="showedCard == 'p406'">中联大厦</button>
+								<button ng-click="showedCard='p407'" ng-disabled="showedCard == 'p407'">别墅区</button>
+								<button ng-click="showedCard='p510'" ng-disabled="showedCard == 'p510'">青枫公园</button>
 							</td>
 							<tr><td></td></tr>
 							<tr><td></td></tr>
@@ -857,7 +864,63 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'p304'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p304.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 常州金店</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你建造完 <span class="citadelstext">常州金店</span>
+								后，如果你有超过3￥，你将3￥装饰在该建筑上，否则你将所有的￥装饰在该建筑上，你无法选择不发动该效果。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造 <span class="citadelstext">常州金店</span> 的当回合你不能从该建筑上拿回1￥。
+								从下一回合起，若该建筑的装饰等级大于0你可以从该牌上拿回1￥，你也可以选择不拿。一回合最多拿回1￥。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								装饰在该牌上的￥也可以通过发动建筑特效拿回。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州金店有限公司创建于1985年，是中国黄金协会常务理事单位。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p406'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p406.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 中联大厦</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">中联大厦</span>
+								会在每回合结束时自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。当该建筑装饰等级超过3时，自动拆除该建筑。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								可以在建造该建筑的当回合装饰该建筑，但是会让该建筑早一回合自动拆除。若该建筑的装饰等级已大于0（建造该建筑之后的回合），家具商无法装饰该建筑。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>中联大厦建造于1986年，位于文化宫广场南面，集合了商场、餐饮、娱乐等多功能设施，是常州历史上第一座商业综合体。
+								中联大厦有12层，55米，曾是常州第一高楼，2017年4月25日拆除。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p407'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p407.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 别墅区</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从你建造完 <span class="citadelstext">别墅区</span>
+								起，每当你建造一个价格为5￥及以上的建筑，若该新造建筑的装饰等级小于3，该新造建筑会自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前建造的价格5￥及以上的建筑不会提高装饰等级。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p510'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p510.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 青枫公园</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行行动阶段当你选择获得牌，若 <span class="citadelstext">青枫公园</span>
+								装饰等级小于3会自动提升一级装饰等级。你不需要支付1￥。装饰所需的1￥从金库中直接获取并放置于该建筑上。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为角色技能或是建筑效果获得牌无法触发 <span class="citadelstext">青枫公园</span> 的效果。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>2008年5月建成的青枫公园位于钟楼开发区，是常州最大的开放式公园，总面积达45公顷。青枫公园是常州市第一个森林公园。</i>
+							</td>
+						</tr>
+					</table>
 				</div>
+				 -->
 			</div>
 		</div>
 	</div>

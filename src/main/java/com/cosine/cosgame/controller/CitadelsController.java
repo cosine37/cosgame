@@ -286,6 +286,8 @@ public class CitadelsController {
 			if (board.isCrownMoved()) {
 				board.updateTrackCrownPlayers();
 			}
+			board.updateOtherAssassinPlayers();
+			board.updateInsuredPlayers();
 			board.updateThief();
 			board.updateRoles();
 			board.updateDeck();
@@ -547,6 +549,8 @@ public class CitadelsController {
 		if (board.isCrownMoved()) {
 			board.updateTrackCrownPlayers();
 		}
+		board.updateOtherAssassinPlayers();
+		board.updateInsuredPlayers();
 		board.updateThief();
 		board.updateRoles();
 		board.updateLogs();

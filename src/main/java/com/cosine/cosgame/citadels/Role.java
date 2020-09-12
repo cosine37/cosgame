@@ -38,6 +38,13 @@ public class Role {
 					board.log(p.getName() + "获得了" + Integer.toString(player.getCoin()) + "￥。");
 				}
 				player.setCoin(0);
+				
+				// insurance handle
+				if (player.isInsured()) {
+					for (int i=0;i<player.getBuilt().size();i++) {
+						player.getBuilt().get(i).insuredEffect();
+					}
+				}
 			}
 		}
 	}

@@ -161,7 +161,7 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			}
 			$timeout(function(){
 			    $scope.offturnHandle();
-			},1000);
+			},5000);
 		}
 		
 		$scope.offturnHandle();

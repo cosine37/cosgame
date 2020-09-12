@@ -129,6 +129,14 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Villa();
 		specialCards.add(c);
+		c = new CharityHouse();
+		specialCards.add(c);
+		c = new HuPalace();
+		specialCards.add(c);
+		c = new MelonField();
+		specialCards.add(c);
+		c = new Insurance();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {
@@ -206,17 +214,17 @@ public class AllRes {
 	
 	public void setDuoColorCards() {
 		Card c;
-		c = CardFactory.createCard("少年宫", CitadelsConsts.GREENBLUE, 5, "gb5", -1, 0);
+		c = CardFactory.createCard("少年宫", CitadelsConsts.GREENBLUE, 4, "gb4", -1, 0);
 		duoColorCards.add(c);
-		c = CardFactory.createCard("保安公司", CitadelsConsts.GREENRED, 5, "gr5", -1, 0);
+		c = CardFactory.createCard("保安公司", CitadelsConsts.GREENRED, 4, "gr4", -1, 0);
 		duoColorCards.add(c);
-		c = CardFactory.createCard("世贸中心", CitadelsConsts.GREENYELLOW, 5, "gy5", -1, 0);
+		c = CardFactory.createCard("世贸中心", CitadelsConsts.GREENYELLOW, 4, "gy4", -1, 0);
 		duoColorCards.add(c);
-		c = CardFactory.createCard("警校", CitadelsConsts.BLUERED, 5, "br5", -1, 0);
+		c = CardFactory.createCard("警校", CitadelsConsts.BLUERED, 4, "br4", -1, 0);
 		duoColorCards.add(c);
-		c = CardFactory.createCard("市委党校", CitadelsConsts.BLUEYELLOW, 5, "by5", -1, 0);
+		c = CardFactory.createCard("市委党校", CitadelsConsts.BLUEYELLOW, 4, "by4", -1, 0);
 		duoColorCards.add(c);
-		c = CardFactory.createCard("江南指挥部", CitadelsConsts.REDYELLOW, 5, "ry5", -1, 0);
+		c = CardFactory.createCard("江南指挥部", CitadelsConsts.REDYELLOW, 4, "ry4", -1, 0);
 		duoColorCards.add(c);
 	}
 	
@@ -244,12 +252,14 @@ public class AllRes {
 		int duoColorCount = 0;
 		if (board.isUseDuoColor()) {
 			duoColorCount = 3;
-			specialCount = 19;
-			Card c;
+			Card c = new AsiaCinema();
+			deck.add(c);
+			/*
 			for (i=0;i<2;i++) {
 				c = CardFactory.createCard("奶茶店", CitadelsConsts.GREEN, 2, "g23", -1, 0);
 				deck.add(c);
 			}
+			*/
 		}
 		for (i=0;i<duoColorCount;i++) {
 			Random rand = new Random();

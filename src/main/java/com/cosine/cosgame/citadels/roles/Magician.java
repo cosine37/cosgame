@@ -56,6 +56,13 @@ public class Magician extends Role {
 			victim.setHand(mhand);
 			player.getCanUseRoleSkill().set(1, "n");
 			board.log(player.getName() + "和" + victim.getName() + "交换了手牌。");
+			
+			// insurance handle
+			if (victim.isInsured()) {
+				for (int i=0;i<victim.getBuilt().size();i++) {
+					victim.getBuilt().get(i).insuredEffect();
+				}
+			}
 		}
 		return ask;
 	}
