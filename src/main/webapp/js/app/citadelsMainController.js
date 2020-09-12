@@ -12,6 +12,8 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.lords = []
 		$scope.statuses = []
 		$scope.canBack = []
+		
+		$scope.onTablesTab = true;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -76,12 +78,24 @@ app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
+		$scope.showTablesTab = function(){
+			$scope.onTablesTab = true;
+		}
+		
+		$scope.hideTablesTab = function(){
+			$scope.onTablesTab = false;
+		}
+		
 		$scope.offturnHandle = function(){
-			$scope.getAllBoards();
+			if ($scope.onTablesTab){
+				$scope.getAllBoards();
+			}
 			$timeout(function(){
 			    $scope.offturnHandle();
 			},4000);
 		}
+		
+		
 		
 		$scope.offturnHandle();
 		
