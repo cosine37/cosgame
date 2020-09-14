@@ -62,6 +62,7 @@
 								<button ng-click="showedCard='p606'" ng-disabled="showedCard == 'p606'">红梅公园</button>
 								<button ng-click="showedCard='p607'" ng-disabled="showedCard == 'p607'">运河</button>
 								<button style="background: rgb(102,102,102)" disabled>医院</button>
+								<button ng-click="showedCard='p611'" ng-disabled="showedCard == 'p611'">大酒店</button>
 							</td>
 						</tr>
 						<tr>
@@ -86,7 +87,7 @@
 					</table>
 					<table ng-show="showedCard == 'p201'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p201.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 小旅馆</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若除该<span class="citadelstext">建筑</span>外你有4种类型<span class="citadelstext">建筑</span>，
@@ -101,7 +102,7 @@
 					</table>
 					<table ng-show="showedCard == 'p301'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p301.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 名人故居</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该<span class="citadelstext">建筑</span>不能成为8号角色的目标。但可以成为其他<span class="citadelstext">建筑</span>特效的目标。</br></br>
@@ -112,7 +113,7 @@
 					</table>
 					<table ng-show="showedCard == 'p401'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p401.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 规划馆</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得牌，
@@ -126,7 +127,7 @@
 					</table>
 					<table ng-show="showedCard == 'p501'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p501.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 地铁</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以支付2<span class="citadelstext">￥</span>并摸3张牌。每回合最多发动一次。</br>
@@ -138,7 +139,7 @@
 					</table>
 					<table ng-show="showedCard == 'p502'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p502.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 南大街</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以弃置一张手牌并获得1<span class="citadelstext">￥</span>每回合最多发动一次。</br>
@@ -150,7 +151,7 @@
 					</table>
 					<table ng-show="showedCard == 'p601'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p601.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 恐龙城</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
@@ -167,7 +168,7 @@
 					</table>
 					<table ng-show="showedCard == 'p602'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p602.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 科教城</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
@@ -183,7 +184,7 @@
 					</table>
 					<table ng-show="showedCard == 'p603'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p603.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 图书馆</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得牌，
@@ -198,7 +199,7 @@
 					</table>
 					<table ng-show="showedCard == 'p604'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p604.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 环球港</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你的<span class="citadelstext">角色</span>在获得收益时，
@@ -213,7 +214,7 @@
 					</table>
 					<table ng-show="showedCard == 'p605'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p605.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 明城墙</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>在对你的其它<span class="citadelstext">建筑</span>使用技能时，
@@ -230,7 +231,7 @@
 					</table>
 					<table ng-show="showedCard == 'p402'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p402.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 青果巷</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回合结束时若你没有<span class="citadelstext">￥</span>则得到1<span class="citadelstext">￥</span>.
@@ -244,7 +245,7 @@
 					</table>
 					<table ng-show="showedCard == 'p503'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p503.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 宝林寺</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1<span class="citadelstext">￥</span>则额外得到得到1分.
@@ -256,7 +257,7 @@
 					</table>
 					<table ng-show="showedCard == 'p504'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p504.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 高铁站</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1个其它特殊（紫色）<span class="citadelstext">建筑</span>则额外得到得到1分。
@@ -268,7 +269,7 @@
 					</table>
 					<table ng-show="showedCard == 'p505'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p505.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 淹城遗址</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1张手牌则额外得到得到1分.
@@ -281,7 +282,7 @@
 					</table>
 					<table ng-show="showedCard == 'p506'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p506.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 开发区</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以建造一个已建造过一次的同名<span class="citadelstext">建筑</span>，
@@ -293,7 +294,7 @@
 					</table>
 					<table ng-show="showedCard == 'p606'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p606.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 红梅公园</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回合结束时若你没有手牌则摸2张牌.该效果为回合结束时才发动，你回合内没有手牌时不会发动。</br></br>
@@ -305,7 +306,7 @@
 					</table>
 					<table ng-show="showedCard == 'p607'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p607.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 运河</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你建造特殊（紫色）<span class="citadelstext">建筑</span>时可以少支付1<span class="citadelstext">￥</span>。
@@ -316,9 +317,22 @@
 						</tr>
 					</table>
 					
+					<table ng-show="showedCard == 'p611'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 大酒店</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当拥有<span class="citadelstext">市长标记</span>的玩家发生变化时，
+								你获得1<span class="citadelstext">￥</span>。该特效不等同于<span class="citadelstext">市长</span>亮出。
+								若拥有<span class="citadelstext">市长标记</span>的玩家亮出<span class="citadelstext">市长</span>牌，
+								你不会获得1<span class="citadelstext">￥</span>。</br></br>
+							</td>
+						</tr>
+					</table>
+					
 					<table ng-show="showedCard == 'p001'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p001.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 梳篦</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你无法建造该牌。游戏结束时从你手牌中展示可以获得3分。你拥有该牌不视为你拥有特殊（紫色）<span class="citadelstext">建筑</span>。</br></br>
@@ -330,7 +344,7 @@
 					</table>
 					<table ng-show="showedCard == 'p202'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p202.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 人民公园</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该<span class="citadelstext">建筑</span>不计入你的回合上限。
@@ -344,7 +358,7 @@
 					</table>
 					<table ng-show="showedCard == 'p302'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p302.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 雕像</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若你拥有<span class="citadelstext">市长标记</span>，你额外获得5分。</br></br>
@@ -355,7 +369,7 @@
 					</table>
 					<table ng-show="showedCard == 'p403'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p403.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 天宁寺</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时你每拥有一个奇数价格的<span class="citadelstext">建筑</span>，你额外获得1分。</br>
@@ -367,7 +381,7 @@
 					</table>
 					<table ng-show="showedCard == 'p507'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p507.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 公寓</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若你某一个类型的<span class="citadelstext">建筑</span>有3个及以上，你额外获得3分。
@@ -378,7 +392,7 @@
 					</table>
 					<table ng-show="showedCard == 'p508'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p508.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 茅山道场</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若该<span class="citadelstext">建筑</span>为你唯一建造的特殊（紫色）<span class="citadelstext">建筑</span>，
@@ -393,7 +407,7 @@
 					</table>
 					<table ng-show="showedCard == 'p608'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p608.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 银行</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得<span class="citadelstext">￥</span>，

@@ -65,7 +65,7 @@
 					</table>
 					<table ng-show="showedCard == 'p609'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p609.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 文化宫</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你选择的<span class="citadelstext">角色</span>无法通过某种类型的建筑获得收益，
@@ -78,7 +78,7 @@
 					</table>
 					<table ng-show="showedCard == 'p404'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p404.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 小商品市场</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得1<span class="citadelstext">￥</span>并摸一张牌，
@@ -88,7 +88,7 @@
 					</table>
 					<table ng-show="showedCard == 'p610'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p610.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 大成三厂</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从下一回合起，每回合你可以额外建造一个<span class="citadelstext">建筑</span>，
@@ -102,7 +102,7 @@
 					</table>
 					<table ng-show="showedCard == 'p405'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p405.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 紫荆公园</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得<span class="citadelstext">市长标记</span>，
@@ -115,7 +115,7 @@
 					</table>
 					<table ng-show="showedCard == 'p303'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p303.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 澳门城</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每回合可支付3<span class="citadelstext">￥</span>并展示牌堆顶的一张牌。
@@ -127,7 +127,7 @@
 					</table>
 					<table ng-show="showedCard == 'p509'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p509.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 天目湖</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>后展示牌堆顶的一张牌。
@@ -141,7 +141,7 @@
 					</table>
 					<table ng-show="showedCard == 'p612'">
 						<tr style="width: 1000px">
-							<td><img src="/image/Citadels/Cards/p612.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 九龙山</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
@@ -149,7 +149,8 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得1<span class="citadelstext">￥</span>，
 								该效果立即自动发动。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>指定该建筑为目标时，
-								该建筑的价格为6<span class="citadelstext">￥</span>（<span class="citadelstext">城管</span>拆除该建筑只需支付5<span class="citadelstext">￥</span>）。</br></br>
+								该建筑的价格为6<span class="citadelstext">￥</span>（<span class="citadelstext">城管</span>拆除该建筑只需支付5<span class="citadelstext">￥</span>）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时若该牌依然为你的手牌，你的总分-2。尽量在游戏结束之前建造该牌或在游戏结束之前将该牌交给其他玩家。</br></br>
 								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该山位于孟河镇，相传为常州的龙脉。</i>
 							</td>
@@ -157,7 +158,7 @@
 					</table>
 					<table ng-show="showedCard == 'p304'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p304.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 常州金店</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你建造完 <span class="citadelstext">常州金店</span>
@@ -173,7 +174,7 @@
 					</table>
 					<table ng-show="showedCard == 'p406'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p406.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 中联大厦</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">中联大厦</span>
@@ -188,7 +189,7 @@
 					</table>
 					<table ng-show="showedCard == 'p407'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p407.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 别墅区</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从你建造完 <span class="citadelstext">别墅区</span>
@@ -199,7 +200,7 @@
 					</table>
 					<table ng-show="showedCard == 'p510'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p510.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 青枫公园</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行行动阶段当你选择获得牌，若 <span class="citadelstext">青枫公园</span>
@@ -212,7 +213,7 @@
 					</table>
 					<table ng-show="showedCard == 'p408'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p408.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 护王府</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你选择1号角色或2号角色执行行动后，若 <span class="citadelstext">护王府</span>
@@ -226,7 +227,7 @@
 					</table>
 					<table ng-show="showedCard == 'p513'">	
 						<tr>
-							<td><img src="/image/Citadels/Cards/p513.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 瓜田</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名其他玩家所选的角色成为1号角色的目标，在该玩家跳过其回合时你获得1￥。<br/>
@@ -238,7 +239,7 @@
 					</table>
 					<table ng-show="showedCard == 'p613'">
 						<tr>
-							<td><img src="/image/Citadels/Cards/p613.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 福利院</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从你建造完 <span class="citadelstext">福利院</span>
@@ -249,14 +250,16 @@
 					</table>
 					<table ng-show="showedCard == 'p614'">		
 						<tr>
-							<td><img src="/image/Citadels/Cards/p614.png" class="newsImg"></td>
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 保险大厦</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你成为一名角色技能的目标，在技能效果结算完毕后你能获得1￥。你以此法获得1￥的时机如下：</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你选择了送葬者指定的角色且你被带走时（而不是送葬者指定你选择的角色时）；</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你的所有￥在你的回合开始时被盗贼偷走之后。即使此时你没有￥你依然能获得1￥。你以此法获得的1￥不会被偷走；</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当魔术师和你交换手牌时。即使你的手牌数量不降反增你依然能获得1￥；</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当城管拆除你其它建筑时。城管若拆除本建筑，你无法获得1￥。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-当你选择了送葬者指定的角色且你被带走时；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-当你的所有￥在你的回合开始时被盗贼偷走之后；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-当魔术师和你交换手牌后；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-当城管拆除你其它建筑后。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你没有钱时被盗贼偷窃，你依然会获得1￥。
+								若魔术师和你交换手牌时你的手牌数量不降反增（基本上不大可能），你依然会获得1￥。当城管拆除该建筑后，你不会获得1￥。</br>
 							</td>
 						</tr>
 					</table>
