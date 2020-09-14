@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsroles')">基本角色介绍</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsspecials')">官方特殊建筑</button></td></tr>
+					<tr><td><button class="selectedsection" disabled>官方扩充角色</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsdiycards')">自创特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsduocards')">双类型建筑</button></td></tr>
+					
+				</table>
+			</td>
+			<td>
+				<div>
+					<h2>官方扩充角色</h2>
+					<table>
+						<tr>
+							<td colspan="2"><h4>装饰概念</h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">装饰</span>是将￥放置于建筑上。
+								一个建筑的<span class="citadelstext">装饰等级</span>等同于放置于该建筑上的￥。
+								一个已装饰的建筑计算分数时额外获得等同于其装饰等级的分数。
+								8号角色对已装饰建筑使用技能时需要额外支付与该建筑装饰等级等量的￥（如城管拆除一个造价为2￥装饰等级为1的建筑需要支付2￥）。
+								<span class="citadelstext">家具商</span> 和部分特殊建筑有装饰效果。
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td><img src="/image/Citadels/Roles/119.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 家具商</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								可以在回合内使用￥装饰最多两个建筑，但不可装饰已装饰过的建筑。换言之，<span class="citadelstext">家具商</span> 只能将一个建筑的装饰等级从0提升到1。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								是9号角色，7人及以下的游戏默认不使用，但是房主可以在游戏开始前指定该局游戏是否使用 <span class="citadelstext">家具商</span>。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用9号角色的游戏，4~6人局每回合开始时额外亮出一张不使用的角色。
+								7人局游戏最后一个选择角色的玩家不可观看暗置角色牌（若一局游戏不使用9号角色，最后一个选择角色的玩家可观看并选择暗置角色牌）。
+								8人局游戏必须使用9号角色，且最后一个选择角色的玩家从最后一张可选角色和暗置角色中选择一张作为自己本回合的角色。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一局游戏人数不超过5人时不推荐使用 <span class="citadelstext">家具商</span>。
+							</td>
+						</tr>
+						
+						<tr>
+							<td><img src="/image/Citadels/Roles/109.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 记者</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当选择 <span class="citadelstext">记者</span>
+								的玩家亮出时，若本回合选角色时该玩家的上家或者下家选择了4号，则该角色立即获得3￥。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">记者</span>
+								是另一个9号角色，一局游戏选择 <span class="citadelstext">记者</span> 就不能选择 <span class="citadelstext">家具商</span>。有关9号角色的设置请看 <span class="citadelstext">家具商</span> 章节。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一局游戏人数不超过5人时不推荐使用 <span class="citadelstext">记者</span>。
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -48,6 +48,30 @@ public class CitadelsController {
 		return "citadelsEndGame";
 	}
 	
+	@RequestMapping(value="/citadelsroles", method = RequestMethod.GET)
+	public String citadelsRoles() {
+		return "citadelsRules/citadelsRoles";
+	}
+	
+	@RequestMapping(value="/citadelsspecials", method = RequestMethod.GET)
+	public String citadelsSpecials() {
+		return "citadelsRules/citadelsSpecials";
+	}
+	
+	@RequestMapping(value="/citadelsnewroles", method = RequestMethod.GET)
+	public String citadelsNewRoles() {
+		return "citadelsRules/citadelsNewRoles";
+	}
+	
+	@RequestMapping(value="/citadelsdiycards", method = RequestMethod.GET)
+	public String citadelsDIYCards() {
+		return "citadelsRules/citadelsDIYCards";
+	}
+	@RequestMapping(value="/citadelsduocards", method = RequestMethod.GET)
+	public String citadelsDuoCards() {
+		return "citadelsRules/citadelsDuoCards";
+	}
+	
 	@RequestMapping(value="/citadelsgame/empty", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> empty(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

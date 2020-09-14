@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsroles')">基本角色介绍</button></td></tr>
+					<tr><td><button class="selectedsection" disabled>官方特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsnewroles')">官方扩充角色</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsdiycards')">自创特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsduocards')">双类型建筑</button></td></tr>
+					
+				</table>
+			</td>
+			<td style="vertical-align:top">
+				<div>
+					<h2>官方特殊建筑</h2>
+					<table>
+						<tr style="width: 1000px">
+							<td>
+								<button ng-click="showedCard='p201'" ng-disabled="showedCard == 'p201'">小旅馆</button>
+								<button ng-click="showedCard='p301'" ng-disabled="showedCard == 'p301'">名人故居</button>
+								<button ng-click="showedCard='p401'" ng-disabled="showedCard == 'p401'">规划馆</button>
+								<button ng-click="showedCard='p501'" ng-disabled="showedCard == 'p501'">地铁</button>
+								<button ng-click="showedCard='p502'" ng-disabled="showedCard == 'p502'">南大街</button>
+								<button style="background: rgb(102,102,102)" disabled>回收站</button>
+								<button ng-click="showedCard='p601'" ng-disabled="showedCard == 'p601'">恐龙城</button>
+								<button ng-click="showedCard='p602'" ng-disabled="showedCard == 'p602'">科教城</button>
+								<button ng-click="showedCard='p603'" ng-disabled="showedCard == 'p603'">图书馆</button>
+								<button ng-click="showedCard='p604'" ng-disabled="showedCard == 'p604'">环球港</button>
+								<button ng-click="showedCard='p605'" ng-disabled="showedCard == 'p605'">明城墙</button>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button style="background: rgb(102,102,102)" disabled>化工厂</button>
+								<button style="background: rgb(102,102,102)" disabled>文笔塔</button>
+								<button ng-click="showedCard='p402'" ng-disabled="showedCard == 'p402'">青果巷</button>
+								<button style="background: rgb(102,102,102)" disabled>博物馆</button>
+								<button ng-click="showedCard='p503'" ng-disabled="showedCard == 'p503'">宝林寺</button>
+								<button ng-click="showedCard='p504'" ng-disabled="showedCard == 'p504'">高铁站</button>
+								<button ng-click="showedCard='p505'" ng-disabled="showedCard == 'p505'">淹城遗址</button>
+								<button ng-click="showedCard='p506'" ng-disabled="showedCard == 'p506'">开发区</button>
+								<button ng-click="showedCard='p606'" ng-disabled="showedCard == 'p606'">红梅公园</button>
+								<button ng-click="showedCard='p607'" ng-disabled="showedCard == 'p607'">运河</button>
+								<button style="background: rgb(102,102,102)" disabled>医院</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button ng-click="showedCard='p001'" ng-disabled="showedCard == 'p001'">梳篦</button>
+								<button ng-click="showedCard='p202'" ng-disabled="showedCard == 'p202'">人民公园</button>
+								<button ng-click="showedCard='p302'" ng-disabled="showedCard == 'p302'">雕像</button>
+								<button style="background: rgb(102,102,102)" disabled>脚手架</button>
+								<button ng-click="showedCard='p403'" ng-disabled="showedCard == 'p403'">天宁寺</button>
+								<button style="background: rgb(102,102,102)" disabled>新村</button>
+								<button ng-click="showedCard='p507'" ng-disabled="showedCard == 'p507'">公寓</button>
+								<button ng-click="showedCard='p508'" ng-disabled="showedCard == 'p508'">茅山道场</button>
+								<button style="background: rgb(102,102,102)" disabled>体育场</button>
+								<button ng-click="showedCard='p608'" ng-disabled="showedCard == 'p608'">银行</button>
+								<button style="background: rgb(102,102,102)" disabled>BRT</button>
+								<button style="background: rgb(102,102,102)" disabled>大剧院</button>
+							</td>
+						</tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+					</table>
+					<table ng-show="showedCard == 'p201'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p201.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 小旅馆</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若除该<span class="citadelstext">建筑</span>外你有4种类型<span class="citadelstext">建筑</span>，
+								该<span class="citadelstext">建筑</span>类型会变成你没有的第5种类型。该效果仅在你不是最后一轮建造该<span class="citadelstext">建筑</span>时才生效。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你最后一轮建造该<span class="citadelstext">建筑</span>，
+								游戏结束计算分数时该<span class="citadelstext">建筑</span>为特殊（紫色）类型。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏过程中该<span class="citadelstext">建筑</span>为特殊（紫色）类型<span class="citadelstext">建筑</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该建筑为宫苑宾馆，1960年开业，位于人民公园对面，是涉外三星级酒店。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p301'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p301.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 名人故居</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该<span class="citadelstext">建筑</span>不能成为8号角色的目标。但可以成为其他<span class="citadelstext">建筑</span>特效的目标。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该建筑为瞿秋白同志故居。瞿秋白，生于江苏常州，中国共产党早期领导人。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p401'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p401.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 规划馆</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得牌，
+								你可以观看3张牌而不是2张。你从观看的3张牌中选择1张加入手牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你同时拥有<span class="citadelstext">图书馆</span>，
+								<span class="citadelstext">执行行动</span>时你从观看的3张牌中选择2张牌加入手牌。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州规划馆位于市民广场西侧。是常州对外宣传的重要窗口，是市民了解规划参与规划的重要平台。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p501'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p501.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 地铁</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以支付2<span class="citadelstext">￥</span>并摸3张牌。每回合最多发动一次。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你无法支付2<span class="citadelstext">￥</span>则无事发生（可能会被嘲讽）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州地铁于2019年开通，图为常州地铁1号线列车红小梦。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p502'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p502.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 南大街</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以弃置一张手牌并获得1<span class="citadelstext">￥</span>每回合最多发动一次。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你没有手牌则无事发生（可能会被嘲讽）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>南大街是常州的百年老街，北起延陵路，南至青果巷。南大街商业步行街是常州的市中心商业地区。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p601'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p601.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 恐龙城</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
+								回合结束计算分数时该建筑为8分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;虽然效果完全相同，但该建筑与<span class="citadelstext">科教城</span>不同名，
+								已建造<span class="citadelstext">科教城</span>的玩家仍可建造该<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>指定该建筑为目标时，
+								该建筑的价格为6<span class="citadelstext">￥</span>（<span class="citadelstext">城管</span>拆除该建筑只需支付5<span class="citadelstext">￥</span>）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>国家5A级旅游景区环球恐龙城位于常州市新北区，是恐龙主题综合旅游度假区，包括：
+								中华恐龙园、迪诺水镇、恐龙谷温泉、恐龙城大剧场、香树湾花园酒店、维景国际大酒店、恐龙主题度假酒店、三河三园亲水之旅等旅游项目。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p602'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p602.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 科教城</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
+								回合结束计算分数时该建筑为8分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;虽然效果完全相同，但该建筑与<span class="citadelstext">恐龙城</span>不同名，
+								已建造<span class="citadelstext">恐龙城</span>的玩家仍可建造该<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>指定该建筑为目标时，
+								该建筑的价格为6<span class="citadelstext">￥</span>（<span class="citadelstext">城管</span>拆除该建筑只需支付5<span class="citadelstext">￥</span>）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州科教城位于武进区，占地5平方公里，是国家高职教育发展综合改革实验区、国家大学科技园和国家海外人才创新创业基地。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p603'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p603.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 图书馆</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得牌，
+								你将观看的2张牌全部收为手牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你同时拥有<span class="citadelstext">规划馆</span>，
+								<span class="citadelstext">执行行动</span>时你从观看的3张牌中选择2张牌加入手牌。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州图书馆新馆于2020年6月28日开放。
+								建筑风格从拱桥汲取创意，以月亮构筑形态，将现代美学与文化氛围关注与极具雕塑感的先锋形态中。藏书量100余万册，阅览座位1200个，20个数据库超30TB数字资源，可供读者免费下载使用。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p604'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p604.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 环球港</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你的<span class="citadelstext">角色</span>在获得收益时，
+								该<span class="citadelstext">建筑</span>类型视为你的<span class="citadelstext">角色</span>能获得收益的类型
+								（如你选择了<span class="citadelstext">市长</span>，在获得收益时该<span class="citadelstext">建筑</span>视为市政（黄色）建筑）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其它时候该<span class="citadelstext">建筑</span>为特殊（紫色）类型。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>江南环球港于2015年开业，是集“文化、旅游、商业”三大功能于一身的超大型游乐购物体验园。
+								各种品牌旗舰店、独立店、概念店；各种露天餐饮、户外公园、屋顶乐园、摩天轮；各种文化展厅、观影场所、艺术画廊，构成了完整的休闲购物消费链和高级城市功能复合体。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p605'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p605.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 明城墙</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>在对你的其它<span class="citadelstext">建筑</span>使用技能时，
+								需额外支付1<span class="citadelstext">￥</span>.
+								（如<span class="citadelstext">城管</span>拆除一个你的价值为2<span class="citadelstext">￥</span>的<span class="citadelstext">建筑</span>需要支付2<span class="citadelstext">￥</span>）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>在对该<span class="citadelstext">建筑</span>使用技能时，
+								不需要额外支付1<span class="citadelstext">￥</span>
+								（如<span class="citadelstext">城管</span>拆除该<span class="citadelstext">建筑</span>需要支付5<span class="citadelstext">￥</span>）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>西瀛门城墙，始建于西晋泰康年间，是常州仅存的明代城墙遗址。
+								民国时期，西瀛门一带商埠林立，是著名的金融商贸一条街，不少店铺建在城墙根下，于是商家便依墙开店，使得该段城墙得到了保留。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p402'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p402.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 青果巷</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回合结束时若你没有<span class="citadelstext">￥</span>则得到1<span class="citadelstext">￥</span>.
+								该效果为回合结束时才发动，你回合内没有<span class="citadelstext">￥</span>时不会发动。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>青果巷，旧称“千果巷”，常州古老街巷之一，始建于明万历年（1581年）前，有着“江南名士第一巷”的美誉。
+								青果巷南临古运河，东起正素巷，西至晋陵中路，直通南大街商业中心。2019年青果巷历史文化街区一期开放。青果巷是常州文脉之地，文风兴起唐代，簪缨世家聚居，书香盈巷，墨迹飘河，先后走出了近百名科举才俊和一大批近现代名人。
+								如语言学家赵元任，汉语拼音之父周有光，民族工业开创者刘国钧等。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p503'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p503.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 宝林寺</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1<span class="citadelstext">￥</span>则额外得到得到1分.
+								<span class="citadelstext">装饰</span>在<span class="citadelstext">建筑</span>上的<span class="citadelstext">￥</span>不会因此给你带来更多的额外分数。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>宝林寺，位于江苏常州武进春秋淹城遗址西隅，为为南朝梁武帝萧衍营造的皇家寺院。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p504'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p504.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 高铁站</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1个其它特殊（紫色）<span class="citadelstext">建筑</span>则额外得到得到1分。
+								该<span class="citadelstext">建筑</span>本身不为“其它特殊（紫色）建筑”。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>高铁常州北站2011年投入运营。2014年5月因房顶霓虹灯发生故障，常州也被戏称为“吊州”。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p505'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p505.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 淹城遗址</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束时你每有1张手牌则额外得到得到1分.
+								你放置于<span class="citadelstext">博物馆</span>下方的牌不视为你的手牌。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州淹城遗址位于武进区。
+								淹城建于春秋晚期，是目前全国保存最完整的春秋地面城池遗址。淹城东西长850米，南北长750米，为三城三河形制，城墙分为三重，均系堆土而筑，高约3米。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p506'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p506.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 开发区</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以建造一个已建造过一次的同名<span class="citadelstext">建筑</span>，
+								若你拥有两个<span class="citadelstext">建筑</span>名称相同，你不能建造第三个（如你已建造了一个<span class="citadelstext">初中</span>，
+								你可以建造第二个<span class="citadelstext">初中</span>，但若你已建造了两个<span class="citadelstext">初中</span>，
+								你不能建造第三个<span class="citadelstext">初中</span>）。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p606'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p606.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 红梅公园</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回合结束时若你没有手牌则摸2张牌.该效果为回合结束时才发动，你回合内没有手牌时不会发动。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>红梅公园，国家4A级旅游景区，位于常州市中心东侧，因园内的著名古建筑红梅阁而得名，是市内最大的一个综合性公园，
+								常州第一园林，常州市最大的国家重点公园，2010年获得中国人居环境奖。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p607'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p607.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 运河</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你建造特殊（紫色）<span class="citadelstext">建筑</span>时可以少支付1<span class="citadelstext">￥</span>。
+								该特效不会降低你特殊（紫色）<span class="citadelstext">建筑</span>的分值。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>京杭大运河在常州穿城而过，千百年来，古老的运河是常州的母亲河。</i>
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == 'p001'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p001.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 梳篦</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你无法建造该牌。游戏结束时从你手牌中展示可以获得3分。你拥有该牌不视为你拥有特殊（紫色）<span class="citadelstext">建筑</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>梳篦，理发的用具，是一种古老的中国传统手工艺品。梳篦是古时人手必备之物，尤其妇女，几乎梳不离身，便形成插梳风气。
+								常州梳篦是历史悠久的传统手工艺品，有“宫梳名篦”之称。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p202'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p202.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 人民公园</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该<span class="citadelstext">建筑</span>不计入你的回合上限。
+								你可在建造该<span class="citadelstext">建筑</span>后继续建造<span class="citadelstext">建筑</span>。本回合若你已建造了<span class="citadelstext">建筑</span>，
+								你依然可以建造该<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你<span class="citadelstext">已建成</span>后依然可以建造该<span class="citadelstext">建筑</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>人民公园坐落在现在公园路，南大街商业步行街对面，是季子祠的旧址。1913年开放，是常州第一座公园。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p302'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p302.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 雕像</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若你拥有<span class="citadelstext">市长标记</span>，你额外获得5分。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>位于江南商场的本雕像名为“未来属于我”，建于80年代，是由常州著名的美术大师刘海粟题词。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p403'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p403.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 天宁寺</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时你每拥有一个奇数价格的<span class="citadelstext">建筑</span>，你额外获得1分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上文所指的价格为<span class="citadelstext">建筑</span>原价，不受降价和装饰的影响。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>位于常州市中心的天宁寺始建于唐朝贞观、永徽年间，为全国重点佛教寺院之一，江苏省文物保护单位，有东南第一丛林之称。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p507'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p507.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 公寓</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若你某一个类型的<span class="citadelstext">建筑</span>有3个及以上，你额外获得3分。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本<span class="citadelstext">建筑</span>为特殊（紫色）<span class="citadelstext">建筑</span>，
+								所以你只要另建造2个特殊（紫色）<span class="citadelstext">建筑</span>即可满足额外获得3分的条件。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p508'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p508.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 茅山道场</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏结束计算分数时若该<span class="citadelstext">建筑</span>为你唯一建造的特殊（紫色）<span class="citadelstext">建筑</span>，
+								你额外获得5分。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你手中的<span class="citadelstext">梳篦</span>不是和其它特殊（紫色）手牌不为建造的特殊（紫色）<span class="citadelstext">建筑</span>。
+								</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>茅山是中国的一座道教名山，是道教上清派的发源地，被道家称为“上清宗坛”。有“第一福地，第八洞天”之美誉。
+								也是中国六大山区抗日根据地之一。山上景点多，有九峰、十九泉、二十六洞、二十八池之景。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p608'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p608.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 银行</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>时若你选择获得<span class="citadelstext">￥</span>，
+								你额外获得1<span class="citadelstext">￥</span>。若你选择获得牌则不发动该特效。
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

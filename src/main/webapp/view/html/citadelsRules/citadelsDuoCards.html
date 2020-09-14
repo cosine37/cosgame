@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsroles')">基本角色介绍</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsspecials')">官方特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsnewroles')">官方扩充角色</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsdiycards')">自创特殊建筑</button></td></tr>
+					<tr><td><button class="selectedsection" disabled>双类型建筑</button></td></tr>
+					
+				</table>
+			</td>
+			<td>
+				<div>
+					<h2>双类型建筑</h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">双类型建筑</span> 建造之后视为拥有两种类型。
+								在获得收益和计算分数时享受两种类型的加成。以下是一个双类型建筑的例子。</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Cards/gb4.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 少年宫</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">少年宫</span> 为教育和商业类型建筑。
+								建成后，当 <span class="citadelstext">校长</span> 和 <span class="citadelstext">实业家</span> 发动技能获得收益时，
+								<span class="citadelstext">少年宫</span> 都能提供1￥。游戏结束计算分数时若你已建造该牌，则视为你已建造教育和商业类型建筑（你只需要建造剩下3种类型的建筑就可以额外获得3分）。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造 <span class="citadelstext">少年宫</span> 需要花费4￥，
+								计算分数时只有2分。8号玩家指定该建筑为目标时该建筑的价格仍为4（如城管拆除该建筑需要花费3￥）。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还有5张和 <span class="citadelstext">少年宫</span> 类似的建筑，
+								它们除了建筑类型不一样，价格和建筑效果都和 <span class="citadelstext">少年宫</span> 一样。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每局游戏默认不加入双类型建筑，房主可以指定一局游戏加入双类型建筑。若房主选择加入双类型建筑，随机3张双类型建筑会加入摸牌堆，
+								该局游戏还会额外加入<span class="citadelstext">亚细亚影城</span>。<br/>
+							</td>
+						</tr>
+						
+						<tr>
+							<td><img src="/image/Citadels/Cards/p512.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 亚细亚影城</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你建造完 <span class="citadelstext">亚细亚影城</span>
+								后，该建筑的装饰等级为2，你不需要支付2￥，装饰所需的2￥从金库中直接获取并放置于该建筑上。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">亚细亚影城</span> 为商业和特殊类型建筑。
+								建成后，当 <span class="citadelstext">实业家</span> 发动技能获得收益时，<span class="citadelstext">亚细亚影城</span> 能提供1￥。
+								游戏结束计算分数时若你已建造该牌，则视为你已建造商业和特殊类型建筑（你只需要建造剩下3种类型的建筑就可以额外获得3分）。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你回合结束时若 <span class="citadelstext">亚细亚影城</span> 的装饰等级为0，
+								该建筑完全降级，失去其特殊类型和建筑效果且其价值-2（转换为第二个形态）。该建筑成为了普通的价值为3的商业类型建筑。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">亚细亚影城</span> 的装饰等级下降时机为执行行动之后，
+								而建筑完全降级的时机为回合结束之后。这意味着你建造的当回合该建筑不会自动下降装饰等级。若执行行动后该建筑装饰等级下降为0，若你使用
+								<span class="citadelstext">家具商</span> 的装饰技能将其装饰等级提高至1，回合结束后该建筑不会完全降级。<br/></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>亚细亚影城建立于上世纪90年代，以电影放映为主，集文化、休闲、娱乐、商贸、服务于一体的现代化多功能综合性文化娱乐中心，
+								2003年被评为五星级影院，是中国首批、江苏唯一一家。亚细亚影城曾为4A级旅游景区。后因经营不善，管理混乱，1楼大厅变成了游戏厅，2楼入驻了SPA，足疗和棋牌室，5~7楼重新装修变成了家装工厂。
+								2015年10月被取消其4A级资质。</i>
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Cards/p512-1.png" class="newsImg"></td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

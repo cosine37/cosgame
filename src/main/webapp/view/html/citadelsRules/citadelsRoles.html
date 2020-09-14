@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="selectedsection" disabled>基本角色介绍</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsspecials')">官方特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsnewroles')">官方扩充角色</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsdiycards')">自创特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsduocards')">双类型建筑</button></td></tr>
+					
+				</table>
+			</td>
+			<td>
+				<div>
+					<h2>基本角色介绍</h2>
+					<table>
+						<tr>
+							<td><img src="/image/Citadels/Roles/001.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 送葬者</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以选择一名<span class="citadelstext">角色</span>（而不是玩家）带走，
+								拥有该<span class="citadelstext">角色</span>的玩家失去其所有技能且跳过本回合。（无法<span class="citadelstext">执行行动</span>和建造<span class="citadelstext">建筑</span>）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你不能选择自己为目标。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若本回合没有玩家选择你要带走的<span class="citadelstext">角色</span>则无事发生。
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/002.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 盗贼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以选择一名<span class="citadelstext">角色</span>（而不是玩家）偷窃，
+								拥有该<span class="citadelstext">角色</span>的玩家在其回合开始时将所有的 <span class="citadelstext">￥</span> 标记交给你。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你不能选择自己、<span class="citadelstext">1号</span>和<span class="citadelstext">1号</span>的目标<span class="citadelstext">角色</span>为目标。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若本回合没有玩家选择你要偷窃的<span class="citadelstext">角色</span>则无事发生。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若被你偷窃的<span class="citadelstext">玩家</span>回合开始时没有<span class="citadelstext">￥</span>你什么都得不到。
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/003.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 魔术师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以选择一名玩家（而不是<span class="citadelstext">角色</span>）交（bai）易（piao），
+								你与该玩家交换你们所有的手牌，即使你没有手牌也可以这么做（有一定几率挨那位玩家揍，后果自负）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你也可以弃置任意数量张手牌并摸取等量的牌。将弃置的牌置于牌堆底。你可以只弃置部分手牌，不一定需要弃置所有手牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上两个效果你最多只可以发动其中一个。</br>
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/004.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 市长</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你的回合开始展示该<span class="citadelstext">角色</span>后立即获得<span class="citadelstext">市长标记</span>，
+								正常情况下下一回合你第一个选择角色。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以获得一次收益，收益的方式为每有一个市政（黄色）<span class="citadelstext">建筑</span>你获得1 <span class="citadelstext">￥</span> 。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你成为<span class="citadelstext">送葬者</span>的目标，回合结束后你依然获得<span class="citadelstext">市长标记</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>变体规则：</b>房主可以将以上规则设置为：
+								若你成为<span class="citadelstext">送葬者</span>的目标且成功被命中，<span class="citadelstext">送葬者</span>获得<span class="citadelstext">市长标记</span>。</br>
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/005.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 校长</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以获得一次收益，收益的方式为每有一个教育（蓝色）<span class="citadelstext">建筑</span>你获得1 <span class="citadelstext">￥</span> 。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本回合你的<span class="citadelstext">建筑</span>不能成为<span class="citadelstext">8号</span>的目标。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若本回合你成为<span class="citadelstext">送葬者</span>的目标，
+								本回合你的<span class="citadelstext">建筑</span><u><b>可以</b></u>成为<span class="citadelstext">8号</span>的目标。
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/006.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 实业家</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你<span class="citadelstext">执行行动</span>后立即额外获得1<span class="citadelstext">￥</span>，
+								无论你<span class="citadelstext">执行行动</span>时选择获得<span class="citadelstext">￥</span>还是获得牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以获得一次收益，收益的方式为每有一个商业（绿色）<span class="citadelstext">建筑</span>你获得1 <span class="citadelstext">￥</span> 。</br>
+								
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/007.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 建筑师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你<span class="citadelstext">执行行动</span>后立即额外摸2张牌，
+								无论你<span class="citadelstext">执行行动</span>时选择获得<span class="citadelstext">￥</span>还是获得牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以额外建造2个<span class="citadelstext">建筑</span>（正常情况下为本回合你最多可以建造3个<span class="citadelstext">建筑</span>），
+								你的<span class="citadelstext">建筑</span>数量可以超过<span class="citadelstext">已建成</span>的上限
+								（如回合开始时你已有6个<span class="citadelstext">建筑</span>，本回合你可以建造第7，第8，甚至第9个建筑 ，但正常情况下你不能建造第10个，因为你一回合最多只能额外建造2个）。</br>
+								
+							</td>
+						</tr>
+						<tr>
+							<td><img src="/image/Citadels/Roles/008.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 城管</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造阶段你可以获得一次收益，收益的方式为每有一个治安（红色）<span class="citadelstext">建筑</span>你获得1 <span class="citadelstext">￥</span> 。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以指定任意一名玩家能拆除的<span class="citadelstext">建筑</span>。
+								如果你能支付比该建筑价格少1<span class="citadelstext">￥</span>的<span class="citadelstext">￥</span>，你就可以拆除指定的<span class="citadelstext">建筑</span>
+								（如果你要拆除一个价格为5<span class="citadelstext">￥</span>的建筑，你需要支付4<span class="citadelstext">￥</span>。
+								你可以免费拆除一个价格为1<span class="citadelstext">￥</span>的建筑）。每回合最多可以拆除一个建筑。
+								将拆除的<span class="citadelstext">建筑</span>置于牌堆底。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以拆除自己的<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你不能拆除<span class="citadelstext">已建成</span>玩家的<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若本回合<span class="citadelstext">校长</span>没有成为<span class="citadelstext">送葬者</span>的目标，
+								你不能拆除<span class="citadelstext">校长</span>的<span class="citadelstext">建筑</span>。
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

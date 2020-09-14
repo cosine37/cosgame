@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsroles')">基本角色介绍</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsspecials')">官方特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsnewroles')">官方扩充角色</button></td></tr>
+					<tr><td><button class="selectedsection" disabled>自创特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsduocards')">双类型建筑</button></td></tr>
+					
+				</table>
+			</td>
+			<td style="vertical-align:top">
+				<div>
+					<h2>自创特殊建筑</h2>
+					<table>
+						<tr>
+							<td>按上线时间顺序排序</td>
+						</tr>
+						<tr>
+							<td>
+								<button ng-click="showedCard='p609'" ng-disabled="showedCard == 'p609'">文化宫</button>
+								<button ng-click="showedCard='p404'" ng-disabled="showedCard == 'p404'">小商品市场</button>
+								<button ng-click="showedCard='p610'" ng-disabled="showedCard == 'p610'">大成三厂</button>
+								<button ng-click="showedCard='p405'" ng-disabled="showedCard == 'p405'">紫荆公园</button>
+								<button ng-click="showedCard='p303'" ng-disabled="showedCard == 'p303'">澳门城</button>
+								<button ng-click="showedCard='p509'" ng-disabled="showedCard == 'p509'">天目湖</button>
+								<button ng-click="showedCard='p612'" ng-disabled="showedCard == 'p612'">九龙山</button>
+								<button ng-click="showedCard='p304'" ng-disabled="showedCard == 'p304'">常州金店</button>
+								<button ng-click="showedCard='p406'" ng-disabled="showedCard == 'p406'">中联大厦</button>
+								<button ng-click="showedCard='p407'" ng-disabled="showedCard == 'p407'">别墅区</button>
+								<button ng-click="showedCard='p510'" ng-disabled="showedCard == 'p510'">青枫公园</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button ng-click="showedCard='p408'" ng-disabled="showedCard == 'p408'">护王府</button>
+								<button ng-click="showedCard='p513'" ng-disabled="showedCard == 'p513'">瓜田</button>
+								<button ng-click="showedCard='p613'" ng-disabled="showedCard == 'p613'">福利院</button>
+								<button ng-click="showedCard='p614'" ng-disabled="showedCard == 'p614'">保险大厦</button>
+							</td>
+						<tr></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+						<tr><td></td></tr>
+					</table>
+					<table ng-show="showedCard == 'p609'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p609.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 文化宫</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你选择的<span class="citadelstext">角色</span>无法通过某种类型的建筑获得收益，
+								<span class="citadelstext">执行行动</span>后你额外获得1<span class="citadelstext">￥</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>文化宫是作为群众文化和娱乐活动之用的公共建筑。
+								苏联在十月革命后，为了满足职工群众对文化生活和娱乐活动的需要，兴建了许多文化宫。其他社会主义国家也有这类建筑</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p404'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p404.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 小商品市场</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得1<span class="citadelstext">￥</span>并摸一张牌，
+								该效果立即自动发动。</br></br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p610'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p610.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 大成三厂</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从下一回合起，每回合你可以额外建造一个<span class="citadelstext">建筑</span>，
+								建造该<span class="citadelstext">建筑</span>的当回合无法发动。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>大成三厂旧址位于茶山街道。
+								大成三厂旧址为刘国钧实业主体之一，是我市目前保存体量最大、最为完整的民国早期纺织业建筑遗存，是常州地区民族工业的特色建筑群。
+								</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p405'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p405.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 紫荆公园</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得<span class="citadelstext">市长标记</span>，
+								该效果立即自动发动。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>紫荆公园位于江苏省常州市东北部的创意产业园内，东经120路路口，占地面积20.15公顷，是常州最大的月季主题公园。
+								公园内拥有世界独一无二的无辐式摩天轮（虽然因为安全原因无法使用）。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p303'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p303.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 澳门城</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每回合可支付3<span class="citadelstext">￥</span>并展示牌堆顶的一张牌。
+								你获得和展示的牌价格相同数量的<span class="citadelstext">￥</span>，每回合限一次。 若你无法支付3￥则无事发生（可能会被嘲讽）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>澳门城位于西太湖产业园区，是江苏省与澳门特区的合作园区。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p509'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p509.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 天目湖</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">执行行动</span>后展示牌堆顶的一张牌。
+								你每有一张和展示的牌类型相同的<span class="citadelstext">建筑</span>就获得1<span class="citadelstext">￥</span>，
+								该效果在<span class="citadelstext">执行行动</span>后自动发动。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>天目湖位于常州溧阳市南八公里处，因属天目山余脉，故名“天目湖”。
+								天目湖被誉为“江南明珠”、“绿色仙境”，天目湖全区拥有300平方公里的生态保护区，区内坐落着沙河、大溪两座国家级大型水库。是江苏省首批生态旅游示范区。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p612'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/p612.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 九龙山</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该建筑只需要支付6<span class="citadelstext">￥</span>，
+								回合结束计算分数时该建筑为8分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后立即获得1<span class="citadelstext">￥</span>，
+								该效果立即自动发动。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">8号角色</span>指定该建筑为目标时，
+								该建筑的价格为6<span class="citadelstext">￥</span>（<span class="citadelstext">城管</span>拆除该建筑只需支付5<span class="citadelstext">￥</span>）。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该山位于孟河镇，相传为常州的龙脉。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p304'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p304.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 常州金店</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你建造完 <span class="citadelstext">常州金店</span>
+								后，如果你有超过3￥，你将3￥装饰在该建筑上，否则你将所有的￥装饰在该建筑上，你无法选择不发动该效果。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造 <span class="citadelstext">常州金店</span> 的当回合你不能从该建筑上拿回1￥。
+								从下一回合起，若该建筑的装饰等级大于0你可以从该牌上拿回1￥，你也可以选择不拿。一回合最多拿回1￥。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								装饰在该牌上的￥也可以通过发动建筑特效拿回。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州金店有限公司创建于1985年，是中国黄金协会常务理事单位。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p406'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p406.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 中联大厦</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">中联大厦</span>
+								会在每回合结束时自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。当该建筑装饰等级超过3时，自动拆除该建筑。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">家具商</span>
+								可以在建造该建筑的当回合装饰该建筑，但是会让该建筑早一回合自动拆除。若该建筑的装饰等级已大于0（建造该建筑之后的回合），家具商无法装饰该建筑。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>中联大厦建造于1986年，位于文化宫广场南面，集合了商场、餐饮、娱乐等多功能设施，是常州历史上第一座商业综合体。
+								中联大厦有12层，55米，曾是常州第一高楼，2017年4月25日拆除。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p407'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p407.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 别墅区</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从你建造完 <span class="citadelstext">别墅区</span>
+								起，每当你建造一个价格为5￥及以上的建筑，若该新造建筑的装饰等级小于3，该新造建筑会自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前建造的价格5￥及以上的建筑不会提高装饰等级。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p510'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p510.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 青枫公园</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行行动阶段当你选择获得牌，若 <span class="citadelstext">青枫公园</span>
+								装饰等级小于3会自动提升一级装饰等级。你不需要支付1￥。装饰所需的1￥从金库中直接获取并放置于该建筑上。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因为角色技能或是建筑效果获得牌无法触发 <span class="citadelstext">青枫公园</span> 的效果。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>2008年5月建成的青枫公园位于钟楼开发区，是常州最大的开放式公园，总面积达45公顷。青枫公园是常州市第一个森林公园。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p408'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p408.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 护王府</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你选择1号角色或2号角色执行行动后，若 <span class="citadelstext">护王府</span>
+								的装饰等级小于3，会自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。<br/></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>护王府位于局前街，是陈坤书的府第遗址。
+								护王陈坤书是广西桂平人，1851年参加太平天国金田起义，1862年由苏州移驻常州，被天王洪秀全晋封为“护王”。护王府是1862年陈坤书移防常州时所建。
+								1864年4月李鸿章率清军收复常州，同年5月，护王陈坤书在肉搏战中力竭受伤后被俘，不屈而死。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p513'">	
+						<tr>
+							<td><img src="/image/Citadels/Cards/p513.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 瓜田</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名其他玩家所选的角色成为1号角色的目标，在该玩家跳过其回合时你获得1￥。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你本回合选择了1号角色且成功命中一名玩家，你依然可以获得1￥。
+								如果本回合你选择的角色为1号角色的目标，你无法获得1￥。<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果本回合没有玩家选择1号角色指定的目标角色，你无法获得1￥。<br/>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p613'">
+						<tr>
+							<td><img src="/image/Citadels/Cards/p613.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 福利院</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从你建造完 <span class="citadelstext">福利院</span>
+								起，每当你建造一个价格为2￥及以下的建筑，若该新造建筑的装饰等级小于3，该新造建筑会自动提升一级装饰等级。你不需要支付1￥，装饰所需的1￥从金库中直接获取并放置于该建筑上。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前建造的价格2￥及以下的建筑不会提高装饰等级。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'p614'">		
+						<tr>
+							<td><img src="/image/Citadels/Cards/p614.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 保险大厦</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你成为一名角色技能的目标，在技能效果结算完毕后你能获得1￥。你以此法获得1￥的时机如下：</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你选择了送葬者指定的角色且你被带走时（而不是送葬者指定你选择的角色时）；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你的所有￥在你的回合开始时被盗贼偷走之后。即使此时你没有￥你依然能获得1￥。你以此法获得的1￥不会被偷走；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当魔术师和你交换手牌时。即使你的手牌数量不降反增你依然能获得1￥；</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当城管拆除你其它建筑时。城管若拆除本建筑，你无法获得1￥。</br>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
