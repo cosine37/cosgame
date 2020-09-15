@@ -125,6 +125,15 @@ public class Board {
 	public void setLord(String lord) {
 		this.lord = lord;
 	}
+	
+	public void addBot() {
+		String botName = "P" + Integer.toString(players.size());
+		Player bot = new Player();
+		bot.setName(botName);
+		bot.setBot(true);
+		players.add(bot);
+		addPlayerToDB(botName);
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -231,6 +240,23 @@ public class Board {
 	public void getFromDB(String id) {
 		Document doc = dbutil.read("id", id);
 		setFromDoc(doc);
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
 	}
 	
 	public boolean exists(String id) {

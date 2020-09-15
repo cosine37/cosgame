@@ -23,6 +23,12 @@ app.controller("nothanksCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.addbot = function(){
+			$http.post("/nothanksgame/addbot").then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/nothanksgame/getboard').then(function(response){
 				$scope.gamedata = response.data
