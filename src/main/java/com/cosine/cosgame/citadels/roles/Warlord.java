@@ -98,6 +98,13 @@ public class Warlord extends Role {
 				board.log(player.getName() + "花费了" + Integer.toString(spent) + "￥拆除了" + victimName + "的" + builtName+"。");
 				board.addCoin(c.getBeautifyLevel());
 				c.setBeautifyLevel(0);
+				if (c.getCardsUnder().size() > 0) {
+					board.log(player.getName() + "将" + victimName + "的" + builtName + "下方的牌一并移除了。");
+				}
+				for (int i=c.getCardsUnder().size()-1;i>=0;i--) {
+					Card u = c.getCardsUnder().remove(i);
+					board.bottomDeck(u);
+				}
 				board.bottomDeck(c);
 				
 				// insurance handle

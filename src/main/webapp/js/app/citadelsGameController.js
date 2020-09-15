@@ -449,7 +449,10 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.chooseOneFromHand = function(x){
-			if ($scope.askId == '99502'){ // South Street
+			if ($scope.askLs[x] == "n"){
+				return
+			}
+			if ($scope.askId == '99502' || $scope.askId == '99305'){ // South Street & Framework
 				var builtIndex = parseInt($scope.askBuiltIndex)
 				var data = {
 						"builtIndex" : builtIndex,
@@ -499,6 +502,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				"float": "left",
 				"margin-left" :marginLeft
 			}
+			
+			
 			if ($scope.chooseHand[index] == "y"){
 				return selectedStyle
 			} else {
@@ -536,7 +541,28 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				"float": "left",
 				"margin-left" :marginLeft
 			}
-			return notSelectedStyle
+			
+			disabledStyle = {
+				"background": imgUrl,
+				"background-color" : "grey",
+				"background-blend-mode" : "screen",
+				"margin-left" : marginLeft,
+				"background-size": "cover",
+				"float" : "left",
+			}
+			if ($scope.askLs[index] == "n") {
+				return disabledStyle
+			} else {
+				return notSelectedStyle
+			}
+		}
+		
+		$scope.disabledChooseOneFromHand = function(index){
+			if ($scope.askLs[index] == "n") {
+				return true
+			} else {
+				return false
+			}
 		}
 		
 		$scope.revealedStyle = function(index){
@@ -745,6 +771,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.roleOwners = response.data.roleOwners
 					$scope.roleImgs = response.data.roleImgs
 					$scope.built = response.data.built
+					$scope.cardsUnder = response.data.cardsUnder
 					$scope.coins = response.data.coins
 					$scope.handSizes = response.data.handSizes
 					$scope.playerNames = response.data.playerNames

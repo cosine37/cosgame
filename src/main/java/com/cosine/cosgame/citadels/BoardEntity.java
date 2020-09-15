@@ -8,6 +8,7 @@ public class BoardEntity {
 	List<List<String>> specialHands;
 	List<List<String>> askBuiltInfo;
 	List<List<String>> beautifyLevel;
+	List<List<String>> cardsUnder;
 	List<String> hand;
 	List<String> buildable;
 	List<String> coins;
@@ -340,5 +341,11 @@ public class BoardEntity {
 	}
 	public void setUseDuoColor(String useDuoColor) {
 		this.useDuoColor = useDuoColor;
+	}
+	public List<List<String>> getCardsUnder() {
+		return cardsUnder;
+	}
+	public void setCardsUnder(List<List<String>> cardsUnder) {
+		this.cardsUnder = cardsUnder;
 	}
 }

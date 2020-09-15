@@ -111,7 +111,6 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		
 	}
 	
 	public void deal() {
@@ -665,18 +664,22 @@ public class Board {
 		List<String> handSizes = new ArrayList<>();
 		List<List<String>> built = new ArrayList<>();
 		List<List<String>> beautifyLevel = new ArrayList<>();
+		List<List<String>> cardsUnder = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			coins.add(Integer.toString(players.get(i).getCoin()));
 			handSizes.add(Integer.toString(players.get(i).getHand().size()));
 			List<String> singleBuilt = new ArrayList<>();
 			List<String> singleBeautifyLevel = new ArrayList<>();
+			List<String> singleCardsUnder = new ArrayList<>();
 			for (j=0;j<players.get(i).getBuilt().size();j++) {
 				singleBuilt.add(players.get(i).getBuilt().get(j).getImg());
 				singleBeautifyLevel.add(Integer.toString(players.get(i).getBuilt().get(j).getBeautifyLevel()));
+				singleCardsUnder.add(Integer.toString(players.get(i).getBuilt().get(j).getCardsUnder().size()));
 			}
 			built.add(singleBuilt);
 			beautifyLevel.add(singleBeautifyLevel);
+			cardsUnder.add(singleCardsUnder);
 		}
 		List<String> hand = new ArrayList<>();
 		List<String> buildable = new ArrayList<>();
@@ -813,6 +816,7 @@ public class Board {
 		entity.setPlayerNames(playerNames);
 		entity.setBuilt(built);
 		entity.setBeautifyLevel(beautifyLevel);
+		entity.setCardsUnder(cardsUnder);
 		entity.setHand(hand);
 		entity.setBuildable(buildable);
 		entity.setRevealedCards(revealedCards);

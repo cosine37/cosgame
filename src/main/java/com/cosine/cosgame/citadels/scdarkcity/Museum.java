@@ -1,4 +1,4 @@
-package com.cosine.cosgame.citadels.specialcards;
+package com.cosine.cosgame.citadels.scdarkcity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +7,14 @@ import com.cosine.cosgame.citadels.Ask;
 import com.cosine.cosgame.citadels.Card;
 import com.cosine.cosgame.citadels.CitadelsConsts;
 
-public class SouthStreet extends Card{
-	public SouthStreet() {
+public class Museum extends Card {
+	public Museum() {
 		super();
-		name = "南大街";
-		cost = 5;
-		img = "p502";
+		name = "博物馆";
+		cost = 4;
+		img = "p409";
 		color = CitadelsConsts.PURPLE;
+		expansion = 1;
 	}
 	
 	public String canUseSkill() {
@@ -34,7 +35,7 @@ public class SouthStreet extends Card{
 			ask.setAskId(99502);
 			ask.setAskType(5);
 			ask.setAskBuiltIndex(index);
-			ask.setMsg("请弃置一张手牌");
+			ask.setMsg("请将一张手牌置于 博物馆 内。");
 			ask.setLs(ls);
 		} else {
 			ask = useSkill(index, x);
@@ -45,7 +46,7 @@ public class SouthStreet extends Card{
 	public Ask useSkill(int index, int x) {
 		Ask ask = super.useSkill(index, x);
 		String name = player.getName();
-		board.log(name + "发动了建筑 南大街 的特效。");
+		board.log(name + "发动了建筑 博物馆 的特效。");
 		if (player.getHand().size() == 0) {
 			board.log("然而" + name + "没有手牌，所以无事发生。");
 		} else  {
@@ -53,10 +54,15 @@ public class SouthStreet extends Card{
 				x = 0;
 			}
 			Card c = player.getHand().remove(x);
-			board.bottomDeck(c);
-			player.addCoin(1);
-			board.log(name + "弃置一张手牌，得到了1￥。");
+			Card m = player.getBuilt().get(index);
+			m.getCardsUnder().add(c);
+			board.log(name + "将一张手牌放入了 博物馆 内。");
 		}
 		return ask;
+	}
+	
+	public int getExtraScore() {
+		int ans = player.getBuilt().get(index).getCardsUnder().size();
+		return ans;
 	}
 }

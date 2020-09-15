@@ -208,6 +208,21 @@ public class Player {
 		hand = temp;
 	}
 	
+	public boolean notIdentical(Card c) {
+		int identicalCount = 0;
+		int i;
+		for (i=0;i<built.size();i++) {
+			if (built.get(i).getImg().contentEquals(c.getImg())) {
+				identicalCount++;
+			}
+		}
+		if (identicalCount > identicalLimit) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public boolean canBuild(int x) {
 		if (hand.size()>x) {
 			Card c = hand.get(x);
@@ -232,17 +247,12 @@ public class Player {
 			if (cost > coin) {
 				return false;
 			}
-			int identicalCount = 0;
-			int i;
-			for (i=0;i<built.size();i++) {
-				if (built.get(i).getImg().contentEquals(c.getImg())) {
-					identicalCount++;
-				}
-			}
-			if (identicalCount > identicalLimit) {
+			
+			if (notIdentical(c) == false) {
 				return false;
 			}
-			return true;
+			return hand.get(x).canBuildWhen(built.size());
+			
 		} else {
 			return false;
 		}
@@ -286,7 +296,11 @@ public class Player {
 					}
 				}
 				canUseCardSkill.add(c.canUseSkillSameRound());
-				if (built.size() == board.getFinishCount()) {
+				int builtSize = 0;
+				for (int i=0;i<built.size();i++) {
+					builtSize = builtSize + built.get(i).buildCount();
+				}
+				if (builtSize >= board.getFinishCount()) {
 					finished = true;
 					if (board.isFirstFinished()) {
 						firstFinished = true;
@@ -651,6 +665,7 @@ public class Player {
 			Card c = CardFactory.createCard(handDocList.get(i));
 			c.setPlayer(this);
 			c.setBoard(this.board);
+			c.setIndex(i);
 			hand.add(c);
 		}
 			
@@ -660,6 +675,7 @@ public class Player {
 			Card c = CardFactory.createCard(builtDocList.get(i));
 			c.setPlayer(this);
 			c.setBoard(this.board);
+			c.setIndex(i);
 			built.add(c);
 			c.alterPlayerAbility();
 			

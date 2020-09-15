@@ -73,6 +73,9 @@
 								ng-show="beautifyLevel[playerIndex][$index] == '3'">
 								<img src="/image/Citadels/beautify.png" height="18" width="18" />
 							</div>
+							<div class="cardsUnder" style="top: 50px" ng-show="cardsUnder[playerIndex][$index] != '0' ">
+								{{cardsUnder[playerIndex][$index]}}
+							</div>
 						</div>
 					</td>
 					
@@ -155,7 +158,7 @@
 		</div>
 		
 		<div id="chooseOneFromHand" class="handdiv" ng-show="askType==5">
-			<div class="hand" ng-repeat="c in hand track by $index" ng-click="chooseOneFromHand($index)" ng-style="chooseOneFromHandStyle($index)">
+			<div class="hand" ng-repeat="c in hand track by $index" ng-click="chooseOneFromHand($index)" ng-style="chooseOneFromHandStyle($index)" ng-disabled="disabledChooseOneFromHand(index)">
 				<div class="qsmark">
 					<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showHand($index);$event.stopPropagation();"/>
 				</div>

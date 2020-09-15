@@ -1,5 +1,8 @@
 package com.cosine.cosgame.citadels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 import com.cosine.cosgame.citadels.sc2016.*;
@@ -92,6 +95,12 @@ public class CardFactory {
 			card = new MelonField();
 		} else if (img.contentEquals("p614")) {
 			card = new Insurance();
+		} else if (img.contentEquals("p305")) {
+			card = new Framework();
+		} else if (img.contentEquals("p409")) {
+			card = new Museum();
+		} else if (img.contentEquals("p410")) {
+			card = new Village();
 		}
 		
 		else {
@@ -117,7 +126,16 @@ public class CardFactory {
 		String img = doc.getString("img");
 		int builtRound = doc.getInteger("builtRound", -1);
 		int beautifyLevel = doc.getInteger("beautifyLevel", 0);
-		return createCard(name, color, cost, img, builtRound, beautifyLevel);
+		List<Document> cu = (List<Document>) doc.get("cardsUnder");
+		List<Card> cardsUnder = new ArrayList<>();
+		for (int i=0;i<cu.size();i++){
+			Card c = createCard(cu.get(i));
+			cardsUnder.add(c);
+		}
+		Card card = createCard(name, color, cost, img, builtRound, beautifyLevel);
+		card.setCardsUnder(cardsUnder);
+		return card;
+		
 	}
 
 }

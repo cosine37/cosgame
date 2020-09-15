@@ -21,6 +21,8 @@ public class Card {
 	protected boolean trackCrown;
 	protected boolean trackOtherAssassin;
 	protected int beautifyLevel;
+	protected int index;
+	protected List<Card> cardsUnder;
 	
 	public Card() {
 		builtRound = -1;
@@ -32,6 +34,7 @@ public class Card {
 		trackCrown = false;
 		trackOtherAssassin = false;
 		beautifyLevel = 0;
+		cardsUnder = new ArrayList<>();
 	}
 	
 	public Card(String name) {
@@ -69,6 +72,14 @@ public class Card {
 	
 	public void onOtherAssassin() {
 		
+	}
+	
+	public int buildCount() {
+		return 1;
+	}
+	
+	public boolean canBuildWhen(int x) {
+		return true;
 	}
 	
 	public boolean destroyable() {
@@ -208,6 +219,18 @@ public class Card {
 	public void setTrackOtherAssassin(boolean trackOtherAssassin) {
 		this.trackOtherAssassin = trackOtherAssassin;
 	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public List<Card> getCardsUnder() {
+		return cardsUnder;
+	}
+	public void setCardsUnder(List<Card> cardsUnder) {
+		this.cardsUnder = cardsUnder;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -216,6 +239,12 @@ public class Card {
 		doc.append("img", img);
 		doc.append("builtRound", builtRound);
 		doc.append("beautifyLevel", beautifyLevel);
+		List<Document> cu = new ArrayList<>();
+		for (int i=0;i<cardsUnder.size();i++) {
+			Document d = cardsUnder.get(i).toDocument();
+			cu.add(d);
+		}
+		doc.append("cardsUnder", cu);
 		return doc;
 	}
 }

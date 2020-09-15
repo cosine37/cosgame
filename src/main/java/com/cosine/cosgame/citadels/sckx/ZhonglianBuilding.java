@@ -20,15 +20,11 @@ public class ZhonglianBuilding extends Card{
 				beautify();
 			}
 			if (beautifyLevel >= 4) {
-				for (int i=0;i<player.getBuilt().size();i++) {
-					if (player.getBuilt().get(i).getImg().contentEquals(img)) {
-						Card c = player.getBuilt().remove(i);
-						board.addCoin(c.getBeautifyLevel());
-						c.setBeautifyLevel(0);
-						board.bottomDeck(c);
-					}
-				}
-				board.log(player.getName() + "的 中联大厦 因年久失修被拆除。");
+				Card c = player.getBuilt().remove(index);
+				board.addCoin(c.getBeautifyLevel());
+				c.setBeautifyLevel(0);
+				board.bottomDeck(c);
+				board.log(player.getName() + "的 中联大厦 因过度建造被拆除。");
 			} else {
 				if (x>0) {
 					board.log(player.getName() + "的 中联大厦 价值上升。");
