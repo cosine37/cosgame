@@ -112,6 +112,10 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
+		Card c = new ChemicalPlant();
+		deck.add(0,c);
+		c = new Village();
+		deck.add(5,c);
 	}
 	
 	public void deal() {

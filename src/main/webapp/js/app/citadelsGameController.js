@@ -378,22 +378,37 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				$http({url: "/citadelsgame/choosecardskill", method: "POST", params: data}).then(function(response){
 					$scope.getBoard()
 				})
-			} else if ($scope.askType == '2' && $scope.phase == '2'){ // destroy & take beautify
-				var wouldChoose = true
-				if ($scope.askId == '1081'){ // destroy
-					wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
-				}
-				if (wouldChoose){
+			} else if ($scope.askType == '2' && $scope.phase == '2'){
+				if ($scope.askId == '99306'){// chemical plant
+					var x = 80000 + playerIndex * 100 + builtIndex;
 					var data = {
-							"skillIndex" : 1,
-							"roleIndex" : 0,
-							"playerIndex" : playerIndex,
-							"builtIndex" : builtIndex
+							"builtIndex": 0,
+							"x": x
 					}
-					$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
+					$http({url: "/citadelsgame/usecardskill", method: "POST", params: data}).then(function(response){
 						$scope.getBoard()
 					})
+				} 
+				
+				else { // use skill, destroy & take beautify
+					var wouldChoose = true
+					if ($scope.askId == '1081'){ // warlord destroy
+						wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
+					}
+					if (wouldChoose){
+						var data = {
+								"skillIndex" : 1,
+								"roleIndex" : 0,
+								"playerIndex" : playerIndex,
+								"builtIndex" : builtIndex
+						}
+						$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
+							$scope.getBoard()
+						})
+					}
 				}
+				
+				
 			} else if ($scope.askType == '6' && $scope.phase == '2'){ // beautify
 				if ($scope.chooseBuilts[playerIndex][builtIndex] == "n"){
 					var limit = parseInt($scope.askLimit)

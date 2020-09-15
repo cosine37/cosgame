@@ -9,6 +9,7 @@ public class BoardEntity {
 	String packCardImg;
 	String packMoney;
 	String id;
+	String intialRevealedMoney;
 	
 	List<String> playerNames;
 	List<String> hasPack;
@@ -78,6 +79,12 @@ public class BoardEntity {
 	}
 	public void setRevealedMoney(List<String> revealedMoney) {
 		this.revealedMoney = revealedMoney;
+	}
+	public String getIntialRevealedMoney() {
+		return intialRevealedMoney;
+	}
+	public void setIntialRevealedMoney(String intialRevealedMoney) {
+		this.intialRevealedMoney = intialRevealedMoney;
 	}
 	
 }

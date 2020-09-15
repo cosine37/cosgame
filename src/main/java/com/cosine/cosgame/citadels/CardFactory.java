@@ -109,6 +109,8 @@ public class CardFactory {
 			card = new TechSchool();
 			card.setColor(color);
 			card.setImg(img);
+		} else if (img.contentEquals("p306")) {
+			card = new ChemicalPlant();
 		}
 		
 		else {

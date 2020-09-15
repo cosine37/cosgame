@@ -3,6 +3,7 @@ package com.cosine.cosgame.nothanks;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -14,6 +15,7 @@ public class Board {
 	int status;
 	int curPlayer;
 	int numGoldInDeck;
+	int initialRevealedMoney;
 	AllRes allRes;
 	MongoDBUtil dbutil;
 	String id;
@@ -45,7 +47,25 @@ public class Board {
 	
 	public void startGame() {
 		status = 1;
+		numGoldInDeck = 12 - players.size()*initialRevealedMoney;
+		System.out.println(numGoldInDeck);
 		deck = allRes.genDeck(players.size(), numGoldInDeck);
+		for (int i=0;i<players.size();i++) {
+			players.get(i).setRevealedMoney(initialRevealedMoney);
+		}
+		shuffle();
+	}
+	
+	public void shuffle() {
+		List<Card> shuffled = new ArrayList<>();
+		Random rand = new Random();
+		while (deck.size()>0) {
+			int size = deck.size();
+			shuffled.add(deck.remove(rand.nextInt(size)));
+		}
+		for (int i=0;i<shuffled.size();i++) {
+			deck.add(shuffled.get(i));
+		}
 	}
 	
 	public void endGame() {
@@ -55,6 +75,10 @@ public class Board {
 	public void sendPack(int x, Package pack) {
 		players.get(x).setPack(pack);
 		curPlayer = x;
+	}
+	
+	public void updateInitialRevealedMoney() {
+		initialRevealedMoney = 12/players.size();
 	}
 	
 	public Player getPlayerByName(String name) {
@@ -73,6 +97,7 @@ public class Board {
 		p.setName(name);
 		p.setBoard(this);
 		players.add(p);
+		updateInitialRevealedMoney();
 	}
 	
 	public void genBoardId() {
@@ -125,7 +150,13 @@ public class Board {
 	public void setLord(String lord) {
 		this.lord = lord;
 	}
-	
+	public int getInitialRevealedMoney() {
+		return initialRevealedMoney;
+	}
+	public void setInitialRevealedMoney(int initialRevealedMoney) {
+		this.initialRevealedMoney = initialRevealedMoney;
+	}
+
 	public void addBot() {
 		String botName = "P" + Integer.toString(players.size());
 		Player bot = new Player();
@@ -133,6 +164,7 @@ public class Board {
 		bot.setBot(true);
 		players.add(bot);
 		addPlayerToDB(botName);
+		updateInitialRevealedMoney();
 	}
 
 	public BoardEntity toBoardEntity(String name) {
@@ -140,6 +172,7 @@ public class Board {
 		entity.setId(id);
 		entity.setStatus(Integer.toString(status));
 		entity.setDeckSize(Integer.toString(deck.size()));
+		entity.setIntialRevealedMoney(Integer.toString(initialRevealedMoney));
 		int i;
 		List<String> handSizes = new ArrayList<>();
 		List<String> revealedMoney = new ArrayList<>();
@@ -183,6 +216,7 @@ public class Board {
 		doc.append("curPlayer", curPlayer);
 		doc.append("numGoldInDeck", numGoldInDeck);
 		doc.append("lord", lord);
+		doc.append("initialRevealedMoney", initialRevealedMoney);
 		List<String> playerNames = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -208,6 +242,7 @@ public class Board {
 		curPlayer = doc.getInteger("curPlayer", -1);
 		numGoldInDeck = doc.getInteger("numGoldInDeck", -1);
 		lord = doc.getString("lord");
+		initialRevealedMoney = doc.getInteger("initialRevealedMoney", 0);
 		int i;
 		
 		players = new ArrayList<>();
@@ -242,12 +277,30 @@ public class Board {
 		setFromDoc(doc);
 	}
 	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
 	public void updatePlayer(String name) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
 			Document dop = p.toDocument();
 			String playerName = "player-" + p.getName();
 			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updateDeck() {
+		List<Integer> lod = new ArrayList<>();
+		for (int i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).getNum());
+		}
+		dbutil.update("id", id, "deck", lod);
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
 		}
 	}
 	

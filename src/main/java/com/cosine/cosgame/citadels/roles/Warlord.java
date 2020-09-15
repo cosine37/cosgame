@@ -34,8 +34,12 @@ public class Warlord extends Role {
 			for (i=0;i<board.getPlayers().size();i++) {
 				Player p = board.getPlayers().get(i);
 				List<String> singleBuiltInfo = new ArrayList<>();
+				int builtSize = 0;
 				for (j=0;j<p.getBuilt().size();j++) {
-					if (p.getBuilt().size() >= board.getFinishCount()) {
+					builtSize = builtSize + p.getBuilt().get(j).buildCount();
+				}
+				for (j=0;j<p.getBuilt().size();j++) {
+					if (builtSize >= board.getFinishCount()) {
 						singleBuiltInfo.add("-1");
 					} else if (p.getRole().isDestroyable() || p.getRole().getNum() == board.getKilledRole()) {
 						int temp = p.getBuilt().get(j).getCost() + p.getBuilt().get(j).getBeautifyLevel()-1;

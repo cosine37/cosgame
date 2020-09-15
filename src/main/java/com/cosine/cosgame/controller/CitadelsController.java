@@ -466,6 +466,13 @@ public class CitadelsController {
 			board.updateDeck();
 			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
+			//System.out.println(x);
+			if (x>=80000) {
+				int victimIndex = x%10000;
+				victimIndex = victimIndex/100;
+				//System.out.println(victimIndex);
+				board.updatePlayer(victimIndex);
+			}
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

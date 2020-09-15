@@ -20,10 +20,8 @@ public class AllRes {
 	
 	public List<Card> genDeck(int n, int x) {
 		List<Card> deck = cards;
-		int numGold;
-		numGold = 12%n + n*x;
 		
-		for (int i=0;i<numGold;i++) {
+		for (int i=0;i<x;i++) {
 			Card c = CardFactory.createCard(-3);
 			deck.add(c);
 		}
