@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.sckx.*;
+import com.cosine.cosgame.citadels.sckx.omnicolor.TechSchool;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class CardFactory {
@@ -101,6 +102,13 @@ public class CardFactory {
 			card = new Museum();
 		} else if (img.contentEquals("p410")) {
 			card = new Village();
+		} else if (img.contentEquals("o41b") 
+				|| img.contentEquals("o41g")
+				|| img.contentEquals("o41r")
+				|| img.contentEquals("o41y")) {
+			card = new TechSchool();
+			card.setColor(color);
+			card.setImg(img);
 		}
 		
 		else {
