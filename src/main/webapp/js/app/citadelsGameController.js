@@ -379,7 +379,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.getBoard()
 				})
 			} else if ($scope.askType == '2' && $scope.phase == '2'){
-				if ($scope.askId == '99306'){// chemical plant
+				if ($scope.askId == '99306' || $scope.askId == '99615'){// chemical plant && fort
 					var x = 80000 + playerIndex * 100 + builtIndex;
 					var data = {
 							"builtIndex": 0,
@@ -467,7 +467,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			if ($scope.askLs[x] == "n"){
 				return
 			}
-			if ($scope.askId == '99502' || $scope.askId == '99305'){ // South Street & Framework
+			if ($scope.askId == '99502' || $scope.askId == '99305' || $scope.askId == '98615'){ // South Street & Framework & Fort
 				var builtIndex = parseInt($scope.askBuiltIndex)
 				var data = {
 						"builtIndex" : builtIndex,

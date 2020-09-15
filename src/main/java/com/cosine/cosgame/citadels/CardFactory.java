@@ -111,6 +111,12 @@ public class CardFactory {
 			card.setImg(img);
 		} else if (img.contentEquals("p306")) {
 			card = new ChemicalPlant();
+		} else if (img.contentEquals("p203")) {
+			card = new Newsstand();
+		} else if (img.contentEquals("p511")) {
+			card = new CanalNo5();
+		} else if (img.contentEquals("p615")) {
+			card = new Fort();
 		}
 		
 		else {
