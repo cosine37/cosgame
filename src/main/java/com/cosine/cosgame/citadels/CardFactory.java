@@ -8,7 +8,7 @@ import org.bson.Document;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.sckx.*;
-import com.cosine.cosgame.citadels.sckx.omnicolor.TechSchool;
+import com.cosine.cosgame.citadels.sckx.omnicolor.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class CardFactory {
@@ -117,6 +117,18 @@ public class CardFactory {
 			card = new CanalNo5();
 		} else if (img.contentEquals("p615")) {
 			card = new Fort();
+		} else if (img.contentEquals("p514")) {
+			card = new DongpoPark();
+		} else if (img.contentEquals("p204")) {
+			card = new StupidSun();
+		} else if (img.contentEquals("o42b") 
+				|| img.contentEquals("o42g")
+				|| img.contentEquals("o42r")
+				|| img.contentEquals("o42y")
+				|| img.contentEquals("o42p")) {
+			card = new Motel();
+			card.setColor(color);
+			card.setImg(img);
 		}
 		
 		else {

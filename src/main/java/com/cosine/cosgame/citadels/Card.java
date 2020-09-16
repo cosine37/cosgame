@@ -66,6 +66,10 @@ public class Card {
 		
 	}
 	
+	public void onAnotherBuild(Card c) {
+		
+	}
+	
 	public void crownMovement() {
 		
 	}

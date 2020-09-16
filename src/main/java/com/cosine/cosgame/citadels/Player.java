@@ -277,6 +277,9 @@ public class Player {
 				numBuilt = numBuilt + c.getBuildCount();
 				c.setBuiltRound(board.getRoundCount());
 				hand.remove(x);
+				for (int i=0;i<built.size();i++) {
+					built.get(i).onAnotherBuild(c);
+				}
 				built.add(c);
 				coin = coin-cost;
 				board.addCoin(cost);

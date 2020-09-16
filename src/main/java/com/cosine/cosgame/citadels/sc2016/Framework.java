@@ -85,11 +85,31 @@ public class Framework extends Card{
 			}
 			Card f = player.getBuilt().remove(index);
 			Card c = player.getHand().remove(x);
+			board.log(name + "通过拆除 脚手架 免费建造了 " + c.getName() + " 。");
 			board.bottomDeck(f);
+			for (int i=0;i<player.getBuilt().size();i++) {
+				player.getBuilt().get(i).onAnotherBuild(c);
+			}
 			player.getBuilt().add(c);
+			c.onBuild();
+			if (player.isBeautify5Up() && c.getBeautifyLevel() < 3 && c.getCost() >= 5) {
+				x = board.takeCoins(1);
+				if (x>0) {
+					c.setBeautifyLevel(x);
+					board.log("因为 别墅区 的效果，" + c.getName() + " 升值了。");
+				}
+			}
+			if (player.isBeautifyUpTo2() && c.getBeautifyLevel() < 3 && c.getCost() <= 2) {
+				x = board.takeCoins(1);
+				if (x>0) {
+					c.setBeautifyLevel(x);
+					board.log("因为 福利院 的效果，" + c.getName() + " 升值了。");
+				}
+			}
+			player.getCanUseCardSkill().add(c.canUseSkillSameRound());
 			int y = player.getNumBuilt()+1;
 			player.setNumBuilt(y);
-			board.log(name + "通过拆除 脚手架 免费建造了 " + c.getName() + " 。");
+			
 		}
 		return ask;
 	}

@@ -153,6 +153,10 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Fort();
 		specialCards.add(c);
+		c = new DongpoPark();
+		specialCards.add(c);
+		c = new StupidSun();
+		specialCards.add(c);
 		*/
 	}
 	
@@ -208,7 +212,7 @@ public class AllRes {
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {
-			c = CardFactory.createCard("警察局", CitadelsConsts.RED, 3, "r3", -1, 0);
+			c = CardFactory.createCard("公安局", CitadelsConsts.RED, 3, "r3", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<2;i++) {
