@@ -51,10 +51,10 @@
 						</tr>
 						<tr>
 							<td>
-								<button style="background: rgb(102,102,102)" disabled>化工厂</button>
+								<button ng-click="showedCard='p306'" ng-disabled="showedCard == 'p306'">化工厂</button>
 								<button style="background: rgb(102,102,102)" disabled>文笔塔</button>
 								<button ng-click="showedCard='p402'" ng-disabled="showedCard == 'p402'">青果巷</button>
-								<button style="background: rgb(102,102,102)" disabled>博物馆</button>
+								<button ng-click="showedCard='p409'" ng-disabled="showedCard == 'p409'">博物馆</button>
 								<button ng-click="showedCard='p503'" ng-disabled="showedCard == 'p503'">宝林寺</button>
 								<button ng-click="showedCard='p504'" ng-disabled="showedCard == 'p504'">高铁站</button>
 								<button ng-click="showedCard='p505'" ng-disabled="showedCard == 'p505'">淹城遗址</button>
@@ -70,9 +70,9 @@
 								<button ng-click="showedCard='p001'" ng-disabled="showedCard == 'p001'">梳篦</button>
 								<button ng-click="showedCard='p202'" ng-disabled="showedCard == 'p202'">人民公园</button>
 								<button ng-click="showedCard='p302'" ng-disabled="showedCard == 'p302'">雕像</button>
-								<button style="background: rgb(102,102,102)" disabled>脚手架</button>
+								<button ng-click="showedCard='p305'" ng-disabled="showedCard == 'p305'">脚手架</button>
 								<button ng-click="showedCard='p403'" ng-disabled="showedCard == 'p403'">天宁寺</button>
-								<button style="background: rgb(102,102,102)" disabled>新村</button>
+								<button ng-click="showedCard='p410'" ng-disabled="showedCard == 'p410'">新村</button>
 								<button ng-click="showedCard='p507'" ng-disabled="showedCard == 'p507'">公寓</button>
 								<button ng-click="showedCard='p508'" ng-disabled="showedCard == 'p508'">茅山道场</button>
 								<button style="background: rgb(102,102,102)" disabled>体育场</button>
@@ -415,6 +415,61 @@
 							</td>
 						</tr>
 					</table>
+					
+					
+					<table ng-show="showedCard == 'p305'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 脚手架</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以拆除该<span class="citadelstext">建筑</span>并免费建造一个你未建造的<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你以此法建造的<span class="citadelstext">建筑</span>视为和正常方式建造<span class="citadelstext">建筑</span>一样，
+								所以你不能以此法建造相同名称的<span class="citadelstext">建筑</span>，且若你本回合建造数量已达上限，你不能以此法免费建造<span class="citadelstext">建筑</span>。
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == 'p306'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 化工厂</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以拆除该<span class="citadelstext">建筑</span>拆除任意一个其他玩家的<span class="citadelstext">建筑</span>。
+								不能拆除已完成玩家的<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该建筑和你指定拆除的其它玩家的<span class="citadelstext">建筑</span>会置于牌堆底。
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == 'p409'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 博物馆</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以在回合内将一张手牌背面朝上放置于该<span class="citadelstext">建筑</span>下，每回合限一次。
+								游戏结束时该<span class="citadelstext">建筑</span>下每有1张手牌，你额外获得1分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">城管</span>拆除该<span class="citadelstext">建筑</span>只需要花费3<span class="citadelstext">￥</span>，
+								无论该建筑下方有几张牌。当该建筑被任何方式拆除时，将该建筑下方的牌和该建筑一起置于牌堆底。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州博物馆新馆于2007年对外开放，地处市民广场西侧。
+								馆藏文物2万余件，其中国家一级文物 27件（国宝级文物1件）、二级文物166件、三级文物3129件，国家一、二级保护动植物、化石标本103件。</i>
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == 'p410'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 新村</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该建筑视为2个<span class="citadelstext">建筑</span>。
+								你在已有5个及以上<span class="citadelstext">建筑</span>时无法建造建造该<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造该<span class="citadelstext">建筑</span>只需要花费1次建造。如<span class="citadelstext">建筑师</span>
+								第一次建造的是<span class="citadelstext">新村</span>，该回合依然可以再建造2个建筑。
+							</td>
+						</tr>
+					</table>
+					
 				</div>
 			</td>
 		</tr>

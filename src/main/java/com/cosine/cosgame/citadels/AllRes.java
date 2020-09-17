@@ -137,7 +137,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Insurance();
 		specialCards.add(c);
-		/*
+		
 		c = new Museum();
 		specialCards.add(c);
 		c = new Village();
@@ -157,7 +157,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new StupidSun();
 		specialCards.add(c);
-		*/
+		
 	}
 	
 	public void setBaseCards() {
