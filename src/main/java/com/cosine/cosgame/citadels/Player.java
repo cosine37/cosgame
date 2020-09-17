@@ -223,7 +223,15 @@ public class Player {
 		}
 	}
 	
-	public boolean canBuild(int x) {
+	public int builtSize() {
+		int builtSize = 0;
+		for (int i=0;i<built.size();i++) {
+			builtSize = builtSize + built.get(i).buildCount();
+		}
+		return builtSize;
+	}
+	
+	public boolean canBuildFree(int x) {
 		if (hand.size()>x) {
 			Card c = hand.get(x);
 			if (!c.isBuildable()) {
@@ -232,7 +240,19 @@ public class Player {
 			if (numBuilt + c.getBuildCount() > buildLimit) {
 				return false;
 			}
-			
+			if (notIdentical(c) == false) {
+				return false;
+			}
+			int builtSize = builtSize();
+			return hand.get(x).canBuildWhen(builtSize);
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean canBuild(int x) {
+		if (canBuildFree(x)) {
+			Card c = hand.get(x);
 			int color = c.getColor();
 			int costReduce;
 			if (color>9) {
@@ -246,20 +266,56 @@ public class Player {
 			if (cost<0) cost = 0;
 			if (cost > coin) {
 				return false;
+			} else {
+				return true;
 			}
-			
-			if (notIdentical(c) == false) {
-				return false;
-			}
-			return hand.get(x).canBuildWhen(built.size());
 			
 		} else {
 			return false;
 		}
 	}
 	
-	public void build(int x) {
+	public void freeBuild(int x) {
 		if (hand.size() > x) {
+			Card c = hand.get(x);
+			numBuilt = numBuilt + c.getBuildCount();
+			c.setBuiltRound(board.getRoundCount());
+			hand.remove(x);
+			for (int i=0;i<built.size();i++) {
+				built.get(i).onAnotherBuild(c);
+			}
+			built.add(c);
+			c.onBuild();
+			if (beautify5Up && c.getBeautifyLevel() < 3 && c.getCost() >= 5) {
+				x = board.takeCoins(1);
+				if (x>0) {
+					c.setBeautifyLevel(x);
+					board.log("因为 别墅区 的效果，" + c.getName() + " 升值了。");
+				}
+			}
+			if (beautifyUpTo2 && c.getBeautifyLevel() < 3 && c.getCost() <= 2) {
+				x = board.takeCoins(1);
+				if (x>0) {
+					c.setBeautifyLevel(x);
+					board.log("因为 福利院 的效果，" + c.getName() + " 升值了。");
+				}
+			}
+			canUseCardSkill.add(c.canUseSkillSameRound());
+			int builtSize = builtSize();
+			if (builtSize >= board.getFinishCount()) {
+				finished = true;
+				if (board.isFirstFinished()) {
+					firstFinished = true;
+					board.setFirstFinished(false);
+					board.log(name + "达成了建筑数量目标，游戏将在本回合结束后结束。");
+				}
+			}
+		}
+		
+	}
+	
+	public void build(int x) {
+		if (canBuild(x)) {
 			Card c = hand.get(x);
 			int color = c.getColor();
 			int costReduce;
@@ -272,45 +328,11 @@ public class Player {
 			}
 			int cost = c.getCost() - costReduce;
 			if (cost<0) cost = 0;
-			if (canBuild(x)) {
-				board.log(name + "花费了" + Integer.toString(cost) + "￥建造了 " + c.getName()+"。");
-				numBuilt = numBuilt + c.getBuildCount();
-				c.setBuiltRound(board.getRoundCount());
-				hand.remove(x);
-				for (int i=0;i<built.size();i++) {
-					built.get(i).onAnotherBuild(c);
-				}
-				built.add(c);
-				coin = coin-cost;
-				board.addCoin(cost);
-				c.onBuild();
-				if (beautify5Up && c.getBeautifyLevel() < 3 && c.getCost() >= 5) {
-					x = board.takeCoins(1);
-					if (x>0) {
-						c.setBeautifyLevel(x);
-						board.log("因为 别墅区 的效果，" + c.getName() + " 升值了。");
-					}
-				}
-				if (beautifyUpTo2 && c.getBeautifyLevel() < 3 && c.getCost() <= 2) {
-					x = board.takeCoins(1);
-					if (x>0) {
-						c.setBeautifyLevel(x);
-						board.log("因为 福利院 的效果，" + c.getName() + " 升值了。");
-					}
-				}
-				canUseCardSkill.add(c.canUseSkillSameRound());
-				int builtSize = 0;
-				for (int i=0;i<built.size();i++) {
-					builtSize = builtSize + built.get(i).buildCount();
-				}
-				if (builtSize >= board.getFinishCount()) {
-					finished = true;
-					if (board.isFirstFinished()) {
-						firstFinished = true;
-						board.setFirstFinished(false);
-						board.log(name + "达成了建筑数量目标，游戏将在本回合结束后结束。");
-					}
-				}
+			coin = coin-cost;
+			board.addCoin(cost);
+			board.log(name + "花费了" + Integer.toString(cost) + "￥建造了 " + c.getName()+"。");
+			if (canBuildFree(x)) {
+				freeBuild(x);
 			}
 		}
 	}
