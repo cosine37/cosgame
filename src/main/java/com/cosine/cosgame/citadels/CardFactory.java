@@ -131,6 +131,14 @@ public class CardFactory {
 			card.setImg(img);
 		} else if (img.contentEquals("p515")) {
 			card = new ShootMoonBay();
+		} else if (img.contentEquals("o21b") 
+				|| img.contentEquals("o21g")
+				|| img.contentEquals("o21r")
+				|| img.contentEquals("o21y")
+				|| img.contentEquals("o21p")) {
+			card = new Agency();
+			card.setColor(color);
+			card.setImg(img);
 		}
 		
 		else {
