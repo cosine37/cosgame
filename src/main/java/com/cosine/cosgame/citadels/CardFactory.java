@@ -129,6 +129,8 @@ public class CardFactory {
 			card = new Motel();
 			card.setColor(color);
 			card.setImg(img);
+		} else if (img.contentEquals("p515")) {
+			card = new ShootMoonBay();
 		}
 		
 		else {

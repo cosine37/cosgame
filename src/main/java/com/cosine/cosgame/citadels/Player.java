@@ -231,13 +231,10 @@ public class Player {
 		return builtSize;
 	}
 	
-	public boolean canBuildFree(int x) {
+	public boolean canBuildFreeNoLimit(int x) {
 		if (hand.size()>x) {
 			Card c = hand.get(x);
 			if (!c.isBuildable()) {
-				return false;
-			}
-			if (numBuilt + c.getBuildCount() > buildLimit) {
 				return false;
 			}
 			if (notIdentical(c) == false) {
@@ -245,6 +242,19 @@ public class Player {
 			}
 			int builtSize = builtSize();
 			return hand.get(x).canBuildWhen(builtSize);
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean canBuildFree(int x) {
+		if (canBuildFreeNoLimit(x)) {
+			Card c = hand.get(x);
+			if (numBuilt + c.getBuildCount() > buildLimit) {
+				return false;
+			} else {
+				return true;
+			}
 		} else {
 			return false;
 		}
@@ -280,6 +290,7 @@ public class Player {
 			Card c = hand.get(x);
 			numBuilt = numBuilt + c.getBuildCount();
 			c.setBuiltRound(board.getRoundCount());
+			c.setIndex(built.size());
 			hand.remove(x);
 			for (int i=0;i<built.size();i++) {
 				built.get(i).onAnotherBuild(c);

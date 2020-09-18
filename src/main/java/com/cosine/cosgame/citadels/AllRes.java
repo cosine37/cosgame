@@ -168,7 +168,7 @@ public class AllRes {
 			baseCards.add(c);
 		}
 		for (i=0;i<4;i++) {
-			c = CardFactory.createCard("快餐店", CitadelsConsts.GREEN, 2, "g21", -1, 0);
+			c = CardFactory.createCard("小吃店", CitadelsConsts.GREEN, 2, "g21", -1, 0);
 			baseCards.add(c);
 		}
 		for (i=0;i<3;i++) {

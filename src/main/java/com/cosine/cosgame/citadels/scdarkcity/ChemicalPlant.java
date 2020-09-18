@@ -58,10 +58,7 @@ public class ChemicalPlant extends Card {
 			for (i=0;i<board.getPlayers().size();i++) {
 				Player p = board.getPlayers().get(i);
 				List<String> singleBuiltInfo = new ArrayList<>();
-				int builtSize = 0;
-				for (j=0;j<p.getBuilt().size();j++) {
-					builtSize = builtSize + p.getBuilt().get(i).buildCount();
-				}
+				int builtSize = p.builtSize();
 				for (j=0;j<p.getBuilt().size();j++) {
 					if (builtSize >= board.getFinishCount()) {
 						singleBuiltInfo.add("-1");

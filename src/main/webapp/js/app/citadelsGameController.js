@@ -50,6 +50,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.chooseRoleNumCol = 4
 		$scope.showRoleSelection = false
 		
+		$scope.builtToUseSkill;
+		
 		$scope.roleTable = []
 		
 		
@@ -375,6 +377,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				var data = {
 						"builtIndex" : builtIndex
 				}
+				$scope.builtToUseSkill = builtIndex;
 				$http({url: "/citadelsgame/choosecardskill", method: "POST", params: data}).then(function(response){
 					$scope.getBoard()
 				})
@@ -382,7 +385,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				if ($scope.askId == '99306' || $scope.askId == '99615'){// chemical plant && fort
 					var x = 80000 + playerIndex * 100 + builtIndex;
 					var data = {
-							"builtIndex": 0,
+							"builtIndex": $scope.builtToUseSkill,
 							"x": x
 					}
 					$http({url: "/citadelsgame/usecardskill", method: "POST", params: data}).then(function(response){
@@ -467,7 +470,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			if ($scope.askLs[x] == "n"){
 				return
 			}
-			if ($scope.askId == '99502' || $scope.askId == '99305' || $scope.askId == '98615'){ // South Street & Framework & Fort
+			if ($scope.askId == '99502' || $scope.askId == '99305' // South Street & Framework
+				|| $scope.askId == '98615' || $scope.askId == '99515'){ // Fort && ShootMoonBay
 				var builtIndex = parseInt($scope.askBuiltIndex)
 				var data = {
 						"builtIndex" : builtIndex,
