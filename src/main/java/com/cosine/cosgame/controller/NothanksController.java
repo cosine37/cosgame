@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.nothanks.Board;
 import com.cosine.cosgame.nothanks.BoardEntity;
+import com.cosine.cosgame.nothanks.NothanksMeta;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -32,6 +33,15 @@ public class NothanksController {
 	@RequestMapping(value="/nothanksgame", method = RequestMethod.GET)
 	public String nothanksGame() {
 		return "nothanksGame";
+	}
+	
+	@RequestMapping(value="/nothanks/allboards", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
+		NothanksMeta meta = new NothanksMeta();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/nothanksgame/newboard", method = RequestMethod.POST)
@@ -71,6 +81,7 @@ public class NothanksController {
 		board.startGame();
 		board.updateDeck();
 		board.updatePlayers();
+		board.updateDB("status", board.getStatus());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

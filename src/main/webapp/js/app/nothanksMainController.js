@@ -5,8 +5,13 @@ var setUrl = function(d){
 }
 
 var app = angular.module("nothanksMainApp", []);
-app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
+		$scope.boards = []
+		$scope.statuses = []
+		$scope.lords = []
+		$scope.canBack = []
+		$scope.onTablesTab = true;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -23,10 +28,59 @@ app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.getAllBoards = function(){
+			$http.get('/nothanks/allboards').then(function(response){
+				var n = response.data.value.length / 4;
+				$scope.boards = []
+				$scope.statuses = []
+				$scope.lords = []
+				$scope.canBack = []
+				for (var i=0;i<n;i++){
+					$scope.boards.push(response.data.value[i*4])
+					var l = response.data.value[i*4+1]
+					$scope.lords.push(l)
+					var x = response.data.value[i*4+2]
+					var t = ''
+					if (x == '0'){
+						t = '准备中'
+					} else if (x == '3'){
+						t = '游戏结束'
+					} else {
+						t = '游戏中'
+					}
+					$scope.statuses.push(t)
+					var y = response.data.value[i*4+3]
+					$scope.canBack.push(y)
+				}
+			});
+		}
+		
 		$scope.newGame = function(){
 			$http.post('/nothanksgame/newboard').then(function(response){
 				$scope.goto('nothankscreategame');
 			});
 		}
+		
+		$scope.showTablesTab = function(){
+			$scope.onTablesTab = true;
+		}
+		
+		$scope.hideTablesTab = function(){
+			$scope.onTablesTab = false;
+		}
+		
+		$scope.offturnHandle = function(){
+			if ($scope.onTablesTab){
+				$scope.getAllBoards();
+			}
+			
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},4000);
+			
+		}
+		
+		
+		$scope.offturnHandle();
 		
 }]);

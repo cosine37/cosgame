@@ -54,6 +54,8 @@ public class Board {
 			players.get(i).setRevealedMoney(initialRevealedMoney);
 		}
 		shuffle();
+		curPlayer = 0;
+		players.get(curPlayer).draw();
 	}
 	
 	public void shuffle() {
@@ -252,6 +254,7 @@ public class Board {
 			Document dop = (Document) doc.get(key);
 			Player p = new Player();
 			p.setFromDoc(dop);
+			p.setBoard(this);
 			players.add(p);
 		}
 		

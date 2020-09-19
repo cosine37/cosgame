@@ -16,9 +16,11 @@ public class Player {
 	
 	public Player() {
 		hand = new ArrayList<>();
+		phase = -1; //offturn
 	}
 	
 	public void draw() {
+		phase = 0; // in turn;
 		if (pack == null) {
 			pack = board.genPack();
 		}
