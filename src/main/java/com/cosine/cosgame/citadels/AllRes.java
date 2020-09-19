@@ -107,7 +107,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Comb();
 		specialCards.add(c);
-		c = new CultPalace();
+		c = new CulturePalace();
 		specialCards.add(c);
 		c = new CommodityMarket();
 		specialCards.add(c);

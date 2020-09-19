@@ -71,6 +71,9 @@ public class Framework extends Card{
 				x = 0;
 			}
 			Card f = player.getBuilt().remove(index);
+			player.getCanUseCardSkill().remove(index);
+			board.addCoin(f.getBeautifyLevel());
+			f.setBeautifyLevel(0);
 			Card c = player.getHand().get(x);
 			board.log(name + "通过拆除 脚手架 免费建造了 " + c.getName() + " 。");
 			board.bottomDeck(f);

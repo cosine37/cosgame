@@ -483,7 +483,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			}
 			if ($scope.askId == '99502' || $scope.askId == '99305' // South Street & Framework
 				|| $scope.askId == '98615' || $scope.askId == '99515' // Fort && ShootMoonBay
-				|| $scope.askId == '99921' // Agency
+				|| $scope.askId == '99921' || $scope.askId == '99951'// Agency & Office
 					){ 
 				var builtIndex = parseInt($scope.askBuiltIndex)
 				var data = {

@@ -124,6 +124,7 @@ public class ChemicalPlant extends Card {
 			board.bottomDeck(c);
 			
 			Card s = player.getBuilt().remove(index);
+			player.getCanUseCardSkill().remove(index);
 			board.addCoin(s.getBeautifyLevel());
 			s.setBeautifyLevel(0);
 			board.bottomDeck(s);

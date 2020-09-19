@@ -3,8 +3,8 @@ package com.cosine.cosgame.citadels.sckx;
 import com.cosine.cosgame.citadels.Card;
 import com.cosine.cosgame.citadels.CitadelsConsts;
 
-public class CultPalace extends Card{
-	public CultPalace() {
+public class CulturePalace extends Card{
+	public CulturePalace() {
 		super();
 		name = "文化宫";
 		cost = 6;

@@ -38,6 +38,9 @@ public class Newsstand extends Card{
 		if (cardsUnder.size() == 0) {
 			board.log(name + "的 报刊亭 感觉身体被掏空，被拆除了。");
 			Card n = player.getBuilt().remove(index);
+			player.getCanUseCardSkill().remove(index);
+			board.addCoin(n.getBeautifyLevel());
+			n.setBeautifyLevel(0);
 			board.bottomDeck(n);
 		}
 		return ask;

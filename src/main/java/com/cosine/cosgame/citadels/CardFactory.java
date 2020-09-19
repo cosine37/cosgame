@@ -63,7 +63,7 @@ public class CardFactory {
 		} else if (img.contentEquals("p001")) {
 			card = new Comb();
 		} else if (img.contentEquals("p609")) {
-			card = new CultPalace();
+			card = new CulturePalace();
 		} else if (img.contentEquals("p404")) {
 			card = new CommodityMarket();
 		} else if (img.contentEquals("p610")) {
@@ -137,6 +137,18 @@ public class CardFactory {
 				|| img.contentEquals("o21y")
 				|| img.contentEquals("o21p")) {
 			card = new Agency();
+			card.setColor(color);
+			card.setImg(img);
+		} else if (img.contentEquals("o01r")) {
+			card = new Roadblock();
+		} else if (img.contentEquals("o43y")) {
+			card = new NewsCenter();
+		} else if (img.contentEquals("o51b") 
+				|| img.contentEquals("o51g")
+				|| img.contentEquals("o51r")
+				|| img.contentEquals("o51y")
+				|| img.contentEquals("o51p")) {
+			card = new Office();
 			card.setColor(color);
 			card.setImg(img);
 		}

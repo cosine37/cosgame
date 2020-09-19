@@ -114,6 +114,14 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
+		/*
+		Card c = new NewsCenter();
+		deck.add(0,c);
+		c = new Office();
+		deck.add(0,c);
+		c = new Roadblock();
+		deck.add(0,c);
+		*/
 	}
 	
 	public void deal() {
