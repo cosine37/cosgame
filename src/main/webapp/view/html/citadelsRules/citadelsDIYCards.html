@@ -62,6 +62,7 @@
 								<button ng-click="showedCard='p511'" ng-disabled="showedCard == 'p511'">运河五号</button>
 								<button ng-click="showedCard='p514'" ng-disabled="showedCard == 'p514'">东坡公园</button>
 								<button ng-click="showedCard='p615'" ng-disabled="showedCard == 'p615'">古炮台</button>
+								<button ng-click="showedCard='p515'" ng-disabled="showedCard == 'p515'">揽月湾</button>
 							</td>
 						<tr></tr>
 						<tr><td></td></tr>
@@ -98,9 +99,9 @@
 							<td><img ng-src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 大成三厂</h4>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年9月4日上线）</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从下一回合起，每回合你可以额外建造一个<span class="citadelstext">建筑</span>，
-								建造该<span class="citadelstext">建筑</span>的当回合无法发动。</br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年9月4日上线， 2020年9月18日修改）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从本回合起，每回合你可以额外建造一个<span class="citadelstext">建筑</span>，
+								建造完该<span class="citadelstext">建筑</span>后立即获得2<span class="citadelstext">￥</span>。</br></br>
 								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>大成三厂旧址位于茶山街道。
 								大成三厂旧址为刘国钧实业主体之一，是我市目前保存体量最大、最为完整的民国早期纺织业建筑遗存，是常州地区民族工业的特色建筑群。
@@ -380,6 +381,24 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该炮台位于长江南岸的江阴鹅鼻嘴公园，修建于1949年。
 								</i>
 								
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == 'p515'">
+						<tr style="width: 1000px">
+							<td><img src="/image/Citadels/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 揽月湾</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年9月18日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;建造完该<span class="citadelstext">建筑</span>后，
+								你可以额外支付1￥并免费建造一个价格不超过3￥的<span class="citadelstext">建筑</span>。你以此法建造的<span class="citadelstext">建筑</span>不计入回合上限。
+								除非特殊情况，否则你不能以此法建造相同名字的<span class="citadelstext">建筑</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该效果在建造完之后立即发动，你也可以选择不发动，但是之后无法发动该效果。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>建筑资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>西太湖揽月湾广场，熠熠湖水，阵阵涟漪，直径88米、高100米的大型喷泉冲天而起，变幻多姿；音乐、喷泉、激光、灯光，在西太湖揽月湾绘织成了一幅美轮美奂的水景图；
+								西太湖揽月湾打造出了优美的“月光水城”幽静的西太湖延岸，最惬意的河边散步。
+								</i>
 							</td>
 						</tr>
 					</table>

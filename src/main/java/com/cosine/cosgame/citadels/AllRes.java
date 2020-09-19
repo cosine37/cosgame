@@ -51,6 +51,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new FurnitureDealer();
 		allRoles.add(r);
+		r = new Diplomat();
+		allRoles.add(r);
 	}
 	
 	public void setSpecialCards() {
@@ -157,7 +159,8 @@ public class AllRes {
 		specialCards.add(c);
 		c = new StupidSun();
 		specialCards.add(c);
-		
+		c = new ShootMoonBay();
+		specialCards.add(c);
 	}
 	
 	public void setBaseCards() {
@@ -251,8 +254,13 @@ public class AllRes {
 	
 	public List<Role> genRoles(int playerNum){
 		List<Role> ans = new ArrayList<>();
-		for (int i=0;i<8;i++) {
+		for (int i=0;i<7;i++) {
 			ans.add(allRoles.get(i));
+		}
+		if (board.getNo8() == 0) {
+			ans.add(allRoles.get(7));
+		} else if (board.getNo8() == 1) {
+			ans.add(allRoles.get(10));
 		}
 		if (board.getNo9() == 0) {
 			ans.add(allRoles.get(8));

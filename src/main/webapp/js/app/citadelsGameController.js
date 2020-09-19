@@ -395,16 +395,27 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				
 				else { // use skill, destroy & take beautify
 					var wouldChoose = true
-					if ($scope.askId == '1081'){ // warlord destroy
+					if ($scope.askId == '1081' || $scope.askId == '1182'){ // warlord destroy & diplomat exchange
 						wouldChoose = confirm("需要花费" + $scope.askBuiltInfo[playerIndex][builtIndex] + "￥，确定继续吗？")
 					}
 					if (wouldChoose){
-						var data = {
-								"skillIndex" : 1,
-								"roleIndex" : 0,
-								"playerIndex" : playerIndex,
-								"builtIndex" : builtIndex
+						var data
+						if ($scope.askId == '1182'){
+							data = {
+									"skillIndex" : 1,
+									"roleIndex" : $scope.askBuiltIndex,
+									"playerIndex" : playerIndex,
+									"builtIndex" : builtIndex
+							}
+						} else {
+							data = {
+									"skillIndex" : 1,
+									"roleIndex" : 0,
+									"playerIndex" : playerIndex,
+									"builtIndex" : builtIndex
+							}
 						}
+						
 						$http({url: "/citadelsgame/useskill", method: "POST", params: data}).then(function(response){
 							$scope.getBoard()
 						})

@@ -51,6 +51,7 @@ public class BoardEntity {
 	String chooseOrDiscard;
 	String finishCount;
 	String regicide;
+	String no8;
 	String no9;
 	String useDuoColor;
 
@@ -329,6 +330,12 @@ public class BoardEntity {
 	}
 	public void setAskLimit(String askLimit) {
 		this.askLimit = askLimit;
+	}
+	public String getNo8() {
+		return no8;
+	}
+	public void setNo8(String no8) {
+		this.no8 = no8;
 	}
 	public String getNo9() {
 		return no9;

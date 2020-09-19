@@ -37,6 +37,7 @@ public class Board {
 	int curPlayer;
 	int curRoleNum;
 	int crown;
+	int no8;
 	int no9;
 	String id;
 	MongoDBUtil dbutil;
@@ -54,6 +55,7 @@ public class Board {
 		killedRole = -1;
 		stealedRole = -1;
 		no9 = -1;
+		no8 = 0;
 		
 		status = CitadelsConsts.PREGAME;
 		
@@ -112,8 +114,6 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		Card c = new Agency();
-		deck.add(0,c);
 	}
 	
 	public void deal() {
@@ -638,6 +638,12 @@ public class Board {
 	public void setTempRevealedTop(List<String> tempRevealedTop) {
 		this.tempRevealedTop = tempRevealedTop;
 	}
+	public int getNo8() {
+		return no8;
+	}
+	public void setNo8(int no8) {
+		this.no8 = no8;
+	}
 	public int getNo9() {
 		return no9;
 	}
@@ -861,6 +867,7 @@ public class Board {
 		entity.setRegicide(regicide);
 		entity.setTempRevealedTop(tempRevealedTop);
 		entity.setSpecialHands(specialHands);
+		entity.setNo8(Integer.toString(no8));
 		entity.setNo9(Integer.toString(no9));
 		entity.setUseDuoColor(useDuoColor);
 		return entity;
@@ -883,6 +890,7 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("regicide", regicide);
 		doc.append("tempRevealedTop", tempRevealedTop);
+		doc.append("no8", no8);
 		doc.append("no9", no9);
 		doc.append("useDuoColor", useDuoColor);
 		int i;
@@ -923,6 +931,7 @@ public class Board {
 		crown = doc.getInteger("crown", -1);
 		lord = doc.getString("lord");
 		regicide = doc.getBoolean("regicide", false);
+		no8 = doc.getInteger("no8", 0);
 		no9 = doc.getInteger("no9", -1);
 		useDuoColor = doc.getBoolean("useDuoColor", false);
 		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");

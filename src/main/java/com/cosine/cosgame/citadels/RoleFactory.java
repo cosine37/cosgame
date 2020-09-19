@@ -28,6 +28,8 @@ public class RoleFactory {
 			role = new Journalist();
 		} else if (img.contentEquals("119")) {
 			role = new FurnitureDealer();
+		} else if (img.contentEquals("108")) {
+			role = new Diplomat();
 		}
 		
 		else {

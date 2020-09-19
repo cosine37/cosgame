@@ -13,10 +13,13 @@ public class GreatA3Factory extends Card{
 		expansion = 3;
 	}
 	
+	public void onBuild() {
+		player.addCoin(2);
+		board.log("因为 大成三厂 的效果，" + player.getName() + "获得了2￥。");
+	}
+	
 	public void alterPlayerAbility() {
-		if (board.getRoundCount() > builtRound) {
-			int x = player.getBuildLimit()+1;
-			player.setBuildLimit(x);
-		}
+		int x = player.getBuildLimit()+1;
+		player.setBuildLimit(x);
 	}
 }

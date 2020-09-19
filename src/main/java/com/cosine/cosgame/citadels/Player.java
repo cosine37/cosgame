@@ -356,6 +356,56 @@ public class Player {
 		}
 	}
 	
+	public List<String> canExchangeList(Player dp, Card c) { // a helper for diplomat
+		List<String> ans = new ArrayList<>();
+		boolean flag;
+		if (dp.getName().contentEquals(name)) {
+			flag = false;
+		} else if (this.builtSize() >= board.getFinishCount()) {
+			flag = false;
+		} else if (role.isDestroyable() || role.getNum() == board.getKilledRole()) {
+			if (notIdentical(c)) {
+				flag = true;
+			} else {
+				flag = false;
+			}
+		} else {
+			flag = false;
+		}
+		
+		for (int i=0;i<built.size();i++) {
+			if (flag) {
+				Card b = built.get(i);
+				int x = b.getCost() + b.getBeautifyLevel() - c.getCost() - c.getBeautifyLevel();
+				if (greatWallIndex >= 0 && i != greatWallIndex) {
+					x = x+1;
+				}
+				if (x<0) x = 0;
+				if (x>dp.getCoin()) {
+					ans.add("-1");
+				} else {
+					ans.add(Integer.toString(x));
+				}
+			} else {
+				ans.add("-1");
+			}
+		}
+		return ans;
+	}
+	
+	public boolean canReceive(Player dp, Card c) { // a helper for diplomat
+		List<String> ls = canExchangeList(dp, c);
+		boolean f = false;
+		for (int i=0;i<ls.size();i++) {
+			if (ls.get(i).contentEquals("-1")) {
+				
+			} else {
+				f = true;
+			}
+		}
+		return f;
+	}
+	
 	public void botNextMove() { // for bot to take action & build
 		if (phase == CitadelsConsts.TAKEACTION) {
 			if (hand.size() > 1) {

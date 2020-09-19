@@ -42,6 +42,10 @@
 			<td>{{useDuoColorDisplay}}</td>
 		</tr>
 		<tr>
+			<td>8号角色：</td>
+			<td>{{no8Display}}</td>
+		</tr>
+		<tr>
 			<td>9号角色：</td>
 			<td>{{no9Display}}</td>
 		</tr>
@@ -71,6 +75,11 @@
 		<div>
 			<button ng-click="setUseDuoColor()">{{duoColorButton}}</button>
 			<button ng-click="setRegicide()">变更市长被带走规则</button>
+		</div>
+		<p></p>
+		<div>
+			<button ng-click="setNo8(0)">8号使用城管</button>
+			<button ng-click="setNo8(1)">8号使用法官</button>
 		</div>
 		<p></p>
 		<div>
