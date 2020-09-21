@@ -122,6 +122,8 @@ public class Board {
 		c = new Roadblock();
 		deck.add(0,c);
 		*/
+		Card c = new Guesthouse();
+		deck.add(0,c);
 	}
 	
 	public void deal() {
@@ -401,6 +403,11 @@ public class Board {
 						String playerName = players.get(curPlayer).getName();
 						log(playerName + "开始回合。");
 						players.get(curPlayer).getRole().whenReveal();
+						for (int j=0;j<players.get(curPlayer).getBuilt().size();j++) {
+							Card c = players.get(curPlayer).getBuilt().get(j);
+							//System.out.println("Deck size:" + deck.size());
+							c.beforeTakeActionEffect();
+						}
 						players.get(curPlayer).setPhase(CitadelsConsts.TAKEACTION);
 						break;
 					}
@@ -951,6 +958,13 @@ public class Board {
 			r.setBoard(this);
 			roles.add(r);
 		}
+		List<Document> dod = (List<Document>) doc.get("deck");
+		deck = new ArrayList<>();
+		for (i=0;i<dod.size();i++) {
+			Card c = CardFactory.createCard(dod.get(i));
+			c.setBoard(this);
+			deck.add(c);
+		}
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		for (i=0;i<playerNames.size();i++) {
 			String playerName = playerNames.get(i);
@@ -962,13 +976,6 @@ public class Board {
 				p.setFromDoc(dop);
 			}
 			players.add(p);
-		}
-		List<Document> dod = (List<Document>) doc.get("deck");
-		deck = new ArrayList<>();
-		for (i=0;i<dod.size();i++) {
-			Card c = CardFactory.createCard(dod.get(i));
-			c.setBoard(this);
-			deck.add(c);
 		}
 		logger.setLogs((List<String>) doc.get("logs"));
 	}

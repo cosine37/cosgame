@@ -151,6 +151,14 @@ public class CardFactory {
 			card = new Office();
 			card.setColor(color);
 			card.setImg(img);
+		} else if (img.contentEquals("o11b") 
+				|| img.contentEquals("o11g")
+				|| img.contentEquals("o11r")
+				|| img.contentEquals("o11y")
+				|| img.contentEquals("o11p")) {
+			card = new Guesthouse();
+			card.setColor(color);
+			card.setImg(img);
 		}
 		
 		else {

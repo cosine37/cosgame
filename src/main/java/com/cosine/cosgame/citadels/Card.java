@@ -54,6 +54,10 @@ public class Card {
 		
 	}
 	
+	public void beforeTakeActionEffect() {
+		
+	}
+	
 	public void afterTakeActionEffect() {
 		
 	}

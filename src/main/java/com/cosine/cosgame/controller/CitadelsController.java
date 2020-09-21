@@ -67,9 +67,15 @@ public class CitadelsController {
 	public String citadelsDIYCards() {
 		return "citadelsRules/citadelsDIYCards";
 	}
+	
 	@RequestMapping(value="/citadelsduocards", method = RequestMethod.GET)
 	public String citadelsDuoCards() {
 		return "citadelsRules/citadelsDuoCards";
+	}
+	
+	@RequestMapping(value="/citadelsomnicards", method = RequestMethod.GET)
+	public String citadelsOmniCards() {
+		return "citadelsRules/citadelsOmniCards";
 	}
 	
 	@RequestMapping(value="/citadelsgame/empty", method = RequestMethod.POST)
@@ -278,6 +284,7 @@ public class CitadelsController {
 		}
 		board.updateCurPlayer();
 		board.updateLogs();
+		board.updateDeck();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -347,11 +354,13 @@ public class CitadelsController {
 		board.updateDB("curPlayer", board.getCurPlayer());
 		board.updateDB("curRoleNum", board.getCurRoleNum());
 		board.updateDB("crown", board.getCrown());
+		board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 		if (board.isCrownMoved()) {
 			board.updateTrackCrownPlayers();
 		}
 		board.updateCurPlayer();
 		board.updateLogs();
+		board.updateDeck();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
