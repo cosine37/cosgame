@@ -19,6 +19,7 @@ public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Role> roles;
+	List<Delicacy> delicacies;
 	List<Integer> trackCrownPlayers;
 	List<Integer> trackOtherAssassinPlayers;
 	List<String> tempRevealedTop;
@@ -49,6 +50,7 @@ public class Board {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		roles = new ArrayList<>();
+		delicacies = new ArrayList<>();
 		firstFinished = true;
 		finishCount = 7;
 		coins = 40;
@@ -834,6 +836,10 @@ public class Board {
 				specialHands.add(singleSpecialHand);
 			}
 		}
+		List<String> lod = new ArrayList<>();
+		for (i=0;i<delicacies.size();i++) {
+			lod.add(delicacies.get(i).getImg());
+		}
 			
 		entity.setDeckSize(Integer.toString(this.deck.size()));
 		entity.setBank(Integer.toString(this.coins));
@@ -885,6 +891,7 @@ public class Board {
 		entity.setNo8(Integer.toString(no8));
 		entity.setNo9(Integer.toString(no9));
 		entity.setUseDuoColor(useDuoColor);
+		entity.setDelicacies(lod);
 		return entity;
 	}
 	
@@ -924,6 +931,11 @@ public class Board {
 			playerName = "player-" + playerName;
 			doc.append(playerName, players.get(i).toDocument());
 		}
+		List<String> lod = new ArrayList<>();
+		for (i=0;i<delicacies.size();i++) {
+			lod.add(delicacies.get(i).getImg());
+		}
+		doc.append("delicacies", lod);
 		doc.append("playerNames", playerNames);
 		doc.append("deck", dod);
 		doc.append("roles", dor);
@@ -976,6 +988,12 @@ public class Board {
 				p.setFromDoc(dop);
 			}
 			players.add(p);
+		}
+		List<String> lod = (List<String>) doc.get("delicacies");
+		delicacies = new ArrayList<>();
+		for (i=0;i<lod.size();i++) {
+			Delicacy d = DelicacyFactory.createDelicacy(lod.get(i));
+			delicacies.add(d);
 		}
 		logger.setLogs((List<String>) doc.get("logs"));
 	}

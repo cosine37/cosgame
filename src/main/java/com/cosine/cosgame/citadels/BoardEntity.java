@@ -27,6 +27,7 @@ public class BoardEntity {
 	List<String> netScores;
 	List<String> extraScores;
 	List<String> tempRevealedTop;
+	List<String> delicacies;
 	
 	String phase;
 	String bank;
@@ -354,5 +355,11 @@ public class BoardEntity {
 	}
 	public void setCardsUnder(List<List<String>> cardsUnder) {
 		this.cardsUnder = cardsUnder;
+	}
+	public List<String> getDelicacies() {
+		return delicacies;
+	}
+	public void setDelicacies(List<String> delicacies) {
+		this.delicacies = delicacies;
 	}
 }

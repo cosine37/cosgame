@@ -34,6 +34,7 @@ public class Player {
 	Ask ask;
 	List<String> canUseRoleSkill;
 	List<String> canUseCardSkill;
+	List<String> canBuyDelicacy;
 	List<Integer> costReducers;
 	
 	public Player(String name) {
