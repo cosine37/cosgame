@@ -159,6 +159,8 @@ public class CardFactory {
 			card = new Guesthouse();
 			card.setColor(color);
 			card.setImg(img);
+		} else if (img.contentEquals("p307")) {
+			card = new XinhuaBookstore();
 		}
 		
 		else {

@@ -19,11 +19,14 @@ public class HuPalace extends Card{
 	public void afterTakeActionEffect() {
 		String name = player.getName();
 		if (player.getRole().getNum() == 1 || player.getRole().getNum() == 2) {
-			int x = board.takeCoins(1);
-			if (x>0) {
-				beautify();
+			if (this.beautifyLevel < 3) {
+				int x = board.takeCoins(1);
+				if (x>0) {
+					beautify();
+				}
+				board.log("因为" + name + "选择了" + player.getRole().getName() + "，护王府升值了。");
 			}
-			board.log("因为" + name + "选择了" + player.getRole().getName() + "，护王府升值了。");
+			
 		}
 		
 	}
