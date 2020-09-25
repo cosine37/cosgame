@@ -76,6 +76,7 @@ public class Board {
 	
 	public void sendPack(int x, Package pack) {
 		players.get(x).setPack(pack);
+		players.get(x).setPhase(0);
 		curPlayer = x;
 	}
 	
@@ -175,14 +176,16 @@ public class Board {
 		entity.setStatus(Integer.toString(status));
 		entity.setDeckSize(Integer.toString(deck.size()));
 		entity.setIntialRevealedMoney(Integer.toString(initialRevealedMoney));
-		int i;
+		int i,j;
 		List<String> handSizes = new ArrayList<>();
 		List<String> revealedMoney = new ArrayList<>();
 		List<String> hasPack = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
+		List<String> hand = new ArrayList<>();
 		String phase = "";
 		String packCardImg = "";
 		String packMoney = "";
+		String trueMoney = "";
 		for (i=0;i<players.size();i++) {
 			handSizes.add(Integer.toString(players.get(i).getHand().size()));
 			revealedMoney.add(Integer.toString(players.get(i).getRevealedMoney()));
@@ -192,7 +195,10 @@ public class Board {
 				if (players.get(i).getPack() != null) {
 					packCardImg = players.get(i).getPack().getCard().getImg();
 				}
-				
+				trueMoney = Integer.toString(players.get(i).getTrueMoney());
+				for (j=0;j<players.get(i).getHand().size();j++) {
+					hand.add(players.get(i).getHand().get(j).getImg());
+				}
 			}
 			if (players.get(i).getPack() != null) {
 				packMoney = Integer.toString(players.get(i).getPack().getMoney());
@@ -202,12 +208,14 @@ public class Board {
 			}
 		}
 		entity.setPhase(phase);
+		entity.setTrueMoney(trueMoney);
 		entity.setPackCardImg(packCardImg);
 		entity.setPackMoney(packMoney);
 		entity.setHasPack(hasPack);
 		entity.setHandSizes(handSizes);
 		entity.setRevealedMoney(revealedMoney);
 		entity.setPlayerNames(playerNames);
+		entity.setHand(hand);
 		return entity;
 	}
 	

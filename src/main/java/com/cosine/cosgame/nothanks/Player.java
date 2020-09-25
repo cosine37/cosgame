@@ -42,6 +42,7 @@ public class Player {
 			revealedMoney--;
 			pack.addMoney();
 			board.sendPack(x, pack);
+			phase = -1;
 		} else {
 			boolean flag = false;
 			for (int i=0;i<hand.size();i++) {
@@ -53,6 +54,7 @@ public class Player {
 			}
 			if (flag) {
 				board.sendPack(x, pack);
+				phase = -1;
 			}
 		}
 	}
@@ -84,7 +86,16 @@ public class Player {
 		}
 		return ans;
 	}
-
+	
+	public int getTrueMoney() {
+		int ans = revealedMoney;
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).getNum() == -3) {
+				ans++;
+			}
+		}
+		return ans;
+	}
 	public String getName() {
 		return name;
 	}

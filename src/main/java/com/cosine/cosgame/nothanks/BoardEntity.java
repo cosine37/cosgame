@@ -10,11 +10,13 @@ public class BoardEntity {
 	String packMoney;
 	String id;
 	String intialRevealedMoney;
+	String trueMoney;
 	
 	List<String> playerNames;
 	List<String> hasPack;
 	List<String> handSizes;
 	List<String> revealedMoney;
+	List<String> hand;
 	
 	public BoardEntity() {
 		
@@ -85,6 +87,18 @@ public class BoardEntity {
 	}
 	public void setIntialRevealedMoney(String intialRevealedMoney) {
 		this.intialRevealedMoney = intialRevealedMoney;
+	}
+	public String getTrueMoney() {
+		return trueMoney;
+	}
+	public void setTrueMoney(String trueMoney) {
+		this.trueMoney = trueMoney;
+	}
+	public List<String> getHand() {
+		return hand;
+	}
+	public void setHand(List<String> hand) {
+		this.hand = hand;
 	}
 	
 }

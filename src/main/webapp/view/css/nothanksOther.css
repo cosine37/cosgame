@@ -13,7 +13,6 @@ button{
 	
 	background: rgb(12,137,24);
 }
-}
 
 button:disabled{
 	outline: none;
