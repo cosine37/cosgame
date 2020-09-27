@@ -30,11 +30,11 @@
 		<p>你收到一个包裹，可以选择收下或送出。</p>
 		<div>
 			<span>{{packCardImg}} 红包数量：{{packMoney}}</span>
-			<button>收下</button>
+			<button ng-click="receive()">收下</button>
 		</div>
 	</div>
 	<div>
-		<span ng-repeat="h in hand">{{h}}</span>
+		<span ng-repeat="h in hand track by $index">{{h}}</span>
 	</div>
 	
 	<p>{{gamedata}}</p>
