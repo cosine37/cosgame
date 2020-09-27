@@ -301,6 +301,15 @@ public class Board {
 		}
 	}
 	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
 	public void updateDeck() {
 		List<Integer> lod = new ArrayList<>();
 		for (int i=0;i<deck.size();i++) {

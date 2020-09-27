@@ -100,6 +100,21 @@ public class NothanksController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/nothanksgame/send", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> send(HttpServletRequest request,  @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.getPlayerByName(username).send(x);
+		board.updatePlayer(username);
+		board.updatePlayer(x);
+		board.updateDeck();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/nothanksgame/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

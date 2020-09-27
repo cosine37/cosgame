@@ -43,6 +43,7 @@ public class Player {
 			pack.addMoney();
 			board.sendPack(x, pack);
 			phase = -1;
+			pack = null;
 		} else {
 			boolean flag = false;
 			for (int i=0;i<hand.size();i++) {

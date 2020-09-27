@@ -30,6 +30,15 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.send = function(x){
+			var data = {
+					"x" : x
+			}
+			$http({url: "/nothanksgame/send", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		setUsers = function(){
 			$scope.disableUserButton = []
 			for (i=0;i<$scope.playerNames.length;i++){
@@ -37,7 +46,11 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.disableUserButton.push(true);
 				} else {
 					if ($scope.phase == 0){
-						$scope.disableUserButton.push(false);
+						if ($scope.trueMoney == "0"){
+							$scope.disableUserButton.push(true);
+						} else {
+							$scope.disableUserButton.push(false);
+						}
 					} else {
 						$scope.disableUserButton.push(true);
 					}
