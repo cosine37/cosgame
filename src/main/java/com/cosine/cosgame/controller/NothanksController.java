@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cosine.cosgame.nothanks.Board;
 import com.cosine.cosgame.nothanks.BoardEntity;
 import com.cosine.cosgame.nothanks.NothanksMeta;
+import com.cosine.cosgame.nothanks.Player;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -111,6 +112,28 @@ public class NothanksController {
 		board.updatePlayer(username);
 		board.updatePlayer(x);
 		board.updateDeck();
+		board.updateDB("curPlayer", board.getCurPlayer());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/nothanksgame/botnextmove", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> botNextMove(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		int index = board.getCurPlayer();
+		if (board.getPlayers().get(index).isBot()) {
+			Player p = board.getPlayers().get(index);
+			int x = p.botNextMove();
+			board.updatePlayer(p.getName());
+			board.updateDeck();
+			if (x>=0) {
+				board.updatePlayer(x);
+				board.updateDB("curPlayer", board.getCurPlayer());
+			}
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

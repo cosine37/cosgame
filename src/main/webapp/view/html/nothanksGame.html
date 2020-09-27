@@ -25,6 +25,9 @@
 	
 	<div ng-show="phase == '-1'">
 		<p>现在不是你的回合。</p>
+		<div>
+			<button ng-click="botnextmove()">botnextmove</button>
+		</div>
 	</div>
 	<div ng-show="phase == '0'">
 		<p>你收到一个包裹，可以选择收下或点击相应玩家的图标送出。</p>

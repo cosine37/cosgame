@@ -2,6 +2,7 @@ package com.cosine.cosgame.nothanks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -12,6 +13,7 @@ public class Player {
 	Package pack;
 	Board board;
 	int phase;
+	int index;
 	boolean bot;
 	
 	public Player() {
@@ -63,9 +65,10 @@ public class Player {
 	public int calcScore() {
 		int i;
 		int ans = 0;
+		boolean f = hasQs();
 		for (i=0;i<hand.size();i++) {
 			if (hand.get(i).getNum() > 0) {
-				if (hasQs()) {
+				if (f) {
 					ans = ans+13-hand.get(i).getNum();
 				}
 			} else {
@@ -85,6 +88,45 @@ public class Player {
 				break;
 			}
 		}
+		return ans;
+	}
+	
+	public int botNextMove() {
+		if (bot && phase == 0) {
+			if (getTrueMoney() == 0 || getReceivedScore() - calcScore() > 3) {
+				receive();
+				return -1;
+			} else {
+				int n = board.getPlayers().size()-1;
+				Random rand = new Random();
+				int x = rand.nextInt(n);
+				if (x>=index) {
+					x = x+1;
+				}
+				send(x);
+				return x;
+			}
+		} else {
+			return -1;
+		}
+	}
+	
+	public int getReceivedScore() {
+		int i;
+		int ans = 0;
+		if (pack.getCard().getNum() == 0) {
+			for (i=0;i<hand.size();i++) {
+				ans = ans+13-hand.get(i).getNum();
+			}
+		} else {
+			ans = calcScore();
+			if (hasQs()) {
+				ans = ans + 13-pack.getCard().getNum();
+			} else {
+				ans = ans + pack.getCard().getNum();
+			}
+		}
+		ans = ans-pack.getMoney()*3;
 		return ans;
 	}
 	
@@ -139,7 +181,13 @@ public class Player {
 	public void setPhase(int phase) {
 		this.phase = phase;
 	}
-	
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);

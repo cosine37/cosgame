@@ -263,6 +263,7 @@ public class Board {
 			Player p = new Player();
 			p.setFromDoc(dop);
 			p.setBoard(this);
+			p.setIndex(i);
 			players.add(p);
 		}
 		

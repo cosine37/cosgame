@@ -39,6 +39,12 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.botnextmove = function(){
+			$http.post('/nothanksgame/botnextmove').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		setUsers = function(){
 			$scope.disableUserButton = []
 			for (i=0;i<$scope.playerNames.length;i++){
