@@ -161,6 +161,14 @@ public class CardFactory {
 			card.setImg(img);
 		} else if (img.contentEquals("p307")) {
 			card = new XinhuaBookstore();
+		} else if (img.contentEquals("p516")) {
+			card = new CitizenSquare();
+		} else if (img.contentEquals("p517")) {
+			card = new Landmark();
+		} else if (img.contentEquals("p701")) {
+			card = new DinoWaterTown();
+		} else if (img.contentEquals("p411")) {
+			card = new Stadium();
 		}
 		
 		else {

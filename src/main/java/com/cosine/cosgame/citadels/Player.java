@@ -273,7 +273,7 @@ public class Player {
 			} else {
 				costReduce = costReducers.get(color);
 			}
-			int cost = c.getCost() - costReduce;
+			int cost = c.getBuildCost() - costReduce;
 			if (cost<0) cost = 0;
 			if (cost > coin) {
 				return false;
@@ -338,7 +338,7 @@ public class Player {
 			} else {
 				costReduce = costReducers.get(color);
 			}
-			int cost = c.getCost() - costReduce;
+			int cost = c.getBuildCost() - costReduce;
 			if (cost<0) cost = 0;
 			coin = coin-cost;
 			board.addCoin(cost);

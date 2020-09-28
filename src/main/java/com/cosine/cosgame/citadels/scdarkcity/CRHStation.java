@@ -15,7 +15,8 @@ public class CRHStation extends Card {
 	public int getExtraScore() {
 		int ans = 0;
 		for (int i=0;i<player.getBuilt().size();i++) {
-			if (player.getBuilt().get(i).getColor() == CitadelsConsts.PURPLE) {
+			if (player.getBuilt().get(i).getColor() == CitadelsConsts.PURPLE
+					|| player.getBuilt().get(i).getColor() == CitadelsConsts.GREENPURPLE) {
 				ans++;
 			}
 		}

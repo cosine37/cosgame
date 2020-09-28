@@ -116,7 +116,8 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		
+		Card c = new Stadium();
+		deck.add(0,c);
 	}
 	
 	public void deal() {

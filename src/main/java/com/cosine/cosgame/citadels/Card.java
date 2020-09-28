@@ -146,6 +146,9 @@ public class Card {
 	public int getCost() {
 		return cost;
 	}
+	public int getBuildCost() {
+		return cost;
+	}
 	public void setCost(int cost) {
 		this.cost = cost;
 	}

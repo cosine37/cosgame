@@ -79,6 +79,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new SouthStreet();
 		specialCards.add(c);
+		
 		c = new BaolinTemple();
 		specialCards.add(c);
 		c = new CRHStation();
@@ -93,6 +94,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new DevZone();
 		specialCards.add(c);
+		
 		c = new Statue();
 		specialCards.add(c);
 		c = new Condo();
@@ -107,6 +109,7 @@ public class AllRes {
 		specialCards.add(c);
 		c = new Comb();
 		specialCards.add(c);
+		
 		c = new CulturePalace();
 		specialCards.add(c);
 		c = new CommodityMarket();
@@ -161,6 +164,9 @@ public class AllRes {
 		specialCards.add(c);
 		c = new ShootMoonBay();
 		specialCards.add(c);
+		c = new XinhuaBookstore();
+		specialCards.add(c);
+		
 	}
 	
 	public void setBaseCards() {
