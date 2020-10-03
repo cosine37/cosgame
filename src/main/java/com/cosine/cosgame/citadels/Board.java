@@ -28,6 +28,8 @@ public class Board {
 	boolean crownMoved;
 	boolean regicide;
 	boolean useDuoColor;
+	boolean useOmniColor;
+	int numDelicacyUsed;
 	int finishCount;
 	int coins;
 	int killedRole;
@@ -58,6 +60,7 @@ public class Board {
 		stealedRole = -1;
 		no9 = -1;
 		no8 = 0;
+		numDelicacyUsed = 0;
 		
 		status = CitadelsConsts.PREGAME;
 		
@@ -105,6 +108,10 @@ public class Board {
 		roles = allRes.genRoles(players.size());
 	}
 	
+	public void genDelicacies() {
+		delicacies = allRes.genDelicacy(numDelicacyUsed);
+	}
+	
 	public void shuffle() {
 		List<Card> shuffled = new ArrayList<>();
 		Random rand = new Random();
@@ -116,8 +123,8 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		Card c = new Stadium();
-		deck.add(0,c);
+		Card c = new DinoWaterTown();
+		deck.add(5,c);
 	}
 	
 	public void deal() {
@@ -159,6 +166,7 @@ public class Board {
 	public void gameSetup() {
 		genRoles();
 		genDeck();
+		genDelicacies();
 		shuffle();
 		deal();
 		curPlayer = crown;
@@ -286,6 +294,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).setRole(null);
 			players.get(i).setRoleNum(-1);
+			players.get(i).resetDelicacies();
 		}
 		roundCount = roundCount+1;
 		log("回合 " + Integer.toString(roundCount)+" 开始");
@@ -662,9 +671,26 @@ public class Board {
 	public boolean isUseDuoColor() {
 		return useDuoColor;
 	}
-
 	public void setUseDuoColor(boolean useDuoColor) {
 		this.useDuoColor = useDuoColor;
+	}
+	public List<Delicacy> getDelicacies() {
+		return delicacies;
+	}
+	public void setDelicacies(List<Delicacy> delicacies) {
+		this.delicacies = delicacies;
+	}
+	public boolean isUseOmniColor() {
+		return useOmniColor;
+	}
+	public void setUseOmniColor(boolean useOmniColor) {
+		this.useOmniColor = useOmniColor;
+	}
+	public int getNumDelicacyUsed() {
+		return numDelicacyUsed;
+	}
+	public void setNumDelicacyUsed(int numDelicacyUsed) {
+		this.numDelicacyUsed = numDelicacyUsed;
 	}
 
 	public BoardEntity toBoardEntity(String name) {
@@ -829,8 +855,14 @@ public class Board {
 			}
 		}
 		List<String> lod = new ArrayList<>();
+		List<String> canBuyDelicacy = new ArrayList<>();
 		for (i=0;i<delicacies.size();i++) {
 			lod.add(delicacies.get(i).getImg());
+			if (delicacies.get(i).canBuy(p)) {
+				canBuyDelicacy.add("y");
+			} else {
+				canBuyDelicacy.add("n");
+			}
 		}
 			
 		entity.setDeckSize(Integer.toString(this.deck.size()));
@@ -883,7 +915,9 @@ public class Board {
 		entity.setNo8(Integer.toString(no8));
 		entity.setNo9(Integer.toString(no9));
 		entity.setUseDuoColor(useDuoColor);
+		entity.setNumDelicacyUsed(Integer.toString(numDelicacyUsed));
 		entity.setDelicacies(lod);
+		entity.setCanBuyDelicacy(canBuyDelicacy);
 		return entity;
 	}
 	
@@ -906,6 +940,7 @@ public class Board {
 		doc.append("tempRevealedTop", tempRevealedTop);
 		doc.append("no8", no8);
 		doc.append("no9", no9);
+		doc.append("numDelicacyUsed", numDelicacyUsed);
 		doc.append("useDuoColor", useDuoColor);
 		int i;
 		List<Document> dod = new ArrayList<>();
@@ -952,6 +987,7 @@ public class Board {
 		regicide = doc.getBoolean("regicide", false);
 		no8 = doc.getInteger("no8", 0);
 		no9 = doc.getInteger("no9", -1);
+		numDelicacyUsed = doc.getInteger("numDelicacyUsed", 0);
 		useDuoColor = doc.getBoolean("useDuoColor", false);
 		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");
 		int i;
@@ -985,6 +1021,8 @@ public class Board {
 		delicacies = new ArrayList<>();
 		for (i=0;i<lod.size();i++) {
 			Delicacy d = DelicacyFactory.createDelicacy(lod.get(i));
+			d.setIndex(i);
+			d.setBoard(this);
 			delicacies.add(d);
 		}
 		logger.setLogs((List<String>) doc.get("logs"));
@@ -1014,6 +1052,15 @@ public class Board {
 			dor.add(roles.get(i).toDocument());
 		}
 		dbutil.update("id", id, "roles", dor);
+	}
+	
+	public void updateDelicacies() {
+		List<String> lod = new ArrayList<>();
+		int i;
+		for (i=0;i<delicacies.size();i++) {
+			lod.add(delicacies.get(i).getImg());
+		}
+		dbutil.update("id", id, "delicacies", lod);
 	}
 	
 	public void updatePlayers() {

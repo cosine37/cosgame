@@ -41,6 +41,16 @@
 			<td>双类型建筑：</td>
 			<td>{{useDuoColorDisplay}}</td>
 		</tr>
+		<!-- 
+		<tr>
+			<td>变类型建筑：</td>
+			<td>{{useOmniColorDisplay}}</td>
+		</tr>
+		 -->
+		<tr>
+			<td>特产数量：</td>
+			<td>{{numDelicacyUsed}}</td>
+		</tr>
 		<tr>
 			<td>8号角色：</td>
 			<td>{{no8Display}}</td>
@@ -74,7 +84,16 @@
 		<p></p>
 		<div>
 			<button ng-click="setUseDuoColor()">{{duoColorButton}}</button>
+			<!-- 
+			<button ng-click="setUseOmniColor()">{{omniColorButton}}</button>
+			 -->
 			<button ng-click="setRegicide()">变更市长被带走规则</button>
+		</div>
+		<p></p>
+		<div>
+			<button ng-click="setNumDelicacy(0)">不使用特产</button>
+			<button ng-click="setNumDelicacy(1)">使用1个特产</button>
+			<button ng-click="setNumDelicacy(2)">使用2个特产</button>
 		</div>
 		<p></p>
 		<div>

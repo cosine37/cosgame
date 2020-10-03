@@ -16,6 +16,7 @@ public class AllRes {
 	List<Card> specialCards;
 	List<Card> duoColorCards;
 	List<Role> allRoles;
+	List<Delicacy> delicacies;
 	Board board;
 	
 	public AllRes() {
@@ -23,10 +24,12 @@ public class AllRes {
 		specialCards = new ArrayList<>();
 		duoColorCards = new ArrayList<>();
 		allRoles = new ArrayList<>();
+		delicacies = new ArrayList<>();
 		setAllRoles();
 		setBaseCards();
 		setDuoColorCards();
 		setSpecialCards();
+		setDelicacies();
 	}
 	
 	void setAllRoles() {
@@ -258,6 +261,14 @@ public class AllRes {
 		duoColorCards.add(c);
 	}
 	
+	public void setDelicacies() {
+		Delicacy d;
+		d = DelicacyFactory.createDelicacy("d201");
+		delicacies.add(d);
+		d = DelicacyFactory.createDelicacy("d301");
+		delicacies.add(d);
+	}
+	
 	public List<Role> genRoles(int playerNum){
 		List<Role> ans = new ArrayList<>();
 		for (int i=0;i<7;i++) {
@@ -274,6 +285,20 @@ public class AllRes {
 			ans.add(allRoles.get(9));
 		}
 		
+		return ans;
+	}
+	
+	public List<Delicacy> genDelicacy(int numDelicacy){
+		List<Delicacy> ans = new ArrayList<>();
+		int x = numDelicacy;
+		if (x > delicacies.size()) {
+			x = delicacies.size();
+		}
+		for (int i=0;i<x;i++) {
+			Random rand = new Random();
+			int size = delicacies.size();
+			ans.add(delicacies.remove(rand.nextInt(size)));
+		}
 		return ans;
 	}
 	

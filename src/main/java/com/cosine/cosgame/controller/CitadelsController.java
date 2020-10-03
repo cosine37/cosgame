@@ -78,6 +78,11 @@ public class CitadelsController {
 		return "citadelsRules/citadelsOmniCards";
 	}
 	
+	@RequestMapping(value="/citadelsdelicacies", method = RequestMethod.GET)
+	public String citadelsDelicacies() {
+		return "citadelsRules/citadelsDelicacies";
+	}
+	
 	@RequestMapping(value="/citadelsgame/empty", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> empty(HttpServletRequest request){
 		StringEntity entity = new StringEntity();
@@ -163,6 +168,18 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setnumdelicacies", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setNumDelicacies(HttpServletRequest request, @RequestParam int n){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.setNumDelicacyUsed(n);
+		board.updateDB("numDelicacyUsed", board.getNumDelicacyUsed());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/setuseduocolor", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setUseDuoColor(HttpServletRequest request){
 		Board board = new Board();
@@ -202,6 +219,7 @@ public class CitadelsController {
 		board.gameSetup();
 		board.updateDeck();
 		board.updateRoles();
+		board.updateDelicacies();
 		board.updatePlayers();
 		board.updateDB("coins", board.getCoins());
 		board.updateDB("status", board.getStatus());
@@ -444,6 +462,27 @@ public class CitadelsController {
 			board.updatePlayer(username);
 			board.updateLogs();
 			board.updateDeck();
+			board.updateDB("coins", board.getCoins());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/buydelicacy", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> buyDelicacy(HttpServletRequest request, @RequestParam int index){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Ask ask = board.getDelicacies().get(index).onBuy(p);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateLogs();
+			board.updateDeck();
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
 		}
 		StringEntity entity = new StringEntity();

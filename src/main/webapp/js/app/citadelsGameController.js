@@ -49,6 +49,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		$scope.chooseRoleTableStyle = {}
 		$scope.chooseRoleNumCol = 4
 		$scope.showRoleSelection = false
+		$scope.delicacyStyle = []
 		
 		$scope.builtToUseSkill;
 		
@@ -64,6 +65,33 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				}
 			}
 			return ans
+		}
+		
+		setDelicacyStyle = function(){
+			$scope.delicacyStyle = []
+			for (i=0;i<$scope.delicacies.length;i++){
+				var singleDelicacyStyle
+				var imgUrl = "url('/image/Citadels/Delicacies/" + $scope.delicacies[i] + ".png')"
+				if ($scope.canBuyDelicacy[i] == "n" || $scope.phase != "2"){
+					singleDelicacyStyle = {
+						"background": imgUrl,
+						"background-color" : "grey",
+						"background-blend-mode" : "screen",
+						"background-size": "cover",
+						"float": "left",
+						"position": "relative"
+					}
+					
+				} else {
+					singleDelicacyStyle = {
+						"background": imgUrl,
+						"background-size": "cover",
+						"float": "left",
+						"position": "relative"
+					}
+				}
+				$scope.delicacyStyle.push(singleDelicacyStyle)
+			}
 		}
 			
 		setPlayerStyle = function(){
@@ -333,6 +361,19 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				$scope.selectedRoleSkill = x;
 			}
 			
+		}
+		
+		$scope.buyDelicacy = function(x){
+			if ($scope.canBuyDelicacy[x] == "n"){
+				return
+			}
+			if ($scope.phase != "2"){
+				return;
+			}
+			var data = {"index" : x}
+			$http({url: "/citadelsgame/buydelicacy", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
 		}
 		
 		$scope.chooseSkill = function(x){
@@ -665,18 +706,33 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			
 		}
 		
-		setBigImageStyle = function(){
-			$scope.bigImageStyle = {
-				"height": "609px", 
-				"width": "392px", 
-				"position": "absolute",
-				"left": "50%",
-				"top": "50%",
-				"margin-left": "-196px",
-				"margin-top": "-280px",
-				"background": "url(" + $scope.bigImage + ")", 
-				"background-size": "cover"
+		setBigImageStyle = function(x){
+			if (x==1){
+				$scope.bigImageStyle = {
+					"height": "392px", 
+					"width": "609px", 
+					"position": "absolute",
+					"left": "50%",
+					"top": "50%",
+					"margin-left": "-280px",
+					"margin-top": "-196px",
+					"background": "url(" + $scope.bigImage + ")", 
+					"background-size": "cover"
+				}
+			} else {
+				$scope.bigImageStyle = {
+					"height": "609px", 
+					"width": "392px", 
+					"position": "absolute",
+					"left": "50%",
+					"top": "50%",
+					"margin-left": "-196px",
+					"margin-top": "-280px",
+					"background": "url(" + $scope.bigImage + ")", 
+					"background-size": "cover"
+				}
 			}
+			
 			$scope.bigImageDivStyle = {
 				"position": "absolute",
 				"left": "0%",
@@ -750,34 +806,40 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			$scope.showBigImage = false
 		}
 		
+		$scope.showDelicacy = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Citadels/Delicacies/" + $scope.delicacies[index] + ".png"
+			setBigImageStyle(1)
+		}
+		
 		$scope.showHand = function(index){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Cards/" + $scope.hand[index] + ".png"
-			setBigImageStyle()
+			setBigImageStyle(0)
 		}
 		
 		$scope.showRevealedCard = function(index){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Cards/" + $scope.revealedCards[index] + ".png"
-			setBigImageStyle()
+			setBigImageStyle(0)
 		}
 		
 		$scope.showTempRevealedCard = function(index){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Cards/" + $scope.tempRevealedTop[index] + ".png"
-			setBigImageStyle()
+			setBigImageStyle(0)
 		}
 		
 		$scope.showBuilt = function(playerIndex, builtIndex){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Cards/" + $scope.built[playerIndex][builtIndex] + ".png"
-			setBigImageStyle()
+			setBigImageStyle(0)
 		}
 		
 		$scope.showPlayerRole = function(playerIndex){
 			$scope.showBigImage = true
 			$scope.bigImage = "/image/Citadels/Roles/" + getRoleImageByNum($scope.roleRevealed[playerIndex]) + ".png"
-			setBigImageStyle()
+			setBigImageStyle(0)
 		}
 		
 		$scope.unshowRoleSelection = function(){
@@ -839,6 +901,8 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$scope.finishCount = response.data.finishCount
 					$scope.regicide = response.data.regicide
 					$scope.beautifyLevel = response.data.beautifyLevel
+					$scope.delicacies = response.data.delicacies
+					$scope.canBuyDelicacy = response.data.canBuyDelicacy
 					if ($scope.regicide == "y"){
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {
@@ -910,6 +974,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 							$scope.statusDisplay = "选择角色"
 						}
 						setPlayerStyle()
+						setDelicacyStyle()
 						setButtons()
 						setHand()
 					}

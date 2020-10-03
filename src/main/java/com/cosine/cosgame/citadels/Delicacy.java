@@ -5,9 +5,14 @@ public class Delicacy {
 	protected String img;
 	protected int cost;
 	protected Board board;
+	protected int index;
 	
 	public Delicacy() {
 		
+	}
+	
+	public boolean canBuy(Player p) {
+		return true;
 	}
 	
 	public Ask onBuy(Player p) {
@@ -50,6 +55,14 @@ public class Delicacy {
 
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 }

@@ -57,6 +57,7 @@ public class Player {
 		ask = new Ask();
 		canUseRoleSkill = new ArrayList<>();
 		canUseCardSkill = new ArrayList<>();
+		canBuyDelicacy = new ArrayList<>();
 		beautify5Up = false;
 		beautifyPurple = false;
 		insured = false;
@@ -81,6 +82,13 @@ public class Player {
 		phase = CitadelsConsts.OFFTURN;
 		board.nextPlayerChooseRole();
 		
+	}
+	
+	public void resetDelicacies() {
+		canBuyDelicacy = new ArrayList<>();
+		for (int i=0;i<board.getDelicacies().size();i++) {
+			canBuyDelicacy.add("y");
+		}
 	}
 	
 	public void useRoleSkill(int index) {
@@ -163,6 +171,12 @@ public class Player {
 		
 	}
 	
+	public void buildCanBuyDelicacy() {
+		for (int i=0;i<board.getDelicacies().size();i++) {
+			canBuyDelicacy.add("y");
+		}
+	}
+	
 	public void buildCanUseCardSkill() {
 		canUseCardSkill = new ArrayList<>();
 		for (int i=0;i<built.size();i++) {
@@ -179,6 +193,7 @@ public class Player {
 			c.afterTakeActionEffect();
 		}
 		buildCanUseCardSkill();
+		buildCanBuyDelicacy();
 		phase = CitadelsConsts.BUILDDISTRICT;
 		numBuilt = 0;
 	}
@@ -693,6 +708,12 @@ public class Player {
 	public void setInsured(boolean insured) {
 		this.insured = insured;
 	}
+	public List<String> getCanBuyDelicacy() {
+		return canBuyDelicacy;
+	}
+	public void setCanBuyDelicacy(List<String> canBuyDelicacy) {
+		this.canBuyDelicacy = canBuyDelicacy;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -706,6 +727,7 @@ public class Player {
 		doc.append("bot", bot);
 		doc.append("canUseRoleSkill", canUseRoleSkill);
 		doc.append("canUseCardSkill", canUseCardSkill);
+		doc.append("canBuyDelicacy", canBuyDelicacy);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -743,6 +765,7 @@ public class Player {
 		}
 		canUseRoleSkill = (List<String>) doc.get("canUseRoleSkill");
 		canUseCardSkill = (List<String>) doc.get("canUseCardSkill");
+		canBuyDelicacy = (List<String>) doc.get("canBuyDelicacy");
 		
 		int i;
 		

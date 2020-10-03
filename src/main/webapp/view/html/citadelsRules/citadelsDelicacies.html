@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Citadels</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/citadelsRules.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/citadelsRulesController.js"></script>
+<body ng-app="citadelsRulesApp" ng-controller="citadelsRulesCtrl">
+	<table>
+		<tr>
+			<td style="width:200px;vertical-align:top">
+				<table>
+					<tr><td><button style="background:none;padding:0px;border:none;color:rgb(0,0,102)" ng-click="goto('citadels')"><u><b>返回</b></u></button></td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td> </td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsroles')">基本角色介绍</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsspecials')">官方特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsnewroles')">官方扩充角色</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsdiycards')">自创特殊建筑</button></td></tr>
+					<tr><td><button class="othersection" ng-click="goto('citadelsduocards')">双类型建筑</button></td></tr>
+					<!-- 
+					<tr><td><button class="othersection" ng-click="goto('citadelsomnicards')">变类型建筑</button></td></tr>
+					 -->
+					<tr><td><button class="selectedsection" disabled>特产</button></td></tr>
+					
+				</table>
+			</td>
+			<td style="vertical-align:top">
+				<div>
+					<h2>特产</h2>
+					<table>
+						<tr>
+							<td style="width: 1000px">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在包括<span class="citadelstext">特产</span>的游戏中，
+								每名玩家的回合内可以在合法的情况下购买任意次<span class="citadelstext">特产</span>，购买每个<span class="citadelstext">特产</span>所需的价格标注于左上角，
+								购买<span class="citadelstext">特产</span>后立即发动其效果。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="citadelstext">特产</span>默认不加入游戏。
+								游戏开始前房主可以决定本局游戏加入0~2张随机的<span class="citadelstext">特产</span>。
+								<span class="citadelstext">特产</span>不是<span class="citadelstext">建筑</span>，
+								购买<span class="citadelstext">特产</span>不视为建造一个<span class="citadelstext">建筑</span>，
+								<span class="citadelstext">特产</span>无法被建造。</br>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<button ng-click="showedCard='d001'" ng-disabled="showedCard == 'd001'">阳湖水蜜桃</button>
+								<button ng-click="showedCard='d101'" ng-disabled="showedCard == 'd101'">大麻糕</button>
+								<button ng-click="showedCard='d201'" ng-disabled="showedCard == 'd201'">横山桥百叶</button>
+								<button ng-click="showedCard='d301'" ng-disabled="showedCard == 'd301'">葡式蛋挞</button>
+								<button ng-click="showedCard='d501'" ng-disabled="showedCard == 'd501'">砂锅鱼头</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'd001'">
+						<tr style="width: 1000px">
+							<td style="vertical-align:top"><img ng-src="/image/Citadels/Delicacies/{{showedCard}}.png" class="newsImgDelicacy"></td>
+							<td style="width: 680px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 阳湖水蜜桃</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年10月3日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买（白嫖）<span class="citadelstext">阳湖水蜜桃</span>时若你没有￥，你获得1￥。
+								每回合最多只可以购买一次<span class="citadelstext">阳湖水蜜桃</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你有￥，你无法购买<span class="citadelstext">阳湖水蜜桃</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>特产资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>阳湖水蜜桃产自于常州市武进区雪堰镇，阳湖水蜜桃又有太湖仙果的美誉，拥有长达800年的栽培史。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'd101'">
+						<tr style="width: 1000px">
+							<td style="vertical-align:top"><img ng-src="/image/Citadels/Delicacies/{{showedCard}}.png" class="newsImgDelicacy"></td>
+							<td style="width: 680px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 大麻糕</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年10月3日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买<span class="citadelstext">大麻糕</span>后你可额外建造一个<span class="citadelstext">建筑</span>。
+								每回合可多次购买<span class="citadelstext">大麻糕</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>特产资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>常州大麻糕，江苏传统糕类特产，始于清道光年间，是具有独特口感和风味的一种椭圆形大烧饼，也是常州人最喜爱吃的家常传统食品。
+								制作时，选用精白面粉、优质芝麻、白糖、精盐等原料，经过和面、搅拌、揉搓、包馅、成形、烘烤等多道工序，精制而成。有咸、甜两种风味。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'd201'">
+						<tr style="width: 1000px">
+							<td style="vertical-align:top"><img ng-src="/image/Citadels/Delicacies/{{showedCard}}.png" class="newsImgDelicacy"></td>
+							<td style="width: 680px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 横山桥百叶</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年10月3日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买<span class="citadelstext">横山桥百叶</span>时，若你没有手牌，摸3张牌。
+								若你有手牌，你无法购买<span class="citadelstext">横山桥百叶</span>。每回合可多次购买<span class="citadelstext">横山桥百叶</span>。
+								每回合可多次购买<span class="citadelstext">横山桥百叶</span>。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>特产资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>横山桥百叶早于明清时就已出名。据考证，当地的山北奚巷村王根产、王德兆父子从乾隆年间就开始制作百叶，三百多年来成为百叶世家。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'd301'">
+						<tr style="width: 1000px">
+							<td style="vertical-align:top"><img ng-src="/image/Citadels/Delicacies/{{showedCard}}.png" class="newsImgDelicacy"></td>
+							<td style="width: 680px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 葡式蛋挞</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年10月3日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买<span class="citadelstext">葡式蛋挞</span>后，展示牌堆顶的一张牌。 你获得和展示的牌价格相同数量的￥，并将以此法展示的牌置于牌堆底，每回合限一次。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>特产资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>葡式蛋挞最早由19世纪葡萄牙里斯本贝伦区热罗尼莫斯修道院的修女发明。
+								1989年，英国人安德鲁·史斗将葡式蛋挞带到澳门，改用英式奶黄馅并减少糖的用量之后，随即慕名而至者众，并成为澳门著名的小吃。
+								蛋挞王子一号店位于常州市南大街，除了制作原味葡式蛋挞外，还制作黄桃味、蓝莓味、芝士味等各种其它口味的葡式蛋挞。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'd501'">
+						<tr style="width: 1000px">
+							<td style="vertical-align:top"><img ng-src="/image/Citadels/Delicacies/{{showedCard}}.png" class="newsImgDelicacy"></td>
+							<td style="width: 680px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 砂锅鱼头</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2020年10月3日上线）</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买<span class="citadelstext">砂锅鱼头</span>后，立即获得6￥，每回合限一次。</br></br>
+								<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>特产资料</i></h5>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>砂锅鱼头味道清香，肉质鲜嫩，别有风味，鲜而不腥，肥而不腻，汤色乳白如汁、清纯如雪，是1975年朱顺才在天目湖一食堂做厨师时创造出来的。
+								2018年砂锅鱼头被评为江苏十大经典名菜。</i>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -106,8 +106,18 @@
 					</tr>
 				</table>
 			</div>
+			<div>
+				<div class="delicacy" ng-repeat="d in delicacies track by $index" 
+						ng-style="delicacyStyle[$index]" 
+						ng-click="buyDelicacy($index)"
+						ng-disabled="canBuyDelicacy[$index] == 'n'">
+					<div class="qsmark">
+						<img src="/image/Citadels/qsmark.png" height="18" width="18" ng-click="showDelicacy($index);$event.stopPropagation();"/>
+					</div>
+				</div>
+			</div>
 			
-			<h3>信息</h3>
+			<h3 style="clear:both">信息</h3>
 			<div id="logcontent" class="logcontent">
 				<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
 			</div>

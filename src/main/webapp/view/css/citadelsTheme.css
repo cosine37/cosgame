@@ -49,6 +49,11 @@
 	width: 210px
 }
 
+.newsImgDelicacy{
+	height: 210px;
+	width: 320px
+}
+
 .hiddenbutton{
 	background: none;
 	padding: 0px;

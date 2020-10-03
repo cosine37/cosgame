@@ -28,6 +28,7 @@ public class BoardEntity {
 	List<String> extraScores;
 	List<String> tempRevealedTop;
 	List<String> delicacies;
+	List<String> canBuyDelicacy;
 	
 	String phase;
 	String bank;
@@ -55,6 +56,7 @@ public class BoardEntity {
 	String no8;
 	String no9;
 	String useDuoColor;
+	String numDelicacyUsed;
 
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -361,5 +363,17 @@ public class BoardEntity {
 	}
 	public void setDelicacies(List<String> delicacies) {
 		this.delicacies = delicacies;
+	}
+	public List<String> getCanBuyDelicacy() {
+		return canBuyDelicacy;
+	}
+	public void setCanBuyDelicacy(List<String> canBuyDelicacy) {
+		this.canBuyDelicacy = canBuyDelicacy;
+	}
+	public String getNumDelicacyUsed() {
+		return numDelicacyUsed;
+	}
+	public void setNumDelicacyUsed(String numDelicacyUsed) {
+		this.numDelicacyUsed = numDelicacyUsed;
 	}
 }

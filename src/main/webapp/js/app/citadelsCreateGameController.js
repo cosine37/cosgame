@@ -36,6 +36,8 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.no8 = response.data.no8
 					$scope.no9 = response.data.no9
 					$scope.useDuoColor = response.data.useDuoColor
+					$scope.useOmniColor = response.data.useOmniColor
+					$scope.numDelicacyUsed = response.data.numDelicacyUsed
 					if ($scope.regicide == "y"){
 						$scope.regicideDisplay = "送葬者获得市长标记"
 					} else {
@@ -47,6 +49,14 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					} else {
 						$scope.duoColorButton = "使用双类型建筑"
 						$scope.useDuoColorDisplay = "不使用"
+					}
+					
+					if ($scope.useOmniColor == "y"){
+						$scope.omniColorButton = "不使用变类型建筑"
+						$scope.useOmniColorDisplay = "使用"
+					} else {
+						$scope.omniColorButton = "使用变类型建筑"
+						$scope.useOmniColorDisplay = "不使用"
 					}
 					
 					$scope.no8Display = "城管"
@@ -109,6 +119,20 @@ app.controller("citadelsCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.setUseDuoColor = function(){
 			$http.post('/citadelsgame/setuseduocolor').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setUseOmniColor = function(){
+			$http.post('/citadelsgame/setuseomnicolor').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.setNumDelicacy = function(x){
+			var y = parseInt(x)
+			var data = {"n" : y}
+			$http({url: "/citadelsgame/setnumdelicacies", method: "POST", params: data}).then(function(response){
 				$scope.getBoard();
 			});
 		}
