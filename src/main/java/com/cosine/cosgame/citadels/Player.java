@@ -172,6 +172,7 @@ public class Player {
 	}
 	
 	public void buildCanBuyDelicacy() {
+		canBuyDelicacy = new ArrayList<>();
 		for (int i=0;i<board.getDelicacies().size();i++) {
 			canBuyDelicacy.add("y");
 		}

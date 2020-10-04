@@ -129,8 +129,14 @@ public class FurnitureDealer extends Role {
 				board.log(player.getName() + "装饰了一个建筑");
 			}
 			player.beautify(b1);
+			x = player.getCoin() - 1;
+			player.setCoin(x);
+			board.addCoin(1);
 			if (b2 != -1) {
 				player.beautify(b2);
+				x = player.getCoin() - 1;
+				player.setCoin(x);
+				board.addCoin(1);
 			}
 		} else if (x == 1) {
 			player.useRoleSkill(1);

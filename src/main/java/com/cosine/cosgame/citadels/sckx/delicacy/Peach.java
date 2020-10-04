@@ -25,9 +25,9 @@ public class Peach extends Delicacy{
 	
 	public Ask onBuy(Player p) {
 		Ask ask = super.onBuy(p);
-		board.log(p.getName() + "白嫖了 阳湖水蜜桃。");
 		if (p.getCanBuyDelicacy().get(index).contentEquals("y")) {
 			if (p.getCoin() == 0) {
+				board.log(p.getName() + "白嫖了 阳湖水蜜桃。");
 				p.addCoin(1);
 				p.getCanBuyDelicacy().set(index, "n");
 				board.log(p.getName() + "获得了1￥。");

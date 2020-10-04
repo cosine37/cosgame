@@ -9,6 +9,7 @@ import com.cosine.cosgame.citadels.roles.*;
 import com.cosine.cosgame.citadels.sc2016.*;
 import com.cosine.cosgame.citadels.scdarkcity.*;
 import com.cosine.cosgame.citadels.sckx.*;
+import com.cosine.cosgame.citadels.sckx.delicacy.*;
 import com.cosine.cosgame.citadels.specialcards.*;
 
 public class AllRes {
@@ -263,9 +264,15 @@ public class AllRes {
 	
 	public void setDelicacies() {
 		Delicacy d;
-		d = DelicacyFactory.createDelicacy("d201");
+		d = new Peach();
 		delicacies.add(d);
-		d = DelicacyFactory.createDelicacy("d301");
+		d = new SesameCake();
+		delicacies.add(d);
+		d = new Layers();
+		delicacies.add(d);
+		d = new EggTart();
+		delicacies.add(d);
+		d = new Fish();
 		delicacies.add(d);
 	}
 	
