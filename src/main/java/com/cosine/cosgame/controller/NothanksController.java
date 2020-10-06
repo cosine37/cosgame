@@ -36,6 +36,11 @@ public class NothanksController {
 		return "nothanksGame";
 	}
 	
+	@RequestMapping(value="/nothanksendgame", method = RequestMethod.GET)
+	public String nothanksEndGame() {
+		return "nothanksEndGame";
+	}
+	
 	@RequestMapping(value="/nothanks/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		NothanksMeta meta = new NothanksMeta();
@@ -97,6 +102,7 @@ public class NothanksController {
 		board.getPlayerByName(username).receive();
 		board.updatePlayer(username);
 		board.updateDeck();
+		board.updateDB("status", board.getStatus());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -132,6 +138,8 @@ public class NothanksController {
 			if (x>=0) {
 				board.updatePlayer(x);
 				board.updateDB("curPlayer", board.getCurPlayer());
+			} else {
+				board.updateDB("status", board.getStatus());
 			}
 		}
 		StringEntity entity = new StringEntity();

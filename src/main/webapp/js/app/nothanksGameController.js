@@ -77,6 +77,9 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.packMoney = response.data.packMoney;
 				$scope.hand = response.data.hand;
 				
+				if ($scope.status == '2'){
+					$scope.goto("nothanksendgame");
+				}
 				setUsers();
 			});
 		}

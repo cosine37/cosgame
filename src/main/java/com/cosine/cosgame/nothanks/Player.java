@@ -35,7 +35,12 @@ public class Player {
 		if (board.getDeck().size() == 0) {
 			board.endGame();
 		} else {
-			draw();
+			if (board.getDeck().size()>0) {
+				draw();
+			} else {
+				board.endGame();
+			}
+			
 		}
 	}
 	
