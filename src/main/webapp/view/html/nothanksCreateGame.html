@@ -16,7 +16,15 @@
 	<button ng-click="goto('nothanks')">back</button>
 	<button ng-click="addbot()">add bot</button>
 	<button ng-click="startGame()">start game</button>
-	
+	<div>
+		<table>
+			<tr ng-repeat="p in playerNames track by $index">
+				<td>{{p}}</td>
+				<td><span ng-show="$index == curPlayer">start player</span></td>
+				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">set as start player</button></td>
+			</tr>
+		</table>
+	</div>
 	<p>{{gamedata}}</p>
 </body>
 </html>

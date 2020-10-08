@@ -35,9 +35,20 @@ app.controller("nothanksCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.setStartPlayer = function($index){
+			var x = parseInt($index)
+			var data = {"index" : x}
+			$http({url: "/nothanksgame/setstartplayer", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/nothanksgame/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.playerNames = response.data.playerNames
+				$scope.curPlayer = response.data.curPlayer;
+				$scope.lord = response.data.lord;
 			});
 		}
 		

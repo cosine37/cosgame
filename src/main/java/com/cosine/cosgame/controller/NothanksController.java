@@ -77,6 +77,21 @@ public class NothanksController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/nothanksgame/setstartplayer", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setStartPlayer(HttpServletRequest request,  @RequestParam int index){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.setCurPlayer(index);
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/nothanksgame/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
 		Board board = new Board();

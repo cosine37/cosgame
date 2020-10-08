@@ -48,13 +48,13 @@ public class Board {
 	public void startGame() {
 		status = 1;
 		numGoldInDeck = 12 - players.size()*initialRevealedMoney;
-		System.out.println(numGoldInDeck);
 		deck = allRes.genDeck(players.size(), numGoldInDeck);
 		for (int i=0;i<players.size();i++) {
 			players.get(i).setRevealedMoney(initialRevealedMoney);
+			players.get(i).setPhase(-1);
 		}
 		shuffle();
-		curPlayer = 0;
+		players.get(curPlayer).setPhase(0);
 		players.get(curPlayer).draw();
 	}
 	
@@ -182,6 +182,7 @@ public class Board {
 		List<String> hasPack = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> hand = new ArrayList<>();
+		List<List<String>> allHands = new ArrayList<>();
 		String phase = "";
 		String packCardImg = "";
 		String packMoney = "";
@@ -206,7 +207,16 @@ public class Board {
 			} else {
 				hasPack.add("n");
 			}
+			if (status == 2) {
+				List<String> singleHand = new ArrayList<>();
+				for (j=0;j<players.get(i).getHand().size();j++) {
+					singleHand.add(players.get(i).getHand().get(j).getImg());
+				}
+				allHands.add(singleHand);
+			}
 		}
+		entity.setCurPlayer(Integer.toString(curPlayer));
+		entity.setLord(lord);
 		entity.setPhase(phase);
 		entity.setTrueMoney(trueMoney);
 		entity.setPackCardImg(packCardImg);
@@ -216,6 +226,7 @@ public class Board {
 		entity.setRevealedMoney(revealedMoney);
 		entity.setPlayerNames(playerNames);
 		entity.setHand(hand);
+		entity.setAllHands(allHands);
 		return entity;
 	}
 	

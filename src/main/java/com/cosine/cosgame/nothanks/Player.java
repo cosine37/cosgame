@@ -98,7 +98,7 @@ public class Player {
 	
 	public int botNextMove() {
 		if (bot && phase == 0) {
-			if (getTrueMoney() == 0 || getReceivedScore() - calcScore() > 3) {
+			if (getTrueMoney() == 0 || getReceivedScore() - calcScore() < 3) {
 				receive();
 				return -1;
 			} else {
