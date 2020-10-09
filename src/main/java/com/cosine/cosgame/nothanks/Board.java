@@ -182,6 +182,7 @@ public class Board {
 		List<String> hasPack = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> hand = new ArrayList<>();
+		List<String> scores = new ArrayList<>();
 		List<List<String>> allHands = new ArrayList<>();
 		String phase = "";
 		String packCardImg = "";
@@ -213,6 +214,7 @@ public class Board {
 					singleHand.add(players.get(i).getHand().get(j).getImg());
 				}
 				allHands.add(singleHand);
+				scores.add(Integer.toString(players.get(i).calcScore()));
 			}
 		}
 		entity.setCurPlayer(Integer.toString(curPlayer));
@@ -227,6 +229,7 @@ public class Board {
 		entity.setPlayerNames(playerNames);
 		entity.setHand(hand);
 		entity.setAllHands(allHands);
+		entity.setScores(scores);
 		return entity;
 	}
 	

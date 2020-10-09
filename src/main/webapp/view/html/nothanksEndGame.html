@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/nothanksTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/nothanksOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/nothanksEndGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -14,7 +15,16 @@
 <script src="/js/app/nothanksEndGameController.js"></script>
 <body ng-app="nothanksEndGameApp" ng-controller="nothanksEndGameCtrl">
 	<button ng-click="goto('nothanks')">back</button>
-	
+	<table>
+		<tr ng-repeat="p in playerNames track by $index" ng-init="playerIndex = $index">
+			<td>{{p}}</td>
+			<td>
+				<div class="hand" ng-repeat="c in allHands[playerIndex] track by $index"
+				ng-style="allHandsStyle[playerIndex][$index]"></div>
+			</td>
+			<td>{{scores[$index]}}</td>
+		</tr>
+	</table>
 	<p>{{gamedata}}</p>
 </body>
 </html>

@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/nothanksTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/nothanksOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/nothanksGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -24,22 +25,34 @@
 	</table>
 	
 	<div ng-show="phase == '-1'">
-		<p>现在不是你的回合。</p>
-		<div>
+		<div style="height: 160px"></div>
+		
+		<div style="clear:both">
+			<p>现在不是你的回合。</p>
 			<button ng-click="botnextmove()">botnextmove</button>
 		</div>
 	</div>
 	<div ng-show="phase == '0'">
-		<p>你收到一个包裹，可以选择收下或点击相应玩家的图标送出。</p>
-		<div>
-			<span>{{packCardImg}} 红包数量：{{packMoney}}</span>
+		<div style="height: 160px">
+			<div class="hand" ng-style="packageStyle">
+			</div>
+			<div class="hand" ng-style="moneyStyle" ng-show="packMoney != '0'">
+				<span class="packMoney">{{packMoney}}</span>
+			</div>
+		</div>
+		<div style="clear:both">
+			<p>你收到一个包裹，可以选择收下或点击相应玩家的图标送出。</p>
 			<button ng-click="receive()">收下</button>
 		</div>
 	</div>
-	<div>
-		<span ng-repeat="h in hand track by $index">{{h}}</span>
+	<div style="clear:both">
+		<div class="hand" ng-repeat="h in hand track by $index"
+			ng-style="handStyle[$index]">
+		</div>
 	</div>
-	
+	<!-- 
 	<p>{{gamedata}}</p>
+	 -->
+	
 </body>
 </html>

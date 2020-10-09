@@ -19,6 +19,7 @@ public class BoardEntity {
 	List<String> handSizes;
 	List<String> revealedMoney;
 	List<String> hand;
+	List<String> scores;
 	
 	List<List<String>> allHands;
 	
@@ -121,6 +122,12 @@ public class BoardEntity {
 	}
 	public void setAllHands(List<List<String>> allHands) {
 		this.allHands = allHands;
+	}
+	public List<String> getScores() {
+		return scores;
+	}
+	public void setScores(List<String> scores) {
+		this.scores = scores;
 	}
 	
 }

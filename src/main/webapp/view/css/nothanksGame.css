@@ -1,0 +1,13 @@
+.hand {
+	float: left;
+	height: 160px;
+	width: 105px;
+	position: relative;
+}
+.packMoney{
+	position: absolute;
+	color: white;
+	font-size: 30px;
+	left: 44px;
+	top: 63px;
+}

@@ -8,6 +8,9 @@ var app = angular.module("nothanksGameApp", []);
 app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		$scope.disableUserButton = []
+		$scope.handStyle = []
+		$scope.packageStyle = {}
+		$scope.moneyStyle = {}
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -64,6 +67,47 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setHand = function(){
+			$scope.handStyle = []
+			for (var i=0;i<$scope.hand.length;i++){
+				var imgUrl = "url('/image/Nothanks/Cards/" + $scope.hand[i] + ".png')"
+				var marginLeft = "0px"
+				if ($scope.hand.length >= 10 && i != 0){
+					marginLeft = "-8px"
+				}
+				if ($scope.hand.length >= 11 && i != 0){
+					marginLeft = "-16px"
+				}
+				if ($scope.hand.length >= 12 && i != 0){
+					marginLeft = "-24px"
+				}	
+				if ($scope.hand.length >= 13 && i != 0){
+					marginLeft = "-31px"
+				}	
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover",
+					"float": "left",
+					"margin-left" :marginLeft
+				}
+				$scope.handStyle.push(singleStyle)
+			}
+			var imgUrl = "url('/image/Nothanks/Cards/" + $scope.packCardImg + ".png')"
+			$scope.packageStyle = {
+				"background": imgUrl,
+				"background-size": "cover",
+				"float": "left",
+				"margin-left" :marginLeft
+			}
+			var imgUrl = "url('/image/Nothanks/Cards/-3.png')"
+			$scope.moneyStyle = {
+				"background": imgUrl,
+				"background-size": "cover",
+				"float": "left",
+				"margin-left" :marginLeft
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/nothanksgame/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -76,11 +120,13 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.packCardImg = response.data.packCardImg;
 				$scope.packMoney = response.data.packMoney;
 				$scope.hand = response.data.hand;
+				$scope.packCardImg = response.data.packCardImg;
 				
 				if ($scope.status == '2'){
 					$scope.goto("nothanksendgame");
 				}
 				setUsers();
+				setHand();
 			});
 		}
 		

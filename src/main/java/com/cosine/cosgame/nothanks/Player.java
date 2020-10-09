@@ -75,11 +75,14 @@ public class Player {
 			if (hand.get(i).getNum() > 0) {
 				if (f) {
 					ans = ans+13-hand.get(i).getNum();
+				} else {
+					ans = ans + hand.get(i).getNum();
 				}
 			} else {
-				ans = ans + hand.get(i).getNum();
+				
 			}
 		}
+		
 		ans = ans-revealedMoney*3;
 		return ans;
 	}
