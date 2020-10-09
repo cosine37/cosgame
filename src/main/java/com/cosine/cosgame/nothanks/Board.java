@@ -347,6 +347,19 @@ public class Board {
 		}
 	}
 	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
 	public boolean exists(String id) {
 		Document doc = dbutil.read("id", id);
 		if (doc == null) {

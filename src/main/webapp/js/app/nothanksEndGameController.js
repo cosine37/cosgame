@@ -43,13 +43,19 @@ app.controller("nothanksEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			}
 		}
 		
+		$scope.dismiss = function(x){
+			$http.post("/nothanksgame/dismiss").then(function(response){
+				$scope.goto('nothanks');
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/nothanksgame/getboard').then(function(response){
 				$scope.gamedata = response.data
 				$scope.playerNames = response.data.playerNames
 				$scope.allHands = response.data.allHands;
 				$scope.scores = response.data.scores;
-				
+				$scope.lord = response.data.lord
 				setAllHands();
 			});
 		}

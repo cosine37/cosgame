@@ -14,13 +14,15 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/nothanksGameController.js"></script>
 <body ng-app="nothanksGameApp" ng-controller="nothanksGameCtrl">
-	<button ng-click="goto('nothankscreategame')">back</button>
+	<button ng-click="goto('nothanks')">back</button>
 	
 	<table>
-		<tr ng-repeat="p in playerNames track by $index">
+		<tr ng-repeat="p in playerNames track by $index" ng-style="playerStyle[$index]">
 			<td><button ng-click="send($index)" ng-disabled="disableUserButton[$index]">{{p}}</button></td>
 			<td>红包：{{revealedMoney[$index]}}</td>
 			<td>手牌数：{{handSizes[$index]}}</td>
+			<td ng-show="curPlayer == $index">◀</td>
+			<td ng-show="curPlayer != $index"></td>
 		</tr>
 	</table>
 	

@@ -14,7 +14,9 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/nothanksEndGameController.js"></script>
 <body ng-app="nothanksEndGameApp" ng-controller="nothanksEndGameCtrl">
-	<button ng-click="goto('nothanks')">back</button>
+	<button ng-click="goto('nothanks')" ng-show="lord != username">back</button>
+	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+	<h4>游戏结束</h4>
 	<table>
 		<tr ng-repeat="p in playerNames track by $index" ng-init="playerIndex = $index">
 			<td>{{p}}</td>

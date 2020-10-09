@@ -5,12 +5,15 @@ var setUrl = function(d){
 }
 
 var app = angular.module("nothanksGameApp", []);
-app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.disableUserButton = []
 		$scope.handStyle = []
+		$scope.playerStyle = []
 		$scope.packageStyle = {}
 		$scope.moneyStyle = {}
+		$scope.phase = "-1"
+		$scope.status = ""
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -50,8 +53,13 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		setUsers = function(){
 			$scope.disableUserButton = []
+			$scope.playerStyle = []
 			for (i=0;i<$scope.playerNames.length;i++){
+				var singlePlayerStyle = {}
 				if ($scope.playerNames[i] == $scope.username){
+					singlePlayerStyle = {
+						"background-color" : "#dddddd"
+					}
 					$scope.disableUserButton.push(true);
 				} else {
 					if ($scope.phase == 0){
@@ -64,6 +72,7 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 						$scope.disableUserButton.push(true);
 					}
 				}
+				$scope.playerStyle.push(singlePlayerStyle)
 			}
 		}
 		
@@ -93,12 +102,19 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.handStyle.push(singleStyle)
 			}
 			var imgUrl = "url('/image/Nothanks/Cards/" + $scope.packCardImg + ".png')"
-			$scope.packageStyle = {
-				"background": imgUrl,
-				"background-size": "cover",
-				"float": "left",
-				"margin-left" :marginLeft
+			if ($scope.packCardImg == ""){
+				$scope.packageStyle = {
+
+				}
+			} else {
+				$scope.packageStyle = {
+					"background": imgUrl,
+					"background-size": "cover",
+					"float": "left",
+					"margin-left" :marginLeft
+				}
 			}
+			
 			var imgUrl = "url('/image/Nothanks/Cards/-3.png')"
 			$scope.moneyStyle = {
 				"background": imgUrl,
@@ -121,6 +137,7 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.packMoney = response.data.packMoney;
 				$scope.hand = response.data.hand;
 				$scope.packCardImg = response.data.packCardImg;
+				$scope.curPlayer = response.data.curPlayer;
 				
 				if ($scope.status == '2'){
 					$scope.goto("nothanksendgame");
@@ -130,6 +147,15 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			if ($scope.phase == "-1" && $scope.status !='2'){
+				$scope.getBoard();
+			}
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1500);
+		}
+		
+		$scope.offturnHandle();
 		
 }]);

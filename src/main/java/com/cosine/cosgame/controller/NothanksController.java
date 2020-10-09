@@ -50,6 +50,43 @@ public class NothanksController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/nothanksgame/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/nothanksgame/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) == null) {
+			board.addPlayer(username);
+			board.addPlayerToDB(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/nothanksgame/kick", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.removePlayerFromDB(index);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/nothanksgame/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -87,6 +124,20 @@ public class NothanksController {
 		if (board.getLord().contentEquals(username)) {
 			board.setCurPlayer(index);
 			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/nothanksgame/dismiss", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.dismiss();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

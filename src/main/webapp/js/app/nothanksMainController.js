@@ -43,7 +43,7 @@ app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document', '
 					var t = ''
 					if (x == '0'){
 						t = '准备中'
-					} else if (x == '3'){
+					} else if (x == '2'){
 						t = '游戏结束'
 					} else {
 						t = '游戏中'
@@ -67,6 +67,22 @@ app.controller("nothanksMainCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.hideTablesTab = function(){
 			$scope.onTablesTab = false;
+		}
+		
+		$scope.goToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/nothanksgame/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/nothanksgame/join").then(function(response){
+					$scope.goto('nothankscreategame')
+				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/nothanksgame/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('nothanksgame')
+			});
 		}
 		
 		$scope.offturnHandle = function(){
