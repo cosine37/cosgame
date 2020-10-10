@@ -7,7 +7,8 @@ var setUrl = function(d){
 var app = angular.module("nothanksCreateGameApp", []);
 app.controller("nothanksCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-	
+		$scope.initialMoneyOptions = []
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -56,6 +57,13 @@ app.controller("nothanksCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.setInitialRevealedMoney = function(x){
+			var data = {"x" : x}
+			$http({url: "/nothanksgame/setinitialrevealedmoney", method: "POST", params: data}).then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/nothanksgame/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -66,7 +74,13 @@ app.controller("nothanksCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.curPlayer = response.data.curPlayer;
 					$scope.lord = response.data.lord;
 					$scope.status = response.data.status;
+					$scope.initialRevealedMoney = response.data.intialRevealedMoney;
 					
+					var n = Math.trunc(12/$scope.playerNames.length)
+					$scope.initialMoneyOptions = []
+					for (i=1;i<=n;i++){
+						$scope.initialMoneyOptions.push(i)
+					}
 					if ($scope.status != "0"){
 						$scope.goto('nothanksgame');
 					}

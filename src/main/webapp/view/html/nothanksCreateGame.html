@@ -26,6 +26,10 @@
 				<td><button ng-show="lord == username && $index != '0'" ng-click="kick($index)">踢</button></td>
 			</tr>
 		</table>
+		<p>初始红包数量：{{initialRevealedMoney}}</p>
+	</div>
+	<div>
+		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
 	</div>
 	<p>{{gamedata}}</p>
 </body>

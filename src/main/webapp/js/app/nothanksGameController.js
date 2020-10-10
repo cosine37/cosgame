@@ -138,6 +138,7 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.hand = response.data.hand;
 				$scope.packCardImg = response.data.packCardImg;
 				$scope.curPlayer = response.data.curPlayer;
+				$scope.deckSize = response.data.deckSize;
 				
 				if ($scope.status == '2'){
 					$scope.goto("nothanksendgame");

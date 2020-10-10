@@ -19,10 +19,22 @@
 	<table>
 		<tr ng-repeat="p in playerNames track by $index" ng-style="playerStyle[$index]">
 			<td><button ng-click="send($index)" ng-disabled="disableUserButton[$index]">{{p}}</button></td>
-			<td>红包：{{revealedMoney[$index]}}</td>
-			<td>手牌数：{{handSizes[$index]}}</td>
+			<td>
+				<img class="icon" src="/image/Nothanks/money.png">
+				{{revealedMoney[$index]}}
+			</td>
+			<td>
+				<img class="icon" src="/image/Nothanks/card.png">
+				{{handSizes[$index]}}
+			</td>
 			<td ng-show="curPlayer == $index">◀</td>
 			<td ng-show="curPlayer != $index"></td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<img class="icon" src="/image/Nothanks/deck.png">
+				{{deckSize}}
+			</td>
 		</tr>
 	</table>
 	

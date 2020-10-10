@@ -79,7 +79,7 @@ public class Player {
 					ans = ans + hand.get(i).getNum();
 				}
 			} else {
-				
+				ans = ans + hand.get(i).getNum();
 			}
 		}
 		

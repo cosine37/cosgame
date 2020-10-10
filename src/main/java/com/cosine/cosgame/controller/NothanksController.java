@@ -68,6 +68,7 @@ public class NothanksController {
 		if (board.getPlayerByName(username) == null) {
 			board.addPlayer(username);
 			board.addPlayerToDB(username);
+			board.updateDB("initialRevealedMoney", board.getInitialRevealedMoney());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -128,6 +129,24 @@ public class NothanksController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/nothanksgame/setinitialrevealedmoney", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setInitialRevealedMoney(HttpServletRequest request,  @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			if (board.getPlayers().size() * x <= 12) {
+				board.setInitialRevealedMoney(x);
+				board.updateDB("initialRevealedMoney", board.getInitialRevealedMoney());
+			}
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value="/nothanksgame/dismiss", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
