@@ -36,7 +36,8 @@ public class NothanksMeta {
 			value.add(Integer.toString(boardStatuses.get(i)));
 			String canBack="n";
 			for (int j=0;j<playerNames.get(i).size();j++) {
-				if (playerNames.get(i).get(j).contentEquals(name)) {
+				
+				if (playerNames.get(i).get(j) != null && playerNames.get(i).get(j).contentEquals(name)) {
 					canBack="y";
 				}
 			}

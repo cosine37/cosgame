@@ -56,6 +56,7 @@ app.controller("nothanksEndGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.allHands = response.data.allHands;
 				$scope.scores = response.data.scores;
 				$scope.lord = response.data.lord
+				$scope.revealedMoney = response.data.revealedMoney
 				setAllHands();
 			});
 		}

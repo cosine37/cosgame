@@ -18,13 +18,21 @@
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<h4>游戏结束</h4>
 	<table>
+		<tr>
+			<th style="text-align:center">玩家</th>
+			<th style="text-align:center">分数</th>
+			<th style="text-align:center">所有手牌</th>
+			<th style="text-align:center">明示的红包</th>
+		</tr>
 		<tr ng-repeat="p in playerNames track by $index" ng-init="playerIndex = $index">
 			<td>{{p}}</td>
+			<td>{{scores[$index]}}</td>
 			<td>
 				<div class="hand" ng-repeat="c in allHands[playerIndex] track by $index"
 				ng-style="allHandsStyle[playerIndex][$index]"></div>
 			</td>
-			<td>{{scores[$index]}}</td>
+			<td style="text-align:center">{{revealedMoney[$index]}}</td>
+			
 		</tr>
 	</table>
 	<p>{{gamedata}}</p>

@@ -21,16 +21,16 @@
 		<table>
 			<tr ng-repeat="p in playerNames track by $index">
 				<td>{{p}}</td>
-				<td><span ng-show="$index == curPlayer">start player</span></td>
-				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">set as start player</button></td>
+				<td><span ng-show="$index == curPlayer">起始玩家</span></td>
+				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">设为起始玩家</button></td>
 				<td><button ng-show="lord == username && $index != '0'" ng-click="kick($index)">踢</button></td>
 			</tr>
 		</table>
-		<p>初始红包数量：{{initialRevealedMoney}}</p>
+		<p>每名玩家初始红包数量：{{initialRevealedMoney}}</p>
 	</div>
 	<div>
+		<p>你可以调整每名玩家初始红包数量：</p>
 		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
 	</div>
-	<p>{{gamedata}}</p>
 </body>
 </html>

@@ -83,6 +83,8 @@ public class NothanksController {
 		board.getFromDB(boardId);
 		if (board.getLord().contentEquals(username)) {
 			board.removePlayerFromDB(index);
+			board.updateInitialRevealedMoney();
+			board.updateDB("initialRevealedMoney", board.getInitialRevealedMoney());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
