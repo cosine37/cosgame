@@ -4,3 +4,21 @@
 	width: 74px;
 	position: relative;
 }
+
+.cup{
+	height: 150px;
+	width: 150px;
+}
+
+.winnerInfo{
+	position: absolute;
+	left: 50%;
+	height: 600px;
+	width: 850px;
+	margin-left: -425px;
+	
+}
+
+.winnderInfo td{
+	border-top: thin solid;
+}

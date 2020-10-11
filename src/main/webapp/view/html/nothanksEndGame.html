@@ -14,27 +14,48 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/nothanksEndGameController.js"></script>
 <body ng-app="nothanksEndGameApp" ng-controller="nothanksEndGameCtrl">
-	<button ng-click="goto('nothanks')" ng-show="lord != username">back</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<h4>游戏结束</h4>
-	<table>
-		<tr>
-			<th style="text-align:center">玩家</th>
-			<th style="text-align:center">分数</th>
-			<th style="text-align:center">所有手牌</th>
-			<th style="text-align:center">明示的红包</th>
-		</tr>
-		<tr ng-repeat="p in playerNames track by $index" ng-init="playerIndex = $index">
-			<td>{{p}}</td>
-			<td>{{scores[$index]}}</td>
-			<td>
-				<div class="hand" ng-repeat="c in allHands[playerIndex] track by $index"
-				ng-style="allHandsStyle[playerIndex][$index]"></div>
-			</td>
-			<td style="text-align:center">{{revealedMoney[$index]}}</td>
-			
-		</tr>
-	</table>
-	<p>{{gamedata}}</p>
+	<div class="winnerInfo">
+		<table style="text-align:center">
+			<tr>
+				<td colspan="7"><h2>游戏结束</h2></td>
+			</tr>
+			<tr>
+				<td colspan="7"><h3>获胜者</h3></td>
+			</tr>
+			<tr>
+				<td colspan="7"><h4>{{playerNames[0]}}</h4></td>
+			</tr>
+			<tr>
+				<td colspan="7">
+					<img src="/image/Nothanks/winner.jpg" class="cup">
+				</td>
+			</tr>
+			<tr>
+				<th style="text-align:center">排名</th>
+				<th style="text-align:center">玩家</th>
+				<th style="text-align:center">分数</th>
+				<th style="text-align:center">明示红包</th>
+				<th style="text-align:center; width: 600px">所有手牌</th>
+				
+			</tr>
+			<tr ng-repeat="p in playerNames track by $index" ng-init="playerIndex = $index">
+				<td style="text-align:center">{{rankings[$index]}}</td>
+				<td style="text-align:center">{{p}}</td>
+				<td style="text-align:center">{{scores[$index]}}</td>
+				<td style="text-align:center">{{revealedMoney[$index]}}</td>
+				<td>
+					<div class="hand" ng-repeat="c in allHands[playerIndex] track by $index"
+					ng-style="allHandsStyle[playerIndex][$index]"></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="7">
+					<button ng-click="goto('nothanks')" ng-show="lord != username">退出</button>
+					<button ng-click="dismiss()" ng-show="lord == username">解散并退出</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
 </body>
 </html>

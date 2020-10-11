@@ -111,7 +111,6 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document', '
 					"background": imgUrl,
 					"background-size": "cover",
 					"float": "left",
-					"margin-left" :marginLeft
 				}
 			}
 			
@@ -120,7 +119,6 @@ app.controller("nothanksGameCtrl", ['$scope', '$window', '$http', '$document', '
 				"background": imgUrl,
 				"background-size": "cover",
 				"float": "left",
-				"margin-left" :marginLeft
 			}
 		}
 		
