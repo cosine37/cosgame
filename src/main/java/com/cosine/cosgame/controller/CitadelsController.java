@@ -14,6 +14,7 @@ import com.cosine.cosgame.citadels.Ask;
 import com.cosine.cosgame.citadels.Board;
 import com.cosine.cosgame.citadels.BoardEntity;
 import com.cosine.cosgame.citadels.CitadelsMeta;
+import com.cosine.cosgame.citadels.Delicacy;
 import com.cosine.cosgame.citadels.Player;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -478,6 +479,29 @@ public class CitadelsController {
 		if (board.getPlayerByName(username) != null) {
 			Player p = board.getPlayerByName(username);
 			Ask ask = board.getDelicacies().get(index).onBuy(p);
+			ask.setAskBuiltIndex(index);
+			p.setAsk(ask);
+			board.updatePlayer(username);
+			board.updateLogs();
+			board.updateDeck();
+			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
+			board.updateDB("coins", board.getCoins());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/citadelsgame/usedelicacyskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useDelicacySkill(HttpServletRequest request, @RequestParam int index, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) != null) {
+			Player p = board.getPlayerByName(username);
+			Delicacy d = board.getDelicacies().get(index);
+			Ask ask = d.afterEffect(p, x);
 			p.setAsk(ask);
 			board.updatePlayer(username);
 			board.updateLogs();
@@ -526,11 +550,9 @@ public class CitadelsController {
 			board.updateDeck();
 			board.updateDB("tempRevealedTop", board.getTempRevealedTop());
 			board.updateDB("coins", board.getCoins());
-			//System.out.println(x);
 			if (x>=80000) {
 				int victimIndex = x%10000;
 				victimIndex = victimIndex/100;
-				//System.out.println(victimIndex);
 				board.updatePlayer(victimIndex);
 			}
 		}

@@ -15,7 +15,14 @@ public class DelicacyFactory {
 			delicacy = new EggTart();
 		} else if (img.contentEquals("d201")) {
 			delicacy = new Layers();
+		} else if (img.contentEquals("d002")) {
+			delicacy = new Wine();
+		} else if (img.contentEquals("d102")) {
+			delicacy = new Tea();
+		} else if (img.contentEquals("d103")) {
+			delicacy = new DriedRaddish();
 		}
+			
 		
 		else {
 			delicacy = new Delicacy();

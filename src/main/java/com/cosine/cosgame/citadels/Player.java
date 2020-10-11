@@ -373,6 +373,18 @@ public class Player {
 		}
 	}
 	
+	public boolean hasCrown() {
+		if (board.getCrown() < 0 || board.getCrown() >= board.getPlayers().size()) {
+			return false;
+		}
+		if (board.getPlayers().get(board.getCrown()).getName().contentEquals(name)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public List<String> canExchangeList(Player dp, Card c) { // a helper for diplomat
 		List<String> ans = new ArrayList<>();
 		boolean flag;

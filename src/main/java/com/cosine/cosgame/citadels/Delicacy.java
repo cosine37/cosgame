@@ -20,7 +20,7 @@ public class Delicacy {
 		return ask;
 	}
 	
-	public Ask afterEffect(Player p) {
+	public Ask afterEffect(Player p, int x) {
 		Ask ask = new Ask();
 		return ask;
 	}

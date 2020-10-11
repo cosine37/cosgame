@@ -274,6 +274,12 @@ public class AllRes {
 		delicacies.add(d);
 		d = new Fish();
 		delicacies.add(d);
+		d = new Wine();
+		delicacies.add(d);
+		d = new Tea();
+		delicacies.add(d);
+		d = new DriedRaddish();
+		delicacies.add(d);
 	}
 	
 	public List<Role> genRoles(int playerNum){

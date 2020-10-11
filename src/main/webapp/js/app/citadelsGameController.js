@@ -72,7 +72,7 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 			for (i=0;i<$scope.delicacies.length;i++){
 				var singleDelicacyStyle
 				var imgUrl = "url('/image/Citadels/Delicacies/" + $scope.delicacies[i] + ".png')"
-				if ($scope.canBuyDelicacy[i] == "n" || $scope.phase != "2"){
+				if ($scope.canBuyDelicacy[i] == "n" || $scope.phase != "2" || $scope.askType !='0'){
 					singleDelicacyStyle = {
 						"background": imgUrl,
 						"background-color" : "grey",
@@ -364,6 +364,9 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 		}
 		
 		$scope.buyDelicacy = function(x){
+			if ($scope.askType != '0'){
+				return
+			}
 			if ($scope.canBuyDelicacy[x] == "n"){
 				return
 			}
@@ -432,7 +435,17 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 					$http({url: "/citadelsgame/usecardskill", method: "POST", params: data}).then(function(response){
 						$scope.getBoard()
 					})
-				} 
+				} else if ($scope.askId == '79103'){ // driedRaddish
+					var x = builtIndex
+					var index = $scope.askBuiltIndex
+					var data = {
+							"index": index,
+							"x": x
+					}
+					$http({url: "/citadelsgame/usedelicacyskill", method: "POST", params: data}).then(function(response){
+						$scope.getBoard()
+					})
+				}
 				
 				else { // use skill, destroy & take beautify
 					var wouldChoose = true
