@@ -3,6 +3,10 @@ package com.cosine.cosgame.pokewhat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
+
 public class Board {
 	List<Player> players;
 	List<List<Card>> playedCards;
@@ -12,12 +16,17 @@ public class Board {
 	int round;
 	int turn;
 	int curPlayer;
+	String id;
 	AllRes allRes;
+	MongoDBUtil dbutil;
 	
 	public Board(){
 		players = new ArrayList<>();
 		playedCards = new ArrayList<>();
 		allRes = new AllRes();
+		
+		String dbname = "pokewhat";
+		String col = "board";
 	}
 	
 	public void genDeck() {
@@ -110,6 +119,61 @@ public class Board {
 	}
 	public void setTurn(int turn) {
 		this.turn = turn;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("id",id);
+		doc.append("status", status);
+		doc.append("round", round);
+		doc.append("turn", turn);
+		doc.append("curPlayer", curPlayer);
+		int i;
+		List<String> lod = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).getImg());
+		}
+		doc.append("deck", lod);
+		List<String> loa = new ArrayList<>();
+		for (i=0;i<ancient.size();i++) {
+			loa.add(ancient.get(i).getImg());
+		}
+		doc.append("ancient", loa);
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			String playerName = players.get(i).getName();
+			playerNames.add(playerName);
+			doc.append(playerName, players.get(i).toDocument());
+		}
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		status = doc.getInteger("status", 0);
+		round = doc.getInteger("round", 0);
+		turn = doc.getInteger("turn", 0);
+		curPlayer = doc.getInteger("curPlayer", 0);
+		int i;
+		List<String> lod = (List<String>) doc.get("deck");
+		deck = new ArrayList<>();
+		for (i=0;i<lod.size();i++) {
+			deck.add(CardFactory.createCard(lod.get(i)));
+		}
+		List<String> loa = (List<String>) doc.get("ancient");
+		ancient = new ArrayList<>();
+		for (i=0;i<loa.size();i++) {
+			ancient.add(CardFactory.createCard(loa.get(i)));
+		}
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String playerName = playerNames.get(i);
+			Document dop = (Document) doc.get(playerName);
+			Player p = new Player();
+			p.setFromDoc(dop);
+			players.add(p);
+		}
 	}
 	
 }

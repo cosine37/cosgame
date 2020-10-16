@@ -3,6 +3,8 @@ package com.cosine.cosgame.pokewhat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	List<Card> hand;
 	List<Card> ancient;
@@ -138,6 +140,53 @@ public class Player {
 	}
 	public void setMinNum(int minNum) {
 		this.minNum = minNum;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("score", score);
+		doc.append("hp", hp);
+		doc.append("scoreLastRound", scoreLastRound);
+		doc.append("phase", phase);
+		doc.append("minNum", minNum);
+		doc.append("kill", kill);
+		doc.append("pm",pm.toDocument());
+		int i;
+		List<String> loh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			loh.add(hand.get(i).getImg());
+		}
+		doc.append("hand", loh);
+		List<String> loa = new ArrayList<>();
+		for (i=0;i<ancient.size();i++) {
+			loh.add(ancient.get(i).getImg());
+		}
+		doc.append("ancient", loa);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		score = doc.getInteger("score", 0);
+		hp = doc.getInteger("hp", 0);
+		scoreLastRound = doc.getInteger("scoreLastRound", 0);
+		phase = doc.getInteger("phase", 0);
+		minNum = doc.getInteger("minNum", 0);
+		kill = doc.getBoolean("kill", false);
+		Document dopm = (Document) doc.get("pm");
+		pm.setFromDoc(dopm);
+		int i;
+		hand = new ArrayList<>();
+		List<String> loh = (List<String>) doc.get("hand");
+		for (i=0;i<loh.size();i++) {
+			hand.add(CardFactory.createCard(loh.get(i)));
+		}
+		ancient = new ArrayList<>();
+		List<String> loa = (List<String>) doc.get("ancient");
+		for (i=0;i<loa.size();i++) {
+			ancient.add(CardFactory.createCard(loa.get(i)));
+		}
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.cosine.cosgame.pokewhat;
 
+import org.bson.Document;
+
 public class Pm {
 	String name;
 	String nickname;
@@ -44,5 +46,19 @@ public class Pm {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("nickname", nickname);
+		doc.append("img", img);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		nickname = doc.getString("nickname");
+		img = doc.getString("img");
 	}
 }
