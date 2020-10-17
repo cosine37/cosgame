@@ -16,6 +16,8 @@ public class AllRes {
 	List<Card> baseCards;
 	List<Card> specialCards;
 	List<Card> duoColorCards;
+	List<Card> omniColorBaseCards;
+	List<Card> omniColorCards;
 	List<Role> allRoles;
 	List<Delicacy> delicacies;
 	Board board;
@@ -24,11 +26,14 @@ public class AllRes {
 		baseCards = new ArrayList<>();
 		specialCards = new ArrayList<>();
 		duoColorCards = new ArrayList<>();
+		omniColorBaseCards = new ArrayList<>();
+		omniColorCards = new ArrayList<>();
 		allRoles = new ArrayList<>();
 		delicacies = new ArrayList<>();
 		setAllRoles();
 		setBaseCards();
 		setDuoColorCards();
+		setOmniColorCards();
 		setSpecialCards();
 		setDelicacies();
 	}
@@ -262,6 +267,32 @@ public class AllRes {
 		duoColorCards.add(c);
 	}
 	
+	public void setOmniColorCards() {
+		Card c;
+		c = CardFactory.createCard("招待所", CitadelsConsts.PURPLE, 1, "o11p", -1, 0);
+		omniColorCards.add(c);
+		c = CardFactory.createCard("办事处", CitadelsConsts.PURPLE, 2, "o21p", -1, 0);
+		omniColorCards.add(c);
+		c = CardFactory.createCard("商务宾馆", CitadelsConsts.PURPLE, 4, "o42p", -1, 0);
+		omniColorCards.add(c);
+		c = CardFactory.createCard("写字楼", CitadelsConsts.PURPLE, 5, "o51p", -1, 0);
+		omniColorCards.add(c);
+		
+		int i;
+		for (i=0;i<2;i++) {
+			c = CardFactory.createCard("奶茶店", CitadelsConsts.GREEN, 2, "g23", -1, 0);
+			omniColorBaseCards.add(c);
+		}
+		for (i=0;i<2;i++) {
+			c = CardFactory.createCard("技校", CitadelsConsts.BLUE, 4, "o41b", -1, 0);
+			omniColorBaseCards.add(c);
+		}
+		c = CardFactory.createCard("路障", CitadelsConsts.RED, 0, "o01r", -1, 0);
+		omniColorBaseCards.add(c);
+		c = CardFactory.createCard("新闻大厦", CitadelsConsts.YELLOW, 4, "o43y", -1, 0);
+		omniColorBaseCards.add(c);
+	}
+	
 	public void setDelicacies() {
 		Delicacy d;
 		d = new Peach();
@@ -323,23 +354,30 @@ public class AllRes {
 		}
 		int specialCount = 18;
 		int duoColorCount = 0;
+		int omniColorCount = 0;
 		if (board.isUseDuoColor()) {
 			duoColorCount = 3;
 			Card c = new AsiaCinema();
 			deck.add(c);
-			/*
-			for (i=0;i<2;i++) {
-				c = CardFactory.createCard("奶茶店", CitadelsConsts.GREEN, 2, "g23", -1, 0);
-				deck.add(c);
+			for (i=0;i<duoColorCount;i++) {
+				Random rand = new Random();
+				int size = duoColorCards.size();
+				deck.add(duoColorCards.remove(rand.nextInt(size)));
 			}
-			*/
 		}
-		for (i=0;i<duoColorCount;i++) {
-			Random rand = new Random();
-			int size = duoColorCards.size();
-			deck.add(duoColorCards.remove(rand.nextInt(size)));
-			
+		
+		if (board.isUseOmniColor()) {
+			omniColorCount = 2;
+			for (i=0;i<omniColorCount;i++) {
+				Random rand = new Random();
+				int size = omniColorCards.size();
+				deck.add(omniColorCards.remove(rand.nextInt(size)));
+			}
+			for (i=0;i<omniColorBaseCards.size();i++) {
+				deck.add(omniColorBaseCards.get(i));
+			}
 		}
+		
 		for (i=0;i<specialCount;i++) {
 			Random rand = new Random();
 			int size = specialCards.size();

@@ -29,6 +29,11 @@ public class Agency extends Card{
 				ls.add("n");
 			}
 		}
+		for (int i=0;i<player.getBuilt().size();i++) {
+			if (player.getBuilt().get(i).getImg().contentEquals(img)) {
+				index = i;
+			}
+		}
 		if (flag) {
 			Ask ask = new Ask();
 			ask.setAskId(99921);

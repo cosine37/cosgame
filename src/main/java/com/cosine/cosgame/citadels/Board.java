@@ -61,6 +61,8 @@ public class Board {
 		no9 = -1;
 		no8 = 0;
 		numDelicacyUsed = 0;
+		useDuoColor = false;
+		useOmniColor = false;
 		
 		status = CitadelsConsts.PREGAME;
 		
@@ -123,8 +125,10 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
-		Card c = new DinoWaterTown();
-		deck.add(5,c);
+		Card c = new Agency();
+		deck.add(0,c);
+		c = new Roadblock();
+		deck.add(0,c);
 	}
 	
 	public void deal() {
@@ -836,10 +840,16 @@ public class Board {
 			regicide = "n";
 		}
 		String useDuoColor;
+		String useOmniColor;
 		if (this.useDuoColor) {
 			useDuoColor = "y";
 		} else {
 			useDuoColor = "n";
+		}
+		if (this.useOmniColor) {
+			useOmniColor = "y";
+		} else {
+			useOmniColor = "n";
 		}
 		List<List<String>> specialHands = new ArrayList<>();
 		if (this.status == CitadelsConsts.ENDGAME) {
@@ -915,6 +925,7 @@ public class Board {
 		entity.setNo8(Integer.toString(no8));
 		entity.setNo9(Integer.toString(no9));
 		entity.setUseDuoColor(useDuoColor);
+		entity.setUseOmniColor(useOmniColor);
 		entity.setNumDelicacyUsed(Integer.toString(numDelicacyUsed));
 		entity.setDelicacies(lod);
 		entity.setCanBuyDelicacy(canBuyDelicacy);
@@ -942,6 +953,7 @@ public class Board {
 		doc.append("no9", no9);
 		doc.append("numDelicacyUsed", numDelicacyUsed);
 		doc.append("useDuoColor", useDuoColor);
+		doc.append("useOmniColor", useOmniColor);
 		int i;
 		List<Document> dod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
@@ -989,6 +1001,7 @@ public class Board {
 		no9 = doc.getInteger("no9", -1);
 		numDelicacyUsed = doc.getInteger("numDelicacyUsed", 0);
 		useDuoColor = doc.getBoolean("useDuoColor", false);
+		useOmniColor = doc.getBoolean("useOmniColor", false);
 		tempRevealedTop = (List<String>) doc.get("tempRevealedTop");
 		int i;
 		List<Document> dor = (List<Document>) doc.get("roles");

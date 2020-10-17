@@ -197,6 +197,22 @@ public class CitadelsController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/citadelsgame/setuseomnicolor", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setUseOmniColor(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.isUseOmniColor()) {
+			board.setUseOmniColor(false);
+		} else {
+			board.setUseOmniColor(true);
+		}
+		board.updateDB("useOmniColor", board.isUseOmniColor());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/citadelsgame/addbot", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
 		Board board = new Board();

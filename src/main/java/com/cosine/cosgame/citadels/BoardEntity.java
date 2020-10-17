@@ -56,6 +56,7 @@ public class BoardEntity {
 	String no8;
 	String no9;
 	String useDuoColor;
+	String useOmniColor;
 	String numDelicacyUsed;
 
 	public List<String> getPlayerNames() {
@@ -375,5 +376,11 @@ public class BoardEntity {
 	}
 	public void setNumDelicacyUsed(String numDelicacyUsed) {
 		this.numDelicacyUsed = numDelicacyUsed;
+	}
+	public String getUseOmniColor() {
+		return useOmniColor;
+	}
+	public void setUseOmniColor(String useOmniColor) {
+		this.useOmniColor = useOmniColor;
 	}
 }
