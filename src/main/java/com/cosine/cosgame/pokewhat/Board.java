@@ -3,6 +3,7 @@ package com.cosine.cosgame.pokewhat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -36,14 +37,39 @@ public class Board {
 	}
 	
 	public void genDeck() {
-		
+		int i,j;
+		final int NUMSPELL = 8;
+		for (i=1;i<=NUMSPELL;i++) {
+			for (j=1;j<=i;j++) {
+				Card c = CardFactory.createCard(i);
+				deck.add(c);
+			}
+		}
+	}
+	
+	public void shuffle() {
+		List<Card> shuffled = new ArrayList<>();
+		Random rand = new Random();
+		while (deck.size()>0) {
+			int size = deck.size();
+			shuffled.add(deck.remove(rand.nextInt(size)));
+		}
+		for (int i=0;i<shuffled.size();i++) {
+			deck.add(shuffled.get(i));
+		}
 	}
 	
 	public void removeCards(int x) {
+		int numRemove = 0;
 		if (x == 2) {
-			
+			numRemove = 12;
 		} else if (x == 3) {
-			
+			numRemove = 6;
+		}
+		for (int i=0;i<numRemove;i++) {
+			Card c = deck.remove(0);
+			int index = c.getNum();
+			playedCards.get(index).add(c);
 		}
 	}
 	
@@ -54,6 +80,17 @@ public class Board {
 		}
 	}
 	
+	public void deal() {
+		int i,j;
+		for (i=0;i<players.size();i++) {
+			for (j=0;j<PokewhatConsts.HANDSIZE;j++) {
+				Card c = deck.remove(0);
+				players.get(i).getHand().add(c);
+			}
+			players.get(i).setHp(PokewhatConsts.MAXHP);
+		}
+	}
+	
 	public void startGame() {
 		int i;
 		for (i=0;i<9;i++) {
@@ -61,8 +98,10 @@ public class Board {
 			playedCards.add(ls);
 		}
 		genDeck();
+		shuffle();
 		removeCards(players.size());
 		genAncient();
+		deal();
 	}
 	
 	public boolean isRoundEnd() {
@@ -232,7 +271,8 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			String playerName = players.get(i).getName();
 			playerNames.add(playerName);
-			doc.append(playerName, players.get(i).toDocument());
+			String s = "player-" + playerName;
+			doc.append(s, players.get(i).toDocument());
 		}
 		doc.append("playerNames", playerNames);
 		return doc;
@@ -263,7 +303,7 @@ public class Board {
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {
-			String playerName = playerNames.get(i);
+			String playerName = "player-" + playerNames.get(i);
 			Document dop = (Document) doc.get(playerName);
 			Player p = new Player();
 			p.setFromDoc(dop);
@@ -292,6 +332,28 @@ public class Board {
 			String playerName = "player-" + p.getName();
 			dbutil.update("id", id, playerName, dop);
 		}
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
+		}
+	}
+	
+	public void updateDeck() {
+		List<String> lod = new ArrayList<>();
+		for (int i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).getImg());
+		}
+		dbutil.update("id", id, "deck", lod);
+	}
+	
+	public void updateAncient() {
+		List<String> loa = new ArrayList<>();
+		for (int i=0;i<ancient.size();i++) {
+			loa.add(ancient.get(i).getImg());
+		}
+		dbutil.update("id", id, "ancient", loa);
 	}
 	
 	public boolean exists(String id) {

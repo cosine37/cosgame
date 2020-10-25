@@ -34,8 +34,6 @@ public class PokewhatController {
 		return "pokewhatGame";
 	}
 	
-	
-	
 	@RequestMapping(value="/pokewhatgame/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -50,12 +48,30 @@ public class PokewhatController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokewhatgame/startgame", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startgame(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.startGame();
+		board.updateDeck();
+		board.updateAncient();
+		board.updatePlayers();
+		board.updateDB("status", board.getStatus());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		System.out.println("Ancient size:" + board.getAncient().size());
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 		} else {
