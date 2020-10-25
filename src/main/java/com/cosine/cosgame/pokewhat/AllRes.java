@@ -1,5 +1,6 @@
 package com.cosine.cosgame.pokewhat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllRes {
@@ -7,6 +8,8 @@ public class AllRes {
 	List<Pm> allPm;
 	
 	public AllRes() {
+		allCards = new ArrayList<>();
+		allPm = new ArrayList<>();
 		genAllCards();
 		genAllPm();
 	}

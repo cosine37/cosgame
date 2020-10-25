@@ -22,6 +22,7 @@ public class Player {
 	public Player() {
 		hand = new ArrayList<>();
 		ancient = new ArrayList<>();
+		pm = new Pm();
 	}
 	
 	public int cardIndex(Card c) {

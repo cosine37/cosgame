@@ -23,4 +23,12 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.getBoard = function(){
+			$http.get('/pokewhatgame/getboard').then(function(response){
+				$scope.gamedata = response.data
+			});
+		}
+		
+		$scope.getBoard();
+		
 }]);

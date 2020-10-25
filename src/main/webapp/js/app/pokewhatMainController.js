@@ -24,6 +24,8 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.newGame = function(){
-			$scope.goto('pokewhatcreategame')
+			$http({url: "/pokewhatgame/newboard", method: "POST"}).then(function(response){
+				$scope.goto('pokewhatcreategame');
+			});
 		}
 }]);
