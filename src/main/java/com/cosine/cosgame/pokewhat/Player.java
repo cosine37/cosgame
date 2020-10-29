@@ -49,6 +49,7 @@ public class Player {
 	public void hurt(int x) {
 		hp = hp-x;
 		if (hp<0) hp=0;
+		//TODO: add end turn & calc score handlers
 	}
 	
 	public void recover(int x) {
@@ -68,6 +69,24 @@ public class Player {
 				return 1;
 			}
 		}
+	}
+	
+	public Player prevPlayer() {
+		int x = index-1;
+		if (x<0) {
+			x = x + board.getPlayers().size();
+		}
+		Player p = board.getPlayers().get(x);
+		return p;
+	}
+	
+	public Player nextPlayer() {
+		int x = index+1;
+		if (x == board.getPlayers().size()) {
+			x = 0;
+		}
+		Player p = board.getPlayers().get(x);
+		return p;
 	}
 
 	public List<Card> getHand() {
@@ -99,6 +118,10 @@ public class Player {
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	public void addHp(int x) {
+		hp = hp+x;
+		if (hp>PokewhatConsts.MAXHP) hp=PokewhatConsts.MAXHP;
 	}
 	public int getScoreLastRound() {
 		return scoreLastRound;

@@ -1,11 +1,11 @@
 package com.cosine.cosgame.pokewhat;
 
 public class Card {
-	int num;
-	String name;
-	String img;
-	Player player;
-	Board board;
+	protected int num;
+	protected String name;
+	protected String img;
+	protected Player player;
+	protected Board board;
 	
 	public Card() {
 		

@@ -307,6 +307,7 @@ public class Board {
 			Document dop = (Document) doc.get(playerName);
 			Player p = new Player();
 			p.setFromDoc(dop);
+			p.setIndex(i);
 			players.add(p);
 		}
 	}
