@@ -15,6 +15,7 @@ public class Player {
 	int phase;
 	int index;
 	int minNum;
+	int missCount;
 	boolean kill;
 	Pm pm;
 	Board board;
@@ -165,7 +166,13 @@ public class Player {
 	public void setMinNum(int minNum) {
 		this.minNum = minNum;
 	}
-	
+	public int getMissCount() {
+		return missCount;
+	}
+	public void setMissCount(int missCount) {
+		this.missCount = missCount;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -175,6 +182,7 @@ public class Player {
 		doc.append("phase", phase);
 		doc.append("minNum", minNum);
 		doc.append("kill", kill);
+		doc.append("missCount", missCount);
 		doc.append("pm",pm.toDocument());
 		int i;
 		List<String> loh = new ArrayList<>();
@@ -198,6 +206,7 @@ public class Player {
 		phase = doc.getInteger("phase", 0);
 		minNum = doc.getInteger("minNum", 0);
 		kill = doc.getBoolean("kill", false);
+		missCount = doc.getInteger("missCount", 0);
 		Document dopm = (Document) doc.get("pm");
 		pm.setFromDoc(dopm);
 		int i;
