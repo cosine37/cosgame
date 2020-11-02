@@ -17,6 +17,7 @@ public class Player {
 	int minNum;
 	int missCount;
 	boolean kill;
+	boolean bot;
 	Pm pm;
 	Board board;
 	
@@ -172,6 +173,12 @@ public class Player {
 	public void setMissCount(int missCount) {
 		this.missCount = missCount;
 	}
+	public boolean isBot() {
+		return bot;
+	}
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -183,6 +190,7 @@ public class Player {
 		doc.append("minNum", minNum);
 		doc.append("kill", kill);
 		doc.append("missCount", missCount);
+		doc.append("bot", bot);
 		doc.append("pm",pm.toDocument());
 		int i;
 		List<String> loh = new ArrayList<>();
@@ -207,6 +215,7 @@ public class Player {
 		minNum = doc.getInteger("minNum", 0);
 		kill = doc.getBoolean("kill", false);
 		missCount = doc.getInteger("missCount", 0);
+		bot = doc.getBoolean("bot", false);
 		Document dopm = (Document) doc.get("pm");
 		pm.setFromDoc(dopm);
 		int i;

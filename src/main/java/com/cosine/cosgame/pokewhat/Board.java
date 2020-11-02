@@ -133,6 +133,14 @@ public class Board {
 		p.setName(s);
 		players.add(p);
 	}
+	public void addBot() {
+		String botName = "P" + Integer.toString(players.size());
+		Player bot = new Player();
+		bot.setName(botName);
+		bot.setBot(true);
+		players.add(bot);
+		addPlayerToDB(botName);
+	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
 		for (int i=0;i<players.size();i++) {
@@ -242,6 +250,7 @@ public class Board {
 		entity.setTurn(Integer.toString(turn));
 		entity.setStatus(Integer.toString(status));
 		entity.setPlayedCards(playedCards);
+		entity.setPlayerNames(playerNames);
 		entity.setAllCards(allCards);
 		entity.setHp(hp);
 		entity.setPm(pms);
@@ -332,6 +341,14 @@ public class Board {
 			Document dop = p.toDocument();
 			String playerName = "player-" + p.getName();
 			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
 		}
 	}
 	

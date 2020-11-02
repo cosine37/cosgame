@@ -23,6 +23,12 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.addBot = function(){
+			$http.post('/pokewhatgame/addbot').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.startGame = function(){
 			$http.post('/pokewhatgame/startgame').then(function(response){
 				$scope.goto('pokewhatgame');

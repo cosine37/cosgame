@@ -48,6 +48,17 @@ public class PokewhatController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokewhatgame/addbot", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.addBot();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startgame(HttpServletRequest request){
 		Board board = new Board();
