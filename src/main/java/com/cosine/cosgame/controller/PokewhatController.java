@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.pokewhat.Board;
 import com.cosine.cosgame.pokewhat.BoardEntity;
+import com.cosine.cosgame.pokewhat.PokewhatMeta;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -34,6 +35,15 @@ public class PokewhatController {
 		return "pokewhatGame";
 	}
 	
+	@RequestMapping(value="/pokewhat/allboards", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
+		PokewhatMeta meta = new PokewhatMeta();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -44,6 +54,29 @@ public class PokewhatController {
 		board.genBoardId();
 		board.storeToDB();
 		session.setAttribute("boardId", board.getId());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) == null) {
+			board.addPlayer(username);
+			board.addPlayerToDB(username);
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
