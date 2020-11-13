@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.cosine.cosgame.pokewhat.Card;
 
-class Moonlight extends Card{
+public class Moonlight extends Card{
 	public Moonlight() {
 		num = 3;
 		img = "3";

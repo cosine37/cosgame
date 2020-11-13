@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.pokewhat.Board;
 import com.cosine.cosgame.pokewhat.BoardEntity;
+import com.cosine.cosgame.pokewhat.Player;
+import com.cosine.cosgame.pokewhat.PokewhatConsts;
 import com.cosine.cosgame.pokewhat.PokewhatMeta;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -93,7 +95,7 @@ public class PokewhatController {
 	}
 	
 	@RequestMapping(value="/pokewhatgame/startgame", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> startgame(HttpServletRequest request){
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
@@ -103,7 +105,48 @@ public class PokewhatController {
 		board.updateDeck();
 		board.updateAncient();
 		board.updatePlayers();
+		board.updatePlayedCards();
 		board.updateDB("status", board.getStatus());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/usemove", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useMove(HttpServletRequest request, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p.getPhase() == PokewhatConsts.USEMOVE) {
+			p.useMove(x);
+			board.updatePlayers();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateDB("status", board.getStatus());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/endturn", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> endturn(HttpServletRequest request, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p.getPhase() == PokewhatConsts.USEMOVE) {
+			p.useMove(x);
+			board.updatePlayers();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateDB("status", board.getStatus());
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

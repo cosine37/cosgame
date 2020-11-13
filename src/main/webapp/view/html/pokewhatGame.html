@@ -15,5 +15,8 @@
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
 	<button ng-click="goto('pokewhat')">back</button>
 	<p>{{gamedata}}</p>
+	<div>
+		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1">{{x}}</button>
+	</div>
 </body>
 </html>

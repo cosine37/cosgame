@@ -16,6 +16,7 @@ public class Player {
 	int index;
 	int minNum;
 	int missCount;
+	int lastMove;
 	boolean kill;
 	boolean bot;
 	Pm pm;
@@ -27,6 +28,18 @@ public class Player {
 		pm = new Pm();
 	}
 	
+	public void startTurn() {
+		phase = PokewhatConsts.USEMOVE;
+		lastMove = 0;
+	}
+	
+	public void endTurn() {
+		phase = PokewhatConsts.OFFTURN;
+		drawHands();
+		Player p = nextPlayer();
+		p.startTurn();
+	}
+	
 	public int cardIndex(Card c) {
 		for (int i=0;i<hand.size();i++) {
 			if (hand.get(i).getImg().contentEquals(c.getImg())) {
@@ -36,7 +49,8 @@ public class Player {
 		return -1;
 	}
 	
-	public void useCard(Card c) {
+	public void useMove(int x) {
+		Card c = CardFactory.createCard(x);
 		c.setPlayer(this);
 		int index = cardIndex(c);
 		if (cardIndex(c) != -1) {
@@ -45,6 +59,9 @@ public class Player {
 			board.addToPlayedCards(removed);
 		} else {
 			c.penalty();
+			if (hp>0) {
+				endTurn();
+			}
 		}
 	}
 	
@@ -58,6 +75,16 @@ public class Player {
 		hp = hp+x;
 		if (hp>PokewhatConsts.MAXHP) {
 			hp=PokewhatConsts.MAXHP;
+		}
+	}
+	
+	public void drawHands() {
+		while (hand.size() < PokewhatConsts.HANDSIZE) {
+			if (board.getDeck().size() == 0) {
+				break;
+			}
+			Card c = board.getDeck().remove(0);
+			hand.add(c);
 		}
 	}
 	
@@ -173,6 +200,12 @@ public class Player {
 	public void setMissCount(int missCount) {
 		this.missCount = missCount;
 	}
+	public int getLastMove() {
+		return lastMove;
+	}
+	public void setLastMove(int lastMove) {
+		this.lastMove = lastMove;
+	}
 	public boolean isBot() {
 		return bot;
 	}
@@ -192,6 +225,7 @@ public class Player {
 		doc.append("missCount", missCount);
 		doc.append("bot", bot);
 		doc.append("pm",pm.toDocument());
+		doc.append("lastMove", lastMove);
 		int i;
 		List<String> loh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -216,6 +250,7 @@ public class Player {
 		kill = doc.getBoolean("kill", false);
 		missCount = doc.getInteger("missCount", 0);
 		bot = doc.getBoolean("bot", false);
+		lastMove = doc.getInteger("lastMove", 0);
 		Document dopm = (Document) doc.get("pm");
 		pm.setFromDoc(dopm);
 		int i;

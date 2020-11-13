@@ -5,7 +5,7 @@ import java.util.Random;
 import com.cosine.cosgame.pokewhat.Card;
 import com.cosine.cosgame.pokewhat.Player;
 
-class DracoMeteor extends Card{
+public class DracoMeteor extends Card{
 	public DracoMeteor() {
 		num = 1;
 		img = "1";

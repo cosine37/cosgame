@@ -7,6 +7,12 @@ var setUrl = function(d){
 var app = angular.module("pokewhatGameApp", []);
 app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
+		$scope.moves = [];
+		$scope.phase = "";
+		
+		for (var i=1;i<=8;i++){
+			$scope.moves.push(i);
+		}
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -23,9 +29,20 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.useMove = function(x){
+			var data = {
+				"x" : x
+			}
+			$http({url: "/pokewhatgame/usemove", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.phase = response.data.phase;
 			});
 		}
 		

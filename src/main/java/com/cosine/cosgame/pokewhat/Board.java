@@ -61,16 +61,18 @@ public class Board {
 	
 	public void removeCards(int x) {
 		int numRemove = 0;
+		int i,j;
 		if (x == 2) {
 			numRemove = 12;
 		} else if (x == 3) {
 			numRemove = 6;
 		}
-		for (int i=0;i<numRemove;i++) {
+		for (i=0;i<numRemove;i++) {
 			Card c = deck.remove(0);
 			int index = c.getNum();
 			playedCards.get(index).add(c);
 		}
+		
 	}
 	
 	public void genAncient() {
@@ -102,6 +104,11 @@ public class Board {
 		removeCards(players.size());
 		genAncient();
 		deal();
+		status = PokewhatConsts.INGAME;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setPhase(PokewhatConsts.OFFTURN);
+		}
+		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
 	}
 	
 	public boolean isRoundEnd() {
@@ -220,6 +227,7 @@ public class Board {
 		List<String> playerNames = new ArrayList<>();
 		List<String> pms = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
+		String phase = "0";
 		int i,j;
 		for (i=0;i<this.playedCards.size();i++) {
 			List<String> sl = new ArrayList<>();
@@ -232,6 +240,10 @@ public class Board {
 			playerNames.add(players.get(i).getName());
 			pms.add(players.get(i).getPm().getImg());
 			hp.add(Integer.toString(players.get(i).getHp()));
+			
+			if (players.get(i).getName().contentEquals(name)) {
+				phase = Integer.toString(players.get(i).getPhase());
+			}
 			
 			List<String> sl = new ArrayList<>();
 			for (j=0;j<players.get(i).getHand().size();j++) {
@@ -249,6 +261,7 @@ public class Board {
 		entity.setRound(Integer.toString(round));
 		entity.setTurn(Integer.toString(turn));
 		entity.setStatus(Integer.toString(status));
+		entity.setPhase(phase);
 		entity.setPlayedCards(playedCards);
 		entity.setPlayerNames(playerNames);
 		entity.setAllCards(allCards);
@@ -265,12 +278,22 @@ public class Board {
 		doc.append("round", round);
 		doc.append("turn", turn);
 		doc.append("curPlayer", curPlayer);
-		int i;
+		int i,j;
 		List<String> lod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			lod.add(deck.get(i).getImg());
 		}
 		doc.append("deck", lod);
+		List<List<String>> lopc = new ArrayList<>();
+		for (i=0;i<playedCards.size();i++) {
+			List<Card> lc = playedCards.get(i);
+			List<String> ls = new ArrayList<>();
+			for (j=0;j<lc.size();j++) {
+				ls.add(lc.get(j).getImg());
+			}
+			lopc.add(ls);
+		}
+		doc.append("playedCards", lopc);
 		List<String> loa = new ArrayList<>();
 		for (i=0;i<ancient.size();i++) {
 			loa.add(ancient.get(i).getImg());
@@ -294,13 +317,24 @@ public class Board {
 		round = doc.getInteger("round", 0);
 		turn = doc.getInteger("turn", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
-		int i;
+		int i,j;
 		List<String> lod = (List<String>) doc.get("deck");
 		deck = new ArrayList<>();
 		for (i=0;i<lod.size();i++) {
 			Card c = CardFactory.createCard(lod.get(i));
 			c.setBoard(this);
 			deck.add(c);
+		}
+		List<List<String>> lopc = (List<List<String>>) doc.get("playedCards");
+		playedCards = new ArrayList<>();
+		for (i=0;i<lopc.size();i++) {
+			List<String> ls = lopc.get(i);
+			List<Card> lc = new ArrayList<>();
+			for (j=0;j<ls.size();j++) {
+				Card c = CardFactory.createCard(ls.get(j));
+				lc.add(c);
+			}
+			playedCards.add(lc);
 		}
 		List<String> loa = (List<String>) doc.get("ancient");
 		ancient = new ArrayList<>();
@@ -317,6 +351,7 @@ public class Board {
 			Player p = new Player();
 			p.setFromDoc(dop);
 			p.setIndex(i);
+			p.setBoard(this);
 			players.add(p);
 		}
 	}
@@ -364,6 +399,20 @@ public class Board {
 			lod.add(deck.get(i).getImg());
 		}
 		dbutil.update("id", id, "deck", lod);
+	}
+	
+	public void updatePlayedCards() {
+		int i,j;
+		List<List<String>> lopc = new ArrayList<>();
+		for (i=0;i<playedCards.size();i++) {
+			List<Card> lc = playedCards.get(i);
+			List<String> ls = new ArrayList<>();
+			for (j=0;j<lc.size();j++) {
+				ls.add(lc.get(j).getImg());
+			}
+			lopc.add(ls);
+		}
+		dbutil.update("id", id, "playedCards", lopc);
 	}
 	
 	public void updateAncient() {

@@ -5,7 +5,7 @@ import java.util.Random;
 import com.cosine.cosgame.pokewhat.Card;
 import com.cosine.cosgame.pokewhat.Player;
 
-class OblivionWing extends Card{
+public class OblivionWing extends Card{
 	public OblivionWing() {
 		num = 2;
 		img = "2";

@@ -10,6 +10,7 @@ public class BoardEntity {
 	List<String> hp;
 	
 	String status;
+	String phase;
 	String round;
 	String turn;
 	String id;
@@ -74,5 +75,11 @@ public class BoardEntity {
 	}
 	public void setHp(List<String> hp) {
 		this.hp = hp;
+	}
+	public String getPhase() {
+		return phase;
+	}
+	public void setPhase(String phase) {
+		this.phase = phase;
 	}
 }
