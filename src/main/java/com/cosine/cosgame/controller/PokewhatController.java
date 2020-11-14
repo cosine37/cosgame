@@ -108,6 +108,7 @@ public class PokewhatController {
 		board.updatePlayedCards();
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
+		board.updateDB("turn", board.getTurn());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

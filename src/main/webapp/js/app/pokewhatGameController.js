@@ -8,6 +8,7 @@ var app = angular.module("pokewhatGameApp", []);
 app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		$scope.moves = [];
+		$scope.allCards = [];
 		$scope.phase = "";
 		$scope.lastMove = 0;
 		
@@ -57,6 +58,13 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.gamedata = response.data
 				$scope.phase = response.data.phase;
 				$scope.lastMove = parseInt(response.data.lastMove);
+				$scope.playerNames = response.data.playerNames;
+				$scope.playedCards = response.data.playedCards;
+				$scope.scores = response.data.scores;
+				$scope.hp = response.data.hp;
+				$scope.allCards = response.data.allCards;
+				$scope.round = response.data.round;
+				$scope.turn = response.data.turn;
 			});
 		}
 		

@@ -14,7 +14,23 @@
 <script src="/js/app/pokewhatGameController.js"></script>
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
 	<button ng-click="goto('pokewhat')">back</button>
-	<p>{{gamedata}}</p>
+	<div>
+		<p>Round: {{round}}</p>
+		<p>Turn: {{turn}}</p>
+		<p>{{playedCards}}</p>
+	</div>
+	<div>
+		<table>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>{{pn}}</td>
+				<td>hp: {{hp[$index]}}</td>
+				<td>score: {{scores[$index]}}</td>
+				<td>
+					<button ng-repeat="(y,x) in allCards[$index] track by y" disabled>{{x}}</button>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<div>
 		<button ng-click="endTurn()" ng-disabled="phase != 1">End Turn</button>
 		<button ng-click="botNextMove()" ng-disabled="phase == 1">Bot Next Move</button>
