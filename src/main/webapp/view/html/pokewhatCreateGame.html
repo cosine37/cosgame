@@ -14,8 +14,8 @@
 <script src="/js/app/pokewhatCreateGameController.js"></script>
 <body ng-app="pokewhatCreateGameApp" ng-controller="pokewhatCreateGameCtrl">
 	<button ng-click="goto('pokewhat')">back</button>
-	<button ng-click="addBot()">add bot</button>
-	<button ng-click="startGame()">start</button>
+	<button ng-click="addBot()" ng-show="username == lord">add bot</button>
+	<button ng-click="startGame()" ng-show="username == lord">start</button>
 	<p>{{gamedata}}</p>
 </body>
 </html>

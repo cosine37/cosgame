@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("pokewhatCreateGameApp", []);
-app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -38,9 +38,20 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.status = response.data.status;
+				if ($scope.status != "0"){
+					$scope.goto('pokewhatgame');
+				}
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			$scope.getBoard();
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},5000);
+		}
+		
+		$scope.offturnHandle();
 		
 }]);

@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("pokewhatGameApp", []);
-app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.moves = [];
 		$scope.allCards = [];
 		$scope.phase = "";
@@ -71,6 +71,15 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			if ($scope.phase != "1" && $scope.status !='2'){
+				$scope.getBoard();
+			}
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1500);
+		}
+		
+		$scope.offturnHandle();
 		
 }]);

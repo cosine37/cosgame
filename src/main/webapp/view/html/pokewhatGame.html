@@ -35,7 +35,7 @@
 	</div>
 	<div>
 		<button ng-click="endTurn()" ng-disabled="phase != 1">End Turn</button>
-		<button ng-click="botNextMove()" ng-disabled="phase == 1">Bot Next Move</button>
+		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
 	</div>
 	<div>
 		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1 || x < lastMove">{{x}}</button>

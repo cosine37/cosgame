@@ -5,12 +5,13 @@ var setUrl = function(d){
 }
 
 var app = angular.module("pokewhatMainApp", []);
-app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.boards = []
 		$scope.statuses = []
 		$scope.lords = []
 		$scope.canBack = []
+		$scope.onTablesTab = true;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -76,5 +77,17 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getAllBoards();
+		$scope.offturnHandle = function(){
+			if ($scope.onTablesTab){
+				$scope.getAllBoards();
+			}
+			
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},4000);
+			
+		}
+		
+		
+		$scope.offturnHandle();
 }]);
