@@ -31,6 +31,7 @@ public class Player {
 	public void startTurn() {
 		phase = PokewhatConsts.USEMOVE;
 		lastMove = 0;
+		board.setCurPlayer(index);
 	}
 	
 	public void endTurn() {

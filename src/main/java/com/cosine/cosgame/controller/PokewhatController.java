@@ -111,6 +111,23 @@ public class PokewhatController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokewhatgame/botnextmove", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> botNextMove(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayers().get(board.getCurPlayer());
+		if (p.isBot()) {
+			p.endTurn();
+			board.updatePlayers();
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/usemove", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> useMove(HttpServletRequest request, @RequestParam int x){
 		Board board = new Board();
@@ -125,6 +142,7 @@ public class PokewhatController {
 			board.updateDeck();
 			board.updateAncient();
 			board.updatePlayedCards();
+			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("status", board.getStatus());
 		}
 		StringEntity entity = new StringEntity();
@@ -132,7 +150,7 @@ public class PokewhatController {
 	}
 	
 	@RequestMapping(value="/pokewhatgame/endturn", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> endturn(HttpServletRequest request, @RequestParam int x){
+	public ResponseEntity<StringEntity> endturn(HttpServletRequest request){
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
@@ -140,12 +158,9 @@ public class PokewhatController {
 		board.getFromDB(boardId);
 		Player p = board.getPlayerByName(username);
 		if (p.getPhase() == PokewhatConsts.USEMOVE) {
-			p.useMove(x);
+			p.endTurn();
 			board.updatePlayers();
-			board.updateDeck();
-			board.updateAncient();
-			board.updatePlayedCards();
-			board.updateDB("status", board.getStatus());
+			board.updateDB("curPlayer", board.getCurPlayer());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -158,7 +173,6 @@ public class PokewhatController {
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		System.out.println("Ancient size:" + board.getAncient().size());
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 		} else {

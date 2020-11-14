@@ -38,6 +38,18 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.endTurn = function(){
+			$http({url: "/pokewhatgame/endturn", method: "POST"}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.botNextMove = function(){
+			$http({url: "/pokewhatgame/botnextmove", method: "POST"}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
