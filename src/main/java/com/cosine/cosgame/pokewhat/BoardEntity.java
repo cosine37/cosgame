@@ -9,6 +9,7 @@ public class BoardEntity {
 	List<String> pm;
 	List<String> hp;
 	List<String> scores;
+	List<String> ancient;
 	
 	String status;
 	String phase;
@@ -17,6 +18,8 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String lastMove;
+	String deckSize;
+	String ancientSize;
 	
 	public List<List<String>> getAllCards() {
 		return allCards;
@@ -95,5 +98,23 @@ public class BoardEntity {
 	}
 	public void setLastMove(String lastMove) {
 		this.lastMove = lastMove;
+	}
+	public List<String> getAncient() {
+		return ancient;
+	}
+	public void setAncient(List<String> ancient) {
+		this.ancient = ancient;
+	}
+	public String getDeckSize() {
+		return deckSize;
+	}
+	public void setDeckSize(String deckSize) {
+		this.deckSize = deckSize;
+	}
+	public String getAncientSize() {
+		return ancientSize;
+	}
+	public void setAncientSize(String ancientSize) {
+		this.ancientSize = ancientSize;
 	}
 }

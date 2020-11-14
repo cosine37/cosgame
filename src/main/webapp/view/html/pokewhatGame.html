@@ -18,6 +18,8 @@
 		<p>Round: {{round}}</p>
 		<p>Turn: {{turn}}</p>
 		<p>{{playedCards}}</p>
+		<p>Deck size: {{deckSize}}</p>
+		<p>Ancient Size: {{ancientSize}}</p>
 	</div>
 	<div>
 		<table>
@@ -37,6 +39,10 @@
 	</div>
 	<div>
 		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1 || x < lastMove">{{x}}</button>
+	</div>
+	<div>
+		Ancient:
+		<button ng-repeat="x in ancient track by $index">{{x}}</button>
 	</div>
 </body>
 </html>

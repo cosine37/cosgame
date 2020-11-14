@@ -164,6 +164,16 @@ public class Board {
 		
 	}
 	
+	public void eternabeam(int index) {
+		for (int i=0;i<players.size();i++) {
+			if (i==index) {
+				continue;
+			} else {
+				players.get(i).setHp(0);
+			}
+		}
+	}
+	
 	public void addToPlayedCards(Card c) {
 		int index = c.getNum();
 		playedCards.get(index).add(c);
@@ -270,6 +280,7 @@ public class Board {
 		List<String> pms = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
 		List<String> scores = new ArrayList<>();
+		List<String> la = new ArrayList<>();
 		String phase = "0";
 		String lastMove = "0";
 		int i,j;
@@ -289,6 +300,9 @@ public class Board {
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
+				for (j=0;j<players.get(i).getAncient().size();j++) {
+					la.add(players.get(i).getAncient().get(j).getImg());
+				}
 			}
 			
 			List<String> sl = new ArrayList<>();
@@ -315,6 +329,9 @@ public class Board {
 		entity.setAllCards(allCards);
 		entity.setHp(hp);
 		entity.setPm(pms);
+		entity.setDeckSize(Integer.toString(deck.size()));
+		entity.setAncientSize(Integer.toString(ancient.size()));
+		entity.setAncient(la);
 		return entity;
 	}
 

@@ -61,6 +61,9 @@ public class Player {
 			c.cardEffect();
 			Card removed = hand.remove(index);
 			board.addToPlayedCards(removed);
+			if (hand.size() == 0) {
+				board.eternabeam(this.index);
+			}
 			if (board.isRoundEnd()) {
 				board.endRound();
 			}
@@ -234,7 +237,7 @@ public class Player {
 		doc.append("hand", loh);
 		List<String> loa = new ArrayList<>();
 		for (i=0;i<ancient.size();i++) {
-			loh.add(ancient.get(i).getImg());
+			loa.add(ancient.get(i).getImg());
 		}
 		doc.append("ancient", loa);
 		return doc;

@@ -65,6 +65,9 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.allCards = response.data.allCards;
 				$scope.round = response.data.round;
 				$scope.turn = response.data.turn;
+				$scope.deckSize = response.data.deckSize;
+				$scope.ancientSize = response.data.ancientSize;
+				$scope.ancient = response.data.ancient;
 			});
 		}
 		
