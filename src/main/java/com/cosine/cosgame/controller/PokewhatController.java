@@ -107,6 +107,7 @@ public class PokewhatController {
 		board.updatePlayers();
 		board.updatePlayedCards();
 		board.updateDB("status", board.getStatus());
+		board.updateDB("round", board.getRound());
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -123,6 +124,7 @@ public class PokewhatController {
 			p.endTurn();
 			board.updatePlayers();
 			board.updateDB("curPlayer", board.getCurPlayer());
+			board.updateDB("turn", board.getTurn());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -144,6 +146,8 @@ public class PokewhatController {
 			board.updatePlayedCards();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("status", board.getStatus());
+			board.updateDB("round", board.getRound());
+			board.updateDB("turn", board.getTurn());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -161,6 +165,7 @@ public class PokewhatController {
 			p.endTurn();
 			board.updatePlayers();
 			board.updateDB("curPlayer", board.getCurPlayer());
+			board.updateDB("turn", board.getTurn());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

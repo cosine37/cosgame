@@ -20,7 +20,7 @@
 		<button ng-click="botNextMove()" ng-disabled="phase == 1">Bot Next Move</button>
 	</div>
 	<div>
-		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1">{{x}}</button>
+		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1 || x < lastMove">{{x}}</button>
 	</div>
 </body>
 </html>

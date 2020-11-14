@@ -29,6 +29,7 @@ public class Player {
 	}
 	
 	public void startTurn() {
+		board.nextTurn();
 		phase = PokewhatConsts.USEMOVE;
 		lastMove = 0;
 		board.setCurPlayer(index);
@@ -53,15 +54,22 @@ public class Player {
 	public void useMove(int x) {
 		Card c = CardFactory.createCard(x);
 		c.setPlayer(this);
+		c.setBoard(board);
 		int index = cardIndex(c);
 		if (cardIndex(c) != -1) {
+			lastMove = c.getNum();
 			c.cardEffect();
 			Card removed = hand.remove(index);
 			board.addToPlayedCards(removed);
+			if (board.isRoundEnd()) {
+				board.endRound();
+			}
 		} else {
 			c.penalty();
 			if (hp>0) {
 				endTurn();
+			} else {
+				board.endRound();
 			}
 		}
 	}
@@ -86,18 +94,6 @@ public class Player {
 			}
 			Card c = board.getDeck().remove(0);
 			hand.add(c);
-		}
-	}
-	
-	public int getRoundScore() {
-		if (hp == 0) {
-			return 0;
-		} else {
-			if (kill) {
-				return 3;
-			} else {
-				return 1;
-			}
 		}
 	}
 	
@@ -142,6 +138,9 @@ public class Player {
 	}
 	public void setScore(int score) {
 		this.score = score;
+	}
+	public void addScore(int x) {
+		score = score+x;
 	}
 	public int getHp() {
 		return hp;
@@ -258,12 +257,16 @@ public class Player {
 		hand = new ArrayList<>();
 		List<String> loh = (List<String>) doc.get("hand");
 		for (i=0;i<loh.size();i++) {
-			hand.add(CardFactory.createCard(loh.get(i)));
+			Card c = CardFactory.createCard(loh.get(i));
+			c.setBoard(board);
+			hand.add(c);
 		}
 		ancient = new ArrayList<>();
 		List<String> loa = (List<String>) doc.get("ancient");
 		for (i=0;i<loa.size();i++) {
-			ancient.add(CardFactory.createCard(loa.get(i)));
+			Card c = CardFactory.createCard(loa.get(i));
+			c.setBoard(board);
+			ancient.add(c);
 		}
 	}
 	

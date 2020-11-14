@@ -94,21 +94,8 @@ public class Board {
 	}
 	
 	public void startGame() {
-		int i;
-		for (i=0;i<9;i++) {
-			List<Card> ls = new ArrayList<>();
-			playedCards.add(ls);
-		}
-		genDeck();
-		shuffle();
-		removeCards(players.size());
-		genAncient();
-		deal();
 		status = PokewhatConsts.INGAME;
-		for (i=0;i<players.size();i++) {
-			players.get(i).setPhase(PokewhatConsts.OFFTURN);
-		}
-		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
+		nextRound();
 	}
 	
 	public boolean isRoundEnd() {
@@ -121,8 +108,60 @@ public class Board {
 		return ans;
 	}
 	
+	public void endRound() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (i == curPlayer) {
+				continue;
+			}
+			if (players.get(i).getHp() > 0) {
+				int x = 1+players.get(i).getAncient().size();
+				players.get(i).setScoreLastRound(x);
+				players.get(i).addScore(x);
+			} else {
+				players.get(i).setScoreLastRound(0);
+			}
+		}
+		if (players.get(curPlayer).getHp() > 0) {
+			int x = 3+players.get(curPlayer).getAncient().size();
+			players.get(curPlayer).setScoreLastRound(x);
+			players.get(curPlayer).addScore(x);
+		} else {
+			players.get(curPlayer).setScoreLastRound(0);
+		}
+		curPlayer++;
+		if (curPlayer>=players.size()) {
+			curPlayer = 0;
+		}
+		nextRound();
+	}
+	
 	public void nextRound() {
+		int i;
+		
 		round++;
+		turn = 1;
+		playedCards = new ArrayList<>();
+		for (i=0;i<9;i++) {
+			List<Card> ls = new ArrayList<>();
+			playedCards.add(ls);
+		}
+		for (i=0;i<players.size();i++) {
+			List<Card> lh = new ArrayList<>();
+			List<Card> la = new ArrayList<>();
+			players.get(i).setHand(lh);
+			players.get(i).setAncient(la);
+			players.get(i).setPhase(PokewhatConsts.OFFTURN);
+		}
+		deck = new ArrayList<>();
+		ancient = new ArrayList<>();
+		genDeck();
+		shuffle();
+		removeCards(players.size());
+		genAncient();
+		deal();
+		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
+		
 	}
 	
 	public void addToPlayedCards(Card c) {
@@ -200,6 +239,9 @@ public class Board {
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
+	public void nextTurn() {
+		turn++;
+	}
 	public List<Card> getDeck() {
 		return deck;
 	}
@@ -227,7 +269,9 @@ public class Board {
 		List<String> playerNames = new ArrayList<>();
 		List<String> pms = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
+		List<String> scores = new ArrayList<>();
 		String phase = "0";
+		String lastMove = "0";
 		int i,j;
 		for (i=0;i<this.playedCards.size();i++) {
 			List<String> sl = new ArrayList<>();
@@ -240,9 +284,11 @@ public class Board {
 			playerNames.add(players.get(i).getName());
 			pms.add(players.get(i).getPm().getImg());
 			hp.add(Integer.toString(players.get(i).getHp()));
+			scores.add(Integer.toString(players.get(i).getScore()));
 			
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
+				lastMove = Integer.toString(players.get(i).getLastMove());
 			}
 			
 			List<String> sl = new ArrayList<>();
@@ -262,8 +308,10 @@ public class Board {
 		entity.setTurn(Integer.toString(turn));
 		entity.setStatus(Integer.toString(status));
 		entity.setPhase(phase);
+		entity.setLastMove(lastMove);
 		entity.setPlayedCards(playedCards);
 		entity.setPlayerNames(playerNames);
+		entity.setScores(scores);
 		entity.setAllCards(allCards);
 		entity.setHp(hp);
 		entity.setPm(pms);
@@ -349,9 +397,9 @@ public class Board {
 			String playerName = "player-" + playerNames.get(i);
 			Document dop = (Document) doc.get(playerName);
 			Player p = new Player();
+			p.setBoard(this);
 			p.setFromDoc(dop);
 			p.setIndex(i);
-			p.setBoard(this);
 			players.add(p);
 		}
 	}

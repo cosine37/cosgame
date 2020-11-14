@@ -9,6 +9,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		$scope.moves = [];
 		$scope.phase = "";
+		$scope.lastMove = 0;
 		
 		for (var i=1;i<=8;i++){
 			$scope.moves.push(i);
@@ -55,6 +56,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document',
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.gamedata = response.data
 				$scope.phase = response.data.phase;
+				$scope.lastMove = parseInt(response.data.lastMove);
 			});
 		}
 		
