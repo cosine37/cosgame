@@ -37,7 +37,13 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
-				$scope.gamedata = response.data
+				$scope.id = response.data.id;
+				if ($scope.id == "NE"){
+					$scope.goto('/pokewhat');
+					return;
+				}
+				$scope.gamedata = response.data;
+				$scope.lord = response.data.lord;
 				$scope.status = response.data.status;
 				if ($scope.status != "0"){
 					$scope.goto('pokewhatgame');

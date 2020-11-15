@@ -55,7 +55,12 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
-				$scope.gamedata = response.data
+				$scope.id = response.data.id;
+				if ($scope.id == "NE"){
+					$scope.goto('/pokewhat');
+					return;
+				}
+				$scope.lord = response.data.lord;
 				$scope.phase = response.data.phase;
 				$scope.lastMove = parseInt(response.data.lastMove);
 				$scope.playerNames = response.data.playerNames;
@@ -68,6 +73,11 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.deckSize = response.data.deckSize;
 				$scope.ancientSize = response.data.ancientSize;
 				$scope.ancient = response.data.ancient;
+				$scope.status = response.data.status;
+				if ($scope.status == "2"){
+					alert("Game Ends");
+					$scope.goto("pokewhatendgame");
+				}
 			});
 		}
 		

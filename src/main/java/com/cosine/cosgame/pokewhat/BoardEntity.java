@@ -10,6 +10,7 @@ public class BoardEntity {
 	List<String> hp;
 	List<String> scores;
 	List<String> ancient;
+	List<String> scoreLastRound;
 	
 	String status;
 	String phase;
@@ -116,5 +117,11 @@ public class BoardEntity {
 	}
 	public void setAncientSize(String ancientSize) {
 		this.ancientSize = ancientSize;
+	}
+	public List<String> getScoreLastRound() {
+		return scoreLastRound;
+	}
+	public void setScoreLastRound(List<String> scoreLastRound) {
+		this.scoreLastRound = scoreLastRound;
 	}
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Pokewhat</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/pokewhatTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/pokewhatOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/pokewhatEndGameController.js"></script>
+<body ng-app="pokewhatEndGameApp" ng-controller="pokewhatEndGameCtrl">
+	<button ng-click="goto('pokewhat')" ng-show="lord != username">back</button>
+	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+	<h2>Game Ends</h2>
+	<table>
+		<tr>
+			<td>Name</td>
+			<td>Score</td>
+			<td>Score Last Round</td>
+		</tr>
+		<tr ng-repeat="pn in playerNames track by $index">
+			<td>{{pn}}</td>
+			<td>{{scores[$index]}}</td>
+			<td>{{scoreLastRound[$index]}}</td>
+		</tr>
+	</table>
+</body>
+</html>

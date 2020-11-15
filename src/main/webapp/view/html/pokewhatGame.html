@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div>
-		<button ng-click="endTurn()" ng-disabled="phase != 1">End Turn</button>
+		<button ng-click="endTurn()" ng-disabled="phase != 1 || lastMove == 0">End Turn</button>
 		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
 	</div>
 	<div>

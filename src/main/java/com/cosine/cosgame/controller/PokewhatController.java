@@ -37,6 +37,11 @@ public class PokewhatController {
 		return "pokewhatGame";
 	}
 	
+	@RequestMapping(value="/pokewhatendgame", method = RequestMethod.GET)
+	public String pokewhatEndGame() {
+		return "pokewhatEndGame";
+	}
+	
 	@RequestMapping(value="/pokewhat/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		PokewhatMeta meta = new PokewhatMeta();
@@ -124,6 +129,7 @@ public class PokewhatController {
 		if (p.isBot()) {
 			p.endTurn();
 			board.updatePlayers();
+			board.updateDeck();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("turn", board.getTurn());
 		}
@@ -165,8 +171,23 @@ public class PokewhatController {
 		if (p.getPhase() == PokewhatConsts.USEMOVE) {
 			p.endTurn();
 			board.updatePlayers();
+			board.updateDeck();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("turn", board.getTurn());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/dismiss", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.dismiss();
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -178,7 +199,6 @@ public class PokewhatController {
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
-		board.getFromDB(boardId);
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 		} else {

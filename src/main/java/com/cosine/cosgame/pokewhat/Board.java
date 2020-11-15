@@ -129,6 +129,12 @@ public class Board {
 		} else {
 			players.get(curPlayer).setScoreLastRound(0);
 		}
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getScore() >= PokewhatConsts.GAMEENDSCORE) {
+				endGame();
+				return;
+			}
+		}
 		curPlayer++;
 		if (curPlayer>=players.size()) {
 			curPlayer = 0;
@@ -151,6 +157,7 @@ public class Board {
 			List<Card> la = new ArrayList<>();
 			players.get(i).setHand(lh);
 			players.get(i).setAncient(la);
+			players.get(i).setLastMove(0);
 			players.get(i).setPhase(PokewhatConsts.OFFTURN);
 		}
 		deck = new ArrayList<>();
@@ -162,6 +169,10 @@ public class Board {
 		deal();
 		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
 		
+	}
+	
+	public void endGame() {
+		status = PokewhatConsts.ENDGAME;
 	}
 	
 	public void eternabeam(int index) {
@@ -281,6 +292,7 @@ public class Board {
 		List<String> hp = new ArrayList<>();
 		List<String> scores = new ArrayList<>();
 		List<String> la = new ArrayList<>();
+		List<String> lsl = new ArrayList<>();
 		String phase = "0";
 		String lastMove = "0";
 		int i,j;
@@ -296,7 +308,7 @@ public class Board {
 			pms.add(players.get(i).getPm().getImg());
 			hp.add(Integer.toString(players.get(i).getHp()));
 			scores.add(Integer.toString(players.get(i).getScore()));
-			
+			lsl.add(Integer.toString(players.get(i).getScoreLastRound()));
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
@@ -332,6 +344,7 @@ public class Board {
 		entity.setDeckSize(Integer.toString(deck.size()));
 		entity.setAncientSize(Integer.toString(ancient.size()));
 		entity.setAncient(la);
+		entity.setScoreLastRound(lsl);
 		return entity;
 	}
 
@@ -497,4 +510,7 @@ public class Board {
 		}
 	}
 	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
 }
