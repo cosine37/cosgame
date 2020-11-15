@@ -2,16 +2,20 @@ package com.cosine.cosgame.pokewhat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AllRes {
 	List<Card> allCards;
 	List<Pm> allPm;
+	List<String> allAvatar;
 	
 	public AllRes() {
 		allCards = new ArrayList<>();
 		allPm = new ArrayList<>();
+		allAvatar = new ArrayList<>();
 		genAllCards();
 		genAllPm();
+		genAllAvatar();
 	}
 	
 	public List<Card> genDeck(){
@@ -216,6 +220,48 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("915", "糖豆人");
 		allPm.add(p);
+	}
+	
+	public void genAllAvatar() {
+		int i;
+		for (i=1;i<=9;i++) {
+			String s = "a00" + Integer.toString(i); 
+			allAvatar.add(s);
+		}
+		for (i=10;i<=20;i++) {
+			String s = "a0" + Integer.toString(i); 
+			allAvatar.add(s);
+		}
+		for (i=1;i<=7;i++) {
+			String s = "a90" + Integer.toString(i); 
+			allAvatar.add(s);
+		}
+	}
+	
+	public List<String> getAvatars() {
+		int i;
+		List<String> ans = new ArrayList<>();
+		List<String> st1 = new ArrayList<>();
+		List<String> st2 = new ArrayList<>();
+		for (i=0;i<5;i++) {
+			ans.add(allAvatar.get(i));
+		}
+		for (i=5;i<20;i++) {
+			st1.add(allAvatar.get(i));
+		}
+		for (i=20;i<27;i++) {
+			st2.add(allAvatar.get(i));
+		}
+		Random rand = new Random();
+		for (i=0;i<8;i++) {
+			int n = st1.size();
+			ans.add(st1.remove(rand.nextInt(n)));
+		}
+		for (i=0;i<2;i++) {
+			int n = st2.size();
+			ans.add(st2.remove(rand.nextInt(n)));
+		}
+		return ans;
 	}
 	
 	

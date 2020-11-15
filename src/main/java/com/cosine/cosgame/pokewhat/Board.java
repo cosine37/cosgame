@@ -14,6 +14,7 @@ public class Board {
 	List<List<Card>> playedCards;
 	List<Card> ancient;
 	List<Card> deck;
+	List<String> avatars;
 	int status;
 	int round;
 	int turn;
@@ -28,12 +29,21 @@ public class Board {
 		playedCards = new ArrayList<>();
 		ancient = new ArrayList<>();
 		deck = new ArrayList<>();
+		avatars = new ArrayList<>();
 		allRes = new AllRes();
 		
 		String dbname = "pokewhat";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
+	}
+	
+	public void newBoard() {
+		avatars = allRes.getAvatars();
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setAvatar(avatars.get(0));
+		}
 	}
 	
 	public void genDeck() {
@@ -205,6 +215,9 @@ public class Board {
 		Player bot = new Player();
 		bot.setName(botName);
 		bot.setBot(true);
+		Random rand = new Random();
+		int x = rand.nextInt(avatars.size());
+		bot.setAvatar(avatars.get(x));
 		players.add(bot);
 		addPlayerToDB(botName);
 	}
@@ -281,7 +294,13 @@ public class Board {
 	public void setLord(String lord) {
 		this.lord = lord;
 	}
-	
+	public List<String> getAvatars() {
+		return avatars;
+	}
+	public void setAvatars(List<String> avatars) {
+		this.avatars = avatars;
+	}
+
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		
@@ -293,6 +312,7 @@ public class Board {
 		List<String> scores = new ArrayList<>();
 		List<String> la = new ArrayList<>();
 		List<String> lsl = new ArrayList<>();
+		List<String> lpa = new ArrayList<>();
 		String phase = "0";
 		String lastMove = "0";
 		int i,j;
@@ -309,6 +329,7 @@ public class Board {
 			hp.add(Integer.toString(players.get(i).getHp()));
 			scores.add(Integer.toString(players.get(i).getScore()));
 			lsl.add(Integer.toString(players.get(i).getScoreLastRound()));
+			lpa.add(players.get(i).getAvatar());
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
@@ -330,6 +351,7 @@ public class Board {
 		
 		entity.setId(id);
 		entity.setLord(lord);
+		entity.setCurPlayer(Integer.toString(curPlayer));
 		entity.setRound(Integer.toString(round));
 		entity.setTurn(Integer.toString(turn));
 		entity.setStatus(Integer.toString(status));
@@ -345,6 +367,8 @@ public class Board {
 		entity.setAncientSize(Integer.toString(ancient.size()));
 		entity.setAncient(la);
 		entity.setScoreLastRound(lsl);
+		entity.setAvatars(avatars);
+		entity.setPlayerAvatars(lpa);
 		return entity;
 	}
 
@@ -357,6 +381,11 @@ public class Board {
 		doc.append("turn", turn);
 		doc.append("curPlayer", curPlayer);
 		int i,j;
+		List<String> lov = new ArrayList<>();
+		for (i=0;i<avatars.size();i++) {
+			lov.add(avatars.get(i));
+		}
+		doc.append("avatars", lov);
 		List<String> lod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			lod.add(deck.get(i).getImg());
@@ -396,6 +425,11 @@ public class Board {
 		turn = doc.getInteger("turn", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
 		int i,j;
+		List<String> lov = (List<String>) doc.get("avatars");
+		avatars = new ArrayList<>();
+		for (i=0;i<lov.size();i++) {
+			avatars.add(lov.get(i));
+		}
 		List<String> lod = (List<String>) doc.get("deck");
 		deck = new ArrayList<>();
 		for (i=0;i<lod.size();i++) {
@@ -499,6 +533,19 @@ public class Board {
 			loa.add(ancient.get(i).getImg());
 		}
 		dbutil.update("id", id, "ancient", loa);
+	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
 	}
 	
 	public boolean exists(String id) {

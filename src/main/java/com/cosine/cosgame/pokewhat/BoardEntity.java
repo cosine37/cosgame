@@ -11,7 +11,10 @@ public class BoardEntity {
 	List<String> scores;
 	List<String> ancient;
 	List<String> scoreLastRound;
+	List<String> avatars;
+	List<String> playerAvatars;
 	
+	String curPlayer;
 	String status;
 	String phase;
 	String round;
@@ -123,5 +126,23 @@ public class BoardEntity {
 	}
 	public void setScoreLastRound(List<String> scoreLastRound) {
 		this.scoreLastRound = scoreLastRound;
+	}
+	public String getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(String curPlayer) {
+		this.curPlayer = curPlayer;
+	}
+	public List<String> getAvatars() {
+		return avatars;
+	}
+	public void setAvatars(List<String> avatars) {
+		this.avatars = avatars;
+	}
+	public List<String> getPlayerAvatars() {
+		return playerAvatars;
+	}
+	public void setPlayerAvatars(List<String> playerAvatars) {
+		this.playerAvatars = playerAvatars;
 	}
 }

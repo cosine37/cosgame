@@ -59,6 +59,7 @@ public class PokewhatController {
 		board.addPlayer(username);
 		board.setLord(username);
 		board.genBoardId();
+		board.newBoard();
 		board.storeToDB();
 		session.setAttribute("boardId", board.getId());
 		StringEntity entity = new StringEntity();
@@ -95,6 +96,51 @@ public class PokewhatController {
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
 		board.addBot();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/kick", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.removePlayerFromDB(index);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/changefirstplayer", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeFirstPlayer(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.setCurPlayer(index);
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/changeavatar", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeAvatar(HttpServletRequest request, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			p.setAvatar(board.getAvatars().get(x));
+			board.updatePlayer(username);
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

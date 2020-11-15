@@ -13,9 +13,45 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/pokewhatCreateGameController.js"></script>
 <body ng-app="pokewhatCreateGameApp" ng-controller="pokewhatCreateGameCtrl">
-	<button ng-click="goto('pokewhat')">back</button>
-	<button ng-click="addBot()" ng-show="username == lord">add bot</button>
-	<button ng-click="startGame()" ng-show="username == lord">start</button>
+	<div>
+		<button ng-click="goto('pokewhat')">back</button>
+		<button ng-click="addBot()" ng-show="username == lord">add bot</button>
+		<button ng-click="startGame()" ng-show="username == lord">start</button>
+		<button ng-click="dismiss()" ng-show="username == lord">dismiss</button>
+	</div>
+	
+	<div style="float:left">
+		<table>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>
+					<div class="avatar-small" ng-style="playerAvatarStyles[$index]">
+					</div>
+				</td>
+				<td>{{pn}}</td>
+				<td>
+					<button ng-show="username == lord && curPlayer != $index" ng-click="changeFirstPlayer($index)">Set as first player</button>
+					<span ng-show="curPlayer == $index">first Player</span>
+				</td>
+				<td>
+					<button ng-show="username == lord && pn != lord" ng-click="kick($index)">Kick</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<h2>Change Avatar</h2>
+		<table>
+			<tr ng-repeat="(x,i) in avatarTableRows track by x">
+				<td ng-repeat="(y,j) in avatarTableCols track by y">
+					<div class="avatar-choose" ng-style="avatarStyles[i*5+j]" ng-click="changeAvatar(i*5+j)">
+						
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+	</div>
 	<p>{{gamedata}}</p>
 </body>
 </html>

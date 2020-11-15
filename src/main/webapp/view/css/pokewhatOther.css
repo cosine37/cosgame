@@ -28,3 +28,18 @@ button:disabled{
 	
 	background: white;
 }
+
+.avatar-choose{
+	height: 174px;
+	width: 135px;
+}
+
+.avatar-small{
+	height: 116px;
+	width: 90px;
+}
+
+.avatar-choose:hover{
+	border-color: yellow;
+	filter:brightness(120%);
+}

@@ -9,6 +9,7 @@ public class Player {
 	List<Card> hand;
 	List<Card> ancient;
 	String name;
+	String avatar;
 	int score;
 	int hp;
 	int scoreLastRound;
@@ -215,6 +216,12 @@ public class Player {
 	public void setBot(boolean bot) {
 		this.bot = bot;
 	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -227,6 +234,7 @@ public class Player {
 		doc.append("kill", kill);
 		doc.append("missCount", missCount);
 		doc.append("bot", bot);
+		doc.append("avatar", avatar);
 		doc.append("pm",pm.toDocument());
 		doc.append("lastMove", lastMove);
 		int i;
@@ -254,6 +262,7 @@ public class Player {
 		missCount = doc.getInteger("missCount", 0);
 		bot = doc.getBoolean("bot", false);
 		lastMove = doc.getInteger("lastMove", 0);
+		avatar = doc.getString("avatar");
 		Document dopm = (Document) doc.get("pm");
 		pm.setFromDoc(dopm);
 		int i;
