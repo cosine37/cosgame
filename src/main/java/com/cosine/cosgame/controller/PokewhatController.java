@@ -153,6 +153,7 @@ public class PokewhatController {
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
 		board.startGame();
+		board.updatePmToChoose();
 		board.updateDeck();
 		board.updateAncient();
 		board.updatePlayers();
@@ -160,6 +161,54 @@ public class PokewhatController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
 		board.updateDB("turn", board.getTurn());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/choosepm", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> choosePm(HttpServletRequest request, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			board.choosePm(p.getIndex(), x);
+			board.updatePlayers();
+			board.updatePmToChoose();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateDB("status", board.getStatus());
+			board.updateDB("round", board.getRound());
+			board.updateDB("turn", board.getTurn());
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/botchoosepm", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> botChoosePm(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayers().get(board.getCurPlayer());
+		if (p.isBot()) {
+			board.botChoosePm();
+			board.updatePlayers();
+			board.updatePmToChoose();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateDB("status", board.getStatus());
+			board.updateDB("round", board.getRound());
+			board.updateDB("turn", board.getTurn());
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

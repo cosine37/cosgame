@@ -13,6 +13,8 @@ public class BoardEntity {
 	List<String> scoreLastRound;
 	List<String> avatars;
 	List<String> playerAvatars;
+	List<String> pmToChoose;
+	List<String> pmToChooseNames;
 	
 	String curPlayer;
 	String status;
@@ -144,5 +146,17 @@ public class BoardEntity {
 	}
 	public void setPlayerAvatars(List<String> playerAvatars) {
 		this.playerAvatars = playerAvatars;
+	}
+	public List<String> getPmToChoose() {
+		return pmToChoose;
+	}
+	public void setPmToChoose(List<String> pmToChoose) {
+		this.pmToChoose = pmToChoose;
+	}
+	public List<String> getPmToChooseNames() {
+		return pmToChooseNames;
+	}
+	public void setPmToChooseNames(List<String> pmToChooseNames) {
+		this.pmToChooseNames = pmToChooseNames;
 	}
 }

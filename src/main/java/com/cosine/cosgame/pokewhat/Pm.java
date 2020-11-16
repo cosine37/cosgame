@@ -14,7 +14,8 @@ public class Pm {
 	}
 	
 	public Pm(String img, String name) {
-		
+		this.img = img;
+		this.name = name;
 	}
 	
 	public String getName() {

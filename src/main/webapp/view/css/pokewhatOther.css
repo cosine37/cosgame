@@ -43,3 +43,20 @@ button:disabled{
 	border-color: yellow;
 	filter:brightness(120%);
 }
+
+.ptc-background{
+	
+}
+
+.ptc{
+	height: 120px;
+	width: 120px;
+	position: relative;
+}
+
+.ptc-name{
+	position: relative;
+	bottom: 2px;
+	
+}
+

@@ -264,5 +264,19 @@ public class AllRes {
 		return ans;
 	}
 	
+	public List<Pm> getPmToChoose(int x){
+		List<Pm> ans = new ArrayList<>();
+		List<Pm> tpm = new ArrayList<>();
+		int i;
+		Random rand = new Random();
+		for (i=0;i<allPm.size();i++) {
+			tpm.add(allPm.get(i));
+		}
+		for (i=0;i<x;i++) {
+			int n = tpm.size();
+			ans.add(tpm.remove(rand.nextInt(n)));
+		}
+		return ans;
+	}
 	
 }

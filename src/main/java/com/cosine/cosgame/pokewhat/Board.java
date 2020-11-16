@@ -15,6 +15,7 @@ public class Board {
 	List<Card> ancient;
 	List<Card> deck;
 	List<String> avatars;
+	List<Pm> pmToChoose;
 	int status;
 	int round;
 	int turn;
@@ -30,6 +31,7 @@ public class Board {
 		ancient = new ArrayList<>();
 		deck = new ArrayList<>();
 		avatars = new ArrayList<>();
+		pmToChoose = new ArrayList<>();
 		allRes = new AllRes();
 		
 		String dbname = "pokewhat";
@@ -104,8 +106,45 @@ public class Board {
 	}
 	
 	public void startGame() {
+		/*
 		status = PokewhatConsts.INGAME;
 		nextRound();
+		*/
+		int x = players.size()+PokewhatConsts.NUMPMTOCHOOSE-1;
+		pmToChoose = allRes.getPmToChoose(x);
+		int i;
+		for (i=0;i<pmToChoose.size();i++) {
+			System.out.print(pmToChoose.get(i).getName() + " ");
+		}
+		System.out.println();
+		status = PokewhatConsts.CHOOSEPM;
+		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
+	}
+	
+	public void choosePm(int playerIndex, int pmIndex) {
+		Player p = players.get(playerIndex);
+		Pm pm = pmToChoose.remove(pmIndex);
+		p.setPm(pm);
+		p.setPhase(PokewhatConsts.OFFTURN);
+		curPlayer++;
+		if (curPlayer>=players.size()) {
+			curPlayer = 0;
+		}
+		Player cp = players.get(curPlayer);
+		cp.setPhase(PokewhatConsts.USEMOVE);
+		if (cp.getPm().getImg() != null && cp.getPm().getImg() != "") {
+			status = PokewhatConsts.INGAME;
+			nextRound();
+		}
+	}
+	
+	public void botChoosePm() {
+		Player p = players.get(curPlayer);
+		if (p.isBot()) {
+			Random rand = new Random();
+			int x = rand.nextInt(PokewhatConsts.NUMPMTOCHOOSE);
+			choosePm(curPlayer, x);
+		}
 	}
 	
 	public boolean isRoundEnd() {
@@ -308,6 +347,8 @@ public class Board {
 		List<List<String>> playedCards = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> pms = new ArrayList<>();
+		List<String> lptc = new ArrayList<>();
+		List<String> lptcn = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
 		List<String> scores = new ArrayList<>();
 		List<String> la = new ArrayList<>();
@@ -322,6 +363,14 @@ public class Board {
 				sl.add(this.playedCards.get(i).get(j).getImg());
 			}
 			playedCards.add(sl);
+		}
+		int tn = PokewhatConsts.NUMPMTOCHOOSE;
+		if (pmToChoose.size()<tn) {
+			tn = pmToChoose.size();
+		}
+		for (i=0;i<tn;i++) {
+			lptc.add(pmToChoose.get(i).getImg());
+			lptcn.add(pmToChoose.get(i).getName());
 		}
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
@@ -369,6 +418,8 @@ public class Board {
 		entity.setScoreLastRound(lsl);
 		entity.setAvatars(avatars);
 		entity.setPlayerAvatars(lpa);
+		entity.setPmToChoose(lptc);
+		entity.setPmToChooseNames(lptcn);
 		return entity;
 	}
 
@@ -386,6 +437,11 @@ public class Board {
 			lov.add(avatars.get(i));
 		}
 		doc.append("avatars", lov);
+		List<Document> lopm = new ArrayList<>();
+		for (i=0;i<pmToChoose.size();i++) {
+			lopm.add(pmToChoose.get(i).toDocument());
+		}
+		doc.append("pmToChoose", lopm);
 		List<String> lod = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
 			lod.add(deck.get(i).getImg());
@@ -429,6 +485,13 @@ public class Board {
 		avatars = new ArrayList<>();
 		for (i=0;i<lov.size();i++) {
 			avatars.add(lov.get(i));
+		}
+		List<Document> lopm = (List<Document>) doc.get("pmToChoose");
+		pmToChoose = new ArrayList<>();
+		for (i=0;i<lopm.size();i++) {
+			Pm pm = new Pm();
+			pm.setFromDoc(lopm.get(i));
+			pmToChoose.add(pm);
 		}
 		List<String> lod = (List<String>) doc.get("deck");
 		deck = new ArrayList<>();
@@ -503,6 +566,14 @@ public class Board {
 		for (int i=0;i<players.size();i++) {
 			updatePlayer(players.get(i).getName());
 		}
+	}
+	
+	public void updatePmToChoose() {
+		List<Document> lopm = new ArrayList<>();
+		for (int i=0;i<pmToChoose.size();i++) {
+			lopm.add(pmToChoose.get(i).toDocument());
+		}
+		dbutil.update("id", id, "pmToChoose", lopm);
 	}
 	
 	public void updateDeck() {
