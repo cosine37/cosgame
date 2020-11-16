@@ -34,6 +34,12 @@ public class Player {
 		phase = PokewhatConsts.USEMOVE;
 		lastMove = 0;
 		board.setCurPlayer(index);
+		board.getLogger().logStartTurn(this);
+	}
+	
+	public void activelyEndTurn() {
+		board.getLogger().logEndTurn(this);
+		endTurn();
 	}
 	
 	public void endTurn() {
@@ -56,6 +62,7 @@ public class Player {
 		Card c = CardFactory.createCard(x);
 		c.setPlayer(this);
 		c.setBoard(board);
+		board.getLogger().logUse(this, c);
 		int index = cardIndex(c);
 		if (cardIndex(c) != -1) {
 			lastMove = c.getNum();
@@ -69,6 +76,7 @@ public class Player {
 				board.endRound();
 			}
 		} else {
+			this.missCount++;
 			c.penalty();
 			if (hp>0) {
 				endTurn();

@@ -26,6 +26,40 @@ public class Logger {
 		return ans;
 	}
 	
+	public void logStartTurn(Player p) {
+		String s;
+		s = p.getName() + "开始了回合。";
+		log(s);
+		Random rand = new Random();
+		int x = rand.nextInt(3);
+		if (x == 0) {
+			Player prev = p.prevPlayer();
+			Player next = p.nextPlayer();
+			x = rand.nextInt(2);
+			if (x == 0) {
+				s = prev.getName() + "：“你能秒我？”";
+				log(s);
+			} else {
+				s = prev.getName() + "：“你能秒我？”";
+				log(s);
+			}
+			
+		}
+		
+	}
+	
+	public void logEndTurn(Player p) {
+		String s;
+		Random rand = new Random();
+		int x = rand.nextInt(3);
+		if (x == 0) {
+			s = p.getName() + "：“我先怂一下。”";
+			log(s);
+		}
+		s = p.getName() + "结束了回合。";
+		log(s);
+	}
+	
 	public void logUse(Player p, Card c) { 
 		String s;
 		if (c.getNum() == 8) {
@@ -36,7 +70,7 @@ public class Logger {
 				log(s);
 			}
 		}
-		if (c.getNum() == 1 || c.getNum() == 2) {
+		if (c.getNum() != 3 && c.getNum() != 4 && c.getNum() != 8) {
 			Random rand = new Random();
 			int x = rand.nextInt(5);
 			if (x<1) {
@@ -46,48 +80,14 @@ public class Logger {
 		}
 		s = p.getName() + "的" + p.getPm().getName() + "使用了" + c.getName() + "。";
 		log(s);
-		
-	}
-	
-	public void logUse(Player p, Card c, Player v) {
-		String s;
-		Random rand = new Random();
-		int x = rand.nextInt(5);
-		if (x<1) {
-			s = p.getName() + "：“我去吃我" + c.getName() + "！”";
-			log(s);
-		}
-		s = p.getName() + "的" + p.getPm().getName() + "对" + v.getName() + "的"
-				+ v.getPm().getName() + "使用了" + c.getName() + "。";
-		log(s);
-		x = rand.nextInt(5);
-		if (x<1) {
-			s = v.getName() + "：“你能秒我？”";
-			log(s);
-		}
-	}
-	
-	public void logUse(Player p, Card c, Player v1, Player v2) {
-		String s;
-		Random rand = new Random();
-		int x = rand.nextInt(5);
-		if (x<1) {
-			s = p.getName() + "：“我去吃我" + c.getName() + "！”";
-			log(s);
-		}
-		s = p.getName() + "的" + p.getPm().getName() + "对" + v1.getName() + "的"
-				+ v1.getPm().getName()  + "和" + v2.getName() + "的"
-				+ v2.getPm().getName() + "使用了" + c.getName() + "。";
-		log(s);
-		x = rand.nextInt(5);
-		if (x<1) {
-			s = v1.getName() + "：“你能秒我？”";
-			log(s);
-		}
-		x = rand.nextInt(5);
-		if (x<1) {
-			s = v2.getName() + "：“你能秒我？”";
-			log(s);
+		Player prev = p.prevPlayer();
+		if (c.getNum() == prev.getLastMove()) {
+			Random rand = new Random();
+			int x = rand.nextInt(2);
+			if (x == 0) {
+				s = prev.getName() + "：“你还"+c.getName()+"我还"+c.getName()+"你还"+c.getName()+"。”";
+				log(s);
+			}
 		}
 	}
 	
@@ -100,7 +100,14 @@ public class Logger {
 		boolean flag = true;
 		Random rand = new Random();
 		int x;
-		if (p.getHp()<=2) {
+		if (c.getNum() == 4) {
+			x = rand.nextInt(3);
+			if (x<1) {
+				s = this.getAnotherUserName(p) + ":“贪贪贪，贪的飞起。”";
+				log(s);
+			}
+		}
+		if (p.getHp()<=2 && p.getHp()>0) {
 			if (flag) {
 				x = rand.nextInt(2);
 				if (x<1) {
@@ -113,6 +120,16 @@ public class Logger {
 				x = rand.nextInt(3);
 				if (x<2) {
 					s = p.getName() + "：“我已经在考虑下一把了。”";
+					log(s);
+					flag = false;
+				}
+			}
+		}
+		if (p.getHp() == 0) {
+			if (flag) {
+				x = rand.nextInt(2);
+				if (x<1) {
+					s = p.getName() + "：“大势已去。”";
 					log(s);
 					flag = false;
 				}
@@ -166,17 +183,19 @@ public class Logger {
 				s = s + "造成了1点伤害。";
 			}
 			log(s);
+			x = rand.nextInt(4);
+			if (x<1) {
+				s = v.getName() + ":“" + "这伤害说不高，其实还挺高。" + "”";
+				log(s);
+			}
 		} else {
 			s = s + "造成了" + h + "点伤害。";
 			log(s);
-			x = rand.nextInt(8);
-			if (x==0) {
+			x = rand.nextInt(6);
+			if (x<2) {
 				s = v.getName() + ":“" + "我去伤害这么高吗？" + "”";
 				log(s);
-			} else if (x == 1) {
-				s = v.getName() + ":“" + "说伤害不高，其实还挺高。" + "”";
-				log(s);
-			} else if (x<4) {
+			} else if (x<3) {
 				s = v.getName() + ":“" + "这十万条命都接不起啊！" + "”";
 				log(s);
 			}
@@ -205,11 +224,34 @@ public class Logger {
 		}
 	}
 	
+	public void logEternabeam(Player p) {
+		String s = p.getName() + "的" + p.getPm().getName() + "使用完全部技能， 发动无！极！光！束！";
+		log(s);
+		s = "所有其它玩家的宝可梦都被击倒了。";
+		log(s);
+		Random rand = new Random();
+		int x = rand.nextInt(5);
+		if (x == 0) {
+			s = this.getAnotherUserName(p) + ":“这十万条命都接不起啊！”";
+			log(s);
+		} else if (x < 3) {
+			s = this.getAnotherUserName(p) + ":“兵败如山倒。”";
+			log(s);
+		}
+	}
+	
+	public void logOverHeal(Player p) {
+		if (p.getHp() == PokewhatConsts.MAXHP) {
+			String s = "然而，" + p.getName() + "的" + p.getPm().getName() + "的生命值是满的，所以无事发生。";
+			log(s);
+		}
+	}
+	
 	public void logHeal(Player p, int h) {
 		String s = p.getName() + "的" + p.getPm().getName() + "回复了" + h + "点生命值。";
 		log(s);
 		Random rand = new Random();
-		if (p.getHp() == 6) {
+		if (p.getHp() >= 5) {
 			int x = rand.nextInt(2);
 			if (x<1) {
 				s = p.getPm().getName() + "的生命值来到了一万三千点。";
@@ -221,6 +263,12 @@ public class Logger {
 	public void logAncient(Player p) {
 		String s = p.getName() + "获得了一张原始牌。";
 		log(s);
+		Random rand = new Random();
+		int x = rand.nextInt(3);
+		if (x<1) {
+			s = p.getName() + ":“胜利的方程式已经写好。”";
+			log(s);
+		}
 	}
 	
 	public void logSend(Player p) {
@@ -228,9 +276,9 @@ public class Logger {
 		log(s);
 		
 		Random rand = new Random();
-		int x = rand.nextInt(5);
+		int x = rand.nextInt(6);
 		if (x<1) {
-			s = p.getName() +":“这把要是能输，我当场给你把这个屏幕吃掉。”";
+			s = p.getName() + ":“这把要是能输，我当场给你把这个屏幕吃掉。”";
 			log(s);
 		}
 		x = rand.nextInt(4);
@@ -248,6 +296,26 @@ public class Logger {
 			}
 			log(s);
 		}
+	}
+	
+	public void logStartRound(int x) {
+		String s = "第" + x + "轮开始。";
+		log(s);
+	}
+	
+	public void logEndRound(int x) {
+		String s = "第" + x + "轮结束。";
+		log(s);
+	}
+	
+	public void logScore(Player p, int x) {
+		String s = p.getName() + "本轮获得" + x + "分。";
+		log(s);
+	}
+	
+	public void logGameEnd() {
+		String s = "游戏结束。";
+		log(s);
 	}
 
 	public List<String> getLogs() {

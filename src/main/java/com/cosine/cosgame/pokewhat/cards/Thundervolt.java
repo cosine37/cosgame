@@ -14,8 +14,10 @@ public class Thundervolt extends Card{
 		Player p1 = player.prevPlayer();
 		Player p2 = player.nextPlayer();
 		p1.hurt(1);
+		board.getLogger().logOn(player, p1, 1);
 		if (!p1.getName().contentEquals(p2.getName())) {
 			p2.hurt(1);
+			board.getLogger().logOn(player, p2, 1);
 		}
 	}
 }

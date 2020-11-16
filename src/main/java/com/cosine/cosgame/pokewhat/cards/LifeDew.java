@@ -1,6 +1,7 @@
 package com.cosine.cosgame.pokewhat.cards;
 
 import com.cosine.cosgame.pokewhat.Card;
+import com.cosine.cosgame.pokewhat.PokewhatConsts;
 
 public class LifeDew extends Card{
 	public LifeDew() {
@@ -10,6 +11,11 @@ public class LifeDew extends Card{
 	}
 	
 	public void cardEffect() {
-		player.recover(1);
+		if (player.getHp() == PokewhatConsts.MAXHP) {
+			board.getLogger().logOverHeal(player);
+		} else {
+			player.recover(1);
+			board.getLogger().logHeal(player, 1);
+		}
 	}
 }

@@ -158,6 +158,7 @@ public class PokewhatController {
 		board.updateAncient();
 		board.updatePlayers();
 		board.updatePlayedCards();
+		board.updateLogs();
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
 		board.updateDB("turn", board.getTurn());
@@ -180,6 +181,7 @@ public class PokewhatController {
 			board.updateDeck();
 			board.updateAncient();
 			board.updatePlayedCards();
+			board.updateLogs();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("round", board.getRound());
 			board.updateDB("turn", board.getTurn());
@@ -204,6 +206,7 @@ public class PokewhatController {
 			board.updateDeck();
 			board.updateAncient();
 			board.updatePlayedCards();
+			board.updateLogs();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("round", board.getRound());
 			board.updateDB("turn", board.getTurn());
@@ -222,9 +225,10 @@ public class PokewhatController {
 		board.getFromDB(boardId);
 		Player p = board.getPlayers().get(board.getCurPlayer());
 		if (p.isBot()) {
-			p.endTurn();
+			p.activelyEndTurn();
 			board.updatePlayers();
 			board.updateDeck();
+			board.updateLogs();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("turn", board.getTurn());
 		}
@@ -246,6 +250,7 @@ public class PokewhatController {
 			board.updateDeck();
 			board.updateAncient();
 			board.updatePlayedCards();
+			board.updateLogs();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("status", board.getStatus());
 			board.updateDB("round", board.getRound());
@@ -264,9 +269,10 @@ public class PokewhatController {
 		board.getFromDB(boardId);
 		Player p = board.getPlayerByName(username);
 		if (p.getPhase() == PokewhatConsts.USEMOVE) {
-			p.endTurn();
+			p.activelyEndTurn();
 			board.updatePlayers();
 			board.updateDeck();
+			board.updateLogs();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("turn", board.getTurn());
 		}

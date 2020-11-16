@@ -17,6 +17,7 @@ public class Card {
 	
 	public void penalty() {
 		player.hurt(1);
+		board.getLogger().logMiss(player, this, 1);
 	}
 
 	public int getNum() {

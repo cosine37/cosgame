@@ -13,5 +13,6 @@ public class Flamethrowner extends Card{
 	public void cardEffect() {
 		Player p = player.prevPlayer();
 		p.hurt(1);
+		board.getLogger().logOn(player, p, 1);
 	}
 }

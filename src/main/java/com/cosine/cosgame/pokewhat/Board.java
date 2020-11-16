@@ -23,6 +23,7 @@ public class Board {
 	String id;
 	String lord;
 	AllRes allRes;
+	Logger logger;
 	MongoDBUtil dbutil;
 	
 	public Board(){
@@ -32,6 +33,7 @@ public class Board {
 		deck = new ArrayList<>();
 		avatars = new ArrayList<>();
 		pmToChoose = new ArrayList<>();
+		logger = new Logger();
 		allRes = new AllRes();
 		
 		String dbname = "pokewhat";
@@ -106,17 +108,8 @@ public class Board {
 	}
 	
 	public void startGame() {
-		/*
-		status = PokewhatConsts.INGAME;
-		nextRound();
-		*/
 		int x = players.size()+PokewhatConsts.NUMPMTOCHOOSE-1;
 		pmToChoose = allRes.getPmToChoose(x);
-		int i;
-		for (i=0;i<pmToChoose.size();i++) {
-			System.out.print(pmToChoose.get(i).getName() + " ");
-		}
-		System.out.println();
 		status = PokewhatConsts.CHOOSEPM;
 		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
 	}
@@ -125,6 +118,7 @@ public class Board {
 		Player p = players.get(playerIndex);
 		Pm pm = pmToChoose.remove(pmIndex);
 		p.setPm(pm);
+		logger.logSend(p);
 		p.setPhase(PokewhatConsts.OFFTURN);
 		curPlayer++;
 		if (curPlayer>=players.size()) {
@@ -159,6 +153,7 @@ public class Board {
 	
 	public void endRound() {
 		int i;
+		logger.logEndRound(round);
 		for (i=0;i<players.size();i++) {
 			if (i == curPlayer) {
 				continue;
@@ -167,19 +162,24 @@ public class Board {
 				int x = 1+players.get(i).getAncient().size();
 				players.get(i).setScoreLastRound(x);
 				players.get(i).addScore(x);
+				logger.logScore(players.get(i), x);
 			} else {
 				players.get(i).setScoreLastRound(0);
+				logger.logScore(players.get(i), 0);
 			}
 		}
 		if (players.get(curPlayer).getHp() > 0) {
 			int x = 3+players.get(curPlayer).getAncient().size();
 			players.get(curPlayer).setScoreLastRound(x);
 			players.get(curPlayer).addScore(x);
+			logger.logScore(players.get(curPlayer), x);
 		} else {
 			players.get(curPlayer).setScoreLastRound(0);
+			logger.logScore(players.get(curPlayer), 0);
 		}
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getScore() >= PokewhatConsts.GAMEENDSCORE) {
+				logger.logGameEnd();
 				endGame();
 				return;
 			}
@@ -207,6 +207,7 @@ public class Board {
 			players.get(i).setHand(lh);
 			players.get(i).setAncient(la);
 			players.get(i).setLastMove(0);
+			players.get(i).setMissCount(0);
 			players.get(i).setPhase(PokewhatConsts.OFFTURN);
 		}
 		deck = new ArrayList<>();
@@ -217,7 +218,8 @@ public class Board {
 		genAncient();
 		deal();
 		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
-		
+		logger.logStartRound(round);
+		logger.logStartTurn(players.get(curPlayer));
 	}
 	
 	public void endGame() {
@@ -227,11 +229,13 @@ public class Board {
 	public void eternabeam(int index) {
 		for (int i=0;i<players.size();i++) {
 			if (i==index) {
+				logger.logEternabeam(players.get(i));
 				continue;
 			} else {
 				players.get(i).setHp(0);
 			}
 		}
+		
 	}
 	
 	public void addToPlayedCards(Card c) {
@@ -339,6 +343,18 @@ public class Board {
 	public void setAvatars(List<String> avatars) {
 		this.avatars = avatars;
 	}
+	public List<Pm> getPmToChoose() {
+		return pmToChoose;
+	}
+	public void setPmToChoose(List<Pm> pmToChoose) {
+		this.pmToChoose = pmToChoose;
+	}
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -420,6 +436,7 @@ public class Board {
 		entity.setPlayerAvatars(lpa);
 		entity.setPmToChoose(lptc);
 		entity.setPmToChooseNames(lptcn);
+		entity.setLogs(logger.getLogs());
 		return entity;
 	}
 
@@ -431,6 +448,7 @@ public class Board {
 		doc.append("round", round);
 		doc.append("turn", turn);
 		doc.append("curPlayer", curPlayer);
+		doc.append("logs", logger.getLogs());
 		int i,j;
 		List<String> lov = new ArrayList<>();
 		for (i=0;i<avatars.size();i++) {
@@ -480,6 +498,7 @@ public class Board {
 		round = doc.getInteger("round", 0);
 		turn = doc.getInteger("turn", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
+		logger.setLogs((List<String>) doc.get("logs"));
 		int i,j;
 		List<String> lov = (List<String>) doc.get("avatars");
 		avatars = new ArrayList<>();
@@ -574,6 +593,10 @@ public class Board {
 			lopm.add(pmToChoose.get(i).toDocument());
 		}
 		dbutil.update("id", id, "pmToChoose", lopm);
+	}
+	
+	public void updateLogs() {
+		dbutil.update("id", id, "logs", logger.getLogs());
 	}
 	
 	public void updateDeck() {

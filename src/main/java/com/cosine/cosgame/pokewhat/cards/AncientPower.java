@@ -15,6 +15,7 @@ public class AncientPower extends Card{
 	public void cardEffect() {
 		Card c = board.getAncient().remove(0);
 		player.getAncient().add(c);
+		board.getLogger().logAncient(player);
 	}
 	
 	

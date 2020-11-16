@@ -22,6 +22,7 @@ public class DracoMeteor extends Card{
 				
 			} else {
 				p.hurt(x);
+				board.getLogger().logOn(player, p, x);
 			}
 		}
 	}
@@ -30,5 +31,6 @@ public class DracoMeteor extends Card{
 		Random rand = new Random();
 		int x = rand.nextInt(3) + 1;
 		player.hurt(x);
+		board.getLogger().logMiss(player, this, x);
 	}
 }

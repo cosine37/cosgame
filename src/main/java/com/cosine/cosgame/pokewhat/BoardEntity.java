@@ -15,6 +15,7 @@ public class BoardEntity {
 	List<String> playerAvatars;
 	List<String> pmToChoose;
 	List<String> pmToChooseNames;
+	List<String> logs;
 	
 	String curPlayer;
 	String status;
@@ -158,5 +159,11 @@ public class BoardEntity {
 	}
 	public void setPmToChooseNames(List<String> pmToChooseNames) {
 		this.pmToChooseNames = pmToChooseNames;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 }

@@ -90,7 +90,6 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				$scope.avatarStyles.push(singleStyle);
 			}
-			
 		}
 		
 		setPmToChooseStyles = function(){
@@ -131,6 +130,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.avatars = response.data.avatars;
 				$scope.pms = response.data.pm;
 				$scope.playerAvatars = response.data.playerAvatars;
+				$scope.logs = response.data.logs;
 				if ($scope.status == "2"){
 					alert("Game Ends");
 					$scope.goto("pokewhatendgame");

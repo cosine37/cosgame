@@ -13,5 +13,6 @@ public class IceBeam extends Card{
 	public void cardEffect() {
 		Player p = player.nextPlayer();
 		p.hurt(1);
+		board.getLogger().logOn(player, p, 1);
 	}
 }
