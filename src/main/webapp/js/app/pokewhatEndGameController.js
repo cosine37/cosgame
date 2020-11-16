@@ -37,18 +37,26 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 		shouldSwap = function(i,j){
 			var s1 = parseInt($scope.scores[i])
 			var s2 = parseInt($scope.scores[j])
-			if (s1>s2){
-				return false;
+			if (s1<s2){
+				return true;
 			} else if (s1 == s2){
 				var l1 = parseInt($scope.scoreLastRound[i])
 				var l2 = parseInt($scope.scoreLastRound[j])
 				if (l1<l2){
 					return true;
+				} else if (l1 == l2){
+					var h1 = parseInt($scope.hp[i])
+					var h2 = parseInt($scope.hp[j])
+					if (h1<h2){
+						return true;
+					} else {
+						return false;
+					}
 				} else {
 					return false;
 				}
 			} else {
-				return true;
+				return false;
 			}
 		}
 		
@@ -63,6 +71,9 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			temp = $scope.scoreLastRound[i]
 			$scope.scoreLastRound[i] = $scope.scoreLastRound[j]
 			$scope.scoreLastRound[j] = temp
+			temp = $scope.hp[i]
+			$scope.hp[i] = $scope.hp[j]
+			$scope.hp[j] = temp
 		}
 		
 		sortPlayers = function(){
@@ -86,7 +97,8 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 					$scope.champions = $scope.playerNames[i];
 				} else {
 					if ($scope.scores[i] == $scope.scores[i-1] 
-					&& $scope.scoreLastRound[i] == $scope.scoreLastRound[i-1]){
+					&& $scope.scoreLastRound[i] == $scope.scoreLastRound[i-1]
+					&& $scope.hp[i] == $scope.hp[i-1]){
 						$scope.rankings.push(t);
 					} else {
 						t = t+1;

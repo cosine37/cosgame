@@ -21,11 +21,13 @@
 			<td>Name</td>
 			<td>Score</td>
 			<td>Score Last Round</td>
+			<td>HP</td>
 		</tr>
 		<tr ng-repeat="pn in playerNames track by $index">
 			<td>{{pn}}</td>
 			<td>{{scores[$index]}}</td>
 			<td>{{scoreLastRound[$index]}}</td>
+			<td>{{hp[$index]}}</td>
 		</tr>
 	</table>
 </body>

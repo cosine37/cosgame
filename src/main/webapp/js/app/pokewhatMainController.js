@@ -28,6 +28,14 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
+		$scope.showTablesTab = function(){
+			$scope.onTablesTab = true;
+		}
+		
+		$scope.hideTablesTab = function(){
+			$scope.onTablesTab = false;
+		}
+		
 		$scope.getAllBoards = function(){
 			$http.get('/pokewhat/allboards').then(function(response){
 				var n = response.data.value.length / 4;
