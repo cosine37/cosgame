@@ -23,7 +23,27 @@
 	background: rgb(249,51,24);
 }
 
+.tabcontent button:disabled{
+	outline: none;
+	color: rgb(249,51,24);
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(249,51,24);
+	border-radius: 8px;
+	
+	background: white;
+}
+
 .pokewhattext{
 	font-weight: bold;
 	color: rgb(249,51,24);
+}
+
+.newsImg{
+	height: 320px;
+	width: 210px
 }

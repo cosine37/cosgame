@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/pokewhatTheme.css">
+
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -186,6 +187,113 @@
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一个轮次结束后，若至少有一名玩家的分数大于等于8，则游戏结束。得分最高的玩家获胜。若平手，则最后一轮得分最高的玩家获胜。
 								若依然平手，则最后一轮剩余<span class="pokewhattext">生命值</span>高的玩家获胜。若依然平手，则共同获胜。</br>
 								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokewhatheader"><b>技能介绍</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每一个<span class="pokewhattext">技能</span>有相对应的编号，代表该<span class="pokewhattext">技能</span>的数量。
+								一名玩家从回合内第二次使用<span class="pokewhattext">技能</span>起，该玩家使用的<span class="pokewhattext">技能</span>编号须大于等于本回合使用的前一个<span class="pokewhattext">技能</span>的编号。
+								如该玩家第一个使用的<span class="pokewhattext">技能</span>为4号，则第二个使用的<span class="pokewhattext">技能</span>编号只能为4~8号。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本回合第一个使用的<span class="pokewhattext">技能</span>编号无限制。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除<span class="pokewhattext">龙星群</span>外的任何<span class="pokewhattext">技能</span>使用失败都会对自己造成1点伤害。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下为各<span class="pokewhattext">技能</span>的效果说明。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button ng-click="showedCard='1'" ng-disabled="showedCard == '1'">龙星群</button>
+								<button ng-click="showedCard='2'" ng-disabled="showedCard == '2'">死亡之翼</button>
+								<button ng-click="showedCard='3'" ng-disabled="showedCard == '3'">月光</button>
+								<button ng-click="showedCard='4'" ng-disabled="showedCard == '4'">原始之力</button>
+								<button ng-click="showedCard='5'" ng-disabled="showedCard == '5'">十万伏特</button>
+								<button ng-click="showedCard='6'" ng-disabled="showedCard == '6'">冷冻光线</button>
+								<button ng-click="showedCard='7'" ng-disabled="showedCard == '7'">喷射火焰</button>
+								<button ng-click="showedCard='8'" ng-disabled="showedCard == '8'">生命水滴</button>
+							</td>
+						</tr>
+					</table>
+					
+					<table ng-show="showedCard == '1'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 龙星群</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则对所有其他玩家随机造成1~3点伤害。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若使用失败，则对自身随机造成1~3点伤害。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '2'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 死亡之翼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则对所有其他玩家随机造成1点伤害，且自身回复1点<span class="pokewhattext">生命值</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pokewhattext">生命值</span>的上限为6。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '3'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 月光</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则自身随机回复1~3点<span class="pokewhattext">生命值</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pokewhattext">生命值</span>的上限为6。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '4'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 原始之力</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则获得一张<span class="pokewhattext">原始牌</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有你知道获得的<span class="pokewhattext">原始牌</span>的编号及效果。
+								本轮游戏结束时若你仍然存活，你每有一张<span class="pokewhattext">原始牌</span>则额外获得1分。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本轮游戏结束时若你的生命值为0，则<span class="pokewhattext">原始牌</span>不会给你提供额外的分数。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '5'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 十万伏特</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则对前一个行动的玩家和后一个行动的玩家各造成1点伤害。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2人游戏时，成功使用该牌只会对对方造成1点伤害（而不是2点）。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '6'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 冷冻光线</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则对后一个行动的玩家造成1点伤害。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '7'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 喷射火焰</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则对前一个行动的玩家造成1点伤害。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == '8'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Pokewhat/Cards/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="citadelstext">&nbsp;&nbsp;&nbsp;&nbsp; 生命水滴</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若成功使用该技能，则自身回复1点<span class="pokewhattext">生命值</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pokewhattext">生命值</span>的上限为6。
 							</td>
 						</tr>
 					</table>

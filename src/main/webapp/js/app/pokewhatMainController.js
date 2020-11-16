@@ -12,6 +12,7 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.lords = []
 		$scope.canBack = []
 		$scope.onTablesTab = true;
+		$scope.showedCard = '1';
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
