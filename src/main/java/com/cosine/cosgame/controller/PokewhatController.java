@@ -83,6 +83,8 @@ public class PokewhatController {
 		board.getFromDB(boardId);
 		if (board.getPlayerByName(username) == null) {
 			board.addPlayer(username);
+			Player p = board.getPlayerByName(username);
+			p.setAvatar(board.getAvatars().get(0));
 			board.addPlayerToDB(username);
 		}
 		StringEntity entity = new StringEntity();

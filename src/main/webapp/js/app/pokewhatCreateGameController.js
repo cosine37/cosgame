@@ -54,7 +54,6 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.changeFirstPlayer = function(x){
 			var data = {"index" : x}
-			alert(x)
 			$http({url: "/pokewhatgame/changefirstplayer", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 			});
@@ -74,8 +73,8 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				singleAvatarStyle = {
 					"background": imgUrl,
 					"background-size": "cover",
-					"border-style" : "solid",
-					"border-width" : "2px"
+					//"border-style" : "solid",
+					//"border-width" : "2px"
 				}
 				$scope.avatarStyles.push(singleAvatarStyle);
 			}
@@ -84,7 +83,8 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				var imgUrl = "url('/image/Pokewhat/Avatar/" + $scope.playerAvatars[i] + ".png')"
 				singleAvatarStyle = {
 					"background": imgUrl,
-					"background-size": "cover",	
+					"background-size": "cover",
+					"background-color": "rgba(120,120,120,0.2)",
 				}
 				$scope.playerAvatarStyles.push(singleAvatarStyle);
 			}
@@ -115,7 +115,7 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			$scope.getBoard();
 			$timeout(function(){
 			    $scope.offturnHandle();
-			},5000);
+			},2500);
 		}
 		
 		$scope.offturnHandle();

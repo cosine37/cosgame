@@ -34,14 +34,27 @@ button:disabled{
 	width: 135px;
 }
 
+.player-avatar-div{
+	border: 2px solid;
+}
+
 .avatar-small{
 	height: 116px;
 	width: 90px;
+	position: relative;
+	padding-top: 90px;
+}
+
+.name-tag-div{
+	color: white;
+	border-top: 2px solid black;
+	background-color:rgb(249,51,24);
+	text-align: center;
+	
 }
 
 .avatar-choose:hover{
-	border-color: yellow;
-	filter:brightness(120%);
+	filter:brightness(120%) drop-shadow(0px 0px 10px yellow);
 }
 
 .ptc-background{
@@ -57,6 +70,34 @@ button:disabled{
 .ptc-name{
 	position: relative;
 	bottom: 2px;
+}
+
+.create-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.3);
+	height: 800px;
+	width: 1200px;
+	margin-top: -400px;
+	margin-left: -600px;
+	padding-top: 30px;
+	padding-left: 50px;
+	padding-right: 50px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.players-waiting-div{
+	width: 300px;
+	float: left;
+}
+
+.choose-avatar-div{
+	float: right;
+	text-align: center;
 	
 }
+
 
