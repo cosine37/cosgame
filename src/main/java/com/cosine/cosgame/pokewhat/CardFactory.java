@@ -21,7 +21,11 @@ public class CardFactory {
 			card = new Flamethrowner();
 		} else if (img.contentEquals("8")) {
 			card = new LifeDew();
-		} else {
+		} else if (img.contentEquals("0")) {
+			card = new Eternalbeam();
+		}
+		
+		else {
 			card = new Card();
 			card.setImg(img);
 			card.setNum(0);

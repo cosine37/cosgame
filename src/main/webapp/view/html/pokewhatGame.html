@@ -43,8 +43,11 @@
 		<button ng-click="endTurn()" ng-disabled="phase != 1 || lastMove == 0">End Turn</button>
 		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
 	</div>
-	<div ng-show="status == 1">
+	<div ng-show="status == 1 && phase ==1 && allCards[curPlayer].length > 0">
 		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1 || x < lastMove">{{x}}</button>
+	</div>
+	<div ng-show="status == 1 && phase ==1 && allCards[curPlayer].length == 0">
+		<button ng-click="useMove(0)">0</button>
 	</div>
 	<div ng-show="status == 1">
 		Ancient:

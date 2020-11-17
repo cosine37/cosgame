@@ -206,7 +206,7 @@ public class Board {
 			List<Card> la = new ArrayList<>();
 			players.get(i).setHand(lh);
 			players.get(i).setAncient(la);
-			players.get(i).setLastMove(0);
+			players.get(i).setLastMove(-1);
 			players.get(i).setMissCount(0);
 			players.get(i).setPhase(PokewhatConsts.OFFTURN);
 		}
@@ -225,7 +225,7 @@ public class Board {
 	public void endGame() {
 		status = PokewhatConsts.ENDGAME;
 	}
-	
+	/*
 	public void eternabeam(int index) {
 		for (int i=0;i<players.size();i++) {
 			if (i==index) {
@@ -237,7 +237,7 @@ public class Board {
 		}
 		
 	}
-	
+	*/
 	public void addToPlayedCards(Card c) {
 		int index = c.getNum();
 		playedCards.get(index).add(c);

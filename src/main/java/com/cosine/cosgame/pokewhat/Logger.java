@@ -40,7 +40,7 @@ public class Logger {
 				s = prev.getName() + "：“你能秒我？”";
 				log(s);
 			} else {
-				s = prev.getName() + "：“你能秒我？”";
+				s = next.getName() + "：“你能秒我？”";
 				log(s);
 			}
 			
@@ -242,7 +242,7 @@ public class Logger {
 	
 	public void logOverHeal(Player p) {
 		if (p.getHp() == PokewhatConsts.MAXHP) {
-			String s = "然而，" + p.getName() + "的" + p.getPm().getName() + "的生命值是满的，所以无事发生。";
+			String s = "然而，" + p.getName() + "的" + p.getPm().getName() + "的生命值是满的，所以生命值不变。";
 			log(s);
 		}
 	}

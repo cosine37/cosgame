@@ -55,9 +55,13 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.endTurn = function(){
-			$http({url: "/pokewhatgame/endturn", method: "POST"}).then(function(response){
-				$scope.getBoard()
-			});
+			if ($scope.allCards[$scope.curPlayer].length == 0){
+				$scope.useMove(0);
+			} else {
+				$http({url: "/pokewhatgame/endturn", method: "POST"}).then(function(response){
+					$scope.getBoard()
+				});
+			}
 		}
 		
 		$scope.botNextMove = function(){
@@ -131,6 +135,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.pms = response.data.pm;
 				$scope.playerAvatars = response.data.playerAvatars;
 				$scope.logs = response.data.logs;
+				$scope.curPlayer = response.data.curPlayer;
 				if ($scope.status == "2"){
 					alert("Game Ends");
 					$scope.goto("pokewhatendgame");

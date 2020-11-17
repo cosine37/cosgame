@@ -32,7 +32,7 @@ public class Player {
 	public void startTurn() {
 		board.nextTurn();
 		phase = PokewhatConsts.USEMOVE;
-		lastMove = 0;
+		lastMove = -1;
 		board.setCurPlayer(index);
 		board.getLogger().logStartTurn(this);
 	}
@@ -62,6 +62,12 @@ public class Player {
 		Card c = CardFactory.createCard(x);
 		c.setPlayer(this);
 		c.setBoard(board);
+		if (x == 0 && hand.size() == 0) {
+			board.getLogger().logEternabeam(this);
+			c.cardEffect();
+			board.endRound();
+			return;
+		}
 		board.getLogger().logUse(this, c);
 		int index = cardIndex(c);
 		if (cardIndex(c) != -1) {
@@ -69,9 +75,11 @@ public class Player {
 			c.cardEffect();
 			Card removed = hand.remove(index);
 			board.addToPlayedCards(removed);
+			/*
 			if (hand.size() == 0) {
 				board.eternabeam(this.index);
 			}
+			*/
 			if (board.isRoundEnd()) {
 				board.endRound();
 			}
