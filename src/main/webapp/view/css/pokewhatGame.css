@@ -8,10 +8,21 @@ body {
 	color: white;
 }
 
+.layer-2{
+	z-index: -2;
+}
+
+.layer-1{
+	z-index: -1;
+}
+
+.layer0{
+	
+}
+
 .avatar-frame{
 	display: inline-block;
 	position: relative;
-	z-index: -1;
 	width: 180px;
 }
 
@@ -35,7 +46,7 @@ body {
 	width: 250px;
 	display: inline-block;
 	margin-left: -100px;
-	z-index: 1;
+	z-index: -1;
 }
 
 .card-small{
@@ -104,4 +115,17 @@ body {
 .card-big{
 	height: 160px;
 	width: 105px;
+}
+
+.moves-placeholder{
+	width: 850px;
+}
+
+.logs{
+	border: 1px solid;
+	overflow-y: scroll;
+	overflow:auto;
+	height: 330px;
+	width: 301px;
+	padding-left: 10px;
 }

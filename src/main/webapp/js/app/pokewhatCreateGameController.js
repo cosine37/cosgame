@@ -34,9 +34,13 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		}
 		
 		$scope.startGame = function(){
-			$http.post('/pokewhatgame/startgame').then(function(response){
-				$scope.goto('pokewhatgame');
-			});
+			if ($scope.playerNames.length<2 || $scope.playerNames.length>5){
+				alert("人数必须为2~5人！")
+			} else {
+				$http.post('/pokewhatgame/startgame').then(function(response){
+					$scope.goto('pokewhatgame');
+				});
+			}
 		}
 		
 		$scope.kick = function(x){

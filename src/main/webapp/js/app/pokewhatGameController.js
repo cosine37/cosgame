@@ -17,8 +17,10 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.otherIndexes = [];
 		$scope.moveStyles = [];
 		$scope.ancientStyles = [];
+		$scope.logs = [];
 		$scope.phase = "";
 		$scope.lastMove = 0;
+		$scope.otherTdStyle = {};
 
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -69,6 +71,36 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			$http({url: "/pokewhatgame/botnextmove", method: "POST"}).then(function(response){
 				$scope.getBoard()
 			});
+		}
+		
+		setOtherTdStyle = function(){
+			var n = $scope.playerNames.length;
+			if (n == 5){
+				$scope.otherTdStyle = {
+					"border-right" : "1px solid white",
+					"padding-left": "28px",
+					"padding-right": "8px"
+				}
+			} else if (n == 4){
+				$scope.otherTdStyle = {
+					"border-right" : "1px solid white",
+					"padding-left": "90px",
+					"padding-right": "70px"
+				}
+			} else if (n == 3){
+				$scope.otherTdStyle = {
+					"border-right" : "1px solid white",
+					"padding-left": "214px",
+					"padding-right": "194px"
+				}
+			} else if (n == 2){
+				$scope.otherTdStyle = {
+					"border-right" : "1px solid white",
+					"padding-left": "586px",
+					"padding-right": "566px"
+				}
+			}
+			
 		}
 		
 		setAvatarPmStyles = function(){
@@ -222,6 +254,11 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			} while (i != $scope.myIndex)
 		}
 		
+		adjustLogs = function(){
+			var logcontent = document.getElementById("logs");
+			logcontent.scrollTop = logcontent.scrollHeight;
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.id = response.data.id;
@@ -249,10 +286,21 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.pms = response.data.pm;
 				$scope.pmNames = response.data.pmNames;
 				$scope.playerAvatars = response.data.playerAvatars;
-				$scope.logs = response.data.logs;
 				$scope.curPlayer = response.data.curPlayer;
 				$scope.myIndex = parseInt(response.data.myIndex);
 				$scope.playerAncients = response.data.playerAncients
+				
+				var updateLogs = false;
+				if ($scope.logs.length < response.data.logs.length){
+					updateLogs = true;
+				}
+				$scope.logs = response.data.logs;
+				
+				if (response.data.hasBot == "0"){
+					$scope.hasBot = false;
+				} else {
+					$scope.hasBot = true;
+				}
 				if ($scope.status == "2"){
 					alert("Game Ends");
 					$scope.goto("pokewhatendgame");
@@ -260,6 +308,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				if ($scope.status == "3"){
 					setPmToChooseStyles();
 				}
+				setOtherTdStyle();
 				setAvatarPmStyles();
 				sortAllCards();
 				setAllCardStyles();
@@ -267,6 +316,11 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				setAncientStyles();
 				setMoveStyles();
 				setOtherIndexes();
+				if (updateLogs){
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs()
+					});
+				}
 			});
 		}
 		

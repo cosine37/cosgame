@@ -26,6 +26,7 @@ public class BoardEntity {
 	String turn;
 	String id;
 	String lord;
+	String hasBot;
 	String myIndex;
 	String lastMove;
 	String deckSize;
@@ -186,5 +187,11 @@ public class BoardEntity {
 	}
 	public void setMyIndex(String myIndex) {
 		this.myIndex = myIndex;
+	}
+	public String getHasBot() {
+		return hasBot;
+	}
+	public void setHasBot(String hasBot) {
+		this.hasBot = hasBot;
 	}
 }

@@ -18,16 +18,16 @@
 	<div>
 		<table>
 			<tr>
-				<td ng-repeat="i in otherIndexes">
+				<td ng-style="otherTdStyle" ng-repeat="i in otherIndexes">
 					<div class="avatar-frame">
 						<table>
 							<tr><td class="avatar-frame-td avatar-frame-name">{{playerNames[i]}}</td></tr>
 							<tr><td class="avatar-frame-td">得分：{{scores[i]}}</td></tr>
 							<tr><td>&nbsp;</td></tr>
-							<tr><td><div class="avatar-big" ng-style="avatarStyles[i]"></div></td></tr>
+							<tr><td><div class="avatar-big layer-2" ng-style="avatarStyles[i]"></div></td></tr>
 						</table>
 					</div>
-					<div class="pm-frame" ng-style="pmStyles[i]"></div>
+					<div class="pm-frame layer-1" ng-style="pmStyles[i]"></div>
 					<div class="card-small-placeholder">
 						<div class="card-small inline-block" ng-repeat="(y,x) in allCardsStyles[i] track by y"
 							ng-style="x">
@@ -100,12 +100,21 @@
 						</div>
 					</div>
 				</td>
-				<td ng-show="status == 1">
-					<table>
+				<td class="moves-placeholder" ng-show="status == 1">
+					<table style="width: 100%">
 						<tr>
+							<td style="text-align:center">轮次</td>
+							<td style="text-align:center">回合</td>
+							<td style="text-align:center">摸牌堆数量</td>
+							<td style="text-align:center">原始牌数量</td>
 							<td colspan="8">弃牌</td>
+							
 						</tr>
 						<tr class="card-logo-placeholder">
+							<td style="text-align:center">{{round}}</td>
+							<td style="text-align:center">{{turn}}</td>
+							<td style="text-align:center">{{deckSize}}</td>
+							<td style="text-align:center">{{ancientSize}}</td>
 							<td class="discard-td" ng-repeat="x in playedCards track by $index" ng-show="$index != 0">
 								<span class="card-logo" ng-repeat="(i,z) in x track by i">{{z}}</span>
 							</td>
@@ -138,8 +147,6 @@
 					<span ng-show="status == 1 && phase != 1">现在不是你的回合</span>
 					<span ng-show="status == 1 && phase == 1 && lastMove == -1">请使用技能</span>
 					<span ng-show="status == 1 && phase == 1 && lastMove != -1">你可以使用技能或结束回合</span>
-					<span><button style="margin-left: 30px"ng-click="endTurn()"
-						ng-show="status == 1 && phase == 1 && lastMove != -1">结束回合</button></span>
 					<div ng-show="allCards[myIndex].length > 0">
 						<div class="card-big inline-block" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-click="useMove($index+1)" ng-disabled="phase != 1 || $index+1 < lastMove">
 							
@@ -151,7 +158,7 @@
 						</div>
 					</div>
 				</td>
-				<td ng-show="status == 3">
+				<td class="moves-placeholder" ng-show="status == 3">
 					<table>
 						<tr ng-show="phase == 1">
 							<td>请选择你的宝可梦</td>
@@ -171,36 +178,26 @@
 						</tr>
 					</table>
 				</td>
+				<td>
+					<div id="logs" class="logs">
+						<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
+					</div>
+					<div>
+						<span style="width: 253px; float:left">
+							<button ng-click="endTurn()"
+								ng-show="status == 1 && phase == 1 && lastMove != -1">结束回合</button>
+							<button ng-click="botNextMove()" ng-show="status == 1 && username == lord && phase != 1">Bot行动</button>
+							<button ng-click="botChoosePm()" ng-show="status == 3 && phase != 1 && username == lord && hasBot">Bot选择宝可梦</button>
+							&nbsp;
+						</span>
+						<span>
+							<button ng-click="goto('pokewhat')">退出</button>
+						</span>
+						
+					</div>
+				</td>
 			</tr>
 		</table>
-	</div>
-	<div ng-show="status == 1">
-		<button ng-click="endTurn()" ng-disabled="phase != 1 || lastMove == -1">End Turn</button>
-		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
-	</div>
-	<div ng-show="status == 1">
-		Ancient:
-		<button ng-repeat="x in ancient track by $index">{{x}}</button>
-	</div>
-	<div ng-show="status == 3 && phase == 1">
-		
-	</div>
-	<div ng-show="status == 3 && phase != 1">
-		Waiting for others to choose PM
-	</div>
-	<div ng-show="status == 3 && phase != 1 && username == lord">
-		<button ng-click="botChoosePm()">Bot Choose PM</button>
-	</div>
-	<button ng-click="goto('pokewhat')">back</button>
-	<div>
-		<p>Round: {{round}}</p>
-		<p>Turn: {{turn}}</p>
-		<p>{{playedCards}}</p>
-		<p>Deck size: {{deckSize}}</p>
-		<p>Ancient Size: {{ancientSize}}</p>
-	</div>
-	<div>
-		{{logs}}
 	</div>
 </body>
 </html>

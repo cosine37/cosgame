@@ -375,6 +375,7 @@ public class Board {
 		String phase = "0";
 		String lastMove = "0";
 		String myIndex = "0";
+		String hasBot = "0";
 		int i,j;
 		for (i=0;i<this.playedCards.size();i++) {
 			List<String> sl = new ArrayList<>();
@@ -400,6 +401,9 @@ public class Board {
 			lsl.add(Integer.toString(players.get(i).getScoreLastRound()));
 			lpa.add(players.get(i).getAvatar());
 			las.add(Integer.toString(players.get(i).getAncient().size()));
+			if (players.get(i).isBot()) {
+				hasBot = "1";
+			}
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
@@ -436,6 +440,7 @@ public class Board {
 		entity.setHp(hp);
 		entity.setPm(pms);
 		entity.setPmNames(pmNames);
+		entity.setHasBot(hasBot);
 		entity.setDeckSize(Integer.toString(deck.size()));
 		entity.setAncientSize(Integer.toString(ancient.size()));
 		entity.setAncient(la);

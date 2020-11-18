@@ -42,6 +42,12 @@ public class PokewhatController {
 		return "pokewhatEndGame";
 	}
 	
+	@RequestMapping(value="/pokewhatgame/empty", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> empty(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhat/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		PokewhatMeta meta = new PokewhatMeta();
