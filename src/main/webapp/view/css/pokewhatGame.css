@@ -1,0 +1,107 @@
+body {
+	background: url('/image/Pokewhat/game_bg.jpg');
+	backdrop-filter: blur(4px) brightness(60%);
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: white;
+}
+
+.avatar-frame{
+	display: inline-block;
+	position: relative;
+	z-index: -1;
+	width: 180px;
+}
+
+.avatar-frame-td{
+	text-align: center;
+}
+
+.avatar-frame-name{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.avatar-big{
+	height: 174px;
+	width: 135px;
+	position: relative;
+}
+
+.pm-frame{
+	height: 250px;
+	width: 250px;
+	display: inline-block;
+	margin-left: -100px;
+	z-index: 1;
+}
+
+.card-small{
+	height: 96px;
+	width: 63px
+}
+
+.card-small-placeholder{
+	height: 96px;
+}
+
+.hand-placeholder{
+	width: 330px
+}
+
+.poke-info-bar{
+	background-color: rgb(245,245,220);
+	color: black;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	width: 315px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.poke-info-name-ancient{
+	margin-left: 20px;
+	font-weight: bold;
+	
+}
+
+.card-logo{
+	background-color: rgb(249,51,24);
+	color: white;
+	padding-right: 3px;
+	padding-left: 3px;
+	border: 1px solid grey;
+	border-radius: 4px;
+	user-select:none;
+}
+
+.card-logo-placeholder{
+	height: 30px;
+}
+
+.discard-td{
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.hp-bar{
+	border: 1px solid black;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.hp-bar-single{
+	width: 45px;
+	height: 8px;
+}
+
+.inline-block{
+	display: inline-block;
+}
+
+.card-big{
+	height: 160px;
+	width: 105px;
+}

@@ -5,7 +5,7 @@ public class PokewhatConsts {
 	public static final int NUMANCIENT = 4;
 	public static final int HANDSIZE = 5;
 	public static final int GAMEENDSCORE = 8;
-	public static final int NUMPMTOCHOOSE = 5;
+	public static final int NUMPMTOCHOOSE = 7;
 	
 	// game status
 	public static final int PREGAME = 0;

@@ -52,7 +52,11 @@ public class CardFactory {
 			card = new Flamethrowner();
 		} else if (x == 8) {
 			card = new LifeDew();
-		} else {
+		} else if (x == 0) {
+			card = new Eternalbeam();
+		}
+		
+		else {
 			String img = Integer.toString(x);
 			card = new Card();
 			card.setImg(img);

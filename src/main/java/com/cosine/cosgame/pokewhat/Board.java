@@ -363,6 +363,7 @@ public class Board {
 		List<List<String>> playedCards = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> pms = new ArrayList<>();
+		List<String> pmNames = new ArrayList<>();
 		List<String> lptc = new ArrayList<>();
 		List<String> lptcn = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
@@ -370,8 +371,10 @@ public class Board {
 		List<String> la = new ArrayList<>();
 		List<String> lsl = new ArrayList<>();
 		List<String> lpa = new ArrayList<>();
+		List<String> las = new ArrayList<>();
 		String phase = "0";
 		String lastMove = "0";
+		String myIndex = "0";
 		int i,j;
 		for (i=0;i<this.playedCards.size();i++) {
 			List<String> sl = new ArrayList<>();
@@ -391,13 +394,16 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			pms.add(players.get(i).getPm().getImg());
+			pmNames.add(players.get(i).getPm().getName());
 			hp.add(Integer.toString(players.get(i).getHp()));
 			scores.add(Integer.toString(players.get(i).getScore()));
 			lsl.add(Integer.toString(players.get(i).getScoreLastRound()));
 			lpa.add(players.get(i).getAvatar());
+			las.add(Integer.toString(players.get(i).getAncient().size()));
 			if (players.get(i).getName().contentEquals(name)) {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
+				myIndex = Integer.toString(i);
 				for (j=0;j<players.get(i).getAncient().size();j++) {
 					la.add(players.get(i).getAncient().get(j).getImg());
 				}
@@ -420,6 +426,7 @@ public class Board {
 		entity.setRound(Integer.toString(round));
 		entity.setTurn(Integer.toString(turn));
 		entity.setStatus(Integer.toString(status));
+		entity.setMyIndex(myIndex);
 		entity.setPhase(phase);
 		entity.setLastMove(lastMove);
 		entity.setPlayedCards(playedCards);
@@ -428,9 +435,11 @@ public class Board {
 		entity.setAllCards(allCards);
 		entity.setHp(hp);
 		entity.setPm(pms);
+		entity.setPmNames(pmNames);
 		entity.setDeckSize(Integer.toString(deck.size()));
 		entity.setAncientSize(Integer.toString(ancient.size()));
 		entity.setAncient(la);
+		entity.setPlayerAncients(las);
 		entity.setScoreLastRound(lsl);
 		entity.setAvatars(avatars);
 		entity.setPlayerAvatars(lpa);

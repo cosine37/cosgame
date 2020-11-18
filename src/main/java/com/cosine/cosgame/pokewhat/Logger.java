@@ -229,15 +229,6 @@ public class Logger {
 		log(s);
 		s = "所有其它玩家的宝可梦都被击倒了。";
 		log(s);
-		Random rand = new Random();
-		int x = rand.nextInt(5);
-		if (x == 0) {
-			s = this.getAnotherUserName(p) + ":“这十万条命都接不起啊！”";
-			log(s);
-		} else if (x < 3) {
-			s = this.getAnotherUserName(p) + ":“兵败如山倒。”";
-			log(s);
-		}
 	}
 	
 	public void logOverHeal(Player p) {

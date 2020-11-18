@@ -7,9 +7,11 @@ public class BoardEntity {
 	List<List<String>> playedCards;
 	List<String> playerNames;
 	List<String> pm;
+	List<String> pmNames;
 	List<String> hp;
 	List<String> scores;
 	List<String> ancient;
+	List<String> playerAncients;
 	List<String> scoreLastRound;
 	List<String> avatars;
 	List<String> playerAvatars;
@@ -24,6 +26,7 @@ public class BoardEntity {
 	String turn;
 	String id;
 	String lord;
+	String myIndex;
 	String lastMove;
 	String deckSize;
 	String ancientSize;
@@ -165,5 +168,23 @@ public class BoardEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public List<String> getPmNames() {
+		return pmNames;
+	}
+	public void setPmNames(List<String> pmNames) {
+		this.pmNames = pmNames;
+	}
+	public List<String> getPlayerAncients() {
+		return playerAncients;
+	}
+	public void setPlayerAncients(List<String> playerAncients) {
+		this.playerAncients = playerAncients;
+	}
+	public String getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(String myIndex) {
+		this.myIndex = myIndex;
 	}
 }

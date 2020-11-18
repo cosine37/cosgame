@@ -20,6 +20,7 @@ public class Eternalbeam extends Card{
 				
 			} else {
 				p.hurt(6);
+				System.out.println(p.getHp());
 				board.getLogger().logOn(player, p, 6);
 			}
 		}

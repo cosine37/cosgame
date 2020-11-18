@@ -62,8 +62,8 @@ button:disabled{
 }
 
 .ptc{
-	height: 120px;
-	width: 120px;
+	height: 100px;
+	width: 100px;
 	position: relative;
 }
 
@@ -81,7 +81,7 @@ button:disabled{
 	width: 1200px;
 	margin-top: -400px;
 	margin-left: -600px;
-	padding-top: 30px;
+	padding-top: 20px;
 	padding-left: 50px;
 	padding-right: 50px;
 	border: 1px solid rgba(120,120,120);
@@ -97,7 +97,7 @@ button:disabled{
 .choose-avatar-div{
 	float: right;
 	text-align: center;
-	
 }
+
 
 

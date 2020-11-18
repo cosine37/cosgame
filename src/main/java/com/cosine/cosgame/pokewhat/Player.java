@@ -75,11 +75,6 @@ public class Player {
 			c.cardEffect();
 			Card removed = hand.remove(index);
 			board.addToPlayedCards(removed);
-			/*
-			if (hand.size() == 0) {
-				board.eternabeam(this.index);
-			}
-			*/
 			if (board.isRoundEnd()) {
 				board.endRound();
 			}

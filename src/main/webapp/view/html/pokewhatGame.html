@@ -7,12 +7,190 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/pokewhatTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/pokewhatOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/pokewhatGame.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/pokewhatGameController.js"></script>
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
+	
+	<div>
+		<table>
+			<tr>
+				<td ng-repeat="i in otherIndexes">
+					<div class="avatar-frame">
+						<table>
+							<tr><td class="avatar-frame-td avatar-frame-name">{{playerNames[i]}}</td></tr>
+							<tr><td class="avatar-frame-td">得分：{{scores[i]}}</td></tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr><td><div class="avatar-big" ng-style="avatarStyles[i]"></div></td></tr>
+						</table>
+					</div>
+					<div class="pm-frame" ng-style="pmStyles[i]"></div>
+					<div class="card-small-placeholder">
+						<div class="card-small inline-block" ng-repeat="(y,x) in allCardsStyles[i] track by y"
+							ng-style="x">
+							
+						</div>
+						
+					</div>
+					<div class="poke-info-bar">
+						<div class="poke-info-name-ancient">
+							<table>
+								<tr>
+									<td style="width: 230px" ng-show="pmNames[i] != null">{{pmNames[i]}}</td>
+									<td style="width: 230px" ng-show="pmNames[i] == null">???</td>
+									<td><span ng-show="playerAncients[i]!='0'"><span class="card-logo">A</span>×{{playerAncients[i]}}</span></td>
+								</tr>
+							</table>
+						
+						</div>
+						<div>
+							<table class="hp-bar">
+								<tr>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][0]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][1]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][2]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][3]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][4]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[i][5]"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<div class="avatar-frame">
+						<table>
+							<tr><td class="avatar-frame-td avatar-frame-name">{{playerNames[myIndex]}}</td></tr>
+							<tr><td class="avatar-frame-td">得分：{{scores[myIndex]}}</td></tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr><td><div class="avatar-big" ng-style="avatarStyles[myIndex]"></div></td></tr>
+						</table>
+					</div>
+					<div class="pm-frame" ng-style="pmStyles[myIndex]"></div>
+					
+					<div class="poke-info-bar">
+						<div class="poke-info-name-ancient">
+							<table>
+								<tr>
+									<td style="width: 230px" ng-show="pmNames[myIndex] != null">{{pmNames[myIndex]}}</td>
+									<td style="width: 230px" ng-show="pmNames[myIndex] == null">???</td>
+									<td><span ng-show="playerAncients[myIndex]!='0'"><span class="card-logo">A</span>×{{playerAncients[myIndex]}}</span></td>
+								</tr>
+							</table>
+						
+						</div>
+						<div>
+							<table class="hp-bar">
+								<tr>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][0]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][1]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][2]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][3]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][4]"></td>
+									<td class="hp-bar-single" ng-style="hpBarStyle[myIndex][5]"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</td>
+				<td ng-show="status == 1">
+					<table>
+						<tr>
+							<td colspan="8">弃牌</td>
+						</tr>
+						<tr class="card-logo-placeholder">
+							<td class="discard-td" ng-repeat="x in playedCards track by $index" ng-show="$index != 0">
+								<span class="card-logo" ng-repeat="(i,z) in x track by i">{{z}}</span>
+							</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td>技能牌</td>
+							<td>原始牌</td>
+						</tr>
+						<tr>
+							<td class="hand-placeholder">
+								<div class="card-small-placeholder">
+									<div class="card-small inline-block" ng-repeat="(y,x) in allCardsStyles[myIndex] track by y"
+										ng-style="x">
+										
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="card-small-placeholder">
+									<div class="card-small inline-block" ng-repeat="(y,x) in ancientStyles track by y"
+										ng-style="x">
+										
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<span ng-show="status == 1 && phase != 1">现在不是你的回合</span>
+					<span ng-show="status == 1 && phase == 1 && lastMove == -1">请使用技能</span>
+					<span ng-show="status == 1 && phase == 1 && lastMove != -1">你可以使用技能或结束回合</span>
+					<span><button style="margin-left: 30px"ng-click="endTurn()"
+						ng-show="status == 1 && phase == 1 && lastMove != -1">结束回合</button></span>
+					<div ng-show="allCards[myIndex].length > 0">
+						<div class="card-big inline-block" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-click="useMove($index+1)" ng-disabled="phase != 1 || $index+1 < lastMove">
+							
+						</div>
+					</div>
+					<div ng-show="allCards[myIndex].length == 0">
+						<div class="card-big inline-block" ng-click="useMove(0)" ng-style="moveStyleZero">
+							
+						</div>
+					</div>
+				</td>
+				<td ng-show="status == 3">
+					<table>
+						<tr ng-show="phase == 1">
+							<td>请选择你的宝可梦</td>
+						</tr>
+						<tr ng-show="phase != 1">
+							<td>正等待其他玩家选择宝可梦</td>
+						</tr>
+						<tr ng-show="phase == 1">
+							<td ng-repeat="x in pmToChoose track by $index">
+								<div class="ptc-background" ng-click="choosePm($index)">
+									<div class="ptc" ng-style="pmToChooseStyles[$index]">
+										
+									</div>
+								</div>
+								<div class="ptc-name">{{pmToChooseNames[$index]}}</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div ng-show="status == 1">
+		<button ng-click="endTurn()" ng-disabled="phase != 1 || lastMove == -1">End Turn</button>
+		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
+	</div>
+	<div ng-show="status == 1">
+		Ancient:
+		<button ng-repeat="x in ancient track by $index">{{x}}</button>
+	</div>
+	<div ng-show="status == 3 && phase == 1">
+		
+	</div>
+	<div ng-show="status == 3 && phase != 1">
+		Waiting for others to choose PM
+	</div>
+	<div ng-show="status == 3 && phase != 1 && username == lord">
+		<button ng-click="botChoosePm()">Bot Choose PM</button>
+	</div>
 	<button ng-click="goto('pokewhat')">back</button>
 	<div>
 		<p>Round: {{round}}</p>
@@ -20,58 +198,6 @@
 		<p>{{playedCards}}</p>
 		<p>Deck size: {{deckSize}}</p>
 		<p>Ancient Size: {{ancientSize}}</p>
-	</div>
-	<div>
-		<table>
-			<tr ng-repeat="pn in playerNames track by $index">
-				<td>{{pn}}</td>
-				<td>
-					<div class="avatar-small" ng-style="avatarStyles[$index]"></div>
-				</td>
-				<td>
-					<div class="ptc" ng-style="pmStyles[$index]"></div>
-				</td>
-				<td>hp: {{hp[$index]}}</td>
-				<td>score: {{scores[$index]}}</td>
-				<td>
-					<button ng-repeat="(y,x) in allCards[$index] track by y" disabled>{{x}}</button>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div ng-show="status == 1">
-		<button ng-click="endTurn()" ng-disabled="phase != 1 || lastMove == 0">End Turn</button>
-		<button ng-click="botNextMove()" ng-disabled="phase == 1" ng-show="username == lord">Bot Next Move</button>
-	</div>
-	<div ng-show="status == 1 && phase ==1 && allCards[curPlayer].length > 0">
-		<button ng-repeat="x in moves" ng-click="useMove(x)" ng-disabled="phase != 1 || x < lastMove">{{x}}</button>
-	</div>
-	<div ng-show="status == 1 && phase ==1 && allCards[curPlayer].length == 0">
-		<button ng-click="useMove(0)">0</button>
-	</div>
-	<div ng-show="status == 1">
-		Ancient:
-		<button ng-repeat="x in ancient track by $index">{{x}}</button>
-	</div>
-	<div ng-show="status == 3 && phase == 1">
-		<table>
-			<tr>
-				<td ng-repeat="x in pmToChoose track by $index">
-					<div class="ptc-background" ng-click="choosePm($index)">
-						<div class="ptc" ng-style="pmToChooseStyles[$index]">
-							
-						</div>
-					</div>
-					<div class="ptc-name">{{pmToChooseNames[$index]}}</div>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div ng-show="status == 3 && phase != 1">
-		Waiting for others to choose PM
-	</div>
-	<div ng-show="status == 3 && phase != 1 && username == lord">
-		<button ng-click="botChoosePm()">Bot Choose PM</button>
 	</div>
 	<div>
 		{{logs}}
