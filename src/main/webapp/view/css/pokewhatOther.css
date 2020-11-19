@@ -67,6 +67,10 @@ button:disabled{
 	position: relative;
 }
 
+.ptc:hover{
+	filter:brightness(120%) drop-shadow(0px 0px 10px yellow);
+}
+
 .ptc-name{
 	position: relative;
 	bottom: 2px;

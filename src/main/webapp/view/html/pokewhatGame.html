@@ -15,7 +15,7 @@
 <script src="/js/app/pokewhatGameController.js"></script>
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
 	
-	<div>
+	<div class="game-container">
 		<table>
 			<tr>
 				<td ng-style="otherTdStyle" ng-repeat="i in otherIndexes">
@@ -27,7 +27,9 @@
 							<tr><td><div class="avatar-big layer-2" ng-style="avatarStyles[i]"></div></td></tr>
 						</table>
 					</div>
-					<div class="pm-frame layer-1" ng-style="pmStyles[i]"></div>
+					<div class="pm-frame layer-1">
+						<div class="pm-div" ng-style="pmStyles[i]"></div>
+					</div>
 					<div class="card-small-placeholder">
 						<div class="card-small inline-block" ng-repeat="(y,x) in allCardsStyles[i] track by y"
 							ng-style="x">
@@ -70,10 +72,12 @@
 							<tr><td class="avatar-frame-td avatar-frame-name">{{playerNames[myIndex]}}</td></tr>
 							<tr><td class="avatar-frame-td">得分：{{scores[myIndex]}}</td></tr>
 							<tr><td>&nbsp;</td></tr>
-							<tr><td><div class="avatar-big" ng-style="avatarStyles[myIndex]"></div></td></tr>
+							<tr><td><div class="avatar-big layer-2" ng-style="avatarStyles[myIndex]"></div></td></tr>
 						</table>
 					</div>
-					<div class="pm-frame" ng-style="pmStyles[myIndex]"></div>
+					<div class="pm-frame layer-1">
+						<div class="pm-div" ng-style="pmStyles[myIndex]"></div>
+					</div>
 					
 					<div class="poke-info-bar">
 						<div class="poke-info-name-ancient">
@@ -148,12 +152,13 @@
 					<span ng-show="status == 1 && phase == 1 && lastMove == -1">请使用技能</span>
 					<span ng-show="status == 1 && phase == 1 && lastMove != -1">你可以使用技能或结束回合</span>
 					<div ng-show="allCards[myIndex].length > 0">
-						<div class="card-big inline-block" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-click="useMove($index+1)" ng-disabled="phase != 1 || $index+1 < lastMove">
+						<div class="card-big inline-block" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-class="moveClasses[$index]"
+							 ng-click="useMove($index+1)" ng-disabled="phase != 1 || $index+1 < lastMove">
 							
 						</div>
 					</div>
 					<div ng-show="allCards[myIndex].length == 0">
-						<div class="card-big inline-block" ng-click="useMove(0)" ng-style="moveStyleZero">
+						<div class="card-big enabled-move inline-block" ng-click="useMove(0)" ng-style="moveStyleZero">
 							
 						</div>
 					</div>
@@ -167,7 +172,7 @@
 							<td>正等待其他玩家选择宝可梦</td>
 						</tr>
 						<tr ng-show="phase == 1">
-							<td ng-repeat="x in pmToChoose track by $index">
+							<td ng-repeat="x in pmToChoose track by $index" style="text-align: center">
 								<div class="ptc-background" ng-click="choosePm($index)">
 									<div class="ptc" ng-style="pmToChooseStyles[$index]">
 										

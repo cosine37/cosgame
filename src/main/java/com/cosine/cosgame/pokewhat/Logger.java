@@ -263,11 +263,18 @@ public class Logger {
 	}
 	
 	public void logSend(Player p) {
-		String s = p.getName() + "派出了" + p.getPm().getName() + "。";
+		Random rand = new Random();
+		String s;
+		int x = rand.nextInt(8);
+		if (x<1) {
+			s = p.getName() + ":“各位同学大家好，我是" + p.getName() + "。”";
+			log(s);
+		}
+		
+		s = p.getName() + "派出了" + p.getPm().getName() + "。";
 		log(s);
 		
-		Random rand = new Random();
-		int x = rand.nextInt(6);
+		x = rand.nextInt(6);
 		if (x<1) {
 			s = p.getName() + ":“这把要是能输，我当场给你把这个屏幕吃掉。”";
 			log(s);

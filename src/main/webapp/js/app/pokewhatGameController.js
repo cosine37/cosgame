@@ -16,6 +16,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.pmStyles = [];
 		$scope.otherIndexes = [];
 		$scope.moveStyles = [];
+		$scope.moveClasses = [];
 		$scope.ancientStyles = [];
 		$scope.logs = [];
 		$scope.phase = "";
@@ -78,26 +79,26 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			if (n == 5){
 				$scope.otherTdStyle = {
 					"border-right" : "1px solid white",
-					"padding-left": "28px",
-					"padding-right": "8px"
+					"padding-left": "32px",
+					"padding-right": "12px"
 				}
 			} else if (n == 4){
 				$scope.otherTdStyle = {
 					"border-right" : "1px solid white",
-					"padding-left": "90px",
-					"padding-right": "70px"
+					"padding-left": "93px",
+					"padding-right": "74px"
 				}
 			} else if (n == 3){
 				$scope.otherTdStyle = {
 					"border-right" : "1px solid white",
-					"padding-left": "214px",
-					"padding-right": "194px"
+					"padding-left": "217px",
+					"padding-right": "197px"
 				}
 			} else if (n == 2){
 				$scope.otherTdStyle = {
 					"border-right" : "1px solid white",
-					"padding-left": "586px",
-					"padding-right": "566px"
+					"padding-left": "587px",
+					"padding-right": "567px"
 				}
 			}
 			
@@ -113,7 +114,9 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					var imgUrl = "url('/image/Pokewhat/PM/" + $scope.pms[i] + ".png')"
 					singleStyle = {
 						"background": imgUrl,
-						"background-size": "cover"
+						"background-size": "cover",
+						"height": $scope.pmSizes[i] + "px",
+						"width": $scope.pmSizes[i] + "px"
 					}
 				}
 				
@@ -216,6 +219,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		setMoveStyles = function(){
 			$scope.moveStyles = [];
+			$scope.moveClasses = [];
 			for (var i=1;i<=8;i++){
 				$scope.moves.push(i);
 				var imgUrl = "url('/image/Pokewhat/Cards/" + i.toString() + ".png')"
@@ -223,20 +227,21 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					singleStyle = {
 						"background": imgUrl,
 						"background-size": "cover",
-						"filter": "grayscale(100%) contrast(50%)"
 					}
+					$scope.moveClasses.push("disabled-move");
 				} else {
 					singleStyle = {
 						"background": imgUrl,
-						"background-size": "cover"
+						"background-size": "cover",
 					}
+					$scope.moveClasses.push("enabled-move");
 				}
 				$scope.moveStyles.push(singleStyle)
 			}
 			var imgUrl = "url('/image/Pokewhat/Cards/0.png')"
 			$scope.moveStyleZero = {
 				"background": imgUrl,
-				"background-size": "cover"
+				"background-size": "cover",
 			}
 		}
 		
@@ -285,6 +290,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.avatars = response.data.avatars;
 				$scope.pms = response.data.pm;
 				$scope.pmNames = response.data.pmNames;
+				$scope.pmSizes = response.data.pmSizes;
 				$scope.playerAvatars = response.data.playerAvatars;
 				$scope.curPlayer = response.data.curPlayer;
 				$scope.myIndex = parseInt(response.data.myIndex);
@@ -301,10 +307,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else {
 					$scope.hasBot = true;
 				}
-				if ($scope.status == "2"){
-					alert("Game Ends");
-					$scope.goto("pokewhatendgame");
-				}
+				
 				if ($scope.status == "3"){
 					setPmToChooseStyles();
 				}
@@ -320,6 +323,10 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs()
 					});
+				}
+				if ($scope.status == "2"){
+					alert("Game Ends");
+					$scope.goto("pokewhatendgame");
 				}
 			});
 		}

@@ -364,6 +364,7 @@ public class Board {
 		List<String> playerNames = new ArrayList<>();
 		List<String> pms = new ArrayList<>();
 		List<String> pmNames = new ArrayList<>();
+		List<String> pmSizes = new ArrayList<>();
 		List<String> lptc = new ArrayList<>();
 		List<String> lptcn = new ArrayList<>();
 		List<String> hp = new ArrayList<>();
@@ -396,6 +397,7 @@ public class Board {
 			playerNames.add(players.get(i).getName());
 			pms.add(players.get(i).getPm().getImg());
 			pmNames.add(players.get(i).getPm().getName());
+			pmSizes.add(Integer.toString(players.get(i).getPm().getSize()));
 			hp.add(Integer.toString(players.get(i).getHp()));
 			scores.add(Integer.toString(players.get(i).getScore()));
 			lsl.add(Integer.toString(players.get(i).getScoreLastRound()));
@@ -440,6 +442,7 @@ public class Board {
 		entity.setHp(hp);
 		entity.setPm(pms);
 		entity.setPmNames(pmNames);
+		entity.setPmSizes(pmSizes);
 		entity.setHasBot(hasBot);
 		entity.setDeckSize(Integer.toString(deck.size()));
 		entity.setAncientSize(Integer.toString(ancient.size()));

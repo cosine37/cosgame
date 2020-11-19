@@ -8,6 +8,7 @@ public class BoardEntity {
 	List<String> playerNames;
 	List<String> pm;
 	List<String> pmNames;
+	List<String> pmSizes;
 	List<String> hp;
 	List<String> scores;
 	List<String> ancient;
@@ -193,5 +194,11 @@ public class BoardEntity {
 	}
 	public void setHasBot(String hasBot) {
 		this.hasBot = hasBot;
+	}
+	public List<String> getPmSizes() {
+		return pmSizes;
+	}
+	public void setPmSizes(List<String> pmSizes) {
+		this.pmSizes = pmSizes;
 	}
 }
