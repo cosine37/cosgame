@@ -236,7 +236,7 @@ public class AllRes {
 			String s = "a0" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
-		for (i=1;i<=7;i++) {
+		for (i=1;i<=9;i++) {
 			String s = "a90" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
@@ -253,7 +253,7 @@ public class AllRes {
 		for (i=5;i<20;i++) {
 			st1.add(allAvatar.get(i));
 		}
-		for (i=20;i<27;i++) {
+		for (i=20;i<29;i++) {
 			st2.add(allAvatar.get(i));
 		}
 		Random rand = new Random();

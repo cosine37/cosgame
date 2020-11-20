@@ -9,13 +9,14 @@
 <link rel="stylesheet" type="text/css" href="/view/css/pokewhatOther.css">
 <link rel="stylesheet" type="text/css" href="/view/css/pokewhatGame.css">
 </head>
+
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/pokewhatGameController.js"></script>
+
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
-	
-	<div class="game-container">
+	<div class="game-container" ng-click="playBGM()">
 		<table>
 			<tr>
 				<td ng-style="otherTdStyle" ng-repeat="i in otherIndexes">
@@ -152,14 +153,18 @@
 					<span ng-show="status == 1 && phase == 1 && lastMove == -1">请使用技能</span>
 					<span ng-show="status == 1 && phase == 1 && lastMove != -1">你可以使用技能或结束回合</span>
 					<div ng-show="allCards[myIndex].length > 0">
-						<div class="card-big inline-block" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-class="moveClasses[$index]"
+						<div class="card-big inline-block moves-card" ng-repeat="x in moveStyles track by $index" ng-style="x" ng-class="moveClasses[$index]"
 							 ng-click="useMove($index+1)" ng-disabled="phase != 1 || $index+1 < lastMove">
-							
+							<div class="qsmark">
+								<img src="/image/Pokewhat/qsmark.png" height="18" width="18" ng-click="showMoveBigImage($index+1);$event.stopPropagation();"/>
+							</div>
 						</div>
 					</div>
 					<div ng-show="allCards[myIndex].length == 0">
-						<div class="card-big enabled-move inline-block" ng-click="useMove(0)" ng-style="moveStyleZero">
-							
+						<div class="card-big enabled-move inline-block moves-card" ng-click="useMove(0)" ng-style="moveStyleZero">
+							<div class="qsmark">
+								<img src="/image/Pokewhat/qsmark.png" height="18" width="18" ng-click="showMoveBigImage(0);$event.stopPropagation();"/>
+							</div>
 						</div>
 					</div>
 				</td>
@@ -188,7 +193,7 @@
 						<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
 					</div>
 					<div>
-						<span style="width: 253px; float:left">
+						<span style="width: 203px; float:left">
 							<button ng-click="endTurn()"
 								ng-show="status == 1 && phase == 1 && lastMove != -1">结束回合</button>
 							<button ng-click="botNextMove()" ng-show="status == 1 && username == lord && phase != 1">Bot行动</button>
@@ -196,6 +201,7 @@
 							&nbsp;
 						</span>
 						<span>
+							<button ng-click="mute()">{{muteButton}}</button>
 							<button ng-click="goto('pokewhat')">退出</button>
 						</span>
 						
@@ -203,6 +209,12 @@
 				</td>
 			</tr>
 		</table>
+	</div>
+	
+	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()"  style="clear:both">
+		<div ng-style="bigImageStyle">
+			
+		</div>
 	</div>
 </body>
 </html>

@@ -11,7 +11,12 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 		$scope.playerNames = [];
 		$scope.scores = [];
 		$scope.scoreLastRound = [];
-	
+		$scope.championIndexes = [];
+		$scope.avatarStyles = [];
+		$scope.pmStyles = [];
+		$scope.champions = "";
+		$scope.isChampion = false;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -74,6 +79,24 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			temp = $scope.hp[i]
 			$scope.hp[i] = $scope.hp[j]
 			$scope.hp[j] = temp
+			temp = $scope.avatars[i];
+			$scope.avatars[i] = $scope.avatars[j];
+			$scope.avatars[j] = temp;
+			temp = $scope.pms[i];
+			$scope.pms[i] = $scope.pms[j];
+			$scope.pms[j] = temp;
+			temp = $scope.pmNames[i];
+			$scope.pmNames[i] = $scope.pmNames[j];
+			$scope.pmNames[j] = temp;
+			temp = $scope.pmSizes[i];
+			$scope.pmSizes[i] = $scope.pmSizes[j];
+			$scope.pmSizes[j] = temp;
+			temp = $scope.playerAvatars[i]
+			$scope.playerAvatars[i] = $scope.playerAvatars[j]
+			$scope.playerAvatars[j] = temp
+			temp = $scope.hp[i];
+			$scope.hp[i] = $scope.hp[j];
+			$scope.hp[j] = temp;
 		}
 		
 		sortPlayers = function(){
@@ -108,6 +131,56 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			}
 		}
 		
+		setChampions = function(){
+			$scope.championIndexes = [];
+			$scope.championNames = "";
+			$scope.isChampion = false;
+			for (i=0;i<$scope.rankings.length;i++){
+				if ($scope.rankings[i] == 1){
+					$scope.championIndexes.push(i);
+					if (i==0){
+						$scope.championNames = $scope.playerNames[i] + "和" + $scope.pmNames[i];
+					} else {
+						$scope.championNames = $scope.championNames + ", " + $scope.playerNames[i] + "和" + $scope.pmNames[i];
+					}
+				} else {
+					break;
+				}
+			}
+			for (i=0;i<$scope.championIndexes.length;i++){
+				
+			}
+		}
+		
+		setAvatarPmStyles = function(){
+			$scope.avatarStyles = [];
+			$scope.pmStyles = [];
+			for (i=0;i<$scope.pms.length;i++){
+				if ($scope.pms[i] == null){
+					singleStyle = {}
+				} else {
+					var imgUrl = "url('/image/Pokewhat/PM/" + $scope.pms[i] + ".png')"
+					singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover",
+						"height": $scope.pmSizes[i] + "px",
+						"width": $scope.pmSizes[i] + "px"
+					}
+				}
+				
+				$scope.pmStyles.push(singleStyle);
+			}
+			for (i=0;i<$scope.avatars.length;i++){
+				var imgUrl = "url('/image/Pokewhat/Avatar/" + $scope.playerAvatars[i] + ".png')"
+				singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				$scope.avatarStyles.push(singleStyle);
+			}
+		}
+		
+		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.id = response.data.id;
@@ -119,8 +192,16 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.playerNames = response.data.playerNames;
 				$scope.scores = response.data.scores;
 				$scope.scoreLastRound = response.data.scoreLastRound;
+				$scope.hp = response.data.hp;
+				$scope.avatars = response.data.avatars;
+				$scope.pms = response.data.pm;
+				$scope.pmNames = response.data.pmNames;
+				$scope.pmSizes = response.data.pmSizes;
+				$scope.playerAvatars = response.data.playerAvatars;
 				sortPlayers();
 				setRankings();
+				setChampions();
+				setAvatarPmStyles();
 			});
 		}
 		

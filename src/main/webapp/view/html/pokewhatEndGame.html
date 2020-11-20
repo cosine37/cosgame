@@ -12,23 +12,73 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/pokewhatEndGameController.js"></script>
+<style>
+body {
+	background: url('/image/Pokewhat/endgame_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="pokewhatEndGameApp" ng-controller="pokewhatEndGameCtrl">
-	<button ng-click="goto('pokewhat')" ng-show="lord != username">back</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<h2>Game Ends</h2>
-	<table>
-		<tr>
-			<td>Name</td>
-			<td>Score</td>
-			<td>Score Last Round</td>
-			<td>HP</td>
-		</tr>
-		<tr ng-repeat="pn in playerNames track by $index">
-			<td>{{pn}}</td>
-			<td>{{scores[$index]}}</td>
-			<td>{{scoreLastRound[$index]}}</td>
-			<td>{{hp[$index]}}</td>
-		</tr>
-	</table>
+	<audio autoplay loop>
+		<source src="/sound/Pokewhat/endgame_bgm.mp3" type="audio/mpeg"></src>
+	</audio>
+	<div class="endgame-div">
+		
+		<table>
+			<tr>
+				<td colspan="6"><h1>游戏结束</h1></td>
+			</tr>
+			<tr>
+				<td colspan="6"><h2>冠军</h2></td>
+			</tr>
+			
+			<tr>
+				<td colspan="6">
+					<div ng-repeat="x in championIndexes">
+						<div class="avatar-frame">
+							<div class="avatar-big layer-2" ng-style="avatarStyles[x]"></div>
+						</div>
+						<div class="pm-frame layer-1">
+							<div class="pm-div" ng-style="pmStyles[x]"></div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6"><h2>{{championNames}}</h2></td>
+			</tr>
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+			<tr class="solid-table">
+				<td>排名</td>
+				<td>玩家</td>
+				<td>宝可梦</td>
+				<td>分数</td>
+				<td>最后轮分数</td>
+				<td>最后轮HP</td>
+			</tr>
+			<tr class="solid-table" ng-repeat="pn in playerNames track by $index">
+				<td>{{rankings[$index]}}</td>
+				<td>{{pn}}</td>
+				<td>{{pmNames[$index]}}</td>
+				<td>{{scores[$index]}}</td>
+				<td>{{scoreLastRound[$index]}}</td>
+				<td>{{hp[$index]}}</td>
+			</tr>
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="6">
+					<button ng-click="goto('pokewhat')" ng-show="lord != username">退出</button>
+					<button ng-click="dismiss()" ng-show="lord == username">解散</button></td>
+			</tr>
+		</table>
+	</div>
+	
 </body>
 </html>

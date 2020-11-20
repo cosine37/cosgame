@@ -103,5 +103,80 @@ button:disabled{
 	text-align: center;
 }
 
+.layer-2{
+	z-index: -2;
+}
 
+.layer-1{
+	z-index: -1;
+}
+
+.layer0{
+	
+}
+
+.avatar-frame{
+	display: inline-block;
+	position: relative;
+	width: 180px;
+}
+
+.avatar-frame-td{
+	text-align: center;
+}
+
+.avatar-frame-name{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.avatar-big{
+	height: 174px;
+	width: 135px;
+	position: relative;
+}
+
+.pm-frame{
+	height: 250px;
+	width: 250px;
+	display: inline-block;
+	margin-left: -110px;
+	z-index: -1;
+	position: relative;
+}
+
+.pm-div{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+.endgame-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 800px;
+	width: 1200px;
+	margin-top: -400px;
+	margin-left: -600px;
+	padding-top: 20px;
+	padding-left: 90px;
+	padding-right: 90px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.endgame-div table{
+	width: 100%;
+}
+
+.endgame-div td{
+	text-align:center;
+}
+
+.solid-table{
+	border: 1px solid black;
+}
 

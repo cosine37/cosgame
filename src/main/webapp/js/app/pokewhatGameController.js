@@ -22,6 +22,13 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.phase = "";
 		$scope.lastMove = 0;
 		$scope.otherTdStyle = {};
+		$scope.showBigImage = false;
+		$scope.bigImage = "";
+		$scope.bigImageStyle = {};
+		$scope.bigImageDivStyle = {};
+		$scope.muteButton = "播放"
+		$scope.playedBGM = false;
+		$scope.bgm = new Audio('/sound/Pokewhat/game_bgm.mp3');
 
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -72,6 +79,59 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			$http({url: "/pokewhatgame/botnextmove", method: "POST"}).then(function(response){
 				$scope.getBoard()
 			});
+		}
+		
+		setBigImageStyle = function(){
+			$scope.bigImageStyle = {
+				"height": "609px", 
+				"width": "392px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-196px",
+				"margin-top": "-280px",
+				"background": "url(" + $scope.bigImage + ")", 
+				"background-size": "cover"
+			}
+			
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
+			}
+		}
+		
+		$scope.showMoveBigImage = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Pokewhat/Cards/" + index.toString() + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false
+		}
+		
+		$scope.playBGM = function(){
+			if ($scope.playedBGM == false){
+				$scope.playedBGM = true;
+		        $scope.bgm.play();
+		        $scope.muteButton = "静音"
+			}
+		}
+		
+		$scope.mute = function(){
+			if ($scope.playedBGM == true){
+				if ($scope.bgm.paused){
+					$scope.bgm.play();
+					$scope.muteButton = "静音"
+				} else {
+					$scope.bgm.pause();
+					$scope.muteButton = "播放"
+				}
+			}
 		}
 		
 		setOtherTdStyle = function(){

@@ -13,54 +13,6 @@ body {
 	margin-left: 50px;
 }
 
-.layer-2{
-	z-index: -2;
-}
-
-.layer-1{
-	z-index: -1;
-}
-
-.layer0{
-	
-}
-
-.avatar-frame{
-	display: inline-block;
-	position: relative;
-	width: 180px;
-}
-
-.avatar-frame-td{
-	text-align: center;
-}
-
-.avatar-frame-name{
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.avatar-big{
-	height: 174px;
-	width: 135px;
-	position: relative;
-}
-
-.pm-frame{
-	height: 250px;
-	width: 250px;
-	display: inline-block;
-	margin-left: -110px;
-	z-index: -1;
-	position: relative;
-}
-
-.pm-div{
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-}
-
 .card-small{
 	height: 96px;
 	width: 63px
@@ -127,6 +79,18 @@ body {
 .card-big{
 	height: 160px;
 	width: 105px;
+}
+
+.moves-card{
+	position: relative;
+}
+
+.qsmark{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	left: 2px;
 }
 
 .moves-placeholder{
