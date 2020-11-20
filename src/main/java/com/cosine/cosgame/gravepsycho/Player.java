@@ -1,0 +1,63 @@
+package com.cosine.cosgame.gravepsycho;
+
+public class Player {
+	String name;
+	int money;
+	int moneyThisTurn;
+	int decision;
+	boolean stillIn;
+	
+	public Player() {
+		name = "";
+		money = 0;
+		moneyThisTurn = 0;
+		decision = 0;
+		stillIn = true;
+	}
+	
+	public Player(String name) {
+		this();
+		this.name = name;
+	}
+	
+	public void addMoney(int x) {
+		money = money+x;
+	}
+	
+	public void secureMoney() {
+		money = money+moneyThisTurn;
+		moneyThisTurn = 0;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	public int getMoneyThisTurn() {
+		return moneyThisTurn;
+	}
+	public void setMoneyThisTurn(int moneyThisTurn) {
+		this.moneyThisTurn = moneyThisTurn;
+	}
+	public int getDecision() {
+		return decision;
+	}
+	public void setDecision(int decision) {
+		this.decision = decision;
+	}
+	public boolean isStillIn() {
+		return stillIn;
+	}
+	public void setStillIn(boolean stillIn) {
+		this.stillIn = stillIn;
+	}
+	
+}
