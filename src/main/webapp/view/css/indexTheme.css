@@ -14,6 +14,11 @@
 	color: rgb(12,137,24);
 }
 
+.pokewhattext{
+	font-weight: bold;
+	color: rgb(249,51,24);
+}
+
 .citadelshovertext{
 	font-weight: bold;
 	color: rgb(0,0,102);
