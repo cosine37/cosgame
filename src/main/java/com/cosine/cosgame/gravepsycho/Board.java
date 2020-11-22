@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
 public class Board {
 	List<Player> players;
 	List<Card> deck;
@@ -248,5 +250,74 @@ public class Board {
 	}
 	public void setRound(int round) {
 		this.round = round;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("status", status);
+		doc.append("round", round);
+		doc.append("leftover", leftover);
+		List<Document> lod = new ArrayList<>();
+		List<Document> lor = new ArrayList<>();
+		List<Document> lot = new ArrayList<>();
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			String name = players.get(i).getName();
+			playerNames.add(name);
+			name = "player-" + name;
+			doc.append(name, players.get(i).toDocument());
+		}
+		doc.append("playersNames", playerNames);
+		for (i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).toDocument());
+		}
+		doc.append("deck", lod);
+		for (i=0;i<revealed.size();i++) {
+			lor.add(revealed.get(i).toDocument());
+		}
+		doc.append("revealed", lor);
+		for (i=0;i<treasures.size();i++) {
+			lot.add(treasures.get(i).toDocument());
+		}
+		doc.append("treasures", lot);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		status = doc.getInteger("status", 0);
+		round = doc.getInteger("round", 0);
+		leftover = doc.getInteger("leftover", 0);
+		List<Document> lod = (List<Document>) doc.get("deck");
+		List<Document> lor = (List<Document>) doc.get("revealed");
+		List<Document> lot = (List<Document>) doc.get("treasures");
+		int i;
+		deck = new ArrayList<>();
+		for (i=0;i<lod.size();i++) {
+			Card c = new Card();
+			c.setFromDoc(lod.get(i));
+			deck.add(c);
+		}
+		revealed = new ArrayList<>();
+		for (i=0;i<lor.size();i++) {
+			Card c = new Card();
+			c.setFromDoc(lor.get(i));
+			revealed.add(c);
+		}
+		treasures = new ArrayList<>();
+		for (i=0;i<lot.size();i++) {
+			Card c = new Card();
+			c.setFromDoc(lot.get(i));
+			treasures.add(c);
+		}
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String playerName = "player-" + playerNames.get(i);
+			Document dop = (Document) doc.get(playerName);
+			Player p = new Player();
+			p.setFromDoc(dop);
+			players.add(p);
+		}
 	}
 }

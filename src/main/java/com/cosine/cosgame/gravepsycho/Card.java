@@ -1,5 +1,7 @@
 package com.cosine.cosgame.gravepsycho;
 
+import org.bson.Document;
+
 public class Card {
 	String name;
 	String img;
@@ -42,4 +44,19 @@ public class Card {
 		this.num = num;
 	}
 	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("img", img);
+		doc.append("type", type);
+		doc.append("num", num);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		img = doc.getString("img");
+		type = doc.getInteger("type", 0);
+		num = doc.getInteger("num", 0);
+	}
 }

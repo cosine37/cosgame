@@ -1,5 +1,7 @@
 package com.cosine.cosgame.gravepsycho;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	int money;
@@ -58,6 +60,24 @@ public class Player {
 	}
 	public void setStillIn(boolean stillIn) {
 		this.stillIn = stillIn;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("money", money);
+		doc.append("moneyThisTurn", moneyThisTurn);
+		doc.append("decision", decision);
+		doc.append("stillIn", stillIn);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		money = doc.getInteger("money", 0);
+		moneyThisTurn = doc.getInteger("moneyThisTurn", 0);
+		decision = doc.getInteger("decision", 0);
+		stillIn = doc.getBoolean("stillIn", false);
 	}
 	
 }
