@@ -68,11 +68,23 @@ body {
 			</table>
 			
 			
-			<div style="padding-top: 60px;">
-				<button ng-click="goto('pokewhat')">退出</button>
-				<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
-				<button ng-click="startGame()" ng-show="username == lord">开始</button>
-				<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+			<div style="padding-top: 40px;">
+				<div>
+					<span style="color: white">目标分数：</span>
+					<span style="color: white" ng-show="username != lord">{{gameEndScore}}</span>
+					<button ng-click="setGameEndScore(8)" ng-show="username == lord" ng-disabled="gameEndScore == '8'">8</button>
+					<button ng-click="setGameEndScore(10)" ng-show="username == lord" ng-disabled="gameEndScore == '10'">10</button>
+					<button ng-click="setGameEndScore(12)" ng-show="username == lord" ng-disabled="gameEndScore == '12'">12</button>
+					<button ng-click="setGameEndScore(14)" ng-show="username == lord" ng-disabled="gameEndScore == '14'">14</button>
+					<button ng-click="setGameEndScore(16)" ng-show="username == lord" ng-disabled="gameEndScore == '16'">16</button>
+				</div>
+				<div style="padding-top: 10px;">
+					<button ng-click="goto('pokewhat')">退出</button>
+					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
+					<button ng-click="startGame()" ng-show="username == lord">开始</button>
+					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+				</div>
+				
 			</div>
 		</div>
 	</div>

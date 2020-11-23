@@ -70,6 +70,13 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.setGameEndScore = function(x){
+			var data = {"x" : x}
+			$http({url: "/pokewhatgame/changegameendscore", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		setAvatars = function(){
 			$scope.avatarStyles = [];
 			for (i=0;i<$scope.avatars.length;i++){
@@ -108,6 +115,7 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				$scope.playerNames = response.data.playerNames;
 				$scope.avatars = response.data.avatars;
 				$scope.playerAvatars = response.data.playerAvatars;
+				$scope.gameEndScore = response.data.gameEndScore;
 				if ($scope.status != "0"){
 					$scope.goto('pokewhatgame');
 				}

@@ -137,6 +137,21 @@ public class PokewhatController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokewhatgame/changegameendscore", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeGameEndScore(HttpServletRequest request, @RequestParam int x) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.setGameEndScore(x);
+			board.updateDB("gameEndScore", board.getGameEndScore());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/changeavatar", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> changeAvatar(HttpServletRequest request, @RequestParam int x){
 		Board board = new Board();

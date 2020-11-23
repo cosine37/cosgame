@@ -20,6 +20,7 @@ public class BoardEntity {
 	List<String> pmToChooseNames;
 	List<String> logs;
 	
+	String gameEndScore;
 	String curPlayer;
 	String status;
 	String phase;
@@ -200,5 +201,11 @@ public class BoardEntity {
 	}
 	public void setPmSizes(List<String> pmSizes) {
 		this.pmSizes = pmSizes;
+	}
+	public String getGameEndScore() {
+		return gameEndScore;
+	}
+	public void setGameEndScore(String gameEndScore) {
+		this.gameEndScore = gameEndScore;
 	}
 }

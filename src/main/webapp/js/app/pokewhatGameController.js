@@ -355,6 +355,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.curPlayer = response.data.curPlayer;
 				$scope.myIndex = parseInt(response.data.myIndex);
 				$scope.playerAncients = response.data.playerAncients
+				$scope.gameEndScore = response.data.gameEndScore;
 				
 				var updateLogs = false;
 				if ($scope.logs.length < response.data.logs.length){

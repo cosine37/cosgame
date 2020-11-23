@@ -110,6 +110,7 @@
 						<tr>
 							<td style="text-align:center">轮次</td>
 							<td style="text-align:center">回合</td>
+							<td style="text-align:center">目标分数</td>
 							<td style="text-align:center">摸牌堆数量</td>
 							<td style="text-align:center">原始牌数量</td>
 							<td colspan="8">弃牌</td>
@@ -118,6 +119,7 @@
 						<tr class="card-logo-placeholder">
 							<td style="text-align:center">{{round}}</td>
 							<td style="text-align:center">{{turn}}</td>
+							<td style="text-align:center">{{gameEndScore}}</td>
 							<td style="text-align:center">{{deckSize}}</td>
 							<td style="text-align:center">{{ancientSize}}</td>
 							<td class="discard-td" ng-repeat="x in playedCards track by $index" ng-show="$index != 0">

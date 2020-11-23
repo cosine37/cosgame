@@ -193,6 +193,46 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("080", "多龙巴鲁托", XL);
 		allPm.add(p);
+		p = new Pm("081", "买噶袋兽", L);
+		allPm.add(p);
+		p = new Pm("082", "拉普拉斯", XL);
+		allPm.add(p);
+		p = new Pm("083", "百变怪", S);
+		allPm.add(p);
+		p = new Pm("084", "大岩蛇", XL);
+		allPm.add(p);
+		p = new Pm("085", "树才怪", L);
+		allPm.add(p);
+		p = new Pm("086", "请假王", XL);
+		allPm.add(p);
+		p = new Pm("087", "向尾喵", S);
+		allPm.add(p);
+		p = new Pm("088", "帕奇利兹", S);
+		allPm.add(p);
+		p = new Pm("089", "火衣机", S);
+		allPm.add(p);
+		p = new Pm("090", "洗衣机", S);
+		allPm.add(p);
+		p = new Pm("091", "泡沫栗鼠", S);
+		allPm.add(p);
+		p = new Pm("092", "风妖精", M);
+		allPm.add(p);
+		p = new Pm("093", "三首恶龙", L);
+		allPm.add(p);
+		p = new Pm("094", "美洛耶塔", M);
+		allPm.add(p);
+		p = new Pm("095", "基格尔德", XL);
+		allPm.add(p);
+		p = new Pm("096", "卡璞·呜呜", L);
+		allPm.add(p);
+		p = new Pm("097", "纸御剑", S);
+		allPm.add(p);
+		p = new Pm("098", "狐大盗", M);
+		allPm.add(p);
+		p = new Pm("099", "冰砌鹅", L);
+		allPm.add(p);
+		p = new Pm("100", "熊徒弟", M);
+		allPm.add(p);
 		
 		p = new Pm("901", "巴达兽", S);
 		allPm.add(p);
@@ -210,7 +250,7 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("908", "索尼克", M);
 		allPm.add(p);
-		p = new Pm("909", "多啦A梦", L);
+		p = new Pm("909", "多啦A梦", M);
 		allPm.add(p);
 		p = new Pm("910", "菜问", M);
 		allPm.add(p);
@@ -224,6 +264,16 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("915", "糖豆人", M);
 		allPm.add(p);
+		p = new Pm("916", "尼莫", S);
+		allPm.add(p);
+		p = new Pm("917", "瓦力", M);
+		allPm.add(p);
+		p = new Pm("918", "米奇", M);
+		allPm.add(p);
+		p = new Pm("917", "仙人掌兽", XL);
+		allPm.add(p);
+		p = new Pm("920", "V仔兽", M);
+		allPm.add(p);
 	}
 	
 	public void genAllAvatar() {
@@ -232,12 +282,16 @@ public class AllRes {
 			String s = "a00" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
-		for (i=10;i<=20;i++) {
+		for (i=10;i<=30;i++) {
 			String s = "a0" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
 		for (i=1;i<=9;i++) {
 			String s = "a90" + Integer.toString(i); 
+			allAvatar.add(s);
+		}
+		for (i=10;i<=15;i++) {
+			String s = "a9" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
 	}
@@ -250,10 +304,10 @@ public class AllRes {
 		for (i=0;i<5;i++) {
 			ans.add(allAvatar.get(i));
 		}
-		for (i=5;i<20;i++) {
+		for (i=5;i<30;i++) {
 			st1.add(allAvatar.get(i));
 		}
-		for (i=20;i<29;i++) {
+		for (i=30;i<45;i++) {
 			st2.add(allAvatar.get(i));
 		}
 		Random rand = new Random();

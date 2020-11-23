@@ -20,6 +20,7 @@ public class Board {
 	int round;
 	int turn;
 	int curPlayer;
+	int gameEndScore;
 	String id;
 	String lord;
 	AllRes allRes;
@@ -43,6 +44,7 @@ public class Board {
 	}
 	
 	public void newBoard() {
+		gameEndScore = PokewhatConsts.GAMEENDSCORE;
 		avatars = allRes.getAvatars();
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -178,7 +180,7 @@ public class Board {
 			logger.logScore(players.get(curPlayer), 0);
 		}
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getScore() >= PokewhatConsts.GAMEENDSCORE) {
+			if (players.get(i).getScore() >= gameEndScore) {
 				logger.logGameEnd();
 				endGame();
 				return;
@@ -355,6 +357,12 @@ public class Board {
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
+	public int getGameEndScore() {
+		return gameEndScore;
+	}
+	public void setGameEndScore(int gameEndScore) {
+		this.gameEndScore = gameEndScore;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -453,6 +461,7 @@ public class Board {
 		entity.setPlayerAvatars(lpa);
 		entity.setPmToChoose(lptc);
 		entity.setPmToChooseNames(lptcn);
+		entity.setGameEndScore(Integer.toString(gameEndScore));
 		entity.setLogs(logger.getLogs());
 		return entity;
 	}
@@ -465,6 +474,7 @@ public class Board {
 		doc.append("round", round);
 		doc.append("turn", turn);
 		doc.append("curPlayer", curPlayer);
+		doc.append("gameEndScore", gameEndScore);
 		doc.append("logs", logger.getLogs());
 		int i,j;
 		List<String> lov = new ArrayList<>();
@@ -515,6 +525,7 @@ public class Board {
 		round = doc.getInteger("round", 0);
 		turn = doc.getInteger("turn", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
+		gameEndScore = doc.getInteger("gameEndScore", PokewhatConsts.GAMEENDSCORE);
 		logger.setLogs((List<String>) doc.get("logs"));
 		int i,j;
 		List<String> lov = (List<String>) doc.get("avatars");
