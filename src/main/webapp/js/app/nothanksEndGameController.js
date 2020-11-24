@@ -128,7 +128,7 @@ app.controller("nothanksEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			for (i=0;i<$scope.playerNames.length;i++){
 				for (j=i+1;j<$scope.playerNames.length;j++){
 					if (shouldSwap(i,j)){
-						echange(i,j)
+						exchange(i,j)
 					}
 				}
 				$scope.rankings.push(i+1);

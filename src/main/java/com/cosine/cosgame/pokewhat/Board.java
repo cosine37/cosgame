@@ -15,6 +15,7 @@ public class Board {
 	List<Card> ancient;
 	List<Card> deck;
 	List<String> avatars;
+	List<Pm> pmPool;
 	List<Pm> pmToChoose;
 	int status;
 	int round;
@@ -109,17 +110,29 @@ public class Board {
 		}
 	}
 	
+	public List<Pm> getPmToChoose(int x){
+		List<Pm> ans = new ArrayList<>();
+		Random rand = new Random();
+		for (int i=0;i<x;i++) {
+			int n = pmPool.size();
+			ans.add(pmPool.remove(rand.nextInt(n)));
+		}
+		return ans;
+	}
+	
 	public void startGame() {
+		pmPool = allRes.getAllPm();
 		int x = players.size()+PokewhatConsts.NUMPMTOCHOOSE-1;
-		pmToChoose = allRes.getPmToChoose(x);
+		pmToChoose = getPmToChoose(x);
+		for (int i=0;i<players.size();i++) {
+			players.get(i).setPmPool(getPmToChoose(PokewhatConsts.NUMPMTOCHOOSE));
+		}
 		status = PokewhatConsts.CHOOSEPM;
 		players.get(curPlayer).setPhase(PokewhatConsts.USEMOVE);
 	}
 	
-	public void choosePm(int playerIndex, int pmIndex) {
+	public void choosePm(int playerIndex) {
 		Player p = players.get(playerIndex);
-		Pm pm = pmToChoose.remove(pmIndex);
-		p.setPm(pm);
 		logger.logSend(p);
 		p.setPhase(PokewhatConsts.OFFTURN);
 		curPlayer++;
@@ -134,12 +147,25 @@ public class Board {
 		}
 	}
 	
+	public void choosePmFromPublic(int playerIndex, int pmIndex) {
+		Player p = players.get(playerIndex);
+		Pm pm = pmToChoose.remove(pmIndex);
+		p.setPm(pm);
+		choosePm(playerIndex);
+	}
+	
+	public void choosePmFromPool(int playerIndex, int pmIndex) {
+		Player p = players.get(playerIndex);
+		p.setPm(p.getPmPool().get(pmIndex));
+		choosePm(playerIndex);
+	}
+	
 	public void botChoosePm() {
 		Player p = players.get(curPlayer);
 		if (p.isBot()) {
 			Random rand = new Random();
 			int x = rand.nextInt(PokewhatConsts.NUMPMTOCHOOSE);
-			choosePm(curPlayer, x);
+			choosePmFromPublic(curPlayer, x);
 		}
 	}
 	
@@ -227,19 +253,7 @@ public class Board {
 	public void endGame() {
 		status = PokewhatConsts.ENDGAME;
 	}
-	/*
-	public void eternabeam(int index) {
-		for (int i=0;i<players.size();i++) {
-			if (i==index) {
-				logger.logEternabeam(players.get(i));
-				continue;
-			} else {
-				players.get(i).setHp(0);
-			}
-		}
-		
-	}
-	*/
+	
 	public void addToPlayedCards(Card c) {
 		int index = c.getNum();
 		playedCards.get(index).add(c);
@@ -381,6 +395,8 @@ public class Board {
 		List<String> lsl = new ArrayList<>();
 		List<String> lpa = new ArrayList<>();
 		List<String> las = new ArrayList<>();
+		List<String> pmFromPool = new ArrayList<>();
+		List<String> pmFromPoolNames = new ArrayList<>();
 		String phase = "0";
 		String lastMove = "0";
 		String myIndex = "0";
@@ -420,6 +436,10 @@ public class Board {
 				myIndex = Integer.toString(i);
 				for (j=0;j<players.get(i).getAncient().size();j++) {
 					la.add(players.get(i).getAncient().get(j).getImg());
+				}
+				for (j=0;j<players.get(i).getPmPool().size();j++) {
+					pmFromPool.add(players.get(i).getPmPool().get(j).getImg());
+					pmFromPoolNames.add(players.get(i).getPmPool().get(j).getName());
 				}
 			}
 			
@@ -461,6 +481,8 @@ public class Board {
 		entity.setPlayerAvatars(lpa);
 		entity.setPmToChoose(lptc);
 		entity.setPmToChooseNames(lptcn);
+		entity.setPmFromPool(pmFromPool);
+		entity.setPmFromPoolNames(pmFromPoolNames);
 		entity.setGameEndScore(Integer.toString(gameEndScore));
 		entity.setLogs(logger.getLogs());
 		return entity;

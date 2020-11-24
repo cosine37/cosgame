@@ -22,10 +22,12 @@ public class Player {
 	boolean bot;
 	Pm pm;
 	Board board;
+	List<Pm> pmPool;
 	
 	public Player() {
 		hand = new ArrayList<>();
 		ancient = new ArrayList<>();
+		pmPool = new ArrayList<>();
 		pm = new Pm();
 	}
 	
@@ -45,6 +47,7 @@ public class Player {
 	public void endTurn() {
 		phase = PokewhatConsts.OFFTURN;
 		drawHands();
+		changePmImgOnEndTurn();
 		Player p = nextPlayer();
 		p.startTurn();
 	}
@@ -92,13 +95,35 @@ public class Player {
 	public void hurt(int x) {
 		hp = hp-x;
 		if (hp<0) hp=0;
-		//TODO: add end turn & calc score handlers
+		changePmImgOnHurt();
 	}
 	
 	public void recover(int x) {
 		hp = hp+x;
 		if (hp>PokewhatConsts.MAXHP) {
 			hp=PokewhatConsts.MAXHP;
+		}
+	}
+	
+	public void changePmImgOnHurt() {
+		if (this.getPm().getImg().contentEquals("071")) {
+			this.getPm().setImg("071_1");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("099")) {
+			this.getPm().setImg("099_1");
+			return;
+		}
+	}
+	
+	public void changePmImgOnEndTurn() {
+		if (this.getPm().getImg().contentEquals("125")) {
+			this.getPm().setImg("125_1");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("125_1")) {
+			this.getPm().setImg("125");
+			return;
 		}
 	}
 	
@@ -233,6 +258,12 @@ public class Player {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	public List<Pm> getPmPool() {
+		return pmPool;
+	}
+	public void setPmPool(List<Pm> pmPool) {
+		this.pmPool = pmPool;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -259,6 +290,11 @@ public class Player {
 			loa.add(ancient.get(i).getImg());
 		}
 		doc.append("ancient", loa);
+		List<Document> lop = new ArrayList<>();
+		for (i=0;i<pmPool.size();i++) {
+			lop.add(pmPool.get(i).toDocument());
+		}
+		doc.append("pmPool", lop);
 		return doc;
 	}
 	
@@ -290,6 +326,13 @@ public class Player {
 			Card c = CardFactory.createCard(loa.get(i));
 			c.setBoard(board);
 			ancient.add(c);
+		}
+		pmPool = new ArrayList<>();
+		List<Document> lop = (List<Document>) doc.get("pmPool");
+		for (i=0;i<lop.size();i++) {
+			Pm pm = new Pm();
+			pm.setFromDoc(lop.get(i));
+			pmPool.add(pm);
 		}
 	}
 	

@@ -18,6 +18,8 @@ public class BoardEntity {
 	List<String> playerAvatars;
 	List<String> pmToChoose;
 	List<String> pmToChooseNames;
+	List<String> pmFromPool;
+	List<String> pmFromPoolNames;
 	List<String> logs;
 	
 	String gameEndScore;
@@ -207,5 +209,17 @@ public class BoardEntity {
 	}
 	public void setGameEndScore(String gameEndScore) {
 		this.gameEndScore = gameEndScore;
+	}
+	public List<String> getPmFromPool() {
+		return pmFromPool;
+	}
+	public void setPmFromPool(List<String> pmFromPool) {
+		this.pmFromPool = pmFromPool;
+	}
+	public List<String> getPmFromPoolNames() {
+		return pmFromPoolNames;
+	}
+	public void setPmFromPoolNames(List<String> pmFromPoolNames) {
+		this.pmFromPoolNames = pmFromPoolNames;
 	}
 }

@@ -11,6 +11,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.allCards = [];
 		$scope.allCardsStyles = [];
 		$scope.pmToChooseStyles = [];
+		$scope.pmFromPoolStyles = [];
 		$scope.avatarStyles = [];
 		$scope.hpBarStyle = []
 		$scope.pmStyles = [];
@@ -48,6 +49,13 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.choosePm = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/choosepm", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.choosePmFromPool = function(x){
+			var data = {"x" : x}
+			$http({url: "/pokewhatgame/choosepmfrompool", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 			});
 		}
@@ -179,7 +187,6 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 						"width": $scope.pmSizes[i] + "px"
 					}
 				}
-				
 				$scope.pmStyles.push(singleStyle);
 			}
 			for (i=0;i<$scope.avatars.length;i++){
@@ -194,6 +201,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		setPmToChooseStyles = function(){
 			$scope.pmToChooseStyles = [];
+			$scope.pmFromPoolStyles = [];
 			for (i=0;i<$scope.pmToChoose.length;i++){
 				var imgUrl = "url('/image/Pokewhat/PM/" + $scope.pmToChoose[i] + ".png')"
 				singleStyle = {
@@ -201,6 +209,14 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					"background-size": "cover"
 				}
 				$scope.pmToChooseStyles.push(singleStyle);
+			}
+			for (i=0;i<$scope.pmFromPool.length;i++){
+				var imgUrl = "url('/image/Pokewhat/PM/" + $scope.pmFromPool[i] + ".png')"
+				singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				$scope.pmFromPoolStyles.push(singleStyle);
 			}
 		}
 		
@@ -347,6 +363,8 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.status = response.data.status;
 				$scope.pmToChoose = response.data.pmToChoose;
 				$scope.pmToChooseNames = response.data.pmToChooseNames;
+				$scope.pmFromPool = response.data.pmFromPool;
+				$scope.pmFromPoolNames = response.data.pmFromPoolNames;
 				$scope.avatars = response.data.avatars;
 				$scope.pms = response.data.pm;
 				$scope.pmNames = response.data.pmNames;

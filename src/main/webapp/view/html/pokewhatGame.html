@@ -188,6 +188,16 @@
 								<div class="ptc-name">{{pmToChooseNames[$index]}}</div>
 							</td>
 						</tr>
+						<tr ng-show="phase == 1">
+							<td ng-repeat="x in pmFromPool track by $index" style="text-align: center">
+								<div class="ptc-background" ng-click="choosePmFromPool($index)">
+									<div class="ptc" ng-style="pmFromPoolStyles[$index]">
+										
+									</div>
+								</div>
+								<div class="ptc-name">{{pmFromPoolNames[$index]}}</div>
+							</td>
+						</tr>
 					</table>
 				</td>
 				<td>

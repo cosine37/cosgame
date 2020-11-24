@@ -94,9 +94,6 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			temp = $scope.playerAvatars[i]
 			$scope.playerAvatars[i] = $scope.playerAvatars[j]
 			$scope.playerAvatars[j] = temp
-			temp = $scope.hp[i];
-			$scope.hp[i] = $scope.hp[j];
-			$scope.hp[j] = temp;
 		}
 		
 		sortPlayers = function(){
@@ -104,7 +101,7 @@ app.controller("pokewhatEndGameCtrl", ['$scope', '$window', '$http', '$document'
 			for (i=0;i<$scope.playerNames.length;i++){
 				for (j=i+1;j<$scope.playerNames.length;j++){
 					if (shouldSwap(i,j)){
-						echange(i,j)
+						exchange(i,j)
 					}
 				}
 			}

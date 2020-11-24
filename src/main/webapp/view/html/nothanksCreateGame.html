@@ -28,7 +28,7 @@
 		</table>
 		<p>每名玩家初始红包数量：{{initialRevealedMoney}}</p>
 	</div>
-	<div>
+	<div ng-show="username == lord">
 		<p>你可以调整每名玩家初始红包数量：</p>
 		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
 	</div>

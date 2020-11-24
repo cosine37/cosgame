@@ -121,7 +121,7 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("044", "固拉多", XL);
 		allPm.add(p);
-		p = new Pm("045", "裂空座", XL);
+		p = new Pm("045", "裂空坐", XL);
 		allPm.add(p);
 		p = new Pm("046", "路卡利欧", L);
 		allPm.add(p);
@@ -234,11 +234,75 @@ public class AllRes {
 		p = new Pm("100", "熊徒弟", M);
 		allPm.add(p);
 		
+		p = new Pm("101", "格洛丘", L);
+		allPm.add(p);
+		p = new Pm("102", "锚尾鲨", L);
+		allPm.add(p);
+		p = new Pm("103", "火球海狮", M);
+		allPm.add(p);
+		p = new Pm("104", "电脑斧", L);
+		allPm.add(p);
+		p = new Pm("105", "冰狼人", M);
+		allPm.add(p);
+		p = new Pm("106", "麒麟麒", XL);
+		allPm.add(p);
+		p = new Pm("107", "异种大舌贝", M);
+		allPm.add(p);
+		p = new Pm("108", "多边兽1.5型", S);
+		allPm.add(p);
+		p = new Pm("109", "巫咒稻人", S);
+		allPm.add(p);
+		p = new Pm("110", "铃铛喵", M);
+		allPm.add(p);
+		
+		p = new Pm("111", "菊草叶", S);
+		allPm.add(p);
+		p = new Pm("112", "火球鼠", S);
+		allPm.add(p);
+		p = new Pm("113", "小锯鳄", S);
+		allPm.add(p);
+		p = new Pm("114", "圈圈熊", S);
+		allPm.add(p);
+		p = new Pm("115", "煤炭龟", M);
+		allPm.add(p);
+		p = new Pm("116", "咕妞妞", S);
+		allPm.add(p);
+		p = new Pm("117", "长耳兔", L);
+		allPm.add(p);
+		p = new Pm("118", "吉利蛋", L);
+		allPm.add(p);
+		p = new Pm("119", "小猫怪", S);
+		allPm.add(p);
+		p = new Pm("120", "谢米", M);
+		allPm.add(p);
+		p = new Pm("121", "龙头地鼠", M);
+		allPm.add(p);
+		p = new Pm("122", "劈斩司令", L);
+		allPm.add(p);
+		p = new Pm("123", "摔角鹰人", L);
+		allPm.add(p);
+		p = new Pm("124", "托戈德玛尔", S);
+		allPm.add(p);
+		p = new Pm("125", "莫鲁贝可", S);
+		allPm.add(p);
+		p = new Pm("126", "梦幻", M);
+		allPm.add(p);
+		p = new Pm("127", "洛奇亚", XL);
+		allPm.add(p);
+		p = new Pm("128", "凤王", XL);
+		allPm.add(p);
+		p = new Pm("129", "时拉比", S);
+		allPm.add(p);
+		p = new Pm("130", "雷吉艾勒奇", XL);
+		allPm.add(p);
+		p = new Pm("131", "三位一体酋雷姆", XL);
+		allPm.add(p);
+		
 		p = new Pm("901", "巴达兽", S);
 		allPm.add(p);
 		p = new Pm("902", "亚古兽", M);
 		allPm.add(p);
-		p = new Pm("903", "板栗仔", M);
+		p = new Pm("903", "板栗仔", S);
 		allPm.add(p);
 		p = new Pm("904", "耀西", M);
 		allPm.add(p);
@@ -270,7 +334,7 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("918", "米奇", M);
 		allPm.add(p);
-		p = new Pm("917", "仙人掌兽", XL);
+		p = new Pm("919", "仙人掌兽", XL);
 		allPm.add(p);
 		p = new Pm("920", "V仔兽", M);
 		allPm.add(p);
@@ -322,19 +386,7 @@ public class AllRes {
 		return ans;
 	}
 	
-	public List<Pm> getPmToChoose(int x){
-		List<Pm> ans = new ArrayList<>();
-		List<Pm> tpm = new ArrayList<>();
-		int i;
-		Random rand = new Random();
-		for (i=0;i<allPm.size();i++) {
-			tpm.add(allPm.get(i));
-		}
-		for (i=0;i<x;i++) {
-			int n = tpm.size();
-			ans.add(tpm.remove(rand.nextInt(n)));
-		}
-		return ans;
+	public List<Pm> getAllPm() {
+		return allPm;
 	}
-	
 }

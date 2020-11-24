@@ -189,6 +189,31 @@ public class PokewhatController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokewhatgame/choosepmfrompool", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> choosePmFromPool(HttpServletRequest request, @RequestParam int x){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			board.choosePmFromPool(p.getIndex(), x);
+			board.updatePlayers();
+			board.updatePmToChoose();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateLogs();
+			board.updateDB("status", board.getStatus());
+			board.updateDB("round", board.getRound());
+			board.updateDB("turn", board.getTurn());
+			board.updateDB("curPlayer", board.getCurPlayer());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokewhatgame/choosepm", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> choosePm(HttpServletRequest request, @RequestParam int x){
 		Board board = new Board();
@@ -198,7 +223,7 @@ public class PokewhatController {
 		board.getFromDB(boardId);
 		Player p = board.getPlayerByName(username);
 		if (p != null) {
-			board.choosePm(p.getIndex(), x);
+			board.choosePmFromPublic(p.getIndex(), x);
 			board.updatePlayers();
 			board.updatePmToChoose();
 			board.updateDeck();
