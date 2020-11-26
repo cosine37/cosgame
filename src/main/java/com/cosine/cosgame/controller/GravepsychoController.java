@@ -8,10 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.gravepsycho.Board;
 import com.cosine.cosgame.gravepsycho.BoardEntity;
 import com.cosine.cosgame.gravepsycho.GravepsychoMeta;
+import com.cosine.cosgame.gravepsycho.Player;
+import com.cosine.cosgame.gravepsycho.Consts;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -67,6 +70,26 @@ public class GravepsychoController {
 		board.updateDB("round", board.getRound());
 		board.updateDeck();
 		board.updateTreasures();
+		board.updatePlayers();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/gravepsycho/decision", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> decision(HttpServletRequest request,  @RequestParam int x) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		board.playerDecide(username, x);
+		board.updateDB("status", board.getStatus());
+		board.updateDB("round", board.getRound());
+		board.updateDeck();
+		board.updateTreasures();
+		board.updateRevealed();
+		board.updatePlayers();
+		board.updateRemoved();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

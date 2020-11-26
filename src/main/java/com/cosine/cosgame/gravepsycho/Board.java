@@ -68,6 +68,7 @@ public class Board {
 	public void disasterHandle() {
 		for (int i=0;i<players.size();i++) {
 			Player p = players.get(i);
+			p.setDecision(Consts.UNDECIDED);
 			if (p.isStillIn()) {
 				p.setMoneyThisTurn(0);
 			}
@@ -77,6 +78,9 @@ public class Board {
 	
 	public void goBackHandle(List<Player> backPlayers) {
 		int n = backPlayers.size();
+		if (n==0) {
+			return;
+		}
 		int x = leftover / n;
 		int y = leftover % n;
 		int i;
@@ -96,16 +100,27 @@ public class Board {
 		}
 	}
 	
+	public void allBackHandle() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setDecision(Consts.UNDECIDED);
+		}
+		status = Consts.ENDROUND;
+	}
+	
 	public void newRoundHandle() {
 		int i;
 		if (status == Consts.DISASTERROUND) {
 			int x = revealed.size()-1;
-			revealed.remove(x);
+			Card c = revealed.remove(x);
+			removed.add(c);
 		}
 		while (revealed.size() > 0) {
 			Card c = revealed.remove(0);
 			if (c.getType() != Consts.TREASURE) {
 				deck.add(c);
+			} else {
+				removed.add(c);
 			}
 		}
 		if (treasures.size()>0) {
@@ -114,6 +129,9 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).setStillIn(true);
+			players.get(i).secureMoney();
+			players.get(i).setMoneyThisTurn(0);
+			players.get(i).setDecisionLastTurn(Consts.NA);
 			players.get(i).setDecision(Consts.UNDECIDED);
 		}
 		shuffle();
@@ -134,7 +152,7 @@ public class Board {
 	}
 	
 	public void distributeCoins(Card c) {
-		if (c.getType() == Consts.TREASURE) {
+		if (c.getType() == Consts.COIN) {
 			int i;
 			int n=0;
 			for (i=0;i<players.size();i++) {
@@ -156,6 +174,12 @@ public class Board {
 	}
 	
 	public void revealNextCard() {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isStillIn()) {
+				players.get(i).setDecisionLastTurn(players.get(i).getDecision());
+				players.get(i).setDecision(Consts.UNDECIDED);
+			}
+		}
 		Card c = deck.remove(0);
 		revealed.add(c);
 		if (c.getType() == Consts.DISASTER) {
@@ -164,11 +188,6 @@ public class Board {
 			}
 		} else if (c.getType() == Consts.COIN) {
 			distributeCoins(c);
-		}
-		for (int i=0;i<players.size();i++) {
-			if (players.get(i).isStillIn()) {
-				players.get(i).setDecision(Consts.UNDECIDED);
-			}
 		}
 	}
 	
@@ -182,13 +201,22 @@ public class Board {
 	}
 	
 	public boolean allDecided() {
-		for (int i=0;i<players.size();i++) {
-			if (players.get(i).isStillIn()) {
+		if (status == Consts.PENDING) {
+			for (int i=0;i<players.size();i++) {
+				if (players.get(i).isStillIn()) {
+					if (players.get(i).getDecision() == Consts.UNDECIDED) {
+						return false;
+					}
+				}
+			}
+		} else if (status == Consts.ENDROUND || status == Consts.DISASTERROUND) {
+			for (int i=0;i<players.size();i++) {
 				if (players.get(i).getDecision() == Consts.UNDECIDED) {
 					return false;
 				}
 			}
 		}
+		
 		return true;
 	}
 	
@@ -208,7 +236,9 @@ public class Board {
 					}
 					goBackHandle(backPlayers);
 					if (allBack()) {
-						status = Consts.ENDROUND;
+						allBackHandle();
+					} else {
+						revealNextCard();
 					}
 				} else if (status == Consts.ENDROUND || status == Consts.DISASTERROUND) {
 					if (round >=5) {
@@ -313,6 +343,12 @@ public class Board {
 		}
 	}
 	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
+		}
+	}
+	
 	public void addPlayerToDB(String name) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
@@ -365,10 +401,19 @@ public class Board {
 	public void updateTreasures() {
 		int i;
 		List<Document> lot = new ArrayList<>();
-		for (i=0;i<revealed.size();i++) {
-			lot.add(revealed.get(i).toDocument());
+		for (i=0;i<treasures.size();i++) {
+			lot.add(treasures.get(i).toDocument());
 		}
 		dbutil.update("id", id, "treasures", lot);
+	}
+	
+	public void updateRemoved() {
+		int i;
+		List<Document> lot = new ArrayList<>();
+		for (i=0;i<removed.size();i++) {
+			lot.add(removed.get(i).toDocument());
+		}
+		dbutil.update("id", id, "removed", lot);
 	}
 	
 	public BoardEntity toBoardEntity(String name) {
@@ -378,6 +423,10 @@ public class Board {
 		List<String> lov = new ArrayList<>();
 		List<String> lod = new ArrayList<>();
 		List<String> los = new ArrayList<>();
+		List<String> money = new ArrayList<>();
+		List<String> moneyThisTurn = new ArrayList<>();
+		String myIndex = "";
+		String myDecision = "";
 		int i;
 		for (i=0;i<revealed.size();i++) {
 			lor.add(revealed.get(i).getImage());
@@ -387,15 +436,25 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
-			if (status == Consts.ALLDECIDED) {
-				lod.add(Integer.toString(players.get(i).getDecision()));
-			} else {
-				lod.add("n/a");
-			}
+			moneyThisTurn.add(Integer.toString(players.get(i).getMoneyThisTurn()));
+			lod.add(Integer.toString(players.get(i).getDecisionLastTurn()));
 			if (players.get(i).isStillIn()) {
 				los.add("y");
 			} else {
 				los.add("n");
+			}
+			if (status == Consts.ENDGAME) {
+				money.add(Integer.toString(players.get(i).getMoney()));
+			} else {
+				if (players.get(i).getName().contentEquals(name)) {
+					money.add(Integer.toString(players.get(i).getMoney()));
+				} else {
+					money.add("-");
+				}
+			}
+			if (players.get(i).getName().contentEquals(name)) {
+				myIndex = Integer.toString(i);
+				myDecision = Integer.toString(players.get(i).getDecision());
 			}
 		}
 		
@@ -409,28 +468,22 @@ public class Board {
 		entity.setRemoved(lov);
 		entity.setDecisions(lod);
 		entity.setStillIn(los);
+		entity.setMoney(money);
+		entity.setMoneyThisTurn(moneyThisTurn);
+		entity.setMyIndex(myIndex);
+		entity.setMyDecision(myDecision);
 		return entity;
 	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
-		doc.append("id", id);
-		doc.append("lord", lord);
-		doc.append("status", status);
-		doc.append("round", round);
-		doc.append("leftover", leftover);
 		List<Document> lod = new ArrayList<>();
 		List<Document> lor = new ArrayList<>();
 		List<Document> lot = new ArrayList<>();
 		List<Document> lov = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		int i;
-		for (i=0;i<players.size();i++) {
-			String name = players.get(i).getName();
-			playerNames.add(name);
-			name = "player-" + name;
-			doc.append(name, players.get(i).toDocument());
-		}
+		
 		doc.append("playerNames", playerNames);
 		for (i=0;i<deck.size();i++) {
 			lod.add(deck.get(i).toDocument());
@@ -448,6 +501,17 @@ public class Board {
 			lov.add(removed.get(i).toDocument());
 		}
 		doc.append("removed", lov);
+		for (i=0;i<players.size();i++) {
+			String name = players.get(i).getName();
+			playerNames.add(name);
+			name = "player-" + name;
+			doc.append(name, players.get(i).toDocument());
+		}
+		doc.append("id", id);
+		doc.append("lord", lord);
+		doc.append("status", status);
+		doc.append("round", round);
+		doc.append("leftover", leftover);
 		return doc;
 	}
 	

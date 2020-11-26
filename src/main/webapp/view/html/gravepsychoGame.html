@@ -16,5 +16,18 @@
 	<button ng-click="goto('gravepsycho')">back</button>
 	<div>
 		{{gamedata}}
+		<div ng-show="myDecision == '0' && status == '1'">
+			<button ng-click="decision(1)">Go</button>
+			<button ng-click="decision(2)">Back</button>
+		</div>
+		<div ng-show="myDecision != '0' && status == '1'">
+			{{myDecision}}
+		</div>
+		<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
+			<button ng-click="decision(1)">OK</button>
+		</div>
+		<div ng-show="myDecision != '0' && (status == '2' || status == '3')">
+			{{myDecision}}
+		</div>
 	</div>
 </body>

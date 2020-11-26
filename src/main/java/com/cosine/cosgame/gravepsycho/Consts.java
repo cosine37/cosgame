@@ -2,20 +2,23 @@ package com.cosine.cosgame.gravepsycho;
 
 public class Consts {
 	// board status
-	static final int CREATEGAME = 0;
-	static final int PENDING = 1;
-	static final int ENDROUND = 2;
-	static final int DISASTERROUND = 3;
-	static final int ENDGAME = 4;
-	static final int ALLDECIDED = 5;
+	public static final int CREATEGAME = 0;
+	public static final int PENDING = 1;
+	public static final int ENDROUND = 2;
+	public static final int DISASTERROUND = 3;
+	public static final int ENDGAME = 4;
+	public static final int ALLDECIDED = 5;
 	
 	// player decisions
-	static final int UNDECIDED = 0;
-	static final int GO = 1;
-	static final int BACK = 2;
+	public static final int UNDECIDED = 0;
+	public static final int GO = 1;
+	public static final int BACK = 2;
 	
 	// card types
-	static final int COIN = 0;
-	static final int DISASTER = 1;
-	static final int TREASURE = 2;
+	public static final int COIN = 0;
+	public static final int DISASTER = 1;
+	public static final int TREASURE = 2;
+	
+	// general
+	public static final int NA = -1;
 }

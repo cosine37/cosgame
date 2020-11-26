@@ -7,6 +7,9 @@ public class Player {
 	int money;
 	int moneyThisTurn;
 	int decision;
+	int decisionLastTurn;
+	
+
 	boolean stillIn;
 	
 	public Player() {
@@ -23,7 +26,7 @@ public class Player {
 	}
 	
 	public void addMoney(int x) {
-		money = money+x;
+		moneyThisTurn = moneyThisTurn+x;
 	}
 	
 	public void secureMoney() {
@@ -61,13 +64,20 @@ public class Player {
 	public void setStillIn(boolean stillIn) {
 		this.stillIn = stillIn;
 	}
-	
+	public int getDecisionLastTurn() {
+		return decisionLastTurn;
+	}
+	public void setDecisionLastTurn(int decisionLastTurn) {
+		this.decisionLastTurn = decisionLastTurn;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("money", money);
 		doc.append("moneyThisTurn", moneyThisTurn);
 		doc.append("decision", decision);
+		doc.append("decisionLastTurn", decisionLastTurn);
 		doc.append("stillIn", stillIn);
 		return doc;
 	}
@@ -77,6 +87,7 @@ public class Player {
 		money = doc.getInteger("money", 0);
 		moneyThisTurn = doc.getInteger("moneyThisTurn", 0);
 		decision = doc.getInteger("decision", 0);
+		decisionLastTurn = doc.getInteger("decisionLastTurn", 0);
 		stillIn = doc.getBoolean("stillIn", false);
 	}
 	

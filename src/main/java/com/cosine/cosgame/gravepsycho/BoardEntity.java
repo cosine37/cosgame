@@ -8,12 +8,16 @@ public class BoardEntity {
 	String status;
 	String round;
 	String leftover;
+	String myDecision;
+	String myIndex;
 	
 	List<String> playerNames;
 	List<String> revealed;
 	List<String> removed;
 	List<String> decisions;
 	List<String> stillIn;
+	List<String> money;
+	List<String> moneyThisTurn;
 	
 	public String getId() {
 		return id;
@@ -74,6 +78,30 @@ public class BoardEntity {
 	}
 	public void setStillIn(List<String> stillIn) {
 		this.stillIn = stillIn;
+	}
+	public List<String> getMoney() {
+		return money;
+	}
+	public void setMoney(List<String> money) {
+		this.money = money;
+	}
+	public List<String> getMoneyThisTurn() {
+		return moneyThisTurn;
+	}
+	public void setMoneyThisTurn(List<String> moneyThisTurn) {
+		this.moneyThisTurn = moneyThisTurn;
+	}
+	public String getMyDecision() {
+		return myDecision;
+	}
+	public void setMyDecision(String myDecision) {
+		this.myDecision = myDecision;
+	}
+	public String getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(String myIndex) {
+		this.myIndex = myIndex;
 	}
 	
 }

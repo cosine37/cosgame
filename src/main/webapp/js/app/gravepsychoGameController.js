@@ -7,13 +7,6 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoGameApp", []);
 app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-		$scope.disableUserButton = []
-		$scope.handStyle = []
-		$scope.playerStyle = []
-		$scope.packageStyle = {}
-		$scope.moneyStyle = {}
-		$scope.phase = "-1"
-		$scope.status = ""
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -30,9 +23,20 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
+		$scope.decision = function(x){
+			var data = {"x" : x}
+			$http({url: "/gravepsycho/decision", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/gravepsycho/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				$scope.round = response.data.round
+				$scope.myIndex = response.data.myIndex;
+				$scope.myDecision = response.data.myDecision;
 			});
 		}
 		
