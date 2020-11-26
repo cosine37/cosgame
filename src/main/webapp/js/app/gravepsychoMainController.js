@@ -7,6 +7,7 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoMainApp", []);
 app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
+		$scope.onTablesTab = true;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -64,6 +65,33 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
-		$scope.getAllBoards()
+		$scope.goToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/gravepsycho/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/gravepsycho/join").then(function(response){
+					$scope.goto('gravepsychocreategame')
+				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/gravepsycho/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('gravepsychogame');
+			});
+		}
+		
+		$scope.offturnHandle = function(){
+			if ($scope.onTablesTab){
+				$scope.getAllBoards();
+			}
+			
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},4000);
+			
+		}
+		
+		$scope.offturnHandle();
 		
 }]);

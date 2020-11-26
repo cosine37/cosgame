@@ -136,6 +136,7 @@ public class Board {
 		}
 		shuffle();
 		status = Consts.PENDING;
+		leftover = 0;
 		round++;
 	}
 	
@@ -414,6 +415,10 @@ public class Board {
 			lot.add(removed.get(i).toDocument());
 		}
 		dbutil.update("id", id, "removed", lot);
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
 	}
 	
 	public BoardEntity toBoardEntity(String name) {

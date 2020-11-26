@@ -7,7 +7,8 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoGameApp", []);
 app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-	
+		$scope.myDecision = "-1"
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -40,5 +41,14 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			if ($scope.myDecision != "0"){
+				$scope.getBoard();
+			}
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1500);
+		}
+		
+		$scope.offturnHandle();
 }]);
