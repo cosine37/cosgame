@@ -23,8 +23,47 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
-		$scope.newGame = function(){
-			$scope.goto('gravepsychocreategame');
+		$scope.showTablesTab = function(){
+			$scope.onTablesTab = true;
 		}
+		
+		$scope.hideTablesTab = function(){
+			$scope.onTablesTab = false;
+		}
+		
+		$scope.getAllBoards = function(){
+			$http.get('/gravepsycho/allboards').then(function(response){
+				var n = response.data.value.length / 4;
+				$scope.boards = []
+				$scope.statuses = []
+				$scope.lords = []
+				$scope.canBack = []
+				for (var i=0;i<n;i++){
+					$scope.boards.push(response.data.value[i*4])
+					var l = response.data.value[i*4+1]
+					$scope.lords.push(l)
+					var x = response.data.value[i*4+2]
+					var t = ''
+					if (x == '0'){
+						t = '准备中'
+					} else if (x == '2'){
+						t = '游戏结束'
+					} else {
+						t = '游戏中'
+					}
+					$scope.statuses.push(t)
+					var y = response.data.value[i*4+3]
+					$scope.canBack.push(y)
+				}
+			});
+		}
+		
+		$scope.newGame = function(){
+			$http({url: "/gravepsycho/newboard", method: "POST"}).then(function(response){
+				$scope.goto('gravepsychocreategame');
+			});
+		}
+		
+		$scope.getAllBoards()
 		
 }]);

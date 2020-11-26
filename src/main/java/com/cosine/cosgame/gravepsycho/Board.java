@@ -1,35 +1,52 @@
 package com.cosine.cosgame.gravepsycho;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Card> revealed;
 	List<Card> treasures;
+	List<Card> removed;
 	int status;
 	int round;
 	int leftover;
+	String id;
+	String lord;
 	AllRes allRes;
+	MongoDBUtil dbutil;
 	
 	public Board() {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		revealed = new ArrayList<>();
 		treasures = new ArrayList<>();
+		removed = new ArrayList<>();
 		allRes = new AllRes();
+		
+		String dbname = "gravepsycho";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
+	
+	public void newBoard() {
+		status = Consts.CREATEGAME;
 	}
 	
 	public void startGame() {
-		status = 0;
 		round = 0;
 		leftover = 0;
 		deck = allRes.getDeck();
 		treasures = allRes.getTreasures();
+		newRoundHandle();
 	}
 	
 	public boolean disaster() {
@@ -100,7 +117,7 @@ public class Board {
 			players.get(i).setDecision(Consts.UNDECIDED);
 		}
 		shuffle();
-		status = Consts.INROUND;
+		status = Consts.PENDING;
 		round++;
 	}
 	
@@ -180,7 +197,7 @@ public class Board {
 		if (p!=null) {
 			p.setDecision(x);
 			if (allDecided()) {
-				if (status == Consts.INROUND) {
+				if (status == Consts.PENDING) {
 					List<Player> backPlayers = new ArrayList<>();
 					for (int i=0;i<players.size();i++) {
 						if (players.get(i).isStillIn()) {
@@ -251,15 +268,161 @@ public class Board {
 	public void setRound(int round) {
 		this.round = round;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+	public int getLeftover() {
+		return leftover;
+	}
+	public void setLeftover(int leftover) {
+		this.leftover = leftover;
+	}
+	public List<Card> getRemoved() {
+		return removed;
+	}
+	public void setRemoved(List<Card> removed) {
+		this.removed = removed;
+	}
+
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	
+	public void addPlayer(String s) {
+		Player p = new Player();
+		p.setName(s);
+		players.add(p);
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void updateDeck() {
+		int i;
+		List<Document> lod = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			lod.add(deck.get(i).toDocument());
+		}
+		dbutil.update("id", id, "deck", lod);
+	}
+	
+	public void updateRevealed() {
+		int i;
+		List<Document> lor = new ArrayList<>();
+		for (i=0;i<revealed.size();i++) {
+			lor.add(revealed.get(i).toDocument());
+		}
+		dbutil.update("id", id, "revealed", lor);
+	}
+	
+	public void updateTreasures() {
+		int i;
+		List<Document> lot = new ArrayList<>();
+		for (i=0;i<revealed.size();i++) {
+			lot.add(revealed.get(i).toDocument());
+		}
+		dbutil.update("id", id, "treasures", lot);
+	}
+	
+	public BoardEntity toBoardEntity(String name) {
+		BoardEntity entity = new BoardEntity();
+		List<String> playerNames = new ArrayList<>();
+		List<String> lor = new ArrayList<>();
+		List<String> lov = new ArrayList<>();
+		List<String> lod = new ArrayList<>();
+		List<String> los = new ArrayList<>();
+		int i;
+		for (i=0;i<revealed.size();i++) {
+			lor.add(revealed.get(i).getImage());
+		}
+		for (i=0;i<removed.size();i++) {
+			lov.add(removed.get(i).getImage());
+		}
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+			if (status == Consts.ALLDECIDED) {
+				lod.add(Integer.toString(players.get(i).getDecision()));
+			} else {
+				lod.add("n/a");
+			}
+			if (players.get(i).isStillIn()) {
+				los.add("y");
+			} else {
+				los.add("n");
+			}
+		}
+		
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setStatus(Integer.toString(status));
+		entity.setRound(Integer.toString(round));
+		entity.setLeftover(Integer.toString(leftover));
+		entity.setPlayerNames(playerNames);
+		entity.setRevealed(lor);
+		entity.setRemoved(lov);
+		entity.setDecisions(lod);
+		entity.setStillIn(los);
+		return entity;
+	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("lord", lord);
 		doc.append("status", status);
 		doc.append("round", round);
 		doc.append("leftover", leftover);
 		List<Document> lod = new ArrayList<>();
 		List<Document> lor = new ArrayList<>();
 		List<Document> lot = new ArrayList<>();
+		List<Document> lov = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -268,7 +431,7 @@ public class Board {
 			name = "player-" + name;
 			doc.append(name, players.get(i).toDocument());
 		}
-		doc.append("playersNames", playerNames);
+		doc.append("playerNames", playerNames);
 		for (i=0;i<deck.size();i++) {
 			lod.add(deck.get(i).toDocument());
 		}
@@ -281,16 +444,23 @@ public class Board {
 			lot.add(treasures.get(i).toDocument());
 		}
 		doc.append("treasures", lot);
+		for (i=0;i<removed.size();i++) {
+			lov.add(removed.get(i).toDocument());
+		}
+		doc.append("removed", lov);
 		return doc;
 	}
 	
 	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		lord = doc.getString("lord");
 		status = doc.getInteger("status", 0);
 		round = doc.getInteger("round", 0);
 		leftover = doc.getInteger("leftover", 0);
 		List<Document> lod = (List<Document>) doc.get("deck");
 		List<Document> lor = (List<Document>) doc.get("revealed");
 		List<Document> lot = (List<Document>) doc.get("treasures");
+		List<Document> lov = (List<Document>) doc.get("removed");
 		int i;
 		deck = new ArrayList<>();
 		for (i=0;i<lod.size();i++) {
@@ -309,6 +479,12 @@ public class Board {
 			Card c = new Card();
 			c.setFromDoc(lot.get(i));
 			treasures.add(c);
+		}
+		removed = new ArrayList<>();
+		for (i=0;i<lov.size();i++) {
+			Card c = new Card();
+			c.setFromDoc(lov.get(i));
+			removed.add(c);
 		}
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();

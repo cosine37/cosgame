@@ -25,7 +25,17 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 		}
 		
 		$scope.startGame = function(){
-			$scope.goto('gravepsychogame')
+			$http.post('/gravepsycho/startgame').then(function(response){
+				$scope.goto('gravepsychogame')
+			});
 		}
+		
+		$scope.getBoard = function(){
+			$http.get('/gravepsycho/getboard').then(function(response){
+				$scope.gamedata = response.data
+			});
+		}
+		
+		$scope.getBoard();
 		
 }]);

@@ -48,9 +48,10 @@ public class AllRes {
 		deck.add(c);
 		int i,j;
 		for (i=0;i<5;i++) {
-			for (j=0;j<3;i++) {
+			for (j=0;j<3;j++) {
 				String img = "d0"+i;
 				c = new Card(img, Consts.DISASTER, i);
+				deck.add(c);
 			}
 		}
 		

@@ -29,4 +29,12 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.getBoard = function(){
+			$http.get('/gravepsycho/getboard').then(function(response){
+				$scope.gamedata = response.data
+			});
+		}
+		
+		$scope.getBoard();
 }]);
