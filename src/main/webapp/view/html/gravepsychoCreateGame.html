@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame No Thanks</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/gravepsychoTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/gravepsychoOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/gravepsychoCreateGameController.js"></script>
+<body ng-app="gravepsychoCreateGameApp" ng-controller="gravepsychoCreateGameCtrl">
+	<button ng-click="goto('gravepsycho')">back</button>
+	<button ng-click="addbot()">add bot</button>
+	<button ng-click="startGame()">start game</button>
+	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+
+</body>
+</html>

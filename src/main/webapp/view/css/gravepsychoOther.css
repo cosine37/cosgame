@@ -1,0 +1,30 @@
+@charset "UTF-8";
+button{
+	outline: none;
+	color: rgb(230,179,61);
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(23,44,60);
+	border-radius: 8px;
+	
+	background: rgb(23,44,60);
+}
+
+button:disabled{
+	outline: none;
+	color: rgb(23,44,60);
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(23,44,60);
+	border-radius: 8px;
+	
+	background: rgb(230,179,61);
+}

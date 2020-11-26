@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Coslash</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/gravepsychoTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/gravepsychoMainController.js"></script>
+<body ng-app="gravepsychoMainApp" ng-controller="gravepsychoMainCtrl" style="background-color:rgb(230,179,61)">
+	<div id="header" class="header">
+		<table width="100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+				<td align="right" style="padding-right: 30px">
+					<span style="margin-right: 10px; color: white">{{username}}</span>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button ng-click="goto('index')">主页</button>
+		<button ng-click="goto('citadels')">富饶龙城</button>
+		<button ng-click="goto('nothanks')">不了谢谢</button>
+		<button ng-click="goto('pokewhat')">宝可纳尼</button>
+		<button style="padding-top: 0px; color: rgb(23,44,60); font-size: 24px; background-color:rgb(230,179,61)">盗墓惊魂</button>
+		<!-- 
+		<button style="padding-top: 0px; color: blue; font-size: 24px; background-color:white">Coslash</button>
+		<button ng-click="goto('dominion')">Dominion</button>
+		<button ng-click="goto('mafia')">Mafia</button>
+		<button ng-click="goto('minigame')">Minigames</button>
+		<button>Others</button>
+		 -->
+	</div>
+	<div id="tabcontent" class="tabcontent">
+		<div class="container">
+			<div id="sidebar" class="sidebar">
+				<ul class="nav nav-tabs flex-column" role="tablist">
+				    <li class="nav-item">
+				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
+				    </li>
+				  </ul>
+			</div>
+			
+			<div class="tab-content">
+				<div id="listtab" class="content container tab-pane active">
+					<h1>游戏</h1>
+					<table class="table">
+						<tr>
+							<td><button ng-click="newGame()">新游戏</button></td>
+						</tr>
+					</table>
+					<table class="table">
+						<tr>
+							<td>房间号</td>
+							<td>房主</td>
+							<td>状态</td>
+							<td></td>
+						</tr>
+						<!-- 
+						<tr ng-repeat ="x in boards track by $index">
+							<td>{{x}}</td>
+							<td>{{lords[$index]}}</td>
+							<td>{{statuses[$index]}}</td>
+							<td>
+								<button ng-show="statuses[$index] == '准备中'" ng-click="goToBoard($index)">加入</button>
+								<button ng-show="statuses[$index] == '游戏中' && canBack[$index] == 'y'" ng-click="backToBoard($index)">回桌</button>
+							</td>
+						</tr>
+						 -->
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
