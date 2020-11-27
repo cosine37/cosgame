@@ -28,3 +28,13 @@ button:disabled{
 	
 	background: rgb(230,179,61);
 }
+
+.revealed{
+	height: 192px;
+	width: 126px;
+	float: left;
+}
+
+.adventure{
+	height: 192px;
+}

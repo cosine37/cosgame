@@ -94,6 +94,7 @@ public class Board {
 			for (i=revealed.size()-1;i>=0;i--) {
 				if (revealed.get(i).getType() == Consts.TREASURE) {
 					Card c = revealed.remove(i);
+					removed.add(c);
 					p.addMoney(c.getNum());
 				}
 			}
@@ -106,6 +107,14 @@ public class Board {
 			players.get(i).setDecision(Consts.UNDECIDED);
 		}
 		status = Consts.ENDROUND;
+	}
+	
+	public void endGameHandle() {
+		status = Consts.ENDGAME;
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).secureMoney();
+		}
 	}
 	
 	public void newRoundHandle() {
@@ -243,7 +252,7 @@ public class Board {
 					}
 				} else if (status == Consts.ENDROUND || status == Consts.DISASTERROUND) {
 					if (round >=5) {
-						status = Consts.ENDGAME;
+						endGameHandle();
 					} else {
 						newRoundHandle();
 					}
@@ -432,6 +441,7 @@ public class Board {
 		List<String> moneyThisTurn = new ArrayList<>();
 		String myIndex = "";
 		String myDecision = "";
+		String myMoney = "";
 		int i;
 		for (i=0;i<revealed.size();i++) {
 			lor.add(revealed.get(i).getImage());
@@ -460,6 +470,7 @@ public class Board {
 			if (players.get(i).getName().contentEquals(name)) {
 				myIndex = Integer.toString(i);
 				myDecision = Integer.toString(players.get(i).getDecision());
+				myMoney = Integer.toString(players.get(i).getMoney());
 			}
 		}
 		
@@ -477,6 +488,7 @@ public class Board {
 		entity.setMoneyThisTurn(moneyThisTurn);
 		entity.setMyIndex(myIndex);
 		entity.setMyDecision(myDecision);
+		entity.setMyMoney(myMoney);
 		return entity;
 	}
 	

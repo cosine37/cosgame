@@ -10,6 +10,7 @@ public class BoardEntity {
 	String leftover;
 	String myDecision;
 	String myIndex;
+	String myMoney;
 	
 	List<String> playerNames;
 	List<String> revealed;
@@ -102,6 +103,12 @@ public class BoardEntity {
 	}
 	public void setMyIndex(String myIndex) {
 		this.myIndex = myIndex;
+	}
+	public String getMyMoney() {
+		return myMoney;
+	}
+	public void setMyMoney(String myMoney) {
+		this.myMoney = myMoney;
 	}
 	
 }

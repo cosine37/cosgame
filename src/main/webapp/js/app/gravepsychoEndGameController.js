@@ -33,6 +33,8 @@ app.controller("gravepsychoEndGameCtrl", ['$scope', '$window', '$http', '$docume
 			$http.get('/gravepsycho/getboard').then(function(response){
 				$scope.gamedata = response.data
 				$scope.lord = response.data.lord
+				$scope.playerNames = response.data.playerNames;
+				$scope.money = response.data.money;
 			});
 		}
 		

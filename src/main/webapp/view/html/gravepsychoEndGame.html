@@ -15,6 +15,12 @@
 <body ng-app="gravepsychoEndGameApp" ng-controller="gravepsychoEndGameCtrl">
 	<div>
 		<h2>Game Ends</h2>
+		<table>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>{{pn}}</td>
+				<td>{{money[$index]}}</td>
+			</tr>
+		</table>
 		<button ng-click="goto('gravepsycho')" ng-show="lord != username">back</button>
 		<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	</div>

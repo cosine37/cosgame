@@ -40,6 +40,7 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 				$scope.gamedata = response.data
 				$scope.id = response.data.id
 				$scope.status = response.data.status;
+				$scope.playerNames = response.data.playerNames;
 				if ($scope.id == "NE"){
 					$scope.goto('/gravepsycho');
 					return;

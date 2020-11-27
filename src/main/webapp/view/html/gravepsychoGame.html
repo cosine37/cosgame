@@ -15,19 +15,45 @@
 <body ng-app="gravepsychoGameApp" ng-controller="gravepsychoGameCtrl">
 	<button ng-click="goto('gravepsycho')">back</button>
 	<div>
-		{{gamedata}}
-		<div ng-show="myDecision == '0' && status == '1'">
-			<button ng-click="decision(1)">Go</button>
-			<button ng-click="decision(2)">Back</button>
+		<div>
+			<div class="playerInfo" ng-repeat="pn in playerNames">
+				<table>
+					<tr>
+						<td>{{pn}}</td>
+					</tr>
+					<tr>
+						<td>本轮收益：{{moneyThisTurn[$index]}}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-		<div ng-show="myDecision != '0' && status == '1'">
-			{{myDecision}}
+		<div>
+			<span>回合 {{round}} </span>
+			<span ng-show="status == '2' || status == '3'">结束</span>
 		</div>
-		<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
-			<button ng-click="decision(1)">OK</button>
+		<div class="adventure">
+			<span>
+				<div class="revealed" ng-repeat="x in revealedStyle track by $index" ng-style="x"></div>
+			</span>
 		</div>
-		<div ng-show="myDecision != '0' && (status == '2' || status == '3')">
-			{{myDecision}}
+		<div style="clear:both">
+			<div ng-show="myDecision == '0' && status == '1'">
+				<button ng-click="decision(1)">Go</button>
+				<button ng-click="decision(2)">Back</button>
+			</div>
+			<div ng-show="myDecision != '0' && status == '1'">
+				{{myDecision}}
+			</div>
+			<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
+				<button ng-click="decision(1)">OK</button>
+			</div>
+			<div ng-show="myDecision != '0' && (status == '2' || status == '3')">
+				已确认
+			</div>
 		</div>
+		<div>
+			总收益：{{myMoney}}
+		</div>
+		
 	</div>
 </body>

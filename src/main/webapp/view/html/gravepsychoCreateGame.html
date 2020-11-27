@@ -14,11 +14,14 @@
 <script src="/js/app/gravepsychoCreateGameController.js"></script>
 <body ng-app="gravepsychoCreateGameApp" ng-controller="gravepsychoCreateGameCtrl">
 	<button ng-click="goto('gravepsycho')">back</button>
-	<button ng-click="addbot()" ng-show="lord == username">add bot</button>
 	<button ng-click="startGame()" ng-show="lord == username">start game</button>
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<div>
-		{{gamedata}}
+		<table>
+			<tr ng-repeat="pn in playerNames">
+				<td>{{pn}}</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>
