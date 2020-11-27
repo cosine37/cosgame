@@ -32,6 +32,11 @@ public class GravepsychoController {
 		return "gravepsychoGame";
 	}
 	
+	@RequestMapping(value="/gravepsychoendgame", method = RequestMethod.GET)
+	public String gravepsychoEndGame() {
+		return "gravepsychoEndGame";
+	}
+	
 	@RequestMapping(value="/gravepsycho/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		GravepsychoMeta meta = new GravepsychoMeta();

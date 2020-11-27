@@ -35,9 +35,13 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			$http.get('/gravepsycho/getboard').then(function(response){
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
+				if ($scope.status == '4'){
+					$scope.goto('gravepsychoendgame')
+				}
 				$scope.round = response.data.round
 				$scope.myIndex = response.data.myIndex;
 				$scope.myDecision = response.data.myDecision;
+				
 			});
 		}
 		
