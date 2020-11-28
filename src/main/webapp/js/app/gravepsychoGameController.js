@@ -36,10 +36,24 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			$scope.revealedStyle = []
 			for (i=0;i<$scope.revealed.length;i++){
 				var imgUrl = "url('/image/Gravepsycho/Cards/" + $scope.revealed[i] + ".png')"
-				var singleStyle = {
-					"background": imgUrl,
-					"background-size": "cover"
+				var singleStyle
+				if (i==0 || $scope.revealed.length<10){
+					singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover"
+					}
+				} else {
+					var n = $scope.revealed.length;
+					var x = Math.floor((1200 - 126*n)/(n-1) - 0.2)
+					var marginLeft = x.toString() + "px"
+					singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover",
+						"margin-left": marginLeft
+					}
 				}
+				
+				
 				$scope.revealedStyle.push(singleStyle)
 			}
 		}
@@ -58,6 +72,9 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.revealed = response.data.revealed;
 				$scope.moneyThisTurn = response.data.moneyThisTurn;
 				$scope.myMoney = response.data.myMoney;
+				$scope.avatar = response.data.avatar;
+				$scope.stillIn = response.data.stillIn;
+				$scope.leftover = response.data.leftover;
 				setRevealedStyle()
 			});
 		}

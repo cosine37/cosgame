@@ -19,6 +19,7 @@ public class BoardEntity {
 	List<String> stillIn;
 	List<String> money;
 	List<String> moneyThisTurn;
+	List<String> avatar;
 	
 	public String getId() {
 		return id;
@@ -109,6 +110,12 @@ public class BoardEntity {
 	}
 	public void setMyMoney(String myMoney) {
 		this.myMoney = myMoney;
+	}
+	public List<String> getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(List<String> avatar) {
+		this.avatar = avatar;
 	}
 	
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cosine.cosgame.gravepsycho.Board;
 import com.cosine.cosgame.gravepsycho.BoardEntity;
 import com.cosine.cosgame.gravepsycho.GravepsychoMeta;
+import com.cosine.cosgame.gravepsycho.Player;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -131,6 +132,22 @@ public class GravepsychoController {
 		board.updateRevealed();
 		board.updatePlayers();
 		board.updateRemoved();
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/gravepsycho/setavatar", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setAvatar(HttpServletRequest request,  @RequestParam String x) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			p.setAvatar(x);
+			board.updatePlayer(username);
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

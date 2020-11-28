@@ -12,16 +12,57 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/gravepsychoEndGameController.js"></script>
+<style>
+body {
+	background: url('/image/Gravepsycho/end_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+	backdrop-filter: blur(4px) brightness(30%);
+}
+</style>
 <body ng-app="gravepsychoEndGameApp" ng-controller="gravepsychoEndGameCtrl">
-	<div>
-		<h2>Game Ends</h2>
+	<div class="end-game-div">
 		<table>
-			<tr ng-repeat="pn in playerNames track by $index">
-				<td>{{pn}}</td>
-				<td>{{money[$index]}}</td>
+			<tr>
+				<td>
+					<h2>游戏结束</h2>
+					<h3>冠军: {{champions}}</h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img class="winner" ng-show="isChampion()" src="/image/Gravepsycho/winner.jpg"/>
+					<img class="winner" ng-show="isChampion() == false" src="/image/Gravepsycho/loser.jpg"/>
+				</td>
+				
 			</tr>
 		</table>
-		<button ng-click="goto('gravepsycho')" ng-show="lord != username">back</button>
-		<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+		
+		<table style="margin-top: 20px">
+			<tr>
+				<td ng-repeat="pn in playerNames track by $index">
+					<div>
+						<img class="avatar" ng-src="{{avatar[$index]}}"/>
+					</div>
+					<div>
+						{{pn}}
+					</div>
+					<div>
+						得分：{{money[$index]}}
+					</div>				
+				</td>
+			</tr>
+		</table>
+		<table  style="margin-top: 20px">
+			<tr>
+				<td>
+					<button ng-click="goto('gravepsycho')" ng-show="lord != username">退出</button>
+					<button ng-click="dismiss()" ng-show="lord == username">解散并退出</button>
+				</td>
+			</tr>
+		</table>
+		
 	</div>
 </body>

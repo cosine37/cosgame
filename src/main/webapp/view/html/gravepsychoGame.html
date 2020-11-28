@@ -12,47 +12,99 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/gravepsychoGameController.js"></script>
+<style>
+body {
+	background: url('/image/Gravepsycho/game_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+	backdrop-filter: blur(2px) brightness(50%);
+}
+</style>
 <body ng-app="gravepsychoGameApp" ng-controller="gravepsychoGameCtrl">
-	<button ng-click="goto('gravepsycho')">back</button>
-	<div>
+	<div class="game-div">
 		<div>
-			<div class="playerInfo" ng-repeat="pn in playerNames">
-				<table>
-					<tr>
-						<td>{{pn}}</td>
-					</tr>
-					<tr>
-						<td>本轮收益：{{moneyThisTurn[$index]}}</td>
-					</tr>
-				</table>
-			</div>
+			<table>
+				<tr>
+					<td ng-repeat="pn in playerNames">
+						<table>
+							<tr>
+								<td>
+									<img class="avatar" ng-src="{{avatar[$index]}}" ng-show="stillIn[$index] == 'y'"/>
+									<img class="avatar" ng-src="/image/Gravepsycho/Avatar/tent.png" ng-show="stillIn[$index] == 'n'"/>
+								</td>
+							</tr>
+							<tr>
+								<td>{{pn}}</td>
+							</tr>
+							<tr>
+								<td>本轮收益：{{moneyThisTurn[$index]}}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top: 20px">
+			<table>
+				<tr>
+					<td>
+						<span class="round-text" ng-show="status == '3'">灾难发生，</span>
+						<span class="round-text">回合 {{round}} </span>
+						<span class="round-text" ng-show="status == '2' || status == '3'">结束</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top: 20px" class="adventure">
+			<table>
+				<tr style="height: 200px">
+					<td>
+						<span>
+							<div class="revealed" ng-repeat="x in revealedStyle track by $index" ng-style="x"></div>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						归途剩余钱币{{leftover}}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="margin-top: 50px">
+			<table>
+				<tr>
+					<td>
+						<div ng-show="myDecision == '0' && status == '1'">
+							<button ng-click="decision(1)">继续冒险</button>
+							<button ng-click="decision(2)">返回营地</button>
+						</div>
+						<div ng-show="myDecision != '0' && status == '1'">
+							<span ng-show="myDecision == 1">你选择了继续冒险</span>
+							<span ng-show="myDecision == 2">你选择了返回营地</span>
+						</div>
+						<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
+							<button ng-click="decision(1)">确认</button>
+						</div>
+						<div ng-show="myDecision != '0' && (status == '2' || status == '3')">
+							已确认
+						</div>
+					</td>
+				</tr>
+			</table>
+			
 		</div>
 		<div>
-			<span>回合 {{round}} </span>
-			<span ng-show="status == '2' || status == '3'">结束</span>
-		</div>
-		<div class="adventure">
-			<span>
-				<div class="revealed" ng-repeat="x in revealedStyle track by $index" ng-style="x"></div>
-			</span>
-		</div>
-		<div style="clear:both">
-			<div ng-show="myDecision == '0' && status == '1'">
-				<button ng-click="decision(1)">Go</button>
-				<button ng-click="decision(2)">Back</button>
-			</div>
-			<div ng-show="myDecision != '0' && status == '1'">
-				{{myDecision}}
-			</div>
-			<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
-				<button ng-click="decision(1)">OK</button>
-			</div>
-			<div ng-show="myDecision != '0' && (status == '2' || status == '3')">
-				已确认
-			</div>
-		</div>
-		<div>
-			总收益：{{myMoney}}
+			<table>
+				<tr>
+					<td>总收益：{{myMoney}}</td>
+				</tr>
+				<tr>
+					<td style="padding-top: 30px"><button ng-click="goto('gravepsycho')">退出</button></td>
+				</tr>
+			</table>
 		</div>
 		
 	</div>

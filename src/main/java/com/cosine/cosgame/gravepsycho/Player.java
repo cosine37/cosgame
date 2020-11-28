@@ -4,16 +4,17 @@ import org.bson.Document;
 
 public class Player {
 	String name;
+	String avatar;
 	int money;
 	int moneyThisTurn;
 	int decision;
 	int decisionLastTurn;
-	
 
 	boolean stillIn;
 	
 	public Player() {
 		name = "";
+		avatar = "/image/Gravepsycho/Avatar/1.png";
 		money = 0;
 		moneyThisTurn = 0;
 		decision = 0;
@@ -70,6 +71,12 @@ public class Player {
 	public void setDecisionLastTurn(int decisionLastTurn) {
 		this.decisionLastTurn = decisionLastTurn;
 	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -79,6 +86,7 @@ public class Player {
 		doc.append("decision", decision);
 		doc.append("decisionLastTurn", decisionLastTurn);
 		doc.append("stillIn", stillIn);
+		doc.append("avatar", avatar);
 		return doc;
 	}
 	
@@ -89,6 +97,7 @@ public class Player {
 		decision = doc.getInteger("decision", 0);
 		decisionLastTurn = doc.getInteger("decisionLastTurn", 0);
 		stillIn = doc.getBoolean("stillIn", false);
+		avatar = doc.getString("avatar");
 	}
 	
 }

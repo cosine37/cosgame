@@ -47,7 +47,7 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 					var t = ''
 					if (x == '0'){
 						t = '准备中'
-					} else if (x == '2'){
+					} else if (x == '4'){
 						t = '游戏结束'
 					} else {
 						t = '游戏中'

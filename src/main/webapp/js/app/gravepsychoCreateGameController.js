@@ -7,7 +7,18 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoCreateGameApp", []);
 app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-		
+		$scope.avatars=[]
+		for (i=0;i<4;i++){
+			var singleLine = []
+			for (j=1;j<=4;j++){
+				var num = i*4+j
+				var imgSrc = "/image/Gravepsycho/Avatar/" + num.toString() + ".png"
+				singleLine.push(imgSrc)
+			}
+			$scope.avatars.push(singleLine)
+		}
+	
+	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -20,6 +31,13 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
+			});
+		}
+		
+		$scope.changeAvatar = function(x){
+			var data = {"x" : x}
+			$http({url: "/gravepsycho/setavatar", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
 			});
 		}
 		
@@ -41,6 +59,7 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 				$scope.id = response.data.id
 				$scope.status = response.data.status;
 				$scope.playerNames = response.data.playerNames;
+				$scope.avatar = response.data.avatar
 				if ($scope.id == "NE"){
 					$scope.goto('/gravepsycho');
 					return;

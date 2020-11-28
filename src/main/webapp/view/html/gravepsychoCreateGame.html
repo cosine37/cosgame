@@ -12,14 +12,50 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/gravepsychoCreateGameController.js"></script>
+<style>
+body {
+	background: url('/image/Gravepsycho/create_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+	backdrop-filter: blur(4px) brightness(30%);
+}
+</style>
 <body ng-app="gravepsychoCreateGameApp" ng-controller="gravepsychoCreateGameCtrl">
-	<button ng-click="goto('gravepsycho')">back</button>
-	<button ng-click="startGame()" ng-show="lord == username">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<div>
+	
+	<div class="create-game-div">
 		<table>
-			<tr ng-repeat="pn in playerNames">
-				<td>{{pn}}</td>
+			<tr>
+				<td ng-repeat="pn in playerNames track by $index">
+					<div>
+						<img class="avatar" ng-src="{{avatar[$index]}}"/>
+					</div>
+					<div>
+						{{pn}}
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td><h4>更换形象</h4></td>
+			</tr>
+		</table>
+		<table>
+			<tr ng-repeat="x in avatars track by $index">
+				<td ng-repeat="(i,y) in x track by i" style="padding-bottom: 10px">
+					<img class="avatar hover-highlight" ng-src="{{y}}" ng-click="changeAvatar(y)"/>
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<button ng-click="goto('gravepsycho')">退出</button>
+					<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
+					<button ng-click="dismiss()" ng-show="lord == username">解散</button>
+				</td>
 			</tr>
 		</table>
 	</div>

@@ -439,6 +439,7 @@ public class Board {
 		List<String> los = new ArrayList<>();
 		List<String> money = new ArrayList<>();
 		List<String> moneyThisTurn = new ArrayList<>();
+		List<String> avatar = new ArrayList<>();
 		String myIndex = "";
 		String myDecision = "";
 		String myMoney = "";
@@ -453,6 +454,7 @@ public class Board {
 			playerNames.add(players.get(i).getName());
 			moneyThisTurn.add(Integer.toString(players.get(i).getMoneyThisTurn()));
 			lod.add(Integer.toString(players.get(i).getDecisionLastTurn()));
+			avatar.add(players.get(i).getAvatar());
 			if (players.get(i).isStillIn()) {
 				los.add("y");
 			} else {
@@ -489,6 +491,7 @@ public class Board {
 		entity.setMyIndex(myIndex);
 		entity.setMyDecision(myDecision);
 		entity.setMyMoney(myMoney);
+		entity.setAvatar(avatar);
 		return entity;
 	}
 	

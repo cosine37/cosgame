@@ -29,10 +29,86 @@ button:disabled{
 	background: rgb(230,179,61);
 }
 
+.create-game-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	width: 1000px;
+	height: 600px;
+	margin-left: -500px;
+	margin-top: -300px;
+	background-color: rgba(255,255,255,0.3);
+	border: 1px solid rgba(120,120,120);
+	border-radius: 20px;
+	filter: drop-shadow(0px 0px 5px black);
+	color: rgb(230,179,61);
+	padding: 20px;
+}
+
+.create-game-div table{
+	width: 100%;
+	text-align: center;
+}
+
+.avatar {
+	height: 80px;
+	width: 80px;
+}
+
 .revealed{
 	height: 192px;
 	width: 126px;
 	float: left;
+}
+
+.game-div{
+	position: absolute; 
+	left: 50%;
+	width: 1200px;
+	height: 800px;
+	margin-left: -600px;
+	margin-top: 80px;
+	color: rgb(230,179,61);
+}
+
+.game-div table{
+	width: 100%;
+	text-align: center;
+}
+
+.end-game-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	width: 1000px;
+	height: 600px;
+	margin-left: -500px;
+	margin-top: -300px;
+	background-color: rgba(255,255,255,0.3);
+	border: 1px solid rgba(120,120,120);
+	border-radius: 20px;
+	filter: drop-shadow(0px 0px 5px black);
+	color: rgb(230,179,61);
+	padding: 20px;
+}
+
+.end-game-div table{
+	width: 100%;
+	text-align: center;
+}
+
+.winner{
+	height: 240px;
+	width: 240px;
+}
+
+.round-text{
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.hover-highlight:hover{
+	filter:brightness(120%) drop-shadow(0px 0px 10px yellow);
 }
 
 .adventure{

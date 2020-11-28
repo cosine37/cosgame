@@ -28,6 +28,16 @@
   border-top: 1px solid rgb(200,149,31);
 }
 
+.gravepsychotext{
+	font-weight: bold;
+	color: rgb(23,44,60);
+}
+
+.newsImg{
+	height: 320px;
+	width: 210px
+}
+
 .tabcontent button{
 	outline: none;
 	color: rgb(230,179,61);
