@@ -12,6 +12,7 @@ public class PokewhatConsts {
 	public static final int INGAME = 1;
 	public static final int ENDGAME = 2;
 	public static final int CHOOSEPM = 3;
+	public static final int ENDROUND = 4;
 	
 	// phases
 	public static final int OFFTURN = 0;

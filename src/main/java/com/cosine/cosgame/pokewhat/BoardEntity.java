@@ -24,6 +24,7 @@ public class BoardEntity {
 	
 	String gameEndScore;
 	String curPlayer;
+	String confirmed;
 	String status;
 	String phase;
 	String round;
@@ -34,7 +35,10 @@ public class BoardEntity {
 	String myIndex;
 	String lastMove;
 	String deckSize;
+	String ScoringMsg;
 	String ancientSize;
+	String roundEndMsg;
+	
 	
 	public List<List<String>> getAllCards() {
 		return allCards;
@@ -221,5 +225,23 @@ public class BoardEntity {
 	}
 	public void setPmFromPoolNames(List<String> pmFromPoolNames) {
 		this.pmFromPoolNames = pmFromPoolNames;
+	}
+	public String getConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(String confirmed) {
+		this.confirmed = confirmed;
+	}
+	public String getRoundEndMsg() {
+		return roundEndMsg;
+	}
+	public void setRoundEndMsg(String roundEndMsg) {
+		this.roundEndMsg = roundEndMsg;
+	}
+	public String getScoringMsg() {
+		return ScoringMsg;
+	}
+	public void setScoringMsg(String scoringMsg) {
+		ScoringMsg = scoringMsg;
 	}
 }

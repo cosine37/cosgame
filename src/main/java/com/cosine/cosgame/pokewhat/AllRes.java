@@ -375,11 +375,11 @@ public class AllRes {
 			st2.add(allAvatar.get(i));
 		}
 		Random rand = new Random();
-		for (i=0;i<8;i++) {
+		for (i=0;i<10;i++) {
 			int n = st1.size();
 			ans.add(st1.remove(rand.nextInt(n)));
 		}
-		for (i=0;i<2;i++) {
+		for (i=0;i<3;i++) {
 			int n = st2.size();
 			ans.add(st2.remove(rand.nextInt(n)));
 		}

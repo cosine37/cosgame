@@ -83,6 +83,12 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			}
 		}
 		
+		$scope.confirmRoundEnd = function(){
+			$http({url: "/pokewhatgame/confirmendround", method: "POST"}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.botNextMove = function(){
 			$http({url: "/pokewhatgame/botnextmove", method: "POST"}).then(function(response){
 				$scope.getBoard()
@@ -374,6 +380,9 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.myIndex = parseInt(response.data.myIndex);
 				$scope.playerAncients = response.data.playerAncients
 				$scope.gameEndScore = response.data.gameEndScore;
+				$scope.roundEndMsg = response.data.roundEndMsg;
+				$scope.confirmed = response.data.confirmed;
+				$scope.scoringMsg = response.data.scoringMsg;
 				
 				var updateLogs = false;
 				if ($scope.logs.length < response.data.logs.length){
@@ -412,6 +421,8 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.offturnHandle = function(){
 			if ($scope.phase != "1" && $scope.status !='2'){
+				$scope.getBoard();
+			} else if ($scope.status =='4'){
 				$scope.getBoard();
 			}
 			$timeout(function(){

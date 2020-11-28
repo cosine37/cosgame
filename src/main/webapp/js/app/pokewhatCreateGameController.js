@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("pokewhatCreateGameApp", []);
 app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-		$scope.avatarTableCols = [0,1,2,3,4]
+		$scope.avatarTableCols = [0,1,2,3,4,5]
 		$scope.avatarTableRows = [0,1,2]
 		$scope.avatarStyles = [];
 		$scope.playerAvatarStyles = [];
@@ -83,9 +83,7 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				var imgUrl = "url('/image/Pokewhat/Avatar/" + $scope.avatars[i] + ".png')"
 				singleAvatarStyle = {
 					"background": imgUrl,
-					"background-size": "cover",
-					//"border-style" : "solid",
-					//"border-width" : "2px"
+					"background-size": "cover"
 				}
 				$scope.avatarStyles.push(singleAvatarStyle);
 			}

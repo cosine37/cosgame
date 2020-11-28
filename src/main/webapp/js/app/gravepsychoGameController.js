@@ -9,6 +9,8 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 	function($scope, $window, $http, $document, $timeout){
 		$scope.myDecision = "-1"
 		$scope.revealed = []
+		$scope.removedIndexes = [[0,1,2,3,4],[5,6,7,8,9]]
+		$scope.showRemoved = false;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -52,9 +54,16 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 						"margin-left": marginLeft
 					}
 				}
-				
-				
 				$scope.revealedStyle.push(singleStyle)
+			}
+			$scope.removedStyle = []
+			for (i=0;i<$scope.removed.length;i++){
+				var imgUrl = "url('/image/Gravepsycho/Cards/" + $scope.removed[i] + ".png')"
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				$scope.removedStyle.push(singleStyle)
 			}
 		}
 		
@@ -75,6 +84,7 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.avatar = response.data.avatar;
 				$scope.stillIn = response.data.stillIn;
 				$scope.leftover = response.data.leftover;
+				$scope.removed = response.data.removed;
 				setRevealedStyle()
 			});
 		}

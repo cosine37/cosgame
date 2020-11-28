@@ -51,7 +51,7 @@ body {
 				<tr>
 					<td>
 						<span class="round-text" ng-show="status == '3'">灾难发生，</span>
-						<span class="round-text">回合 {{round}} </span>
+						<span class="round-text">轮次 {{round}} </span>
 						<span class="round-text" ng-show="status == '2' || status == '3'">结束</span>
 					</td>
 				</tr>
@@ -96,11 +96,29 @@ body {
 			</table>
 			
 		</div>
-		<div>
+		<div style="margin-top: 10px">
 			<table>
 				<tr>
-					<td>总收益：{{myMoney}}</td>
+					<td>
+						总收益：{{myMoney}}
+						<button ng-show="showRemoved == false" ng-click="showRemoved = true">查看弃牌</button>
+						<button ng-show="showRemoved" ng-click="showRemoved = false">收起弃牌</button>
+					</td>
 				</tr>
+			</table>
+		</div>
+		<div ng-show="showRemoved">
+			<table>
+				<tr>
+					<td>
+						<p ng-show="removed.length == 0">没有弃牌</p>
+						<div class="discard" ng-repeat="x in removedStyle" ng-style="x"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table>
 				<tr>
 					<td style="padding-top: 30px"><button ng-click="goto('gravepsycho')">退出</button></td>
 				</tr>

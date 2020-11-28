@@ -15,6 +15,7 @@ public class Board {
 	List<Card> ancient;
 	List<Card> deck;
 	List<String> avatars;
+	List<String> confirmRoundEnd;
 	List<Pm> pmPool;
 	List<Pm> pmToChoose;
 	int status;
@@ -24,6 +25,8 @@ public class Board {
 	int gameEndScore;
 	String id;
 	String lord;
+	String roundEndMsg;
+	String scoringMsg;
 	AllRes allRes;
 	Logger logger;
 	MongoDBUtil dbutil;
@@ -35,6 +38,7 @@ public class Board {
 		deck = new ArrayList<>();
 		avatars = new ArrayList<>();
 		pmToChoose = new ArrayList<>();
+		confirmRoundEnd = new ArrayList<>();
 		logger = new Logger();
 		allRes = new AllRes();
 		
@@ -181,7 +185,15 @@ public class Board {
 	
 	public void endRound() {
 		int i;
+		status = PokewhatConsts.ENDROUND;
 		logger.logEndRound(round);
+		roundEndMsg = "";
+		scoringMsg = "";
+		List<String> defeated = new ArrayList<>();
+		List<String> ls = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			ls.add("");
+		}
 		for (i=0;i<players.size();i++) {
 			if (i == curPlayer) {
 				continue;
@@ -191,20 +203,87 @@ public class Board {
 				players.get(i).setScoreLastRound(x);
 				players.get(i).addScore(x);
 				logger.logScore(players.get(i), x);
+				ls.set(i, Integer.toString(x));
 			} else {
+				defeated.add(players.get(i).getName()+"的"+players.get(i).getPm().getName());
 				players.get(i).setScoreLastRound(0);
 				logger.logScore(players.get(i), 0);
+				ls.set(i, "0");
 			}
+			
 		}
 		if (players.get(curPlayer).getHp() > 0) {
 			int x = 3+players.get(curPlayer).getAncient().size();
 			players.get(curPlayer).setScoreLastRound(x);
 			players.get(curPlayer).addScore(x);
 			logger.logScore(players.get(curPlayer), x);
+			ls.set(curPlayer, Integer.toString(x));
 		} else {
 			players.get(curPlayer).setScoreLastRound(0);
 			logger.logScore(players.get(curPlayer), 0);
+			ls.set(curPlayer, "0");
 		}
+		confirmRoundEnd = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (i==0) {
+				scoringMsg = players.get(i).getName() + "获得" + ls.get(i) + "分";
+			} else {
+				scoringMsg = scoringMsg + "，" + players.get(i).getName() + "获得" + ls.get(i) + "分";
+			}
+			if (players.get(i).isBot()) {
+				confirmRoundEnd.add("y");
+			} else {
+				confirmRoundEnd.add("n");
+			}
+		}
+		String name = players.get(curPlayer).getName();
+		String pmName = players.get(curPlayer).getPm().getName();
+		if (defeated.size() == 0) {
+			roundEndMsg = name + "的" + pmName + "在混乱中击倒了自己。";
+		} else {
+			roundEndMsg = name + "的" + pmName + "击败了";
+			int x = defeated.size()-1;
+			if (x == 0) {
+				roundEndMsg = roundEndMsg + defeated.get(0);
+			} else {
+				for (i=0;i<x;i++) {
+					roundEndMsg = roundEndMsg + "，" + defeated.get(i);
+				}
+				roundEndMsg = roundEndMsg + "和" + defeated.get(x);
+			}
+			
+		}
+		
+		curPlayer++;
+		if (curPlayer>=players.size()) {
+			curPlayer = 0;
+		}
+		
+		//nextRound();
+	}
+	
+	public void confirmEndRound(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				confirmRoundEnd.set(i, "y");
+			}
+		}
+		boolean flag = true;
+		for (i=0;i<confirmRoundEnd.size();i++) {
+			if (!confirmRoundEnd.get(i).contentEquals("y")) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			nextRound();
+		}
+	}
+	
+	public void nextRound() {
+		int i;
+		status = PokewhatConsts.INGAME;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getScore() >= gameEndScore) {
 				logger.logGameEnd();
@@ -212,15 +291,6 @@ public class Board {
 				return;
 			}
 		}
-		curPlayer++;
-		if (curPlayer>=players.size()) {
-			curPlayer = 0;
-		}
-		nextRound();
-	}
-	
-	public void nextRound() {
-		int i;
 		
 		round++;
 		turn = 1;
@@ -377,6 +447,30 @@ public class Board {
 	public void setGameEndScore(int gameEndScore) {
 		this.gameEndScore = gameEndScore;
 	}
+	public List<String> getConfirmRoundEnd() {
+		return confirmRoundEnd;
+	}
+	public void setConfirmRoundEnd(List<String> confirmRoundEnd) {
+		this.confirmRoundEnd = confirmRoundEnd;
+	}
+	public List<Pm> getPmPool() {
+		return pmPool;
+	}
+	public void setPmPool(List<Pm> pmPool) {
+		this.pmPool = pmPool;
+	}
+	public String getRoundEndMsg() {
+		return roundEndMsg;
+	}
+	public void setRoundEndMsg(String roundEndMsg) {
+		this.roundEndMsg = roundEndMsg;
+	}
+	public String getScoringMsg() {
+		return scoringMsg;
+	}
+	public void setScoringMsg(String scoringMsg) {
+		this.scoringMsg = scoringMsg;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -401,6 +495,7 @@ public class Board {
 		String lastMove = "0";
 		String myIndex = "0";
 		String hasBot = "0";
+		String confirmed = "n";
 		int i,j;
 		for (i=0;i<this.playedCards.size();i++) {
 			List<String> sl = new ArrayList<>();
@@ -434,6 +529,12 @@ public class Board {
 				phase = Integer.toString(players.get(i).getPhase());
 				lastMove = Integer.toString(players.get(i).getLastMove());
 				myIndex = Integer.toString(i);
+				if (confirmRoundEnd.size()>i) {
+					confirmed = confirmRoundEnd.get(i);
+				} else {
+					confirmed = "n";
+				}
+				
 				for (j=0;j<players.get(i).getAncient().size();j++) {
 					la.add(players.get(i).getAncient().get(j).getImg());
 				}
@@ -485,6 +586,9 @@ public class Board {
 		entity.setPmFromPoolNames(pmFromPoolNames);
 		entity.setGameEndScore(Integer.toString(gameEndScore));
 		entity.setLogs(logger.getLogs());
+		entity.setConfirmed(confirmed);
+		entity.setRoundEndMsg(roundEndMsg);
+		entity.setScoringMsg(scoringMsg);
 		return entity;
 	}
 
@@ -498,6 +602,9 @@ public class Board {
 		doc.append("curPlayer", curPlayer);
 		doc.append("gameEndScore", gameEndScore);
 		doc.append("logs", logger.getLogs());
+		doc.append("confirmRoundEnd", confirmRoundEnd);
+		doc.append("roundEndMsg", roundEndMsg);
+		doc.append("scoringMsg", scoringMsg);
 		int i,j;
 		List<String> lov = new ArrayList<>();
 		for (i=0;i<avatars.size();i++) {
@@ -548,6 +655,9 @@ public class Board {
 		turn = doc.getInteger("turn", 0);
 		curPlayer = doc.getInteger("curPlayer", 0);
 		gameEndScore = doc.getInteger("gameEndScore", PokewhatConsts.GAMEENDSCORE);
+		confirmRoundEnd = (List<String>) doc.get("confirmRoundEnd");
+		roundEndMsg = doc.getString("roundEndMsg");
+		scoringMsg = doc.getString("scoringMsg");
 		logger.setLogs((List<String>) doc.get("logs"));
 		int i,j;
 		List<String> lov = (List<String>) doc.get("avatars");

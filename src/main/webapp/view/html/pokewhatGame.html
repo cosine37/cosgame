@@ -200,6 +200,25 @@
 						</tr>
 					</table>
 				</td>
+				<td class="moves-placeholder" ng-show="status == 4">
+					<table>
+						<tr>
+							<td><h4>回合结束</h4></td>
+						</tr>
+						<tr>
+							<td><p>{{roundEndMsg}}</p></td>
+						</tr>
+						<tr>
+							<td><p>{{scoringMsg}}</p></td>
+						</tr>
+						<tr>
+							<td>
+								<button ng-click="confirmRoundEnd()" ng-show="confirmed == 'n'">确认</button>
+								<p ng-show="confirmed == 'y'">正等待其他玩家确认</p>
+							</td>
+						</tr>
+					</table>
+				</td>
 				<td>
 					<div id="logs" class="logs">
 						<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>

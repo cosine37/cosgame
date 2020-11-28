@@ -301,8 +301,10 @@ public class PokewhatController {
 			board.updateLogs();
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("status", board.getStatus());
-			board.updateDB("round", board.getRound());
+			board.updateDB("confirmRoundEnd", board.getConfirmRoundEnd());
 			board.updateDB("turn", board.getTurn());
+			board.updateDB("roundEndMsg", board.getRoundEndMsg());
+			board.updateDB("scoringMsg", board.getScoringMsg());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -322,6 +324,30 @@ public class PokewhatController {
 			board.updateDeck();
 			board.updateLogs();
 			board.updateDB("curPlayer", board.getCurPlayer());
+			board.updateDB("turn", board.getTurn());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokewhatgame/confirmendround", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmEndRound(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getStatus() == PokewhatConsts.ENDROUND) {
+			board.confirmEndRound(username);
+			board.updatePlayers();
+			board.updateDeck();
+			board.updateAncient();
+			board.updatePlayedCards();
+			board.updateLogs();
+			board.updateDB("confirmRoundEnd", board.getConfirmRoundEnd());
+			board.updateDB("status", board.getStatus());
+			board.updateDB("curPlayer", board.getCurPlayer());
+			board.updateDB("round", board.getRound());
 			board.updateDB("turn", board.getTurn());
 		}
 		StringEntity entity = new StringEntity();
