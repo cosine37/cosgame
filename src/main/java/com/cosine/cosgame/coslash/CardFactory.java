@@ -1,5 +1,7 @@
 package com.cosine.cosgame.coslash;
 
+import java.util.List;
+
 import org.bson.Document;
 
 import com.cosine.cosgame.coslash.basecards.*;
@@ -9,16 +11,20 @@ public class CardFactory {
 		
 	}
 	
-	public static Card createCard(String name, int suit, int rank) {
-		if (name.equals("Slash")) return new Slash(suit, rank);
+	public static Card createCard(String name, int suit, int rank, List<Integer> targets) {
+		Card c = new Card();
+		if (name.equals("Slash")) c = new Slash(suit, rank);
 		
-		return null;
+		c.setTargets(targets);
+		
+		return c;
 	}
 	
 	public static Card createCard(Document dc) {
 		String name = dc.getString("name");
 		int suit = dc.getInteger("suit");
 		int rank = dc.getInteger("rank");
-		return createCard(name, suit, rank);
+		List<Integer> targets = (List<Integer>) dc.get("targets");
+		return createCard(name, suit, rank, targets);
 	}
 }

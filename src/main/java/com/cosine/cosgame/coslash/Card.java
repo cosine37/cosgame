@@ -1,5 +1,7 @@
 package com.cosine.cosgame.coslash;
 
+import java.util.List;
+
 import org.bson.Document;
 
 public class Card {
@@ -19,6 +21,8 @@ public class Card {
 	public static final int DIAMOND = 3;
 	
 	protected int rank; // aka point
+	
+	protected List<Integer> targets;
 	
 	public Card() {
 		
@@ -88,11 +92,20 @@ public class Card {
 		this.image = image;
 	}
 
+	public List<Integer> getTargets() {
+		return targets;
+	}
+
+	public void setTargets(List<Integer> targets) {
+		this.targets = targets;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("suit", suit);
 		doc.append("rank", rank);
+		doc.append("targets", targets);
 		return doc;
 	}
 	
