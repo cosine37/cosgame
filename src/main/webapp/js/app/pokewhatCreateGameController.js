@@ -99,6 +99,21 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			}
 		}
 		
+		sleep = function(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+		
+		setTempMsg = async function(){
+			$scope.tempMsg = "等待Sleep";
+			if ($scope.tf){
+				sleep(2000).then(function(){
+					$scope.tf = false;
+					$scope.tempMsg = "更换形象";
+				})
+				
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.id = response.data.id;
@@ -106,6 +121,14 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 					$scope.goto('/pokewhat');
 					return;
 				}
+				/*
+				if ($scope.tf){
+					$timeout(function(){
+						$scope.tf = false;
+						$scope.tempMsg = "更换形象";
+					}, 2000)
+				}
+				*/
 				$scope.gamedata = response.data;
 				$scope.lord = response.data.lord;
 				$scope.status = response.data.status;

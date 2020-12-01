@@ -23,6 +23,8 @@ public class Board {
 	int turn;
 	int curPlayer;
 	int gameEndScore;
+	int curAnimationId;
+	Animation animation;
 	String id;
 	String lord;
 	String roundEndMsg;
@@ -41,6 +43,7 @@ public class Board {
 		confirmRoundEnd = new ArrayList<>();
 		logger = new Logger();
 		allRes = new AllRes();
+		animation = new Animation();
 		
 		String dbname = "pokewhat";
 		String col = "board";
@@ -471,6 +474,18 @@ public class Board {
 	public void setScoringMsg(String scoringMsg) {
 		this.scoringMsg = scoringMsg;
 	}
+	public int getCurAnimationId() {
+		return curAnimationId;
+	}
+	public void setCurAnimationId(int curAnimationId) {
+		this.curAnimationId = curAnimationId;
+	}
+	public Animation getAnimation() {
+		return animation;
+	}
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -589,6 +604,13 @@ public class Board {
 		entity.setConfirmed(confirmed);
 		entity.setRoundEndMsg(roundEndMsg);
 		entity.setScoringMsg(scoringMsg);
+		entity.setAnimationId(Integer.toString(animation.getId()));
+		entity.setAnimationType(Integer.toString(animation.getType()));
+		entity.setFrameImg(animation.getFrameImg());
+		entity.setFrameTargets(animation.getFrameTargets());
+		entity.setFrameTime(animation.getFrameTime());
+		entity.setFrameType(animation.getFrameType());
+	
 		return entity;
 	}
 
@@ -605,6 +627,8 @@ public class Board {
 		doc.append("confirmRoundEnd", confirmRoundEnd);
 		doc.append("roundEndMsg", roundEndMsg);
 		doc.append("scoringMsg", scoringMsg);
+		doc.append("curAnimationId", curAnimationId);
+		doc.append("animation", animation.toDocument());
 		int i,j;
 		List<String> lov = new ArrayList<>();
 		for (i=0;i<avatars.size();i++) {
@@ -659,6 +683,9 @@ public class Board {
 		roundEndMsg = doc.getString("roundEndMsg");
 		scoringMsg = doc.getString("scoringMsg");
 		logger.setLogs((List<String>) doc.get("logs"));
+		curAnimationId = doc.getInteger("curAnimationId", 0);
+		Document doa = (Document) doc.get("animation");
+		animation.setFromDoc(doa);
 		int i,j;
 		List<String> lov = (List<String>) doc.get("avatars");
 		avatars = new ArrayList<>();

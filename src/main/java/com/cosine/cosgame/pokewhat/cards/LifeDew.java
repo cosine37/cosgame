@@ -5,6 +5,7 @@ import com.cosine.cosgame.pokewhat.PokewhatConsts;
 
 public class LifeDew extends Card{
 	public LifeDew() {
+		super();
 		num = 8;
 		img = "8";
 		name = "生命水滴";

@@ -1,13 +1,24 @@
 package com.cosine.cosgame.pokewhat;
 
+import java.util.List;
+
 public class Card {
 	protected int num;
 	protected String name;
 	protected String img;
 	protected Player player;
 	protected Board board;
+	protected Animation animation;
 	
 	public Card() {
+		animation = new Animation();
+	}
+	
+	public void moveAnimation(List<Integer> targets) {
+		
+	}
+	
+	public void missAnimation() {
 		
 	}
 	
@@ -49,6 +60,12 @@ public class Card {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	public Animation getAnimation() {
+		return animation;
+	}
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
 	}
 	
 }

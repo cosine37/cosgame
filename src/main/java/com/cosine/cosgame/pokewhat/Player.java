@@ -137,6 +137,22 @@ public class Player {
 		}
 	}
 	
+	public int prevPlayerIndex() {
+		int x = index-1;
+		if (x<0) {
+			x = x + board.getPlayers().size();
+		}
+		return x;
+	}
+	
+	public int nextPlayerIndex() {
+		int x = index+1;
+		if (x == board.getPlayers().size()) {
+			x = 0;
+		}
+		return x;
+	}
+	
 	public Player prevPlayer() {
 		int x = index-1;
 		if (x<0) {

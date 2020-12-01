@@ -7,6 +7,7 @@ import com.cosine.cosgame.pokewhat.PokewhatConsts;
 
 public class Moonlight extends Card{
 	public Moonlight() {
+		super();
 		num = 3;
 		img = "3";
 		name = "月光";

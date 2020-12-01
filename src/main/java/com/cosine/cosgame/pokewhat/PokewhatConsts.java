@@ -17,4 +17,7 @@ public class PokewhatConsts {
 	// phases
 	public static final int OFFTURN = 0;
 	public static final int USEMOVE = 1;
+	
+	// animation types
+	public static final int MOVE = 1;
 }

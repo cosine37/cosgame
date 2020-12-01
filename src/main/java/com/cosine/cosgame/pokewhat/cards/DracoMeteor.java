@@ -7,6 +7,7 @@ import com.cosine.cosgame.pokewhat.Player;
 
 public class DracoMeteor extends Card{
 	public DracoMeteor() {
+		super();
 		num = 1;
 		img = "1";
 		name = "龙星群";

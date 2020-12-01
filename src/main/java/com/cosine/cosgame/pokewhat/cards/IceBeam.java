@@ -5,6 +5,7 @@ import com.cosine.cosgame.pokewhat.Player;
 
 public class IceBeam extends Card{
 	public IceBeam() {
+		super();
 		num = 6;
 		img = "6";
 		name = "冰冻光束";

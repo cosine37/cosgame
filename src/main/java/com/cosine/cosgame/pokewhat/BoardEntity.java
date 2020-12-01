@@ -5,6 +5,10 @@ import java.util.List;
 public class BoardEntity {
 	List<List<String>> allCards;
 	List<List<String>> playedCards;
+	List<List<String>> frameTargets;
+	List<String> frameType;
+	List<String> frameTime;
+	List<String> frameImg;
 	List<String> playerNames;
 	List<String> pm;
 	List<String> pmNames;
@@ -22,6 +26,7 @@ public class BoardEntity {
 	List<String> pmFromPoolNames;
 	List<String> logs;
 	
+	
 	String gameEndScore;
 	String curPlayer;
 	String confirmed;
@@ -38,6 +43,9 @@ public class BoardEntity {
 	String ScoringMsg;
 	String ancientSize;
 	String roundEndMsg;
+	String animationId;
+	String animationType;
+	
 	
 	
 	public List<List<String>> getAllCards() {
@@ -243,5 +251,41 @@ public class BoardEntity {
 	}
 	public void setScoringMsg(String scoringMsg) {
 		ScoringMsg = scoringMsg;
+	}
+	public String getAnimationId() {
+		return animationId;
+	}
+	public void setAnimationId(String animationId) {
+		this.animationId = animationId;
+	}
+	public String getAnimationType() {
+		return animationType;
+	}
+	public void setAnimationType(String animationType) {
+		this.animationType = animationType;
+	}
+	public List<List<String>> getFrameTargets() {
+		return frameTargets;
+	}
+	public void setFrameTargets(List<List<String>> frameTargets) {
+		this.frameTargets = frameTargets;
+	}
+	public List<String> getFrameType() {
+		return frameType;
+	}
+	public void setFrameType(List<String> frameType) {
+		this.frameType = frameType;
+	}
+	public List<String> getFrameTime() {
+		return frameTime;
+	}
+	public void setFrameTime(List<String> frameTime) {
+		this.frameTime = frameTime;
+	}
+	public List<String> getFrameImg() {
+		return frameImg;
+	}
+	public void setFrameImg(List<String> frameImg) {
+		this.frameImg = frameImg;
 	}
 }

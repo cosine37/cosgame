@@ -345,7 +345,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			var logcontent = document.getElementById("logs");
 			logcontent.scrollTop = logcontent.scrollHeight;
 		}
-		
+			
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
 				$scope.id = response.data.id;

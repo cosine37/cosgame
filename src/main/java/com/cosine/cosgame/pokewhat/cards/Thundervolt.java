@@ -5,6 +5,7 @@ import com.cosine.cosgame.pokewhat.Player;
 
 public class Thundervolt extends Card{
 	public Thundervolt() {
+		super();
 		num = 5;
 		img = "5";
 		name = "十万伏特";

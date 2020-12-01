@@ -7,6 +7,7 @@ import com.cosine.cosgame.pokewhat.Player;
 
 public class Eternalbeam extends Card{
 	public Eternalbeam() {
+		super();
 		num = 0;
 		img = "0";
 		name = "无极光束";

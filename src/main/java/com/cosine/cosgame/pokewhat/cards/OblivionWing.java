@@ -8,6 +8,7 @@ import com.cosine.cosgame.pokewhat.PokewhatConsts;
 
 public class OblivionWing extends Card{
 	public OblivionWing() {
+		super();
 		num = 2;
 		img = "2";
 		name = "死亡之翼";
