@@ -54,6 +54,7 @@ public class Board {
 	public void newBoard() {
 		gameEndScore = PokewhatConsts.GAMEENDSCORE;
 		avatars = allRes.getAvatars();
+		curAnimationId = 0;
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setAvatar(avatars.get(0));
@@ -186,6 +187,12 @@ public class Board {
 		return ans;
 	}
 	
+	public void changeAnimation(Animation animation) {
+		curAnimationId++;
+		animation.setId(curAnimationId);
+		this.animation = animation;
+	}
+	
 	public void endRound() {
 		int i;
 		status = PokewhatConsts.ENDROUND;
@@ -261,8 +268,6 @@ public class Board {
 		if (curPlayer>=players.size()) {
 			curPlayer = 0;
 		}
-		
-		//nextRound();
 	}
 	
 	public void confirmEndRound(String name) {
@@ -814,6 +819,10 @@ public class Board {
 			loa.add(ancient.get(i).getImg());
 		}
 		dbutil.update("id", id, "ancient", loa);
+	}
+	
+	public void updateAnimation() {
+		dbutil.update("id", id, "animation", animation.toDocument());
 	}
 	
 	public void removePlayerFromDB(int index) {

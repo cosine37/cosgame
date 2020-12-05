@@ -299,6 +299,8 @@ public class PokewhatController {
 			board.updateAncient();
 			board.updatePlayedCards();
 			board.updateLogs();
+			board.updateAnimation();
+			board.updateDB("curAnimationId", board.getCurAnimationId());
 			board.updateDB("curPlayer", board.getCurPlayer());
 			board.updateDB("status", board.getStatus());
 			board.updateDB("confirmRoundEnd", board.getConfirmRoundEnd());

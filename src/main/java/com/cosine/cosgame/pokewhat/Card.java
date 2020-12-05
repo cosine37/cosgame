@@ -12,14 +12,18 @@ public class Card {
 	
 	public Card() {
 		animation = new Animation();
-	}
-	
-	public void moveAnimation(List<Integer> targets) {
 		
 	}
 	
-	public void missAnimation() {
-		
+	public Animation getMoveAnimation() {
+		animation = new Animation();
+		return animation;
+	}
+	
+	public Animation getMissAnimation() {
+		animation = new Animation();
+		animation.addFrame(player.getIndex(), PokewhatConsts.MOVE, 1, "a09");
+		return animation;
 	}
 	
 	public void cardEffect() {

@@ -10,6 +10,28 @@ public class Animation {
 	int type;
 	List<Frame> frames;
 	
+	public Animation() {
+		frames = new ArrayList<>();
+	}
+	
+	public void addFrame(Frame frame) {
+		frames.add(frame);
+	}
+	
+	public void addFrame(List<Integer> targets, int type, int time, String img) {
+		Frame frame = new Frame();
+		frame.setTargets(targets);
+		frame.setType(type);
+		frame.setTime(time);
+		frame.setImg(img);
+		addFrame(frame);
+	}
+	
+	public void addFrame(int target, int type, int time, String img) {
+		List<Integer> targets = new ArrayList<>();
+		targets.add(target);
+		addFrame(targets, type, time, img);
+	}
 	
 	public int getId() {
 		return id;

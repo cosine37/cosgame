@@ -76,6 +76,7 @@ public class Player {
 		if (cardIndex(c) != -1) {
 			lastMove = c.getNum();
 			c.cardEffect();
+			board.changeAnimation(c.getMoveAnimation());
 			Card removed = hand.remove(index);
 			board.addToPlayedCards(removed);
 			if (board.isRoundEnd()) {

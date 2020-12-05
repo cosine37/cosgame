@@ -345,6 +345,76 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			var logcontent = document.getElementById("logs");
 			logcontent.scrollTop = logcontent.scrollHeight;
 		}
+		
+		updateBoardInfo = function(response){
+			$scope.lord = response.data.lord;
+			$scope.phase = response.data.phase;
+			$scope.lastMove = parseInt(response.data.lastMove);
+			$scope.playerNames = response.data.playerNames;
+			$scope.playedCards = response.data.playedCards;
+			$scope.scores = response.data.scores;
+			$scope.hp = response.data.hp;
+			$scope.allCards = response.data.allCards;
+			$scope.round = response.data.round;
+			$scope.turn = response.data.turn;
+			$scope.deckSize = response.data.deckSize;
+			$scope.ancientSize = response.data.ancientSize;
+			$scope.ancient = response.data.ancient;
+			$scope.status = response.data.status;
+			$scope.pmToChoose = response.data.pmToChoose;
+			$scope.pmToChooseNames = response.data.pmToChooseNames;
+			$scope.pmFromPool = response.data.pmFromPool;
+			$scope.pmFromPoolNames = response.data.pmFromPoolNames;
+			$scope.avatars = response.data.avatars;
+			$scope.pms = response.data.pm;
+			$scope.pmNames = response.data.pmNames;
+			$scope.pmSizes = response.data.pmSizes;
+			$scope.playerAvatars = response.data.playerAvatars;
+			$scope.curPlayer = response.data.curPlayer;
+			$scope.myIndex = parseInt(response.data.myIndex);
+			$scope.playerAncients = response.data.playerAncients
+			$scope.gameEndScore = response.data.gameEndScore;
+			$scope.roundEndMsg = response.data.roundEndMsg;
+			$scope.confirmed = response.data.confirmed;
+			$scope.scoringMsg = response.data.scoringMsg;
+			
+			var updateLogs = false;
+			if ($scope.logs.length < response.data.logs.length){
+				updateLogs = true;
+			}
+			$scope.logs = response.data.logs;
+			
+			if (response.data.hasBot == "0"){
+				$scope.hasBot = false;
+			} else {
+				$scope.hasBot = true;
+			}
+			
+			if ($scope.status == "3"){
+				setPmToChooseStyles();
+			}
+			setOtherTdStyle();
+			setAvatarPmStyles();
+			sortAllCards();
+			setAllCardStyles();
+			setHpBarStyle();
+			setAncientStyles();
+			setMoveStyles();
+			setOtherIndexes();
+			if (updateLogs){
+				$http.post('/citadelsgame/empty').then(function(response){
+					adjustLogs()
+				});
+			}
+			if ($scope.status == "2"){
+				alert("Game Ends");
+				$scope.goto("pokewhatendgame");
+			}
+		}
+		
+		playAnimation = function(response){
+			updateBoardInfo(response);
+		}
 			
 		$scope.getBoard = function(){
 			$http.get('/pokewhatgame/getboard').then(function(response){
@@ -353,69 +423,14 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$scope.goto('/pokewhat');
 					return;
 				}
-				$scope.lord = response.data.lord;
-				$scope.phase = response.data.phase;
-				$scope.lastMove = parseInt(response.data.lastMove);
-				$scope.playerNames = response.data.playerNames;
-				$scope.playedCards = response.data.playedCards;
-				$scope.scores = response.data.scores;
-				$scope.hp = response.data.hp;
-				$scope.allCards = response.data.allCards;
-				$scope.round = response.data.round;
-				$scope.turn = response.data.turn;
-				$scope.deckSize = response.data.deckSize;
-				$scope.ancientSize = response.data.ancientSize;
-				$scope.ancient = response.data.ancient;
-				$scope.status = response.data.status;
-				$scope.pmToChoose = response.data.pmToChoose;
-				$scope.pmToChooseNames = response.data.pmToChooseNames;
-				$scope.pmFromPool = response.data.pmFromPool;
-				$scope.pmFromPoolNames = response.data.pmFromPoolNames;
-				$scope.avatars = response.data.avatars;
-				$scope.pms = response.data.pm;
-				$scope.pmNames = response.data.pmNames;
-				$scope.pmSizes = response.data.pmSizes;
-				$scope.playerAvatars = response.data.playerAvatars;
-				$scope.curPlayer = response.data.curPlayer;
-				$scope.myIndex = parseInt(response.data.myIndex);
-				$scope.playerAncients = response.data.playerAncients
-				$scope.gameEndScore = response.data.gameEndScore;
-				$scope.roundEndMsg = response.data.roundEndMsg;
-				$scope.confirmed = response.data.confirmed;
-				$scope.scoringMsg = response.data.scoringMsg;
 				
-				var updateLogs = false;
-				if ($scope.logs.length < response.data.logs.length){
-					updateLogs = true;
-				}
-				$scope.logs = response.data.logs;
-				
-				if (response.data.hasBot == "0"){
-					$scope.hasBot = false;
+				if ($scope.animationId != response.data.animationId){
+					playAnimation(response);
 				} else {
-					$scope.hasBot = true;
+					updateBoardInfo(response);
 				}
 				
-				if ($scope.status == "3"){
-					setPmToChooseStyles();
-				}
-				setOtherTdStyle();
-				setAvatarPmStyles();
-				sortAllCards();
-				setAllCardStyles();
-				setHpBarStyle();
-				setAncientStyles();
-				setMoveStyles();
-				setOtherIndexes();
-				if (updateLogs){
-					$http.post('/citadelsgame/empty').then(function(response){
-						adjustLogs()
-					});
-				}
-				if ($scope.status == "2"){
-					alert("Game Ends");
-					$scope.goto("pokewhatendgame");
-				}
+				
 			});
 		}
 		
