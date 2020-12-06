@@ -22,7 +22,7 @@ public class Card {
 	
 	public Animation getMissAnimation() {
 		animation = new Animation();
-		animation.addFrame(player.getIndex(), PokewhatConsts.MOVE, 1, "a09");
+		animation.addFrame(player.getIndex(), PokewhatConsts.MOVE, 500, "a09");
 		return animation;
 	}
 	

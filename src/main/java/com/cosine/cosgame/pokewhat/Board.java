@@ -257,7 +257,12 @@ public class Board {
 				roundEndMsg = roundEndMsg + defeated.get(0);
 			} else {
 				for (i=0;i<x;i++) {
-					roundEndMsg = roundEndMsg + "，" + defeated.get(i);
+					if (i==0) {
+						roundEndMsg = roundEndMsg + defeated.get(i);
+					} else {
+						roundEndMsg = roundEndMsg + "，" + defeated.get(i);
+					}
+					
 				}
 				roundEndMsg = roundEndMsg + "和" + defeated.get(x);
 			}

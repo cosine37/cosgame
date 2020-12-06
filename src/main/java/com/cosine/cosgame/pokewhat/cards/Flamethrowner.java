@@ -17,7 +17,7 @@ public class Flamethrowner extends Card{
 	
 	public Animation getMoveAnimation() {
 		animation = new Animation();
-		animation.addFrame(player.prevPlayerIndex(), PokewhatConsts.MOVE, 1, "a07");
+		animation.addFrame(player.prevPlayerIndex(), PokewhatConsts.MOVE, 500, "a07");
 		return animation;
 	}
 	

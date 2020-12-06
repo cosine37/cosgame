@@ -68,6 +68,7 @@ public class Player {
 		if (x == 0 && hand.size() == 0) {
 			board.getLogger().logEternabeam(this);
 			c.cardEffect();
+			board.changeAnimation(c.getMoveAnimation());
 			board.endRound();
 			return;
 		}
@@ -85,6 +86,7 @@ public class Player {
 		} else {
 			this.missCount++;
 			c.penalty();
+			board.changeAnimation(c.getMissAnimation());
 			if (hp>0) {
 				endTurn();
 			} else {

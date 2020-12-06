@@ -30,6 +30,10 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.muteButton = "播放"
 		$scope.playedBGM = false;
 		$scope.bgm = new Audio('/sound/Pokewhat/game_bgm.mp3');
+		$scope.showAnimationImg = []
+		$scope.playingAnimation = false;
+		$scope.firstGetBoard = true;
+		$scope.animationDivStyles = []
 
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -305,7 +309,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			for (var i=1;i<=8;i++){
 				$scope.moves.push(i);
 				var imgUrl = "url('/image/Pokewhat/Cards/" + i.toString() + ".png')"
-				if (i<$scope.lastMove || $scope.phase != 1){
+				if (i<$scope.lastMove || $scope.phase != 1 || $scope.playingAnimation){
 					singleStyle = {
 						"background": imgUrl,
 						"background-size": "cover",
@@ -346,74 +350,71 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			logcontent.scrollTop = logcontent.scrollHeight;
 		}
 		
-		updateBoardInfo = function(response){
-			$scope.lord = response.data.lord;
-			$scope.phase = response.data.phase;
-			$scope.lastMove = parseInt(response.data.lastMove);
-			$scope.playerNames = response.data.playerNames;
-			$scope.playedCards = response.data.playedCards;
+		afterAnimationSetup = function(response){
 			$scope.scores = response.data.scores;
 			$scope.hp = response.data.hp;
-			$scope.allCards = response.data.allCards;
+			$scope.curPlayer = response.data.curPlayer;
+			$scope.roundEndMsg = response.data.roundEndMsg;
+			$scope.scoringMsg = response.data.scoringMsg;
+			$scope.ancientSize = response.data.ancientSize;
+			$scope.ancient = response.data.ancient;
 			$scope.round = response.data.round;
 			$scope.turn = response.data.turn;
 			$scope.deckSize = response.data.deckSize;
-			$scope.ancientSize = response.data.ancientSize;
-			$scope.ancient = response.data.ancient;
-			$scope.status = response.data.status;
-			$scope.pmToChoose = response.data.pmToChoose;
-			$scope.pmToChooseNames = response.data.pmToChooseNames;
-			$scope.pmFromPool = response.data.pmFromPool;
-			$scope.pmFromPoolNames = response.data.pmFromPoolNames;
-			$scope.avatars = response.data.avatars;
-			$scope.pms = response.data.pm;
-			$scope.pmNames = response.data.pmNames;
-			$scope.pmSizes = response.data.pmSizes;
-			$scope.playerAvatars = response.data.playerAvatars;
-			$scope.curPlayer = response.data.curPlayer;
-			$scope.myIndex = parseInt(response.data.myIndex);
-			$scope.playerAncients = response.data.playerAncients
-			$scope.gameEndScore = response.data.gameEndScore;
-			$scope.roundEndMsg = response.data.roundEndMsg;
-			$scope.confirmed = response.data.confirmed;
-			$scope.scoringMsg = response.data.scoringMsg;
 			
-			var updateLogs = false;
-			if ($scope.logs.length < response.data.logs.length){
-				updateLogs = true;
-			}
-			$scope.logs = response.data.logs;
-			
-			if (response.data.hasBot == "0"){
-				$scope.hasBot = false;
-			} else {
-				$scope.hasBot = true;
-			}
-			
-			if ($scope.status == "3"){
-				setPmToChooseStyles();
-			}
-			setOtherTdStyle();
-			setAvatarPmStyles();
-			sortAllCards();
-			setAllCardStyles();
+			setMoveStyles();
 			setHpBarStyle();
 			setAncientStyles();
-			setMoveStyles();
-			setOtherIndexes();
-			if (updateLogs){
-				$http.post('/citadelsgame/empty').then(function(response){
-					adjustLogs()
-				});
-			}
-			if ($scope.status == "2"){
-				alert("Game Ends");
-				$scope.goto("pokewhatendgame");
-			}
+			$scope.firstGetBoard = false;
 		}
 		
-		playAnimation = function(response){
-			updateBoardInfo(response);
+		playFrame = function(){
+			i = $scope.curFrame
+			$scope.animationImg = $scope.frameImg[i] + ".png";
+			var imgUrl = "url('/image/Pokewhat/Animation/" + $scope.frameImg[i] + ".png')"
+			$scope.showAnimationImg = []
+			$scope.animationDivStyles = []
+			for (j=0;j<$scope.playerNames.length;j++){
+				$scope.showAnimationImg.push(false);
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover",
+					"height": $scope.pmSizes[j] + "px",
+					"width": $scope.pmSizes[j] + "px"
+				}
+				$scope.animationDivStyles.push(singleStyle)
+			}
+			for (j=0;j<$scope.frameTargets[i].length;j++){
+				index = parseInt($scope.frameTargets[i][j]);
+				$scope.showAnimationImg[index] = true;
+			}
+			//alert($scope.showAnimationImg)
+			$timeout(function(){
+				$scope.curFrame = $scope.curFrame+1
+				if ($scope.curFrame < $scope.frameImg.length){
+					playFrame();
+				} else {
+					$scope.playingAnimation = false;
+					afterAnimationSetup($scope.response);
+				}
+			}, parseInt($scope.frameTime[i]));
+		}
+		
+		animationHandle = function(response){
+			if ($scope.animationId != response.data.animationId && response.data.frameImg.length > 0){
+				$scope.animationId = response.data.animationId
+				$scope.frameImg = response.data.frameImg
+				$scope.frameTargets = response.data.frameTargets
+				$scope.frameTime = response.data.frameTime
+				$scope.frameType = response.data.frameType
+				
+				$scope.playingAnimation = true;
+				$scope.curFrame = 0;
+				setMoveStyles();
+				playFrame();
+			} else {
+				afterAnimationSetup(response);
+			}
 		}
 			
 		$scope.getBoard = function(){
@@ -423,14 +424,58 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$scope.goto('/pokewhat');
 					return;
 				}
+				$scope.response = response;
+				$scope.lord = response.data.lord;
+				$scope.phase = response.data.phase;
+				$scope.lastMove = parseInt(response.data.lastMove);
+				$scope.playerNames = response.data.playerNames;
+				$scope.allCards = response.data.allCards;
+				$scope.playedCards = response.data.playedCards;
+				$scope.status = response.data.status;
+				$scope.pmToChoose = response.data.pmToChoose;
+				$scope.pmToChooseNames = response.data.pmToChooseNames;
+				$scope.pmFromPool = response.data.pmFromPool;
+				$scope.pmFromPoolNames = response.data.pmFromPoolNames;
+				$scope.avatars = response.data.avatars;
+				$scope.pms = response.data.pm;
+				$scope.pmNames = response.data.pmNames;
+				$scope.pmSizes = response.data.pmSizes;
+				$scope.playerAvatars = response.data.playerAvatars;
+				$scope.myIndex = parseInt(response.data.myIndex);
+				$scope.playerAncients = response.data.playerAncients
+				$scope.gameEndScore = response.data.gameEndScore;
+				$scope.confirmed = response.data.confirmed;
 				
-				if ($scope.animationId != response.data.animationId){
-					playAnimation(response);
+				var updateLogs = false;
+				if ($scope.logs.length < response.data.logs.length){
+					updateLogs = true;
+				}
+				$scope.logs = response.data.logs;
+				
+				if (response.data.hasBot == "0"){
+					$scope.hasBot = false;
 				} else {
-					updateBoardInfo(response);
+					$scope.hasBot = true;
 				}
 				
-				
+				if ($scope.status == "3"){
+					setPmToChooseStyles();
+				}
+				setOtherTdStyle();
+				setAvatarPmStyles();
+				sortAllCards();
+				setAllCardStyles();
+				setOtherIndexes();
+				animationHandle(response);
+				if (updateLogs){
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs()
+					});
+				}
+				if ($scope.status == "2"){
+					alert("Game Ends");
+					$scope.goto("pokewhatendgame");
+				}
 			});
 		}
 		
