@@ -176,6 +176,19 @@ public class AllRes {
 		c = new XinhuaBookstore();
 		specialCards.add(c);
 		
+		c = new ForebackNorthBay();
+		specialCards.add(c);
+		c = new NearGarden();
+		specialCards.add(c);
+		c = new EastStorage();
+		specialCards.add(c);
+		c = new WaterStreet();
+		specialCards.add(c);
+		c = new LightCity();
+		specialCards.add(c);
+		c = new JinchuanPark();
+		specialCards.add(c);
+		
 	}
 	
 	public void setBaseCards() {

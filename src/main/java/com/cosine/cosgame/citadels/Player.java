@@ -24,6 +24,7 @@ public class Player {
 	boolean beautifyUpTo2;
 	boolean beautifyPurple;
 	boolean insured;
+	boolean protect;
 	int roleNum;
 	int phase;
 	int buildLimit;
@@ -61,6 +62,7 @@ public class Player {
 		beautify5Up = false;
 		beautifyPurple = false;
 		insured = false;
+		protect = false;
 		costReducers = new ArrayList<>();
 		for (int i=0;i<5;i++) {
 			costReducers.add(0);
@@ -727,6 +729,12 @@ public class Player {
 	public void setCanBuyDelicacy(List<String> canBuyDelicacy) {
 		this.canBuyDelicacy = canBuyDelicacy;
 	}
+	public boolean isProtect() {
+		return protect;
+	}
+	public void setProtect(boolean protect) {
+		this.protect = protect;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -801,7 +809,6 @@ public class Player {
 			c.setIndex(i);
 			built.add(c);
 			c.alterPlayerAbility();
-			
 		}
 		
 		List<Document> forChooseDocList = (List<Document>) doc.get("forChoose");

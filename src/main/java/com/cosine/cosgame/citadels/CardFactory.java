@@ -169,6 +169,18 @@ public class CardFactory {
 			card = new DinoWaterTown();
 		} else if (img.contentEquals("p411")) {
 			card = new Stadium();
+		} else if (img.contentEquals("p308")) {
+			card = new ForebackNorthBay();
+		} else if (img.contentEquals("p205")) {
+			card = new NearGarden();
+		} else if (img.contentEquals("p412")) {
+			card = new EastStorage();
+		} else if (img.contentEquals("p518")) {
+			card = new WaterStreet();
+		} else if (img.contentEquals("p616")) {
+			card = new LightCity();
+		} else if (img.contentEquals("p309")) {
+			card = new JinchuanPark();
 		}
 		
 		else {

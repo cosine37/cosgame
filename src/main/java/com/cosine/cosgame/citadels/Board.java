@@ -125,6 +125,8 @@ public class Board {
 			deck.add(shuffled.get(i));
 		}
 		//TODO: test special cards addition here
+		Card c = new JinchuanPark();
+		deck.add(0,c);
 	}
 	
 	public void deal() {
@@ -156,6 +158,10 @@ public class Board {
 	
 	public void bottomDeck(Card card) {
 		deck.add(card);
+	}
+	
+	public void topDeck(Card card) {
+		deck.add(0,card);
 	}
 	
 	public void genBoardId() {
@@ -341,10 +347,18 @@ public class Board {
 		for (i=0;i<roles.size();i++) {
 			Role r = roles.get(i);
 			if (r.getNum() == curRoleNum) {
-				if (curRoleNum == killedRole) {
+				boolean protect = false;
+				if (r.getOwner() >= 0) {
+					if (players.get(r.getOwner()).isProtect()) {
+						protect = true;
+					}
+				}
+				
+				if (curRoleNum == killedRole && protect == false) {
 					log(Integer.toString(curRoleNum)+"号 "+r.getName()+"被1号 送葬者带走了。");
 					if (r.getOwner() < 0) {
 						log("然而，没有玩家选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"，这就尴尬了。");
+						nextRole();
 					} else {
 						String playerName = players.get(r.getOwner()).getName();
 						log(playerName + "失去所有角色技能并跳过回合。");
@@ -383,9 +397,8 @@ public class Board {
 								players.get(r.getOwner()).getBuilt().get(j).insuredEffect();
 							}
 						}
-						
+						nextRole();
 					}
-					nextRole();
 					return;
 				} else {
 					if (curRoleNum == stealedRole) {
@@ -401,6 +414,19 @@ public class Board {
 						nextRole();
 						return;
 					} else {
+						if (protect && (curRoleNum == killedRole || curRoleNum == stealedRole)) {
+							if (curRoleNum == killedRole) {
+								log(Integer.toString(curRoleNum)+"号 "+r.getName()+"被1号 送葬者盯上了。");
+								killedRole = -1;
+							} else if (curRoleNum == stealedRole) {
+								stealedRole = -1;
+							}
+							for (int j=0;j<players.get(r.getOwner()).getBuilt().size();j++) {
+								Card c = players.get(r.getOwner()).getBuilt().get(j);
+								c.protectEffect();
+							}
+							
+						}
 						log("轮到选择"+Integer.toString(curRoleNum)+"号 "+r.getName()+"的玩家行动了。");
 						curPlayer = r.getOwner();
 						String playerName = players.get(curPlayer).getName();

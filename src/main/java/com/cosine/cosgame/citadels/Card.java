@@ -66,6 +66,10 @@ public class Card {
 		
 	}
 	
+	public void protectEffect() {
+		
+	}
+	
 	public void onBuild() {
 		
 	}

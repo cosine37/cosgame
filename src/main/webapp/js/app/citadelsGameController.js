@@ -536,8 +536,10 @@ app.controller("citadelsGameCtrl", ['$scope', '$window', '$http', '$document','$
 				return
 			}
 			if ($scope.askId == '99502' || $scope.askId == '99305' // South Street & Framework
-				|| $scope.askId == '98615' || $scope.askId == '99515' // Fort && ShootMoonBay
+				|| $scope.askId == '98615' || $scope.askId == '99515' // Fort & ShootMoonBay
 				|| $scope.askId == '99921' || $scope.askId == '99951'// Agency & Office
+				|| $scope.askId == '99308' || $scope.askId == '99412'// Foreback North Bay & East Storage
+				|| $scope.askId == '99409' // Museum
 					){ 
 				var builtIndex = parseInt($scope.askBuiltIndex)
 				var data = {
