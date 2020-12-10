@@ -20,8 +20,10 @@ public class Consts {
 	public static final int SEER = 2;
 	public static final int THEIF = 3;
 	public static final int KID = 4;
+	public static final int MINION = 5;
 	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;
+	public static final int TARGET = -3;
 }

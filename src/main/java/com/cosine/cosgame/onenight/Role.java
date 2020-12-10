@@ -1,19 +1,32 @@
 package com.cosine.cosgame.onenight;
 
 public class Role {
-	int roleNum;
-	int side;
-	String name;
-	String img;
+	protected int roleNum;
+	protected int side;
+	protected int sequence;
+	protected String name;
+	protected String img;
 	
-	Player player;
-	Board board;
+	protected Player player;
+	protected Board board;
+	
+	public Role() {
+		
+	}
+	
+	public void vision() {
+		
+	}
 	
 	public void useSkill(int t1) {
 		
 	}
 	
 	public void useSkill(int t1, int t2) {
+		
+	}
+	
+	public void executeSkill() {
 		
 	}
 	
@@ -40,6 +53,12 @@ public class Role {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 	
 	

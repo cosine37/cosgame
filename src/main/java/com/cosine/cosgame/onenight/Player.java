@@ -5,10 +5,13 @@ import java.util.List;
 
 public class Player {
 	String name;
+	String displayName;
 	List<Role> roles; // the change of roles over time
 	int numVotes; // number of votes this player receives
 	int voteIndex; // who this player votes	
 	int score;
+	int index;
+	boolean voted;
 	
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
@@ -19,6 +22,7 @@ public class Player {
 		roles = new ArrayList<>();
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
+		voted = false;
 	}
 	
 	public int getCurrentRoleIndex() {
@@ -53,6 +57,14 @@ public class Player {
 		for (i=0;i<3;i++) {
 			centerMarks.add(-1);
 		}
+	}
+	
+	public void addRole(Role role) {
+		roles.add(role);
+	}
+	
+	public void receiveVote() {
+		numVotes++;
 	}
 	
 	public String getName() {
@@ -96,6 +108,24 @@ public class Player {
 	}
 	public void setScore(int score) {
 		this.score = score;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public boolean isVoted() {
+		return voted;
+	}
+	public void setVoted(boolean voted) {
+		this.voted = voted;
 	}
 
 }
