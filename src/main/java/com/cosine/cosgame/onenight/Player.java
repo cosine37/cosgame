@@ -3,6 +3,8 @@ package com.cosine.cosgame.onenight;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	String displayName;
@@ -126,6 +128,49 @@ public class Player {
 	}
 	public void setVoted(boolean voted) {
 		this.voted = voted;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("displayName", displayName);
+		doc.append("numVotes", numVotes);
+		doc.append("voteIndex", voteIndex);
+		doc.append("score", score);
+		doc.append("playerMarks", playerMarks);
+		doc.append("centerMarks", centerMarks);
+		int i;
+		List<String> lor = new ArrayList<>();
+		for (i=0;i<roles.size();i++) {
+			lor.add(roles.get(i).getImg());
+		}
+		doc.append("roles", lor);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		displayName = doc.getString("displayName");
+		numVotes = doc.getInteger("numVotes", 0);
+		voteIndex = doc.getInteger("voteIndex", 0);
+		score = doc.getInteger("score", 0);
+		playerMarks = (List<Integer>) doc.get("playerMarks");
+		centerMarks = (List<Integer>) doc.get("centerMarks");
+		List<String> lor = (List<String>) doc.get("roles");
+		int i;
+		roles = new ArrayList<>();
+		for (i=0;i<lor.size();i++) {
+			Role r = RoleFactory.createRole(lor.get(i));
+			r.setPlayer(this);
+			r.setBoard(board);
+			roles.add(r);
+		}
 	}
 
 }

@@ -60,6 +60,18 @@ public class Role {
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
+	public Player getPlayer() {
+		return player;
+	}
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 	
 	
 }
