@@ -1,9 +1,12 @@
 package com.cosine.cosgame.onenight;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Player> players;
@@ -15,13 +18,21 @@ public class Board {
 	int round;
 	int totalRounds;
 	int winSide;
+	String lord;
 	
 	List<String> confirmed;
 	
+	MongoDBUtil dbutil;
 	
 	public Board() {
 		players = new ArrayList<>();
 		rolesThisGame = new ArrayList<>();
+		centerRoles = new ArrayList<>();
+		
+		String dbname = "onenight";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public void startGame() {
@@ -30,7 +41,7 @@ public class Board {
 		for (i=0;i<n;i++) {
 			players.get(i).initializeMarks(n);
 		}
-		status = Consts.PREGAME;
+		status = Consts.SETUP;
 		winSide = -1;
 		
 	}
@@ -139,6 +150,29 @@ public class Board {
 		}
 	}
 	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
+	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		p.setDisplayName(name);
+		players.add(p);
+	}
+	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -175,6 +209,97 @@ public class Board {
 	public void setConfirmed(List<String> confirmed) {
 		this.confirmed = confirmed;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public int getTotalRounds() {
+		return totalRounds;
+	}
+	public void setTotalRounds(int totalRounds) {
+		this.totalRounds = totalRounds;
+	}
+	public int getWinSide() {
+		return winSide;
+	}
+	public void setWinSide(int winSide) {
+		this.winSide = winSide;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+
+	public BoardEntity toBoardEntity(String name) {
+		BoardEntity entity = new BoardEntity();
+		String initialRole = "-1";
+		String lastSeenRole = "-1";
+		List<String> playerMarks = new ArrayList<>();
+		List<String> centerMarks = new ArrayList<>();
+		List<String> playerNames = new ArrayList<>();
+		List<String> playerDisplayNames = new ArrayList<>();
+		int i,j;
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+			playerDisplayNames.add(players.get(i).getDisplayName());
+			if (players.get(i).getName().contentEquals(name)) {
+				Player p = players.get(i);
+				if (p.getInitialRole() == null) {
+					initialRole = "-1";
+				} else {
+					initialRole = p.getInitialRole().getImg();
+				}
+				
+				for (j=0;j<p.getPlayerMarks().size();j++) {
+					int x = p.getPlayerMarks().get(j);
+					String s;
+					if (x<0) {
+						s = Integer.toString(x);
+					} else {
+						Role r = RoleFactory.createRole(x);
+						s = r.getImg();
+					}
+					playerMarks.add(s);
+					if (j == p.getIndex()) {
+						lastSeenRole = s;
+					}
+				}
+				for (j=0;j<p.getCenterMarks().size();j++) {
+					int x = p.getCenterMarks().get(j);
+					String s;
+					if (x<0) {
+						s = Integer.toString(x);
+					} else {
+						Role r = RoleFactory.createRole(x);
+						s = r.getImg();
+					}
+					centerMarks.add(s);
+				}
+			}
+		}
+		
+		List<String> lor = new ArrayList<>();
+		for (i=0;i<rolesThisGame.size();i++) {
+			lor.add(rolesThisGame.get(i).getImg());
+		}
+		
+		entity.setId(id);
+		entity.setStatus(Integer.toString(status));
+		entity.setRound(Integer.toString(round));
+		entity.setTotalRounds(Integer.toString(totalRounds));
+		entity.setPlayerNames(playerNames);
+		entity.setPlayerDisplayNames(playerDisplayNames);
+		entity.setInitialRole(initialRole);
+		entity.setLastSeenRole(lastSeenRole);
+		entity.setPlayerMarks(playerMarks);
+		entity.setCenterMarks(centerMarks);
+		entity.setRolesThisGame(lor);
+		return entity;
+	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
@@ -183,6 +308,7 @@ public class Board {
 		doc.append("round", round);
 		doc.append("totalRounds", totalRounds);
 		doc.append("confirmed", confirmed);
+		doc.append("lord", lord);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -215,6 +341,7 @@ public class Board {
 		round = doc.getInteger("round", 0);
 		totalRounds = doc.getInteger("totalRounds", totalRounds);
 		confirmed = (List<String>) doc.get("confirmed");
+		lord = doc.getString("lord");
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();
@@ -246,4 +373,62 @@ public class Board {
 		}
 	}
 	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

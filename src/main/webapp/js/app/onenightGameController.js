@@ -23,4 +23,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.getBoard = function(){
+			$http.get('/onenightgame/getboard').then(function(response){
+				$scope.gamedata = response.data
+			});
+		}
+		
+		$scope.getBoard();
 }]);

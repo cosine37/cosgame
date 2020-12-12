@@ -24,7 +24,9 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.newGame = function(){
-			$scope.goto('onenightcreategame');
+			$http.post('/onenightgame/newboard').then(function(response){
+				$scope.goto('onenightcreategame');
+			});
 		}
 		
 }]);

@@ -16,7 +16,8 @@ public class WebAppConfigurer implements WebMvcConfigurer {
 		registration.addPathPatterns("/index","/dominion","/dominiongame","/dominionboard","/dominionlist","/dominionend",
 				"/mafia","/mafiarules","/mafiagame", "/minigame/**", "/citadels", "/citadelscreategame", "/citadelsgame", 
 				"/nothanks", "/nothankscreategame", "/nothanksgame", "/pokewhat", "/pokewhatcreategame", "/pokewhatgame",
-				"/gravepsycho", "/gravepsychocreategame", "/gravepsychogame");
+				"/gravepsycho", "/gravepsychocreategame", "/gravepsychogame",
+				"/onenight", "/onenightcreategame", "/onenightgame");
 		//registration.excludePathPatterns("/login","/error","/view/css/**","/image/**","/js/**"); 
 	}
 }

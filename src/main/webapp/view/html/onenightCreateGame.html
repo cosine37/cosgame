@@ -14,5 +14,8 @@
 <script src="/js/app/onenightCreateGameController.js"></script>
 <body ng-app="onenightCreateGameApp" ng-controller="onenightCreateGameCtrl">
 	<button ng-click="goto('onenight')">back</button>
-	<button ng-click="goto('onenightgame')">start</button>
+	<button ng-click="start()">start</button>
+	<div>
+		{{gamedata}}
+	</div>
 </body>
