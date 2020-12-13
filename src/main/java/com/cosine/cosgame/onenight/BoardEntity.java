@@ -11,6 +11,11 @@ public class BoardEntity {
 	String initialRole;
 	String lastSeenRole;
 	String canNight;
+	String initialRoleName;
+	String choosePlayerNum;
+	String chooseCenterNum;
+	String canChooseBoth;
+	String myIndex;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -95,5 +100,35 @@ public class BoardEntity {
 	}
 	public void setCanNight(String canNight) {
 		this.canNight = canNight;
+	}
+	public String getInitialRoleName() {
+		return initialRoleName;
+	}
+	public void setInitialRoleName(String initialRoleName) {
+		this.initialRoleName = initialRoleName;
+	}
+	public String getChoosePlayerNum() {
+		return choosePlayerNum;
+	}
+	public void setChoosePlayerNum(String choosePlayerNum) {
+		this.choosePlayerNum = choosePlayerNum;
+	}
+	public String getChooseCenterNum() {
+		return chooseCenterNum;
+	}
+	public void setChooseCenterNum(String chooseCenterNum) {
+		this.chooseCenterNum = chooseCenterNum;
+	}
+	public String getCanChooseBoth() {
+		return canChooseBoth;
+	}
+	public void setCanChooseBoth(String canChooseBoth) {
+		this.canChooseBoth = canChooseBoth;
+	}
+	public String getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(String myIndex) {
+		this.myIndex = myIndex;
 	}
 }

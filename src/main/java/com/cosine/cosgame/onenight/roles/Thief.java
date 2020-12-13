@@ -11,6 +11,8 @@ public class Thief extends Role{
 		side = Consts.HUMAN;
 		img = "r03";
 		sequence = 600;
+		name = "盗贼";
+		choosePlayerNum = 1;
 	}
 	
 	public void useSkill(int t1) {

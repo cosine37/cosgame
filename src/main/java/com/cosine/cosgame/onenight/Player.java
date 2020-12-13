@@ -14,6 +14,7 @@ public class Player {
 	int score;
 	int index;
 	boolean voted;
+	boolean bot;
 	
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
@@ -25,6 +26,7 @@ public class Player {
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
 		voted = false;
+		bot = false;
 	}
 	
 	public int getCurrentRoleIndex() {
@@ -135,6 +137,12 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public boolean isBot() {
+		return bot;
+	}
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -145,6 +153,7 @@ public class Player {
 		doc.append("score", score);
 		doc.append("playerMarks", playerMarks);
 		doc.append("centerMarks", centerMarks);
+		doc.append("bot", bot);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -162,6 +171,7 @@ public class Player {
 		score = doc.getInteger("score", 0);
 		playerMarks = (List<Integer>) doc.get("playerMarks");
 		centerMarks = (List<Integer>) doc.get("centerMarks");
+		bot = doc.getBoolean("bot", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

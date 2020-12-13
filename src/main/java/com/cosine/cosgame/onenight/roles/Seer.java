@@ -11,6 +11,9 @@ public class Seer extends Role{
 		side = Consts.HUMAN;
 		img = "r02";
 		sequence = 500;
+		name = "预言家";
+		choosePlayerNum = 1;
+		chooseCenterNum = 2;
 	}
 	
 	public void useSkill(int t1) {

@@ -10,5 +10,6 @@ public class Villager extends Role{
 		side = Consts.HUMAN;
 		img = "r00";
 		sequence = 0;
+		name = "村民";
 	}
 }

@@ -11,6 +11,7 @@ public class Werewolf extends Role{
 		side = Consts.WOLF;
 		img = "r01";
 		sequence = 200;
+		name = "狼人";
 	}
 	
 	public void vision() {

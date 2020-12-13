@@ -11,6 +11,8 @@ public class Urchin extends Role{
 		side = Consts.HUMAN;
 		img = "r04";
 		sequence = 700;
+		name = "熊孩子";
+		choosePlayerNum = 2;
 	}
 	
 	public void useSkill(int t1, int t2) {

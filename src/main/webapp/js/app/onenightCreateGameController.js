@@ -29,6 +29,12 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.addBot = function(){
+			$http.post('/onenightgame/addbot').then(function(response){
+				$scope.getBoard();
+			});
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/onenightgame/getboard').then(function(response){
 				$scope.gamedata = response.data

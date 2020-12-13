@@ -70,13 +70,18 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Random rand = new Random();
 			int size = tls.size();
-			players.get(i).addRole(tls.remove(rand.nextInt(size)));
+			Role r = tls.remove(rand.nextInt(size));
+			r.setPlayer(players.get(i));
+			players.get(i).addRole(r);
 		}
 		centerRoles = new ArrayList<>();
 		for (i=0;i<3;i++) {
 			List<Role> singleRole = new ArrayList<>();
 			singleRole.add(tls.remove(0));
 			centerRoles.add(singleRole);
+		}
+		for (i=0;i<players.size();i++) {
+			players.get(i).getInitialRole().vision();
 		}
 		status = Consts.NIGHT;
 	}
@@ -196,13 +201,6 @@ public class Board {
 		return p;
 	}
 	
-	public void addPlayer(String name) {
-		Player p = new Player();
-		p.setName(name);
-		p.setDisplayName(name);
-		players.add(p);
-	}
-	
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
@@ -278,7 +276,12 @@ public class Board {
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		String initialRole = "-1";
+		String initialRoleName = "";
 		String lastSeenRole = "-1";
+		String choosePlayerNum = "0";
+		String chooseCenterNum = "0";
+		String myIndex = "-1";
+		String canChooseBoth = "n";
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
@@ -289,12 +292,18 @@ public class Board {
 			playerDisplayNames.add(players.get(i).getDisplayName());
 			if (players.get(i).getName().contentEquals(name)) {
 				Player p = players.get(i);
+				myIndex = Integer.toString(i);
 				if (p.getInitialRole() == null) {
 					initialRole = "-1";
 				} else {
 					initialRole = p.getInitialRole().getImg();
+					initialRoleName = p.getInitialRole().getName();
+					choosePlayerNum = Integer.toString(p.getInitialRole().getChoosePlayerNum());
+					chooseCenterNum = Integer.toString(p.getInitialRole().getChooseCenterNum());
+					if (p.getInitialRole().isCanChooseBoth()) {
+						canChooseBoth = "y";
+					}
 				}
-				
 				for (j=0;j<p.getPlayerMarks().size();j++) {
 					int x = p.getPlayerMarks().get(j);
 					String s;
@@ -341,10 +350,15 @@ public class Board {
 		entity.setPlayerNames(playerNames);
 		entity.setPlayerDisplayNames(playerDisplayNames);
 		entity.setInitialRole(initialRole);
+		entity.setInitialRoleName(initialRoleName);
 		entity.setLastSeenRole(lastSeenRole);
 		entity.setPlayerMarks(playerMarks);
 		entity.setCenterMarks(centerMarks);
 		entity.setRolesThisGame(lor);
+		entity.setChooseCenterNum(chooseCenterNum);
+		entity.setChoosePlayerNum(choosePlayerNum);
+		entity.setMyIndex(myIndex);
+		entity.setCanChooseBoth(canChooseBoth);
 		return entity;
 	}
 	
@@ -492,6 +506,23 @@ public class Board {
 			dbutil.push("id", id, "playerNames", name);
 			updatePlayer(name);
 		}
+	}
+	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		p.setDisplayName(name);
+		players.add(p);
+	}
+	
+	public void addBot() {
+		String botName = "P" + Integer.toString(players.size());
+		Player bot = new Player();
+		bot.setName(botName);
+		bot.setDisplayName(botName);
+		bot.setBot(true);
+		players.add(bot);
+		addPlayerToDB(botName);
 	}
 	
 	public boolean exists(String id) {

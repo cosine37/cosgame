@@ -7,11 +7,17 @@ public class Role {
 	protected String name;
 	protected String img;
 	
+	protected int choosePlayerNum;
+	protected int chooseCenterNum;
+	protected boolean canChooseBoth;
+	
 	protected Player player;
 	protected Board board;
 	
 	public Role() {
-		
+		choosePlayerNum = 0;
+		chooseCenterNum = 0;
+		canChooseBoth = false;
 	}
 	
 	public void vision() {
@@ -71,6 +77,24 @@ public class Role {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	public int getChoosePlayerNum() {
+		return choosePlayerNum;
+	}
+	public void setChoosePlayerNum(int choosePlayerNum) {
+		this.choosePlayerNum = choosePlayerNum;
+	}
+	public int getChooseCenterNum() {
+		return chooseCenterNum;
+	}
+	public void setChooseCenterNum(int chooseCenterNum) {
+		this.chooseCenterNum = chooseCenterNum;
+	}
+	public boolean isCanChooseBoth() {
+		return canChooseBoth;
+	}
+	public void setCanChooseBoth(boolean canChooseBoth) {
+		this.canChooseBoth = canChooseBoth;
 	}
 	
 	
