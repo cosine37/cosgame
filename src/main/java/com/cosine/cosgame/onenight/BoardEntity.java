@@ -4,11 +4,13 @@ import java.util.List;
 
 public class BoardEntity {
 	String id;
+	String lord;
 	String status;
 	String round;
 	String totalRounds;
 	String initialRole;
 	String lastSeenRole;
+	String canNight;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -81,5 +83,17 @@ public class BoardEntity {
 	}
 	public void setPlayerDisplayNames(List<String> playerDisplayNames) {
 		this.playerDisplayNames = playerDisplayNames;
+	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+	public String getCanNight() {
+		return canNight;
+	}
+	public void setCanNight(String canNight) {
+		this.canNight = canNight;
 	}
 }

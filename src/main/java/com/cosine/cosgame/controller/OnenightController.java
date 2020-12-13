@@ -64,6 +64,39 @@ public class OnenightController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/onenightgame/setroles", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setRoles(HttpServletRequest request, @RequestParam List<Integer> roles){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.setRolesThisGameByInt(roles);
+			board.updateRolesThisGame();
+			board.updateDB("canNight", board.isCanNight());
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/onenightgame/night", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> night(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username) && board.isCanNight()) {
+			board.distributeRoles();
+			board.updateDB("status", board.getStatus());
+			board.updatePlayers();
+			board.updateCenterRoles();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/onenightgame/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

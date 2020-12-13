@@ -17,4 +17,20 @@
 	<div>
 		{{gamedata}}
 	</div>
+	<div ng-show="status == '1' && lord == username">
+		<span ng-repeat="x in rolesSelect track by $index">
+			<select ng-model="rolesSelect[$index]">
+				<option value=0>村民</option>
+				<option value=1>狼人</option>
+				<option value=2>预言家</option>
+				<option value=3>盗贼</option>
+				<option value=4>熊孩子</option>
+				<option value=5>帮凶</option>
+				
+			</select>
+		</span>
+		<button ng-click="submitRolesSelect()">确定</button>
+		<button ng-click="night()" ng-show="canNight == 'y'">天黑</button>
+	</div>
+	
 </body>

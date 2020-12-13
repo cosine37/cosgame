@@ -3,6 +3,7 @@ package com.cosine.cosgame.onenight;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -19,6 +20,7 @@ public class Board {
 	int totalRounds;
 	int winSide;
 	String lord;
+	boolean canNight;
 	
 	List<String> confirmed;
 	
@@ -28,6 +30,7 @@ public class Board {
 		players = new ArrayList<>();
 		rolesThisGame = new ArrayList<>();
 		centerRoles = new ArrayList<>();
+		canNight = false;
 		
 		String dbname = "onenight";
 		String col = "board";
@@ -41,9 +44,41 @@ public class Board {
 		for (i=0;i<n;i++) {
 			players.get(i).initializeMarks(n);
 		}
+		canNight = false;
 		status = Consts.SETUP;
 		winSide = -1;
 		
+	}
+	
+	public void setRolesThisGameByInt(List<Integer> ls) {
+		int i;
+		rolesThisGame = new ArrayList<>();
+		for (i=0;i<ls.size();i++) {
+			Role r = RoleFactory.createRole(ls.get(i));
+			rolesThisGame.add(r);
+		}
+		canNight = true;
+	}
+	
+	public void distributeRoles() {
+		List<Role> tls = new ArrayList<>();
+		int i;
+		for (i=0;i<rolesThisGame.size();i++) {
+			tls.add(rolesThisGame.get(i));
+		}
+		
+		for (i=0;i<players.size();i++) {
+			Random rand = new Random();
+			int size = tls.size();
+			players.get(i).addRole(tls.remove(rand.nextInt(size)));
+		}
+		centerRoles = new ArrayList<>();
+		for (i=0;i<3;i++) {
+			List<Role> singleRole = new ArrayList<>();
+			singleRole.add(tls.remove(0));
+			centerRoles.add(singleRole);
+		}
+		status = Consts.NIGHT;
 	}
 	
 	public Role getCurCenterRole(int x) {
@@ -233,6 +268,12 @@ public class Board {
 	public void setLord(String lord) {
 		this.lord = lord;
 	}
+	public boolean isCanNight() {
+		return canNight;
+	}
+	public void setCanNight(boolean canNight) {
+		this.canNight = canNight;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -286,8 +327,14 @@ public class Board {
 		for (i=0;i<rolesThisGame.size();i++) {
 			lor.add(rolesThisGame.get(i).getImg());
 		}
+		if (canNight) {
+			entity.setCanNight("y");
+		} else {
+			entity.setCanNight("n");
+		}
 		
 		entity.setId(id);
+		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
 		entity.setRound(Integer.toString(round));
 		entity.setTotalRounds(Integer.toString(totalRounds));
@@ -309,6 +356,7 @@ public class Board {
 		doc.append("totalRounds", totalRounds);
 		doc.append("confirmed", confirmed);
 		doc.append("lord", lord);
+		doc.append("canNight", canNight);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -323,7 +371,7 @@ public class Board {
 			}
 			loc.add(sloc);
 		}
-		doc.append("centerRoles", centerRoles);
+		doc.append("centerRoles", loc);
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			String playerName = players.get(i).getName();
@@ -342,6 +390,7 @@ public class Board {
 		totalRounds = doc.getInteger("totalRounds", totalRounds);
 		confirmed = (List<String>) doc.get("confirmed");
 		lord = doc.getString("lord");
+		canNight = doc.getBoolean("canNight", false);
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();
@@ -413,6 +462,28 @@ public class Board {
 		for (int i=0;i<players.size();i++) {
 			updatePlayer(players.get(i).getName());
 		}
+	}
+	
+	public void updateRolesThisGame() {
+		int i;
+		List<String> lor = new ArrayList<>();
+		for (i=0;i<rolesThisGame.size();i++) {
+			lor.add(rolesThisGame.get(i).getImg());
+		}
+		dbutil.update("id", id, "rolesThisGame", lor);
+	}
+	
+	public void updateCenterRoles() {
+		int i,j;
+		List<List<String>> loc = new ArrayList<>();
+		for (i=0;i<centerRoles.size();i++) {
+			List<String> sloc = new ArrayList<>();
+			for (j=0;j<centerRoles.get(i).size();j++) {
+				sloc.add(centerRoles.get(i).get(j).getImg());
+			}
+			loc.add(sloc);
+		}
+		dbutil.update("id", id, "centerRoles", loc);
 	}
 	
 	public void addPlayerToDB(String name) {
