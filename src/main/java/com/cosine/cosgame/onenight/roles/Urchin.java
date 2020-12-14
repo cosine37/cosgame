@@ -13,6 +13,7 @@ public class Urchin extends Role{
 		sequence = 700;
 		name = "熊孩子";
 		choosePlayerNum = 2;
+		hasNight = true;
 	}
 	
 	public void useSkill(int t1, int t2) {

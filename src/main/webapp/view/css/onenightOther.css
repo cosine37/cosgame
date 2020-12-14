@@ -28,3 +28,22 @@ button:disabled{
 	
 	background: white;
 }
+
+.role {
+	height: 160px;
+	width: 105px;
+	position: relative;
+}
+
+.target{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -45px;
+	height: 80px;
+	width: 80px;
+	background:url("/image/Onenight/target.png");
+	background-size:cover;
+}

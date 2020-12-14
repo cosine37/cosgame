@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cosine.cosgame.onenight.Board;
 import com.cosine.cosgame.onenight.BoardEntity;
+import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -93,7 +94,7 @@ public class OnenightController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+		
 	@RequestMapping(value="/onenightgame/night", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> night(HttpServletRequest request){
 		Board board = new Board();
@@ -104,6 +105,27 @@ public class OnenightController {
 		if (board.getLord().contentEquals(username) && board.isCanNight()) {
 			board.distributeRoles();
 			board.updateDB("status", board.getStatus());
+			board.updateDB("confirmed", board.getConfirmed());
+			board.updatePlayers();
+			board.updateCenterRoles();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/onenightgame/useskill", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useSkill(HttpServletRequest request, @RequestParam List<Integer> targets){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			p.getInitialRole().useSkill(targets);
+			board.confirm(p.getIndex());
+			board.updateDB("status", board.getStatus());
+			board.updateDB("confirmed", board.getConfirmed());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}

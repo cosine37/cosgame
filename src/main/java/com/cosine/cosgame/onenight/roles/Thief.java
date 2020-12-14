@@ -13,6 +13,7 @@ public class Thief extends Role{
 		sequence = 600;
 		name = "盗贼";
 		choosePlayerNum = 1;
+		hasNight = true;
 	}
 	
 	public void useSkill(int t1) {

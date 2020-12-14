@@ -14,6 +14,7 @@ public class Seer extends Role{
 		name = "预言家";
 		choosePlayerNum = 1;
 		chooseCenterNum = 2;
+		hasNight = true;
 	}
 	
 	public void useSkill(int t1) {

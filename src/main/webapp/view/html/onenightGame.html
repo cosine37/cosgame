@@ -34,8 +34,33 @@
 		<button ng-click="night()" ng-show="canNight == 'y'">天黑</button>
 	</div>
 	
-	<div ng-show="status == '2'">
+	<div ng-show="status == '2' || status == '3'">
+		<table>
+			<tr>
+				<td ng-repeat="i in indexes">
+					<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
+						<div class="target" ng-show="playerSelect[i] == 'y'">
+						</div>
+					</div>
+					{{playerDisplayNames[i]}}
+				</td>
+			</tr>
+		</table>
+		中央区域
+		<table>
+			<tr>
+				<td ng-repeat="x in centerRoleStyles track by $index">
+					<div class="role" ng-style="x" ng-click="clickCenterRole($index)">
+						<div class="target" ng-show="centerSelect[$index] == 'y'">
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
 		你的初始身份是{{initialRoleName}}
+		<div class="role" ng-style="myRoleStyle">
+		</div>
+		<button ng-click="confirmNight()">确认</button>
 	</div>
 	
 </body>

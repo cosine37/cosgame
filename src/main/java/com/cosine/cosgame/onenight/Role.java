@@ -1,5 +1,7 @@
 package com.cosine.cosgame.onenight;
 
+import java.util.List;
+
 public class Role {
 	protected int roleNum;
 	protected int side;
@@ -10,6 +12,8 @@ public class Role {
 	protected int choosePlayerNum;
 	protected int chooseCenterNum;
 	protected boolean canChooseBoth;
+	protected boolean hasNight;
+	protected boolean mandatory;
 	
 	protected Player player;
 	protected Board board;
@@ -18,6 +22,8 @@ public class Role {
 		choosePlayerNum = 0;
 		chooseCenterNum = 0;
 		canChooseBoth = false;
+		hasNight = false;
+		mandatory = false;
 	}
 	
 	public void vision() {
@@ -30,6 +36,14 @@ public class Role {
 	
 	public void useSkill(int t1, int t2) {
 		
+	}
+	
+	public void useSkill(List<Integer> targets) {
+		if (targets.size() == 1) {
+			useSkill(targets.get(0));
+		} else if (targets.size() == 2) {
+			useSkill(targets.get(0), targets.get(1));
+		}
 	}
 	
 	public void executeSkill() {
@@ -95,6 +109,18 @@ public class Role {
 	}
 	public void setCanChooseBoth(boolean canChooseBoth) {
 		this.canChooseBoth = canChooseBoth;
+	}
+	public boolean isHasNight() {
+		return hasNight;
+	}
+	public void setHasNight(boolean hasNight) {
+		this.hasNight = hasNight;
+	}
+	public boolean isMandatory() {
+		return mandatory;
+	}
+	public void setMandatory(boolean mandatory) {
+		this.mandatory = mandatory;
 	}
 	
 	

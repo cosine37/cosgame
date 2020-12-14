@@ -16,6 +16,7 @@ public class BoardEntity {
 	String chooseCenterNum;
 	String canChooseBoth;
 	String myIndex;
+	String mandatory;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -130,5 +131,11 @@ public class BoardEntity {
 	}
 	public void setMyIndex(String myIndex) {
 		this.myIndex = myIndex;
+	}
+	public String getMandatory() {
+		return mandatory;
+	}
+	public void setMandatory(String mandatory) {
+		this.mandatory = mandatory;
 	}
 }

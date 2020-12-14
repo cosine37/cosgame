@@ -83,6 +83,15 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
 		}
+		confirmed = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getInitialRole().isHasNight()) {
+				confirmed.add("n");
+			} else {
+				confirmed.add("y");
+			}
+			
+		}
 		status = Consts.NIGHT;
 	}
 	
@@ -124,6 +133,9 @@ public class Board {
 	public boolean allConfirmed() {
 		int i;
 		for (i=0;i<confirmed.size();i++) {
+			if (players.get(i).isBot()) {
+				continue;
+			}
 			if (confirmed.get(i).contentEquals("n")) {
 				return false;
 			}
@@ -131,15 +143,21 @@ public class Board {
 		return true;
 	}
 	
-	public void nextStatus() {
+	public void botMoves() {
 		
 	}
 	
 	public void confirm(int x) {
 		confirmed.set(x, "y");
 		if (allConfirmed()) {
-			nextStatus();
+			botMoves();
+			executeAllSkills();
+			status = Consts.DAY;
 		}
+	}
+	
+	public void unconfirm(int x) {
+		confirmed.set(x, "n");
 	}
 	
 	public void vote(int x, int y) {
@@ -282,6 +300,7 @@ public class Board {
 		String chooseCenterNum = "0";
 		String myIndex = "-1";
 		String canChooseBoth = "n";
+		String mandatory = "n";
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
@@ -302,6 +321,9 @@ public class Board {
 					chooseCenterNum = Integer.toString(p.getInitialRole().getChooseCenterNum());
 					if (p.getInitialRole().isCanChooseBoth()) {
 						canChooseBoth = "y";
+					}
+					if (p.getInitialRole().isMandatory()) {
+						mandatory = "y";
 					}
 				}
 				for (j=0;j<p.getPlayerMarks().size();j++) {
@@ -359,6 +381,7 @@ public class Board {
 		entity.setChoosePlayerNum(choosePlayerNum);
 		entity.setMyIndex(myIndex);
 		entity.setCanChooseBoth(canChooseBoth);
+		entity.setMandatory(mandatory);
 		return entity;
 	}
 	
