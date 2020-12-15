@@ -14,6 +14,11 @@ public class Urchin extends Role{
 		name = "熊孩子";
 		choosePlayerNum = 2;
 		hasNight = true;
+		nightMsg.add("你的初始身份是 熊孩子。");
+		nightMsg.add("选择两名其他玩家的身份进行交换。");
+		nightMsg.add("选择后点击确认结束你的夜晚阶段。");
+		dayMsg.add("你的初始身份是 熊孩子，你现在的身份可能已有变化。");
+		dayMsg.add("身份牌上拥有交换标记的玩家是你当时的交换对象。");
 	}
 	
 	public void useSkill(int t1, int t2) {

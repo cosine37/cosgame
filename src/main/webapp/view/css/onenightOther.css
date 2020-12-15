@@ -47,3 +47,14 @@ button:disabled{
 	background:url("/image/Onenight/target.png");
 	background-size:cover;
 }
+
+.exchange{
+	position: absolute;
+	user-select:none;
+	right: 0px;
+	bottom: 0px;
+	height: 60px;
+	width: 60px;
+	background:url("/image/Onenight/exchange.png");
+	background-size:cover;
+}

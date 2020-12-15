@@ -41,6 +41,8 @@
 					<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
 						<div class="target" ng-show="playerSelect[i] == 'y'">
 						</div>
+						<div class="exchange" ng-show="playerMarks[i] == '-2'">
+						</div>
 					</div>
 					{{playerDisplayNames[i]}}
 				</td>
@@ -53,14 +55,43 @@
 					<div class="role" ng-style="x" ng-click="clickCenterRole($index)">
 						<div class="target" ng-show="centerSelect[$index] == 'y'">
 						</div>
+						<div class="exchange" ng-show="centerMarks[i] == '-2'">
+						</div>
 					</div>
 				</td>
 			</tr>
 		</table>
-		你的初始身份是{{initialRoleName}}
-		<div class="role" ng-style="myRoleStyle">
-		</div>
-		<button ng-click="confirmNight()">确认</button>
+		<table>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<div class="role" ng-style="myRoleStyle">
+								</div>
+							</td>
+							<td ng-show="showUpdatedRole == 'y'">
+								<div class="role" ng-style="updatedRoleStyle">
+								</div>
+							</td>
+							<td ng-show="showUpdatedRole == 'n'">
+								<div class="role"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>初始身份</td>
+							<td ng-show="showUpdatedRole == 'y'">最后看到身份</td>
+							<td ng-show="showUpdatedRole == 'n'"></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<p ng-repeat="msg in centerMsg">{{msg}}</p>
+				</td>
+			</tr>
+		</table>
+		
+		<button ng-show="status == '2'" ng-click="confirmNight()">确认</button>
 	</div>
 	
 </body>

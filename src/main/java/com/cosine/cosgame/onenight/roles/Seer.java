@@ -1,7 +1,6 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
-import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
 public class Seer extends Role{
@@ -15,6 +14,11 @@ public class Seer extends Role{
 		choosePlayerNum = 1;
 		chooseCenterNum = 2;
 		hasNight = true;
+		nightMsg.add("你的初始身份是 预言家。");
+		nightMsg.add("你可以选择一名其它角色的身份牌或两张中央身份牌查看。");
+		nightMsg.add("选择后点击确认结束你的夜晚阶段，天亮时你可以看到你选择的身份牌。");
+		dayMsg.add("你的初始身份是 预言家，你现在的身份可能已有变化。");
+		dayMsg.add("场上显示的身份牌是你发动你技能时所看到的身份牌，可能已有变化。");
 	}
 	
 	public void useSkill(int t1) {

@@ -14,6 +14,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.playerSelect = [];
 		$scope.centerSelect = [];
 		$scope.myRoleStyle = {};
+		$scope.updatedRoleStyle = {};
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -131,9 +132,16 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			}
 			var data = {"targets" : targets}
-			$http({url: "/onenightgame/useskill", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
-			});
+			if ($scope.hasSkill == "y"){
+				$http({url: "/onenightgame/useskill", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			} else {
+				$http({url: "/onenightgame/confirmnight", method: "POST"}).then(function(response){
+					$scope.getBoard()
+				});
+			}
+			
 		}
 		
 		setRoleStyles = function(){
@@ -156,6 +164,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 			imgUrl = "url('/image/Onenight/Roles/" + $scope.initialRole + ".png')"
 			$scope.myRoleStyle = {
+				"background": imgUrl,
+				"background-size": "cover"
+			}
+			imgUrl = "url('/image/Onenight/Roles/" + $scope.updatedRole + ".png')"
+			$scope.updatedRoleStyle = {
 				"background": imgUrl,
 				"background-size": "cover"
 			}
@@ -195,6 +208,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.initialRoleName = response.data.initialRoleName
 				$scope.myIndex = parseInt(response.data.myIndex)
 				$scope.mandatory = response.data.mandatory
+				$scope.hasSkill = response.data.hasSkill
+				$scope.showUpdatedRole = response.data.showUpdatedRole
+				$scope.updatedRole = response.data.updatedRole
+				$scope.centerMsg = response.data.centerMsg
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.playerNames.length+3;i++){

@@ -301,6 +301,10 @@ public class Board {
 		String myIndex = "-1";
 		String canChooseBoth = "n";
 		String mandatory = "n";
+		String hasSkill = "n";
+		String showUpdatedRole = "n";
+		String updatedRole = "";
+		List<String> centerMsg = new ArrayList<>();
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
@@ -324,6 +328,18 @@ public class Board {
 					}
 					if (p.getInitialRole().isMandatory()) {
 						mandatory = "y";
+					}
+					if (p.getInitialRole().isHasNight()) {
+						hasSkill = "y";
+					}
+					if (p.isShowUpdatedRole()) {
+						showUpdatedRole = "y";
+						updatedRole = p.getUpdatedRole().getImg();
+					}
+					if (status == Consts.NIGHT) {
+						centerMsg = p.getInitialRole().getNightMsg();
+					} else if (status == Consts.DAY) {
+						centerMsg = p.getInitialRole().getDayMsg();
 					}
 				}
 				for (j=0;j<p.getPlayerMarks().size();j++) {
@@ -382,6 +398,10 @@ public class Board {
 		entity.setMyIndex(myIndex);
 		entity.setCanChooseBoth(canChooseBoth);
 		entity.setMandatory(mandatory);
+		entity.setHasSkill(hasSkill);
+		entity.setUpdatedRole(updatedRole);
+		entity.setShowUpdatedRole(showUpdatedRole);
+		entity.setCenterMsg(centerMsg);
 		return entity;
 	}
 	

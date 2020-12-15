@@ -133,6 +133,25 @@ public class OnenightController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/onenightgame/confirmnight", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmNight(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		Player p = board.getPlayerByName(username);
+		if (p != null) {
+			board.confirm(p.getIndex());
+			board.updateDB("status", board.getStatus());
+			board.updateDB("confirmed", board.getConfirmed());
+			board.updatePlayers();
+			board.updateCenterRoles();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/onenightgame/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

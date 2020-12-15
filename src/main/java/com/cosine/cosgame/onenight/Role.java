@@ -1,5 +1,6 @@
 package com.cosine.cosgame.onenight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Role {
@@ -8,6 +9,8 @@ public class Role {
 	protected int sequence;
 	protected String name;
 	protected String img;
+	protected List<String> nightMsg;
+	protected List<String> dayMsg;
 	
 	protected int choosePlayerNum;
 	protected int chooseCenterNum;
@@ -24,6 +27,10 @@ public class Role {
 		canChooseBoth = false;
 		hasNight = false;
 		mandatory = false;
+		name = "";
+		img = "";
+		nightMsg = new ArrayList<>();
+		dayMsg = new ArrayList<>();
 	}
 	
 	public void vision() {
@@ -122,6 +129,21 @@ public class Role {
 	public void setMandatory(boolean mandatory) {
 		this.mandatory = mandatory;
 	}
-	
+
+	public List<String> getNightMsg() {
+		return nightMsg;
+	}
+
+	public void setNightMsg(List<String> nightMsg) {
+		this.nightMsg = nightMsg;
+	}
+
+	public List<String> getDayMsg() {
+		return dayMsg;
+	}
+
+	public void setDayMsg(List<String> dayMsg) {
+		this.dayMsg = dayMsg;
+	}
 	
 }

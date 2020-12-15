@@ -17,12 +17,16 @@ public class BoardEntity {
 	String canChooseBoth;
 	String myIndex;
 	String mandatory;
+	String hasSkill;
+	String updatedRole;
+	String showUpdatedRole;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
 	List<String> playerMarks;
 	List<String> centerMarks;
 	List<String> rolesThisGame;
+	List<String> centerMsg;
 	
 	public String getId() {
 		return id;
@@ -137,5 +141,29 @@ public class BoardEntity {
 	}
 	public void setMandatory(String mandatory) {
 		this.mandatory = mandatory;
+	}
+	public String getHasSkill() {
+		return hasSkill;
+	}
+	public void setHasSkill(String hasSkill) {
+		this.hasSkill = hasSkill;
+	}
+	public String getUpdatedRole() {
+		return updatedRole;
+	}
+	public void setUpdatedRole(String updatedRole) {
+		this.updatedRole = updatedRole;
+	}
+	public String getShowUpdatedRole() {
+		return showUpdatedRole;
+	}
+	public void setShowUpdatedRole(String showUpdatedRole) {
+		this.showUpdatedRole = showUpdatedRole;
+	}
+	public List<String> getCenterMsg() {
+		return centerMsg;
+	}
+	public void setCenterMsg(List<String> centerMsg) {
+		this.centerMsg = centerMsg;
 	}
 }
