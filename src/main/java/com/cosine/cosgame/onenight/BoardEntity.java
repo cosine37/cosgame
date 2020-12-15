@@ -20,6 +20,7 @@ public class BoardEntity {
 	String hasSkill;
 	String updatedRole;
 	String showUpdatedRole;
+	String confirmed;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -165,5 +166,11 @@ public class BoardEntity {
 	}
 	public void setCenterMsg(List<String> centerMsg) {
 		this.centerMsg = centerMsg;
+	}
+	public String getConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(String confirmed) {
+		this.confirmed = confirmed;
 	}
 }

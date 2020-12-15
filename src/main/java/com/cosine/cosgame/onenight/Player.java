@@ -17,6 +17,7 @@ public class Player {
 	boolean bot;
 	Role updatedRole; // the updated role the user see
 	boolean showUpdatedRole;
+	boolean confirmed;
 	
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
@@ -31,6 +32,7 @@ public class Player {
 		bot = false;
 		updatedRole = new Role();
 		showUpdatedRole = false;
+		confirmed = false;
 	}
 	
 	public int getCurrentRoleIndex() {
@@ -159,6 +161,12 @@ public class Player {
 	public void setShowUpdatedRole(boolean showUpdatedRole) {
 		this.showUpdatedRole = showUpdatedRole;
 	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -172,6 +180,7 @@ public class Player {
 		doc.append("bot", bot);
 		doc.append("showUpdatedRole", showUpdatedRole);
 		doc.append("updatedRole", updatedRole.getImg());
+		doc.append("confirmed", confirmed);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -192,6 +201,7 @@ public class Player {
 		bot = doc.getBoolean("bot", false);
 		showUpdatedRole = doc.getBoolean("showUpdatedRole", false);
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
+		confirmed = doc.getBoolean("confirmed", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

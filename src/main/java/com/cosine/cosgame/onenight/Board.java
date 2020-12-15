@@ -90,7 +90,6 @@ public class Board {
 			} else {
 				confirmed.add("y");
 			}
-			
 		}
 		status = Consts.NIGHT;
 	}
@@ -147,11 +146,23 @@ public class Board {
 		
 	}
 	
+	public void clearConfirmed() {
+		int i;
+		for (i=0;i<confirmed.size();i++) {
+			confirmed.set(i, "n");
+		}
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmed(false);
+		}
+	}
+	
 	public void confirm(int x) {
 		confirmed.set(x, "y");
+		players.get(x).setConfirmed(true);
 		if (allConfirmed()) {
 			botMoves();
 			executeAllSkills();
+			clearConfirmed();
 			status = Consts.DAY;
 		}
 	}
@@ -304,6 +315,7 @@ public class Board {
 		String hasSkill = "n";
 		String showUpdatedRole = "n";
 		String updatedRole = "";
+		String confirmed = "n";
 		List<String> centerMsg = new ArrayList<>();
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
@@ -340,6 +352,9 @@ public class Board {
 						centerMsg = p.getInitialRole().getNightMsg();
 					} else if (status == Consts.DAY) {
 						centerMsg = p.getInitialRole().getDayMsg();
+					}
+					if (p.isConfirmed()) {
+						confirmed = "y";
 					}
 				}
 				for (j=0;j<p.getPlayerMarks().size();j++) {
@@ -402,6 +417,7 @@ public class Board {
 		entity.setUpdatedRole(updatedRole);
 		entity.setShowUpdatedRole(showUpdatedRole);
 		entity.setCenterMsg(centerMsg);
+		entity.setConfirmed(confirmed);
 		return entity;
 	}
 	

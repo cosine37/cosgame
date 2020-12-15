@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("onenightCreateGameApp", []);
-app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -41,5 +41,12 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			$scope.getBoard();
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},2500);
+		}
+		
+		$scope.offturnHandle();
 }]);

@@ -5,8 +5,8 @@ var setUrl = function(d){
 }
 
 var app = angular.module("onenightGameApp", []);
-app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
+	function($scope, $window, $http, $document, $timeout){
 		$scope.rolesSelect = [];
 		$scope.indexes = [];
 		$scope.playerRoleStyles = [];
@@ -15,6 +15,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.centerSelect = [];
 		$scope.myRoleStyle = {};
 		$scope.updatedRoleStyle = {};
+		$scope.status = "0";
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -212,6 +213,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.showUpdatedRole = response.data.showUpdatedRole
 				$scope.updatedRole = response.data.updatedRole
 				$scope.centerMsg = response.data.centerMsg
+				$scope.confirm = response.data.confirm
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.playerNames.length+3;i++){
@@ -232,5 +234,20 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.getBoard();
+		$scope.offturnHandle = function(){
+			if ($scope.status == "0"){
+				$scope.getBoard();
+			} else if ($scope.status == "1" && $scope.lord != $scope.username){
+				$scope.getBoard();
+			} else if ($scope.status == "2" && $scope.confirmed == "y"){
+				$scope.getBoard();
+			} else if ($scope.status == "3" && $scope.confirmed == "y"){
+				$scope.getBoard();
+			}
+			$timeout(function(){
+			    $scope.offturnHandle();
+			},1500);
+		}
+		
+		$scope.offturnHandle()
 }]);

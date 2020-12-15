@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cosine.cosgame.onenight.Board;
 import com.cosine.cosgame.onenight.BoardEntity;
+import com.cosine.cosgame.onenight.OnenightMeta;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -35,7 +36,7 @@ public class OnenightController {
 		return "onenightGame";
 	}
 	
-	@RequestMapping(value="/onenightgame/newboard", method = RequestMethod.POST)
+	@RequestMapping(value="/onenight/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -45,6 +46,38 @@ public class OnenightController {
 		board.genBoardId();
 		board.storeToDB();
 		session.setAttribute("boardId", board.getId());
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/onenight/allboards", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
+		OnenightMeta meta = new OnenightMeta();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/onenight/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/onenight/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) == null) {
+			board.addPlayer(username);
+			board.addPlayerToDB(username);
+		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
