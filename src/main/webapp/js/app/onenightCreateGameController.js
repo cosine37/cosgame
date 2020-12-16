@@ -38,6 +38,10 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.getBoard = function(){
 			$http.get('/onenightgame/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				if ($scope.status != "0"){
+					$scope.goto('/onenightgame')
+				}
 			});
 		}
 		

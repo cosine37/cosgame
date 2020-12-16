@@ -156,6 +156,15 @@ public class Board {
 		}
 	}
 	
+	public void clearVoted() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setVoted(false);
+			players.get(i).setNumVotes(0);
+			players.get(i).setVoteIndex(-1);
+		}
+	}
+	
 	public void confirm(int x) {
 		confirmed.set(x, "y");
 		players.get(x).setConfirmed(true);
@@ -163,6 +172,7 @@ public class Board {
 			botMoves();
 			executeAllSkills();
 			clearConfirmed();
+			clearVoted();
 			status = Consts.DAY;
 		}
 	}
@@ -173,7 +183,13 @@ public class Board {
 	
 	public void vote(int x, int y) {
 		players.get(x).setVoteIndex(y);
+		players.get(x).setVoted(true);
 		players.get(y).receiveVote();
+		confirmed.set(x, "y");
+		if (allConfirmed()) {
+			decideWinSide();
+			status = Consts.AFTERVOTE;
+		}
 	}
 	
 	public void decideWinSide() {
@@ -316,6 +332,7 @@ public class Board {
 		String showUpdatedRole = "n";
 		String updatedRole = "";
 		String confirmed = "n";
+		String voted = "n";
 		List<String> centerMsg = new ArrayList<>();
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
@@ -355,6 +372,9 @@ public class Board {
 					}
 					if (p.isConfirmed()) {
 						confirmed = "y";
+					}
+					if (p.isVoted()) {
+						voted = "y";
 					}
 				}
 				for (j=0;j<p.getPlayerMarks().size();j++) {
@@ -418,6 +438,7 @@ public class Board {
 		entity.setShowUpdatedRole(showUpdatedRole);
 		entity.setCenterMsg(centerMsg);
 		entity.setConfirmed(confirmed);
+		entity.setVoted(voted);
 		return entity;
 	}
 	

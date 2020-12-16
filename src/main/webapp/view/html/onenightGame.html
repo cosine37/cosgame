@@ -39,9 +39,13 @@
 			<tr>
 				<td ng-repeat="i in indexes">
 					<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
-						<div class="target" ng-show="playerSelect[i] == 'y'">
+						<div class="target" ng-show="status == 2 && playerSelect[i] == 'y' && confirmed == 'n'">
 						</div>
 						<div class="exchange" ng-show="playerMarks[i] == '-2'">
+						</div>
+						<div class="checked" ng-show="playerMarks[i] == '-3'">
+						</div>
+						<div class="vote" ng-show="voteIndex == i">
 						</div>
 					</div>
 					{{playerDisplayNames[i]}}
@@ -56,6 +60,8 @@
 						<div class="target" ng-show="centerSelect[$index] == 'y'">
 						</div>
 						<div class="exchange" ng-show="centerMarks[i] == '-2'">
+						</div>
+						<div class="checked" ng-show="centerMarks[i] == '-3'">
 						</div>
 					</div>
 				</td>
@@ -91,7 +97,8 @@
 			</tr>
 		</table>
 		
-		<button ng-show="status == '2'" ng-click="confirmNight()">确认</button>
+		<button ng-show="status == '2' && confirmed != 'y'" ng-click="confirmNight()">确认</button>
+		<button ng-show="status == '3' && voted != 'y'" ng-click="confirmVote()">投票</button>
 	</div>
 	
 </body>

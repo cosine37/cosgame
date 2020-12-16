@@ -21,6 +21,7 @@ public class BoardEntity {
 	String updatedRole;
 	String showUpdatedRole;
 	String confirmed;
+	String voted;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -172,5 +173,11 @@ public class BoardEntity {
 	}
 	public void setConfirmed(String confirmed) {
 		this.confirmed = confirmed;
+	}
+	public String getVoted() {
+		return voted;
+	}
+	public void setVoted(String voted) {
+		this.voted = voted;
 	}
 }

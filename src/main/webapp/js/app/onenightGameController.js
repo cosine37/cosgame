@@ -16,6 +16,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.myRoleStyle = {};
 		$scope.updatedRoleStyle = {};
 		$scope.status = "0";
+		$scope.voteIndex = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -50,65 +51,71 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.clickPlayerRole = function(x){
-			if ($scope.status != "2") return
-			if ($scope.playerSelect[x] == "y"){
-				$scope.playerSelect[x] = "n"
-			} else {
-				if ($scope.canChooseBoth == "n"){
-					for (i=0;i<$scope.centerSelect.length;i++){
-						$scope.centerSelect[i] = "n"
-					}
-				}
-				var t = 0;
-				for (i=0;i<$scope.playerSelect.length;i++){
-					if ($scope.playerSelect[i] == "y"){
-						t++;
-					}
-				}
-				if (t < $scope.choosePlayerNum){
-					$scope.playerSelect[x] = "y";
+			if ($scope.status == "2" && $scope.confirmed == "n"){
+				if ($scope.playerSelect[x] == "y"){
+					$scope.playerSelect[x] = "n"
 				} else {
-					if ($scope.choosePlayerNum == 1){
-						for (i=0;i<$scope.playerSelect.length;i++){
-							$scope.playerSelect[i] = "n"
-						}
-						$scope.playerSelect[x] = "y";
-					} else {
-						
-					}
-				}
-			}
-		}
-		
-		$scope.clickCenterRole = function(x){
-			if ($scope.status != "2") return
-			if ($scope.centerSelect[x] == "y"){
-				$scope.centerSelect[x] = "n"
-			} else {
-				if ($scope.canChooseBoth == "n"){
-					for (i=0;i<$scope.playerSelect.length;i++){
-						$scope.playerSelect[i] = "n"
-					}
-				}
-				var t = 0;
-				for (i=0;i<$scope.centerSelect.length;i++){
-					if ($scope.centerSelect[i] == "y"){
-						t++;
-					}
-				}
-				if (t < $scope.chooseCenterNum){
-					$scope.centerSelect[x] = "y";
-				} else {
-					if ($scope.chooseCenterNum == 1){
+					if ($scope.canChooseBoth == "n"){
 						for (i=0;i<$scope.centerSelect.length;i++){
 							$scope.centerSelect[i] = "n"
 						}
+					}
+					var t = 0;
+					for (i=0;i<$scope.playerSelect.length;i++){
+						if ($scope.playerSelect[i] == "y"){
+							t++;
+						}
+					}
+					if (t < $scope.choosePlayerNum){
+						$scope.playerSelect[x] = "y";
+					} else {
+						if ($scope.choosePlayerNum == 1){
+							for (i=0;i<$scope.playerSelect.length;i++){
+								$scope.playerSelect[i] = "n"
+							}
+							$scope.playerSelect[x] = "y";
+						} else {
+							
+						}
+					}
+				}
+			} else if ($scope.status == "3" && $scope.voted == "n"){
+				$scope.voteIndex = x;
+			}  
+			
+		}
+		
+		$scope.clickCenterRole = function(x){
+			if ($scope.status == "2" && $scope.confirmed == "n"){
+				if ($scope.centerSelect[x] == "y"){
+					$scope.centerSelect[x] = "n"
+				} else {
+					if ($scope.canChooseBoth == "n"){
+						for (i=0;i<$scope.playerSelect.length;i++){
+							$scope.playerSelect[i] = "n"
+						}
+					}
+					var t = 0;
+					for (i=0;i<$scope.centerSelect.length;i++){
+						if ($scope.centerSelect[i] == "y"){
+							t++;
+						}
+					}
+					if (t < $scope.chooseCenterNum){
 						$scope.centerSelect[x] = "y";
 					} else {
-						
+						if ($scope.chooseCenterNum == 1){
+							for (i=0;i<$scope.centerSelect.length;i++){
+								$scope.centerSelect[i] = "n"
+							}
+							$scope.centerSelect[x] = "y";
+						} else {
+							
+						}
 					}
 				}
 			}
+			
 		}
 		
 		$scope.canConfirmNight = function(){
@@ -145,6 +152,21 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			
 		}
 		
+		$scope.chooseVote = function(x){
+			$scope.voteIndex = x;
+		}
+		
+		$scope.confirmVote = function(){
+			if ($scope.voteIndex != -1){
+				var data = {"index" : $scope.voteIndex}
+				$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			} else {
+				alert("请选择你的投票对象")
+			}
+		}
+		
 		setRoleStyles = function(){
 			var imgUrl;
 			$scope.playerRoleStyles = [];
@@ -152,7 +174,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			for (i=0;i<$scope.playerMarks.length;i++){
 				$scope.playerSelect.push("n");
 				imgUrl = "url('/image/Onenight/qs.png')"
-				if ($scope.playerMarks[i] == "-1" || $scope.playerMarks[i] == "-2"){
+				if ($scope.playerMarks[i] == "-1" || $scope.playerMarks[i] == "-2" || $scope.playerMarks[i] == "-3"){
 					
 				} else {
 					imgUrl = "url('/image/Onenight/Roles/" + $scope.playerMarks[i] + ".png')"
@@ -213,7 +235,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.showUpdatedRole = response.data.showUpdatedRole
 				$scope.updatedRole = response.data.updatedRole
 				$scope.centerMsg = response.data.centerMsg
-				$scope.confirm = response.data.confirm
+				$scope.confirmed = response.data.confirmed
+				$scope.voted = response.data.voted
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.playerNames.length+3;i++){
@@ -241,7 +264,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.getBoard();
 			} else if ($scope.status == "2" && $scope.confirmed == "y"){
 				$scope.getBoard();
-			} else if ($scope.status == "3" && $scope.confirmed == "y"){
+			} else if ($scope.status == "3" && $scope.voted == "y"){
 				$scope.getBoard();
 			}
 			$timeout(function(){

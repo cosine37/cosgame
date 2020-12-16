@@ -58,3 +58,27 @@ button:disabled{
 	background:url("/image/Onenight/exchange.png");
 	background-size:cover;
 }
+
+.checked{
+	position: absolute;
+	user-select:none;
+	right: 10px;
+	bottom: 10px;
+	height: 40px;
+	width: 40px;
+	background:url("/image/Onenight/checked.png");
+	background-size:cover;
+}
+
+.vote{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -45px;
+	height: 80px;
+	width: 80px;
+	background:url("/image/Onenight/vote.png");
+	background-size:cover;
+}
