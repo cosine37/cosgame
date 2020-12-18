@@ -13,24 +13,41 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/onenightGameController.js"></script>
 <body ng-app="onenightGameApp" ng-controller="onenightGameCtrl">
-	<button ng-click="goto('onenightcreategame')">back</button>
+	<button ng-click="goto('onenight')">back</button>
 	<div>
 		{{gamedata}}
 	</div>
-	<div ng-show="status == '1' && lord == username">
-		<span ng-repeat="x in rolesSelect track by $index">
-			<select ng-model="rolesSelect[$index]">
-				<option value='0'>村民</option>
-				<option value='1'>狼人</option>
-				<option value='2'>预言家</option>
-				<option value='3'>盗贼</option>
-				<option value='4'>熊孩子</option>
-				<!-- 
-				<option value='5'>帮凶</option>
-				 -->
-			</select>
-		</span>
-		<button ng-click="submitRolesSelect()">确定</button>
+	<div ng-show="status == '1'">
+		<div ng-show="lord == username">
+			以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。请选择本局游戏的{{playerNames.length+3}}个身份
+			<button ng-disabled="totalSelected != playerNames.length+3" ng-click="submitRolesSelect()">确定</button>
+		</div>
+		<div ng-show="lord != username">
+			以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。
+		</div>
+		<table>
+			<tr>
+				<td ng-repeat="x in roleChooseStyles track by $index">
+					<div class="role" ng-style="x" ng-click="selectRole($index)">
+						<div class="target" ng-show="rolesSelect[$index] == 1"></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div ng-show="lord == username && rolesThisGame.length>0">
+			以下为你选择的本局游戏身份。
+		</div>
+		<div ng-show="lord != username && rolesThisGame.length>0">
+			以下为房主选择的本局游戏身份。
+		</div>
+		<table>
+			<tr>
+				<td ng-repeat="x in rolesThisGameStyles track by $index">
+					<div class="role" ng-style="x" ng-click="selectRole($index)">
+					</div>
+				</td>
+			</tr>
+		</table>
 		<button ng-click="night()" ng-show="canNight == 'y'">天黑</button>
 	</div>
 	

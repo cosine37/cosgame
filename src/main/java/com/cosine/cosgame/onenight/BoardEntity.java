@@ -29,6 +29,7 @@ public class BoardEntity {
 	List<String> centerMarks;
 	List<String> rolesThisGame;
 	List<String> centerMsg;
+	List<String> rolesChoose;
 	
 	public String getId() {
 		return id;
@@ -179,5 +180,11 @@ public class BoardEntity {
 	}
 	public void setVoted(String voted) {
 		this.voted = voted;
+	}
+	public List<String> getRolesChoose() {
+		return rolesChoose;
+	}
+	public void setRolesChoose(List<String> rolesChoose) {
+		this.rolesChoose = rolesChoose;
 	}
 }

@@ -53,10 +53,14 @@ public class Board {
 	
 	public void setRolesThisGameByInt(List<Integer> ls) {
 		int i;
+		AllRes allRes = new AllRes();
+		List<Role> allRoles = allRes.getAllRoles();
 		rolesThisGame = new ArrayList<>();
 		for (i=0;i<ls.size();i++) {
-			Role r = RoleFactory.createRole(ls.get(i));
-			rolesThisGame.add(r);
+			if (ls.get(i) == 1) {
+				Role r = allRoles.get(i);
+				rolesThisGame.add(r);
+			}
 		}
 		canNight = true;
 	}
@@ -94,8 +98,8 @@ public class Board {
 		}
 		status = Consts.NIGHT;
 		// TODO: test roles here
-		Role r = new Seer();
-		players.get(0).getRoles().set(0, r);
+		//Role r = new Seer();
+		//players.get(0).getRoles().set(0, r);
 		
 	}
 	
@@ -428,6 +432,13 @@ public class Board {
 			entity.setCanNight("n");
 		}
 		
+		List<String> rolesChoose = new ArrayList<>();
+		AllRes allRes = new AllRes();
+		List<Role> allRoles = allRes.getAllRoles();
+		for (i=0;i<allRoles.size();i++) {
+			rolesChoose.add(allRoles.get(i).getImg());
+		}
+		
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
@@ -452,6 +463,7 @@ public class Board {
 		entity.setCenterMsg(centerMsg);
 		entity.setConfirmed(confirmed);
 		entity.setVoted(voted);
+		entity.setRolesChoose(rolesChoose);
 		return entity;
 	}
 	
