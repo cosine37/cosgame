@@ -28,6 +28,10 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Seer();
 		allRoles.add(r);
+		for (i=0;i<2;i++) {
+			r = new Mason();
+			allRoles.add(r);
+		}
 		r = new Thief();
 		allRoles.add(r);
 		r = new Urchin();

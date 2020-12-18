@@ -32,9 +32,8 @@ public class Werewolf extends Role{
 				continue;
 			}
 			Player p = board.getPlayers().get(i);
-			System.out.println(p.getInitialRole().getRoleNum());
 			if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
-				player.getPlayerMarks().set(i, 1);
+				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNum());
 			}
 		}
 	}

@@ -21,6 +21,8 @@ public class RoleFactory {
 			role = new Insomniac();
 		} else if (img.contentEquals("r07")) {
 			role = new Drunk();
+		} else if (img.contentEquals("r08")) {
+			role = new Mason();
 		}
 		
 		else {
@@ -49,6 +51,8 @@ public class RoleFactory {
 			role = new Insomniac();
 		} else if (num == 7) {
 			role = new Drunk();
+		} else if (num == 8) {
+			role = new Mason();
 		}
 		
 		else {

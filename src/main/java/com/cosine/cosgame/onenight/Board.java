@@ -87,10 +87,6 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		Role r = new Seer();
-		r.setPlayer(players.get(0));
-		r.setBoard(this);
-		players.get(0).getRoles().set(0, r);
 		/*
 		Role r = new Werewolf();
 		r.setPlayer(players.get(0));

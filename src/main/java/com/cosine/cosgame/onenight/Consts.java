@@ -22,6 +22,8 @@ public class Consts {
 	public static final int URCHIN = 4;
 	public static final int MINION = 5;
 	public static final int INSOMNIAC = 6;
+	public static final int DRUNK = 7;
+	public static final int MASON = 8;
 	
 	// marks
 	public static final int UNKNOWN = -1;
