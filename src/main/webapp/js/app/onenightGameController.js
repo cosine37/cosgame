@@ -20,6 +20,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.status = "0";
 		$scope.voteIndex = -1;
 		$scope.totalSelected = 0;
+		$scope.showConfirmed = true;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -68,6 +69,28 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
+		updateShowConfirmed = function(){
+			if ($scope.mandatory != 'y') return
+			var tp = 0;
+			for (i=0;i<$scope.playerSelect.length;i++){
+				if ($scope.playerSelect[i] == "y"){
+					tp++;
+				}
+			}
+			var tc = 0;
+			for (i=0;i<$scope.centerSelect.length;i++){
+				if ($scope.centerSelect[i] == "y"){
+					tc++;
+				}
+			}
+			
+			if (tp == $scope.choosePlayerNum && tc == $scope.chooseCenterNum){
+				$scope.showConfirmed = true;
+			} else {
+				$scope.showConfirmed = false;
+			}
+		}
+		
 		$scope.clickPlayerRole = function(x){
 			if ($scope.status == "2" && $scope.confirmed == "n"){
 				if ($scope.playerSelect[x] == "y"){
@@ -100,7 +123,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			} else if ($scope.status == "3" && $scope.voted == "n"){
 				$scope.voteIndex = x;
 			}  
-			
+			updateShowConfirmed()
 		}
 		
 		$scope.clickCenterRole = function(x){
@@ -133,7 +156,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					}
 				}
 			}
-			
+			updateShowConfirmed()
 		}
 		
 		$scope.canConfirmNight = function(){
@@ -158,7 +181,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 			}
 			var data = {"targets" : targets}
-			if ($scope.hasSkill == "y"){
+			if ($scope.hasSkill == "y" && targets.length > 0){
 				$http({url: "/onenightgame/useskill", method: "POST", params: data}).then(function(response){
 					$scope.getBoard()
 				});
@@ -291,6 +314,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					if (x == $scope.myIndex) break;
 					$scope.indexes.push(x);
 					x = x+1;
+				}
+				$scope.showConfirmed = true;
+				if ($scope.mandatory == 'y'){
+					$scope.showConfirmed = false;
 				}
 				setRoleStyles();
 			});

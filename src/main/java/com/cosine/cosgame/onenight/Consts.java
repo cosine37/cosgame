@@ -19,8 +19,9 @@ public class Consts {
 	public static final int WEREWOLF = 1;
 	public static final int SEER = 2;
 	public static final int THEIF = 3;
-	public static final int KID = 4;
+	public static final int URCHIN = 4;
 	public static final int MINION = 5;
+	public static final int INSOMNIAC = 6;
 	
 	// marks
 	public static final int UNKNOWN = -1;

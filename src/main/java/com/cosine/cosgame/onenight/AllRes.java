@@ -24,11 +24,17 @@ public class AllRes {
 			r = new Werewolf();
 			allRoles.add(r);
 		}
+		r = new Minion();
+		allRoles.add(r);
 		r = new Seer();
 		allRoles.add(r);
 		r = new Thief();
 		allRoles.add(r);
 		r = new Urchin();
+		allRoles.add(r);
+		r = new Drunk();
+		allRoles.add(r);
+		r = new Insomniac();
 		allRoles.add(r);
 	}
 

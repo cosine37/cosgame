@@ -15,6 +15,12 @@ public class RoleFactory {
 			role = new Thief();
 		} else if (img.contentEquals("r04")) {
 			role = new Urchin();
+		} else if (img.contentEquals("r05")) {
+			role = new Minion();
+		} else if (img.contentEquals("r06")) {
+			role = new Insomniac();
+		} else if (img.contentEquals("r07")) {
+			role = new Drunk();
 		}
 		
 		else {
@@ -37,6 +43,12 @@ public class RoleFactory {
 			role = new Thief();
 		} else if (num == 4) {
 			role = new Urchin();
+		} else if (num == 5) {
+			role = new Minion();
+		} else if (num == 6) {
+			role = new Insomniac();
+		} else if (num == 7) {
+			role = new Drunk();
 		}
 		
 		else {

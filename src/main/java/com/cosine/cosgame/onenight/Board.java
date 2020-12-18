@@ -85,6 +85,27 @@ public class Board {
 			singleRole.add(tls.remove(0));
 			centerRoles.add(singleRole);
 		}
+		
+		// TODO: test roles here
+		Role r = new Seer();
+		r.setPlayer(players.get(0));
+		r.setBoard(this);
+		players.get(0).getRoles().set(0, r);
+		/*
+		Role r = new Werewolf();
+		r.setPlayer(players.get(0));
+		r.setBoard(this);
+		players.get(0).getRoles().set(0, r);
+		r = new Minion();
+		r.setPlayer(players.get(1));
+		r.setBoard(this);
+		players.get(1).getRoles().set(0, r);
+		r = new Werewolf();
+		r.setPlayer(players.get(2));
+		r.setBoard(this);
+		players.get(2).getRoles().set(0, r);
+		*/
+		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
 		}
@@ -97,9 +118,7 @@ public class Board {
 			}
 		}
 		status = Consts.NIGHT;
-		// TODO: test roles here
-		//Role r = new Seer();
-		//players.get(0).getRoles().set(0, r);
+		
 		
 	}
 	
@@ -110,6 +129,14 @@ public class Board {
 			int n = centerRoles.get(x).size()-1;
 			Role role = centerRoles.get(x).get(n);
 			return role;
+		}
+	}
+	
+	public void addCenterRole(int x, Role r) {
+		if (x>2 || x<0) {
+			return;
+		} else {
+			centerRoles.get(x).add(r);
 		}
 	}
 	
