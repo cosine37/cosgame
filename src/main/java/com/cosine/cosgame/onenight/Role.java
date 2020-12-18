@@ -11,6 +11,8 @@ public class Role {
 	protected String img;
 	protected List<String> nightMsg;
 	protected List<String> dayMsg;
+	protected List<String> confirmedMsg;
+	protected List<String> votedMsg;
 	
 	protected int choosePlayerNum;
 	protected int chooseCenterNum;
@@ -31,6 +33,8 @@ public class Role {
 		img = "";
 		nightMsg = new ArrayList<>();
 		dayMsg = new ArrayList<>();
+		confirmedMsg = new ArrayList<>();
+		votedMsg = new ArrayList<>();
 	}
 	
 	public void vision() {
@@ -144,6 +148,22 @@ public class Role {
 
 	public void setDayMsg(List<String> dayMsg) {
 		this.dayMsg = dayMsg;
+	}
+
+	public List<String> getConfirmedMsg() {
+		return confirmedMsg;
+	}
+
+	public void setConfirmedMsg(List<String> confirmedMsg) {
+		this.confirmedMsg = confirmedMsg;
+	}
+
+	public List<String> getVotedMsg() {
+		return votedMsg;
+	}
+
+	public void setVotedMsg(List<String> votedMsg) {
+		this.votedMsg = votedMsg;
 	}
 	
 }

@@ -181,6 +181,7 @@ public class Player {
 		doc.append("showUpdatedRole", showUpdatedRole);
 		doc.append("updatedRole", updatedRole.getImg());
 		doc.append("confirmed", confirmed);
+		doc.append("voted", voted);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -202,6 +203,7 @@ public class Player {
 		showUpdatedRole = doc.getBoolean("showUpdatedRole", false);
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
 		confirmed = doc.getBoolean("confirmed", false);
+		voted = doc.getBoolean("voted", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

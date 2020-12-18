@@ -15,8 +15,14 @@ public class Werewolf extends Role{
 		nightMsg.add("你的初始身份是 狼人。");
 		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");
+		confirmedMsg.add("你的初始身份是 村民。");
+		confirmedMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
+		confirmedMsg.add("正等待其他玩家确认。");
 		dayMsg.add("你的初始身份是 狼人，你现在的身份可能已有变化。");
 		dayMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，但当前身份可能已有变化。");
+		votedMsg.add("你的初始身份是 狼人，你现在的身份可能已有变化。");
+		votedMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，但当前身份可能已有变化。");
+		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
 	public void vision() {

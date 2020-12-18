@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.onenight.roles.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -92,6 +93,10 @@ public class Board {
 			}
 		}
 		status = Consts.NIGHT;
+		// TODO: test roles here
+		Role r = new Seer();
+		players.get(0).getRoles().set(0, r);
+		
 	}
 	
 	public Role getCurCenterRole(int x) {
@@ -366,9 +371,17 @@ public class Board {
 						updatedRole = p.getUpdatedRole().getImg();
 					}
 					if (status == Consts.NIGHT) {
-						centerMsg = p.getInitialRole().getNightMsg();
+						if (p.isConfirmed()) {
+							centerMsg = p.getInitialRole().getConfirmedMsg();
+						} else {
+							centerMsg = p.getInitialRole().getNightMsg();
+						}
 					} else if (status == Consts.DAY) {
-						centerMsg = p.getInitialRole().getDayMsg();
+						if (p.isVoted()) {
+							centerMsg = p.getInitialRole().getVotedMsg();
+						} else {
+							centerMsg = p.getInitialRole().getDayMsg();
+						}
 					}
 					if (p.isConfirmed()) {
 						confirmed = "y";
