@@ -16,7 +16,9 @@
 	<button ng-click="goto('onenight')">back</button>
 	<button ng-click="addBot()">add bot</button>
 	<button ng-click="start()">start</button>
-	<div>
-		{{gamedata}}
-	</div>
+	<table>
+		<tr ng-repeat="pn in playerNames track by $index">
+			<td>{{pn}}</td>
+		</tr>
+	</table>
 </body>

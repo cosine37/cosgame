@@ -208,6 +208,45 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			}
 		}
 		
+		setBigImageStyle = function(){
+			$scope.bigImageStyle = {
+				"height": "609px", 
+				"width": "392px", 
+				"position": "absolute",
+				"left": "50%",
+				"top": "50%",
+				"margin-left": "-196px",
+				"margin-top": "-280px",
+				"background": "url(" + $scope.bigImage + ")", 
+				"background-size": "cover"
+			}
+			
+			$scope.bigImageDivStyle = {
+				"position": "absolute",
+				"left": "0%",
+				"top": "0%",
+				"height": "100%",
+				"width": "100%",
+				"background": "rgba(150, 150, 150, 0.5)"
+			}
+		}
+		
+		$scope.showRoleThisGameBigImage = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Onenight/Roles/" + $scope.rolesThisGame[index] + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.showMyInitialBigImage = function(){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Onenight/Roles/" + $scope.initialRole + ".png"
+			setBigImageStyle()
+		}
+		
+		$scope.unshowBigImage = function(){
+			$scope.showBigImage = false
+		}
+		
 		setRoleStyles = function(){
 			var imgUrl;
 			$scope.playerRoleStyles = [];
@@ -375,6 +414,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				if ($scope.status == '4') {
 					setResultMsg();
+				} else if ($scope.status == '2'){
+					$scope.centerMsg.unshift("天黑了。")
+				} else if ($scope.status == '3'){
+					$scope.centerMsg.unshift("天亮了。")
 				}
 				setRoleStyles();
 			});

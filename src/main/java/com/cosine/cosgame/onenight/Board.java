@@ -163,11 +163,24 @@ public class Board {
 	
 	public boolean allConfirmed() {
 		int i;
-		for (i=0;i<confirmed.size();i++) {
+		for (i=0;i<players.size();i++) {
 			if (players.get(i).isBot()) {
 				continue;
 			}
-			if (confirmed.get(i).contentEquals("n")) {
+			if (!players.get(i).isConfirmed()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean allVoted() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isBot()) {
+				continue;
+			}
+			if (!players.get(i).isVoted()) {
 				return false;
 			}
 		}
@@ -218,7 +231,7 @@ public class Board {
 		players.get(x).setVoted(true);
 		players.get(y).receiveVote();
 		confirmed.set(x, "y");
-		if (allConfirmed()) {
+		if (allVoted()) {
 			decideWinSide();
 			showAllRoles();
 			status = Consts.AFTERVOTE;
@@ -509,6 +522,8 @@ public class Board {
 		for (i=0;i<allRoles.size();i++) {
 			rolesChoose.add(allRoles.get(i).getImg());
 		}
+		
+		decideWinSide();
 		
 		entity.setId(id);
 		entity.setLord(lord);

@@ -82,3 +82,12 @@ button:disabled{
 	background:url("/image/Onenight/vote.png");
 	background-size:cover;
 }
+
+.qsmark{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	left: 2px;
+	cursor: pointer;
+}
