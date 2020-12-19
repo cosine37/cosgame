@@ -30,6 +30,12 @@ public class BoardEntity {
 	List<String> rolesThisGame;
 	List<String> centerMsg;
 	List<String> rolesChoose;
+	List<String> winPlayers;
+	List<String> losePlayers;
+	List<String> numVotes;
+	List<String> playerVotes;
+	List<String> votedOut;
+	List<String> finalRoles;
 	
 	public String getId() {
 		return id;
@@ -174,6 +180,30 @@ public class BoardEntity {
 	}
 	public void setConfirmed(String confirmed) {
 		this.confirmed = confirmed;
+}
+	public List<String> getRolesChoose() {
+		return rolesChoose;
+	}
+	public void setRolesChoose(List<String> rolesChoose) {
+		this.rolesChoose = rolesChoose;
+	}
+	public List<String> getWinPlayers() {
+		return winPlayers;
+	}
+	public void setWinPlayers(List<String> winPlayers) {
+		this.winPlayers = winPlayers;
+	}
+	public List<String> getLosePlayers() {
+		return losePlayers;
+	}
+	public void setLosePlayers(List<String> losePlayers) {
+		this.losePlayers = losePlayers;
+	}
+	public List<String> getNumVotes() {
+		return numVotes;
+	}
+	public void setNumVotes(List<String> numVotes) {
+		this.numVotes = numVotes;
 	}
 	public String getVoted() {
 		return voted;
@@ -181,10 +211,22 @@ public class BoardEntity {
 	public void setVoted(String voted) {
 		this.voted = voted;
 	}
-	public List<String> getRolesChoose() {
-		return rolesChoose;
+	public List<String> getPlayerVotes() {
+		return playerVotes;
 	}
-	public void setRolesChoose(List<String> rolesChoose) {
-		this.rolesChoose = rolesChoose;
+	public void setPlayerVotes(List<String> playerVotes) {
+		this.playerVotes = playerVotes;
+	}
+	public List<String> getVotedOut() {
+		return votedOut;
+	}
+	public void setVotedOut(List<String> votedOut) {
+		this.votedOut = votedOut;
+	}
+	public List<String> getFinalRoles() {
+		return finalRoles;
+	}
+	public void setFinalRoles(List<String> finalRoles) {
+		this.finalRoles = finalRoles;
 	}
 }

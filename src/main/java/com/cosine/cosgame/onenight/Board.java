@@ -220,7 +220,15 @@ public class Board {
 		confirmed.set(x, "y");
 		if (allConfirmed()) {
 			decideWinSide();
+			showAllRoles();
 			status = Consts.AFTERVOTE;
+		}
+	}
+	
+	public void showAllRoles() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).showAllRoles();
 		}
 	}
 	
@@ -238,7 +246,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
 			if (players.get(i).getNumVotes() == mostVote) {
-				players.get(i).setVoted(true);
+				players.get(i).setVotedOut(true);
 				if (r.getSide() == Consts.WOLF) {
 					if (r.getRoleNum() == Consts.MINION) {
 						votedMinion = true;
@@ -349,6 +357,30 @@ public class Board {
 	public void setCanNight(boolean canNight) {
 		this.canNight = canNight;
 	}
+	
+	public List<String> getWinPlayers(){
+		List<String> ans = new ArrayList<>();
+		if (status != Consts.AFTERVOTE) return ans;
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getSide() == winSide) {
+				ans.add(players.get(i).getName());
+			}
+		}
+		return ans;
+	}
+	
+	public List<String> getLosePlayers(){
+		List<String> ans = new ArrayList<>();
+		if (status != Consts.AFTERVOTE) return ans;
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getSide() != winSide) {
+				ans.add(players.get(i).getName());
+			}
+		}
+		return ans;
+	}
 
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
@@ -370,12 +402,27 @@ public class Board {
 		List<String> centerMarks = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> playerDisplayNames = new ArrayList<>();
+		List<String> numVotes = new ArrayList<>();
+		List<String> playerVotes = new ArrayList<>();
+		List<String> votedOut = new ArrayList<>();
+		List<String> finalRoles = new ArrayList<>();
 		int i,j;
 		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
 			playerNames.add(players.get(i).getName());
 			playerDisplayNames.add(players.get(i).getDisplayName());
+			if (status == Consts.AFTERVOTE) {
+				numVotes.add(Integer.toString(p.getNumVotes()));
+				playerVotes.add(Integer.toString(p.getVoteIndex()));
+				finalRoles.add(p.getCurrentRole().getImg());
+				if (p.isVotedOut()) {
+					votedOut.add("y");
+				} else {
+					votedOut.add("n");
+				}
+			}
 			if (players.get(i).getName().contentEquals(name)) {
-				Player p = players.get(i);
+				
 				myIndex = Integer.toString(i);
 				if (p.getInitialRole() == null) {
 					initialRole = "-1";
@@ -416,6 +463,7 @@ public class Board {
 					if (p.isVoted()) {
 						voted = "y";
 					}
+					
 				}
 				for (j=0;j<p.getPlayerMarks().size();j++) {
 					int x = p.getPlayerMarks().get(j);
@@ -487,6 +535,12 @@ public class Board {
 		entity.setConfirmed(confirmed);
 		entity.setVoted(voted);
 		entity.setRolesChoose(rolesChoose);
+		entity.setWinPlayers(getWinPlayers());
+		entity.setLosePlayers(getLosePlayers());
+		entity.setNumVotes(numVotes);
+		entity.setPlayerVotes(playerVotes);
+		entity.setVotedOut(votedOut);
+		entity.setFinalRoles(finalRoles);
 		return entity;
 	}
 	

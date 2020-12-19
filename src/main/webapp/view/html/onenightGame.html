@@ -13,10 +13,7 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/onenightGameController.js"></script>
 <body ng-app="onenightGameApp" ng-controller="onenightGameCtrl">
-	<button ng-click="goto('onenight')">back</button>
-	<div>
-		{{gamedata}}
-	</div>
+	
 	<div ng-show="status == '1'">
 		<div ng-show="lord == username">
 			以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。请选择本局游戏的{{playerNames.length+3}}个身份
@@ -43,15 +40,16 @@
 		<table>
 			<tr>
 				<td ng-repeat="x in rolesThisGameStyles track by $index">
-					<div class="role" ng-style="x" ng-click="selectRole($index)">
+					<div class="role" ng-style="x">
 					</div>
 				</td>
 			</tr>
 		</table>
-		<button ng-click="night()" ng-show="canNight == 'y'">天黑</button>
+		<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
 	</div>
 	
-	<div ng-show="status == '2' || status == '3'">
+	<div ng-show="status == '2' || status == '3' || status == '4'">
+		所有玩家
 		<table>
 			<tr>
 				<td ng-repeat="i in indexes">
@@ -65,7 +63,12 @@
 						<div class="vote" ng-show="voteIndex == i">
 						</div>
 					</div>
-					{{playerDisplayNames[i]}}
+					<span ng-show="status != '4'">
+						{{playerDisplayNames[i]}}
+					</span>
+					<span ng-show="status == '4'">
+						{{playerDisplayNames[i]}} 获得{{numVotes[i]}}票
+					</span>	
 				</td>
 			</tr>
 		</table>
@@ -84,7 +87,16 @@
 				</td>
 			</tr>
 		</table>
+		本局所有角色（按夜晚行动顺序排列）
 		<table>
+			<tr>
+				<td ng-repeat="x in rolesThisGameStyles track by $index">
+					<div class="role" ng-style="x">
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table style="margin-top: 10px">
 			<tr>
 				<td>
 					<table>
@@ -103,11 +115,13 @@
 						</tr>
 						<tr>
 							<td>初始身份</td>
-							<td ng-show="showUpdatedRole == 'y'">最后看到身份</td>
+							<td ng-show="showUpdatedRole == 'y' && status != '4'">最后看到身份</td>
+							<td ng-show="showUpdatedRole == 'y' && status == '4'">最终身份</td>
 							<td ng-show="showUpdatedRole == 'n'"></td>
 						</tr>
 					</table>
 				</td>
+				<td style="width: 20px">&nbsp;</td>
 				<td>
 					<p ng-repeat="msg in centerMsg">{{msg}}</p>
 				</td>
@@ -115,7 +129,8 @@
 		</table>
 		
 		<button ng-show="status == '2' && confirmed != 'y' && showConfirmed" ng-click="confirmNight()">确认</button>
-		<button ng-show="status == '3' && voted != 'y'" ng-click="confirmVote()">投票</button>
+		<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
+		<button ng-click="goto('onenight')">退出</button>
 	</div>
 	
 </body>

@@ -274,6 +274,56 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			}
 		}
 		
+		setResultMsg = function(){
+			$scope.centerMsg = []
+			$scope.centerMsg.push("投票结束。")
+			var voteMsg = "";
+			for (i=0;i<$scope.playerNames.length;i++){
+				var x = parseInt($scope.playerVotes[i]);
+				var s = ""
+				if (x == -1){
+					s = $scope.playerNames[i] + "弃权。";
+				} else {
+					s = $scope.playerNames[i] + "投给了" + $scope.playerNames[x] + "。";
+				}
+				voteMsg = voteMsg + s
+			}
+			$scope.centerMsg.push(voteMsg);
+			var flag = true;
+			var voteOutMsg = "";
+			for (i=0;i<$scope.votedOut.length;i++){
+				if ($scope.votedOut[i] == "y"){
+					if (flag){
+						flag = false;
+						voteOutMsg = $scope.playerNames[i];
+					} else {
+						voteOutMsg = voteOutMsg + "," + $scope.playerNames[i];
+					}
+				}
+			} 
+			if (flag){
+				voteOutMsg = "没有人被公投出局。"
+			} else {
+				voteOutMsg = voteOutMsg + "被公投出局。"
+			}
+			$scope.centerMsg.push(voteOutMsg);
+			var winMsg = "获胜者：";
+			flag = true;
+			for (i=0;i<$scope.winPlayers.length;i++){
+				if (flag){
+					flag = false;
+					winMsg = winMsg + $scope.winPlayers[i];
+				} else {
+					winMsg = winMsg + ", " + $scope.winPlayers[i];
+				}
+			}
+			if (flag){
+				winMsg = "没有获胜者"
+			}
+			winMsg = winMsg + "。"
+			$scope.centerMsg.push(winMsg)
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/onenightgame/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -299,6 +349,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.confirmed = response.data.confirmed
 				$scope.voted = response.data.voted
 				$scope.rolesChoose = response.data.rolesChoose
+				$scope.numVotes = response.data.numVotes;
+				$scope.playerVotes = response.data.playerVotes;
+				$scope.votedOut = response.data.votedOut
+				$scope.winPlayers = response.data.winPlayers
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){
@@ -318,6 +372,9 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.showConfirmed = true;
 				if ($scope.mandatory == 'y'){
 					$scope.showConfirmed = false;
+				}
+				if ($scope.status == '4') {
+					setResultMsg();
 				}
 				setRoleStyles();
 			});

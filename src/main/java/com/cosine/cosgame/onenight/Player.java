@@ -14,6 +14,7 @@ public class Player {
 	int score;
 	int index;
 	boolean voted;
+	boolean votedOut;
 	boolean bot;
 	Role updatedRole; // the updated role the user see
 	boolean showUpdatedRole;
@@ -29,6 +30,7 @@ public class Player {
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
 		voted = false;
+		votedOut = false;
 		bot = false;
 		updatedRole = new Role();
 		showUpdatedRole = false;
@@ -67,6 +69,20 @@ public class Player {
 		for (i=0;i<3;i++) {
 			centerMarks.add(-1);
 		}
+	}
+	
+	public void showAllRoles() {
+		int i;
+		for (i=0;i<playerMarks.size();i++) {
+			int x = board.getPlayers().get(i).getCurrentRole().getRoleNum();
+			playerMarks.set(i, x);
+		}
+		for (i=0;i<centerMarks.size();i++) {
+			int x = board.getCurCenterRole(i).getRoleNum();
+			centerMarks.set(i, x);
+		}
+		updatedRole = getCurrentRole();
+		showUpdatedRole = true;
 	}
 	
 	public void addRole(Role role) {
@@ -167,6 +183,12 @@ public class Player {
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
 	}
+	public boolean isVotedOut() {
+		return votedOut;
+	}
+	public void setVotedOut(boolean votedOut) {
+		this.votedOut = votedOut;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -182,6 +204,7 @@ public class Player {
 		doc.append("updatedRole", updatedRole.getImg());
 		doc.append("confirmed", confirmed);
 		doc.append("voted", voted);
+		doc.append("votedOut", votedOut);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -204,6 +227,7 @@ public class Player {
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
 		confirmed = doc.getBoolean("confirmed", false);
 		voted = doc.getBoolean("voted", false);
+		votedOut = doc.getBoolean("votedOut", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();
