@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cosgame Coslash</title>
+<title>Cosgame Onenight</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/onenightTheme.css">
@@ -12,13 +12,33 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/onenightCreateGameController.js"></script>
+<style>
+body {
+	background: url('/image/Onenight/create_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="onenightCreateGameApp" ng-controller="onenightCreateGameCtrl">
-	<button ng-click="goto('onenight')">back</button>
-	<button ng-click="addBot()">add bot</button>
-	<button ng-click="start()">start</button>
-	<table>
-		<tr ng-repeat="pn in playerNames track by $index">
-			<td>{{pn}}</td>
-		</tr>
-	</table>
+	<div class="create-div">
+		<table>
+			<tr>
+				<td><h4>玩家</h4></td>
+			</tr>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>{{pn}}</td>
+			</tr>
+			<tr>
+				<td>
+					<button ng-click="goto('onenight')">back</button>
+					<button ng-click="addBot()">add bot</button>
+					<button ng-click="start()">start</button>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+	
 </body>

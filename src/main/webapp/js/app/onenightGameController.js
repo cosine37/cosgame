@@ -21,6 +21,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.voteIndex = -1;
 		$scope.totalSelected = 0;
 		$scope.showConfirmed = true;
+		$scope.bodyClass = "day"
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -419,6 +420,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else if ($scope.status == '3'){
 					$scope.centerMsg.unshift("天亮了。")
 				}
+				if ($scope.status == '2'){
+					$scope.bodyClass = "night"
+				} else {
+					$scope.bodyClass = "day"
+				}
+				
 				setRoleStyles();
 			});
 		}

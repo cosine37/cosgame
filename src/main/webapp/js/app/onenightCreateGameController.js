@@ -41,7 +41,7 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
 				if ($scope.status != "0"){
-					$scope.goto('/onenightgame')
+					$scope.goto('onenightgame')
 				}
 			});
 		}

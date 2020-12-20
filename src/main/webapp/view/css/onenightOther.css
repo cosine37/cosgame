@@ -91,3 +91,53 @@ button:disabled{
 	left: 2px;
 	cursor: pointer;
 }
+
+.create-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 800px;
+	width: 1280px;
+	margin-top: -400px;
+	margin-left: -640px;
+	padding-top: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.night{
+	background: url('/image/Onenight/night.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.day{
+	background: url('/image/Onenight/day.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.game-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 860px;
+	width: 1500px;
+	margin-top: -430px;
+	margin-left: -750px;
+	padding-top: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}

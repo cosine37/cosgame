@@ -87,12 +87,12 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		/*
-		Role r = new Werewolf();
+		
+		Role r = new Villager();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		r = new Minion();
+		r = new Villager();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -100,7 +100,7 @@ public class Board {
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
-		*/
+		
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
@@ -230,11 +230,10 @@ public class Board {
 		players.get(x).setVoteIndex(y);
 		players.get(x).setVoted(true);
 		players.get(y).receiveVote();
-		confirmed.set(x, "y");
 		if (allVoted()) {
+			status = Consts.AFTERVOTE;
 			decideWinSide();
 			showAllRoles();
-			status = Consts.AFTERVOTE;
 		}
 	}
 	
@@ -246,6 +245,9 @@ public class Board {
 	}
 	
 	public void decideWinSide() {
+		if (status != Consts.AFTERVOTE) {
+			return;
+		}
 		int mostVote = 2;
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -256,9 +258,12 @@ public class Board {
 		boolean votedWerewolf = false;
 		boolean votedMinion = false;
 		boolean missedWerewolf = false;
+		//System.out.println("Most votes: "+mostVote);
 		for (i=0;i<players.size();i++) {
+			//System.out.println(players.get(i).getName() + ":" + players.get(i).getNumVotes());
 			Role r = players.get(i).getCurrentRole();
 			if (players.get(i).getNumVotes() == mostVote) {
+				//System.out.println(players.get(i).getName());
 				players.get(i).setVotedOut(true);
 				if (r.getSide() == Consts.WOLF) {
 					if (r.getRoleNum() == Consts.MINION) {
@@ -420,6 +425,9 @@ public class Board {
 		List<String> votedOut = new ArrayList<>();
 		List<String> finalRoles = new ArrayList<>();
 		int i,j;
+		
+		decideWinSide();
+		
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(players.get(i).getName());
@@ -522,8 +530,6 @@ public class Board {
 		for (i=0;i<allRoles.size();i++) {
 			rolesChoose.add(allRoles.get(i).getImg());
 		}
-		
-		decideWinSide();
 		
 		entity.setId(id);
 		entity.setLord(lord);

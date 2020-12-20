@@ -67,7 +67,7 @@ app.controller("gravepsychoEndGameCtrl", ['$scope', '$window', '$http', '$docume
 			$scope.championMoney = $scope.money[0]
 			$scope.champions = $scope.playerNames[0]
 			for (i=1;i<$scope.money.length;i++){
-				if ($scope.money[i] == x){
+				if ($scope.money[i] == $scope.championMoney){
 					$scope.champions = $scope.champions + ", " + $scope.playerNames[i];
 				}
 			}

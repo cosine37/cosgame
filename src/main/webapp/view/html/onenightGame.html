@@ -12,132 +12,134 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/app/onenightGameController.js"></script>
-<body ng-app="onenightGameApp" ng-controller="onenightGameCtrl">
-	
-	<div ng-show="status == '1'">
-		<div ng-show="lord == username">
-			以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。请选择本局游戏的{{playerNames.length+3}}个身份
-			<button ng-disabled="totalSelected != playerNames.length+3" ng-click="submitRolesSelect()">确定</button>
+<body ng-app="onenightGameApp" ng-controller="onenightGameCtrl" ng-class="bodyClass">
+	<div class="game-div">
+		<div ng-show="status == '1'">
+			<div ng-show="lord == username">
+				以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。请选择本局游戏的{{playerNames.length+3}}个身份
+				<button ng-disabled="totalSelected != playerNames.length+3" ng-click="submitRolesSelect()">确定</button>
+			</div>
+			<div ng-show="lord != username">
+				以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。
+			</div>
+			<table>
+				<tr>
+					<td ng-repeat="x in roleChooseStyles track by $index">
+						<div class="role" ng-style="x" ng-click="selectRole($index)">
+							<div class="target" ng-show="rolesSelect[$index] == 1"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div ng-show="lord == username && rolesThisGame.length>0">
+				以下为你选择的本局游戏身份。
+			</div>
+			<div ng-show="lord != username && rolesThisGame.length>0">
+				以下为房主选择的本局游戏身份。
+			</div>
+			<table>
+				<tr>
+					<td ng-repeat="x in rolesThisGameStyles track by $index">
+						<div class="role" ng-style="x">
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
 		</div>
-		<div ng-show="lord != username">
-			以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。
-		</div>
-		<table>
-			<tr>
-				<td ng-repeat="x in roleChooseStyles track by $index">
-					<div class="role" ng-style="x" ng-click="selectRole($index)">
-						<div class="target" ng-show="rolesSelect[$index] == 1"></div>
-					</div>
-				</td>
-			</tr>
-		</table>
-		<div ng-show="lord == username && rolesThisGame.length>0">
-			以下为你选择的本局游戏身份。
-		</div>
-		<div ng-show="lord != username && rolesThisGame.length>0">
-			以下为房主选择的本局游戏身份。
-		</div>
-		<table>
-			<tr>
-				<td ng-repeat="x in rolesThisGameStyles track by $index">
-					<div class="role" ng-style="x">
-					</div>
-				</td>
-			</tr>
-		</table>
-		<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
-	</div>
-	
-	<div ng-show="status == '2' || status == '3' || status == '4'">
-		所有玩家
-		<table>
-			<tr>
-				<td ng-repeat="i in indexes">
-					<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
-						<div class="target" ng-show="status == 2 && playerSelect[i] == 'y' && confirmed == 'n'">
-						</div>
-						<div class="exchange" ng-show="playerMarks[i] == '-2'">
-						</div>
-						<div class="checked" ng-show="playerMarks[i] == '-3'">
-						</div>
-						<div class="vote" ng-show="voteIndex == i">
-						</div>
-					</div>
-					<span ng-show="status != '4'">
-						{{playerDisplayNames[i]}}
-					</span>
-					<span ng-show="status == '4'">
-						{{playerDisplayNames[i]}} 获得{{numVotes[i]}}票
-					</span>	
-				</td>
-			</tr>
-		</table>
-		中央区域
-		<table>
-			<tr>
-				<td ng-repeat="x in centerRoleStyles track by $index">
-					<div class="role" ng-style="x" ng-click="clickCenterRole($index)">
-						<div class="target" ng-show="centerSelect[$index] == 'y'">
-						</div>
-						<div class="exchange" ng-show="centerMarks[$index] == '-2'">
-						</div>
-						<div class="checked" ng-show="centerMarks[$index] == '-3'">
-						</div>
-					</div>
-				</td>
-			</tr>
-		</table>
-		本局所有角色（按夜晚行动顺序排列）
-		<table>
-			<tr>
-				<td ng-repeat="x in rolesThisGameStyles track by $index">
-					<div class="role" ng-style="x">
-						<div class="qsmark">
-							<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showRoleThisGameBigImage($index);$event.stopPropagation();"/>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</table>
-		<table style="margin-top: 10px">
-			<tr>
-				<td>
-					<table>
-						<tr>
-							<td>
-								<div class="role" ng-style="myRoleStyle">
-									<div class="qsmark">
-										<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showMyInitialBigImage();$event.stopPropagation();"/>
-									</div>
-								</div>
-							</td>
-							<td ng-show="showUpdatedRole == 'y'">
-								<div class="role" ng-style="updatedRoleStyle">
-								</div>
-							</td>
-							<td ng-show="showUpdatedRole == 'n'">
-								<div class="role"></div>
-							</td>
-						</tr>
-						<tr>
-							<td>初始身份</td>
-							<td ng-show="showUpdatedRole == 'y' && status != '4'">最后看到身份</td>
-							<td ng-show="showUpdatedRole == 'y' && status == '4'">最终身份</td>
-							<td ng-show="showUpdatedRole == 'n'"></td>
-						</tr>
-					</table>
-				</td>
-				<td style="width: 20px">&nbsp;</td>
-				<td>
-					<p ng-repeat="msg in centerMsg">{{msg}}</p>
-				</td>
-			</tr>
-		</table>
-		<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
-		<button ng-show="status == '2' && confirmed != 'y' && showConfirmed" ng-click="confirmNight()">确认</button>
-		<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
 		
+		<div ng-show="status == '2' || status == '3' || status == '4'">
+			所有玩家
+			<table>
+				<tr>
+					<td ng-repeat="i in indexes">
+						<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
+							<div class="target" ng-show="status == 2 && playerSelect[i] == 'y' && confirmed == 'n'">
+							</div>
+							<div class="exchange" ng-show="playerMarks[i] == '-2'">
+							</div>
+							<div class="checked" ng-show="playerMarks[i] == '-3'">
+							</div>
+							<div class="vote" ng-show="voteIndex == i">
+							</div>
+						</div>
+						<span ng-show="status != '4'">
+							{{playerDisplayNames[i]}}
+						</span>
+						<span ng-show="status == '4'">
+							{{playerDisplayNames[i]}} 获得{{numVotes[i]}}票
+						</span>	
+					</td>
+				</tr>
+			</table>
+			中央区域
+			<table>
+				<tr>
+					<td ng-repeat="x in centerRoleStyles track by $index">
+						<div class="role" ng-style="x" ng-click="clickCenterRole($index)">
+							<div class="target" ng-show="centerSelect[$index] == 'y'">
+							</div>
+							<div class="exchange" ng-show="centerMarks[$index] == '-2'">
+							</div>
+							<div class="checked" ng-show="centerMarks[$index] == '-3'">
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			本局所有角色（按夜晚行动顺序排列）
+			<table>
+				<tr>
+					<td ng-repeat="x in rolesThisGameStyles track by $index">
+						<div class="role" ng-style="x">
+							<div class="qsmark">
+								<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showRoleThisGameBigImage($index);$event.stopPropagation();"/>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<table style="margin-top: 10px">
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td>
+									<div class="role" ng-style="myRoleStyle">
+										<div class="qsmark">
+											<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showMyInitialBigImage();$event.stopPropagation();"/>
+										</div>
+									</div>
+								</td>
+								<td ng-show="showUpdatedRole == 'y'">
+									<div class="role" ng-style="updatedRoleStyle">
+									</div>
+								</td>
+								<td ng-show="showUpdatedRole == 'n'">
+									<div class="role"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>初始身份</td>
+								<td ng-show="showUpdatedRole == 'y' && status != '4'">最后看到身份</td>
+								<td ng-show="showUpdatedRole == 'y' && status == '4'">最终身份</td>
+								<td ng-show="showUpdatedRole == 'n'"></td>
+							</tr>
+						</table>
+					</td>
+					<td style="width: 20px">&nbsp;</td>
+					<td>
+						<p ng-repeat="msg in centerMsg">{{msg}}</p>
+					</td>
+				</tr>
+			</table>
+			<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
+			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed" ng-click="confirmNight()">确认</button>
+			<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
+			
+		</div>
 	</div>
+	
 	
 	<div ng-show="showBigImage" ng-style="bigImageDivStyle" ng-click="unshowBigImage()"  style="clear:both">
 		<div ng-style="bigImageStyle">
