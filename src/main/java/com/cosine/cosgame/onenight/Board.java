@@ -22,6 +22,7 @@ public class Board {
 	int winSide;
 	String lord;
 	boolean canNight;
+	boolean tannerWin;
 	
 	List<String> confirmed;
 	
@@ -87,8 +88,8 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		
-		Role r = new Villager();
+		/*
+		Role r = new Hunter();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -96,11 +97,11 @@ public class Board {
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
-		r = new Werewolf();
+		r = new Tanner();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
-		
+		*/
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
@@ -257,20 +258,31 @@ public class Board {
 		}
 		boolean votedWerewolf = false;
 		boolean votedMinion = false;
+		boolean votedTanner = false;
 		boolean missedWerewolf = false;
-		//System.out.println("Most votes: "+mostVote);
 		for (i=0;i<players.size();i++) {
-			//System.out.println(players.get(i).getName() + ":" + players.get(i).getNumVotes());
 			Role r = players.get(i).getCurrentRole();
 			if (players.get(i).getNumVotes() == mostVote) {
-				//System.out.println(players.get(i).getName());
 				players.get(i).setVotedOut(true);
+				if (r.getRoleNum() == Consts.HUNTER) {
+					int x = players.get(i).getVoteIndex();
+					if (x>=0 && x<players.size()) {
+						players.get(x).setVotedOut(true);
+					}
+				}
+			}
+		}
+		for (i=0;i<players.size();i++) {
+			Role r = players.get(i).getCurrentRole();
+			if (players.get(i).isVotedOut()) {
 				if (r.getSide() == Consts.WOLF) {
 					if (r.getRoleNum() == Consts.MINION) {
 						votedMinion = true;
 					} else {
 						votedWerewolf = true;
 					}
+				} else if (r.getSide() == Consts.TANNER) {
+					votedTanner = true;
 				}
 			} else {
 				if (r.getSide() == Consts.WOLF) {
@@ -278,6 +290,11 @@ public class Board {
 				}
 			}
 		}
+		
+		if (votedTanner) {
+			tannerWin = true;
+		}
+		
 		if (votedWerewolf) {
 			winSide = Consts.HUMAN;
 		} else if (votedMinion){
@@ -287,7 +304,11 @@ public class Board {
 				winSide = Consts.HUMAN;
 			}
 		} else if (missedWerewolf == false) {
-			winSide = Consts.HUMAN;
+			if (votedTanner) {
+				winSide = Consts.OTHER;
+			} else {
+				winSide = Consts.HUMAN;
+			}
 		} else {
 			winSide = Consts.WOLF;
 		}
@@ -381,6 +402,12 @@ public class Board {
 		if (status != Consts.AFTERVOTE) return ans;
 		int i;
 		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getRoleNum() == Consts.TANNER) {
+				if (tannerWin) {
+					ans.add(players.get(i).getName());
+					continue;
+				}
+			}
 			if (players.get(i).getCurrentRole().getSide() == winSide) {
 				ans.add(players.get(i).getName());
 			}
@@ -393,6 +420,12 @@ public class Board {
 		if (status != Consts.AFTERVOTE) return ans;
 		int i;
 		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getRoleNum() == Consts.TANNER) {
+				if (!tannerWin) {
+					ans.add(players.get(i).getName());
+					continue;
+				}
+			}
 			if (players.get(i).getCurrentRole().getSide() != winSide) {
 				ans.add(players.get(i).getName());
 			}

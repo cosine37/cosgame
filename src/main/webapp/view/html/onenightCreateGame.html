@@ -30,7 +30,7 @@ body {
 			<tr ng-repeat="pn in playerNames track by $index">
 				<td>{{pn}}</td>
 			</tr>
-			<tr>
+			<tr ng-show="username == lord">
 				<td>
 					<button ng-click="goto('onenight')">back</button>
 					<button ng-click="addBot()">add bot</button>

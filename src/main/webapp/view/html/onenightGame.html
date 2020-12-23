@@ -23,10 +23,10 @@
 				以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。
 			</div>
 			<table>
-				<tr>
-					<td ng-repeat="x in roleChooseStyles track by $index">
-						<div class="role" ng-style="x" ng-click="selectRole($index)">
-							<div class="target" ng-show="rolesSelect[$index] == 1"></div>
+				<tr ng-repeat="l in roleChooseIndexes track by $index">
+					<td ng-repeat="i in l track by $index">
+						<div class="role" ng-style="roleChooseStyles[i]" ng-click="selectRole(i)">
+							<div class="target" ng-show="rolesSelect[i] == 1"></div>
 						</div>
 					</td>
 				</tr>

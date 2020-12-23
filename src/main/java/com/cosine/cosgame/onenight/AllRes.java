@@ -16,10 +16,6 @@ public class AllRes {
 		allRoles = new ArrayList<>();
 		Role r;
 		int i;
-		for (i=0;i<3;i++) {
-			r = new Villager();
-			allRoles.add(r);
-		}
 		for (i=0;i<2;i++) {
 			r = new Werewolf();
 			allRoles.add(r);
@@ -40,6 +36,16 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Insomniac();
 		allRoles.add(r);
+		r = new SleepingWolf();
+		allRoles.add(r);
+		r = new Tanner();
+		allRoles.add(r);
+		r = new Hunter();
+		allRoles.add(r);
+		for (i=0;i<3;i++) {
+			r = new Villager();
+			allRoles.add(r);
+		}
 	}
 
 	public List<Role> getAllRoles() {

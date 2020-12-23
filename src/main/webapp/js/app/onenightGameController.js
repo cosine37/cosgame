@@ -22,6 +22,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.totalSelected = 0;
 		$scope.showConfirmed = true;
 		$scope.bodyClass = "day"
+		$scope.roleChooseIndexes = [];
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -292,7 +293,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				$scope.centerRoleStyles.push(singleStyle)
 			}
-			
+			$scope.roleChooseIndexes = [];
 			$scope.roleChooseStyles = [];
 			for (i=0;i<$scope.rolesChoose.length;i++){
 				imgUrl = "url('/image/Onenight/Roles/" + $scope.rolesChoose[i] + ".png')"
@@ -301,6 +302,20 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					"background-size": "cover"
 				}
 				$scope.roleChooseStyles.push(singleStyle)
+			}
+			var y = 0;
+			var slRoleChooseIndexes = [];
+			for (i=0;i<$scope.rolesChoose.length;i++){
+				slRoleChooseIndexes.push(i);
+				y++;
+				if (y == 13){
+					$scope.roleChooseIndexes.push(slRoleChooseIndexes)
+					slRoleChooseIndexes = [];
+					y = 0;
+				}
+			}
+			if (slRoleChooseIndexes.length>0){
+				$scope.roleChooseIndexes.push(slRoleChooseIndexes)
 			}
 			
 			$scope.rolesThisGameStyles = [];
@@ -425,7 +440,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else {
 					$scope.bodyClass = "day"
 				}
-				
+				$scope.voteIndex = -1;
 				setRoleStyles();
 			});
 		}

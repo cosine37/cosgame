@@ -23,6 +23,12 @@ public class RoleFactory {
 			role = new Drunk();
 		} else if (img.contentEquals("r08")) {
 			role = new Mason();
+		} else if (img.contentEquals("r09")) {
+			role = new Hunter();
+		} else if (img.contentEquals("r10")) {
+			role = new Tanner();
+		} else if (img.contentEquals("r11")) {
+			role = new SleepingWolf();
 		}
 		
 		else {
@@ -53,6 +59,12 @@ public class RoleFactory {
 			role = new Drunk();
 		} else if (num == 8) {
 			role = new Mason();
+		} else if (num == 9) {
+			role = new Hunter();
+		} else if (num == 10) {
+			role = new Tanner();
+		} else if (num == 11) {
+			role = new SleepingWolf();
 		}
 		
 		else {
