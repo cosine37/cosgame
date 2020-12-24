@@ -23,6 +23,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.showConfirmed = true;
 		$scope.bodyClass = "day"
 		$scope.roleChooseIndexes = [];
+		$scope.detectiveIndex = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -261,6 +262,9 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else {
 					imgUrl = "url('/image/Onenight/Roles/" + $scope.playerMarks[i] + ".png')"
 				}
+				if (i == $scope.detectiveIndex){
+					imgUrl = "url('/image/Onenight/Roles/" + $scope.detectiveRoleImg + ".png')"
+				}
 				var singleStyle = {
 					"background": imgUrl,
 					"background-size": "cover"
@@ -408,6 +412,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.playerVotes = response.data.playerVotes;
 				$scope.votedOut = response.data.votedOut
 				$scope.winPlayers = response.data.winPlayers
+				$scope.detectiveIndex = parseInt(response.data.detectiveIndex)
+				$scope.detectiveRoleImg = response.data.detectiveRoleImg
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){

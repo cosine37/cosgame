@@ -156,9 +156,13 @@ public class OnenightController {
 		Player p = board.getPlayerByName(username);
 		if (p != null) {
 			p.getInitialRole().useSkill(targets);
-			board.confirm(p.getIndex());
+			if (p.getInitialRole().canConfirm(targets)) {
+				board.confirm(p.getIndex());
+			}
 			board.updateDB("status", board.getStatus());
 			board.updateDB("confirmed", board.getConfirmed());
+			board.updateDB("detectiveIndex", board.getDetectiveIndex());
+			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}
@@ -178,6 +182,8 @@ public class OnenightController {
 			board.confirm(p.getIndex());
 			board.updateDB("status", board.getStatus());
 			board.updateDB("confirmed", board.getConfirmed());
+			board.updateDB("detectiveIndex", board.getDetectiveIndex());
+			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}

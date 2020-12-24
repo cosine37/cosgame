@@ -22,6 +22,8 @@ public class BoardEntity {
 	String showUpdatedRole;
 	String confirmed;
 	String voted;
+	String detectiveIndex;
+	String detectiveRoleImg;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -228,5 +230,17 @@ public class BoardEntity {
 	}
 	public void setFinalRoles(List<String> finalRoles) {
 		this.finalRoles = finalRoles;
+	}
+	public String getDetectiveIndex() {
+		return detectiveIndex;
+	}
+	public void setDetectiveIndex(String detectiveIndex) {
+		this.detectiveIndex = detectiveIndex;
+	}
+	public String getDetectiveRoleImg() {
+		return detectiveRoleImg;
+	}
+	public void setDetectiveRoleImg(String detectiveRoleImg) {
+		this.detectiveRoleImg = detectiveRoleImg;
 	}
 }

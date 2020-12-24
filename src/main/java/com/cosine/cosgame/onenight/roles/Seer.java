@@ -16,7 +16,7 @@ public class Seer extends Role{
 		hasNight = true;
 		nightMsg.add("你的初始身份是 预言家。");
 		nightMsg.add("你可以选择一名其它角色的身份牌或两张中央身份牌查看。");
-		nightMsg.add("选择后点击确认结束你的夜晚阶段，天亮时你可以看到你选择的身份牌。");
+		nightMsg.add("选择后点击确认结束你的夜晚阶段，之后你可以看到你选择的身份牌。");
 		confirmedMsg.add("你的初始身份是 预言家。");
 		confirmedMsg.add("场上显示的身份牌是你发动你技能时指定的身份牌。");
 		confirmedMsg.add("正等待其他玩家确认。");

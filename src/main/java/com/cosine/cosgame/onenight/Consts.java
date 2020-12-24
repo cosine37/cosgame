@@ -27,6 +27,9 @@ public class Consts {
 	public static final int HUNTER = 9;
 	public static final int TANNER = 10;
 	public static final int SLEEPINGWOLF = 11;
+	public static final int APPRENTICESEER = 12;
+	public static final int DETECTIVE = 13;
+	public static final int WITCH = 14;
 	
 	// marks
 	public static final int UNKNOWN = -1;

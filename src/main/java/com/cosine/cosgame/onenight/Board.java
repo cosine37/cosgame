@@ -23,6 +23,8 @@ public class Board {
 	String lord;
 	boolean canNight;
 	boolean tannerWin;
+	int detectiveIndex;
+	String detectiveRoleImg;
 	
 	List<String> confirmed;
 	
@@ -33,6 +35,8 @@ public class Board {
 		rolesThisGame = new ArrayList<>();
 		centerRoles = new ArrayList<>();
 		canNight = false;
+		detectiveIndex = -1;
+		detectiveRoleImg = "";
 		
 		String dbname = "onenight";
 		String col = "board";
@@ -49,7 +53,6 @@ public class Board {
 		canNight = false;
 		status = Consts.SETUP;
 		winSide = -1;
-		
 	}
 	
 	public void setRolesThisGameByInt(List<Integer> ls) {
@@ -89,15 +92,17 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Hunter();
+		Role r = new Detective();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		r = new Villager();
+		
+		r = new Werewolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
-		r = new Tanner();
+		
+		r = new Villager();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -396,7 +401,19 @@ public class Board {
 	public void setCanNight(boolean canNight) {
 		this.canNight = canNight;
 	}
-	
+	public int getDetectiveIndex() {
+		return detectiveIndex;
+	}
+	public void setDetectiveIndex(int detectiveIndex) {
+		this.detectiveIndex = detectiveIndex;
+	}
+	public String getDetectiveRoleImg() {
+		return detectiveRoleImg;
+	}
+	public void setDetectiveRoleImg(String detectiveRoleImg) {
+		this.detectiveRoleImg = detectiveRoleImg;
+	}
+
 	public List<String> getWinPlayers(){
 		List<String> ans = new ArrayList<>();
 		if (status != Consts.AFTERVOTE) return ans;
@@ -595,6 +612,8 @@ public class Board {
 		entity.setPlayerVotes(playerVotes);
 		entity.setVotedOut(votedOut);
 		entity.setFinalRoles(finalRoles);
+		entity.setDetectiveIndex(Integer.toString(detectiveIndex));
+		entity.setDetectiveRoleImg(detectiveRoleImg);
 		return entity;
 	}
 	
@@ -607,6 +626,8 @@ public class Board {
 		doc.append("confirmed", confirmed);
 		doc.append("lord", lord);
 		doc.append("canNight", canNight);
+		doc.append("detectiveIndex", detectiveIndex);
+		doc.append("detectiveRoleImg", detectiveRoleImg);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -641,6 +662,8 @@ public class Board {
 		confirmed = (List<String>) doc.get("confirmed");
 		lord = doc.getString("lord");
 		canNight = doc.getBoolean("canNight", false);
+		detectiveIndex = doc.getInteger("detectiveIndex", -1);
+		detectiveRoleImg = doc.getString("detectiveRoleImg");
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();

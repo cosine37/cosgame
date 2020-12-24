@@ -24,17 +24,23 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Seer();
 		allRoles.add(r);
+		r = new ApprenticeSeer();
+		allRoles.add(r);
 		for (i=0;i<2;i++) {
 			r = new Mason();
 			allRoles.add(r);
 		}
 		r = new Thief();
 		allRoles.add(r);
+		r = new Witch();
+		allRoles.add(r);
 		r = new Urchin();
 		allRoles.add(r);
 		r = new Drunk();
 		allRoles.add(r);
 		r = new Insomniac();
+		allRoles.add(r);
+		r = new Detective();
 		allRoles.add(r);
 		r = new SleepingWolf();
 		allRoles.add(r);

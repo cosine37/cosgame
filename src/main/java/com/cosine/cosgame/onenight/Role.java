@@ -61,6 +61,10 @@ public class Role {
 		
 	}
 	
+	public boolean canConfirm(List<Integer> targets) {
+		return true;
+	}
+	
 	public int getRoleNum() {
 		return roleNum;
 	}

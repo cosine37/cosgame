@@ -70,6 +70,17 @@ button:disabled{
 	background-size:cover;
 }
 
+.detective{
+	position: absolute;
+	user-select:none;
+	right: 30px;
+	bottom: 20px;
+	height: 40px;
+	width: 40px;
+	background:url("/image/Onenight/detective.png");
+	background-size:cover;
+}
+
 .vote{
 	position: absolute;
 	user-select:none;

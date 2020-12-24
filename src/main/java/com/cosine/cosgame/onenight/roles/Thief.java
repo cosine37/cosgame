@@ -18,7 +18,7 @@ public class Thief extends Role{
 		nightMsg.add("你可以将你的身份和一名其他玩家的身份交换，你也可以不交换。");
 		nightMsg.add("选择后点击确认结束你的夜晚阶段，天亮时你可以看到你获得的身份牌。");
 		confirmedMsg.add("你的初始身份是 盗贼。");
-		confirmedMsg.add("场上显示的身份牌是你发动你技能时指定的身份牌。");
+		confirmedMsg.add("身份牌上拥有交换标记的玩家是你选择的交换对象。");
 		confirmedMsg.add("正等待其他玩家确认。");
 		dayMsg.add("你的初始身份是 盗贼，你现在的身份可能已有变化。");
 		dayMsg.add("你初始身份右侧的身份是你交换获得的技能，可能已有变化。");

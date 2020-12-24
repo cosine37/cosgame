@@ -62,6 +62,8 @@
 							</div>
 							<div class="vote" ng-show="voteIndex == i">
 							</div>
+							<div class="detective" ng-show="detectiveIndex == i">
+							</div>
 						</div>
 						<span ng-show="status != '4'">
 							{{playerDisplayNames[i]}}
@@ -113,6 +115,7 @@
 								</td>
 								<td ng-show="showUpdatedRole == 'y'">
 									<div class="role" ng-style="updatedRoleStyle">
+										<div class="detective" ng-show="detectiveIndex == myIndex"></div>
 									</div>
 								</td>
 								<td ng-show="showUpdatedRole == 'n'">
