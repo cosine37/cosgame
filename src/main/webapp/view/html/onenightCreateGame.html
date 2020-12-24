@@ -22,21 +22,24 @@ body {
 }
 </style>
 <body ng-app="onenightCreateGameApp" ng-controller="onenightCreateGameCtrl">
+	<h1 class="create-title">狼人不杀</h1>
 	<div class="create-div">
 		<table>
 			<tr>
-				<td><h4>玩家</h4></td>
+				<td>
+					<button ng-click="goto('onenight')">退出</button>
+					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
+					<button ng-click="start()" ng-show="username == lord">开始</button>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td><h4>玩家列表</h4></td>
 			</tr>
 			<tr ng-repeat="pn in playerNames track by $index">
 				<td>{{pn}}</td>
 			</tr>
-			<tr ng-show="username == lord">
-				<td>
-					<button ng-click="goto('onenight')">back</button>
-					<button ng-click="addBot()">add bot</button>
-					<button ng-click="start()">start</button>
-				</td>
-			</tr>
+			
 		</table>
 		
 	</div>

@@ -108,16 +108,33 @@ button:disabled{
 	top: 50%;
 	left: 50%;
 	background-color: rgba(255,255,255,0.5);
-	height: 800px;
-	width: 1280px;
-	margin-top: -400px;
-	margin-left: -640px;
-	padding-top: 20px;
-	padding-left: 50px;
-	padding-right: 50px;
+	height: 400px;
+	width: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 	border: 1px solid rgba(120,120,120);
 	filter: drop-shadow(0px 0px 5px black);
 	border-radius: 20px;
+}
+
+.create-div table{
+	width:100%;
+	text-align:center;
+}
+
+.create-title{
+	color: white;
+	font-weight: bold;
+	position: absolute; 
+	text-align:center;
+	width: 400px;
+	margin-left: -200px;
+	margin-top: 200px;
+	left: 50%;
+	
 }
 
 .night{
@@ -151,4 +168,5 @@ button:disabled{
 	border: 1px solid rgba(120,120,120);
 	filter: drop-shadow(0px 0px 5px black);
 	border-radius: 20px;
+	font-weight: bold;
 }

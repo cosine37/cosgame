@@ -53,6 +53,9 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
 				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rolestab" ng-click="hideTablesTab()">身份介绍</a>
+				    </li>
 				  </ul>
 			</div>
 			
@@ -84,7 +87,327 @@
 						
 					</table>
 				</div>
-				
+				<div id="rulestab" class="content container tab-pane fade">
+					<h2><b>规则</b></h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 你生活在一个安静祥和的村庄中。忽然有一天，村庄里有传闻说一些村民可能已经和魔鬼达成协议，在月圆之夜会变成<span class="onenighttext">狼人</span>，并会难以自制的想吃人。
+								明天晚上即是月圆之夜，所以即使你们中真的有人签订了魔鬼的契约，今天晚上也不会咬人。你们可不会像<b>米勒山谷</b>里的<b>村民</b>一样每晚任狼宰割。你们还有一个晚上的时间可以找出谁即将成为<span class="onenighttext">狼人</span>，并在第二天将其绳之以法。
+								你们中有一些能力者，在晚上可以帮助你们收集到一些线索，以方便明天白天的找狼。你们中还有一些好事者，在如此紧要的关头，夜晚时还有可能会胡搅蛮缠。但无论如何，你们的目标就是，<span class="onenighttext">狼人不杀</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 然而，说不定，你就是那个已经和魔鬼达成协议的<span class="onenighttext">狼人</span>……
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 游戏支持3~10人，对你没看错，3个人也能玩的起来……
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>游戏内容</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前游戏一共包含19张身份牌。一些是“人”阵营，一些是“狼”阵营。
+								每个身份都有其对应的技能（也有可能没有）。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>游戏设置</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;房主会选择比总人数多3张身份牌。每名玩家随机抽取一张身份。剩余3张身份作为中央身份。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>游戏流程</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一局游戏分为夜晚、白天和投票阶段。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5><b>夜晚阶段</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拥有特殊身份的玩家可以按照顺序发动其相关技能。
+								为了节省时间以及防止玩家根据行动时间推测出中央身份，本游戏所有玩家多线程同时操作，夜晚阶段没有技能的玩家也需要按确定键假装操作。而技能效果在所有玩家操作结束之后按照行动顺序依次结算。
+								所有技能结算完毕后进入白天阶段。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>警告：一些特殊身份的技能可以交换玩家身份，所以你的初始身份可能不是你的最终身份。</b>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5><b>白天阶段</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;官方规则是从任意一名玩家开始，每名玩家进行3轮发言。具体操作时可以村规，比如规定发言时间的自由发言（或者干脆都憋说话）等。
+								发言结束后进入投票阶段</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5><b>投票阶段</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每名玩家不公开投票给另一名玩家，当所有玩家投票结束后，公开投票结果。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有获得不少于2票的票数最多的玩家被<span class="onenighttext">公投出局</span>，
+								所以如果最高票数为平票，平票玩家没有新一轮发言，一起被<span class="onenighttext">公投出局</span>，除非所有玩家都只获得1票。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若所有玩家都只获得1票，则没有玩家被<span class="onenighttext">公投出局</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公开投票结果后，所有玩家亮出身份。<b>此时的身份或许已经不是最初身份。</b>一些玩家可以在此发动其身份的技能。
+								当技能结算完毕后，游戏结束。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5><b>游戏结束</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如无特殊说明，若<span class="onenighttext">公投出局</span>的玩家里面包含“狼”阵营玩家，
+								所有则“人”阵营玩家获胜，无论被<span class="onenighttext">公投出局</span>的玩家里面是否有“人”阵营玩家或没有被<span class="onenighttext">公投出局</span>的玩家里面是否有“狼”阵营玩家。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若<span class="onenighttext">公投出局</span>的玩家都不属于“狼”阵营，
+								且没有被<span class="onenighttext">公投出局</span>的玩家里面有“狼”阵营玩家，则所有“人”阵营玩家获胜。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若所有玩家的最终阵营都是相同阵营，那么无论公投结果如何，所有玩家共同胜利（玩了个寂寞）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>以上的胜利条件有两个例外</b>，具体内容请参见<b>身份</b>介绍章节的
+								<span class="onenighttext">帮凶</span> 和 <span class="onenighttext">皮匠</span> 介绍。</br>
+								</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="rolestab" class="content container tab-pane fade">
+					<table>
+						<tr>
+							<td colspan="2">
+								以下身份夜晚有行动，按行动顺序排列
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button ng-click="showedCard='r01'" ng-disabled="showedCard == 'r01'">狼人</button>
+								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
+								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
+								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
+								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
+								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
+								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
+								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
+								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
+								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
+								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								以下身份夜晚无行动
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button ng-click="showedCard='r11'" ng-disabled="showedCard == 'r11'">奥伯狼</button>
+								<button ng-click="showedCard='r10'" ng-disabled="showedCard == 'r10'">皮匠</button>
+								<button ng-click="showedCard='r09'" ng-disabled="showedCard == 'r09'">猎人</button>
+								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r01'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>2</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r05'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 帮凶</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到所有其他同阵营队友，但你的队友看不到你。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>若你有队友，你的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利，无论你是否被<span class="onenighttext">投票出局</span>。
+								若你没有队友，你被<span class="onenighttext">投票出局</span>则“人”阵营胜利。你没有被<span class="onenighttext">投票出局</span>则获胜。换言之，你就是个“狼”阵营的抗推位。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r02'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 预言家</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段二选一，可以查看一名其他玩家的身份（此时为初始身份）；或两张中央身份。不能同时发动。
+								你所查看的玩家身份或中央身份之后可能会发生变化。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r12'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 见习预言家</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一张中央身份。你所查看的中央身份之后可能会发生变化。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r08'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 砖瓦工</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>2</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以看到另一位<span class="onenighttext">砖瓦工</span>。
+								若你没有看到另一位<span class="onenighttext">砖瓦工</span>，则另一位<span class="onenighttext">砖瓦工</span>为中央身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>设置：</b>使用<span class="onenighttext">砖瓦工</span>的游戏请保证2张都使用。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r03'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 盗贼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以将你的身份和另一名玩家的身份交换，你可以看到你获得的新身份。你也可以不发动此技能。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r14'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 女巫</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一张中央身份并将其与任何一名玩家（可以是自己）的身份交换。
+								你也可以不发动此技能，但若你查看中央身份则必定要和一名玩家交换。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r04'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 熊孩子</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段交换除你以外的两名玩家的身份牌，该技能必须发动。你不能查看你交换的身份牌。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r07'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 酒鬼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。你不能查看你获得的新身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r06'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 失眠者</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你查看你的身份（此时为你的最终身份），该技能必须发动。本游戏设定为天亮时自动显示你的最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r13'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 侦探</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份（此时为最终身份），你也可以不发动该技能。
+								若你查看的玩家的阵营为“人”，则将该身份正面朝上放置（所有其他玩家将会看到该玩家的最终身份，相当于一张大金水），该效果自动发动。本游戏设定为天亮时自动显示你选择玩家的最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r11'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 奥伯狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你所有同阵营队友能看到你（某种意义上算是你的技能）。你不能看到任何同阵营队友。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r10'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 皮匠</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>单独</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>无，但你有个比较奇葩的胜利条件。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你只要被<span class="onenighttext">投票出局</span>即获得胜利，无论其他玩家的胜利条件。
+								若你被<span class="onenighttext">投票出局</span>的同时，场上有“狼”阵营的玩家且满足“人”阵营玩家的胜利条件，则“人”阵营玩家和你共同胜利。
+								若场上无“狼”阵营的玩家且你被<span class="onenighttext">投票出局</span>，你单独获胜。
+								若你没有被<span class="onenighttext">投票出局</span>，无论其他阵营胜利与否，你都没有获胜。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r09'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 猎人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>若你被<span class="onenighttext">投票出局</span>，你投票的玩家也出局。
+								该技能为被动技能，你不能在被<span class="onenighttext">投票出局</span>后重新指定出局的玩家。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r00'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 村民</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>3</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>无
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -49,8 +49,7 @@
 		</div>
 		
 		<div ng-show="status == '2' || status == '3' || status == '4'">
-			所有玩家
-			<table>
+			<table style="text-align:center">
 				<tr>
 					<td ng-repeat="i in indexes">
 						<div class="role" ng-style="playerRoleStyles[i]" ng-click="clickPlayerRole(i)">
@@ -74,8 +73,8 @@
 					</td>
 				</tr>
 			</table>
-			中央区域
-			<table>
+			
+			<table style="margin-top: 10px">
 				<tr>
 					<td ng-repeat="x in centerRoleStyles track by $index">
 						<div class="role" ng-style="x" ng-click="clickCenterRole($index)">
@@ -89,8 +88,8 @@
 					</td>
 				</tr>
 			</table>
-			本局所有角色（按夜晚行动顺序排列）
-			<table>
+			中央身份
+			<table style="margin-top: 10px">
 				<tr>
 					<td ng-repeat="x in rolesThisGameStyles track by $index">
 						<div class="role" ng-style="x">
@@ -101,10 +100,11 @@
 					</td>
 				</tr>
 			</table>
+			本局所有角色（按夜晚行动顺序排列）
 			<table style="margin-top: 10px">
 				<tr>
 					<td>
-						<table>
+						<table style="text-align:center">
 							<tr>
 								<td>
 									<div class="role" ng-style="myRoleStyle">
@@ -132,7 +132,7 @@
 					</td>
 					<td style="width: 20px">&nbsp;</td>
 					<td>
-						<p ng-repeat="msg in centerMsg">{{msg}}</p>
+						<p ng-repeat="msg in centerMsg" style="margin: 5px">{{msg}}</p>
 					</td>
 				</tr>
 			</table>
