@@ -24,6 +24,7 @@ public class BoardEntity {
 	String voted;
 	String detectiveIndex;
 	String detectiveRoleImg;
+	String soleWolf;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -242,5 +243,11 @@ public class BoardEntity {
 	}
 	public void setDetectiveRoleImg(String detectiveRoleImg) {
 		this.detectiveRoleImg = detectiveRoleImg;
+	}
+	public String getSoleWolf() {
+		return soleWolf;
+	}
+	public void setSoleWolf(String soleWolf) {
+		this.soleWolf = soleWolf;
 	}
 }

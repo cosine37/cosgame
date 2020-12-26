@@ -88,7 +88,7 @@
 					</td>
 				</tr>
 			</table>
-			中央身份
+			{{centerZoneMsg}}
 			<table style="margin-top: 10px">
 				<tr>
 					<td ng-repeat="x in rolesThisGameStyles track by $index">
@@ -138,6 +138,7 @@
 			</table>
 			<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
 			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed" ng-click="confirmNight()">确认</button>
+			<button ng-show="status == '3' && voted != 'y'" ng-click="forfeitVote()">弃权</button>
 			<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
 			
 		</div>

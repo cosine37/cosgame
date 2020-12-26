@@ -24,6 +24,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.bodyClass = "day"
 		$scope.roleChooseIndexes = [];
 		$scope.detectiveIndex = -1;
+		$scope.centerZoneMsg = "中央区域"
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -209,6 +210,13 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			} else {
 				alert("请选择你的投票对象")
 			}
+		}
+		
+		$scope.forfeitVote = function(){
+			var data = {"index" : -1}
+			$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
 		}
 		
 		setBigImageStyle = function(){
@@ -414,6 +422,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.winPlayers = response.data.winPlayers
 				$scope.detectiveIndex = parseInt(response.data.detectiveIndex)
 				$scope.detectiveRoleImg = response.data.detectiveRoleImg
+				$scope.soleWolf = response.data.soleWolf;
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){
@@ -445,6 +454,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$scope.bodyClass = "night"
 				} else {
 					$scope.bodyClass = "day"
+				}
+				$scope.centerZoneMsg = "中央区域"
+				if ($scope.soleWolf == "y"){
+					$scope.centerZoneMsg = "中央区域  (若你是独狼，夜晚阶段你可以查看该区域一张身份牌)"
 				}
 				$scope.voteIndex = -1;
 				setRoleStyles();

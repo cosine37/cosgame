@@ -25,6 +25,7 @@ public class Board {
 	boolean tannerWin;
 	int detectiveIndex;
 	String detectiveRoleImg;
+	boolean soleWolf;
 	
 	List<String> confirmed;
 	
@@ -37,11 +38,25 @@ public class Board {
 		canNight = false;
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
+		soleWolf = false;
 		
 		String dbname = "onenight";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
+	}
+	
+	public void parseSettings(List<Integer> settings) {
+		int minLength = 1;
+		if (settings.size()<minLength) {
+			return;
+		} else {
+			if (settings.get(0) == 1) {
+				soleWolf = true;
+			} else {
+				soleWolf = false;
+			}
+		}
 	}
 	
 	public void startGame() {
@@ -91,13 +106,13 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		/*
-		Role r = new Detective();
+		
+		Role r = new Villager();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new Villager();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -106,7 +121,7 @@ public class Board {
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
-		*/
+		
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
@@ -194,7 +209,7 @@ public class Board {
 	}
 	
 	public void botMoves() {
-		
+		 
 	}
 	
 	public void clearConfirmed() {
@@ -235,7 +250,9 @@ public class Board {
 	public void vote(int x, int y) {
 		players.get(x).setVoteIndex(y);
 		players.get(x).setVoted(true);
-		players.get(y).receiveVote();
+		if (y>0 && y<players.size()) {
+			players.get(y).receiveVote();
+		}
 		if (allVoted()) {
 			status = Consts.AFTERVOTE;
 			decideWinSide();
@@ -265,6 +282,7 @@ public class Board {
 		boolean votedMinion = false;
 		boolean votedTanner = false;
 		boolean missedWerewolf = false;
+		boolean votedSomeone = false;
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
 			if (players.get(i).getNumVotes() == mostVote) {
@@ -280,6 +298,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
 			if (players.get(i).isVotedOut()) {
+				votedSomeone = true;
 				if (r.getSide() == Consts.WOLF) {
 					if (r.getRoleNum() == Consts.MINION) {
 						votedMinion = true;
@@ -312,7 +331,12 @@ public class Board {
 			if (votedTanner) {
 				winSide = Consts.OTHER;
 			} else {
-				winSide = Consts.HUMAN;
+				if (votedSomeone) {
+					winSide = Consts.OTHER;
+				} else {
+					winSide = Consts.HUMAN;
+				}
+				
 			}
 		} else {
 			winSide = Consts.WOLF;
@@ -412,6 +436,12 @@ public class Board {
 	}
 	public void setDetectiveRoleImg(String detectiveRoleImg) {
 		this.detectiveRoleImg = detectiveRoleImg;
+	}
+	public boolean isSoleWolf() {
+		return soleWolf;
+	}
+	public void setSoleWolf(boolean soleWolf) {
+		this.soleWolf = soleWolf;
 	}
 
 	public List<String> getWinPlayers(){
@@ -573,6 +603,11 @@ public class Board {
 		} else {
 			entity.setCanNight("n");
 		}
+		if (soleWolf) {
+			entity.setSoleWolf("y");
+		} else {
+			entity.setSoleWolf("n");
+		}
 		
 		List<String> rolesChoose = new ArrayList<>();
 		AllRes allRes = new AllRes();
@@ -628,6 +663,7 @@ public class Board {
 		doc.append("canNight", canNight);
 		doc.append("detectiveIndex", detectiveIndex);
 		doc.append("detectiveRoleImg", detectiveRoleImg);
+		doc.append("soleWolf", soleWolf);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -664,6 +700,7 @@ public class Board {
 		canNight = doc.getBoolean("canNight", false);
 		detectiveIndex = doc.getInteger("detectiveIndex", -1);
 		detectiveRoleImg = doc.getString("detectiveRoleImg");
+		soleWolf = doc.getBoolean("soleWolf", false);
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();

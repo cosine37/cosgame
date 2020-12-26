@@ -32,6 +32,13 @@ body {
 					<button ng-click="start()" ng-show="username == lord">开始</button>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<label ng-show="username == lord">独狼变体</label>
+					<input type="checkbox" ng-show="username == lord" ng-model="soleWolfOption">
+				</td>
+				
+			</tr>
 			<tr><td>&nbsp;</td></tr>
 			<tr>
 				<td><h4>玩家列表</h4></td>

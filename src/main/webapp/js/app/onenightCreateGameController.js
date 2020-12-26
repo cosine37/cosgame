@@ -7,6 +7,8 @@ var setUrl = function(d){
 var app = angular.module("onenightCreateGameApp", []);
 app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
+		$scope.settings = [0];
+		$scope.soleWolfOption = false;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -24,9 +26,14 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		}
 		
 		$scope.start = function(){
-			$http.post('/onenightgame/startgame').then(function(response){
+			if ($scope.soleWolfOption){
+				$scope.settings[0] = 1;
+			}
+			var data = {"settings" : $scope.settings}
+			$http({url: "/onenightgame/startgame", method: "POST", params: data}).then(function(response){
 				$scope.goto('onenightgame');
 			});
+			
 		}
 		
 		$scope.addBot = function(){
