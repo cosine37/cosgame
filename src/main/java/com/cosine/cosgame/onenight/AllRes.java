@@ -20,6 +20,8 @@ public class AllRes {
 			r = new Werewolf();
 			allRoles.add(r);
 		}
+		r = new MysticWolf();
+		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
 		r = new Seer();
@@ -32,21 +34,39 @@ public class AllRes {
 		}
 		r = new Thief();
 		allRoles.add(r);
+		r = new Magician();
+		allRoles.add(r);
 		r = new Witch();
 		allRoles.add(r);
+		r = new YoungWitch();
+		allRoles.add(r);
 		r = new Urchin();
+		allRoles.add(r);
+		r = new Idiot();
 		allRoles.add(r);
 		r = new Drunk();
 		allRoles.add(r);
 		r = new Insomniac();
 		allRoles.add(r);
+		r = new Watcher();
+		allRoles.add(r);
 		r = new Detective();
+		allRoles.add(r);
+		r = new Agent();
 		allRoles.add(r);
 		r = new SleepingWolf();
 		allRoles.add(r);
 		r = new Tanner();
 		allRoles.add(r);
 		r = new Hunter();
+		allRoles.add(r);
+		r = new Guard();
+		allRoles.add(r);
+		r = new Prince();
+		allRoles.add(r);
+		r = new Sheriff();
+		allRoles.add(r);
+		r = new WolfChild();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

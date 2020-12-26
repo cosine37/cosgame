@@ -35,6 +35,26 @@ public class RoleFactory {
 			role = new Detective();
 		} else if (img.contentEquals("r14")) {
 			role = new Witch();
+		} else if (img.contentEquals("r15")) {
+			role = new MysticWolf();
+		} else if (img.contentEquals("r16")) {
+			role = new Guard();
+		} else if (img.contentEquals("r17")) {
+			role = new Idiot();
+		} else if (img.contentEquals("r18")) {
+			role = new Watcher();
+		} else if (img.contentEquals("r19")) {
+			role = new Prince();
+		} else if (img.contentEquals("r20")) {
+			role = new Sheriff();
+		} else if (img.contentEquals("r21")) {
+			role = new YoungWitch();
+		} else if (img.contentEquals("r22")) {
+			role = new Agent();
+		} else if (img.contentEquals("r23")) {
+			role = new Magician();
+		} else if (img.contentEquals("r24")) {
+			role = new WolfChild();
 		}
 		
 		else {
@@ -77,6 +97,26 @@ public class RoleFactory {
 			role = new Detective();
 		} else if (num == 14) {
 			role = new Witch();
+		} else if (num == 15) {
+			role = new MysticWolf();
+		} else if (num == 16) {
+			role = new Guard();
+		} else if (num == 17) {
+			role = new Idiot();
+		} else if (num == 18) {
+			role = new Watcher();
+		} else if (num == 19) {
+			role = new Prince();
+		} else if (num == 20) {
+			role = new Sheriff();
+		} else if (num == 21) {
+			role = new YoungWitch();
+		} else if (num == 22) {
+			role = new Agent();
+		} else if (num == 23) {
+			role = new Magician();
+		} else if (num == 24) {
+			role = new WolfChild();
 		}
 		
 		else {

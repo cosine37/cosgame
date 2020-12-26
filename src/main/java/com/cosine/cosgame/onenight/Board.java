@@ -116,22 +116,26 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Detective();
+		Role r = new Werewolf();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Villager();
+		r = new WolfChild();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Villager();
+		r = new Werewolf();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
-		*/
 		
+		r = new Seer();
+		r.setPlayer(players.get(3));
+		r.setBoard(this);
+		players.get(3).getRoles().set(0, r);
+		*/
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
 		}
@@ -259,8 +263,15 @@ public class Board {
 	public void vote(int x, int y) {
 		players.get(x).setVoteIndex(y);
 		players.get(x).setVoted(true);
-		if (y>0 && y<players.size()) {
-			players.get(y).receiveVote();
+		if (y>=0 && y<players.size()) {
+			if (players.get(x).getCurrentRole().getRoleNum() == Consts.PRINCE) {
+				
+			} else {
+				players.get(y).receiveVote();
+				if (players.get(x).getCurrentRole().getRoleNum() == Consts.SHERIFF) {
+					players.get(y).receiveVote();
+				}
+			}
 		}
 		if (allVoted()) {
 			status = Consts.AFTERVOTE;
@@ -282,6 +293,26 @@ public class Board {
 		}
 		int mostVote = 2;
 		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GUARD) {
+				int x = players.get(i).getVoteIndex();
+				if (x>0 && x<players.size()) {
+					players.get(x).setNumVotes(0);
+				}
+				
+			}
+			if (players.get(i).getCurrentRole().getRoleNum() == Consts.PRINCE) {
+				players.get(i).setNumVotes(0);
+			}
+			if (players.get(i).getCurrentRole().getSide() == Consts.WOLF) {
+				int x = players.get(i).getVoteIndex();
+				if (x>0 && x<players.size()) {
+					if (players.get(x).getCurrentRole().getRoleNum() == Consts.WOLFCHILD) {
+						players.get(x).getCurrentRole().setSide(Consts.WOLF);
+					}
+				}
+			}
+		}
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getNumVotes() > mostVote) {
 				mostVote = players.get(i).getNumVotes();
@@ -524,7 +555,7 @@ public class Board {
 			if (status == Consts.AFTERVOTE) {
 				numVotes.add(Integer.toString(p.getNumVotes()));
 				playerVotes.add(Integer.toString(p.getVoteIndex()));
-				finalRoles.add(p.getCurrentRole().getImg());
+				finalRoles.add(p.getCurrentRole().getFinalImg());
 				if (p.isVotedOut()) {
 					votedOut.add("y");
 				} else {
@@ -552,7 +583,7 @@ public class Board {
 					}
 					if (p.isShowUpdatedRole()) {
 						showUpdatedRole = "y";
-						updatedRole = p.getUpdatedRole().getImg();
+						updatedRole = p.getUpdatedRole().getFinalImg();
 					}
 					if (status == Consts.NIGHT) {
 						if (p.isConfirmed()) {

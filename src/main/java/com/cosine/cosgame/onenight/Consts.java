@@ -30,6 +30,16 @@ public class Consts {
 	public static final int APPRENTICESEER = 12;
 	public static final int DETECTIVE = 13;
 	public static final int WITCH = 14;
+	public static final int MYSTICWOLF = 15;
+	public static final int GUARD = 16;
+	public static final int IDIOT = 17;
+	public static final int WATCHER = 18;
+	public static final int PRINCE = 19;
+	public static final int SHERIFF = 20;
+	public static final int YOUNGWITCH = 21;
+	public static final int AGENT = 22;
+	public static final int MAGICIAN = 23;
+	public static final int WOLFCHILD = 24;
 	
 	// marks
 	public static final int UNKNOWN = -1;

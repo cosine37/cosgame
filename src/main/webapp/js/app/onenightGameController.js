@@ -194,7 +194,13 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$scope.getBoard()
 				});
 			}
-			
+		}
+		
+		$scope.idiotNight = function(x){
+			var data = {"option" : x}
+			$http({url: "/onenightgame/useskillidiot", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
 		}
 		
 		$scope.chooseVote = function(x){
@@ -246,6 +252,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				"width": "100%",
 				"background": "rgba(150, 150, 150, 0.5)"
 			}
+		}
+		
+		$scope.showRoleChooseImg = function(index){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Onenight/Roles/" + $scope.rolesChoose[index] + ".png"
+			setBigImageStyle()
 		}
 		
 		$scope.showRoleThisGameBigImage = function(index){
@@ -350,6 +362,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		setResultMsg = function(){
 			$scope.centerMsg = []
 			$scope.centerMsg.push("投票结束。")
+			$scope.centerMsg.push("你获得了" + $scope.numVotes[$scope.myIndex] + "票。")
 			var voteMsg = "";
 			for (i=0;i<$scope.playerNames.length;i++){
 				var x = parseInt($scope.playerVotes[i]);
@@ -429,6 +442,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.detectiveIndex = parseInt(response.data.detectiveIndex)
 				$scope.detectiveRoleImg = response.data.detectiveRoleImg
 				$scope.soleWolf = response.data.soleWolf;
+				$scope.finalRoles = response.data.finalRoles;
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){
@@ -451,6 +465,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				if ($scope.status == '4') {
 					setResultMsg();
+					$scope.playerMarks = $scope.finalRoles
+					$scope.updatedRole = $scope.playerMarks[$scope.myIndex]
 				} else if ($scope.status == '2'){
 					$scope.centerMsg.unshift("天黑了。")
 				} else if ($scope.status == '3'){

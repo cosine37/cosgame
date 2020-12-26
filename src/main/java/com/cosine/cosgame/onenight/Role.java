@@ -86,6 +86,9 @@ public class Role {
 	public String getImg() {
 		return img;
 	}
+	public String getFinalImg() {
+		return getImg();
+	}
 	public void setImg(String img) {
 		this.img = img;
 	}

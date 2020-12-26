@@ -229,6 +229,7 @@ public class Player {
 		bot = doc.getBoolean("bot", false);
 		showUpdatedRole = doc.getBoolean("showUpdatedRole", false);
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
+		updatedRole.setBoard(board);
 		confirmed = doc.getBoolean("confirmed", false);
 		voted = doc.getBoolean("voted", false);
 		votedOut = doc.getBoolean("votedOut", false);

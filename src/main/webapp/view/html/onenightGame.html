@@ -27,6 +27,9 @@
 					<td ng-repeat="i in l track by $index">
 						<div class="role" ng-style="roleChooseStyles[i]" ng-click="selectRole(i)">
 							<div class="target" ng-show="rolesSelect[i] == 1"></div>
+							<div class="qsmark">
+								<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showRoleChooseImg(i);$event.stopPropagation();"/>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -137,10 +140,15 @@
 				</tr>
 			</table>
 			<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
-			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed" ng-click="confirmNight()">确认</button>
+			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole !== 'r17'" ng-click="confirmNight()">确认</button>
+			
+			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(0)">不变化</button>
+			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(1)">左移一顺位</button>
+			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(2)">右移一顺位</button>
+			
 			<button ng-show="status == '3' && voted != 'y'" ng-click="forfeitVote()">弃权</button>
 			<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
-			<button ng-show="status == '4'" ng-click="restart()">再来一局</button>
+			<button ng-show="status == '4' && lord == username" ng-click="restart()">再来一局</button>
 			
 		</div>
 	</div>
