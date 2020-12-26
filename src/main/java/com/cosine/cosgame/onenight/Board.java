@@ -64,10 +64,19 @@ public class Board {
 		int i;
 		for (i=0;i<n;i++) {
 			players.get(i).initializeMarks(n);
+			players.get(i).setShowUpdatedRole(false);
+			players.get(i).clearRole();
 		}
+		detectiveIndex = -1;
+		detectiveRoleImg = "";
 		canNight = false;
 		status = Consts.SETUP;
 		winSide = -1;
+	}
+	
+	public void restart() {
+		startGame();
+		canNight = true;
 	}
 	
 	public void setRolesThisGameByInt(List<Integer> ls) {
@@ -106,8 +115,8 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		
-		Role r = new Villager();
+		/*
+		Role r = new Detective();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -121,7 +130,7 @@ public class Board {
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
-		
+		*/
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();

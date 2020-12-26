@@ -219,6 +219,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
+		$scope.restart = function(){
+			$http.post('/onenightgame/restart').then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		setBigImageStyle = function(){
 			$scope.bigImageStyle = {
 				"height": "609px", 
@@ -472,6 +478,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			} else if ($scope.status == "2" && $scope.confirmed == "y"){
 				$scope.getBoard();
 			} else if ($scope.status == "3" && $scope.voted == "y"){
+				$scope.getBoard();
+			} else if ($scope.status == "4"){
 				$scope.getBoard();
 			}
 			$timeout(function(){

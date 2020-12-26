@@ -89,6 +89,10 @@ public class Player {
 		roles.add(role);
 	}
 	
+	public void clearRole() {
+		roles = new ArrayList<>();
+	}
+	
 	public void receiveVote() {
 		numVotes++;
 	}
