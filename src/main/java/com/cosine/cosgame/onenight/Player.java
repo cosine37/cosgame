@@ -205,14 +205,14 @@ public class Player {
 		doc.append("centerMarks", centerMarks);
 		doc.append("bot", bot);
 		doc.append("showUpdatedRole", showUpdatedRole);
-		doc.append("updatedRole", updatedRole.getImg());
+		doc.append("updatedRole", updatedRole.getDBStorageImg());
 		doc.append("confirmed", confirmed);
 		doc.append("voted", voted);
 		doc.append("votedOut", votedOut);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
-			lor.add(roles.get(i).getImg());
+			lor.add(roles.get(i).getDBStorageImg());
 		}
 		doc.append("roles", lor);
 		return doc;
@@ -230,6 +230,7 @@ public class Player {
 		showUpdatedRole = doc.getBoolean("showUpdatedRole", false);
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
 		updatedRole.setBoard(board);
+		updatedRole.setPlayer(this);
 		confirmed = doc.getBoolean("confirmed", false);
 		voted = doc.getBoolean("voted", false);
 		votedOut = doc.getBoolean("votedOut", false);

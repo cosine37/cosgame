@@ -25,6 +25,7 @@ public class BoardEntity {
 	String detectiveIndex;
 	String detectiveRoleImg;
 	String soleWolf;
+	String firstPlayer;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -249,5 +250,11 @@ public class BoardEntity {
 	}
 	public void setSoleWolf(String soleWolf) {
 		this.soleWolf = soleWolf;
+	}
+	public String getFirstPlayer() {
+		return firstPlayer;
+	}
+	public void setFirstPlayer(String firstPlayer) {
+		this.firstPlayer = firstPlayer;
 	}
 }

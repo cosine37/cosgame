@@ -40,6 +40,7 @@ public class Consts {
 	public static final int AGENT = 22;
 	public static final int MAGICIAN = 23;
 	public static final int WOLFCHILD = 24;
+	public static final int INVESTIGATOR = 25;
 	
 	// marks
 	public static final int UNKNOWN = -1;

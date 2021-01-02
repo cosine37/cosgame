@@ -55,6 +55,17 @@ public class RoleFactory {
 			role = new Magician();
 		} else if (img.contentEquals("r24")) {
 			role = new WolfChild();
+		} else if (img.contentEquals("r25")) {
+			role = new Investigator();
+		} else if (img.contentEquals("r2500")) {
+			role = new Investigator();
+			role.setSide(Consts.HUMAN);
+		} else if (img.contentEquals("r2501")) {
+			role = new Investigator();
+			role.setSide(Consts.WOLF);
+		} else if (img.contentEquals("r2502")) {
+			role = new Investigator();
+			role.setSide(Consts.TANNER);
 		}
 		
 		else {
@@ -117,6 +128,8 @@ public class RoleFactory {
 			role = new Magician();
 		} else if (num == 24) {
 			role = new WolfChild();
+		} else if (num == 25) {
+			role = new Investigator();
 		}
 		
 		else {

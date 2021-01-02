@@ -28,6 +28,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new ApprenticeSeer();
 		allRoles.add(r);
+		r = new Investigator();
+		allRoles.add(r);
 		for (i=0;i<2;i++) {
 			r = new Mason();
 			allRoles.add(r);

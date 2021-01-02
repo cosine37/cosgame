@@ -89,6 +89,12 @@ public class Role {
 	public String getFinalImg() {
 		return getImg();
 	}
+	public String getDisplayImg() {
+		return getImg();
+	}
+	public String getDBStorageImg() {
+		return getImg();
+	}
 	public void setImg(String img) {
 		this.img = img;
 	}

@@ -20,6 +20,7 @@ public class Board {
 	int round;
 	int totalRounds;
 	int winSide;
+	int firstPlayerIndex;
 	String lord;
 	boolean canNight;
 	boolean tannerWin;
@@ -66,6 +67,7 @@ public class Board {
 			players.get(i).initializeMarks(n);
 			players.get(i).setShowUpdatedRole(false);
 			players.get(i).clearRole();
+			players.get(i).setVotedOut(false);
 		}
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
@@ -116,17 +118,17 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Werewolf();
+		Role r = new Investigator();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new WolfChild();
+		r = new Thief();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new Tanner();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -244,6 +246,12 @@ public class Board {
 		}
 	}
 	
+	public void decideFirstPlayer() {
+		Random rand = new Random();
+		int size = players.size();
+		firstPlayerIndex = rand.nextInt(size);
+	}
+	
 	public void confirm(int x) {
 		confirmed.set(x, "y");
 		players.get(x).setConfirmed(true);
@@ -252,6 +260,7 @@ public class Board {
 			executeAllSkills();
 			clearConfirmed();
 			clearVoted();
+			decideFirstPlayer();
 			status = Consts.DAY;
 		}
 	}
@@ -483,13 +492,19 @@ public class Board {
 	public void setSoleWolf(boolean soleWolf) {
 		this.soleWolf = soleWolf;
 	}
+	public int getFirstPlayerIndex() {
+		return firstPlayerIndex;
+	}
+	public void setFirstPlayerIndex(int firstPlayerIndex) {
+		this.firstPlayerIndex = firstPlayerIndex;
+	}
 
 	public List<String> getWinPlayers(){
 		List<String> ans = new ArrayList<>();
 		if (status != Consts.AFTERVOTE) return ans;
 		int i;
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getCurrentRole().getRoleNum() == Consts.TANNER) {
+			if (players.get(i).getCurrentRole().getSide() == Consts.TANNER) {
 				if (tannerWin) {
 					ans.add(players.get(i).getName());
 					continue;
@@ -507,7 +522,7 @@ public class Board {
 		if (status != Consts.AFTERVOTE) return ans;
 		int i;
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getCurrentRole().getRoleNum() == Consts.TANNER) {
+			if (players.get(i).getCurrentRole().getSide() == Consts.TANNER) {
 				if (!tannerWin) {
 					ans.add(players.get(i).getName());
 					continue;
@@ -689,6 +704,7 @@ public class Board {
 		entity.setFinalRoles(finalRoles);
 		entity.setDetectiveIndex(Integer.toString(detectiveIndex));
 		entity.setDetectiveRoleImg(detectiveRoleImg);
+		entity.setFirstPlayer(players.get(firstPlayerIndex).getDisplayName());
 		return entity;
 	}
 	
@@ -704,6 +720,7 @@ public class Board {
 		doc.append("detectiveIndex", detectiveIndex);
 		doc.append("detectiveRoleImg", detectiveRoleImg);
 		doc.append("soleWolf", soleWolf);
+		doc.append("firstPlayerIndex", firstPlayerIndex);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -714,7 +731,7 @@ public class Board {
 		for (i=0;i<centerRoles.size();i++) {
 			List<String> sloc = new ArrayList<>();
 			for (j=0;j<centerRoles.get(i).size();j++) {
-				sloc.add(centerRoles.get(i).get(j).getImg());
+				sloc.add(centerRoles.get(i).get(j).getDBStorageImg());
 			}
 			loc.add(sloc);
 		}
@@ -741,6 +758,7 @@ public class Board {
 		detectiveIndex = doc.getInteger("detectiveIndex", -1);
 		detectiveRoleImg = doc.getString("detectiveRoleImg");
 		soleWolf = doc.getBoolean("soleWolf", false);
+		firstPlayerIndex = doc.getInteger("firstPlayerIndex", 0);
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();
