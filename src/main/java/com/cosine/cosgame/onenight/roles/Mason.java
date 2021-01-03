@@ -10,7 +10,7 @@ public class Mason extends Role{
 		roleNum = 8;
 		side = Consts.HUMAN;
 		img = "r08";
-		sequence = 900;
+		sequence = 400;
 		name = "砖瓦工";
 		nightMsg.add("你的初始身份是 砖瓦工。");
 		nightMsg.add("另一个砖瓦工身份已显示，若未显示，则该砖瓦工位于中央牌区。");

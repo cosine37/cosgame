@@ -22,7 +22,15 @@ public class AllRes {
 		}
 		r = new MysticWolf();
 		allRoles.add(r);
+		r = new Timberwolf();
+		allRoles.add(r);
 		r = new Minion();
+		allRoles.add(r);
+		for (i=0;i<2;i++) {
+			r = new Mason();
+			allRoles.add(r);
+		}
+		r = new BearTrainer();
 		allRoles.add(r);
 		r = new Seer();
 		allRoles.add(r);
@@ -30,10 +38,6 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Investigator();
 		allRoles.add(r);
-		for (i=0;i<2;i++) {
-			r = new Mason();
-			allRoles.add(r);
-		}
 		r = new Thief();
 		allRoles.add(r);
 		r = new Magician();

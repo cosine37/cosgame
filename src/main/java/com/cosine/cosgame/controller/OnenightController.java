@@ -185,6 +185,7 @@ public class OnenightController {
 			board.updateDB("detectiveIndex", board.getDetectiveIndex());
 			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
 			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
+			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}
@@ -208,6 +209,7 @@ public class OnenightController {
 			board.updateDB("detectiveIndex", board.getDetectiveIndex());
 			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
 			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
+			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}
@@ -230,6 +232,7 @@ public class OnenightController {
 			board.updateDB("detectiveIndex", board.getDetectiveIndex());
 			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
 			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
+			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updatePlayers();
 			board.updateCenterRoles();
 		}

@@ -204,22 +204,24 @@
 							<td colspan="2">
 								<button ng-click="showedCard='r01'" ng-disabled="showedCard == 'r01'">狼人</button>
 								<button ng-click="showedCard='r15'" ng-disabled="showedCard == 'r15'">狼先知</button>
+								<button ng-click="showedCard='r26'" ng-disabled="showedCard == 'r26'">森林狼</button>
 								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
+								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
+								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
 								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
 								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
-								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
 								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
-								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
-								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
-								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
 							</td>
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
+								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
+								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
 								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
 								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
@@ -273,6 +275,21 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r26'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 森林狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								你可以指定一名其他玩家（可以是队友）。该玩家天亮时只有第一轮可以发言。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								在禁言一名其他玩家的同时，你还可以查看一张中央身份。
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r05'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -283,6 +300,31 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到所有其他同阵营队友，但你的队友看不到你。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>若你有队友，你的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利，无论你是否被<span class="onenighttext">投票出局</span>。
 								若你没有队友，你被<span class="onenighttext">投票出局</span>则“人”阵营胜利。你没有被<span class="onenighttext">投票出局</span>则获胜。换言之，你就是个“狼”阵营的抗推位。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r08'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 砖瓦工</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>2</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以看到另一位<span class="onenighttext">砖瓦工</span>。
+								若你没有看到另一位<span class="onenighttext">砖瓦工</span>，则另一位<span class="onenighttext">砖瓦工</span>为中央身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>设置：</b>使用<span class="onenighttext">砖瓦工</span>的游戏请保证2张都使用。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r27'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 驯熊师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段若你左侧或者右侧的玩家至少有一个初始身份为“狼”阵营，你的熊会咆哮。
+								本游戏设定为你在消息栏看到熊是否咆哮。</br>
 							</td>
 						</tr>
 					</table>
@@ -322,19 +364,6 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你的胜利条件和你的阵营相同。若你查看的对象为<span class="onenighttext">皮匠</span>，
 								你和<span class="onenighttext">皮匠</span>的胜利条件为你和<span class="onenighttext">皮匠</span>中的任何一人被投票出局即共同胜利。
 								若你查看的对象为<span class="onenighttext">狼孩</span>，你的阵营为“人”。</br>
-							</td>
-						</tr>
-					</table>
-					<table ng-show="showedCard == 'r08'">
-						<tr style="width: 1000px">
-							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
-							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 砖瓦工</h4>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>2</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以看到另一位<span class="onenighttext">砖瓦工</span>。
-								若你没有看到另一位<span class="onenighttext">砖瓦工</span>，则另一位<span class="onenighttext">砖瓦工</span>为中央身份。</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>设置：</b>使用<span class="onenighttext">砖瓦工</span>的游戏请保证2张都使用。</br>
 							</td>
 						</tr>
 					</table>

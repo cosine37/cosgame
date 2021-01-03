@@ -66,6 +66,10 @@ public class RoleFactory {
 		} else if (img.contentEquals("r2502")) {
 			role = new Investigator();
 			role.setSide(Consts.TANNER);
+		} else if (img.contentEquals("r26")) {
+			role = new Timberwolf();
+		} else if (img.contentEquals("r27")) {
+			role = new BearTrainer();
 		}
 		
 		else {
@@ -130,6 +134,10 @@ public class RoleFactory {
 			role = new WolfChild();
 		} else if (num == 25) {
 			role = new Investigator();
+		} else if (num == 26) {
+			role = new Timberwolf();
+		} else if (num == 27) {
+			role = new BearTrainer();
 		}
 		
 		else {

@@ -26,6 +26,8 @@ public class BoardEntity {
 	String detectiveRoleImg;
 	String soleWolf;
 	String firstPlayer;
+	String restrictedIndex;
+	String restrictedPlayer;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -256,5 +258,17 @@ public class BoardEntity {
 	}
 	public void setFirstPlayer(String firstPlayer) {
 		this.firstPlayer = firstPlayer;
+	}
+	public String getRestrictedIndex() {
+		return restrictedIndex;
+	}
+	public void setRestrictedIndex(String restrictedIndex) {
+		this.restrictedIndex = restrictedIndex;
+	}
+	public String getRestrictedPlayer() {
+		return restrictedPlayer;
+	}
+	public void setRestrictedPlayer(String restrictedPlayer) {
+		this.restrictedPlayer = restrictedPlayer;
 	}
 }

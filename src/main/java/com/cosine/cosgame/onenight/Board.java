@@ -27,6 +27,7 @@ public class Board {
 	int detectiveIndex;
 	String detectiveRoleImg;
 	boolean soleWolf;
+	int restrictedIndex;
 	
 	List<String> confirmed;
 	
@@ -40,6 +41,7 @@ public class Board {
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
 		soleWolf = false;
+		restrictedIndex = -1;
 		
 		String dbname = "onenight";
 		String col = "board";
@@ -74,6 +76,7 @@ public class Board {
 		canNight = false;
 		status = Consts.SETUP;
 		winSide = -1;
+		restrictedIndex = -1;
 	}
 	
 	public void restart() {
@@ -118,7 +121,7 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Investigator();
+		Role r = new BearTrainer();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -128,7 +131,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Tanner();
+		r = new Werewolf();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -498,6 +501,12 @@ public class Board {
 	public void setFirstPlayerIndex(int firstPlayerIndex) {
 		this.firstPlayerIndex = firstPlayerIndex;
 	}
+	public int getRestrictedIndex() {
+		return restrictedIndex;
+	}
+	public void setRestrictedIndex(int restrictedIndex) {
+		this.restrictedIndex = restrictedIndex;
+	}
 
 	public List<String> getWinPlayers(){
 		List<String> ans = new ArrayList<>();
@@ -664,6 +673,11 @@ public class Board {
 			entity.setSoleWolf("n");
 		}
 		
+		String restrictedPlayer = "";
+		if (restrictedIndex != -1) {
+			restrictedPlayer = players.get(restrictedIndex).getName();
+		}
+		
 		List<String> rolesChoose = new ArrayList<>();
 		AllRes allRes = new AllRes();
 		List<Role> allRoles = allRes.getAllRoles();
@@ -705,6 +719,8 @@ public class Board {
 		entity.setDetectiveIndex(Integer.toString(detectiveIndex));
 		entity.setDetectiveRoleImg(detectiveRoleImg);
 		entity.setFirstPlayer(players.get(firstPlayerIndex).getDisplayName());
+		entity.setRestrictedIndex(Integer.toString(restrictedIndex));
+		entity.setRestrictedPlayer(restrictedPlayer);
 		return entity;
 	}
 	
@@ -721,6 +737,7 @@ public class Board {
 		doc.append("detectiveRoleImg", detectiveRoleImg);
 		doc.append("soleWolf", soleWolf);
 		doc.append("firstPlayerIndex", firstPlayerIndex);
+		doc.append("restrictedIndex", restrictedIndex);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -759,6 +776,7 @@ public class Board {
 		detectiveRoleImg = doc.getString("detectiveRoleImg");
 		soleWolf = doc.getBoolean("soleWolf", false);
 		firstPlayerIndex = doc.getInteger("firstPlayerIndex", 0);
+		restrictedIndex = doc.getInteger("restrictedIndex", -1);
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();

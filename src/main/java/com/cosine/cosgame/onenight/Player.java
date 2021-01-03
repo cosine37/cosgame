@@ -37,6 +37,24 @@ public class Player {
 		confirmed = false;
 	}
 	
+	public Player prevPlayer() {
+		int x = index-1;
+		if (x<0) {
+			x = x+board.getPlayers().size();
+		}
+		Player p = board.getPlayers().get(x);
+		return p;
+	}
+	
+	public Player nextPlayer() {
+		int x = index+1;
+		if (x == board.getPlayers().size()) {
+			x = 0;
+		}
+		Player p = board.getPlayers().get(x);
+		return p;
+	}
+	
 	public int getCurrentRoleIndex() {
 		int x = roles.size() - 1;
 		return x;

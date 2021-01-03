@@ -444,6 +444,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.soleWolf = response.data.soleWolf;
 				$scope.finalRoles = response.data.finalRoles;
 				$scope.firstPlayer = response.data.firstPlayer;
+				$scope.restrictedPlayer = response.data.restrictedPlayer;
+				$scope.restrictedIndex = response.data.restrictedIndex;
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){
@@ -471,7 +473,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else if ($scope.status == '2'){
 					$scope.centerMsg.unshift("天黑了。")
 				} else if ($scope.status == '3'){
-					$scope.centerMsg.unshift("天亮了，初始发言玩家为" + $scope.firstPlayer + "。");
+					var morningMsg = "天亮了，初始发言玩家为" + $scope.firstPlayer + "。";
+					if ($scope.restrictedIndex != '-1'){
+						morningMsg = morningMsg + $scope.restrictedPlayer + "被禁言了，只有第一轮能发言。"
+					}
+					
+					$scope.centerMsg.unshift(morningMsg);
 				}
 				if ($scope.status == '2'){
 					$scope.bodyClass = "night"
