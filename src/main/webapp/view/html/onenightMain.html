@@ -208,6 +208,7 @@
 								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
 								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
 								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
+								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
 								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
 								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
@@ -226,6 +227,7 @@
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
 								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
 								<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
+								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
 							</td>
 						</tr>
 						<tr>
@@ -325,6 +327,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段若你左侧或者右侧的玩家至少有一个初始身份为“狼”阵营，你的熊会咆哮。
 								本游戏设定为你在消息栏看到熊是否咆哮。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r28'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 乞丐</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以指定一名玩家（也可以不指定），该玩家知道你的初始身份。</br>
 							</td>
 						</tr>
 					</table>
@@ -488,6 +501,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份（此时为最终身份），你也可以不发动该技能。本游戏设定为天亮时自动显示你选择玩家的最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r29'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 村长</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
+								换言之，该技能必须发动。</br>
 							</td>
 						</tr>
 					</table>

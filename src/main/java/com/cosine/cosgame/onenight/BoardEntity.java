@@ -28,6 +28,7 @@ public class BoardEntity {
 	String firstPlayer;
 	String restrictedIndex;
 	String restrictedPlayer;
+	String beggarIndex;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
@@ -270,5 +271,11 @@ public class BoardEntity {
 	}
 	public void setRestrictedPlayer(String restrictedPlayer) {
 		this.restrictedPlayer = restrictedPlayer;
+	}
+	public String getBeggarIndex() {
+		return beggarIndex;
+	}
+	public void setBeggarIndex(String beggarIndex) {
+		this.beggarIndex = beggarIndex;
 	}
 }

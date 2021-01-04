@@ -70,6 +70,10 @@ public class RoleFactory {
 			role = new Timberwolf();
 		} else if (img.contentEquals("r27")) {
 			role = new BearTrainer();
+		} else if (img.contentEquals("r28")) {
+			role = new Beggar();
+		} else if (img.contentEquals("r29")) {
+			role = new VillageHead();
 		}
 		
 		else {
@@ -138,6 +142,10 @@ public class RoleFactory {
 			role = new Timberwolf();
 		} else if (num == 27) {
 			role = new BearTrainer();
+		} else if (num == 28) {
+			role = new Beggar();
+		} else if (num == 29) {
+			role = new VillageHead();
 		}
 		
 		else {

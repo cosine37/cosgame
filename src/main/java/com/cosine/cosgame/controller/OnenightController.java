@@ -109,6 +109,11 @@ public class OnenightController {
 			board.updatePlayers();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("soleWolf", board.isSoleWolf());
+			board.updateDB("canNight", board.isCanNight());
+			board.updateDB("detectiveIndex", board.getDetectiveIndex());
+			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
+			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
+			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -128,6 +133,8 @@ public class OnenightController {
 			board.updateDB("canNight", board.isCanNight());
 			board.updateDB("detectiveIndex", board.getDetectiveIndex());
 			board.updateDB("detectiveRoleImg", board.getDetectiveRoleImg());
+			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
+			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

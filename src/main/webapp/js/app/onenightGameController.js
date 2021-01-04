@@ -446,6 +446,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.firstPlayer = response.data.firstPlayer;
 				$scope.restrictedPlayer = response.data.restrictedPlayer;
 				$scope.restrictedIndex = response.data.restrictedIndex;
+				$scope.beggarIndex = response.data.beggarIndex;
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){

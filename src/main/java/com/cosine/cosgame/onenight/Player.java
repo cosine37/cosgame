@@ -13,6 +13,7 @@ public class Player {
 	int voteIndex; // who this player votes	
 	int score;
 	int index;
+	int beggarIndex;
 	boolean voted;
 	boolean votedOut;
 	boolean bot;
@@ -35,6 +36,7 @@ public class Player {
 		updatedRole = new Role();
 		showUpdatedRole = false;
 		confirmed = false;
+		beggarIndex = -1;
 	}
 	
 	public Player prevPlayer() {
@@ -211,6 +213,12 @@ public class Player {
 	public void setVotedOut(boolean votedOut) {
 		this.votedOut = votedOut;
 	}
+	public int getBeggarIndex() {
+		return beggarIndex;
+	}
+	public void setBeggarIndex(int beggarIndex) {
+		this.beggarIndex = beggarIndex;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -227,6 +235,7 @@ public class Player {
 		doc.append("confirmed", confirmed);
 		doc.append("voted", voted);
 		doc.append("votedOut", votedOut);
+		doc.append("beggarIndex", beggarIndex);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -252,6 +261,7 @@ public class Player {
 		confirmed = doc.getBoolean("confirmed", false);
 		voted = doc.getBoolean("voted", false);
 		votedOut = doc.getBoolean("votedOut", false);
+		beggarIndex = doc.getInteger("beggarIndex", -1);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

@@ -42,6 +42,7 @@ public class Board {
 		detectiveRoleImg = "";
 		soleWolf = false;
 		restrictedIndex = -1;
+		firstPlayerIndex = -1;
 		
 		String dbname = "onenight";
 		String col = "board";
@@ -77,6 +78,7 @@ public class Board {
 		status = Consts.SETUP;
 		winSide = -1;
 		restrictedIndex = -1;
+		firstPlayerIndex = -1;
 	}
 	
 	public void restart() {
@@ -121,7 +123,7 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new BearTrainer();
+		Role r = new VillageHead();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -250,9 +252,11 @@ public class Board {
 	}
 	
 	public void decideFirstPlayer() {
-		Random rand = new Random();
-		int size = players.size();
-		firstPlayerIndex = rand.nextInt(size);
+		if (firstPlayerIndex == -1) {
+			Random rand = new Random();
+			int size = players.size();
+			firstPlayerIndex = rand.nextInt(size);
+		}
 	}
 	
 	public void confirm(int x) {
@@ -559,6 +563,7 @@ public class Board {
 		String updatedRole = "";
 		String confirmed = "n";
 		String voted = "n";
+		String beggarIndex = "-1";
 		List<String> centerMsg = new ArrayList<>();
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
@@ -587,7 +592,7 @@ public class Board {
 				}
 			}
 			if (players.get(i).getName().contentEquals(name)) {
-				
+				beggarIndex = Integer.toString(players.get(i).getBeggarIndex());
 				myIndex = Integer.toString(i);
 				if (p.getInitialRole() == null) {
 					initialRole = "-1";
@@ -685,6 +690,11 @@ public class Board {
 			rolesChoose.add(allRoles.get(i).getImg());
 		}
 		
+		String firstPlayer = "";
+		if (firstPlayerIndex != -1) {
+			firstPlayer = players.get(firstPlayerIndex).getDisplayName();
+		}
+		
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
@@ -718,9 +728,10 @@ public class Board {
 		entity.setFinalRoles(finalRoles);
 		entity.setDetectiveIndex(Integer.toString(detectiveIndex));
 		entity.setDetectiveRoleImg(detectiveRoleImg);
-		entity.setFirstPlayer(players.get(firstPlayerIndex).getDisplayName());
+		entity.setFirstPlayer(firstPlayer);
 		entity.setRestrictedIndex(Integer.toString(restrictedIndex));
 		entity.setRestrictedPlayer(restrictedPlayer);
+		entity.setBeggarIndex(beggarIndex);
 		return entity;
 	}
 	

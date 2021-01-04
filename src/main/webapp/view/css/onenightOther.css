@@ -81,6 +81,17 @@ button:disabled{
 	background-size:cover;
 }
 
+.beggar{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	bottom: 0px;
+	height: 50px;
+	width: 50px;
+	background:url("/image/Onenight/beggar.png");
+	background-size:cover;
+}
+
 .vote{
 	position: absolute;
 	user-select:none;
