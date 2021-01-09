@@ -32,6 +32,8 @@ public class AllRes {
 		}
 		r = new BearTrainer();
 		allRoles.add(r);
+		r = new Beggar();
+		allRoles.add(r);
 		r = new Seer();
 		allRoles.add(r);
 		r = new ApprenticeSeer();
@@ -59,6 +61,8 @@ public class AllRes {
 		r = new Detective();
 		allRoles.add(r);
 		r = new Agent();
+		allRoles.add(r);
+		r = new VillageHead();
 		allRoles.add(r);
 		r = new SleepingWolf();
 		allRoles.add(r);

@@ -43,7 +43,9 @@ public class Consts {
 	public static final int INVESTIGATOR = 25;
 	public static final int TIMBERWOLF = 26;
 	public static final int BEARTRAINER = 27;
-	
+	public static final int BEGGAR = 28;
+	public static final int VILLAGEHEAD = 29;
+	public static final int POPE = 30;
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;

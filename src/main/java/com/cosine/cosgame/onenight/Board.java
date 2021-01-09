@@ -123,17 +123,17 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new VillageHead();
+		Role r = new Pope();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Thief();
+		r = new Werewolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new MysticWolf();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -309,10 +309,12 @@ public class Board {
 		}
 		int mostVote = 2;
 		int i;
+		boolean killedPope = true;
+		boolean hasWerewolf = false;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GUARD) {
 				int x = players.get(i).getVoteIndex();
-				if (x>0 && x<players.size()) {
+				if (x>=0 && x<players.size()) {
 					players.get(x).setNumVotes(0);
 				}
 				
@@ -321,13 +323,22 @@ public class Board {
 				players.get(i).setNumVotes(0);
 			}
 			if (players.get(i).getCurrentRole().getSide() == Consts.WOLF) {
+				hasWerewolf = true;
 				int x = players.get(i).getVoteIndex();
-				if (x>0 && x<players.size()) {
+				if (x>=0 && x<players.size()) {
 					if (players.get(x).getCurrentRole().getRoleNum() == Consts.WOLFCHILD) {
 						players.get(x).getCurrentRole().setSide(Consts.WOLF);
 					}
+					if (players.get(x).getCurrentRole().getRoleNum() != Consts.POPE) {
+						killedPope = false;
+					}
+				} else {
+					killedPope = false;
 				}
 			}
+		}
+		if (hasWerewolf == false) {
+			killedPope = false;
 		}
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getNumVotes() > mostVote) {
@@ -376,12 +387,20 @@ public class Board {
 		}
 		
 		if (votedWerewolf) {
-			winSide = Consts.HUMAN;
+			if (killedPope) {
+				winSide = Consts.WOLF;
+			} else {
+				winSide = Consts.HUMAN;
+			}
 		} else if (votedMinion){
 			if (missedWerewolf) {
 				winSide = Consts.WOLF;
 			} else {
-				winSide = Consts.HUMAN;
+				if (killedPope) {
+					winSide = Consts.WOLF;
+				} else {
+					winSide = Consts.HUMAN;
+				}
 			}
 		} else if (missedWerewolf == false) {
 			if (votedTanner) {

@@ -206,6 +206,7 @@
 								<button ng-click="showedCard='r15'" ng-disabled="showedCard == 'r15'">狼先知</button>
 								<button ng-click="showedCard='r26'" ng-disabled="showedCard == 'r26'">森林狼</button>
 								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
+								<button ng-click="showedCard='r30'" ng-disabled="showedCard == 'r30'">教宗</button>
 								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
 								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
 								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
@@ -214,12 +215,12 @@
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
-								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
-								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
 							</td>
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
+								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
 								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
 								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
 								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
@@ -318,6 +319,19 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r30'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 教宗</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以看到所有初始阵营为“狼”的玩家。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>特殊：</b>投票阶段若你获得所有最终阵营为“狼”的玩家的投票，则无论谁被公投出局，“狼”阵营获胜且“人”阵营失败。
+								若你未获得所有最终阵营为“狼”的玩家的投票，则结局判定不变。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r27'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -337,7 +351,7 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 乞丐</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以指定一名玩家（也可以不指定），该玩家知道你的初始身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以指定一名其他玩家（也可以不指定），该玩家知道你的初始身份。</br>
 							</td>
 						</tr>
 					</table>

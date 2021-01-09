@@ -48,7 +48,9 @@ app.controller("gravepsychoEndGameCtrl", ['$scope', '$window', '$http', '$docume
 			var i,j;
 			for (i=0;i<$scope.money.length;i++){
 				for (j=i+1;j<$scope.money.length;j++){
-					if ($scope.money[i] < $scope.money[j]){
+					var m1 = parseInt($scope.money[i])
+					var m2 = parseInt($scope.money[j])
+					if (m1 < m2){
 						temp = $scope.money[i];
 						$scope.money[i] = $scope.money[j];
 						$scope.money[j] = temp;
