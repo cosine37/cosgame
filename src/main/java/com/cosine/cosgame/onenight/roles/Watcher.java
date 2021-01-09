@@ -20,7 +20,7 @@ public class Watcher extends Role{
 		dayMsg.add("你的初始身份是 观者");
 		dayMsg.add("场上显示的身份牌为初始身份是预言家和见习预言家的玩家的最终身份。");
 		dayMsg.add("你可以选择某位玩家的身份牌并点击确认投票给该玩家。");
-		votedMsg.add("你的初始身份是 失眠者。");
+		votedMsg.add("你的初始身份是 观者。");
 		votedMsg.add("场上显示的身份牌为初始身份是预言家和见习预言家的玩家的最终身份。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}

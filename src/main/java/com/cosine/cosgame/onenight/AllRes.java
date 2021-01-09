@@ -26,6 +26,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
+		r = new Pope();
+		allRoles.add(r);
 		for (i=0;i<2;i++) {
 			r = new Mason();
 			allRoles.add(r);
@@ -58,11 +60,13 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Watcher();
 		allRoles.add(r);
-		r = new Detective();
+		r = new Bishop();
+		allRoles.add(r);
+		r = new VillageHead();
 		allRoles.add(r);
 		r = new Agent();
 		allRoles.add(r);
-		r = new VillageHead();
+		r = new Detective();
 		allRoles.add(r);
 		r = new SleepingWolf();
 		allRoles.add(r);

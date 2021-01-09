@@ -71,6 +71,7 @@ public class Board {
 			players.get(i).setShowUpdatedRole(false);
 			players.get(i).clearRole();
 			players.get(i).setVotedOut(false);
+			players.get(i).setNumVotes(0);
 		}
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
@@ -123,22 +124,22 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Pope();
+		Role r = new Bishop();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new Thief();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new MysticWolf();
+		r = new Pope();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
 		
-		r = new Seer();
+		r = new Pope();
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);

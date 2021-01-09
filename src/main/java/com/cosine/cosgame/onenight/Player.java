@@ -89,6 +89,7 @@ public class Player {
 		for (i=0;i<3;i++) {
 			centerMarks.add(-1);
 		}
+		beggarIndex = -1;
 	}
 	
 	public void showAllRoles() {

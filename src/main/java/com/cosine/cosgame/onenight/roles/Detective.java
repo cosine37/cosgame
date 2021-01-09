@@ -49,7 +49,7 @@ public class Detective extends Role{
 			}
 		}
 		if (x != -1) {
-			if (r.getSide() == Consts.HUMAN) {
+			if (r.getSide() == Consts.HUMAN && r.getRoleNum() != Consts.POPE) {
 				board.setDetectiveIndex(x);
 				board.setDetectiveRoleImg(r.getImg());
 				Player p = board.getPlayers().get(x);

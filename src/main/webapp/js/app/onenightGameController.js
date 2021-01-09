@@ -476,7 +476,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else if ($scope.status == '3'){
 					var morningMsg = "天亮了，初始发言玩家为" + $scope.firstPlayer + "。";
 					if ($scope.restrictedIndex != '-1'){
-						morningMsg = morningMsg + $scope.restrictedPlayer + "被禁言了，只有第一轮能发言。"
+						morningMsg = morningMsg + $scope.restrictedPlayer + "中了森林诅咒，只能用方言（如不会方言则只能用英语）发言。"
 					}
 					
 					$scope.centerMsg.unshift(morningMsg);

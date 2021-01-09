@@ -116,7 +116,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前游戏一共包含29张身份牌。一些是“人”阵营，一些是“狼”阵营。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前游戏一共包含36张身份牌。一些是“人”阵营，一些是“狼”阵营。
 								每个身份都有其对应的技能（也有可能没有）。
 								</p>
 							</td>
@@ -226,9 +226,10 @@
 								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
 								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
-								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
-								<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
+								<button ng-click="showedCard='r31'" ng-disabled="showedCard == 'r31'">主教</button>
 								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
+								<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
+								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
 							</td>
 						</tr>
 						<tr>
@@ -286,7 +287,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
-								你可以指定一名其他玩家（可以是队友）。该玩家天亮时只有第一轮可以发言。</br>
+								你可以指定一名其他玩家（可以是队友）。该玩家发言时只能用方言发言，无论其他玩家是否能听懂。若该玩家不会方言，则只能用英语发言。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
 								在禁言一名其他玩家的同时，你还可以查看一张中央身份。
@@ -495,15 +496,26 @@
 							</td>
 						</tr>
 					</table>
-					<table ng-show="showedCard == 'r13'">
+					<table ng-show="showedCard == 'r31'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 侦探</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 主教</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份（此时为最终身份），你也可以不发动该技能。
-								若你查看的玩家的阵营为“人”，则将该身份正面朝上放置（所有其他玩家将会看到该玩家的最终身份，相当于一张大金水），该效果自动发动。本游戏设定为天亮时自动显示你选择玩家的最终身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你看到初始身份为教宗的玩家的最终身份。本游戏设定为天亮时自动显示其最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r29'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 村长</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
+								换言之，该技能必须发动。</br>
 							</td>
 						</tr>
 					</table>
@@ -518,15 +530,15 @@
 							</td>
 						</tr>
 					</table>
-					<table ng-show="showedCard == 'r29'">
+					<table ng-show="showedCard == 'r13'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 村长</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 侦探</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
-								换言之，该技能必须发动。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份（此时为最终身份），你也可以不发动该技能。
+								若你查看的玩家的阵营为“人”且不为教宗，则将该身份正面朝上放置（所有其他玩家将会看到该玩家的最终身份，相当于一张大金水），该效果自动发动。本游戏设定为天亮时自动显示你选择玩家的最终身份。</br>
 							</td>
 						</tr>
 					</table>

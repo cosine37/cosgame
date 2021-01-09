@@ -76,6 +76,8 @@ public class RoleFactory {
 			role = new VillageHead();
 		} else if (img.contentEquals("r30")) {
 			role = new Pope();
+		} else if (img.contentEquals("r31")) {
+			role = new Bishop();
 		}
 		
 		else {
@@ -150,6 +152,8 @@ public class RoleFactory {
 			role = new VillageHead();
 		} else if (num == 30) {
 			role = new Pope();
+		} else if (num == 31) {
+			role = new Bishop();
 		}
 		
 		else {
