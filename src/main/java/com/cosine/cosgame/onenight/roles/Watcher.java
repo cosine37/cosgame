@@ -32,6 +32,12 @@ public class Watcher extends Role{
 			if (ir.getRoleNum() == Consts.SEER || ir.getRoleNum() == Consts.APPRENTICESEER) {
 				Role cr = board.getPlayers().get(i).getCurrentRole();
 				player.getPlayerMarks().set(i, cr.getRoleNum());
+				if (cr.getRoleNum() == Consts.PAGAN) {
+					Role r1 = new QuoteWerewolf();
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+				}
 			}
 		}
 	}

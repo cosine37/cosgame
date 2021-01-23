@@ -42,10 +42,21 @@ public class Thief extends Role{
 				Player p = board.getPlayers().get(i);
 				Role r1 = p.getCurrentRole();
 				Role r2 = player.getCurrentRole();
-				p.addRole(r2);
-				player.addRole(r1);
-				player.setUpdatedRole(r1);
-				player.setShowUpdatedRole(true);
+				if (r1.exchangable() && r2.exchangable()) {
+					p.addRole(r2);
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+					if (r1.getRoleNum() == Consts.PAGAN) {
+						r1 = new QuoteWerewolf();
+						player.addRole(r1);
+						player.setUpdatedRole(r1);
+						player.setShowUpdatedRole(true);
+					}
+				} else {
+					player.setUpdatedRole(r2);
+					player.setShowUpdatedRole(true);
+				}
 			}
 		}
 	}

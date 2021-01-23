@@ -78,6 +78,16 @@ public class RoleFactory {
 			role = new Pope();
 		} else if (img.contentEquals("r31")) {
 			role = new Bishop();
+		} else if (img.contentEquals("r32")) {
+			role = new Monk();
+		} else if (img.contentEquals("r33")) {
+			role = new Actor();
+		} else if (img.contentEquals("r34")) {
+			role = new Pagan();
+		} else if (img.contentEquals("r3401")) {
+			role = new QuoteWerewolf();
+		} else if (img.contentEquals("r35")) {
+			role = new Shepherd();
 		}
 		
 		else {
@@ -154,6 +164,16 @@ public class RoleFactory {
 			role = new Pope();
 		} else if (num == 31) {
 			role = new Bishop();
+		} else if (num == 32) {
+			role = new Monk();
+		} else if (num == 33) {
+			role = new Actor();
+		} else if (num == 34) {
+			role = new Pagan();
+		} else if (num == 3401) {
+			role = new QuoteWerewolf();
+		} else if (num == 35) {
+			role = new Shepherd();
 		}
 		
 		else {

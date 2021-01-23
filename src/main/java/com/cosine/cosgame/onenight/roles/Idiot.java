@@ -15,7 +15,6 @@ public class Idiot extends Role{
 		img = "r17";
 		sequence = 750;
 		name = "白痴";
-		choosePlayerNum = 1;
 		hasNight = true;
 		nightMsg.add("你的初始身份是 白痴。");
 		nightMsg.add("你可以选择将除你以外的玩家的身份左移一顺位，或右移一顺位，或不移动");
@@ -33,6 +32,13 @@ public class Idiot extends Role{
 		List<Role> curRoles = new ArrayList<>();
 		for (i=0;i<board.getPlayers().size();i++) {
 			curRoles.add(board.getPlayers().get(i).getCurrentRole());
+		}
+		for (i=0;i<board.getPlayers().size();i++) {
+			if (i==x) continue;
+			Role r = board.getPlayers().get(i).getCurrentRole();
+			if (!r.exchangable()) {
+				return;
+			}
 		}
 		if (y == 0) {
 			

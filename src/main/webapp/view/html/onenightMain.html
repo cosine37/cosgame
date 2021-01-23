@@ -220,6 +220,7 @@
 						<tr>
 							<td>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
+								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">演员</button>
 								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
 								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
 								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
@@ -228,6 +229,7 @@
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
 								<button ng-click="showedCard='r31'" ng-disabled="showedCard == 'r31'">主教</button>
 								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
+								<button ng-click="showedCard='r35'" ng-disabled="showedCard == 'r35'">牧羊人</button>
 								<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
 								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
 							</td>
@@ -245,7 +247,9 @@
 								<button ng-click="showedCard='r16'" ng-disabled="showedCard == 'r16'">守卫</button>
 								<button ng-click="showedCard='r19'" ng-disabled="showedCard == 'r19'">王子</button>
 								<button ng-click="showedCard='r20'" ng-disabled="showedCard == 'r20'">警长</button>
-								<button ng-click="showedCard='r24'" ng-disabled="showedCard == 'r24'">狼孩</button>
+								<button ng-click="showedCard='r24'" ng-disabled="showedCard == 'r24'"><del>狼孩</del></button>
+								<button ng-click="showedCard='r32'" ng-disabled="showedCard == 'r32'">僧侣</button>
+								<button ng-click="showedCard='r34'" ng-disabled="showedCard == 'r34'">邪灵法师</button>
 								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
 							</td>
 						</tr>
@@ -429,6 +433,17 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r33'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 演员</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。交换完后你查看你获得的新身份。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r21'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -516,6 +531,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
 								换言之，该技能必须发动。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r35'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 牧羊人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>你知道随机一个身份发生过变化的其他玩家。本游戏设定为天亮时该随机玩家的身份上显示交换标记。
+								若所有其他玩家的身份都没有发生过变化，你不会看到任何标记。你无法知道自己的身份是否发生过变化。</br>
 							</td>
 						</tr>
 					</table>
@@ -619,13 +646,52 @@
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼孩</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; <del>狼孩</del></h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该身份目前不可选</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>你的初始阵营为“人”，投票阶段若你获得“狼”阵营玩家的投票，你的阵营变为“狼”。
 								若你未获得“狼”阵营玩家的投票，你依然是“人”阵营，哪怕你获得皮匠的投票。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>无</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>与你最终阵营的胜利条件相同。</br>
 							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r32'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 僧侣</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>所有指定该身份牌的交换将会失效。换言之，如果你的初始身份为僧侣，你的最终身份必然为僧侣。
+								该技能与该身份牌相关而不是玩家，所以即使该身份牌为中央身份，与该身份牌相关的交换依然会失效。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>以下为该身份技能触发的所有情况：</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>魔术师、小魔女、熊孩子、白痴、酒鬼：</b>技能发动失效，所有被选中的玩家都不交换身份（只要场上有玩家是僧侣，白痴的交换就会失效），但技能发动目标依然会显示。</br></i>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、演员：</b>交换失效，查看自身身份牌时会显示盗贼或演员（即之前的身份）。</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>女巫：</b>你查看的中央身份为该身份后依然要选择交换的目标，但交换会失效。你选择的交换目标若为其他玩家，其身份牌的显示会仍为未知（而不为僧侣）。</i></br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r34'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 邪灵法师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段，所有使用“人”阵营身份技能看到该身份的玩家的身份在其技能结算完毕后将会变为“狼人”。
+								该技能与该身份牌相关而不是玩家，所以即使该身份牌为中央身份，查看该身份依然会发动效果。初始身份为邪灵法师的玩家看到自己的身份不属于发动技能看到自己身份的范畴。
+								仅仅指定该身份牌但不查看该身份牌不会触发该身份牌的效果（如熊孩子交换该身份与另一名玩家的身份不会令熊孩子身份变为“狼人”）。
+								触发该身份效果之后变成的“狼人”身份之后依然可以被交换。“狼人”身份不完全等同于狼人，其身份描述上会说明该“狼人”身份是因为邪灵法师而触发。</br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>以下为该身份技能触发的所有情况：</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>预言家、见习预言家、调查员、失眠者、观者、主教、侦探助理：</b>只要看到该身份牌，无论该身份牌为某名玩家的身份或中央身份，使用技能的玩家的身份将会变为“狼人”。</br></i>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、女巫、演员：</b>该变化发生在其技能效果之后，而不是看到该身份牌时，所以盗贼获得邪灵法师、女巫和演员交给自己邪灵法师的效果在邪灵法师的效果之前，即
+								其身份在获得邪灵法师之后将会变为“狼人”。</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>侦探：</b>看到该身份牌后，自身身份会变为“狼人”。该身份依然会被展示。白天看到因此展示的邪灵法师的玩家不会触发该身份的效果。</br></i>
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Roles/r3401.png" class="newsImg"></td>
 						</tr>
 					</table>
 					<table ng-show="showedCard == 'r00'">

@@ -62,8 +62,10 @@ public class YoungWitch extends Role{
 			Player p1 = board.getPlayers().get(t1);
 			Role r1 = p1.getCurrentRole();
 			Role r2 = board.getCurCenterRole(t2);
-			p1.addRole(r2);
-			board.addCenterRole(t2, r1);
+			if (r1.exchangable() && r2.exchangable()) {
+				p1.addRole(r2);
+				board.addCenterRole(t2, r1);
+			}
 		}
 	}
 	

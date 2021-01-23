@@ -45,6 +45,12 @@ public class Detective extends Role{
 				r = p.getCurrentRole();
 				x = i;
 				player.getPlayerMarks().set(i, r.getRoleNum());
+				if (r.getRoleNum() == Consts.PAGAN) {
+					Role r1 = new QuoteWerewolf();
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+				}
 				break;
 			}
 		}

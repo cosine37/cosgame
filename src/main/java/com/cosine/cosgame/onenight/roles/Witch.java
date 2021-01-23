@@ -73,19 +73,42 @@ public class Witch extends Role{
 			if (ip != -1) {
 				Role r1 = board.getCurCenterRole(ic);
 				Role r2 = board.getPlayers().get(ip).getCurrentRole();
-				board.getPlayers().get(ip).addRole(r1);
-				board.addCenterRole(ic, r2);
-				player.getPlayerMarks().set(ip, r1.getRoleNum());
-				player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				if (r1.exchangable() && r2.exchangable()) {
+					board.getPlayers().get(ip).addRole(r1);
+					board.addCenterRole(ic, r2);
+					player.getPlayerMarks().set(ip, r1.getRoleNum());
+					player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				} else {
+					player.getPlayerMarks().set(ip, r1.getRoleNum());
+					player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				}
+				if (r1.getRoleNum() == Consts.PAGAN) {
+					r1 = new QuoteWerewolf();
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+				}
 			} else {
 				Role r1 = board.getCurCenterRole(ic);
 				Role r2 = player.getCurrentRole();
-				player.addRole(r1);
-				board.addCenterRole(ic,r2);
-				player.setUpdatedRole(r1);
-				player.setShowUpdatedRole(true);
-				player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				if (r1.exchangable() && r2.exchangable()) {
+					player.addRole(r1);
+					board.addCenterRole(ic,r2);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+					player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				} else {
+					player.setUpdatedRole(r2);
+					player.setShowUpdatedRole(true);
+				}
+				if (r1.getRoleNum() == Consts.PAGAN) {
+					r1 = new QuoteWerewolf();
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+				}
 			}
+			
 		}
 	}
 	

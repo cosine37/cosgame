@@ -124,17 +124,17 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Bishop();
+		Role r = new Shepherd();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Thief();
+		r = new Seer();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Pope();
+		r = new Pagan();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -143,7 +143,23 @@ public class Board {
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
+		
+		List<Role> rs = new ArrayList<>();
+		rs.add(r);
+		centerRoles.set(0, rs);
+		
+		
+		r = new Pope();
+		r.setPlayer(players.get(2));
+		r.setBoard(this);
+		players.get(2).getRoles().set(0, r);
+		
+		r = new Thief();
+		r.setPlayer(players.get(3));
+		r.setBoard(this);
+		players.get(3).getRoles().set(0, r);
 		*/
+		
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
 		}

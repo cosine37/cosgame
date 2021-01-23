@@ -272,6 +272,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			setBigImageStyle()
 		}
 		
+		$scope.showMyUpdatedBigImage = function(){
+			$scope.showBigImage = true
+			$scope.bigImage = "/image/Onenight/Roles/" + $scope.updatedRole + ".png"
+			setBigImageStyle()
+		}
+		
 		$scope.unshowBigImage = function(){
 			$scope.showBigImage = false
 		}

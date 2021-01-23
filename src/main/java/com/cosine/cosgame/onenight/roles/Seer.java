@@ -31,6 +31,12 @@ public class Seer extends Role{
 		if (t1 < board.getPlayers().size()) {
 			int x = board.getPlayers().get(t1).getCurrentRole().getRoleNum();
 			player.getPlayerMarks().set(t1, x);
+			if (x == Consts.PAGAN) {
+				Role r1 = new QuoteWerewolf();
+				player.addRole(r1);
+				player.setUpdatedRole(r1);
+				player.setShowUpdatedRole(true);
+			}
 		}
 	}
 	
@@ -39,11 +45,23 @@ public class Seer extends Role{
 			int x = t1-100;
 			int y = board.getCurCenterRole(x).getRoleNum();
 			player.getCenterMarks().set(x, y);
+			if (y == Consts.PAGAN) {
+				Role r1 = new QuoteWerewolf();
+				player.addRole(r1);
+				player.setUpdatedRole(r1);
+				player.setShowUpdatedRole(true);
+			}
 		}
 		if (t2 >= 100 && t2 <= 102) {
 			int x = t2-100;
 			int y = board.getCurCenterRole(x).getRoleNum();
 			player.getCenterMarks().set(x, y);
+			if (y == Consts.PAGAN) {
+				Role r1 = new QuoteWerewolf();
+				player.addRole(r1);
+				player.setUpdatedRole(r1);
+				player.setShowUpdatedRole(true);
+			}
 		}
 	}
 }

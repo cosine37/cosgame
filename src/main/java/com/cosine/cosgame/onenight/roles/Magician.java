@@ -40,8 +40,10 @@ public class Magician extends Role{
 				Player p = board.getPlayers().get(i);
 				Role r1 = p.getCurrentRole();
 				Role r2 = player.getCurrentRole();
-				p.addRole(r2);
-				player.addRole(r1);
+				if (r1.exchangable() && r2.exchangable()) {
+					p.addRole(r2);
+					player.addRole(r1);
+				}	
 			}
 		}
 	}

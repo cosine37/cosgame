@@ -32,6 +32,12 @@ public class Bishop extends Role{
 			if (ir.getRoleNum() == Consts.POPE) {
 				Role cr = board.getPlayers().get(i).getCurrentRole();
 				player.getPlayerMarks().set(i, cr.getRoleNum());
+				if (cr.getRoleNum() == Consts.PAGAN) {
+					Role r1 = new QuoteWerewolf();
+					player.addRole(r1);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+				}
 			}
 		}
 	}

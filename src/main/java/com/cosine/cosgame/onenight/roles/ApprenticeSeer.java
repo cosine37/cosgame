@@ -30,8 +30,15 @@ public class ApprenticeSeer extends Role{
 	public void useSkill(int t1) {
 		if (t1 >= 100 && t1 <= 102) {
 			int x = t1-100;
-			int y = board.getCurCenterRole(x).getRoleNum();
+			Role r = board.getCurCenterRole(x);
+			int y = r.getRoleNum();
 			player.getCenterMarks().set(x, y);
+			if (y == Consts.PAGAN) {
+				Role r1 = new QuoteWerewolf();
+				player.addRole(r1);
+				player.setUpdatedRole(r1);
+				player.setShowUpdatedRole(true);
+			}
 		}
 	}
 }

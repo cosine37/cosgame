@@ -43,6 +43,12 @@ public class Investigator extends Role{
 			}
 			player.setUpdatedRole(this);
 			player.setShowUpdatedRole(true);
+			if (r.getRoleNum() == Consts.PAGAN) {
+				Role r1 = new QuoteWerewolf();
+				player.addRole(r1);
+				player.setUpdatedRole(r1);
+				player.setShowUpdatedRole(true);
+			}
 		}
 	}
 	

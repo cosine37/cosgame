@@ -4,27 +4,28 @@ import com.cosine.cosgame.onenight.Consts;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
-public class Drunk extends Role{
-	public Drunk() {
+public class Actor extends Role{
+	public Actor() {
 		super();
-		roleNum = 7;
+		roleNum = 33;
 		side = Consts.HUMAN;
-		img = "r07";
-		sequence = 800;
-		name = "酒鬼";
+		img = "r33";
+		sequence = 680;
+		name = "演员";
 		chooseCenterNum = 1;
 		hasNight = true;
 		mandatory = true;
-		nightMsg.add("你的初始身份是 酒鬼。");
+		nightMsg.add("你的初始身份是 演员。");
 		nightMsg.add("选择一张中央身份牌和你的角色牌交换。");
 		nightMsg.add("选择后点击确认结束你的夜晚阶段。");
-		confirmedMsg.add("你的初始身份是 酒鬼。");
+		confirmedMsg.add("你的初始身份是 演员。");
 		confirmedMsg.add("拥有交换标记的中央身份是你选择的交换对象。");
 		confirmedMsg.add("正等待其他玩家确认。");
-		dayMsg.add("你的初始身份是 酒鬼，你现在的身份已有变化。");
+		dayMsg.add("你的初始身份是 演员，你现在的身份应该已有变化。");
 		dayMsg.add("拥有交换标记的中央身份是你选择的交换对象。");
+		dayMsg.add("你初始身份右侧的身份是你交换获得的身份，可能已有变化。");
 		dayMsg.add("你可以选择某位玩家的身份牌并点击确认投票给该玩家。");
-		votedMsg.add("你的初始身份是 酒鬼，你现在的身份已有变化。");
+		votedMsg.add("你的初始身份是 演员，你现在的身份应该已有变化。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
@@ -44,6 +45,16 @@ public class Drunk extends Role{
 				if (r1.exchangable() && r2.exchangable()) {
 					player.addRole(r1);
 					board.addCenterRole(i, r2);
+					player.setUpdatedRole(r1);
+					player.setShowUpdatedRole(true);
+					if (r1.getRoleNum() == Consts.PAGAN) {
+						r1 = new QuoteWerewolf();
+						player.addRole(r1);
+						player.setUpdatedRole(r1);
+					}
+				} else {
+					player.setUpdatedRole(r2);
+					player.setShowUpdatedRole(true);
 				}
 				break;
 			}

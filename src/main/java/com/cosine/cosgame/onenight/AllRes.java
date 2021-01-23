@@ -48,6 +48,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Witch();
 		allRoles.add(r);
+		r = new Actor();
+		allRoles.add(r);
 		r = new YoungWitch();
 		allRoles.add(r);
 		r = new Urchin();
@@ -63,6 +65,8 @@ public class AllRes {
 		r = new Bishop();
 		allRoles.add(r);
 		r = new VillageHead();
+		allRoles.add(r);
+		r = new Shepherd();
 		allRoles.add(r);
 		r = new Agent();
 		allRoles.add(r);
@@ -80,7 +84,13 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Sheriff();
 		allRoles.add(r);
+		r = new Monk();
+		allRoles.add(r);
+		/*
 		r = new WolfChild();
+		allRoles.add(r);
+		*/
+		r = new Pagan();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

@@ -65,6 +65,10 @@ public class Role {
 		return true;
 	}
 	
+	public boolean exchangable() {
+		return true;
+	}
+	
 	public int getRoleNum() {
 		return roleNum;
 	}

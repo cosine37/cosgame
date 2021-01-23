@@ -47,6 +47,10 @@ public class Consts {
 	public static final int VILLAGEHEAD = 29;
 	public static final int POPE = 30;
 	public static final int BISHOP = 31;
+	public static final int MONK = 32;
+	public static final int ACTOR = 33;
+	public static final int PAGAN = 34;
+	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;

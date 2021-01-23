@@ -55,8 +55,10 @@ public class Urchin extends Role{
 			Player p2 = board.getPlayers().get(t2);
 			Role r1 = p1.getCurrentRole();
 			Role r2 = p2.getCurrentRole();
-			p2.addRole(r1);
-			p1.addRole(r2);
+			if (r1.exchangable() && r2.exchangable()) {
+				p2.addRole(r1);
+				p1.addRole(r2);
+			}
 		}
 	}
 	

@@ -27,6 +27,12 @@ public class Insomniac extends Role{
 		Role r = player.getCurrentRole();
 		player.setUpdatedRole(r);
 		player.setShowUpdatedRole(true);
+		if (r.getRoleNum() == Consts.PAGAN) {
+			Role r1 = new QuoteWerewolf();
+			player.addRole(r1);
+			player.setUpdatedRole(r1);
+			player.setShowUpdatedRole(true);
+		}
 	}
 	
 	
