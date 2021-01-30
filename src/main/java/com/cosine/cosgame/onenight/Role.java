@@ -69,6 +69,14 @@ public class Role {
 		return true;
 	}
 	
+	public void dayHandle() {
+		
+	}
+	
+	public int getRoleNumToShow() {
+		return roleNum;
+	}
+	
 	public int getRoleNum() {
 		return roleNum;
 	}

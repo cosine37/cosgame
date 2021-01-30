@@ -50,6 +50,12 @@ public class Consts {
 	public static final int MONK = 32;
 	public static final int ACTOR = 33;
 	public static final int PAGAN = 34;
+	public static final int SHEPERD = 35;
+	public static final int ALPHAWOLF = 36;
+	public static final int LITTLEGIRL = 37;
+	public static final int FOX = 38;
+	public static final int WEREMELEON = 39;
+	public static final int BAKER = 40;
 	
 	// marks
 	public static final int UNKNOWN = -1;

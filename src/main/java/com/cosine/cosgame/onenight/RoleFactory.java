@@ -88,6 +88,18 @@ public class RoleFactory {
 			role = new QuoteWerewolf();
 		} else if (img.contentEquals("r35")) {
 			role = new Shepherd();
+		} else if (img.contentEquals("r36")) {
+			role = new AlphaWolf();
+		} else if (img.contentEquals("r3601")) {
+			role = new QuoteWerewolf2();
+		} else if (img.contentEquals("r37")) {
+			role = new LittleGirl();
+		} else if (img.contentEquals("r38")) {
+			role = new Fox();
+		} else if (img.contentEquals("r39")) {
+			role = new Weremeleon();
+		} else if (img.contentEquals("r40")) {
+			role = new Baker();
 		}
 		
 		else {
@@ -174,6 +186,18 @@ public class RoleFactory {
 			role = new QuoteWerewolf();
 		} else if (num == 35) {
 			role = new Shepherd();
+		} else if (num == 36) {
+			role = new AlphaWolf();
+		} else if (num == 3601) {
+			role = new QuoteWerewolf2();
+		} else if (num == 37) {
+			role = new LittleGirl();
+		} else if (num == 38) {
+			role = new Fox();
+		} else if (num == 39) {
+			role = new Weremeleon();
+		} else if (num == 40) {
+			role = new Baker();
 		}
 		
 		else {

@@ -32,9 +32,9 @@ public class Investigator extends Role{
 	public void useSkill(int t1) {
 		if (t1 < board.getPlayers().size()) {
 			Role r = board.getPlayers().get(t1).getCurrentRole();
-			int x = r.getRoleNum();
+			int x = r.getRoleNumToShow();
 			player.getPlayerMarks().set(t1, x);
-			if (r.getSide() == Consts.HUMAN) {
+			if (r.getSide() == Consts.HUMAN || (r.getRoleNum() == Consts.WEREMELEON && board.getWeremeleonIndex() != -1)) {
 				this.side = Consts.HUMAN;
 			} else if (r.getSide() == Consts.WOLF) {
 				this.side = Consts.WOLF;

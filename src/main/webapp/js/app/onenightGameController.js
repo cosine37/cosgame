@@ -294,7 +294,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				} else {
 					imgUrl = "url('/image/Onenight/Roles/" + $scope.playerMarks[i] + ".png')"
 				}
-				if (i == $scope.detectiveIndex){
+				if (i == $scope.detectiveIndex && $scope.status == '3'){
 					imgUrl = "url('/image/Onenight/Roles/" + $scope.detectiveRoleImg + ".png')"
 				}
 				var singleStyle = {

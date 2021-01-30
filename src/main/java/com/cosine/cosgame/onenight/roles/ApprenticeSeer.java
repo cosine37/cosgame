@@ -31,7 +31,7 @@ public class ApprenticeSeer extends Role{
 		if (t1 >= 100 && t1 <= 102) {
 			int x = t1-100;
 			Role r = board.getCurCenterRole(x);
-			int y = r.getRoleNum();
+			int y = r.getRoleNumToShow();
 			player.getCenterMarks().set(x, y);
 			if (y == Consts.PAGAN) {
 				Role r1 = new QuoteWerewolf();

@@ -29,7 +29,7 @@ public class Seer extends Role{
 	
 	public void useSkill(int t1) {
 		if (t1 < board.getPlayers().size()) {
-			int x = board.getPlayers().get(t1).getCurrentRole().getRoleNum();
+			int x = board.getPlayers().get(t1).getCurrentRole().getRoleNumToShow();
 			player.getPlayerMarks().set(t1, x);
 			if (x == Consts.PAGAN) {
 				Role r1 = new QuoteWerewolf();
@@ -43,7 +43,7 @@ public class Seer extends Role{
 	public void useSkill(int t1, int t2) {
 		if (t1 >= 100 && t1 <= 102) {
 			int x = t1-100;
-			int y = board.getCurCenterRole(x).getRoleNum();
+			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			player.getCenterMarks().set(x, y);
 			if (y == Consts.PAGAN) {
 				Role r1 = new QuoteWerewolf();
@@ -54,7 +54,7 @@ public class Seer extends Role{
 		}
 		if (t2 >= 100 && t2 <= 102) {
 			int x = t2-100;
-			int y = board.getCurCenterRole(x).getRoleNum();
+			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			player.getCenterMarks().set(x, y);
 			if (y == Consts.PAGAN) {
 				Role r1 = new QuoteWerewolf();

@@ -34,7 +34,7 @@ public class Witch extends Role{
 	public void useSkill(int t1) {
 		if (t1 >= 100 && t1 <= 102) {
 			int x = t1-100;
-			int y = board.getCurCenterRole(x).getRoleNum();
+			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			player.getCenterMarks().set(x, y);
 		} else if (t1 < board.getPlayers().size()) {
 			player.getPlayerMarks().set(t1, Consts.EXCHANGE);
@@ -76,10 +76,10 @@ public class Witch extends Role{
 				if (r1.exchangable() && r2.exchangable()) {
 					board.getPlayers().get(ip).addRole(r1);
 					board.addCenterRole(ic, r2);
-					player.getPlayerMarks().set(ip, r1.getRoleNum());
+					player.getPlayerMarks().set(ip, r1.getRoleNumToShow());
 					player.getCenterMarks().set(ic, Consts.EXCHANGE);
 				} else {
-					player.getPlayerMarks().set(ip, r1.getRoleNum());
+					player.getPlayerMarks().set(ip, r1.getRoleNumToShow());
 					player.getCenterMarks().set(ic, Consts.EXCHANGE);
 				}
 				if (r1.getRoleNum() == Consts.PAGAN) {

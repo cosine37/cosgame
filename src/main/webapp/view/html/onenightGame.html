@@ -64,7 +64,7 @@
 							</div>
 							<div class="vote" ng-show="voteIndex == i">
 							</div>
-							<div class="detective" ng-show="detectiveIndex == i">
+							<div class="detective" ng-show="detectiveIndex == i  && status == '3'">
 							</div>
 							<div class="beggar" ng-show="beggarIndex == i">
 							</div>
@@ -120,7 +120,7 @@
 								</td>
 								<td ng-show="showUpdatedRole == 'y'">
 									<div class="role" ng-style="updatedRoleStyle">
-										<div class="detective" ng-show="detectiveIndex == myIndex"></div>
+										<div class="detective" ng-show="detectiveIndex == myIndex && status == '3'"></div>
 										<div class="qsmark">
 											<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showMyUpdatedBigImage();$event.stopPropagation();"/>
 										</div>

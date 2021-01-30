@@ -24,14 +24,18 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Timberwolf();
 		allRoles.add(r);
+		r = new Weremeleon();
+		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
 		r = new Pope();
 		allRoles.add(r);
+		/*
 		for (i=0;i<2;i++) {
 			r = new Mason();
 			allRoles.add(r);
 		}
+		*/
 		r = new BearTrainer();
 		allRoles.add(r);
 		r = new Beggar();
@@ -52,6 +56,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new YoungWitch();
 		allRoles.add(r);
+		r = new LittleGirl();
+		allRoles.add(r);
 		r = new Urchin();
 		allRoles.add(r);
 		r = new Idiot();
@@ -68,6 +74,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Shepherd();
 		allRoles.add(r);
+		r = new Fox();
+		allRoles.add(r);
 		r = new Agent();
 		allRoles.add(r);
 		r = new Detective();
@@ -76,12 +84,14 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Tanner();
 		allRoles.add(r);
+		/*
 		r = new Hunter();
 		allRoles.add(r);
 		r = new Guard();
 		allRoles.add(r);
 		r = new Prince();
 		allRoles.add(r);
+		*/
 		r = new Sheriff();
 		allRoles.add(r);
 		r = new Monk();
@@ -91,6 +101,8 @@ public class AllRes {
 		allRoles.add(r);
 		*/
 		r = new Pagan();
+		allRoles.add(r);
+		r = new Baker();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

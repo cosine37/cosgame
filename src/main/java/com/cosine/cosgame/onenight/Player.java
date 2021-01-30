@@ -194,7 +194,11 @@ public class Player {
 		return updatedRole;
 	}
 	public void setUpdatedRole(Role updatedRole) {
-		this.updatedRole = updatedRole;
+		if (updatedRole.getRoleNum() == Consts.WEREMELEON && board.getWeremeleonIndex() != -1) {
+			this.updatedRole = board.getWeremeleonRole();
+		} else {
+			this.updatedRole = updatedRole;
+		}
 	}
 	public boolean isShowUpdatedRole() {
 		return showUpdatedRole;

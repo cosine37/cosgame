@@ -40,7 +40,7 @@ public class Agent extends Role{
 			if (player.getPlayerMarks().get(i) == Consts.TARGET) {
 				Player p = board.getPlayers().get(i);
 				r = p.getCurrentRole();
-				player.getPlayerMarks().set(i, r.getRoleNum());
+				player.getPlayerMarks().set(i, r.getRoleNumToShow());
 				if (r.getRoleNum() == Consts.PAGAN) {
 					Role r1 = new QuoteWerewolf();
 					player.addRole(r1);

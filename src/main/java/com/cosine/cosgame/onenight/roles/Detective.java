@@ -44,7 +44,7 @@ public class Detective extends Role{
 				Player p = board.getPlayers().get(i);
 				r = p.getCurrentRole();
 				x = i;
-				player.getPlayerMarks().set(i, r.getRoleNum());
+				player.getPlayerMarks().set(i, r.getRoleNumToShow());
 				if (r.getRoleNum() == Consts.PAGAN) {
 					Role r1 = new QuoteWerewolf();
 					player.addRole(r1);
@@ -60,6 +60,12 @@ public class Detective extends Role{
 				board.setDetectiveRoleImg(r.getImg());
 				Player p = board.getPlayers().get(x);
 				p.setUpdatedRole(r);
+				p.setShowUpdatedRole(true);
+			} else if (r.getRoleNum() == Consts.WEREMELEON && board.getWeremeleonIndex() != -1) {
+				board.setDetectiveIndex(x);
+				board.setDetectiveRoleImg(board.getWeremeleonImg());
+				Player p = board.getPlayers().get(x);
+				p.setUpdatedRole(board.getRolesThisGame().get(board.getWeremeleonIndex()));
 				p.setShowUpdatedRole(true);
 			}
 		}
