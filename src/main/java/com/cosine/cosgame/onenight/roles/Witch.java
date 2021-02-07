@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
+import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
 public class Witch extends Role{
@@ -33,9 +35,7 @@ public class Witch extends Role{
 	
 	public void useSkill(int t1) {
 		if (t1 >= 100 && t1 <= 102) {
-			int x = t1-100;
-			int y = board.getCurCenterRole(x).getRoleNumToShow();
-			player.getCenterMarks().set(x, y);
+			Manipulations.peekCenterRole(player,board,t1);
 		} else if (t1 < board.getPlayers().size()) {
 			player.getPlayerMarks().set(t1, Consts.EXCHANGE);
 		}
@@ -71,42 +71,14 @@ public class Witch extends Role{
 				}
 			}
 			if (ip != -1) {
-				Role r1 = board.getCurCenterRole(ic);
-				Role r2 = board.getPlayers().get(ip).getCurrentRole();
-				if (r1.exchangable() && r2.exchangable()) {
-					board.getPlayers().get(ip).addRole(r1);
-					board.addCenterRole(ic, r2);
-					player.getPlayerMarks().set(ip, r1.getRoleNumToShow());
-					player.getCenterMarks().set(ic, Consts.EXCHANGE);
-				} else {
-					player.getPlayerMarks().set(ip, r1.getRoleNumToShow());
-					player.getCenterMarks().set(ic, Consts.EXCHANGE);
-				}
-				if (r1.getRoleNum() == Consts.PAGAN) {
-					r1 = new QuoteWerewolf();
-					player.addRole(r1);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-				}
+				Player p = board.getPlayers().get(ip);
+				Manipulations.swapCenterRole(p, board, ic);
+				player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				Manipulations.viewPlayerRole(player,p);
 			} else {
-				Role r1 = board.getCurCenterRole(ic);
-				Role r2 = player.getCurrentRole();
-				if (r1.exchangable() && r2.exchangable()) {
-					player.addRole(r1);
-					board.addCenterRole(ic,r2);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-					player.getCenterMarks().set(ic, Consts.EXCHANGE);
-				} else {
-					player.setUpdatedRole(r2);
-					player.setShowUpdatedRole(true);
-				}
-				if (r1.getRoleNum() == Consts.PAGAN) {
-					r1 = new QuoteWerewolf();
-					player.addRole(r1);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-				}
+				Manipulations.swapCenterRole(player, board, ic);
+				player.getCenterMarks().set(ic, Consts.EXCHANGE);
+				Manipulations.viewCurrentRole(player);
 			}
 			
 		}

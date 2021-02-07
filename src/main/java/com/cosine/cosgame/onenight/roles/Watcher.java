@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -26,19 +27,7 @@ public class Watcher extends Role{
 	}
 	
 	public void executeSkill() {
-		int i;
-		for (i=0;i<board.getPlayers().size();i++) {
-			Role ir = board.getPlayers().get(i).getInitialRole();
-			if (ir.getRoleNum() == Consts.SEER || ir.getRoleNum() == Consts.APPRENTICESEER) {
-				Role cr = board.getPlayers().get(i).getCurrentRole();
-				player.getPlayerMarks().set(i, cr.getRoleNumToShow());
-				if (cr.getRoleNum() == Consts.PAGAN) {
-					Role r1 = new QuoteWerewolf();
-					player.addRole(r1);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-				}
-			}
-		}
+		Manipulations.viewFinalRole(player, board, Consts.SEER);
+		Manipulations.viewFinalRole(player, board, Consts.APPRENTICESEER);
 	}
 }

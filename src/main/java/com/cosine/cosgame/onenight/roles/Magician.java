@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -38,12 +39,7 @@ public class Magician extends Role{
 		for (i=0;i<player.getPlayerMarks().size();i++) {
 			if (player.getPlayerMarks().get(i) == Consts.EXCHANGE) {
 				Player p = board.getPlayers().get(i);
-				Role r1 = p.getCurrentRole();
-				Role r2 = player.getCurrentRole();
-				if (r1.exchangable() && r2.exchangable()) {
-					p.addRole(r2);
-					player.addRole(r1);
-				}	
+				Manipulations.swapRoles(player, p);
 			}
 		}
 	}

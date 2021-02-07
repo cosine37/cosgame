@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -40,23 +41,9 @@ public class Thief extends Role{
 		for (i=0;i<player.getPlayerMarks().size();i++) {
 			if (player.getPlayerMarks().get(i) == Consts.EXCHANGE) {
 				Player p = board.getPlayers().get(i);
-				Role r1 = p.getCurrentRole();
-				Role r2 = player.getCurrentRole();
-				if (r1.exchangable() && r2.exchangable()) {
-					p.addRole(r2);
-					player.addRole(r1);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-					if (r1.getRoleNum() == Consts.PAGAN) {
-						r1 = new QuoteWerewolf();
-						player.addRole(r1);
-						player.setUpdatedRole(r1);
-						player.setShowUpdatedRole(true);
-					}
-				} else {
-					player.setUpdatedRole(r2);
-					player.setShowUpdatedRole(true);
-				}
+				Manipulations.swapRoles(player, p);
+				Manipulations.viewCurrentRole(player);
+				break;
 			}
 		}
 	}

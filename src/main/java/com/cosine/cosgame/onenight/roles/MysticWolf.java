@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -71,14 +72,14 @@ public class MysticWolf extends Role{
 				player.getCenterMarks().set(x, y);
 			} else {
 				if (t1>=0 && t1 < board.getPlayers().size()) {
-					int x = board.getPlayers().get(t1).getCurrentRole().getRoleNum();
-					player.getPlayerMarks().set(t1, x);
+					Player p = board.getPlayers().get(t1);
+					Manipulations.viewPlayerRole(player, p);
 				}
 			}
 		} else {
 			if (t1>=0 && t1 < board.getPlayers().size()) {
-				int x = board.getPlayers().get(t1).getCurrentRole().getRoleNum();
-				player.getPlayerMarks().set(t1, x);
+				Player p = board.getPlayers().get(t1);
+				Manipulations.viewPlayerRole(player, p);
 			}
 		}
 	}

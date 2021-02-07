@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -38,23 +39,16 @@ public class Detective extends Role{
 	public void executeSkill() {
 		int i;
 		int x = -1;
-		Role r = new Role();
 		for (i=0;i<player.getPlayerMarks().size();i++) {
 			if (player.getPlayerMarks().get(i) == Consts.TARGET) {
-				Player p = board.getPlayers().get(i);
-				r = p.getCurrentRole();
 				x = i;
-				player.getPlayerMarks().set(i, r.getRoleNumToShow());
-				if (r.getRoleNum() == Consts.PAGAN) {
-					Role r1 = new QuoteWerewolf();
-					player.addRole(r1);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-				}
+				Player p = board.getPlayers().get(i);
+				Manipulations.viewPlayerRole(player, p);
 				break;
 			}
 		}
 		if (x != -1) {
+			Role r = board.getPlayers().get(x).getCurrentRole();
 			if (r.getSide() == Consts.HUMAN && r.getRoleNum() != Consts.POPE) {
 				board.setDetectiveIndex(x);
 				board.setDetectiveRoleImg(r.getImg());

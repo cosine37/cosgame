@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Role;
 
 public class Investigator extends Role{
@@ -32,8 +33,6 @@ public class Investigator extends Role{
 	public void useSkill(int t1) {
 		if (t1 < board.getPlayers().size()) {
 			Role r = board.getPlayers().get(t1).getCurrentRole();
-			int x = r.getRoleNumToShow();
-			player.getPlayerMarks().set(t1, x);
 			if (r.getSide() == Consts.HUMAN || (r.getRoleNum() == Consts.WEREMELEON && board.getWeremeleonIndex() != -1)) {
 				this.side = Consts.HUMAN;
 			} else if (r.getSide() == Consts.WOLF) {
@@ -41,14 +40,8 @@ public class Investigator extends Role{
 			} else if (r.getSide() == Consts.TANNER) {
 				this.side = Consts.TANNER;
 			}
-			player.setUpdatedRole(this);
-			player.setShowUpdatedRole(true);
-			if (r.getRoleNum() == Consts.PAGAN) {
-				Role r1 = new QuoteWerewolf();
-				player.addRole(r1);
-				player.setUpdatedRole(r1);
-				player.setShowUpdatedRole(true);
-			}
+			Manipulations.viewCurrentRole(player);
+			Manipulations.viewPlayerRole(player, board.getPlayers().get(t1));
 		}
 	}
 	

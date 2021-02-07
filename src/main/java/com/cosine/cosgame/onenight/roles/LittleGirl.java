@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -33,12 +34,7 @@ public class LittleGirl extends Role{
 		int t2 = p2.getIndex();
 		player.getPlayerMarks().set(t1, Consts.EXCHANGE);
 		player.getPlayerMarks().set(t2, Consts.EXCHANGE);
-		Role r1 = p1.getCurrentRole();
-		Role r2 = p2.getCurrentRole();
-		if (r1.exchangable() && r2.exchangable()) {
-			p2.addRole(r1);
-			p1.addRole(r2);
-		}
+		Manipulations.swapRoles(p1, p2);
 	}
 	
 }

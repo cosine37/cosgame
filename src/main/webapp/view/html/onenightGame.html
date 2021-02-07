@@ -57,7 +57,8 @@
 				</table>
 			</div>
 			<div style="margin-top:10px">
-				<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
+				<button ng-click="goto('onenight')" style="margin-right: 20px;">退出</button>
+				<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
 			</div>
 			
 			

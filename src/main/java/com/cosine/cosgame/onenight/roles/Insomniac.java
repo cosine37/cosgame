@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -24,15 +25,7 @@ public class Insomniac extends Role{
 	}
 	
 	public void executeSkill() {
-		Role r = player.getCurrentRole();
-		player.setUpdatedRole(r);
-		player.setShowUpdatedRole(true);
-		if (r.getRoleNum() == Consts.PAGAN) {
-			Role r1 = new QuoteWerewolf();
-			player.addRole(r1);
-			player.setUpdatedRole(r1);
-			player.setShowUpdatedRole(true);
-		}
+		Manipulations.viewCurrentRole(player);
 	}
 	
 	

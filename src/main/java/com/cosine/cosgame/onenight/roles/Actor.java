@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -40,22 +41,9 @@ public class Actor extends Role{
 		int i;
 		for (i=0;i<player.getCenterMarks().size();i++) {
 			if (player.getCenterMarks().get(i) == Consts.EXCHANGE) {
-				Role r1 = board.getCurCenterRole(i);
-				Role r2 = player.getCurrentRole();
-				if (r1.exchangable() && r2.exchangable()) {
-					player.addRole(r1);
-					board.addCenterRole(i, r2);
-					player.setUpdatedRole(r1);
-					player.setShowUpdatedRole(true);
-					if (r1.getRoleNum() == Consts.PAGAN) {
-						r1 = new QuoteWerewolf();
-						player.addRole(r1);
-						player.setUpdatedRole(r1);
-					}
-				} else {
-					player.setUpdatedRole(r2);
-					player.setShowUpdatedRole(true);
-				}
+				Manipulations.swapCenterRole(player, board, i);
+				player.getCenterMarks().set(i, Consts.EXCHANGE);
+				Manipulations.viewCurrentRole(player);
 				break;
 			}
 		}

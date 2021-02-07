@@ -1,6 +1,8 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
+import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
 public class Pagan extends Role{
@@ -23,5 +25,11 @@ public class Pagan extends Role{
 		votedMsg.add("你的初始身份是 邪灵法师。");
 		votedMsg.add("夜晚观看你身份牌的玩家身份已立即变成“狼人”。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
+	}
+	
+	public void onView(Player viewer) {
+		Role r1 = new QuoteWerewolf();
+		Manipulations.convertRole(viewer, r1);
+		viewer.setShowUpdatedRole(true);
 	}
 }

@@ -73,6 +73,10 @@ public class Role {
 		
 	}
 	
+	public void onView(Player viewer) {
+		
+	}
+	
 	public int getRoleNumToShow() {
 		return roleNum;
 	}

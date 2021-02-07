@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Role;
 
 public class ApprenticeSeer extends Role{
@@ -29,16 +30,7 @@ public class ApprenticeSeer extends Role{
 	
 	public void useSkill(int t1) {
 		if (t1 >= 100 && t1 <= 102) {
-			int x = t1-100;
-			Role r = board.getCurCenterRole(x);
-			int y = r.getRoleNumToShow();
-			player.getCenterMarks().set(x, y);
-			if (y == Consts.PAGAN) {
-				Role r1 = new QuoteWerewolf();
-				player.addRole(r1);
-				player.setUpdatedRole(r1);
-				player.setShowUpdatedRole(true);
-			}
+			Manipulations.viewCenterRole(player, board, t1);
 		}
 	}
 }

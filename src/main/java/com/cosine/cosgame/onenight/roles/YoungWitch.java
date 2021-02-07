@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -60,12 +61,7 @@ public class YoungWitch extends Role{
 		}
 		if (t1 != -1 && t2 != -1) {
 			Player p1 = board.getPlayers().get(t1);
-			Role r1 = p1.getCurrentRole();
-			Role r2 = board.getCurCenterRole(t2);
-			if (r1.exchangable() && r2.exchangable()) {
-				p1.addRole(r2);
-				board.addCenterRole(t2, r1);
-			}
+			Manipulations.swapCenterRole(p1, board, t2);
 		}
 	}
 	

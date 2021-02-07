@@ -147,22 +147,22 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Seer();
+		Role r = new Watcher();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Thief();
+		r = new Pagan();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Baker();
+		r = new Urchin();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
 		
-		r = new Pope();
+		r = new Seer();
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
