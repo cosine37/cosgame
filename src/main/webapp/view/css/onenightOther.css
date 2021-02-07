@@ -174,10 +174,16 @@ button:disabled{
 	margin-top: -430px;
 	margin-left: -540px;
 	padding-top: 20px;
-	padding-left: 50px;
-	padding-right: 50px;
+	padding-left: 45px;
+	padding-right: 45px;
 	border: 1px solid rgba(120,120,120);
 	filter: drop-shadow(0px 0px 5px black);
 	border-radius: 20px;
 	font-weight: bold;
+}
+
+.allroles-div{
+	overflow-y: scroll;
+	overflow:auto;
+	height: 520px;
 }

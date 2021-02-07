@@ -15,6 +15,26 @@
 <body ng-app="onenightGameApp" ng-controller="onenightGameCtrl" ng-class="bodyClass">
 	<div class="game-div">
 		<div ng-show="status == '1'">
+			<div style="height:220px">
+				<div ng-show="lord == username && rolesThisGame.length>0">
+					以下为你选择的本局游戏身份。
+					<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
+				</div>
+				<div ng-show="lord != username && rolesThisGame.length>0">
+					以下为房主选择的本局游戏身份，不喜勿喷。
+				</div>
+				<div ng-show="rolesThisGame.length==0">
+					房主暂时未选身份，赶紧催他！
+				</div>
+				<table>
+					<tr>
+						<td ng-repeat="x in rolesThisGameStyles track by $index">
+							<div class="role" ng-style="x">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<div ng-show="lord == username">
 				以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。请选择本局游戏的{{playerNames.length+3}}个身份
 				<button ng-disabled="totalSelected != playerNames.length+3" ng-click="submitRolesSelect()">确定</button>
@@ -22,33 +42,25 @@
 			<div ng-show="lord != username">
 				以下为本游戏目前支持的所有身份（按夜晚行动顺序排列）。
 			</div>
-			<table>
-				<tr ng-repeat="l in roleChooseIndexes track by $index">
-					<td ng-repeat="i in l track by $index">
-						<div class="role" ng-style="roleChooseStyles[i]" ng-click="selectRole(i)">
-							<div class="target" ng-show="rolesSelect[i] == 1"></div>
-							<div class="qsmark">
-								<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showRoleChooseImg(i);$event.stopPropagation();"/>
+			<div class="allroles-div">
+				<table>
+					<tr ng-repeat="l in roleChooseIndexes track by $index">
+						<td ng-repeat="i in l track by $index">
+							<div class="role" ng-style="roleChooseStyles[i]" ng-click="selectRole(i)">
+								<div class="target" ng-show="rolesSelect[i] == 1"></div>
+								<div class="qsmark">
+									<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showRoleChooseImg(i);$event.stopPropagation();"/>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<div ng-show="lord == username && rolesThisGame.length>0">
-				以下为你选择的本局游戏身份。
+						</td>
+					</tr>
+				</table>
 			</div>
-			<div ng-show="lord != username && rolesThisGame.length>0">
-				以下为房主选择的本局游戏身份。
+			<div style="margin-top:10px">
+				<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
 			</div>
-			<table>
-				<tr>
-					<td ng-repeat="x in rolesThisGameStyles track by $index">
-						<div class="role" ng-style="x">
-						</div>
-					</td>
-				</tr>
-			</table>
-			<button ng-click="night()" ng-show="canNight == 'y' && lord == username">天黑</button>
+			
+			
 		</div>
 		
 		<div ng-show="status == '2' || status == '3' || status == '4'">
