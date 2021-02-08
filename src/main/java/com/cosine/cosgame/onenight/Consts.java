@@ -56,9 +56,13 @@ public class Consts {
 	public static final int FOX = 38;
 	public static final int WEREMELEON = 39;
 	public static final int BAKER = 40;
+	public static final int MASQUERADER = 40;
 	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;
 	public static final int TARGET = -3;
+	
+	// spliter
+	public static final int DAWNSPLITER = 850;
 }

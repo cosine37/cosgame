@@ -147,27 +147,27 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Watcher();
+		Role r = new Masquerader();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Pagan();
+		r = new Insomniac();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Urchin();
+		r = new Thief();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
 		
-		r = new Seer();
+		r = new Pagan();
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new Villager();
 		r.setPlayer(players.get(4));
 		r.setBoard(this);
 		players.get(4).getRoles().set(0, r);
@@ -240,9 +240,22 @@ public class Board {
 				}
 			}
 		}
+		
+		// night skills
 		for (i=0;i<tps.size();i++) {
 			int x = tps.get(i).getInitialRole().getSequence();
-			if (x > 0) {
+			if (x > 0 && x < Consts.DAWNSPLITER) {
+				tps.get(i).getInitialRole().executeSkill();
+			}
+		}
+		// on dawn skills
+		for (i=0;i<tps.size();i++) {
+			tps.get(i).getInitialRole().onDawnSkill();
+		}
+		// dawn skills
+		for (i=0;i<tps.size();i++) {
+			int x = tps.get(i).getInitialRole().getSequence();
+			if (x > Consts.DAWNSPLITER) {
 				tps.get(i).getInitialRole().executeSkill();
 			}
 		}

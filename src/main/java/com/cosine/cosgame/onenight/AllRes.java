@@ -46,6 +46,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new AlphaWolf();
 		allRoles.add(r);
+		r = new Masquerader();
+		allRoles.add(r);
 		r = new Thief();
 		allRoles.add(r);
 		r = new Magician();

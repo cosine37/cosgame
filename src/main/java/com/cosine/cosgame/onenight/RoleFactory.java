@@ -100,6 +100,8 @@ public class RoleFactory {
 			role = new Weremeleon();
 		} else if (img.contentEquals("r40")) {
 			role = new Baker();
+		} else if (img.contentEquals("r41")) {
+			role = new Masquerader();
 		}
 		
 		else {
@@ -198,6 +200,8 @@ public class RoleFactory {
 			role = new Weremeleon();
 		} else if (num == 40) {
 			role = new Baker();
+		} else if (num == 41) {
+			role = new Masquerader();
 		}
 		
 		else {

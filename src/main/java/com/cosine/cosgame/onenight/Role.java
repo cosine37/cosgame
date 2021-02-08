@@ -61,6 +61,10 @@ public class Role {
 		
 	}
 	
+	public void onDawnSkill() {
+		
+	}
+	
 	public boolean canConfirm(List<Integer> targets) {
 		return true;
 	}
