@@ -147,7 +147,7 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Wolfdog();
+		Role r = new Weremeleon();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);

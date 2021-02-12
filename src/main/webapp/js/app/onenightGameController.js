@@ -494,7 +494,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				$scope.centerZoneMsg = "中央区域"
 				if ($scope.soleWolf == "y"){
-					$scope.centerZoneMsg = "中央区域  (若你是独狼，夜晚阶段你可以查看该区域一张身份牌)"
+					$scope.centerZoneMsg = "中央区域  (若你是独狼，会显示该区域一张身份，系统会尽可能保证显示的身份为“人”阵营)"
 				}
 				$scope.voteIndex = -1;
 				setRoleStyles();

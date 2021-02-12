@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
@@ -41,28 +42,8 @@ public class AlphaWolf extends Role{
 				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNum());
 			}
 		}
+		Manipulations.soleWolfHandle(player, board);
 	}
-	
-	boolean isSoleWolf() {
-		if (board.isSoleWolf()) {
-			int i;
-			int t=0;
-			for (i=0;i<board.getPlayers().size();i++) {
-				if (player.getIndex() == i) {
-					continue;
-				}
-				Player p = board.getPlayers().get(i);
-				if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
-					t++;
-				}
-			}
-			if (t == 0) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	private void makeChange(int t1) {
 		if (board.getPlayers().get(t1).getCurrentRole().exchangable()) {
 			Role r = new QuoteWerewolf2();
@@ -73,44 +54,9 @@ public class AlphaWolf extends Role{
 	}
 	
 	public void useSkill(int t1) {
-		if (isSoleWolf()) {
-			if (t1 >= 100 && t1 <= 102) {
-				int x = t1-100;
-				int y = board.getCurCenterRole(x).getRoleNum();
-				player.getCenterMarks().set(x, y);
-			} else {
-				if (t1>=0 && t1 < board.getPlayers().size()) {
-					makeChange(t1);
-				}
-			}
-		} else {
-			if (t1>=0 && t1 < board.getPlayers().size()) {
-				makeChange(t1);
-			}
+		if (t1>=0 && t1 < board.getPlayers().size()) {
+			makeChange(t1);
 		}
-	}
-	
-	public void useSkill(int t1, int t2) {
-		if (isSoleWolf()) {
-			if (t1 >= 100 && t1 <= 102) {
-				int x = t1-100;
-				int y = board.getCurCenterRole(x).getRoleNum();
-				player.getCenterMarks().set(x, y);
-				makeChange(t2);
-			} else {
-				int x = t2-100;
-				int y = board.getCurCenterRole(x).getRoleNum();
-				player.getCenterMarks().set(x, y);
-				makeChange(t1);
-			}
-		}
-	}
-	
-	public int getChooseCenterNum() {
-		if (isSoleWolf()) {
-			chooseCenterNum = 1;
-		}
-		return chooseCenterNum;
 	}
 	
 }

@@ -1,6 +1,8 @@
 package com.cosine.cosgame.onenight;
 
-import com.cosine.cosgame.onenight.roles.QuoteWerewolf;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Manipulations {
 	public static void swapRoles(Player p1, Player p2) {
@@ -89,6 +91,69 @@ public class Manipulations {
 		if (p.getCurrentRole().exchangable()) {
 			p.addRole(r);
 			p.setUpdatedRole(r);
+		}
+	}
+	
+	static boolean isSoleWolf(Player player, Board board) {
+		if (board.isSoleWolf()) {
+			int i;
+			int t=0;
+			for (i=0;i<board.getPlayers().size();i++) {
+				if (player.getIndex() == i) {
+					continue;
+				}
+				Player p = board.getPlayers().get(i);
+				if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
+					t++;
+				}
+			}
+			if (t == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void soleWolfHandle(Player player, Board board) {
+		if (isSoleWolf(player,board)) {
+			List<Role> crs = new ArrayList<>();
+			List<Integer> cis = new ArrayList<>();
+			for (int i=0;i<board.getCenterRoles().size();i++) {
+				Role r = board.getCurCenterRole(i);
+				cis.add(i);
+				crs.add(r);
+			}
+			boolean alreadyRevealed = false;
+			while (crs.size() > 0) {
+				Random rand = new Random();
+				int x = rand.nextInt(crs.size());
+				Role r = crs.remove(x);
+				int y = cis.remove(x);
+				if (r.getSide() != Consts.WOLF && r.getRoleNum() != Consts.BAKER) {
+					player.getCenterMarks().set(y, r.getRoleNum());
+					alreadyRevealed = true;
+					break;
+				}
+			}
+			if (alreadyRevealed == false) {
+				crs = new ArrayList<>();
+				cis = new ArrayList<>();
+				for (int i=0;i<board.getCenterRoles().size();i++) {
+					Role r = board.getCurCenterRole(i);
+					cis.add(i);
+					crs.add(r);
+				}
+				while (crs.size() > 0) {
+					Random rand = new Random();
+					int x = rand.nextInt(crs.size());
+					Role r = crs.remove(x);
+					int y = cis.remove(x);
+					if (r.getRoleNum() != Consts.BAKER) {
+						player.getCenterMarks().set(y, r.getRoleNum());
+						break;
+					}
+				}
+			}
 		}
 	}
 }
