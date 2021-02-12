@@ -114,6 +114,10 @@ public class Player {
 		roles = new ArrayList<>();
 	}
 	
+	public void receiveVote(int x) {
+		numVotes = numVotes+x;
+	}
+	
 	public void receiveVote() {
 		numVotes++;
 	}

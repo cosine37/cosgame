@@ -102,6 +102,18 @@ public class RoleFactory {
 			role = new Baker();
 		} else if (img.contentEquals("r41")) {
 			role = new Masquerader();
+		} else if (img.contentEquals("r42")) {
+			role = new Sorcerer();
+		} else if (img.contentEquals("r43")) {
+			role = new Scapegoat();
+		} else if (img.contentEquals("r44")) {
+			role = new Wolfdog();
+		} else if (img.contentEquals("r4400")) {
+			role = new Wolfdog();
+			role.setSide(Consts.HUMAN);
+		} else if (img.contentEquals("r4401")) {
+			role = new Wolfdog();
+			role.setSide(Consts.WOLF);
 		}
 		
 		else {
@@ -202,6 +214,18 @@ public class RoleFactory {
 			role = new Baker();
 		} else if (num == 41) {
 			role = new Masquerader();
+		} else if (num == 42) {
+			role = new Sorcerer();
+		} else if (num == 43) {
+			role = new Scapegoat();
+		} else if (num == 44) {
+			role = new Wolfdog();
+		} else if (num == 4400) {
+			role = new Wolfdog();
+			role.setSide(Consts.HUMAN);
+		} else if (num == 4401) {
+			role = new Wolfdog();
+			role.setSide(Consts.WOLF);
 		}
 		
 		else {

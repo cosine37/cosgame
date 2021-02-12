@@ -1,6 +1,7 @@
 package com.cosine.cosgame.onenight.roles;
 
 import com.cosine.cosgame.onenight.Consts;
+import com.cosine.cosgame.onenight.Player;
 import com.cosine.cosgame.onenight.Role;
 
 public class Guard extends Role{
@@ -21,5 +22,13 @@ public class Guard extends Role{
 		votedMsg.add("你的初始身份是 守卫，你现在的身份可能已有变化。");
 		votedMsg.add("若你依然是守卫，你投票的玩家的票数将变为0。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
+	}
+	
+	public void afterVoteCountHandle() {
+		int x = player.getVoteIndex();
+		if (x>=0 && x<board.getPlayers().size()) {
+			Player p = board.getPlayers().get(x);
+			p.setNumVotes(0);
+		}
 	}
 }

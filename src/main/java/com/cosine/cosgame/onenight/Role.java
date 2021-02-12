@@ -65,6 +65,18 @@ public class Role {
 		
 	}
 	
+	public void receiveVote(int x) {
+		player.receiveVote(x);
+	}
+
+	public int voteValue() {
+		return 1;
+	}
+	
+	public void afterVoteCountHandle() {
+		
+	}
+	
 	public boolean canConfirm(List<Integer> targets) {
 		return true;
 	}

@@ -22,4 +22,8 @@ public class Sheriff extends Role{
 		votedMsg.add("若你依然是警长，你投票的玩家将收获2票而不是1票。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
+	
+	public int voteValue() {
+		return 2;
+	}
 }

@@ -40,9 +40,9 @@ public class Manipulations {
 		if (t >= 100 && t <= 102) {
 			int x = t-100;
 			Role r = board.getCurCenterRole(x);
+			r.onView(viewer);
 			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			viewer.getCenterMarks().set(x, y);
-			r.onView(viewer);
 		}
 	}
 	
@@ -50,24 +50,24 @@ public class Manipulations {
 		if (t1 >= 100 && t1 <= 102) {
 			int x = t1-100;
 			Role r = board.getCurCenterRole(x);
+			r.onView(viewer);
 			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			viewer.getCenterMarks().set(x, y);
-			r.onView(viewer);
 		}
 		if (t2 >= 100 && t2 <= 102) {
 			int x = t2-100;
 			Role r = board.getCurCenterRole(x);
+			r.onView(viewer);
 			int y = board.getCurCenterRole(x).getRoleNumToShow();
 			viewer.getCenterMarks().set(x, y);
-			r.onView(viewer);
 		}
 	}
 	
 	public static void viewCurrentRole(Player viewer) {
 		Role r = viewer.getCurrentRole();
+		r.onView(viewer);
 		viewer.setUpdatedRole(r);
 		viewer.setShowUpdatedRole(true);
-		r.onView(viewer);
 	}
 	
 	public static void viewFinalRole(Player viewer, Board board, int initialRoleNum) {
@@ -79,8 +79,8 @@ public class Manipulations {
 			Role ir = board.getPlayers().get(i).getInitialRole();
 			if (ir.getRoleNum() == initialRoleNum) {
 				Role cr = board.getPlayers().get(i).getCurrentRole();
-				viewer.getPlayerMarks().set(i, cr.getRoleNumToShow());
 				cr.onView(viewer);
+				viewer.getPlayerMarks().set(i, cr.getRoleNumToShow());
 			}
 		}
 	}

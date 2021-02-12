@@ -42,6 +42,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new ApprenticeSeer();
 		allRoles.add(r);
+		r = new Sorcerer();
+		allRoles.add(r);
 		r = new Investigator();
 		allRoles.add(r);
 		r = new AlphaWolf();
@@ -84,6 +86,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new SleepingWolf();
 		allRoles.add(r);
+		r = new Wolfdog();
+		allRoles.add(r);
 		r = new Tanner();
 		allRoles.add(r);
 		r = new Hunter();
@@ -101,6 +105,8 @@ public class AllRes {
 		r = new Pagan();
 		allRoles.add(r);
 		r = new Baker();
+		allRoles.add(r);
+		r = new Scapegoat();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

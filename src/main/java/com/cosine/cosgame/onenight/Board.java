@@ -147,12 +147,12 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Masquerader();
+		Role r = new Wolfdog();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Insomniac();
+		r = new Seer();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -162,7 +162,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
 		
-		r = new Pagan();
+		r = new Seer();
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
@@ -172,7 +172,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(4).getRoles().set(0, r);
 		
-		r = new Baker();
+		r = new Wolfdog();
 		List<Role> rs = new ArrayList<>();
 		rs.add(r);
 		centerRoles.set(0, rs);
@@ -363,6 +363,7 @@ public class Board {
 	public void vote(int x, int y) {
 		players.get(x).setVoteIndex(y);
 		players.get(x).setVoted(true);
+		/*
 		if (y>=0 && y<players.size()) {
 			if (players.get(x).getCurrentRole().getRoleNum() == Consts.PRINCE) {
 				
@@ -373,10 +374,31 @@ public class Board {
 				}
 			}
 		}
+		*/
 		if (allVoted()) {
 			status = Consts.AFTERVOTE;
+			countVote();
 			decideWinSide();
 			showAllRoles();
+		}
+	}
+	
+	public void countVote() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setNumVotes(0);
+		}
+		for (i=0;i<players.size();i++) {
+			Role r = players.get(i).getCurrentRole();
+			int v = r.voteValue();
+			int x = players.get(i).getVoteIndex();
+			if (x>=0 && x<=players.size()) {
+				Player p = players.get(x);
+				p.getCurrentRole().receiveVote(v);
+			}
+		}
+		for (i=0;i<players.size();i++) {
+			players.get(i).getCurrentRole().afterVoteCountHandle();
 		}
 	}
 	
@@ -396,6 +418,7 @@ public class Board {
 		boolean killedPope = true;
 		boolean hasWerewolf = false;
 		for (i=0;i<players.size();i++) {
+			/*
 			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GUARD) {
 				int x = players.get(i).getVoteIndex();
 				if (x>=0 && x<players.size()) {
@@ -406,6 +429,7 @@ public class Board {
 			if (players.get(i).getCurrentRole().getRoleNum() == Consts.PRINCE) {
 				players.get(i).setNumVotes(0);
 			}
+			*/
 			if (players.get(i).getCurrentRole().getSide() == Consts.WOLF) {
 				hasWerewolf = true;
 				int x = players.get(i).getVoteIndex();
@@ -767,7 +791,7 @@ public class Board {
 						s = Integer.toString(x);
 					} else {
 						Role r = RoleFactory.createRole(x);
-						s = r.getImg();
+						s = r.getDisplayImg();
 					}
 					playerMarks.add(s);
 					if (j == p.getIndex()) {
@@ -781,7 +805,7 @@ public class Board {
 						s = Integer.toString(x);
 					} else {
 						Role r = RoleFactory.createRole(x);
-						s = r.getImg();
+						s = r.getDisplayImg();
 					}
 					centerMarks.add(s);
 				}
@@ -1004,7 +1028,7 @@ public class Board {
 		for (i=0;i<centerRoles.size();i++) {
 			List<String> sloc = new ArrayList<>();
 			for (j=0;j<centerRoles.get(i).size();j++) {
-				sloc.add(centerRoles.get(i).get(j).getImg());
+				sloc.add(centerRoles.get(i).get(j).getDBStorageImg());
 			}
 			loc.add(sloc);
 		}

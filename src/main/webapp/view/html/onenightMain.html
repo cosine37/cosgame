@@ -64,9 +64,7 @@
 			
 			<div class="tab-content">
 				<div id="listtab" class="content container tab-pane active">
-					<!-- 
 					<img src="/image/Onenight/cloudword.png" style="position: absolute; z-index: 1;max-height:700px;"/>
-					 -->
 					<div style="position: relative;z-index: 2;">
 						<h1>狼人不杀</h1>
 						<table class="table">
@@ -236,13 +234,14 @@
 								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
 								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
 								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
+								<button ng-click="showedCard='r42'" ng-disabled="showedCard == 'r42'">灵媒</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
 								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
-								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 							</td>
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
@@ -279,6 +278,7 @@
 						<tr>
 							<td colspan="2">
 								<button ng-click="showedCard='r11'" ng-disabled="showedCard == 'r11'">奥伯狼</button>
+								<button ng-click="showedCard='r44'" ng-disabled="showedCard == 'r44'">狼狗</button>
 								<button ng-click="showedCard='r10'" ng-disabled="showedCard == 'r10'">皮匠</button>
 								<button ng-click="showedCard='r09'" ng-disabled="showedCard == 'r09'">猎人</button>
 								<button ng-click="showedCard='r16'" ng-disabled="showedCard == 'r16'">守卫</button>
@@ -288,6 +288,7 @@
 								<button ng-click="showedCard='r32'" ng-disabled="showedCard == 'r32'">僧侣</button>
 								<button ng-click="showedCard='r34'" ng-disabled="showedCard == 'r34'">邪灵法师</button>
 								<button ng-click="showedCard='r40'" ng-disabled="showedCard == 'r40'">面包师</button>
+								<button ng-click="showedCard='r43'" ng-disabled="showedCard == 'r43'">替罪羊</button>
 								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
 							</td>
 						</tr>
@@ -434,6 +435,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一张中央身份。你所查看的中央身份之后可能会发生变化。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r42'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 灵媒</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>若中央身份中有预言家或见习预言家，夜晚阶段你可以查看一名其他玩家的初始身份。
+								若中央身份中没有预言家或见习预言家，你无法查看一名玩家的身份。</br>
 							</td>
 						</tr>
 					</table>
@@ -686,6 +699,19 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r44'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼狗</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>你的初始阵营为“狼”，当该身份（无论是否为中央身份）在天亮之前被“人”阵营玩家发动技能观看后，该身份变为“人”阵营。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你所有同阵营队友能看到你（某种意义上算是你的技能）。你不能看到任何同阵营队友。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>因为你无从得知你是否有队友，<span class="onenighttext">独狼变体</span>规则对你不适用。
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r10'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -806,6 +832,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>天亮时该身份牌将会被翻开。该技能与该身份牌相关而不是玩家，初始身份为面包师的玩家在改变身份后不发动此效果。
 								即使该身份牌为中央身份，该效果依然发动。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r43'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 替罪羊</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>若有玩家的最终阵营是“狼”，在投票结束后你额外获得2票。若没有玩家的最终阵营是“狼”，你不会获得额外的票数。
 							</td>
 						</tr>
 					</table>

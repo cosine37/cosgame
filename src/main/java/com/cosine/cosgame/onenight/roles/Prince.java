@@ -22,4 +22,12 @@ public class Prince extends Role{
 		votedMsg.add("若你依然是王子，你的投票无效且你不会获得任何票数。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
+	
+	public int voteValue() {
+		return 0;
+	}
+	
+	public void afterVoteCountHandle() {
+		player.setNumVotes(0);
+	}
 }
