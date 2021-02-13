@@ -114,6 +114,12 @@ public class RoleFactory {
 		} else if (img.contentEquals("r4401")) {
 			role = new Wolfdog();
 			role.setSide(Consts.WOLF);
+		} else if (img.contentEquals("r45")) {
+			role = new BigBadWolf();
+		} else if (img.contentEquals("r46")) {
+			role = new Butterfly();
+		} else if (img.contentEquals("r47")) {
+			role = new Gravekeeper();
 		}
 		
 		else {
@@ -226,6 +232,12 @@ public class RoleFactory {
 		} else if (num == 4401) {
 			role = new Wolfdog();
 			role.setSide(Consts.WOLF);
+		} else if (num == 45) {
+			role = new BigBadWolf();
+		} else if (num == 46) {
+			role = new Butterfly();
+		} else if (num == 47) {
+			role = new Gravekeeper();
 		}
 		
 		else {

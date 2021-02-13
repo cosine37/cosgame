@@ -27,8 +27,10 @@ public class Wolfdog extends Role{
 	}
 	
 	public void onView(Player viewer) {
-		side = Consts.HUMAN;
-		img = "r4400";
+		if (viewer.getInitialRole().getSide() == Consts.HUMAN) {
+			side = Consts.HUMAN;
+			img = "r4400";
+		}
 	}
 	
 	public String getDBStorageImg() {

@@ -69,7 +69,6 @@ public class Board {
 		for (int i=0;i<rolesThisGame.size();i++) {
 			ris.add(i);
 		}
-		System.out.println(ris);
 		while (ris.size() > 0) {
 			Random rand = new Random();
 			int x = rand.nextInt(ris.size());
@@ -81,7 +80,6 @@ public class Board {
 				}
 			}
 		}
-		System.out.println("WeremeleonIndex=" + weremeleonIndex);
 	}
 	
 	public void startGame() {
@@ -147,17 +145,17 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new Weremeleon();
+		Role r = new Seer();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Seer();
+		r = new Wolfdog();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Thief();
+		r = new Monk();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);

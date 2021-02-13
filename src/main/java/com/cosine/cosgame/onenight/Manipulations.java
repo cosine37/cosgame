@@ -25,9 +25,9 @@ public class Manipulations {
 	
 	public static void viewPlayerRole(Player viewer, Player p) {
 		Role r = p.getCurrentRole();
+		r.onView(viewer);
 		int x = r.getRoleNumToShow();
 		viewer.getPlayerMarks().set(p.getIndex(), x);
-		r.onView(viewer);
 	}
 	
 	public static void peekCenterRole(Player viewer, Board board, int t) {

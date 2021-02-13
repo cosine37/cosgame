@@ -26,6 +26,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Weremeleon();
 		allRoles.add(r);
+		r = new BigBadWolf();
+		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
 		r = new Pope();
@@ -48,6 +50,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new AlphaWolf();
 		allRoles.add(r);
+		r = new Butterfly();
+		allRoles.add(r);
 		r = new Masquerader();
 		allRoles.add(r);
 		r = new Thief();
@@ -69,6 +73,8 @@ public class AllRes {
 		r = new Drunk();
 		allRoles.add(r);
 		r = new Insomniac();
+		allRoles.add(r);
+		r = new Gravekeeper();
 		allRoles.add(r);
 		r = new Watcher();
 		allRoles.add(r);

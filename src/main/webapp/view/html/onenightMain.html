@@ -202,12 +202,22 @@
 					<h2><b>进阶规则</b></h2>
 					<table>
 						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>独狼变体</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 若除帮凶、奥伯狼、狼狗外“狼”阵营玩家夜晚阶段行动时未看到队友，系统会随机显示一张中央身份。
+								系统会优先选择“人”阵营身份。若无“人”阵营则显示随机中央身份。系统不会选择显示<span class="onenighttext">面包师</span>身份。</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
 							<td colspan="2" style="width: 1000px"><h4><b>黎明阶段</b></h4></td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 黎明阶段在夜晚阶段结束后开始。一般情况下，黎明阶段的行动等同于夜晚阶段。
-								在黎明阶段开始前会有一些身份技能的结算，这些技能结算完毕后立即开始黎明每段的结算。目前黎明阶段暂无拥有交换身份技能的身份。</br>
+								在黎明阶段开始前会有一些身份技能的结算，结算顺序按夜晚行动顺序，这些技能结算完毕后立即开始黎明每段的结算。目前黎明阶段暂无拥有交换身份技能的身份。</br>
 								</p>
 							</td>
 						</tr>
@@ -227,6 +237,7 @@
 								<button ng-click="showedCard='r15'" ng-disabled="showedCard == 'r15'">狼先知</button>
 								<button ng-click="showedCard='r26'" ng-disabled="showedCard == 'r26'">森林狼</button>
 								<button ng-click="showedCard='r39'" ng-disabled="showedCard == 'r39'">变色狼</button>
+								<button ng-click="showedCard='r45'" ng-disabled="showedCard == 'r45'">大灰狼</button>
 								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
 								<button ng-click="showedCard='r30'" ng-disabled="showedCard == 'r30'">教宗</button>
 								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
@@ -236,11 +247,12 @@
 								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
 								<button ng-click="showedCard='r42'" ng-disabled="showedCard == 'r42'">灵媒</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
-								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
 							</td>
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
+								<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
 								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
@@ -261,6 +273,7 @@
 						<tr>
 							<td>
 								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
+								<button ng-click="showedCard='r47'" ng-disabled="showedCard == 'r47'">守墓者</button>
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
 								<button ng-click="showedCard='r31'" ng-disabled="showedCard == 'r31'">主教</button>
 								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
@@ -303,7 +316,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								你可以查看一张中央身份。
+								一张中央身份将会显示。
 							</td>
 						</tr>
 					</table>
@@ -318,7 +331,7 @@
 								你可以查看一名其他玩家的身份。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								在查看一名其他玩家身份的同时，你还可以查看一张中央身份。
+								一张中央身份将会显示。
 							</td>
 						</tr>
 					</table>
@@ -333,7 +346,7 @@
 								你可以指定一名其他玩家（可以是队友）。该玩家发言时只能用方言发言，无论其他玩家是否能听懂。若该玩家不会方言，则只能用英语发言。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								在禁言一名其他玩家的同时，你还可以查看一张中央身份。
+								一张中央身份将会显示。
 							</td>
 						</tr>
 					</table>
@@ -346,10 +359,24 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
 								游戏结束之前，该身份会显示为本局游戏拥有的随机“人”阵营玩家的身份。你会看到本局游戏你所显示的身份。任何玩家查看你的身份牌都会显示该身份。该身份为中央身份时该效果依然有效，即游戏结束前依然会显示为本局游戏拥有的随机“人”阵营玩家的身份。
-								该身份不会被显示为僧侣、邪灵法师、面包师。该身份仍然视为狼阵营，只在其他玩家观看的时候才会显示为随机“人”阵营玩家的身份。所以驯熊师、教宗、狐仙的技能依然对你有效。</br>
+								该身份不会被显示为僧侣、邪灵法师、面包师。该身份仍然视为“狼”阵营，只在其他玩家观看的时候才会显示为随机“人”阵营玩家的身份。所以驯熊师、教宗、狐仙的技能依然对其有效。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								在禁言一名其他玩家的同时，你还可以查看一张中央身份。
+								一张中央身份将会显示。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r45'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 大灰狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。你投的玩家将获得2票（而不是1票）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。
 							</td>
 						</tr>
 					</table>
@@ -477,7 +504,19 @@
 								你可以指定一名其他玩家。该玩家的身份会变为“狼人”。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								在将一名其他玩家的身份变为“狼人”的同时，你还可以查看一张中央身份。
+								一张中央身份将会显示。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r46'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 花蝴蝶</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以将你的身份和另一名玩家的身份交换，你可以看到你获得的新身份。若你选择发动该技能，黎明阶段开始前，你和该玩家的身份将再次被交换。
+								你也可以不发动此技能。</br>
 							</td>
 						</tr>
 					</table>
@@ -488,8 +527,8 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 假面舞者</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段交换你指定的除你以外的两名玩家的身份牌，该技能必须发动。你不能查看你交换的身份牌。
-								黎明阶段开始前，你指定的该两名玩家的身份牌将再次被交换。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段交换你指定的除你以外的两名玩家的身份，该技能必须发动。你不能查看你交换的身份。
+								黎明阶段开始前，你指定的两名玩家的身份将再次被交换。</br>
 							</td>
 						</tr>
 					</table>
@@ -601,7 +640,19 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 失眠者</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你查看你的身份（此时为你的最终身份），该技能必须发动。本游戏设定为天亮时自动显示你的最终身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你查看你的身份（此时为你的最终身份），该技能必须发动。本游戏设定为天亮时自动显示你的最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r47'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 守墓者</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你能看到一张阵营为“狼”且不为变色狼的中央身份。本游戏设定为天亮时自动显示该身份。
+								若中央身份中没有不为变色狼的“狼”阵营身份，则不会显示任何身份。</br>
 							</td>
 						</tr>
 					</table>
@@ -612,7 +663,7 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 观者</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你看到所有初始身份为预言家和见习预言家的玩家的最终身份。本游戏设定为天亮时自动显示其最终身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你看到所有初始身份为预言家和见习预言家的玩家的最终身份。本游戏设定为天亮时自动显示其最终身份。</br>
 							</td>
 						</tr>
 					</table>
@@ -623,7 +674,7 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 主教</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你看到初始身份为教宗的玩家的最终身份。本游戏设定为天亮时自动显示其最终身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你看到初始身份为教宗的玩家的最终身份。本游戏设定为天亮时自动显示其最终身份。</br>
 							</td>
 						</tr>
 					</table>
@@ -634,7 +685,7 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 村长</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段指定一名玩家，该玩家白天第一个发言。若你没有指定，则白天你第一个发言。
 								换言之，该技能必须发动。</br>
 							</td>
 						</tr>
@@ -659,7 +710,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>指定一名玩家，若从该玩家起从左到右三名玩家的最终身份有“狼”阵营，你的狐狸会叫。
-								若都不是“狼”阵营，则你的狐狸不会叫.</br>
+								若都不是“狼”阵营，则你的狐狸不会叫。.</br>
 							</td>
 						</tr>
 					</table>
@@ -707,7 +758,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>你的初始阵营为“狼”，当该身份（无论是否为中央身份）在天亮之前被“人”阵营玩家发动技能观看后，该身份变为“人”阵营。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你所有同阵营队友能看到你（某种意义上算是你的技能）。你不能看到任何同阵营队友。</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>与你的阵营相同。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>因为你无从得知你是否有队友，<span class="onenighttext">独狼变体</span>规则对你不适用。
 							</td>
 						</tr>
