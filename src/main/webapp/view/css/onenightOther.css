@@ -92,6 +92,18 @@ button:disabled{
 	background-size:cover;
 }
 
+.wolf{
+	position: absolute;
+	user-select:none;
+	left: 18px;
+	top: 0px;
+	height: 70px;
+	width: 70px;
+	background:url("/image/Onenight/wolf.png");
+	background-size:cover;
+	filter:brightness(120%) drop-shadow(0px 0px 10px red);
+}
+
 .vote{
 	position: absolute;
 	user-select:none;

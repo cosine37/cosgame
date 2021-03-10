@@ -291,6 +291,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				imgUrl = "url('/image/Onenight/qs.png')"
 				if ($scope.playerMarks[i] == "-1" || $scope.playerMarks[i] == "-2" || $scope.playerMarks[i] == "-3"){
 					
+				} else if ($scope.playerMarks[i] == "-4"){
+					imgUrl = "url('/image/Onenight/wolfcard.png')"
 				} else {
 					imgUrl = "url('/image/Onenight/Roles/" + $scope.playerMarks[i] + ".png')"
 				}

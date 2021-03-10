@@ -257,6 +257,7 @@
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
+								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">调换儿</button>
 								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">演员</button>
 								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
 								<button ng-click="showedCard='r37'" ng-disabled="showedCard == 'r37'">小女孩</button>
@@ -274,6 +275,7 @@
 							<td>
 								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
 								<button ng-click="showedCard='r47'" ng-disabled="showedCard == 'r47'">守墓者</button>
+								<button ng-click="showedCard='r43'" ng-disabled="showedCard == 'r43'">替罪羊</button>
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
 								<button ng-click="showedCard='r31'" ng-disabled="showedCard == 'r31'">主教</button>
 								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
@@ -301,7 +303,6 @@
 								<button ng-click="showedCard='r32'" ng-disabled="showedCard == 'r32'">僧侣</button>
 								<button ng-click="showedCard='r34'" ng-disabled="showedCard == 'r34'">邪灵法师</button>
 								<button ng-click="showedCard='r40'" ng-disabled="showedCard == 'r40'">面包师</button>
-								<button ng-click="showedCard='r43'" ng-disabled="showedCard == 'r43'">替罪羊</button>
 								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
 							</td>
 						</tr>
@@ -563,6 +564,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一张中央身份并将其与任何一名玩家（可以是自己）的身份交换。
 								你也可以不发动此技能，但若你查看中央身份则必定要和一名玩家交换。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r48'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 调换儿</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。交换完后你查看你获得的新身份。
+								黎明阶段开始前，你指定的相同位置的中央身份和你的身份将再次被交换。</br>
 							</td>
 						</tr>
 					</table>
@@ -893,7 +906,7 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 替罪羊</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>若有玩家的最终阵营是“狼”，在投票结束后你额外获得2票。若没有玩家的最终阵营是“狼”，你不会获得额外的票数。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段查看所有中央身份。投票阶段时若有玩家的最终阵营是“狼”，在投票结束后你额外获得2票；若没有玩家的最终阵营是“狼”，你不会获得额外的票数。
 							</td>
 						</tr>
 					</table>

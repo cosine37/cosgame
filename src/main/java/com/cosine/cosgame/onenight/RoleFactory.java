@@ -120,6 +120,8 @@ public class RoleFactory {
 			role = new Butterfly();
 		} else if (img.contentEquals("r47")) {
 			role = new Gravekeeper();
+		} else if (img.contentEquals("r48")) {
+			role = new Changeling();
 		}
 		
 		else {
@@ -238,6 +240,8 @@ public class RoleFactory {
 			role = new Butterfly();
 		} else if (num == 47) {
 			role = new Gravekeeper();
+		} else if (num == 48) {
+			role = new Changeling();
 		}
 		
 		else {

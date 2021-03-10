@@ -144,13 +144,13 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		/*
-		Role r = new Seer();
+		
+		Role r = new Minion();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		
-		r = new Wolfdog();
+		/*
+		r = new Actor();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);

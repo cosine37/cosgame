@@ -60,6 +60,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Witch();
 		allRoles.add(r);
+		r = new Changeling();
+		allRoles.add(r);
 		r = new Actor();
 		allRoles.add(r);
 		r = new YoungWitch();
@@ -75,6 +77,8 @@ public class AllRes {
 		r = new Insomniac();
 		allRoles.add(r);
 		r = new Gravekeeper();
+		allRoles.add(r);
+		r = new Scapegoat();
 		allRoles.add(r);
 		r = new Watcher();
 		allRoles.add(r);
@@ -111,8 +115,6 @@ public class AllRes {
 		r = new Pagan();
 		allRoles.add(r);
 		r = new Baker();
-		allRoles.add(r);
-		r = new Scapegoat();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

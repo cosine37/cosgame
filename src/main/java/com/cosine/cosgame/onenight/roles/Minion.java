@@ -13,16 +13,16 @@ public class Minion extends Role{
 		sequence = 300;
 		name = "帮凶";
 		nightMsg.add("你的初始身份是 帮凶。");
-		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，其身份不一定为狼人。");
+		nightMsg.add("身份牌上有标记的玩家初始身份和你同一阵营。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");
 		confirmedMsg.add("你的初始身份是 帮凶。");
-		confirmedMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，其身份不一定为狼人。");
+		confirmedMsg.add("身份牌上有标记的玩家初始身份和你同一阵营。");
 		confirmedMsg.add("正等待其他玩家确认。");
 		dayMsg.add("你的初始身份是 帮凶，你现在的身份可能已有变化。");
-		dayMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，其身份不一定为狼人，且当前阵营可能已有变化。");
+		dayMsg.add("身份牌上有标记的玩家初始身份和你同一阵营，且当前阵营可能已有变化。");
 		dayMsg.add("你可以选择某位玩家的身份牌并点击确认投票给该玩家。");
 		votedMsg.add("你的初始身份是 帮凶，你现在的身份可能已有变化。");
-		votedMsg.add("场上显示身份牌的玩家初始身份和你同一阵营，其身份不一定为狼人，且当前阵营可能已有变化。");
+		votedMsg.add("身份牌上有标记的玩家初始身份和你同一阵营，且当前阵营可能已有变化。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
@@ -34,7 +34,7 @@ public class Minion extends Role{
 			}
 			Player p = board.getPlayers().get(i);
 			if (p.getInitialRole().getSide() == Consts.WOLF) {
-				player.getPlayerMarks().set(i, 1);
+				player.getPlayerMarks().set(i, Consts.WOLFMARK);
 			}
 		}
 	}
