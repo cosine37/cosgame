@@ -76,6 +76,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Insomniac();
 		allRoles.add(r);
+		r = new OldMan();
+		allRoles.add(r);
 		r = new Gravekeeper();
 		allRoles.add(r);
 		r = new Scapegoat();

@@ -64,6 +64,7 @@ public class Consts {
 	public static final int BUTTERFLY = 46;
 	public static final int GRAVEKEEPER = 47;
 	public static final int CHANGELING = 48;
+	public static final int OLDMAN = 49;
 	
 	// marks
 	public static final int UNKNOWN = -1;

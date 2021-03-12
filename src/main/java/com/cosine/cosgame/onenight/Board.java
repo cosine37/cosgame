@@ -144,13 +144,13 @@ public class Board {
 		}
 		
 		// TODO: test roles here
-		
-		Role r = new Minion();
+		/*
+		Role r = new OldMan();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		/*
-		r = new Actor();
+		
+		r = new Witch();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);

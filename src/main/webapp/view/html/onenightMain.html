@@ -274,6 +274,7 @@
 						<tr>
 							<td>
 								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
+								<button ng-click="showedCard='r49'" ng-disabled="showedCard == 'r49'">苦涩老头</button>
 								<button ng-click="showedCard='r47'" ng-disabled="showedCard == 'r47'">守墓者</button>
 								<button ng-click="showedCard='r43'" ng-disabled="showedCard == 'r43'">替罪羊</button>
 								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
@@ -654,6 +655,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你查看你的身份（此时为你的最终身份），该技能必须发动。本游戏设定为天亮时自动显示你的最终身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r49'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 苦涩老头</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段知道最终身份为苦涩老头的玩家。本游戏设定为天亮时自动显示最终身份为苦涩老头的玩家的身份牌。
+								若没有任何玩家的身份牌被显示，则没有玩家的最终身份为苦涩老头。该技能不受变色狼的技能影响。</br>
 							</td>
 						</tr>
 					</table>

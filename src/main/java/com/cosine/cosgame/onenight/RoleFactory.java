@@ -122,6 +122,8 @@ public class RoleFactory {
 			role = new Gravekeeper();
 		} else if (img.contentEquals("r48")) {
 			role = new Changeling();
+		} else if (img.contentEquals("r49")) {
+			role = new OldMan();
 		}
 		
 		else {
@@ -242,6 +244,8 @@ public class RoleFactory {
 			role = new Gravekeeper();
 		} else if (num == 48) {
 			role = new Changeling();
+		} else if (num == 49) {
+			role = new OldMan();
 		}
 		
 		else {
