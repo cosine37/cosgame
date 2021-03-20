@@ -1,0 +1,195 @@
+@charset "UTF-8";
+button{
+	outline: none;
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(198,145,69);
+	border-radius: 8px;
+	
+	background: rgb(198,145,69);
+}
+
+button:disabled{
+	outline: none;
+	color: rgb(126,33,18);
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(198,145,69);
+	border-radius: 8px;
+	
+	background: white;
+}
+
+.role {
+	height: 160px;
+	width: 105px;
+	position: relative;
+}
+
+.target{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -45px;
+	height: 80px;
+	width: 80px;
+	background:url("/image/Onenight/target.png");
+	background-size:cover;
+}
+
+.exchange{
+	position: absolute;
+	user-select:none;
+	right: 0px;
+	bottom: 0px;
+	height: 60px;
+	width: 60px;
+	background:url("/image/Onenight/exchange.png");
+	background-size:cover;
+}
+
+.checked{
+	position: absolute;
+	user-select:none;
+	right: 10px;
+	bottom: 10px;
+	height: 40px;
+	width: 40px;
+	background:url("/image/Onenight/checked.png");
+	background-size:cover;
+}
+
+.detective{
+	position: absolute;
+	user-select:none;
+	right: 30px;
+	bottom: 20px;
+	height: 40px;
+	width: 40px;
+	background:url("/image/Onenight/detective.png");
+	background-size:cover;
+}
+
+.beggar{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	bottom: 0px;
+	height: 50px;
+	width: 50px;
+	background:url("/image/Onenight/beggar.png");
+	background-size:cover;
+}
+
+.wolf{
+	position: absolute;
+	user-select:none;
+	left: 18px;
+	top: 0px;
+	height: 70px;
+	width: 70px;
+	background:url("/image/Onenight/wolf.png");
+	background-size:cover;
+	filter:brightness(120%) drop-shadow(0px 0px 10px red);
+}
+
+.vote{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -45px;
+	height: 80px;
+	width: 80px;
+	background:url("/image/Onenight/vote.png");
+	background-size:cover;
+}
+
+.qsmark{
+	position: absolute;
+	user-select:none;
+	float: left;
+	bottom: 2px;
+	left: 2px;
+	cursor: pointer;
+}
+
+.create-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 400px;
+	width: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.create-div table{
+	width:100%;
+	text-align:center;
+}
+
+.create-title{
+	color: rgb(198,145,69);
+	font-weight: bold;
+	-webkit-text-stroke: 1.0px #000000;
+}
+
+.night{
+	background: url('/image/Onenight/night.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.day{
+	background: url('/image/Onenight/day.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.game-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 860px;
+	width: 1500px;
+	margin-top: -430px;
+	margin-left: -540px;
+	padding-top: 20px;
+	padding-left: 45px;
+	padding-right: 45px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+	font-weight: bold;
+}
+
+.allroles-div{
+	overflow-y: scroll;
+	overflow:auto;
+	height: 520px;
+}

@@ -40,7 +40,7 @@ public class LoginController {
 	public ResponseEntity<StringEntity> setUsername(HttpServletRequest request, @RequestParam String username) {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("username", username);
-		session.setMaxInactiveInterval(20 * 60);
+		session.setMaxInactiveInterval(40 * 60);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
