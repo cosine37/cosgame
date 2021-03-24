@@ -6,6 +6,7 @@ public class Zodiac {
 	boolean isReal;
 	boolean reveal;
 	boolean keep;
+	boolean stolen;
 	int votes;
 	
 	public Zodiac() {
@@ -13,6 +14,7 @@ public class Zodiac {
 		isReal = true;
 		reveal = false;
 		keep = false;
+		stolen = false;
 	}
 	
 	public int getVotes() {
@@ -50,5 +52,11 @@ public class Zodiac {
 	}
 	public void setKeep(boolean keep) {
 		this.keep = keep;
+	}
+	public boolean isStolen() {
+		return stolen;
+	}
+	public void setStolen(boolean stolen) {
+		this.stolen = stolen;
 	}
 }

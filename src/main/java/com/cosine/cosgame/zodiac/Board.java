@@ -12,6 +12,7 @@ public class Board {
 	int round;
 	int phase;
 	int status;
+	boolean flipped;
 	
 	public void initializeZodiacs() {
 		int i;
@@ -135,6 +136,10 @@ public class Board {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
-	
+	public boolean isFlipped() {
+		return flipped;
+	}
+	public void setFlipped(boolean flipped) {
+		this.flipped = flipped;
+	}
 }
