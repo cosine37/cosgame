@@ -38,6 +38,7 @@ public class Consts {
 	public static final String GENIUSIMG = "r07";
 	
 	// options
+	public static final int NOOPTION = 0;
 	public static final int FLIP = 1;
 	public static final int DEAD = 2;
 }

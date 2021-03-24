@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
 public class Board {
 	List<Player> players;
 	List<Zodiac> zodiacs;
 	List<Role> roles;
 	
+	String id;
 	int round;
 	int phase;
 	int status;
@@ -141,5 +144,58 @@ public class Board {
 	}
 	public void setFlipped(boolean flipped) {
 		this.flipped = flipped;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("round", round);
+		doc.append("phase", phase);
+		doc.append("status", status);
+		doc.append("flipped", flipped);
+		int i;
+		List<String> playerNames = new ArrayList<>();
+		List<Document> playerDocs = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add("player-" + players.get(i).getName());
+			playerDocs.add(players.get(i).toDocument());
+		}
+		doc.append("playerNames", playerNames);
+		doc.append("players", playerDocs);
+		List<Document> zodiacDocs = new ArrayList<>();
+		for (i=0;i<zodiacs.size();i++) {
+			zodiacDocs.add(zodiacs.get(i).toDocument());
+		}
+		doc.append("zodiacs", zodiacDocs);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		round = doc.getInteger("round", -1);
+		phase = doc.getInteger("phase", -1);
+		status = doc.getInteger("status", -1);
+		flipped = doc.getBoolean("flipped", false);
+		int i;
+		List<Document> playerDocs = (List<Document>) doc.get("players");
+		players = new ArrayList<>();
+		for (i=0;i<playerDocs.size();i++) {
+			Player p = new Player();
+			p.setBoard(this);
+			p.setFromDoc(playerDocs.get(i));
+			p.setIndex(i);
+		}
+		List<Document> zodiacDocs = (List<Document>) doc.get("zodiacs");
+		zodiacs = new ArrayList<>();
+		for (i=0;i<zodiacDocs.size();i++) {
+			Zodiac z = new Zodiac();
+			z.setBoard(this);
+			z.setFromDoc(zodiacDocs.get(i));
+		}
 	}
 }
