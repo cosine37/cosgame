@@ -2,8 +2,6 @@ package com.cosine.cosgame.zodiac;
 
 import java.util.List;
 
-import com.cosine.cosgame.zodiac.roles.Thief;
-
 public class Manipulations {
 	static void flip(Player p, int x) {
 		if (p.getCheckHistory().get(x) == Consts.REAL) {

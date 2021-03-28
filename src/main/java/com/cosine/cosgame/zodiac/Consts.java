@@ -5,6 +5,7 @@ public class Consts {
 	public static final int NUMROUNDS = 3;
 	
 	// targets
+	public static final int NOTCHOOSED = 0;
 	public static final int CHOOSED = 1;
 	public static final int HIGHERCHOOSED = 2;
 	
@@ -37,8 +38,18 @@ public class Consts {
 	public static final String THIEFIMG = "r06";
 	public static final String GENIUSIMG = "r07";
 	
+	public static final int TOTALROLES = 8;
+	
 	// options
 	public static final int NOOPTION = 0;
 	public static final int FLIP = 1;
 	public static final int DEAD = 2;
+	
+	// statuses
+	public static final int PREGAME = 0;
+	public static final int INGAME = 1;
+	
+	// phases
+	public static final int INSPECT = 0;
+	public static final int DAY = 1;
 }

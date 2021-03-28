@@ -1,10 +1,13 @@
 package com.cosine.cosgame.zodiac;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Player> players;
@@ -12,21 +15,28 @@ public class Board {
 	List<Role> roles;
 	
 	String id;
+	String lord;
 	int round;
 	int phase;
 	int status;
 	boolean flipped;
 	
-	public void initializeZodiacs() {
-		int i;
-		String[] names = {"鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","苟","猪"};
+	MongoDBUtil dbutil;
+	
+	public Board() {
+		players = new ArrayList<>();
 		zodiacs = new ArrayList<>();
-		for (i=0;i<12;i++) {
-			Zodiac z = new Zodiac();
-			z.setName(names[i]);
-			z.setNum(i+1);
-			zodiacs.add(z);
-		}
+		roles = new ArrayList<>();
+		
+		String dbname = "zodiac";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
+	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
 	}
 	
 	public void setZodiacQualities() {
@@ -58,6 +68,21 @@ public class Board {
 			int x = rand.nextInt(tempZ.size());
 			Zodiac z = tempZ.remove(x);
 			zodiacs.add(z);
+		}
+	}
+	
+	public void distributeRoles() {
+		roles = AllRes.genRoles(players.size());
+		int i;
+		List<Role> tempRoles = new ArrayList<>();
+		for (i=0;i<roles.size();i++) {
+			tempRoles.add(roles.get(i));
+		}
+		for (i=0;i<players.size();i++) {
+			Random rand = new Random();
+			int x = rand.nextInt(tempRoles.size());
+			Role r = tempRoles.remove(x);
+			players.get(i).setRole(r);
 		}
 	}
 	
@@ -102,7 +127,34 @@ public class Board {
 			}
 		}
 	}
+	
+	public void newRound() {
+		flipped = false;
+		phase = Consts.INSPECT;
+		round++;
+		for (int i=0;i<players.size();i++) {
+			players.get(i).newRound();
+		}
+	}
 
+	public void startGame() {
+		if (players.size()>=6 && players.size() <=8) {
+			setZodiacQualities();
+			randomizeZodiacs();
+			distributeRoles();
+		}
+	}
+	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -151,9 +203,41 @@ public class Board {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		
+		entity.setLord(lord);
+		entity.setPhase(Integer.toString(phase));
+		entity.setStatus(Integer.toString(status));
+		entity.setRound(Integer.toString(round));
+		
+		int i;
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+		}
+		entity.setPlayers(playerNames);
+		List<String> zodiacNames = new ArrayList<>();
+		List<String> zodiacImages = new ArrayList<>();
+		for (i=0;i<round*4;i++) {
+			zodiacNames.add(zodiacs.get(i).getName());
+			zodiacImages.add(zodiacs.get(i).getImg());
+		}
+		entity.setZodiacs(zodiacNames);
+		entity.setZodiacImages(zodiacImages);
+		
+		return entity;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("id", id);
+		doc.append("lord", lord);
 		doc.append("round", round);
 		doc.append("phase", phase);
 		doc.append("status", status);
@@ -177,6 +261,7 @@ public class Board {
 	
 	public void setFromDoc(Document doc) {
 		id = doc.getString("id");
+		lord = doc.getString("lord");
 		round = doc.getInteger("round", -1);
 		phase = doc.getInteger("phase", -1);
 		status = doc.getInteger("status", -1);
@@ -196,6 +281,66 @@ public class Board {
 			Zodiac z = new Zodiac();
 			z.setBoard(this);
 			z.setFromDoc(zodiacDocs.get(i));
+		}
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(players.get(i).getName());
+		}
+	}
+	
+	public void updateBasicDB() {
+		dbutil.update("id", id, "status", status);
+		dbutil.update("id", id, "round", round);
+		dbutil.update("id", id, "phase", phase);
+	}
+	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		p.setDisplayName(name);
+		players.add(p);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }

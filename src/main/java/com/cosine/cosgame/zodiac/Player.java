@@ -1,5 +1,6 @@
 package com.cosine.cosgame.zodiac;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -23,10 +24,42 @@ public class Player {
 	public Player() {
 		votes = 0;
 		disabledTurn = -1;
+		voteHistory = new ArrayList<>();
+		checkHistory = new ArrayList<>();
+		sideHistory = new ArrayList<>();
+		zodiacTargets = new ArrayList<>();
+		playerTargets = new ArrayList<>();
+		role = new Role();
 	}
 	
 	public void initialize() {
 		votes = 0;
+		int n = Consts.NUMZODIACS;
+		int i;
+		for (i=0;i<n;i++) {
+			voteHistory.add(0);
+			checkHistory.add(Consts.NOTCHECKED);
+			zodiacTargets.add(Consts.NOTCHOOSED);
+		}
+		n = board.getPlayers().size();
+		for (i=0;i<n;i++) {
+			sideHistory.add(Consts.NOTCHECKED);
+			playerTargets.add(Consts.NOTCHOOSED);
+		}
+	}
+	
+	public void newRound() {
+		disabled = false;
+		if (option == Consts.FLIP) {
+			option = Consts.NOOPTION;
+		}
+		if (option == Consts.DEAD) {
+			disabled = true;
+		}
+		if (board.getRound() == disabledTurn) {
+			disabled = true;
+		}
+		votes = votes+2;
 	}
 	
 	public String getName() {
