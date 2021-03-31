@@ -28,9 +28,13 @@ public class AllRes {
 		allRoles.add(r);
 		r = new BigBadWolf();
 		allRoles.add(r);
+		r = new WolfGodFather();
+		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
 		r = new Pope();
+		allRoles.add(r);
+		r = new Redhat();
 		allRoles.add(r);
 		for (i=0;i<2;i++) {
 			r = new Mason();
@@ -73,6 +77,8 @@ public class AllRes {
 		r = new Idiot();
 		allRoles.add(r);
 		r = new Drunk();
+		allRoles.add(r);
+		r = new Nun();
 		allRoles.add(r);
 		r = new Insomniac();
 		allRoles.add(r);
@@ -117,6 +123,10 @@ public class AllRes {
 		r = new Pagan();
 		allRoles.add(r);
 		r = new Baker();
+		allRoles.add(r);
+		r = new Link();
+		allRoles.add(r);
+		r = new StutteringJudge();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

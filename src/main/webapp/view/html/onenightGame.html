@@ -64,7 +64,7 @@
 			
 		</div>
 		
-		<div ng-show="status == '2' || status == '3' || status == '4'">
+		<div ng-show="status == '2' || status == '3' || status == '4' || status == '6'">
 			<table style="text-align:center">
 				<tr>
 					<td ng-repeat="i in indexes">
@@ -164,8 +164,8 @@
 			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(1)">左移一顺位</button>
 			<button ng-show="status == '2' && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(2)">右移一顺位</button>
 			
-			<button ng-show="status == '3' && voted != 'y'" ng-click="forfeitVote()">弃权</button>
-			<button ng-show="status == '3' && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
+			<button ng-show="(status == '3' || status == '6') && voted != 'y'" ng-click="forfeitVote()">弃权</button>
+			<button ng-show="(status == '3' || status == '6') && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>
 			<button ng-show="status == '4' && lord == username" ng-click="restart()">再来一局</button>
 			
 		</div>

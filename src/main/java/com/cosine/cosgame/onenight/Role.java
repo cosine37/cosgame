@@ -73,6 +73,20 @@ public class Role {
 		return 1;
 	}
 	
+	public void voteHandle() {
+		int v = voteValue();
+		int x = player.getVoteIndex();
+		if (x>=0 && x<=board.getPlayers().size()) {
+			Player p = board.getPlayers().get(x);
+			p.getCurrentRole().receiveVote(v);
+			p.getCurrentRole().votedReaction(player);
+		}
+	}
+	
+	public void votedReaction(Player p) {
+		
+	}
+	
 	public void afterVoteCountHandle() {
 		
 	}

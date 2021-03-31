@@ -124,7 +124,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 						}
 					}
 				}
-			} else if ($scope.status == "3" && $scope.voted == "n"){
+			} else if (($scope.status == "3" || $scope.status == "6")&& $scope.voted == "n"){
 				$scope.voteIndex = x;
 			}  
 			updateShowConfirmed()
@@ -219,10 +219,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.forfeitVote = function(){
-			var data = {"index" : -1}
-			$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
-			});
+			if (confirm("你确定要弃权吗？")){
+				var data = {"index" : -1}
+				$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			}
 		}
 		
 		$scope.restart = function(){
@@ -481,8 +483,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					$scope.updatedRole = $scope.playerMarks[$scope.myIndex]
 				} else if ($scope.status == '2'){
 					$scope.centerMsg.unshift("天黑了。")
-				} else if ($scope.status == '3'){
+				} else if ($scope.status == '3' || $scope.status == '6'){
 					var morningMsg = "天亮了，初始发言玩家为" + $scope.firstPlayer + "。";
+					if ($scope.status == '6'){
+						morningMsg = "口吃法官宣布额外进行一轮发言，初始发言玩家为" + $scope.firstPlayer + "。";
+					}
 					if ($scope.restrictedIndex != '-1'){
 						morningMsg = morningMsg + $scope.restrictedPlayer + "中了森林诅咒，只能用方言（如不会方言则只能用英语）发言。"
 					}
@@ -510,7 +515,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.getBoard();
 			} else if ($scope.status == "2" && $scope.confirmed == "y"){
 				$scope.getBoard();
-			} else if ($scope.status == "3" && $scope.voted == "y"){
+			} else if (($scope.status == "3" || $scope.status == "6") && $scope.voted == "y"){
 				$scope.getBoard();
 			} else if ($scope.status == "4"){
 				$scope.getBoard();

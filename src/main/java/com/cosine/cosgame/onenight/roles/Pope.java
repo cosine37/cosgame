@@ -28,7 +28,7 @@ public class Pope extends Role{
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
-	public void vision() {
+	public void executeSkill() {
 		int i;
 		for (i=0;i<board.getPlayers().size();i++) {
 			if (player.getIndex() == i) {

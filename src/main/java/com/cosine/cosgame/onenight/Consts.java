@@ -8,6 +8,7 @@ public class Consts {
 	public static final int DAY = 3;
 	public static final int AFTERVOTE = 4;
 	public static final int ENDGAME = 5;
+	public static final int ADDITIONALROUND = 6;
 	
 	// sides
 	public static final int HUMAN = 0;
@@ -65,6 +66,10 @@ public class Consts {
 	public static final int GRAVEKEEPER = 47;
 	public static final int CHANGELING = 48;
 	public static final int OLDMAN = 49;
+	public static final int WOLFGODFATHER = 50;
+	public static final int NUN = 51;
+	public static final int LINK = 52;
+	public static final int REDHAT = 53;
 	
 	// marks
 	public static final int UNKNOWN = -1;

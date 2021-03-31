@@ -124,6 +124,16 @@ public class RoleFactory {
 			role = new Changeling();
 		} else if (img.contentEquals("r49")) {
 			role = new OldMan();
+		} else if (img.contentEquals("r50")) {
+			role = new WolfGodFather();
+		} else if (img.contentEquals("r51")) {
+			role = new Nun();
+		} else if (img.contentEquals("r52")) {
+			role = new Link();
+		} else if (img.contentEquals("r53")) {
+			role = new Redhat();
+		} else if (img.contentEquals("r54")) {
+			role = new StutteringJudge();
 		}
 		
 		else {
@@ -246,6 +256,16 @@ public class RoleFactory {
 			role = new Changeling();
 		} else if (num == 49) {
 			role = new OldMan();
+		} else if (num == 50) {
+			role = new WolfGodFather();
+		} else if (num == 51) {
+			role = new Nun();
+		} else if (num == 52) {
+			role = new Link();
+		} else if (num == 53) {
+			role = new Redhat();
+		} else if (num == 54) {
+			role = new StutteringJudge();
 		}
 		
 		else {

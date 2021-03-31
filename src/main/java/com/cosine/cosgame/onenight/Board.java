@@ -145,12 +145,12 @@ public class Board {
 		
 		// TODO: test roles here
 		/*
-		Role r = new OldMan();
+		Role r = new StutteringJudge();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Witch();
+		r = new AlphaWolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -374,10 +374,13 @@ public class Board {
 		}
 		*/
 		if (allVoted()) {
-			status = Consts.AFTERVOTE;
+			int statusBefore = status;
 			countVote();
-			decideWinSide();
-			showAllRoles();
+			if (status == statusBefore) {
+				status = Consts.AFTERVOTE;
+				decideWinSide();
+				showAllRoles();
+			}
 		}
 	}
 	
@@ -388,12 +391,7 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
-			int v = r.voteValue();
-			int x = players.get(i).getVoteIndex();
-			if (x>=0 && x<=players.size()) {
-				Player p = players.get(x);
-				p.getCurrentRole().receiveVote(v);
-			}
+			r.voteHandle();
 		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).getCurrentRole().afterVoteCountHandle();
@@ -416,18 +414,6 @@ public class Board {
 		boolean killedPope = true;
 		boolean hasWerewolf = false;
 		for (i=0;i<players.size();i++) {
-			/*
-			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GUARD) {
-				int x = players.get(i).getVoteIndex();
-				if (x>=0 && x<players.size()) {
-					players.get(x).setNumVotes(0);
-				}
-				
-			}
-			if (players.get(i).getCurrentRole().getRoleNum() == Consts.PRINCE) {
-				players.get(i).setNumVotes(0);
-			}
-			*/
 			if (players.get(i).getCurrentRole().getSide() == Consts.WOLF) {
 				hasWerewolf = true;
 				int x = players.get(i).getVoteIndex();
@@ -767,7 +753,7 @@ public class Board {
 						} else {
 							centerMsg = p.getInitialRole().getNightMsg();
 						}
-					} else if (status == Consts.DAY) {
+					} else if (status == Consts.DAY || status == Consts.ADDITIONALROUND) {
 						if (p.isVoted()) {
 							centerMsg = p.getInitialRole().getVotedMsg();
 						} else {
