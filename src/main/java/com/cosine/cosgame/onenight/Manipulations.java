@@ -8,7 +8,7 @@ public class Manipulations {
 	public static void swapRoles(Player p1, Player p2) {
 		Role r1 = p1.getCurrentRole();
 		Role r2 = p2.getCurrentRole();
-		if (r1.exchangable() && r2.exchangable()) {
+		if (r1.exchangable() && r2.exchangable() && (!p1.hasSentinel()) && (!p2.hasSentinel())) {
 			p2.addRole(r1);
 			p1.addRole(r2);
 		}
@@ -17,17 +17,19 @@ public class Manipulations {
 	public static void swapCenterRole(Player p, Board board, int t) {
 		Role r1 = board.getCurCenterRole(t);
 		Role r2 = p.getCurrentRole();
-		if (r1.exchangable() && r2.exchangable()) {
+		if (r1.exchangable() && r2.exchangable() && (!p.hasSentinel())) {
 			p.addRole(r1);
 			board.addCenterRole(t, r2);
 		}
 	}
 	
 	public static void viewPlayerRole(Player viewer, Player p) {
-		Role r = p.getCurrentRole();
-		r.onView(viewer);
-		int x = r.getRoleNumToShow();
-		viewer.getPlayerMarks().set(p.getIndex(), x);
+		if (!p.hasSentinel()) {
+			Role r = p.getCurrentRole();
+			r.onView(viewer);
+			int x = r.getRoleNumToShow();
+			viewer.getPlayerMarks().set(p.getIndex(), x);
+		}
 	}
 	
 	public static void peekCenterRole(Player viewer, Board board, int t) {
@@ -66,10 +68,13 @@ public class Manipulations {
 	}
 	
 	public static void viewCurrentRole(Player viewer) {
-		Role r = viewer.getCurrentRole();
-		r.onView(viewer);
-		viewer.setUpdatedRole(r);
-		viewer.setShowUpdatedRole(true);
+		if (!viewer.hasSentinel()) {
+			Role r = viewer.getCurrentRole();
+			r.onView(viewer);
+			viewer.setUpdatedRole(r);
+			viewer.setShowUpdatedRole(true);
+		}
+		
 	}
 	
 	public static void viewFinalRole(Player viewer, Board board, int initialRoleNum) {
@@ -83,12 +88,13 @@ public class Manipulations {
 				Role cr = board.getPlayers().get(i).getCurrentRole();
 				cr.onView(viewer);
 				viewer.getPlayerMarks().set(i, cr.getRoleNumToShow());
+				
 			}
 		}
 	}
 	
 	public static void convertRole(Player p, Role r) {
-		if (p.getCurrentRole().exchangable()) {
+		if (p.getCurrentRole().exchangable() && (!p.hasSentinel())) {
 			p.addRole(r);
 			p.setUpdatedRole(r);
 		}

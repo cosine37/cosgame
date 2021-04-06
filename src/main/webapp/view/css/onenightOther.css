@@ -81,6 +81,18 @@ button:disabled{
 	background-size:cover;
 }
 
+.sentinel{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	top: 0px;
+	height: 160px;
+	width: 105px;
+	background:url("/image/Onenight/sentinel.png");
+	background-size:cover;
+	opacity: 0.6;
+}
+
 .beggar{
 	position: absolute;
 	user-select:none;
@@ -170,6 +182,14 @@ button:disabled{
 
 .day{
 	background: url('/image/Onenight/day.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.dusk{
+	background: url('/image/Onenight/dusk.png');
 	-webkit-background-size: cover;
 	-moz-background-size:  cover;
 	-o-background-size: cover;

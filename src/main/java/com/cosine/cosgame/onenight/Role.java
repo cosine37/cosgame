@@ -9,6 +9,8 @@ public class Role {
 	protected int sequence;
 	protected String name;
 	protected String img;
+	protected List<String> duskMsg;
+	protected List<String> confirmedDuskMsg;
 	protected List<String> nightMsg;
 	protected List<String> dayMsg;
 	protected List<String> confirmedMsg;
@@ -19,6 +21,7 @@ public class Role {
 	protected boolean canChooseBoth;
 	protected boolean hasNight;
 	protected boolean mandatory;
+	protected boolean hasDusk;
 	
 	protected Player player;
 	protected Board board;
@@ -28,9 +31,12 @@ public class Role {
 		chooseCenterNum = 0;
 		canChooseBoth = false;
 		hasNight = false;
+		hasDusk = false;
 		mandatory = false;
 		name = "";
 		img = "";
+		duskMsg = new ArrayList<>();
+		confirmedDuskMsg = new ArrayList<>();
 		nightMsg = new ArrayList<>();
 		dayMsg = new ArrayList<>();
 		confirmedMsg = new ArrayList<>();
@@ -38,6 +44,26 @@ public class Role {
 	}
 	
 	public void vision() {
+		
+	}
+	/*
+	public void useDuskSkill(int t1) {
+		
+	}
+	
+	public void useDuskSkill(int t1, int t2) {
+		
+	}
+	
+	public void useDuskSkill(List<Integer> targets) {
+		if (targets.size() == 1) {
+			useDuskSkill(targets.get(0));
+		} else if (targets.size() == 2) {
+			useDuskSkill(targets.get(0), targets.get(1));
+		}
+	}
+	*/
+	public void executeDuskSkill() {
 		
 	}
 	
@@ -223,6 +249,32 @@ public class Role {
 
 	public void setVotedMsg(List<String> votedMsg) {
 		this.votedMsg = votedMsg;
+	}
+	public boolean isHasDusk() {
+		return hasDusk;
+	}
+	public void setHasDusk(boolean hasDusk) {
+		this.hasDusk = hasDusk;
+	}
+	public List<String> getDuskMsg() {
+		if (duskMsg.size() == 0) {
+			duskMsg.add("你的身份是 " + name + "。");
+			duskMsg.add("点击确认结束你的黄昏阶段。");
+		}
+		return duskMsg;
+	}
+	public void setDuskMsg(List<String> duskMsg) {
+		this.duskMsg = duskMsg;
+	}
+	public List<String> getConfirmedDuskMsg() {
+		if (confirmedDuskMsg.size() == 0) {
+			confirmedDuskMsg.add("你的身份是 " + name + "。");
+			confirmedDuskMsg.add("正等待其他玩家确认。");
+		}
+		return confirmedDuskMsg;
+	}
+	public void setConfirmedDuskMsg(List<String> confirmedDuskMsg) {
+		this.confirmedDuskMsg = confirmedDuskMsg;
 	}
 	
 }

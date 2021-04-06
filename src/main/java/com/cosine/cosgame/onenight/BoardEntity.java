@@ -24,6 +24,7 @@ public class BoardEntity {
 	String voted;
 	String detectiveIndex;
 	String detectiveRoleImg;
+	String sentinelIndex;
 	String soleWolf;
 	String firstPlayer;
 	String restrictedIndex;
@@ -277,5 +278,11 @@ public class BoardEntity {
 	}
 	public void setBeggarIndex(String beggarIndex) {
 		this.beggarIndex = beggarIndex;
+	}
+	public String getSentinelIndex() {
+		return sentinelIndex;
+	}
+	public void setSentinelIndex(String sentinelIndex) {
+		this.sentinelIndex = sentinelIndex;
 	}
 }

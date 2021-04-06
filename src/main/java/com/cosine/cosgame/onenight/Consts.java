@@ -9,6 +9,7 @@ public class Consts {
 	public static final int AFTERVOTE = 4;
 	public static final int ENDGAME = 5;
 	public static final int ADDITIONALROUND = 6;
+	public static final int DUSK = 7;
 	
 	// sides
 	public static final int HUMAN = 0;

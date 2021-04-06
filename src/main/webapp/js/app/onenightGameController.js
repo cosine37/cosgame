@@ -96,7 +96,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.clickPlayerRole = function(x){
-			if ($scope.status == "2" && $scope.confirmed == "n"){
+			if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "n" && $scope.hasSkill == "y"){
 				if ($scope.playerSelect[x] == "y"){
 					$scope.playerSelect[x] = "n"
 				} else {
@@ -131,7 +131,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}
 		
 		$scope.clickCenterRole = function(x){
-			if ($scope.status == "2" && $scope.confirmed == "n"){
+			if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "n" && $scope.hasSkill == "y"){
 				if ($scope.centerSelect[x] == "y"){
 					$scope.centerSelect[x] = "n"
 				} else {
@@ -163,16 +163,8 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			updateShowConfirmed()
 		}
 		
-		$scope.canConfirmNight = function(){
-			var ans = true;
-			if ($scope.mandatory == "y"){
-				
-			}
-			return ans;
-		}
-		
 		$scope.confirmNight = function(){
-			if ($scope.status != "2") return
+			if ($scope.status != "2" && $scope.status != "7") return
 			var targets = [];
 			for (i=0;i<$scope.playerSelect.length;i++){
 				if ($scope.playerSelect[i] == "y"){
@@ -451,6 +443,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.winPlayers = response.data.winPlayers
 				$scope.detectiveIndex = parseInt(response.data.detectiveIndex)
 				$scope.detectiveRoleImg = response.data.detectiveRoleImg
+				$scope.sentinelIndex = response.data.sentinelIndex
 				$scope.soleWolf = response.data.soleWolf;
 				$scope.finalRoles = response.data.finalRoles;
 				$scope.firstPlayer = response.data.firstPlayer;
@@ -474,7 +467,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					x = x+1;
 				}
 				$scope.showConfirmed = true;
-				if ($scope.mandatory == 'y'){
+				if ($scope.mandatory == 'y' && $scope.hasSkill == 'y'){
 					$scope.showConfirmed = false;
 				}
 				if ($scope.status == '4') {
@@ -493,15 +486,19 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					}
 					
 					$scope.centerMsg.unshift(morningMsg);
+				} else if ($scope.status == '7'){
+					$scope.centerMsg.unshift("现在是黄昏。")
 				}
 				if ($scope.status == '2'){
 					$scope.bodyClass = "night"
+				} else if ($scope.status == '7'){
+					$scope.bodyClass = "dusk"
 				} else {
 					$scope.bodyClass = "day"
 				}
 				$scope.centerZoneMsg = "中央区域"
 				if ($scope.soleWolf == "y"){
-					$scope.centerZoneMsg = "中央区域  (若你是独狼，会显示该区域一张身份，系统会尽可能保证显示的身份为“人”阵营)"
+					$scope.centerZoneMsg = "中央区域  (若你是独狼，系统会自动显示该区域一张身份，系统会尽可能保证显示的身份为“人”阵营)"
 				}
 				$scope.voteIndex = -1;
 				setRoleStyles();
@@ -513,7 +510,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.getBoard();
 			} else if ($scope.status == "1" && $scope.lord != $scope.username){
 				$scope.getBoard();
-			} else if ($scope.status == "2" && $scope.confirmed == "y"){
+			} else if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "y"){
 				$scope.getBoard();
 			} else if (($scope.status == "3" || $scope.status == "6") && $scope.voted == "y"){
 				$scope.getBoard();

@@ -134,6 +134,8 @@ public class RoleFactory {
 			role = new Redhat();
 		} else if (img.contentEquals("r54")) {
 			role = new StutteringJudge();
+		} else if (img.contentEquals("r55")) {
+			role = new Sentinel();
 		}
 		
 		else {
@@ -266,6 +268,8 @@ public class RoleFactory {
 			role = new Redhat();
 		} else if (num == 54) {
 			role = new StutteringJudge();
+		} else if (num == 55) {
+			role = new Sentinel();
 		}
 		
 		else {

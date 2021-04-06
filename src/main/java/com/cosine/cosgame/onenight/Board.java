@@ -26,6 +26,7 @@ public class Board {
 	boolean tannerWin;
 	int detectiveIndex;
 	int weremeleonIndex;
+	int sentinelIndex;
 	String detectiveRoleImg;
 	boolean soleWolf;
 	int restrictedIndex;
@@ -41,6 +42,7 @@ public class Board {
 		canNight = false;
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
+		sentinelIndex = -1;
 		soleWolf = false;
 		restrictedIndex = -1;
 		firstPlayerIndex = -1;
@@ -94,6 +96,7 @@ public class Board {
 		}
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
+		sentinelIndex = -1;
 		canNight = false;
 		status = Consts.SETUP;
 		winSide = -1;
@@ -144,18 +147,19 @@ public class Board {
 		}
 		
 		// TODO: test roles here
+		Role r;
 		/*
-		Role r = new StutteringJudge();
+		r = new Sentinel();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new AlphaWolf();
+		r = new Urchin();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Monk();
+		r = new Seer();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -170,7 +174,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(4).getRoles().set(0, r);
 		
-		r = new Wolfdog();
+		r = new Sentinel();
 		List<Role> rs = new ArrayList<>();
 		rs.add(r);
 		centerRoles.set(0, rs);
@@ -186,7 +190,42 @@ public class Board {
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
 		*/
+		boolean hasDusk = false;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getInitialRole().isHasDusk()) {
+				hasDusk = true;
+				break;
+			}
+		}
+		for (i=0;i<centerRoles.size();i++) {
+			if (centerRoles.get(i).get(0).isHasDusk()) {
+				hasDusk = true;
+				break;
+			}
+		}
+		if (hasDusk) {
+			earlyDuskHandle();
+		} else {
+			earlyNightHandle();
+		}
 		
+	}
+	
+	public void earlyDuskHandle() {
+		int i;
+		confirmed = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getInitialRole().isHasDusk()) {
+				confirmed.add("n");
+			} else {
+				confirmed.add("y");
+			}
+		}
+		status = Consts.DUSK;	
+	}
+	
+	public void earlyNightHandle() {
+		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).getInitialRole().vision();
 		}
@@ -198,9 +237,7 @@ public class Board {
 				confirmed.add("y");
 			}
 		}
-		status = Consts.NIGHT;
-		
-		
+		status = Consts.NIGHT;	
 	}
 	
 	public Role getCurCenterRole(int x) {
@@ -238,23 +275,34 @@ public class Board {
 				}
 			}
 		}
-		
-		// night skills
-		for (i=0;i<tps.size();i++) {
-			int x = tps.get(i).getInitialRole().getSequence();
-			if (x > 0 && x < Consts.DAWNSPLITER) {
-				tps.get(i).getInitialRole().executeSkill();
+		if (status == Consts.DUSK) {
+			System.out.println("It is dusk now!");
+			for (i=0;i<tps.size();i++) {
+				int x = tps.get(i).getInitialRole().getSequence();
+				if (x < 0) {
+					tps.get(i).getInitialRole().executeDuskSkill();
+				}
 			}
 		}
-		// on dawn skills
-		for (i=0;i<tps.size();i++) {
-			tps.get(i).getInitialRole().onDawnSkill();
-		}
-		// dawn skills
-		for (i=0;i<tps.size();i++) {
-			int x = tps.get(i).getInitialRole().getSequence();
-			if (x > Consts.DAWNSPLITER) {
-				tps.get(i).getInitialRole().executeSkill();
+		
+		if (status == Consts.NIGHT) {
+			// night skills
+			for (i=0;i<tps.size();i++) {
+				int x = tps.get(i).getInitialRole().getSequence();
+				if (x > 0 && x < Consts.DAWNSPLITER) {
+					tps.get(i).getInitialRole().executeSkill();
+				}
+			}
+			// on dawn skills
+			for (i=0;i<tps.size();i++) {
+				tps.get(i).getInitialRole().onDawnSkill();
+			}
+			// dawn skills
+			for (i=0;i<tps.size();i++) {
+				int x = tps.get(i).getInitialRole().getSequence();
+				if (x > Consts.DAWNSPLITER) {
+					tps.get(i).getInitialRole().executeSkill();
+				}
 			}
 		}
 	}
@@ -348,9 +396,14 @@ public class Board {
 			executeAllSkills();
 			clearConfirmed();
 			clearVoted();
-			dayHandle();
-			decideFirstPlayer();
-			status = Consts.DAY;
+			if (status == Consts.NIGHT) {
+				dayHandle();
+				decideFirstPlayer();
+				status = Consts.DAY;
+			} else if (status == Consts.DUSK) {
+				status = Consts.NIGHT;
+			}
+			
 		}
 	}
 	
@@ -622,6 +675,12 @@ public class Board {
 	public void setRestrictedIndex(int restrictedIndex) {
 		this.restrictedIndex = restrictedIndex;
 	}
+	public int getSentinelIndex() {
+		return sentinelIndex;
+	}
+	public void setSentinelIndex(int sentinelIndex) {
+		this.sentinelIndex = sentinelIndex;
+	}
 	public int getWeremeleonIndex() {
 		return weremeleonIndex;
 	}
@@ -740,14 +799,14 @@ public class Board {
 					if (p.getInitialRole().isMandatory()) {
 						mandatory = "y";
 					}
-					if (p.getInitialRole().isHasNight()) {
-						hasSkill = "y";
-					}
 					if (p.isShowUpdatedRole()) {
 						showUpdatedRole = "y";
 						updatedRole = p.getUpdatedRole().getFinalImg();
 					}
 					if (status == Consts.NIGHT) {
+						if (p.getInitialRole().isHasNight()) {
+							hasSkill = "y";
+						}
 						if (p.isConfirmed()) {
 							centerMsg = p.getInitialRole().getConfirmedMsg();
 						} else {
@@ -758,6 +817,15 @@ public class Board {
 							centerMsg = p.getInitialRole().getVotedMsg();
 						} else {
 							centerMsg = p.getInitialRole().getDayMsg();
+						}
+					} else if (status == Consts.DUSK) {
+						if (p.getInitialRole().isHasDusk()) {
+							hasSkill = "y";
+						}
+						if (p.isConfirmed()) {
+							centerMsg = p.getInitialRole().getConfirmedDuskMsg();
+						} else {
+							centerMsg = p.getInitialRole().getDuskMsg();
 						}
 					}
 					if (p.isConfirmed()) {
@@ -861,6 +929,7 @@ public class Board {
 		entity.setFinalRoles(finalRoles);
 		entity.setDetectiveIndex(Integer.toString(detectiveIndex));
 		entity.setDetectiveRoleImg(detectiveRoleImg);
+		entity.setSentinelIndex(Integer.toString(sentinelIndex));
 		entity.setFirstPlayer(firstPlayer);
 		entity.setRestrictedIndex(Integer.toString(restrictedIndex));
 		entity.setRestrictedPlayer(restrictedPlayer);
@@ -879,6 +948,7 @@ public class Board {
 		doc.append("canNight", canNight);
 		doc.append("detectiveIndex", detectiveIndex);
 		doc.append("detectiveRoleImg", detectiveRoleImg);
+		doc.append("sentinelIndex", sentinelIndex);
 		doc.append("soleWolf", soleWolf);
 		doc.append("firstPlayerIndex", firstPlayerIndex);
 		doc.append("restrictedIndex", restrictedIndex);
@@ -919,6 +989,7 @@ public class Board {
 		canNight = doc.getBoolean("canNight", false);
 		detectiveIndex = doc.getInteger("detectiveIndex", -1);
 		detectiveRoleImg = doc.getString("detectiveRoleImg");
+		sentinelIndex = doc.getInteger("sentinelIndex", -1);
 		soleWolf = doc.getBoolean("soleWolf", false);
 		firstPlayerIndex = doc.getInteger("firstPlayerIndex", 0);
 		restrictedIndex = doc.getInteger("restrictedIndex", -1);

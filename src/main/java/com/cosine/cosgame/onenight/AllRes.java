@@ -16,6 +16,10 @@ public class AllRes {
 		allRoles = new ArrayList<>();
 		Role r;
 		int i;
+		/*
+		r = new Sentinel();
+		allRoles.add(r);
+		*/
 		for (i=0;i<2;i++) {
 			r = new Werewolf();
 			allRoles.add(r);
@@ -132,6 +136,7 @@ public class AllRes {
 			r = new Villager();
 			allRoles.add(r);
 		}
+		
 	}
 
 	public List<Role> getAllRoles() {

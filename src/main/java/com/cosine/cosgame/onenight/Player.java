@@ -122,6 +122,10 @@ public class Player {
 		numVotes++;
 	}
 	
+	public boolean hasSentinel() {
+		return (board.getSentinelIndex() == index);
+	}
+	
 	public String getName() {
 		return name;
 	}

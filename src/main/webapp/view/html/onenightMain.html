@@ -121,8 +121,8 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前游戏一共包含46张身份牌。一些是“人”阵营，一些是“狼”阵营。
-								每个身份都有其对应的技能（也有可能没有）。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏由大量身份牌和一些标记组成。身份牌中一些是“人”阵营，一些是“狼”阵营，还有一些为第三方阵营。
+								每个身份都有其对应的技能（没有技能应该也算是一种技能）。
 								</p>
 							</td>
 						</tr>
@@ -217,15 +217,39 @@
 						<tr>
 							<td colspan="2">
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 黎明阶段在夜晚阶段结束后开始。一般情况下，黎明阶段的行动等同于夜晚阶段。
-								在黎明阶段开始前会有一些身份技能的结算，结算顺序按夜晚行动顺序，这些技能结算完毕后立即开始黎明每段的结算。目前黎明阶段暂无拥有交换身份技能的身份。</br>
+								在黎明阶段开始前会有一些身份技能的结算，结算顺序按夜晚行动顺序，这些技能结算完毕后立即开始黎明每段的结算。</br>
 								</p>
 							</td>
 						</tr>
+						<!-- 
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>黄昏阶段</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份的技能效果在黄昏阶段发动。黄昏阶段在夜晚阶段之前。几乎所有的黄昏阶段的技能效果是施加状态。</br>
+								</p>
+							</td>
+						</tr>
+						 -->
 					</table>
 				</div>
 				<div id="rolestab" class="content container tab-pane fade">
 					<h2><b>身份介绍</b></h2>
 					<table>
+						<!-- 
+						<tr>
+							<td colspan="2">
+								以下身份黄昏阶段有行动，按行动顺序排列
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2">
+								<button ng-click="showedCard='r55'" ng-disabled="showedCard == 'r55'">魔法警卫</button>
+							</td>
+						</tr>
+						 -->
 						<tr>
 							<td colspan="2">
 								以下身份夜晚阶段有行动，按行动顺序排列
@@ -314,6 +338,19 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r55'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 魔法警卫</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以指定一名其他玩家，该玩家获得“魔法守护”标记。该标记为公开信息且在黄昏阶段结束后对所有玩家可见。
+								拥有“魔法守护”标记的玩家在黄昏阶段结束后至天亮前其身份牌不能被查看、交换或改变。</br>
+							</td>
+						</tr>
+					</table>
+					
 					<table ng-show="showedCard == 'r01'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
