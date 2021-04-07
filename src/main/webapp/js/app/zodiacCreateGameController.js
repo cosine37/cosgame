@@ -27,6 +27,13 @@ app.controller("zodiacCreateGameCtrl", ['$scope', '$window', '$http', '$document
 			});
 		}
 		
+		$scope.addBot = function(){
+			$http({url: "/zodiac/addbot", method: "POST"}).then(function(response){
+				$scope.getBoard();
+			});
+			
+		}
+		
 		$scope.start = function(){
 			$http({url: "/zodiac/startgame", method: "POST"}).then(function(response){
 				$scope.goto('zodiacgame');
@@ -34,6 +41,19 @@ app.controller("zodiacCreateGameCtrl", ['$scope', '$window', '$http', '$document
 			
 		}
 		
+		$scope.getBoard = function(){
+			$http.get('/zodiacgame/getboard').then(function(response){
+				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				$scope.playerNames = response.data.players
+				$scope.lord = response.data.lord
+				if ($scope.status != "0"){
+					$scope.goto('zodiacgame')
+				}
+			});
+		}
+		
+		$scope.getBoard()
 		
 		/*
 		$scope.start = function(){

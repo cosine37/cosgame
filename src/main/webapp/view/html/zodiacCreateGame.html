@@ -31,17 +31,17 @@ body {
 				</td>
 			</tr>
 			<tr>
-				<td><h4>玩家列表</h4></td>
-			</tr>
-			<tr ng-repeat="pn in playerNames track by $index">
-				<td>{{pn}}</td>
-			</tr>
-			<tr>
 				<td>
 					<button ng-click="goto('zodiac')">退出</button>
 					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
 					<button ng-click="start()" ng-show="username == lord">开始</button>
 				</td>
+			</tr>
+			<tr>
+				<td><h4>玩家列表</h4></td>
+			</tr>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>{{pn}}</td>
 			</tr>
 			
 		</table>

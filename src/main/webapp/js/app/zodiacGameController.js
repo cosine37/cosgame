@@ -27,4 +27,15 @@ app.controller("zodiacGameCtrl", ['$scope', '$window', '$http', '$document', '$t
 			});
 		}
 		
+		$scope.getBoard = function(){
+			$http.get('/zodiacgame/getboard').then(function(response){
+				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				$scope.playerNames = response.data.players
+				$scope.lord = response.data.lord
+			});
+		}
+		
+		$scope.getBoard()
+		
 }]);

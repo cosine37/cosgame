@@ -7,6 +7,7 @@ public class BoardEntity {
 	List<String> zodiacs;
 	List<String> zodiacImages;
 	
+	String id;
 	String status;
 	String phase;
 	String round;
@@ -53,5 +54,11 @@ public class BoardEntity {
 	}
 	public void setLord(String lord) {
 		this.lord = lord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 }

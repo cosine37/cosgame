@@ -48,6 +48,20 @@ public class ZodiacController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/zodiac/addbot", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addBot(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.addBot();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/zodiac/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
 		StringEntity entity = new StringEntity();
@@ -56,9 +70,11 @@ public class ZodiacController {
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
 			board.startGame();
 			board.updateBasicDB();
 			board.updatePlayers();
+			board.updateZodiacs();
 		} else {
 			board.setId("NE");
 		}

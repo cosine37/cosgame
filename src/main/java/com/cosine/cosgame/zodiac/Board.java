@@ -40,6 +40,7 @@ public class Board {
 	}
 	
 	public void setZodiacQualities() {
+		zodiacs = AllRes.genZodiacs();
 		int i;
 		List<Boolean> bs = new ArrayList<>();
 		for (i=0;i<6;i++) {
@@ -142,6 +143,8 @@ public class Board {
 			setZodiacQualities();
 			randomizeZodiacs();
 			distributeRoles();
+			status = Consts.INGAME;
+			newRound();
 		}
 	}
 	
@@ -212,6 +215,7 @@ public class Board {
 	public BoardEntity toBoardEntity(String username) {
 		BoardEntity entity = new BoardEntity();
 		
+		entity.setId(id);
 		entity.setLord(lord);
 		entity.setPhase(Integer.toString(phase));
 		entity.setStatus(Integer.toString(status));
@@ -225,10 +229,13 @@ public class Board {
 		entity.setPlayers(playerNames);
 		List<String> zodiacNames = new ArrayList<>();
 		List<String> zodiacImages = new ArrayList<>();
-		for (i=0;i<round*4;i++) {
-			zodiacNames.add(zodiacs.get(i).getName());
-			zodiacImages.add(zodiacs.get(i).getImg());
+		if (status == Consts.INGAME) {
+			for (i=0;i<round*4;i++) {
+				zodiacNames.add(zodiacs.get(i).getName());
+				zodiacImages.add(zodiacs.get(i).getImg());
+			}
 		}
+		
 		entity.setZodiacs(zodiacNames);
 		entity.setZodiacImages(zodiacImages);
 		
@@ -244,13 +251,11 @@ public class Board {
 		doc.append("flipped", flipped);
 		int i;
 		List<String> playerNames = new ArrayList<>();
-		List<Document> playerDocs = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
-			playerNames.add("player-" + players.get(i).getName());
-			playerDocs.add(players.get(i).toDocument());
+			playerNames.add(players.get(i).getName());
+			doc.append("player-" + players.get(i).getName(), players.get(i).toDocument());
 		}
 		doc.append("playerNames", playerNames);
-		doc.append("players", playerDocs);
 		List<Document> zodiacDocs = new ArrayList<>();
 		for (i=0;i<zodiacs.size();i++) {
 			zodiacDocs.add(zodiacs.get(i).toDocument());
@@ -267,13 +272,17 @@ public class Board {
 		status = doc.getInteger("status", -1);
 		flipped = doc.getBoolean("flipped", false);
 		int i;
-		List<Document> playerDocs = (List<Document>) doc.get("players");
+		
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		
 		players = new ArrayList<>();
-		for (i=0;i<playerDocs.size();i++) {
+		for (i=0;i<playerNames.size();i++) {
 			Player p = new Player();
+			Document playerDoc = (Document) doc.get("player-" + playerNames.get(i));
 			p.setBoard(this);
-			p.setFromDoc(playerDocs.get(i));
+			p.setFromDoc(playerDoc);
 			p.setIndex(i);
+			players.add(p);
 		}
 		List<Document> zodiacDocs = (List<Document>) doc.get("zodiacs");
 		zodiacs = new ArrayList<>();
@@ -281,6 +290,7 @@ public class Board {
 			Zodiac z = new Zodiac();
 			z.setBoard(this);
 			z.setFromDoc(zodiacDocs.get(i));
+			zodiacs.add(z);
 		}
 	}
 	
@@ -322,10 +332,26 @@ public class Board {
 		}
 	}
 	
+	public void updateZodiacs() {
+		List<Document> zodiacDocs = new ArrayList<>();
+		for (int i=0;i<zodiacs.size();i++) {
+			zodiacDocs.add(zodiacs.get(i).toDocument());
+		}
+		dbutil.update("id", id, "zodiacs", zodiacDocs);
+	}
+	
 	public void updateBasicDB() {
 		dbutil.update("id", id, "status", status);
 		dbutil.update("id", id, "round", round);
 		dbutil.update("id", id, "phase", phase);
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
 	}
 	
 	public void addPlayer(String name) {
@@ -333,6 +359,15 @@ public class Board {
 		p.setName(name);
 		p.setDisplayName(name);
 		players.add(p);
+	}
+	public void addBot() {
+		String botName = "P" + Integer.toString(players.size());
+		Player bot = new Player();
+		bot.setName(botName);
+		bot.setDisplayName(botName);
+		bot.setBot(true);
+		players.add(bot);
+		addPlayerToDB(botName);
 	}
 	
 	public boolean exists(String id) {

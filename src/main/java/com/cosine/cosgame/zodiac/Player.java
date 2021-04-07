@@ -20,6 +20,7 @@ public class Player {
 	List<Integer> zodiacTargets;
 	List<Integer> playerTargets;
 	boolean disabled;
+	boolean bot;
 	
 	public Player() {
 		votes = 0;
@@ -30,6 +31,7 @@ public class Player {
 		zodiacTargets = new ArrayList<>();
 		playerTargets = new ArrayList<>();
 		role = new Role();
+		bot = false;
 	}
 	
 	public void initialize() {
@@ -146,6 +148,12 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public boolean isBot() {
+		return bot;
+	}
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -160,6 +168,7 @@ public class Player {
 		doc.append("zodiacTargets", zodiacTargets);
 		doc.append("playerTargets", playerTargets);
 		doc.append("disabled", disabled);
+		doc.append("bot", bot);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -177,5 +186,6 @@ public class Player {
 		zodiacTargets = (List<Integer>) doc.get("zodiacTargets");
 		playerTargets = (List<Integer>) doc.get("playerTargets");
 		disabled = doc.getBoolean("disabled", false);
+		bot = doc.getBoolean("bot", false);
 	}
 }
