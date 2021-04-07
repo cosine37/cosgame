@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.zodiac.Board;
 import com.cosine.cosgame.zodiac.BoardEntity;
+import com.cosine.cosgame.zodiac.ZodiacMeta;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -32,6 +33,38 @@ public class ZodiacController {
 	@RequestMapping(value="/zodiacgame", method = RequestMethod.GET)
 	public String zodiacGame() {
 		return "zodiacGame";
+	}
+	
+	@RequestMapping(value="/zodiac/allboards", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
+		ZodiacMeta meta = new ZodiacMeta();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/zodiac/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/zodiac/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) == null) {
+			board.addPlayer(username);
+			board.addPlayerToDB(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/zodiac/newboard", method = RequestMethod.POST)
