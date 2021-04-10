@@ -18,10 +18,12 @@ public class Role {
 	
 	protected int choosePlayerNum;
 	protected int chooseCenterNum;
+	protected int chooseStatusNum;
 	protected boolean canChooseBoth;
 	protected boolean hasNight;
 	protected boolean mandatory;
 	protected boolean hasDusk;
+	protected boolean useStatus;
 	
 	protected Player player;
 	protected Board board;
@@ -29,9 +31,11 @@ public class Role {
 	public Role() {
 		choosePlayerNum = 0;
 		chooseCenterNum = 0;
+		chooseStatusNum = 0;
 		canChooseBoth = false;
 		hasNight = false;
 		hasDusk = false;
+		useStatus = false;
 		mandatory = false;
 		name = "";
 		img = "";
@@ -46,23 +50,7 @@ public class Role {
 	public void vision() {
 		
 	}
-	/*
-	public void useDuskSkill(int t1) {
-		
-	}
 	
-	public void useDuskSkill(int t1, int t2) {
-		
-	}
-	
-	public void useDuskSkill(List<Integer> targets) {
-		if (targets.size() == 1) {
-			useDuskSkill(targets.get(0));
-		} else if (targets.size() == 2) {
-			useDuskSkill(targets.get(0), targets.get(1));
-		}
-	}
-	*/
 	public void executeDuskSkill() {
 		
 	}
@@ -256,6 +244,19 @@ public class Role {
 	public void setHasDusk(boolean hasDusk) {
 		this.hasDusk = hasDusk;
 	}
+	public int getChooseStatusNum() {
+		return chooseStatusNum;
+	}
+	public void setChooseStatusNum(int chooseStatusNum) {
+		this.chooseStatusNum = chooseStatusNum;
+	}
+	public boolean isUseStatus() {
+		return useStatus;
+	}
+	public void setUseStatus(boolean useStatus) {
+		this.useStatus = useStatus;
+	}
+
 	public List<String> getDuskMsg() {
 		if (duskMsg.size() == 0) {
 			duskMsg.add("你的身份是 " + name + "。");

@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.onenight.statuses.NoStatus;
+
 public class Player {
 	String name;
 	String displayName;
 	List<Role> roles; // the change of roles over time
+	List<Status> statuses;  // the change of statuses over time
 	int numVotes; // number of votes this player receives
 	int voteIndex; // who this player votes	
 	int score;
@@ -18,23 +21,32 @@ public class Player {
 	boolean votedOut;
 	boolean bot;
 	Role updatedRole; // the updated role the user see
+	Status updatedStatus;
+	Status finalStatus;
+	boolean showFinalStatus;
 	boolean showUpdatedRole;
 	boolean confirmed;
 	
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
+	List<Integer> statusMarks;
 	
 	Board board;
 	
 	public Player() {
 		roles = new ArrayList<>();
+		statuses = new ArrayList<>();
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
+		statusMarks = new ArrayList<>();
 		voted = false;
 		votedOut = false;
 		bot = false;
 		updatedRole = new Role();
+		updatedStatus = new Status();
+		finalStatus = new Status();
 		showUpdatedRole = false;
+		showFinalStatus = false;
 		confirmed = false;
 		beggarIndex = -1;
 	}
@@ -79,12 +91,23 @@ public class Player {
 		}
 	}
 	
+	public Status getCurrentStatus() {
+		if (statuses.size() > 0) {
+			int x = statuses.size() - 1;
+			return statuses.get(x);
+		} else {
+			return null;
+		}
+	}
+	
 	public void initializeMarks(int n) {
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
+		statusMarks = new ArrayList<>();
 		int i;
 		for (i=0;i<n;i++) {
 			playerMarks.add(-1);
+			statusMarks.add(-1);
 		}
 		for (i=0;i<3;i++) {
 			centerMarks.add(-1);
@@ -102,8 +125,14 @@ public class Player {
 			int x = board.getCurCenterRole(i).getRoleNum();
 			centerMarks.set(i, x);
 		}
+		for (i=0;i<statusMarks.size();i++) {
+			int x = board.getPlayers().get(i).getCurrentStatus().getNum();
+			statusMarks.set(i, x);
+		}
 		updatedRole = getCurrentRole();
+		finalStatus = getCurrentStatus();
 		showUpdatedRole = true;
+		showFinalStatus = true;
 	}
 	
 	public void addRole(Role role) {
@@ -112,6 +141,15 @@ public class Player {
 	
 	public void clearRole() {
 		roles = new ArrayList<>();
+	}
+	
+	public void addStatus(Status status) {
+		statuses.add(status);
+	}
+	
+	public void clearStatus() {
+		statuses = new ArrayList<>();
+		Manipulations.convertStatus(this, new NoStatus());
 	}
 	
 	public void receiveVote(int x) {
@@ -232,6 +270,36 @@ public class Player {
 	public void setBeggarIndex(int beggarIndex) {
 		this.beggarIndex = beggarIndex;
 	}
+	public Status getUpdatedStatus() {
+		return updatedStatus;
+	}
+	public void setUpdatedStatus(Status updatedStatus) {
+		this.updatedStatus = updatedStatus;
+	}
+	public List<Integer> getStatusMarks() {
+		return statusMarks;
+	}
+	public void setStatusMarks(List<Integer> statusMarks) {
+		this.statusMarks = statusMarks;
+	}
+	public List<Status> getStatuses() {
+		return statuses;
+	}
+	public void setStatuses(List<Status> statuses) {
+		this.statuses = statuses;
+	}
+	public Status getFinalStatus() {
+		return finalStatus;
+	}
+	public void setFinalStatus(Status finalStatus) {
+		this.finalStatus = finalStatus;
+	}
+	public boolean isShowFinalStatus() {
+		return showFinalStatus;
+	}
+	public void setShowFinalStatus(boolean showFinalStatus) {
+		this.showFinalStatus = showFinalStatus;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -242,9 +310,13 @@ public class Player {
 		doc.append("score", score);
 		doc.append("playerMarks", playerMarks);
 		doc.append("centerMarks", centerMarks);
+		doc.append("statusMarks", statusMarks);
 		doc.append("bot", bot);
 		doc.append("showUpdatedRole", showUpdatedRole);
+		doc.append("showFinalStatus", showFinalStatus);
 		doc.append("updatedRole", updatedRole.getDBStorageImg());
+		doc.append("updatedStatus", updatedStatus.getNum());
+		doc.append("finalStatus", finalStatus.getNum());
 		doc.append("confirmed", confirmed);
 		doc.append("voted", voted);
 		doc.append("votedOut", votedOut);
@@ -255,6 +327,11 @@ public class Player {
 			lor.add(roles.get(i).getDBStorageImg());
 		}
 		doc.append("roles", lor);
+		List<Integer> los = new ArrayList<>();
+		for (i=0;i<statuses.size();i++) {
+			los.add(statuses.get(i).getNum());
+		}
+		doc.append("statuses", los);
 		return doc;
 	}
 	
@@ -266,11 +343,19 @@ public class Player {
 		score = doc.getInteger("score", 0);
 		playerMarks = (List<Integer>) doc.get("playerMarks");
 		centerMarks = (List<Integer>) doc.get("centerMarks");
+		statusMarks = (List<Integer>) doc.get("statusMarks");
 		bot = doc.getBoolean("bot", false);
 		showUpdatedRole = doc.getBoolean("showUpdatedRole", false);
+		showFinalStatus = doc.getBoolean("showFinalStatus", false);
 		updatedRole = RoleFactory.createRole(doc.getString("updatedRole"));
 		updatedRole.setBoard(board);
 		updatedRole.setPlayer(this);
+		updatedStatus = StatusFactory.createStatus(doc.getInteger("updatedStatus", Consts.UNKNOWN));
+		updatedStatus.setBoard(board);
+		updatedStatus.setPlayer(this);
+		finalStatus = StatusFactory.createStatus(doc.getInteger("finalStatus", Consts.UNKNOWN));
+		finalStatus.setBoard(board);
+		finalStatus.setPlayer(this);
 		confirmed = doc.getBoolean("confirmed", false);
 		voted = doc.getBoolean("voted", false);
 		votedOut = doc.getBoolean("votedOut", false);
@@ -283,6 +368,14 @@ public class Player {
 			r.setPlayer(this);
 			r.setBoard(board);
 			roles.add(r);
+		}
+		List<Integer> los = (List<Integer>) doc.get("statuses");
+		statuses = new ArrayList<>();
+		for (i=0;i<los.size();i++) {
+			Status s = StatusFactory.createStatus(los.get(i));
+			s.setPlayer(this);
+			s.setBoard(board);
+			statuses.add(s);
 		}
 	}
 

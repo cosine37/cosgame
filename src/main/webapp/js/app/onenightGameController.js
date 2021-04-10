@@ -11,10 +11,14 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.indexes = [];
 		$scope.playerRoleStyles = [];
 		$scope.centerRoleStyles = [];
+		$scope.playerStatusStyles = [];
 		$scope.playerSelect = [];
 		$scope.centerSelect = [];
+		$scope.statusSelect = [];
 		$scope.myRoleStyle = {};
 		$scope.updatedRoleStyle = {};
+		$scope.updatedStatusStyle = {};
+		$scope.finalStatusStyle = {};
 		$scope.roleChooseStyles = [];
 		$scope.rolesThisGameStyles = [];
 		$scope.status = "0";
@@ -88,12 +92,53 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 			}
 			
-			if (tp == $scope.choosePlayerNum && tc == $scope.chooseCenterNum){
+			var ts = 0;
+			for (i=0;i<$scope.statusSelect.length;i++){
+				if ($scope.statusSelect[i] == "y"){
+					ts++;
+				}
+			}
+			
+			if (tp == $scope.choosePlayerNum && tc == $scope.chooseCenterNum && ts == $scope.chooseStatusNum){
 				$scope.showConfirmed = true;
 			} else {
 				$scope.showConfirmed = false;
 			}
 		}
+		
+		$scope.clickPlayerStatus = function(x){
+			if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "n" && $scope.hasSkill == "y"){
+				if ($scope.statusSelect[x] == "y"){
+					$scope.statusSelect[x] = "n"
+				} else {
+					if ($scope.canChooseBoth == "n"){
+						for (i=0;i<$scope.playerSelect.length;i++){
+							$scope.playerSelect[i] = "n"
+						}
+					}
+					var t = 0;
+					for (i=0;i<$scope.statusSelect.length;i++){
+						if ($scope.statusSelect[i] == "y"){
+							t++;
+						}
+					}
+					if (t < $scope.chooseStatusNum){
+						$scope.statusSelect[x] = "y";
+					} else {
+						if ($scope.chooseStatusNum == 1){
+							for (i=0;i<$scope.statusSelect.length;i++){
+								$scope.statusSelect[i] = "n"
+							}
+							$scope.statusSelect[x] = "y";
+						} else {
+							
+						}
+					}
+				}
+			}
+			updateShowConfirmed()
+		}
+		
 		
 		$scope.clickPlayerRole = function(x){
 			if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "n" && $scope.hasSkill == "y"){
@@ -103,6 +148,9 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 					if ($scope.canChooseBoth == "n"){
 						for (i=0;i<$scope.centerSelect.length;i++){
 							$scope.centerSelect[i] = "n"
+						}
+						for (i=0;i<$scope.statusSelect.length;i++){
+							$scope.statusSelect[i] = "n"
 						}
 					}
 					var t = 0;
@@ -174,6 +222,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			for (i=0;i<$scope.centerSelect.length;i++){
 				if ($scope.centerSelect[i] == "y"){
 					targets.push(i+100)
+				}
+			}
+			for (i=0;i<$scope.statusSelect.length;i++){
+				if ($scope.statusSelect[i] == "y"){
+					targets.push(i+200)
 				}
 			}
 			var data = {"targets" : targets}
@@ -274,6 +327,31 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.unshowBigImage = function(){
 			$scope.showBigImage = false
+		}
+		
+		setStatusStyles = function(){
+			var imgUrl;
+			$scope.playerStatusStyles = [];
+			$scope.statusSelect = [];
+			for (i=0;i<$scope.statusMarks.length;i++){
+				$scope.statusSelect.push("n");
+				imgUrl = "url('/image/Onenight/Statuses/" + $scope.statusMarks[i] + ".png')"
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				$scope.playerStatusStyles.push(singleStyle)
+			}
+			imgUrl = "url('/image/Onenight/Statuses/" + $scope.updatedStatus + ".png')"
+			$scope.updatedStatusStyle = {
+				"background": imgUrl,
+				"background-size": "cover"
+			}
+			imgUrl = "url('/image/Onenight/Statuses/" + $scope.finalStatus + ".png')"
+			$scope.finalStatusStyle = {
+				"background": imgUrl,
+				"background-size": "cover"
+			}
 		}
 		
 		setRoleStyles = function(){
@@ -419,8 +497,10 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.playerDisplayNames = response.data.playerDisplayNames;
 				$scope.playerMarks = response.data.playerMarks;
 				$scope.centerMarks = response.data.centerMarks;
+				$scope.statusMarks = response.data.statusMarks;
 				$scope.choosePlayerNum = parseInt(response.data.choosePlayerNum)
 				$scope.chooseCenterNum = parseInt(response.data.chooseCenterNum)
+				$scope.chooseStatusNum = parseInt(response.data.chooseStatusNum)
 				$scope.canChooseBoth = response.data.canChooseBoth
 				$scope.lord = response.data.lord;
 				$scope.status = response.data.status
@@ -450,6 +530,12 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.restrictedPlayer = response.data.restrictedPlayer;
 				$scope.restrictedIndex = response.data.restrictedIndex;
 				$scope.beggarIndex = response.data.beggarIndex;
+				$scope.useStatus = response.data.useStatus;
+				$scope.updatedStatus = response.data.updatedStatus;
+				$scope.finalStatus = response.data.finalStatus;
+				$scope.showFinalStatus = response.data.showFinalStatus;
+				
+				//alert($scope.useStatus);
 				if ($scope.canNight == "n" || $scope.rolesSelect.length == 0){
 					$scope.rolesSelect = [];
 					for (i=0;i<$scope.rolesChoose.length;i++){
@@ -502,6 +588,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 				$scope.voteIndex = -1;
 				setRoleStyles();
+				setStatusStyles();
 			});
 		}
 		

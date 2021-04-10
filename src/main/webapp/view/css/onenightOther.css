@@ -48,6 +48,19 @@ button:disabled{
 	background-size:cover;
 }
 
+.target-usestatus{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 75%;
+	margin-left: -35px;
+	margin-top: -40px;
+	height: 70px;
+	width: 70px;
+	background:url("/image/Onenight/target.png");
+	background-size:cover;
+}
+
 .exchange{
 	position: absolute;
 	user-select:none;
@@ -114,6 +127,27 @@ button:disabled{
 	background:url("/image/Onenight/wolf.png");
 	background-size:cover;
 	filter:brightness(120%) drop-shadow(0px 0px 10px red);
+}
+
+.status{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	bottom: 75px;
+	height: 22px;
+	width: 105px;
+}
+
+.status-select{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	bottom: 75px;
+	height: 22px;
+	width: 105px;
+	background-color: yellow;
+	background-size:cover;
+	filter:opacity(50%);
 }
 
 .vote{

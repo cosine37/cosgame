@@ -100,6 +100,12 @@ public class Manipulations {
 		}
 	}
 	
+	public static void convertStatus(Player p, Status s) {
+		s.setPlayer(p);
+		s.setBoard(p.getBoard());
+		p.addStatus(s);
+	}
+	
 	static boolean isSoleWolf(Player player, Board board) {
 		if (board.isSoleWolf()) {
 			int i;

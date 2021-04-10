@@ -17,9 +17,17 @@ public class AllRes {
 		Role r;
 		int i;
 		/*
+		r = new Cupid();
+		allRoles.add(r);
+		
+		r = new Priest();
+		allRoles.add(r);
+		
+		
 		r = new Sentinel();
 		allRoles.add(r);
 		*/
+		
 		for (i=0;i<2;i++) {
 			r = new Werewolf();
 			allRoles.add(r);

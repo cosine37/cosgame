@@ -14,12 +14,16 @@ public class BoardEntity {
 	String initialRoleName;
 	String choosePlayerNum;
 	String chooseCenterNum;
+	String chooseStatusNum;
 	String canChooseBoth;
 	String myIndex;
 	String mandatory;
 	String hasSkill;
 	String updatedRole;
 	String showUpdatedRole;
+	String updatedStatus;
+	String showFinalStatus;
+	String finalStatus;
 	String confirmed;
 	String voted;
 	String detectiveIndex;
@@ -30,11 +34,13 @@ public class BoardEntity {
 	String restrictedIndex;
 	String restrictedPlayer;
 	String beggarIndex;
+	String useStatus;
 	
 	List<String> playerNames;
 	List<String> playerDisplayNames;
 	List<String> playerMarks;
 	List<String> centerMarks;
+	List<String> statusMarks;
 	List<String> rolesThisGame;
 	List<String> centerMsg;
 	List<String> rolesChoose;
@@ -285,4 +291,41 @@ public class BoardEntity {
 	public void setSentinelIndex(String sentinelIndex) {
 		this.sentinelIndex = sentinelIndex;
 	}
+	public String getUseStatus() {
+		return useStatus;
+	}
+	public void setUseStatus(String useStatus) {
+		this.useStatus = useStatus;
+	}
+	public List<String> getStatusMarks() {
+		return statusMarks;
+	}
+	public void setStatusMarks(List<String> statusMarks) {
+		this.statusMarks = statusMarks;
+	}
+	public String getUpdatedStatus() {
+		return updatedStatus;
+	}
+	public void setUpdatedStatus(String updatedStatus) {
+		this.updatedStatus = updatedStatus;
+	}
+	public String getShowFinalStatus() {
+		return showFinalStatus;
+	}
+	public void setShowFinalStatus(String showFinalStatus) {
+		this.showFinalStatus = showFinalStatus;
+	}
+	public String getFinalStatus() {
+		return finalStatus;
+	}
+	public void setFinalStatus(String finalStatus) {
+		this.finalStatus = finalStatus;
+	}
+	public String getChooseStatusNum() {
+		return chooseStatusNum;
+	}
+	public void setChooseStatusNum(String chooseStatusNum) {
+		this.chooseStatusNum = chooseStatusNum;
+	}
+	
 }

@@ -8,6 +8,8 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.onenight.roles.*;
+import com.cosine.cosgame.onenight.statuses.NoStatus;
+import com.cosine.cosgame.onenight.statuses.Unknown;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -90,7 +92,9 @@ public class Board {
 		for (i=0;i<n;i++) {
 			players.get(i).initializeMarks(n);
 			players.get(i).setShowUpdatedRole(false);
+			players.get(i).setShowFinalStatus(false);
 			players.get(i).clearRole();
+			players.get(i).clearStatus();
 			players.get(i).setVotedOut(false);
 			players.get(i).setNumVotes(0);
 		}
@@ -149,12 +153,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Sentinel();
+		r = new Cupid();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Urchin();
+		r = new Priest();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -215,6 +219,7 @@ public class Board {
 		int i;
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
+			players.get(i).setUpdatedStatus(new Unknown());
 			if (players.get(i).getInitialRole().isHasDusk()) {
 				confirmed.add("n");
 			} else {
@@ -227,7 +232,9 @@ public class Board {
 	public void earlyNightHandle() {
 		int i;
 		for (i=0;i<players.size();i++) {
+			players.get(i).setUpdatedStatus(players.get(i).getCurrentStatus());
 			players.get(i).getInitialRole().vision();
+			players.get(i).getCurrentStatus().vision();
 		}
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -276,7 +283,6 @@ public class Board {
 			}
 		}
 		if (status == Consts.DUSK) {
-			System.out.println("It is dusk now!");
 			for (i=0;i<tps.size();i++) {
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x < 0) {
@@ -401,7 +407,8 @@ public class Board {
 				decideFirstPlayer();
 				status = Consts.DAY;
 			} else if (status == Consts.DUSK) {
-				status = Consts.NIGHT;
+				earlyNightHandle();
+				//status = Consts.NIGHT;
 			}
 			
 		}
@@ -497,8 +504,10 @@ public class Board {
 		boolean votedSomeone = false;
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
+			Status s = players.get(i).getCurrentStatus();
 			if (players.get(i).getNumVotes() == mostVote) {
 				players.get(i).setVotedOut(true);
+				s.votedOutHandle();
 				if (r.getRoleNum() == Consts.HUNTER) {
 					int x = players.get(i).getVoteIndex();
 					if (x>=0 && x<players.size()) {
@@ -747,6 +756,7 @@ public class Board {
 		String lastSeenRole = "-1";
 		String choosePlayerNum = "0";
 		String chooseCenterNum = "0";
+		String chooseStatusNum = "0";
 		String myIndex = "-1";
 		String canChooseBoth = "n";
 		String mandatory = "n";
@@ -756,9 +766,13 @@ public class Board {
 		String confirmed = "n";
 		String voted = "n";
 		String beggarIndex = "-1";
+		String updatedStatus = "";
+		String finalStatus = "";
+		String showFinalStatus = "n";
 		List<String> centerMsg = new ArrayList<>();
 		List<String> playerMarks = new ArrayList<>();
 		List<String> centerMarks = new ArrayList<>();
+		List<String> statusMarks = new ArrayList<>();
 		List<String> playerNames = new ArrayList<>();
 		List<String> playerDisplayNames = new ArrayList<>();
 		List<String> numVotes = new ArrayList<>();
@@ -793,6 +807,7 @@ public class Board {
 					initialRoleName = p.getInitialRole().getName();
 					choosePlayerNum = Integer.toString(p.getInitialRole().getChoosePlayerNum());
 					chooseCenterNum = Integer.toString(p.getInitialRole().getChooseCenterNum());
+					chooseStatusNum = Integer.toString(p.getInitialRole().getChooseStatusNum());
 					if (p.getInitialRole().isCanChooseBoth()) {
 						canChooseBoth = "y";
 					}
@@ -861,13 +876,38 @@ public class Board {
 					}
 					centerMarks.add(s);
 				}
+				for (j=0;j<p.getStatusMarks().size();j++) {
+					int x = p.getStatusMarks().get(j);
+					String s = StatusFactory.createStatus(x).getImg();
+					statusMarks.add(s);
+				}
+				updatedStatus = p.getUpdatedStatus().getImg();
+				if (p.isShowFinalStatus()) {
+					showFinalStatus = "y";
+					finalStatus = p.getFinalStatus().getImg();	
+				} else {
+					showFinalStatus = "n";
+				}
+					
 			}
 		}
 		
+		boolean useStatus = false;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
 			lor.add(rolesThisGame.get(i).getImg());
+			if (rolesThisGame.get(i).isUseStatus()) {
+				useStatus = true;
+			}
 		}
+		
+		if (useStatus) {
+			entity.setUseStatus("y");
+		} else {
+			entity.setUseStatus("n");
+		}
+		
+		
 		if (canNight) {
 			entity.setCanNight("y");
 		} else {
@@ -908,15 +948,20 @@ public class Board {
 		entity.setLastSeenRole(lastSeenRole);
 		entity.setPlayerMarks(playerMarks);
 		entity.setCenterMarks(centerMarks);
+		entity.setStatusMarks(statusMarks);
 		entity.setRolesThisGame(lor);
 		entity.setChooseCenterNum(chooseCenterNum);
 		entity.setChoosePlayerNum(choosePlayerNum);
+		entity.setChooseStatusNum(chooseStatusNum);
 		entity.setMyIndex(myIndex);
 		entity.setCanChooseBoth(canChooseBoth);
 		entity.setMandatory(mandatory);
 		entity.setHasSkill(hasSkill);
 		entity.setUpdatedRole(updatedRole);
 		entity.setShowUpdatedRole(showUpdatedRole);
+		entity.setUpdatedStatus(updatedStatus);
+		entity.setShowFinalStatus(showFinalStatus);
+		entity.setFinalStatus(finalStatus);
 		entity.setCenterMsg(centerMsg);
 		entity.setConfirmed(confirmed);
 		entity.setVoted(voted);

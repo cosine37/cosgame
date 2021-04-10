@@ -136,6 +136,10 @@ public class RoleFactory {
 			role = new StutteringJudge();
 		} else if (img.contentEquals("r55")) {
 			role = new Sentinel();
+		} else if (img.contentEquals("r56")) {
+			role = new Cupid();
+		} else if (img.contentEquals("r57")) {
+			role = new Priest();
 		}
 		
 		else {
@@ -270,6 +274,10 @@ public class RoleFactory {
 			role = new StutteringJudge();
 		} else if (num == 55) {
 			role = new Sentinel();
+		} else if (num == 56) {
+			role = new Cupid();
+		} else if (num == 57) {
+			role = new Priest();
 		}
 		
 		else {

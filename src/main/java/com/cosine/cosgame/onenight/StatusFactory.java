@@ -1,0 +1,18 @@
+package com.cosine.cosgame.onenight;
+
+import com.cosine.cosgame.onenight.statuses.*;
+
+public class StatusFactory {
+	public static Status createStatus(int statusNum) {
+		Status status = new Status();
+		if (statusNum == Consts.NOSTATUS) {
+			status = new NoStatus();
+		} else if (statusNum == Consts.UNKNOWN){
+			status = new Unknown();
+		} else if (statusNum == Consts.LOVE) {
+			status = new Love();
+		}
+		
+		return status;
+	}
+}

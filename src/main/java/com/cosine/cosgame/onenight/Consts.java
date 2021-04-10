@@ -80,4 +80,8 @@ public class Consts {
 	
 	// spliter
 	public static final int DAWNSPLITER = 850;
+	
+	// statuses
+	public static final int NOSTATUS = 0;
+	public static final int LOVE = 1;
 }
