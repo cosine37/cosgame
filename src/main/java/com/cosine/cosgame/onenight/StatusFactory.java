@@ -11,6 +11,10 @@ public class StatusFactory {
 			status = new Unknown();
 		} else if (statusNum == Consts.LOVE) {
 			status = new Love();
+		} else if (statusNum == Consts.STONED) {
+			status = new Stoned();
+		} else if (statusNum == Consts.CONFUSED) {
+			status = new Confused();
 		}
 		
 		return status;

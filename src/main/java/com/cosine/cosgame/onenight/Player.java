@@ -26,6 +26,7 @@ public class Player {
 	boolean showFinalStatus;
 	boolean showUpdatedRole;
 	boolean confirmed;
+	boolean stoned;
 	
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
@@ -49,6 +50,7 @@ public class Player {
 		showFinalStatus = false;
 		confirmed = false;
 		beggarIndex = -1;
+		stoned = false;
 	}
 	
 	public Player prevPlayer() {
@@ -100,6 +102,12 @@ public class Player {
 		}
 	}
 	
+	public int getSide() {
+		int ans = getCurrentRole().getSide();
+		ans = getCurrentStatus().getSide(ans);
+		return ans;
+	}
+	
 	public void initializeMarks(int n) {
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
@@ -113,6 +121,7 @@ public class Player {
 			centerMarks.add(-1);
 		}
 		beggarIndex = -1;
+		stoned = false;
 	}
 	
 	public void showAllRoles() {
@@ -133,6 +142,12 @@ public class Player {
 		finalStatus = getCurrentStatus();
 		showUpdatedRole = true;
 		showFinalStatus = true;
+	}
+	
+	public boolean win() {
+		boolean ans = getCurrentRole().win();
+		ans = getCurrentStatus().win(ans);
+		return ans;
 	}
 	
 	public void addRole(Role role) {
@@ -300,6 +315,12 @@ public class Player {
 	public void setShowFinalStatus(boolean showFinalStatus) {
 		this.showFinalStatus = showFinalStatus;
 	}
+	public boolean isStoned() {
+		return stoned;
+	}
+	public void setStoned(boolean stoned) {
+		this.stoned = stoned;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -321,6 +342,7 @@ public class Player {
 		doc.append("voted", voted);
 		doc.append("votedOut", votedOut);
 		doc.append("beggarIndex", beggarIndex);
+		doc.append("stoned", stoned);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -360,6 +382,7 @@ public class Player {
 		voted = doc.getBoolean("voted", false);
 		votedOut = doc.getBoolean("votedOut", false);
 		beggarIndex = doc.getInteger("beggarIndex", -1);
+		stoned = doc.getBoolean("stoned", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

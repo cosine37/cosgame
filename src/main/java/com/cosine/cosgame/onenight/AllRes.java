@@ -16,6 +16,9 @@ public class AllRes {
 		allRoles = new ArrayList<>();
 		Role r;
 		int i;
+		
+		r = new Lycanroc();
+		allRoles.add(r);
 		/*
 		r = new Cupid();
 		allRoles.add(r);

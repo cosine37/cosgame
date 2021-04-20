@@ -23,6 +23,18 @@ public class Status {
 		
 	}
 	
+	public void earlyNightOperation() {
+		
+	}
+	
+	public boolean win(boolean f) {
+		return f;
+	}
+	
+	public int getSide(int x) {
+		return x;
+	}
+	
 	public int getNum() {
 		return num;
 	}

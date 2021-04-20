@@ -105,6 +105,19 @@ public class Role {
 		
 	}
 	
+	public boolean win() {
+		if (this.side == Consts.HUMAN) {
+			if (board.getWinSide() == Consts.HUMAN) {
+				return true;
+			}
+		} else if (this.side == Consts.WOLF) {
+			if (board.getWinSide() == Consts.WOLF && board.isTannerWin() == false) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean canConfirm(List<Integer> targets) {
 		return true;
 	}

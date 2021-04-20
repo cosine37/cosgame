@@ -22,4 +22,11 @@ public class Tanner extends Role{
 		votedMsg.add("若你依然是皮匠且被公投出局，而且没有狼阵营玩家被公投出局，你获得胜利。");
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
+	
+	public boolean win() {
+		if (player.isVotedOut()) {
+			return true;
+		}
+		return false;
+	}
 }

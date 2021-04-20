@@ -84,4 +84,6 @@ public class Consts {
 	// statuses
 	public static final int NOSTATUS = 0;
 	public static final int LOVE = 1;
+	public static final int STONED = 2;
+	public static final int CONFUSED = 3;
 }

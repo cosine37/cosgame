@@ -153,17 +153,17 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Cupid();
+		r = new Instigator();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Priest();
+		r = new BigBadWolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Seer();
+		r = new Tanner();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -173,7 +173,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
 		
-		r = new Villager();
+		r = new Werewolf();
 		r.setPlayer(players.get(4));
 		r.setBoard(this);
 		players.get(4).getRoles().set(0, r);
@@ -222,6 +222,7 @@ public class Board {
 			players.get(i).setUpdatedStatus(new Unknown());
 			if (players.get(i).getInitialRole().isHasDusk()) {
 				confirmed.add("n");
+				players.get(i).getInitialRole().vision();
 			} else {
 				confirmed.add("y");
 			}
@@ -232,9 +233,13 @@ public class Board {
 	public void earlyNightHandle() {
 		int i;
 		for (i=0;i<players.size();i++) {
+			players.get(i).getCurrentStatus().earlyNightOperation();
 			players.get(i).setUpdatedStatus(players.get(i).getCurrentStatus());
-			players.get(i).getInitialRole().vision();
 			players.get(i).getCurrentStatus().vision();
+			if (players.get(i).isStoned() == false) {
+				players.get(i).getInitialRole().vision();
+			}
+			
 		}
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -294,6 +299,7 @@ public class Board {
 		if (status == Consts.NIGHT) {
 			// night skills
 			for (i=0;i<tps.size();i++) {
+				if (tps.get(i).isStoned()) continue;
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x > 0 && x < Consts.DAWNSPLITER) {
 					tps.get(i).getInitialRole().executeSkill();
@@ -301,10 +307,12 @@ public class Board {
 			}
 			// on dawn skills
 			for (i=0;i<tps.size();i++) {
+				if (tps.get(i).isStoned()) continue;
 				tps.get(i).getInitialRole().onDawnSkill();
 			}
 			// dawn skills
 			for (i=0;i<tps.size();i++) {
+				if (tps.get(i).isStoned()) continue;
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x > Consts.DAWNSPLITER) {
 					tps.get(i).getInitialRole().executeSkill();
@@ -474,7 +482,7 @@ public class Board {
 		boolean killedPope = true;
 		boolean hasWerewolf = false;
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getCurrentRole().getSide() == Consts.WOLF) {
+			if (players.get(i).getSide() == Consts.WOLF) {
 				hasWerewolf = true;
 				int x = players.get(i).getVoteIndex();
 				if (x>=0 && x<players.size()) {
@@ -518,19 +526,20 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();
+			Player p = players.get(i);
 			if (players.get(i).isVotedOut()) {
 				votedSomeone = true;
-				if (r.getSide() == Consts.WOLF) {
+				if (p.getSide() == Consts.WOLF) {
 					if (r.getRoleNum() == Consts.MINION) {
 						votedMinion = true;
 					} else {
 						votedWerewolf = true;
 					}
-				} else if (r.getSide() == Consts.TANNER) {
+				} else if (p.getSide() == Consts.TANNER) {
 					votedTanner = true;
 				}
 			} else {
-				if (r.getSide() == Consts.WOLF) {
+				if (p.getSide() == Consts.WOLF) {
 					missedWerewolf = true;
 				}
 			}
@@ -696,6 +705,13 @@ public class Board {
 	public void setWeremeleonIndex(int weremeleonIndex) {
 		this.weremeleonIndex = weremeleonIndex;
 	}
+	public boolean isTannerWin() {
+		return tannerWin;
+	}
+	public void setTannerWin(boolean tannerWin) {
+		this.tannerWin = tannerWin;
+	}
+
 	public String getWeremeleonImg() {
 		if (weremeleonIndex != -1) {
 			Role r = rolesThisGame.get(weremeleonIndex);
@@ -712,7 +728,31 @@ public class Board {
 			return null;
 		}
 	}
-
+	
+	public List<String> getWinPlayers(){
+		List<String> ans = new ArrayList<>();
+		if (status != Consts.AFTERVOTE) return ans;
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).win()) {
+				ans.add(players.get(i).getName());
+			}
+		}
+		return ans;
+	}
+	
+	public List<String> getLosePlayers(){
+		List<String> ans = new ArrayList<>();
+		if (status != Consts.AFTERVOTE) return ans;
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (!players.get(i).win()) {
+				ans.add(players.get(i).getName());
+			}
+		}
+		return ans;
+	}
+	/*
 	public List<String> getWinPlayers(){
 		List<String> ans = new ArrayList<>();
 		if (status != Consts.AFTERVOTE) return ans;
@@ -748,7 +788,7 @@ public class Board {
 		}
 		return ans;
 	}
-
+	 */
 	public BoardEntity toBoardEntity(String name) {
 		BoardEntity entity = new BoardEntity();
 		String initialRole = "-1";
