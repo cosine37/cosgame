@@ -15,6 +15,8 @@ public class StatusFactory {
 			status = new Stoned();
 		} else if (statusNum == Consts.CONFUSED) {
 			status = new Confused();
+		} else if (statusNum == Consts.PLAGUE) {
+			status = new Plague();
 		}
 		
 		return status;

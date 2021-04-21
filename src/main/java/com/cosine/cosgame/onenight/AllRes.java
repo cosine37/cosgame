@@ -17,10 +17,17 @@ public class AllRes {
 		Role r;
 		int i;
 		
+		/*
 		r = new Lycanroc();
 		allRoles.add(r);
-		/*
+		
+		r = new Diseased();
+		allRoles.add(r);
+		
 		r = new Cupid();
+		allRoles.add(r);
+		
+		r = new Instigator();
 		allRoles.add(r);
 		
 		r = new Priest();

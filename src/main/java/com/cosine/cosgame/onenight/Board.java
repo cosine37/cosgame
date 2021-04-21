@@ -153,7 +153,7 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Instigator();
+		r = new Diseased();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -163,7 +163,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Tanner();
+		r = new Sheriff();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);

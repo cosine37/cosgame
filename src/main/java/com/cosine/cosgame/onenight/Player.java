@@ -145,8 +145,23 @@ public class Player {
 	}
 	
 	public boolean win() {
-		boolean ans = getCurrentRole().win();
+		boolean ans = false;
+		if (getSide() == Consts.HUMAN) {
+			if (board.getWinSide() == Consts.HUMAN) {
+				ans = true;
+			}
+		} else if (getSide() == Consts.WOLF) {
+			if (board.getWinSide() == Consts.WOLF && board.isTannerWin() == false) {
+				ans = true;
+			}
+		}
+		ans = getCurrentRole().win(ans);
 		ans = getCurrentStatus().win(ans);
+		if (voteIndex >= 0 && voteIndex < board.getPlayers().size()) {
+			Player p = board.getPlayers().get(voteIndex);
+			ans = p.getCurrentRole().votedThis(ans);
+			ans = p.getCurrentStatus().votedThis(ans);
+		}
 		return ans;
 	}
 	

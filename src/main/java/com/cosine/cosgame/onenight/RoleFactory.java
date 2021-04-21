@@ -144,6 +144,8 @@ public class RoleFactory {
 			role = new Lycanroc();
 		} else if (img.contentEquals("r59")) {
 			role = new Instigator();
+		} else if (img.contentEquals("r60")) {
+			role = new Diseased();
 		}
 		
 		else {
@@ -286,6 +288,8 @@ public class RoleFactory {
 			role = new Lycanroc();
 		} else if (num == 59) {
 			role = new Instigator();
+		} else if (num == 60) {
+			role = new Diseased();
 		}
 		
 		else {

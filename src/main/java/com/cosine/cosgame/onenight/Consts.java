@@ -86,4 +86,5 @@ public class Consts {
 	public static final int LOVE = 1;
 	public static final int STONED = 2;
 	public static final int CONFUSED = 3;
+	public static final int PLAGUE = 4;
 }

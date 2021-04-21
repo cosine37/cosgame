@@ -23,7 +23,7 @@ public class Tanner extends Role{
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
-	public boolean win() {
+	public boolean win(boolean f) {
 		if (player.isVotedOut()) {
 			return true;
 		}

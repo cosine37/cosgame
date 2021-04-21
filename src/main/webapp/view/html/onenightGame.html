@@ -169,12 +169,16 @@
 				</tr>
 			</table>
 			<button ng-click="goto('onenight')" style="margin-right: 185px;">退出</button>
-			<button ng-show="(status == '2' || status == '7') && confirmed != 'y' && showConfirmed && initialRole !== 'r17'" ng-click="confirmNight()">确认</button>
+			<button ng-show="(status == '2' || status == '7') && confirmed != 'y' && showConfirmed && initialRole !== 'r17' && initialRole !== 'r60'" ng-click="confirmNight()">确认</button>
 			
 			<button ng-show="(status == '7') && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="confirmNight()">确认</button>
 			<button ng-show="(status == '2') && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(0)">不变化</button>
 			<button ng-show="(status == '2') && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(1)">左移一顺位</button>
 			<button ng-show="(status == '2') && confirmed != 'y' && showConfirmed && initialRole == 'r17'" ng-click="idiotNight(2)">右移一顺位</button>
+			
+			<button ng-show="(status == '2') && confirmed != 'y' && showConfirmed && initialRole == 'r60'" ng-click="confirmNight()">确认</button>
+			<button ng-show="(status == '7') && confirmed != 'y' && showConfirmed && initialRole == 'r60'" ng-click="idiotNight(1)">传染左侧</button>
+			<button ng-show="(status == '7') && confirmed != 'y' && showConfirmed && initialRole == 'r60'" ng-click="idiotNight(2)">传染右侧</button>
 			
 			<button ng-show="(status == '3' || status == '6') && voted != 'y'" ng-click="forfeitVote()">弃权</button>
 			<button ng-show="(status == '3' || status == '6') && voted != 'y' && voteIndex != -1" ng-click="confirmVote()">投票</button>

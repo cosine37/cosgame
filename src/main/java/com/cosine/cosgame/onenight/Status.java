@@ -31,6 +31,10 @@ public class Status {
 		return f;
 	}
 	
+	public boolean votedThis(boolean f) {
+		return f;
+	}
+	
 	public int getSide(int x) {
 		return x;
 	}
