@@ -15,6 +15,7 @@ public class Cupid extends Role{
 		sequence = -400;
 		name = "丘比特";
 		chooseStatusNum = 2;
+		canChooseSelfStatus = true;
 		useStatus = true;
 		hasDusk = true;
 		duskMsg.add("你的身份是 丘比特。");

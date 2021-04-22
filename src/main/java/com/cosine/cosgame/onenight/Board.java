@@ -153,12 +153,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Diseased();
+		r = new Cupid();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new BigBadWolf();
+		r = new CombatMedic();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -799,6 +799,7 @@ public class Board {
 		String chooseStatusNum = "0";
 		String myIndex = "-1";
 		String canChooseBoth = "n";
+		String canChooseSelfStatus = "n";
 		String mandatory = "n";
 		String hasSkill = "n";
 		String showUpdatedRole = "n";
@@ -850,6 +851,9 @@ public class Board {
 					chooseStatusNum = Integer.toString(p.getInitialRole().getChooseStatusNum());
 					if (p.getInitialRole().isCanChooseBoth()) {
 						canChooseBoth = "y";
+					}
+					if (p.getInitialRole().isCanChooseSelfStatus()) {
+						canChooseSelfStatus = "y";
 					}
 					if (p.getInitialRole().isMandatory()) {
 						mandatory = "y";
@@ -918,7 +922,12 @@ public class Board {
 				}
 				for (j=0;j<p.getStatusMarks().size();j++) {
 					int x = p.getStatusMarks().get(j);
-					String s = StatusFactory.createStatus(x).getImg();
+					String s;
+					if (x == Consts.TARGET) {
+						s = "TARGET";
+					} else {
+						s = StatusFactory.createStatus(x).getImg();
+					}
 					statusMarks.add(s);
 				}
 				updatedStatus = p.getUpdatedStatus().getImg();
@@ -995,6 +1004,7 @@ public class Board {
 		entity.setChooseStatusNum(chooseStatusNum);
 		entity.setMyIndex(myIndex);
 		entity.setCanChooseBoth(canChooseBoth);
+		entity.setCanChooseSelfStatus(canChooseSelfStatus);
 		entity.setMandatory(mandatory);
 		entity.setHasSkill(hasSkill);
 		entity.setUpdatedRole(updatedRole);

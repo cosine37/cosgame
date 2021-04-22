@@ -17,10 +17,10 @@ public class AllRes {
 		Role r;
 		int i;
 		
-		/*
+		
 		r = new Lycanroc();
 		allRoles.add(r);
-		
+		/*
 		r = new Diseased();
 		allRoles.add(r);
 		

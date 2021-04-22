@@ -150,6 +150,18 @@ button:disabled{
 	filter:opacity(50%);
 }
 
+.status-target{
+	position: absolute;
+	user-select:none;
+	left: 0px;
+	bottom: 75px;
+	height: 22px;
+	width: 105px;
+	background-color: green;
+	background-size:cover;
+	filter:opacity(50%);
+}
+
 .vote{
 	position: absolute;
 	user-select:none;

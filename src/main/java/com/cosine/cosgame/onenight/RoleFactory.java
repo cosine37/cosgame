@@ -146,6 +146,10 @@ public class RoleFactory {
 			role = new Instigator();
 		} else if (img.contentEquals("r60")) {
 			role = new Diseased();
+		} else if (img.contentEquals("r61")) {
+			role = new Assassin();
+		} else if (img.contentEquals("r62")) {
+			role = new CombatMedic();
 		}
 		
 		else {
@@ -290,6 +294,10 @@ public class RoleFactory {
 			role = new Instigator();
 		} else if (num == 60) {
 			role = new Diseased();
+		} else if (num == 61) {
+			role = new Assassin();
+		} else if (num == 62) {
+			role = new CombatMedic();
 		}
 		
 		else {

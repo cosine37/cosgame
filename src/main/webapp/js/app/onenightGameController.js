@@ -111,6 +111,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				if ($scope.statusSelect[x] == "y"){
 					$scope.statusSelect[x] = "n"
 				} else {
+					$scope.playerSelect[x] = "n"
 					if ($scope.canChooseBoth == "n"){
 						for (i=0;i<$scope.playerSelect.length;i++){
 							$scope.playerSelect[i] = "n"
@@ -139,12 +140,18 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			updateShowConfirmed()
 		}
 		
+		$scope.clickSelfStatus = function(){
+			if ($scope.canChooseSelfStatus == "y"){
+				$scope.clickPlayerStatus($scope.myIndex);
+			}
+		}
 		
 		$scope.clickPlayerRole = function(x){
 			if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "n" && $scope.hasSkill == "y"){
 				if ($scope.playerSelect[x] == "y"){
 					$scope.playerSelect[x] = "n"
 				} else {
+					$scope.statusSelect[x] = "n"
 					if ($scope.canChooseBoth == "n"){
 						for (i=0;i<$scope.centerSelect.length;i++){
 							$scope.centerSelect[i] = "n"
@@ -336,10 +343,14 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			for (i=0;i<$scope.statusMarks.length;i++){
 				$scope.statusSelect.push("n");
 				imgUrl = "url('/image/Onenight/Statuses/" + $scope.statusMarks[i] + ".png')"
+				if ($scope.statusMarks[i] == 'TARGET'){
+					imgUrl = "url('/image/Onenight/Statuses/s99.png')"
+				}
 				var singleStyle = {
 					"background": imgUrl,
 					"background-size": "cover"
 				}
+				
 				$scope.playerStatusStyles.push(singleStyle)
 			}
 			imgUrl = "url('/image/Onenight/Statuses/" + $scope.updatedStatus + ".png')"
@@ -502,6 +513,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.chooseCenterNum = parseInt(response.data.chooseCenterNum)
 				$scope.chooseStatusNum = parseInt(response.data.chooseStatusNum)
 				$scope.canChooseBoth = response.data.canChooseBoth
+				$scope.canChooseSelfStatus = response.data.canChooseSelfStatus
 				$scope.lord = response.data.lord;
 				$scope.status = response.data.status
 				$scope.canNight = response.data.canNight;

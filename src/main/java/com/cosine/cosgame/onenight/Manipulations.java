@@ -106,6 +106,24 @@ public class Manipulations {
 		p.addStatus(s);
 	}
 	
+	public static void swapStatuses(Player p1, Player p2) {
+		Status s1 = p1.getCurrentStatus();
+		Status s2 = p2.getCurrentStatus();
+		p2.addStatus(s1);
+		p1.addStatus(s2);
+	}
+	
+	public static void viewCurrentStatus(Player viewer) {
+		Status s = viewer.getCurrentStatus();
+		viewer.setUpdatedStatus(s);
+	}
+	
+	public static void viewPlayerStatus(Player viewer, Player p) {
+		Status s = p.getCurrentStatus();
+		int x = s.getNum();
+		viewer.getStatusMarks().set(p.getIndex(), x);
+	}
+	
 	static boolean isSoleWolf(Player player, Board board) {
 		if (board.isSoleWolf()) {
 			int i;

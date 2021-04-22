@@ -20,6 +20,7 @@ public class Role {
 	protected int chooseCenterNum;
 	protected int chooseStatusNum;
 	protected boolean canChooseBoth;
+	protected boolean canChooseSelfStatus;
 	protected boolean hasNight;
 	protected boolean mandatory;
 	protected boolean hasDusk;
@@ -33,6 +34,7 @@ public class Role {
 		chooseCenterNum = 0;
 		chooseStatusNum = 0;
 		canChooseBoth = false;
+		canChooseSelfStatus = false;
 		hasNight = false;
 		hasDusk = false;
 		useStatus = false;
@@ -264,7 +266,12 @@ public class Role {
 	public void setUseStatus(boolean useStatus) {
 		this.useStatus = useStatus;
 	}
-
+	public boolean isCanChooseSelfStatus() {
+		return canChooseSelfStatus;
+	}
+	public void setCanChooseSelfStatus(boolean canChooseSelfStatus) {
+		this.canChooseSelfStatus = canChooseSelfStatus;
+	}
 	public List<String> getDuskMsg() {
 		if (duskMsg.size() == 0) {
 			duskMsg.add("你的身份是 " + name + "。");

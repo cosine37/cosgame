@@ -16,6 +16,7 @@ public class BoardEntity {
 	String chooseCenterNum;
 	String chooseStatusNum;
 	String canChooseBoth;
+	String canChooseSelfStatus;
 	String myIndex;
 	String mandatory;
 	String hasSkill;
@@ -326,6 +327,12 @@ public class BoardEntity {
 	}
 	public void setChooseStatusNum(String chooseStatusNum) {
 		this.chooseStatusNum = chooseStatusNum;
+	}
+	public String getCanChooseSelfStatus() {
+		return canChooseSelfStatus;
+	}
+	public void setCanChooseSelfStatus(String canChooseSelfStatus) {
+		this.canChooseSelfStatus = canChooseSelfStatus;
 	}
 	
 }

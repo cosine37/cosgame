@@ -56,6 +56,9 @@ public class Weremeleon extends Role{
 		Manipulations.soleWolfHandle(player, board);
 	}
 	public int getRoleNumToShow() {
+		if (board.getWeremeleonIndex() == -1) {
+			return roleNum;
+		}
 		return board.getRolesThisGame().get(board.getWeremeleonIndex()).getRoleNum();
 	}
 	

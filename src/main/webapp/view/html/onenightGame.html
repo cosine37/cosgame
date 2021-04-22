@@ -73,7 +73,9 @@
 							</div>
 							<div class="status" ng-style="playerStatusStyles[i]" ng-show="useStatus == 'y'" ng-click="clickPlayerStatus(i); $event.stopPropagation();">
 							</div>
-							<div class="status-select" ng-show="(status == '2' || status =='7') && statusSelect[i] == 'y' && confirmed == 'n'">
+							<div class="status-select" ng-show="(status == '2' || status =='7') && statusSelect[i] == 'y' && confirmed == 'n'" ng-click="clickPlayerStatus(i); $event.stopPropagation();">
+							</div>
+							<div class="status-target" ng-show="statusMarks[i] == 'TARGET'">
 							</div>
 							<div class="target" ng-show="(status == '2' || status =='7') && playerSelect[i] == 'y' && useStatus == 'n' && confirmed == 'n'">
 							</div>
@@ -135,7 +137,15 @@
 								<td>
 									<div class="role" ng-style="myRoleStyle">
 										<div class="sentinel" ng-show="sentinelIndex == myIndex"></div>
-										<div class="status" ng-style="updatedStatusStyle" ng-show="useStatus == 'y'"></div>
+										
+										<div class="status" ng-style="updatedStatusStyle" ng-show="useStatus == 'y' && status != '7'"></div>
+										
+										<div class="status" ng-style="playerStatusStyles[myIndex]" ng-show="useStatus == 'y' && status == '7'" ng-click="clickSelfStatus(); $event.stopPropagation();">
+										</div>
+										<div class="status-select" ng-show="(status == '2' || status =='7') && statusSelect[myIndex] == 'y' && confirmed == 'n'" ng-click="clickSelfStatus(); $event.stopPropagation();">
+										</div>
+										<div class="status-target" ng-show="statusMarks[i] == 'TARGET'">
+										</div>
 										<div class="qsmark">
 											<img src="/image/Onenight/qsmark.png" height="18" width="18" ng-click="showMyInitialBigImage();$event.stopPropagation();"/>
 										</div>

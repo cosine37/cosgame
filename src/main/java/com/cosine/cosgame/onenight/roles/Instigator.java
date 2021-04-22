@@ -15,6 +15,7 @@ public class Instigator extends Role{
 		sequence = -300;
 		name = "煽动者";
 		chooseStatusNum = 1;
+		canChooseSelfStatus = true;
 		useStatus = true;
 		hasDusk = true;
 		duskMsg.add("你的身份是 煽动者。");
