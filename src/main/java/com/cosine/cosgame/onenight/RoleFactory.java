@@ -150,6 +150,10 @@ public class RoleFactory {
 			role = new Assassin();
 		} else if (img.contentEquals("r62")) {
 			role = new CombatMedic();
+		} else if (img.contentEquals("r63")) {
+			role = new Warlock();
+		} else if (img.contentEquals("r64")) {
+			role = new Gremlin();
 		}
 		
 		else {
@@ -298,6 +302,10 @@ public class RoleFactory {
 			role = new Assassin();
 		} else if (num == 62) {
 			role = new CombatMedic();
+		} else if (num == 63) {
+			role = new Warlock();
+		} else if (num == 64) {
+			role = new Gremlin();
 		}
 		
 		else {

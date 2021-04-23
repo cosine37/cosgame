@@ -17,26 +17,22 @@ public class AllRes {
 		Role r;
 		int i;
 		
-		
+		r = new AlphaWolf();
+		allRoles.add(r);
 		r = new Lycanroc();
 		allRoles.add(r);
-		/*
 		r = new Diseased();
 		allRoles.add(r);
-		
 		r = new Cupid();
 		allRoles.add(r);
-		
 		r = new Instigator();
 		allRoles.add(r);
-		
 		r = new Priest();
 		allRoles.add(r);
-		
-		
+		r = new Assassin();
+		allRoles.add(r);
 		r = new Sentinel();
 		allRoles.add(r);
-		*/
 		
 		for (i=0;i<2;i++) {
 			r = new Werewolf();
@@ -74,7 +70,7 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Investigator();
 		allRoles.add(r);
-		r = new AlphaWolf();
+		r = new CombatMedic();
 		allRoles.add(r);
 		r = new Butterfly();
 		allRoles.add(r);
@@ -92,11 +88,15 @@ public class AllRes {
 		allRoles.add(r);
 		r = new YoungWitch();
 		allRoles.add(r);
+		r = new Warlock();
+		allRoles.add(r);
 		r = new LittleGirl();
 		allRoles.add(r);
 		r = new Urchin();
 		allRoles.add(r);
 		r = new Idiot();
+		allRoles.add(r);
+		r = new Gremlin();
 		allRoles.add(r);
 		r = new Drunk();
 		allRoles.add(r);

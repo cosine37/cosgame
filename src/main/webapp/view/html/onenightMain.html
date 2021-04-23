@@ -221,7 +221,7 @@
 								</p>
 							</td>
 						</tr>
-						<!-- 
+						
 						<tr>
 							<td colspan="2" style="width: 1000px"><h4><b>黄昏阶段</b></h4></td>
 						</tr>
@@ -231,13 +231,25 @@
 								</p>
 							</td>
 						</tr>
-						 -->
+						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>状态</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份能够给玩家施加、改变或清除状态。一些状态可能会限制玩家的行动甚至改变胜利条件。
+								游戏开始时所有玩家都没有状态，黄昏阶段结束时所有玩家观看其当前状态，夜晚时玩家的状态可能会有所改变，天亮时玩家无法再次观看自身状态。状态独立于身份，交换身份时不会和状态一起交换。
+								投票结束时若与状态相关的获胜条件和身份有冲突，以状态所指示的获胜条件为准。</br>
+								</p>
+							</td>
+						</tr>
+						
 					</table>
 				</div>
 				<div id="rolestab" class="content container tab-pane fade">
 					<h2><b>身份介绍</b></h2>
 					<table>
-						<!-- 
+						
 						<tr>
 							<td colspan="2">
 								以下身份黄昏阶段有行动，按行动顺序排列
@@ -246,10 +258,16 @@
 						
 						<tr>
 							<td colspan="2">
+								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
+								<button ng-click="showedCard='r58'" ng-disabled="showedCard == 'r58'">鬃岩狼人</button>
+								<button ng-click="showedCard='r60'" ng-disabled="showedCard == 'r60'">传染病人</button>
+								<button ng-click="showedCard='r56'" ng-disabled="showedCard == 'r56'">丘比特</button>
+								<button ng-click="showedCard='r59'" ng-disabled="showedCard == 'r59'">煽动者</button>
+								<button ng-click="showedCard='r57'" ng-disabled="showedCard == 'r57'">牧师</button>
+								<button ng-click="showedCard='r61'" ng-disabled="showedCard == 'r61'">刺客</button>
 								<button ng-click="showedCard='r55'" ng-disabled="showedCard == 'r55'">魔法警卫</button>
 							</td>
 						</tr>
-						 -->
 						<tr>
 							<td colspan="2">
 								以下身份夜晚阶段有行动，按行动顺序排列
@@ -278,7 +296,7 @@
 							<td>
 								<button ng-click="showedCard='r42'" ng-disabled="showedCard == 'r42'">灵媒</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
-								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
+								<button ng-click="showedCard='r62'" ng-disabled="showedCard == 'r62'">退伍军医</button>
 								<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
 								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
@@ -287,9 +305,16 @@
 								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">调换儿</button>
 								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">演员</button>
 								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
+								<button ng-click="showedCard='r63'" ng-disabled="showedCard == 'r63'">术士</button>
 								<button ng-click="showedCard='r37'" ng-disabled="showedCard == 'r37'">小女孩</button>
 								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
+							</td>
+							
+						</tr>
+						<tr>
+							<td>
 								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
+								<button ng-click="showedCard='r64'" ng-disabled="showedCard == 'r64'">小魔怪</button>
 								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
 							</td>
 						</tr>
@@ -338,6 +363,118 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r36'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼卓</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								你必须给一名其他玩家施加【狼种】状态。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【狼种】：</b>拥有该状态的玩家阵营改为“狼”，其身份的阵营将被无视。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s06.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r58'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 鬃岩狼人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								你必须给一名其他玩家施加【石化】状态。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【石化】：</b>夜晚阶段开始时拥有该状态的玩家在天亮前所有的行动失效。
+								该状态只影响夜晚阶段开始时拥有该状态的玩家，之后获得该状态的玩家不受该状态影响。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s02.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r60'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 传染病人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须给你左侧或右侧玩家施加【瘟疫】状态。
+								投票阶段一名投你或投的目标玩家拥有【瘟疫】状态的玩家无法获胜，无论是否满足胜利条件。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【瘟疫】：</b>投票阶段投获得该状态的玩家无法获胜，无论是否满足胜利条件。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s04.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r56'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 丘比特</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以给至多两名玩家（包括你自己）施加【爱心】状态。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【爱心】：</b>夜晚开始时知道另一个获得拥有该状态的玩家。投票时若拥有该状态的玩家被投票出局，则另一个拥有该状态的玩家也出局。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s01.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r59'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 煽动者</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以给一名玩家（包括你自己）施加【煽惑】状态。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【煽惑】：</b>拥有该状态的玩家胜利条件改为其队友被投票出局。若该玩家无队友，则该状态对其无效。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s03.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r57'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 牧师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须清除自身的状态。你可以清除一名其他玩家的状态。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r61'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top" rowspan="2">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 刺客</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>单独</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须给一名玩家（包括你自己）施加【暗杀】状态。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>拥有【暗杀】状态的玩家（哪怕是你）被投票出局即获得胜利，无论你是否被投票出局或其他阵营胜利与否。</br></br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【暗杀】：</b>对拥有该状态的玩家没有影响，仅仅作为刺客的胜利条件而存在。
+							</td>
+						</tr>
+						<tr>
+							<td><img ng-src="/image/Onenight/Statuses/s05.png" class="newsStatusImg"></td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r55'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -345,8 +482,8 @@
 								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 魔法警卫</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以指定一名其他玩家，该玩家获得“魔法守护”标记。该标记为公开信息且在黄昏阶段结束后对所有玩家可见。
-								拥有“魔法守护”标记的玩家在黄昏阶段结束后至天亮前其身份牌不能被查看、交换或改变。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以指定一名其他玩家，该玩家获得“魔法守护”标记。“魔法守护”标记不是状态。该标记为公开信息且在黄昏阶段结束后对所有玩家可见。
+								拥有“魔法守护”标记的玩家在黄昏阶段结束后至天亮前其身份牌不能被查看、交换或改变。但其状态可以被查看、交换或改变。</br>
 							</td>
 						</tr>
 					</table>
@@ -564,18 +701,15 @@
 							</td>
 						</tr>
 					</table>
-					<table ng-show="showedCard == 'r36'">
+					<table ng-show="showedCard == 'r62'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼卓</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 退伍军医</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
-								你可以指定一名其他玩家。该玩家的身份会变为“狼人”。</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
-								一张中央身份将会显示。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份与另一名其他玩家的状态。你可以只查看身份或状态，也可以都查看。你不能查看同一名玩家的身份和状态。
+								你也可以不发动此技能。</br>
 							</td>
 						</tr>
 					</table>
@@ -672,6 +806,17 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r63'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 术士</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以交换你与另一名玩家的状态，交换后查看你新获得的状态。你也可以不交换。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r37'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -702,6 +847,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以将除你以外的其他所有玩家的身份向左移动一顺位，或向右移动一顺位，或不移动。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r64'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 小魔怪</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段交换两名其他玩家的身份或状态。你必须发动该技能。你只能选择交换身份或状态中的一种，不能都交换。
+								你不能查看你交换的身份或状态。</br>
 							</td>
 						</tr>
 					</table>

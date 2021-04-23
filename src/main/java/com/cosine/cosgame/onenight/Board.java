@@ -153,12 +153,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Cupid();
+		r = new AlphaWolf();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new CombatMedic();
+		r = new Gremlin();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);

@@ -66,6 +66,171 @@
 						<table>
 							<tr>
 								<td colspan="2">
+									<h4>2021.04.22 <span class="onenighttext">狼人不杀 の 黄昏之鬃</span> 扩展上线</h4>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 1000px" colspan="2">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="onenighttext">狼人不杀</span>的代码再次重构。
+									新系统<span class="onenighttext">黄昏阶段</span>和<span class="onenighttext">状态</span>上线。本次更新基于官方系统。<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一些身份的技能效果在<span class="onenighttext">黄昏阶段</span>发动。黄昏阶段在夜晚阶段之前。几乎所有的黄昏阶段的技能效果是施加状态。<br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一些身份能够给玩家施加、改变或清除<span class="onenighttext">状态</span>。一些状态可能会限制玩家的行动甚至改变胜利条件。
+									游戏开始时所有玩家都没有状态，黄昏阶段结束时所有玩家观看其当前状态，夜晚时玩家的状态可能会有所改变，天亮时玩家无法再次观看自身状态。状态独立于身份，交换身份时不会和状态一起交换。
+									投票结束时若状态的获胜条件和身份有冲突，以状态所指示的获胜条件为准。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本次更新大幅修改<span class="onenighttext">狼卓</span>身份的技能效果，并加入大量新身份，所有身份均为官方身份。
+									以下为新增身份，按行动顺序排列。<br>
+								</td>
+							</tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r36.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼卓</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+									你必须给一名其他玩家施加【狼种】状态。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+									一张中央身份将会显示。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【狼种】：</b>拥有该状态的玩家阵营改为“狼”，其身份的阵营将被无视。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s06.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r58.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top" rowspan="2">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 鬃岩狼人</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+									你必须给一名其他玩家施加【石化】状态。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+									一张中央身份将会显示。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【石化】：</b>夜晚阶段开始时拥有该状态的玩家在天亮前所有的行动失效。
+									该状态只影响夜晚阶段开始时拥有该状态的玩家，之后获得该状态的玩家不受该状态影响。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s02.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r60.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top" rowspan="2">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 传染病人</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须给你左侧或右侧玩家施加【瘟疫】状态。
+									投票阶段一名投你或投的目标玩家拥有【瘟疫】状态的玩家无法获胜，无论是否满足胜利条件。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【瘟疫】：</b>投票阶段投获得该状态的玩家无法获胜，无论是否满足胜利条件。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s04.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r56.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top" rowspan="2">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 丘比特</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以给至多两名玩家（包括你自己）施加【爱心】状态。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【爱心】：</b>夜晚开始时知道另一个获得拥有该状态的玩家。投票时若拥有该状态的玩家被投票出局，则另一个拥有该状态的玩家也出局。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s01.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r59.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top" rowspan="2">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 煽动者</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以给一名玩家（包括你自己）施加【煽惑】状态。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【煽惑】：</b>拥有该状态的玩家胜利条件改为其队友被投票出局。若该玩家无队友，则该状态对其无效。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s03.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r57.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 牧师</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须清除自身的状态。你可以清除一名其他玩家的状态。</br>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r61.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top" rowspan="2">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 刺客</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>单独</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你必须给一名玩家（包括你自己）施加【暗杀】状态。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>拥有【暗杀】状态的玩家（哪怕是你）被投票出局即获得胜利，无论你是否被投票出局或其他阵营胜利与否。</br></br></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>【暗杀】：</b>对拥有该状态的玩家没有影响，仅仅作为刺客的胜利条件而存在。
+								</td>
+							</tr>
+							<tr>
+								<td><img ng-src="/image/Onenight/Statuses/s05.png" class="newsStatusImg"></td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r55.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 魔法警卫</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段你可以指定一名其他玩家，该玩家获得“魔法守护”标记。“魔法守护”标记不是状态。该标记为公开信息且在黄昏阶段结束后对所有玩家可见。
+									拥有“魔法守护”标记的玩家在黄昏阶段结束后至天亮前其身份牌不能被查看、交换或改变。但其状态可以被查看、交换或改变。</br>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r62.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 退伍军医</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份与另一名其他玩家的状态。你可以只查看身份或状态，也可以都查看。你不能查看同一名玩家的身份和状态。
+									你也可以不发动此技能。</br>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r63.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 术士</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以交换你与另一名玩家的状态，交换后查看你新获得的状态。你也可以不交换。</br>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr style="width: 1000px">
+								<td><img ng-src="/image/Onenight/Roles/r64.png" class="newsImg"></td>
+								<td style="width: 790px; vertical-align:top">
+									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 小魔怪</h4>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段交换两名其他玩家的身份或状态。你必须发动该技能。你只能选择交换身份或状态中的一种，不能都交换。
+									你不能查看你交换的身份或状态。</br>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td><td></td></tr>
+							<tr>
+								<td colspan="2">
 									<h4>2021.03.30 <span class="onenighttext">狼人不杀</span> 新增5个身份</h4>
 								</td>
 							</tr>
@@ -281,7 +446,7 @@
 								</td>
 							</tr>
 							<tr style="width: 1000px">
-								<td><img ng-src="/image/Onenight/Roles/r36.png" class="newsImg"></td>
+								<td><img ng-src="/image/Onenight/Roles/zr36_old.png" class="newsImg"></td>
 								<td style="width: 790px; vertical-align:top">
 									<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 狼卓</h4>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>

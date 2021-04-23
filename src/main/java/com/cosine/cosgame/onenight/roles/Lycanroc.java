@@ -19,7 +19,7 @@ public class Lycanroc extends Role{
 		hasDusk = true;
 		mandatory = true;
 		duskMsg.add("你的身份是 鬃岩狼人。");
-		duskMsg.add("你可以给一名玩家施加【石化】状态，夜晚阶段开始时拥有该状态的玩家至天亮前使用技能失效。");
+		duskMsg.add("你可以给一名其他玩家施加【石化】状态，夜晚阶段开始时拥有该状态的玩家至天亮前使用技能失效。");
 		duskMsg.add("点击确认结束你的黄昏阶段。");
 		nightMsg.add("你的初始身份是 鬃岩狼人。");
 		nightMsg.add("状态显示为【石化】的玩家是你指定的目标。该玩家夜晚阶段使用的技能将会失效。");

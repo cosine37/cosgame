@@ -19,6 +19,8 @@ public class StatusFactory {
 			status = new Plague();
 		} else if (statusNum == Consts.ASSASSINATION) {
 			status = new Assassination();
+		} else if (statusNum == Consts.CANIS) {
+			status = new Canis();
 		}
 		
 		return status;

@@ -99,6 +99,13 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				}
 			}
 			
+			if ($scope.choosePlayerNum > 0 && $scope.chooseStatusNum > 0){
+				$scope.showConfirmed = false;
+				if (tp == $scope.choosePlayerNum) $scope.showConfirmed = true;
+				if (ts == $scope.chooseStatusNum) $scope.showConfirmed = true;
+				return;
+			}
+			
 			if (tp == $scope.choosePlayerNum && tc == $scope.chooseCenterNum && ts == $scope.chooseStatusNum){
 				$scope.showConfirmed = true;
 			} else {
