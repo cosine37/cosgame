@@ -13,6 +13,7 @@ public class Bishop extends Role{
 		img = "r31";
 		sequence = 960;
 		name = "主教";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 主教。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮时你可以看到初始身份为教宗的玩家的最终身份。");
 		confirmedMsg.add("你的初始身份是 主教。");

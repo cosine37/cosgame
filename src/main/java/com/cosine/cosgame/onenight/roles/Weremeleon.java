@@ -17,6 +17,7 @@ public class Weremeleon extends Role{
 		img = "r39";
 		sequence = 200;
 		name = "变色狼";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 变色狼。");
 		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
 		nightMsg.add("右侧显示的身份是游戏结束前你的身份牌显示的身份");

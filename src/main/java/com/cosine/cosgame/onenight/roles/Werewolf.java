@@ -13,6 +13,7 @@ public class Werewolf extends Role{
 		img = "r01";
 		sequence = 200;
 		name = "狼人";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 狼人。");
 		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");

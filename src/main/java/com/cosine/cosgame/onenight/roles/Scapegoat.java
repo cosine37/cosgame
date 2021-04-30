@@ -15,6 +15,7 @@ public class Scapegoat extends Role{
 		img = "r43";
 		sequence = 930;
 		name = "替罪羊";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 替罪羊。");
 		nightMsg.add("点击确认结束你的夜晚阶段。天亮时你将看到所有中央身份。");
 		confirmedMsg.add("你的初始身份是 替罪羊。");

@@ -13,6 +13,7 @@ public class BigBadWolf extends Role{
 		img = "r45";
 		sequence = 200;
 		name = "大灰狼";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 大灰狼。");
 		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");

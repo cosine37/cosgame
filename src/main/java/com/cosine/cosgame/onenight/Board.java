@@ -152,13 +152,13 @@ public class Board {
 		
 		// TODO: test roles here
 		Role r;
-		/*
-		r = new AlphaWolf();
+		
+		r = new Werewolf();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		
-		r = new Gremlin();
+		/*
+		r = new Warlock();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -236,10 +236,9 @@ public class Board {
 			players.get(i).getCurrentStatus().earlyNightOperation();
 			players.get(i).setUpdatedStatus(players.get(i).getCurrentStatus());
 			players.get(i).getCurrentStatus().vision();
-			if (players.get(i).isStoned() == false) {
+			if (players.get(i).isStoned() == false && players.get(i).getInitialRole().isHasNight()) {
 				players.get(i).getInitialRole().vision();
 			}
-			
 		}
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

@@ -15,6 +15,7 @@ public class OldMan extends Role{
 		img = "r49";
 		sequence = 910;
 		name = "苦涩老头";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 苦涩老头。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮时你可以知道最终身份是苦涩老头的玩家。");
 		confirmedMsg.add("你的初始身份是 苦涩老头。");

@@ -17,6 +17,7 @@ public class Redhat extends Role{
 		img = "r53";
 		sequence = 402;
 		name = "小红帽";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 小红帽。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");
 		confirmedMsg.add("你的初始身份是 小红帽。");

@@ -13,6 +13,7 @@ public class Insomniac extends Role{
 		img = "r06";
 		sequence = 900;
 		name = "失眠者";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 失眠者。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮时你可以看到你的最终身份。");
 		confirmedMsg.add("你的初始身份是 失眠者。");

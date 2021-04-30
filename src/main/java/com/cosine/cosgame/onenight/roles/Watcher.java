@@ -13,6 +13,7 @@ public class Watcher extends Role{
 		img = "r18";
 		sequence = 950;
 		name = "观者";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 观者。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮时你可以看到初始身份为预言家和见习预言家的玩家的最终身份。");
 		confirmedMsg.add("你的初始身份是 观者。");

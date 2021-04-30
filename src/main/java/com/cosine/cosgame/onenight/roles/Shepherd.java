@@ -16,6 +16,7 @@ public class Shepherd extends Role{
 		img = "r35";
 		sequence = 900;
 		name = "牧羊人";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 牧羊人。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮时你可以看到一名身份发生变化的其他玩家。");
 		confirmedMsg.add("你的初始身份是 牧羊人。");

@@ -12,6 +12,7 @@ public class Mason extends Role{
 		img = "r08";
 		sequence = 400;
 		name = "砖瓦工";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 砖瓦工。");
 		nightMsg.add("另一个砖瓦工身份已显示，若未显示，则该砖瓦工位于中央牌区。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");

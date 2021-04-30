@@ -12,6 +12,7 @@ public class Pope extends Role{
 		img = "r30";
 		sequence = 401;
 		name = "教宗";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 教宗。");
 		nightMsg.add("身份牌上有标记的玩家初始阵营为狼。");
 		nightMsg.add("点击确认结束你的夜晚阶段。");

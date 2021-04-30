@@ -13,6 +13,7 @@ public class Nun extends Role{
 		img = "r51";
 		sequence = 855;
 		name = "尼姑";
+		hasNight = true;
 		nightMsg.add("你的初始身份是 尼姑。");
 		nightMsg.add("点击确认结束你的夜晚阶段，天亮前你的身份牌会和尼姑身份牌发生交换。");
 		confirmedMsg.add("你的初始身份是 尼姑。");
