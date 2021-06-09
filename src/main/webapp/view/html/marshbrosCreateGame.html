@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Marshbros</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/marshbrosTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/marshbrosOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/marshbrosCreateGameController.js"></script>
+<body ng-app="marshbrosCreateGameApp" ng-controller="marshbrosCreateGameCtrl">
+	
+	<div class="create-div">
+		<table>
+			<tr>
+				<td>
+					<h1 class="create-title">水泊传说</h1>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button ng-click="goto('marshbros')">退出</button>
+					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
+					<button ng-click="start()" ng-show="username == lord">开始</button>
+				</td>
+			</tr>
+			<tr>
+				<td><h4>玩家列表</h4></td>
+			</tr>
+			<tr ng-repeat="pn in playerNames track by $index">
+				<td>{{pn}}</td>
+			</tr>
+			
+		</table>
+		
+	</div>
+	
+</body>

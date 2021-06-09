@@ -152,12 +152,12 @@ public class Board {
 		
 		// TODO: test roles here
 		Role r;
-		
-		r = new Werewolf();
+		/*
+		r = new Pope();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		/*
+		
 		r = new Warlock();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);

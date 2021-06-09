@@ -1,0 +1,45 @@
+@charset "UTF-8";
+.tabs{
+	background: linear-gradient(black, rgb(218,165,32), rgb(218,165,32), rgb(218,165,32), black);
+}
+
+.nav-tabs .nav-link.active{
+	background: rgb(218,165,32);
+	color: white;
+}
+
+.tabcontent button{
+	outline: none;
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(218,165,32);
+	border-radius: 8px;
+	
+	background: rgb(218,165,32);
+}
+
+.tabcontent button:disabled{
+	outline: none;
+	color: rgb(126,33,18);
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid rgb(218,165,32);
+	border-radius: 8px;
+	
+	background: white;
+}
+
+
+.marshbrostext{
+	font-weight: bold;
+	color: rgb(218,165,32);
+}
