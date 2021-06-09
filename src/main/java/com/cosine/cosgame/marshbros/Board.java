@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
 public class Board {
 	List<Player> players;
 	List<Card> deck;
@@ -108,6 +110,61 @@ public class Board {
 	}
 	public void setWinTarget(int winTarget) {
 		this.winTarget = winTarget;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("curPlayerIndex", curPlayerIndex);
+		doc.append("status", status);
+		doc.append("winTarget", winTarget);
+		int i;
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+			String tempName = "player-" + players.get(i).getName();
+			doc.append(tempName, players.get(i).toDocument());
+		}
+		doc.append("playerNames", playerNames);
+		List<String> decks = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			decks.add(deck.get(i).getName());
+		}
+		doc.append("deck", decks);
+		List<String> tombs = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			tombs.add(deck.get(i).getName());
+		}
+		doc.append("tomb", tombs);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		curPlayerIndex = doc.getInteger("curPlayerIndex", 0);
+		status = doc.getInteger("status", -1);
+		winTarget = doc.getInteger("winTarget", 10);
+		int i;
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String tempName = "player-" + playerNames.get(i);
+			Document dop = (Document) doc.get(tempName);
+			Player p = new Player();
+			p.setBoard(this);
+			p.setFromDoc(dop);
+			players.add(p);
+		}
+		List<String> decks = (List<String>) doc.get("deck");
+		deck = new ArrayList<>();
+		for (i=0;i<decks.size();i++) {
+			Card c = CardFactory.createCard(decks.get(i));
+			deck.add(c);
+		}
+		List<String> tombs = (List<String>) doc.get("tomb");
+		tomb = new ArrayList<>();
+		for (i=0;i<decks.size();i++) {
+			Card c = CardFactory.createCard(tombs.get(i));
+			tomb.add(c);
+		}
 	}
 	
 	
