@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.marshbros.Board;
 import com.cosine.cosgame.marshbros.Meta;
+import com.cosine.cosgame.marshbros.BoardEntity;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -52,5 +53,40 @@ public class MarshbrosController {
 		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/marshbros/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/marshbros/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getPlayerByName(username) == null) {
+			board.addPlayer(username);
+			board.addPlayerToDB(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
+	@RequestMapping(value="/marshbros/getboard", method = RequestMethod.GET)
+	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+		} else {
+			board.setId("NE");
+		}
+		BoardEntity entity = board.toBoardEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 }

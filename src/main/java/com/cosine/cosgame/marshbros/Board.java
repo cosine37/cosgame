@@ -142,6 +142,17 @@ public class Board {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -152,6 +163,22 @@ public class Board {
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
+	}
+	
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		
+		List<String> playerNames = new ArrayList<>();
+		for (int i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+		}
+		
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setStatus(Integer.toString(status));
+		entity.setPlayers(playerNames);
+		
+		return entity;
 	}
 	
 	public Document toDocument() {
@@ -216,6 +243,47 @@ public class Board {
 	public void storeToDB() {
 		Document doc = toDocument();
 		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 }

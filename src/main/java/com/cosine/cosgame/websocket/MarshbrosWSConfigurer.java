@@ -62,7 +62,6 @@ public class MarshbrosWSConfigurer implements WebSocketConfigurer {
 		@Override
 		public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 			broadcastAllSessions("refresh");
-			
 		}
 
 		@Override
@@ -73,7 +72,70 @@ public class MarshbrosWSConfigurer implements WebSocketConfigurer {
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 			removeClosedSessions();
+		}
+
+		@Override
+		public boolean supportsPartialMessages() {
+			return false;
+		}
+		
+	}
+	
+	class boardWSHandler implements WebSocketHandler{
+		
+		List<WebSocketSession> allSessions;
+		
+		public boardWSHandler() {
+			allSessions = new ArrayList<>();
+		}
+		
+		public void removeClosedSessions() {
+			List<WebSocketSession> newSessions = new ArrayList<>();
+			for (int i=0;i<allSessions.size();i++) {
+				if (allSessions.get(i).isOpen()) {
+					newSessions.add(allSessions.get(i));
+				}
+			}
+			allSessions = newSessions;
+		}
+		
+		public void broadcastAllSessionsInBoard(String content) {
+			TextMessage message = new TextMessage(content);
+					
+			for (int i=0;i<allSessions.size();i++) {
+				try {
+					if (allSessions.get(i).isOpen()) {
+						allSessions.get(i).sendMessage(message);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		@Override
+		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+			allSessions.add(session);
+			removeClosedSessions();
+		}
+
+		@Override
+		public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+			//System.out.println("Message here:" + message.toString());
+			//broadcastAllSessions("refresh");
+			broadcastAllSessionsInBoard("refresh");
+		}
+
+		@Override
+		public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 			
+		}
+
+		@Override
+		public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+			removeClosedSessions();
 		}
 
 		@Override
@@ -86,7 +148,7 @@ public class MarshbrosWSConfigurer implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(new AllBoardsWSHandler(), "/marshbros/allboardsrefresh").setAllowedOrigins("*");
-		
+		registry.addHandler(new boardWSHandler(), "/marshbros/boardrefresh").setAllowedOrigins("*");
 	}
 
 }

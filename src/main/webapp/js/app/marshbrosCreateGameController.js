@@ -4,9 +4,20 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("marshbrosCreateGameApp", []);
-app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("marshbrosCreateGameApp", ["ngWebSocket"]);
+app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
+	function($scope, $window, $http, $document, $websocket){
+		
+		var ws = $websocket("ws://localhost:13737/marshbros/boardrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+	
 		$scope.settings = [0];
 		
 		$scope.goto = function(d){
@@ -42,21 +53,28 @@ app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			*/
 		}
 		
+		
+		
 		$scope.getBoard = function(){
-			/*
-			$http.get('/zodiacgame/getboard').then(function(response){
+			$http.get('/marshbros/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.id = response.data.id
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.players
 				$scope.lord = response.data.lord
-				if ($scope.status != "0"){
-					$scope.goto('zodiacgame')
-				}
+				
+				//ws.send(id);
 			});
-			*/
 		}
 		
-		//$scope.getBoard()
+		$scope.getBoard()
+		
+		//var json_data = '{type:notify,content:refresh}';
+		
+		
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
 		
 		/*
 		$scope.start = function(){
@@ -76,25 +94,5 @@ app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
-		$scope.getBoard = function(){
-			$http.get('/onenightgame/getboard').then(function(response){
-				$scope.gamedata = response.data
-				$scope.status = response.data.status
-				$scope.playerNames = response.data.playerNames
-				$scope.lord = response.data.lord
-				if ($scope.status != "0"){
-					$scope.goto('onenightgame')
-				}
-			});
-		}
-		
-		$scope.offturnHandle = function(){
-			$scope.getBoard();
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},2500);
-		}
-		
-		$scope.offturnHandle();
 		*/
 }]);

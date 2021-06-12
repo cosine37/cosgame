@@ -5,48 +5,6 @@ var setUrl = function(d){
 }
 
 var app = angular.module("marshbrosMainApp", ["ngWebSocket"]);
-/*
-app.factory('socketData', function ($websocket, $location) {
-    var host = $location.host();
-    if ($location.port() && $location.port() != 80 && $location.port() != 443) {
-        host = host + ':' + $location.port();
-    }
-    var ws = "ws";
-    if ($location.protocol() == 'https') {
-        ws = "wss";
-    }
-
-    // 开始连接
-    var dataStream = $websocket(ws + '://' + host + '/Api/App');
-    dataStream.reconnectIfNotNormalClose = true;
-    var collection = [];
-    var methods = {
-        lastestdata: {},
-        readyState: 0,
-        collection: collection,
-        sendData: function (data) {
-            dataStream.send(JSON.stringify(data));
-        }
-    };
-    dataStream.onMessage(function (message) {
-    methods.readyState = dataStream.readyState;
-    methods.lastestdata = JSON.parse(message.data);
-    collection.push(JSON.parse(message.data));
-    });
-    dataStream.onError(function (message) {
-//监控状态变化，实时跟进连接状态
-        methods.readyState = dataStream.readyState;
-    });
-    dataStream.onOpen(function (message) {
-        methods.readyState = dataStream.readyState;
-    });
-
-    dataStream.onClose(function (message) {
-        methods.readyState = dataStream.readyState;
-    });
-    return methods;
-})
-*/
 app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		
@@ -60,8 +18,16 @@ app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', 
 		ws.onOpen(function() {
 		});
 		
-		
+		var boardws = $websocket("ws://localhost:13737/marshbros/boardrefresh");
+		boardws.onError(function(event) {
+		});
 	
+		boardws.onClose(function(event) {
+		});
+	
+		boardws.onOpen(function() {
+		});
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -79,7 +45,7 @@ app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.newGame = function(){
 			$http({url: "/marshbros/newboard", method: "POST"}).then(function(response){
-				var json_data = '{type:notify,content:refresh}';
+				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
 				$scope.goto('marshbroscreategame');
 			});
@@ -109,6 +75,24 @@ app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', 
 					var y = response.data.value[i*4+3]
 					$scope.canBack.push(y)
 				}
+			});
+		}
+		
+		$scope.goToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/marshbros/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/marshbros/join").then(function(response){
+					//var json_data = '{"type":"notify","content":"refresh"}';
+			        boardws.send($scope.boards[index]);
+					$scope.goto('marshbroscreategame')
+				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/marshbros/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('marshbrosgame');
 			});
 		}
 		
