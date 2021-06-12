@@ -17,7 +17,8 @@ public class Player {
 	List<Role> area;
 	
 	public Player() {
-		
+		hand = new ArrayList<>();
+		area = new ArrayList<>();
 	}
 	
 	public void draw() {

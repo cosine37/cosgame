@@ -1,10 +1,13 @@
 package com.cosine.cosgame.marshbros;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Player> players;
@@ -14,6 +17,22 @@ public class Board {
 	int curPlayerIndex;
 	int status;
 	int winTarget;
+	
+	String id;
+	String lord;
+		
+	MongoDBUtil dbutil;
+	
+	public Board() {
+		players = new ArrayList<>();
+		deck = new ArrayList<>();
+		tomb = new ArrayList<>();
+		
+		String dbname = "marshbros";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
 	
 	void shuffle() {
 		List<Card> shuffled = new ArrayList<>();
@@ -111,12 +130,37 @@ public class Board {
 	public void setWinTarget(int winTarget) {
 		this.winTarget = winTarget;
 	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		players.add(p);
+	}
+	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("curPlayerIndex", curPlayerIndex);
 		doc.append("status", status);
 		doc.append("winTarget", winTarget);
+		doc.append("lord", lord);
+		doc.append("id", id);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -142,6 +186,8 @@ public class Board {
 		curPlayerIndex = doc.getInteger("curPlayerIndex", 0);
 		status = doc.getInteger("status", -1);
 		winTarget = doc.getInteger("winTarget", 10);
+		lord = doc.getString("lord");
+		id = doc.getString("id");
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -167,5 +213,9 @@ public class Board {
 		}
 	}
 	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
 	
 }
