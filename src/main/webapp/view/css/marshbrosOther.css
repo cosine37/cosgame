@@ -28,3 +28,15 @@ button:disabled{
 	
 	background: white;
 }
+
+.otherPlay {
+	height: 160px;
+	width: 105px;
+	position: relative;
+}
+
+.handCard {
+	height: 256px;
+	width: 168px;
+	position: relative;
+}

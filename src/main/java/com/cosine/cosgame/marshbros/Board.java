@@ -17,6 +17,7 @@ public class Board {
 	int curPlayerIndex;
 	int status;
 	int winTarget;
+	int ruleVariant;
 	
 	String id;
 	String lord;
@@ -47,7 +48,8 @@ public class Board {
 	}
 	
 	void buildDeck() {
-		
+		AllRes allRes = new AllRes();
+		deck = allRes.genDeck();
 	}
 	
 	void reshuffle() {
@@ -55,19 +57,32 @@ public class Board {
 		Random rand = new Random();
 		while (tomb.size()>0) {
 			int size = tomb.size();
-			shuffled.add(deck.remove(rand.nextInt(size)));
+			shuffled.add(tomb.remove(rand.nextInt(size)));
 		}
 		for (int i=0;i<shuffled.size();i++) {
 			deck.add(shuffled.get(i));
 		}
 	}
 	
+	void dealAll() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (i == curPlayerIndex) {
+				players.get(i).draw(3);
+			} else {
+				players.get(i).draw(4);
+			}
+		}
+	}
+	
 	public void startGame() {
 		int numPlayers = players.size();
+		status = Consts.INGAME;
 		Random rand = new Random();
 		curPlayerIndex  = rand.nextInt(numPlayers);
 		buildDeck();
 		shuffle();
+		dealAll();
 	}
 	
 	public List<Card> takeTopCards(int x) {
@@ -166,17 +181,29 @@ public class Board {
 	}
 	
 	public BoardEntity toBoardEntity(String username) {
+		int i,j;
+		
 		BoardEntity entity = new BoardEntity();
 		
 		List<String> playerNames = new ArrayList<>();
-		for (int i=0;i<players.size();i++) {
-			playerNames.add(players.get(i).getName());
+		List<String> hand = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			playerNames.add(p.getName());
+			if (username.contentEquals(players.get(i).getName())) {
+				for (j=0;j<p.getHand().size();j++) {
+					hand.add(p.getHand().get(j).getImg());
+				}
+				
+			}
 		}
 		
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
+		entity.setCurPlayerIndex(Integer.toString(curPlayerIndex));
 		entity.setPlayers(playerNames);
+		entity.setHand(hand);
 		
 		return entity;
 	}
@@ -198,12 +225,12 @@ public class Board {
 		doc.append("playerNames", playerNames);
 		List<String> decks = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
-			decks.add(deck.get(i).getName());
+			decks.add(deck.get(i).getImg());
 		}
 		doc.append("deck", decks);
 		List<String> tombs = new ArrayList<>();
 		for (i=0;i<deck.size();i++) {
-			tombs.add(deck.get(i).getName());
+			tombs.add(deck.get(i).getImg());
 		}
 		doc.append("tomb", tombs);
 		return doc;
@@ -250,6 +277,9 @@ public class Board {
 		setFromDoc(doc);
 	}
 	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
 	
 	public void updatePlayer(int index) {
 		Player p = players.get(index);
@@ -269,6 +299,17 @@ public class Board {
 		}
 	}
 	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void updateBasicDB() {
+		updateDB("curPlayerIndex", curPlayerIndex);
+		updateDB("status", status);
+	}
+	
 	public void addPlayerToDB(String name) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
@@ -285,5 +326,7 @@ public class Board {
 			return true;
 		}
 	}
+
+	
 	
 }

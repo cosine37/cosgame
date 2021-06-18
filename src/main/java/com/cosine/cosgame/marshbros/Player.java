@@ -95,7 +95,7 @@ public class Player {
 		int i;
 		List<String> hands = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
-			hands.add(hand.get(i).getName());
+			hands.add(hand.get(i).getImg());
 		}
 		List<Document> doa = new ArrayList<>();
 		for (i=0;i<area.size();i++) {

@@ -40,6 +40,7 @@ public class MarshbrosController {
 		board.addPlayer(username);
 		board.setLord(username);
 		board.genBoardId();
+		board.setStatus(0);
 		board.storeToDB();
 		session.setAttribute("boardId", board.getId());
 		StringEntity entity = new StringEntity();
@@ -74,7 +75,23 @@ public class MarshbrosController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/marshbros/startgame", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.startGame();
+			board.updateBasicDB();
+			board.updatePlayers();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/marshbros/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

@@ -6,8 +6,10 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String status;
+	String curPlayerIndex;
 	
 	List<String> players;
+	List<String> hand;
 
 	public String getId() {
 		return id;
@@ -32,6 +34,18 @@ public class BoardEntity {
 	}
 	public void setPlayers(List<String> players) {
 		this.players = players;
+	}
+	public List<String> getHand() {
+		return hand;
+	}
+	public void setHand(List<String> hand) {
+		this.hand = hand;
+	}
+	public String getCurPlayerIndex() {
+		return curPlayerIndex;
+	}
+	public void setCurPlayerIndex(String curPlayerIndex) {
+		this.curPlayerIndex = curPlayerIndex;
 	}
 	
 	

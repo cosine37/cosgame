@@ -8,7 +8,7 @@ var app = angular.module("marshbrosMainApp", ["ngWebSocket"]);
 app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		
-		var ws = $websocket("ws://localhost:13737/marshbros/allboardsrefresh");
+		var ws = $websocket("ws://" + $window.location.host + "/marshbros/allboardsrefresh");
 		ws.onError(function(event) {
 		});
 	
@@ -18,7 +18,7 @@ app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', 
 		ws.onOpen(function() {
 		});
 		
-		var boardws = $websocket("ws://localhost:13737/marshbros/boardrefresh");
+		var boardws = $websocket("ws://" + $window.location.host + "/marshbros/boardrefresh");
 		boardws.onError(function(event) {
 		});
 	

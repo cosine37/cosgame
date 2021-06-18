@@ -4,10 +4,10 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("marshbrosCreateGameApp", ["ngWebSocket"]);
-app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
+var app = angular.module("marshbrosGameApp", ["ngWebSocket"]);
+app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
-		
+	
 		var ws = $websocket("ws://" + $window.location.host + "/marshbros/boardrefresh");
 		ws.onError(function(event) {
 		});
@@ -19,6 +19,7 @@ app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		});
 	
 		$scope.settings = [0];
+		$scope.handStyles = [];
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -37,23 +38,21 @@ app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
-		$scope.addBot = function(){
-			/*
-			$http({url: "/zodiac/addbot", method: "POST"}).then(function(response){
-				$scope.getBoard();
-			});
-			*/
-		}
-		
-		$scope.start = function(){
+		setHandStyle = function(){
+			for (i=0;i<$scope.hand.length;i++){
+				imgUrl = "url('/image/Marshbros/Card/" + $scope.hand[i] + ".png')"
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				$scope.handStyles.push(singleStyle)
+			}
 			
-			$http({url: "/marshbros/startgame", method: "POST"}).then(function(response){
-				ws.send("start");
-				$scope.goto('marshbrosgame');
-			});
 		}
 		
-		
+		setUI = function(){
+			setHandStyle()
+		}
 		
 		$scope.getBoard = function(){
 			$http.get('/marshbros/getboard').then(function(response){
@@ -62,18 +61,14 @@ app.controller("marshbrosCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.players
 				$scope.lord = response.data.lord
+				$scope.hand = response.data.hand
 				
-				if ($scope.status == '1'){
-					$scope.goto('marshbrosgame');
-				}
-				
+				setUI();
 				//ws.send(id);
 			});
 		}
 		
 		$scope.getBoard()
-		
-		//var json_data = '{type:notify,content:refresh}';
 		
 		
 		ws.onMessage(function(){

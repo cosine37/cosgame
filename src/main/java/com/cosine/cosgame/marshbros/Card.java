@@ -1,18 +1,19 @@
 package com.cosine.cosgame.marshbros;
 
 public class Card {
-	String name;
-	String img;
-	int atk;
-	int hp;
-	int type;
+	protected String name;
+	protected String nickname;
+	protected String img;
+	protected int atk;
+	protected int hp;
+	protected int type;
 	
-	Board board;
-	Player player;
-	Role role;
+	protected Board board;
+	protected Player player;
+	protected Role role;
 	
-	boolean taunt;
-	boolean canAttack;
+	protected boolean taunt;
+	protected boolean canAttack;
 	
 	public Card() {
 		taunt = false;

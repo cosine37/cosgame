@@ -73,7 +73,7 @@ public class Role {
 	
 	public Document toDocument() {
 		Document doc = new Document();
-		doc.append("card", card.getName());
+		doc.append("card", card.getImg());
 		doc.append("hp", hp);
 		doc.append("atk", atk);
 		doc.append("owner", owner);
