@@ -187,10 +187,29 @@ public class Board {
 		
 		List<String> playerNames = new ArrayList<>();
 		List<String> hand = new ArrayList<>();
+		List<List<String>> areaCards = new ArrayList<>();
+		List<List<String>> atks = new ArrayList<>();
+		List<List<String>> hps = new ArrayList<>();
+		String myIndex = "-1";
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(p.getName());
+			
+			List<String> singleAreaCards = new ArrayList<>();
+			List<String> singleAtks = new ArrayList<>();
+			List<String> singleHps = new ArrayList<>();
+			for (j=0;j<p.getArea().size();j++) {
+				Role r = p.getArea().get(j);
+				singleAreaCards.add(r.getCard().getImg());
+				singleAtks.add(Integer.toString(r.getAtk()));
+				singleHps.add(Integer.toString(r.getHp()));
+			}
+			areaCards.add(singleAreaCards);
+			atks.add(singleAtks);
+			hps.add(singleHps);
+			
 			if (username.contentEquals(players.get(i).getName())) {
+				myIndex = Integer.toString(i);
 				for (j=0;j<p.getHand().size();j++) {
 					hand.add(p.getHand().get(j).getImg());
 				}
@@ -204,6 +223,10 @@ public class Board {
 		entity.setCurPlayerIndex(Integer.toString(curPlayerIndex));
 		entity.setPlayers(playerNames);
 		entity.setHand(hand);
+		entity.setMyIndex(myIndex);
+		entity.setAreaCards(areaCards);
+		entity.setAtks(atks);
+		entity.setHps(hps);
 		
 		return entity;
 	}

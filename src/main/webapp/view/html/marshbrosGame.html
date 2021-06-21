@@ -20,9 +20,17 @@
 	</div>
 	
 	<table style="text-align:center">
+		<tr ng-repeat="singleAreaStyles in areaStyles track by $index">
+			<td ng-repeat="areaStyle in singleAreaStyles track by $index">
+				<div class="areaCard" ng-style="areaStyle"></div>
+			</td>
+		</tr>
+	</table>
+	
+	<table style="text-align:center">
 		<tr>
 			<td ng-repeat="handStyle in handStyles track by $index">
-				<div class="handCard" ng-style="handStyle"></div>
+				<div class="handCard" ng-style="handStyle" ng-click="appoint($index)"></div>
 			</td>
 		</tr>
 	</table>

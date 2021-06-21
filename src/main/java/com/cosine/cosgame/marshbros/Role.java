@@ -16,6 +16,17 @@ public class Role {
 	Player player;
 	Board board;
 	
+	public Role() {
+		card = new Card();
+	}
+	
+	public Role(Card c) {
+		card = c;
+		card.setRole(this);
+		hp = card.getHp();
+		atk = card.getAtk();
+	}
+	
 	public Card getCard() {
 		return card;
 	}

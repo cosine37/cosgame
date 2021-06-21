@@ -35,6 +35,12 @@ public class Player {
 		
 	}
 	
+	public void appoint(int x) {
+		Card c = hand.remove(x);
+		Role r = new Role(c);
+		area.add(r);
+	}
+	
 	public void moveToTomb(int x) {
 		if (x>=0 && x<area.size()) {
 			Card c = area.remove(x).getCard();

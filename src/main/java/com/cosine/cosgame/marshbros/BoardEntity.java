@@ -7,9 +7,13 @@ public class BoardEntity {
 	String lord;
 	String status;
 	String curPlayerIndex;
+	String myIndex;
 	
 	List<String> players;
 	List<String> hand;
+	List<List<String>> areaCards;
+	List<List<String>> atks;
+	List<List<String>> hps;
 
 	public String getId() {
 		return id;
@@ -46,6 +50,30 @@ public class BoardEntity {
 	}
 	public void setCurPlayerIndex(String curPlayerIndex) {
 		this.curPlayerIndex = curPlayerIndex;
+	}
+	public String getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(String myIndex) {
+		this.myIndex = myIndex;
+	}
+	public List<List<String>> getAreaCards() {
+		return areaCards;
+	}
+	public void setAreaCards(List<List<String>> areaCards) {
+		this.areaCards = areaCards;
+	}
+	public List<List<String>> getAtks() {
+		return atks;
+	}
+	public void setAtks(List<List<String>> atks) {
+		this.atks = atks;
+	}
+	public List<List<String>> getHps() {
+		return hps;
+	}
+	public void setHps(List<List<String>> hps) {
+		this.hps = hps;
 	}
 	
 	
