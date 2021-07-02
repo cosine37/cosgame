@@ -7,5 +7,9 @@ public class Consts {
 
 	//phases
 	public static final int OFFTURN = -1;
+	
+	//choices
+	public static final int NOTHING = 0;
+	public static final int RAID = 1;
 }
 

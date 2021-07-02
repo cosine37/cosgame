@@ -27,6 +27,11 @@ public class Role {
 		atk = card.getAtk();
 	}
 	
+	public void raid() {
+		int x = board.diceFinalResult(atk, hp);
+		player.addResource(x);
+	}
+	
 	public Card getCard() {
 		return card;
 	}

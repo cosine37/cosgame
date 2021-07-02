@@ -22,7 +22,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.handStyles = [];
 		$scope.areaStyles = [];
 		$scope.myIndex = 0;
-		$scope.showAreaCardInfo = false;
+		$scope.roleIndex = -1;
+		$scope.shownInstruction = "";
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -41,6 +42,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		
+		
 		$scope.appoint = function(x){
 			var data = {"index" : x}
 			$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){
@@ -48,14 +51,40 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.raid = function(){
+			var data = {"index" : $scope.roleIndex}
+			$http({url: "/marshbros/raid", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.showAreaCard = function(x){
-			$scope.showAreaCardInfo = true;
 			$scope.curAreaCardIndex = x;
-			imgUrl = "url('/image/Marshbros/Card/" + $scope.area[$scope.myIndex][x] + ".png')"
+			imgUrl = "url('/image/Marshbros/Empty/" + $scope.areaCards[$scope.myIndex][x] + ".png')"
 			var singleStyle = {
 				"background": imgUrl,
 				"background-size": "cover"
 			}
+			$scope.choosedRoleStyle = singleStyle
+		}
+		
+		$scope.showInstructions = function(s){
+			$scope.shownInstruction = s;
+		}
+		
+		$scope.openChoices = function(x,y){
+			if ($scope.roleIndex == y){
+				$scope.roleIndex = -1;
+				$scope.choosedRoleStyle = {}
+				$scope.showInstructions("")
+			} else {
+				$scope.roleIndex = y;
+				$scope.showAreaCard($scope.roleIndex);
+			}
+		}
+		
+		$scope.cancelChoosed = function(){
+			$scope.openChoices($scope.myIndex, $scope.roleIndex)
 		}
 		
 		setAreaStyle = function(){

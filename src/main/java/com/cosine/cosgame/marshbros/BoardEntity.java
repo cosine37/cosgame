@@ -11,9 +11,11 @@ public class BoardEntity {
 	
 	List<String> players;
 	List<String> hand;
+	List<String> diceResults;
 	List<List<String>> areaCards;
 	List<List<String>> atks;
 	List<List<String>> hps;
+	List<List<String>> choices;
 
 	public String getId() {
 		return id;
@@ -74,6 +76,18 @@ public class BoardEntity {
 	}
 	public void setHps(List<List<String>> hps) {
 		this.hps = hps;
+	}
+	public List<String> getDiceResults() {
+		return diceResults;
+	}
+	public void setDiceResults(List<String> diceResults) {
+		this.diceResults = diceResults;
+	}
+	public List<List<String>> getChoices() {
+		return choices;
+	}
+	public void setChoices(List<List<String>> choices) {
+		this.choices = choices;
 	}
 	
 	

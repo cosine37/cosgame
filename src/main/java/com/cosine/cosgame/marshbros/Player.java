@@ -47,6 +47,10 @@ public class Player {
 			board.getTomb().add(c);
 		}
 	}
+	
+	public void addResource(int x) {
+		resource = resource + x;
+	}
 
 	public String getName() {
 		return name;

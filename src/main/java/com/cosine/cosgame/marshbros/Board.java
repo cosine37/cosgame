@@ -13,6 +13,7 @@ public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Card> tomb;
+	Dice dice;
 	
 	int curPlayerIndex;
 	int status;
@@ -28,6 +29,7 @@ public class Board {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		tomb = new ArrayList<>();
+		dice = new Dice();
 		
 		String dbname = "marshbros";
 		String col = "board";
@@ -83,6 +85,11 @@ public class Board {
 		buildDeck();
 		shuffle();
 		dealAll();
+	}
+	
+	public int diceFinalResult(int atk, int hp) {
+		dice.roll(hp);
+		return dice.calcResult(atk);
 	}
 	
 	public List<Card> takeTopCards(int x) {
@@ -187,10 +194,17 @@ public class Board {
 		
 		List<String> playerNames = new ArrayList<>();
 		List<String> hand = new ArrayList<>();
+		List<String> diceResults = new ArrayList<>();
 		List<List<String>> areaCards = new ArrayList<>();
 		List<List<String>> atks = new ArrayList<>();
 		List<List<String>> hps = new ArrayList<>();
+		List<List<String>> choices = new ArrayList<>();
 		String myIndex = "-1";
+		
+		for (i=0;i<dice.results.size();i++) {
+			diceResults.add(Integer.toString(dice.getResults().get(i)));
+		}
+		
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(p.getName());
@@ -198,15 +212,19 @@ public class Board {
 			List<String> singleAreaCards = new ArrayList<>();
 			List<String> singleAtks = new ArrayList<>();
 			List<String> singleHps = new ArrayList<>();
+			List<String> singleChoices = new ArrayList<>();
 			for (j=0;j<p.getArea().size();j++) {
 				Role r = p.getArea().get(j);
 				singleAreaCards.add(r.getCard().getImg());
 				singleAtks.add(Integer.toString(r.getAtk()));
 				singleHps.add(Integer.toString(r.getHp()));
+				singleChoices.add(Integer.toString(r.getChoice()));
+				
 			}
 			areaCards.add(singleAreaCards);
 			atks.add(singleAtks);
 			hps.add(singleHps);
+			choices.add(singleChoices);
 			
 			if (username.contentEquals(players.get(i).getName())) {
 				myIndex = Integer.toString(i);
@@ -227,6 +245,8 @@ public class Board {
 		entity.setAreaCards(areaCards);
 		entity.setAtks(atks);
 		entity.setHps(hps);
+		entity.setChoices(choices);
+		entity.setDiceResults(diceResults);
 		
 		return entity;
 	}
@@ -238,6 +258,7 @@ public class Board {
 		doc.append("winTarget", winTarget);
 		doc.append("lord", lord);
 		doc.append("id", id);
+		doc.append("dice", dice.toDocument());
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -265,6 +286,10 @@ public class Board {
 		winTarget = doc.getInteger("winTarget", 10);
 		lord = doc.getString("lord");
 		id = doc.getString("id");
+		
+		dice = new Dice();
+		dice.setFromDoc((Document) doc.get("dice"));
+		
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -331,6 +356,7 @@ public class Board {
 	public void updateBasicDB() {
 		updateDB("curPlayerIndex", curPlayerIndex);
 		updateDB("status", status);
+		updateDB("dice", dice.toDocument());
 	}
 	
 	public void addPlayerToDB(String name) {
@@ -349,7 +375,5 @@ public class Board {
 			return true;
 		}
 	}
-
-	
 	
 }

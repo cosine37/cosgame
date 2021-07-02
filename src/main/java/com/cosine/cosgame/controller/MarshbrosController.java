@@ -102,9 +102,30 @@ public class MarshbrosController {
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
-			p.appoint(index);
-			board.updateBasicDB();
-			board.updatePlayers();
+			if (p != null) {
+				p.appoint(index);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+			
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/marshbros/raid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> raid(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.getArea().get(index).raid();
+				board.updateBasicDB();
+				board.updatePlayer(username);
+			}
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
