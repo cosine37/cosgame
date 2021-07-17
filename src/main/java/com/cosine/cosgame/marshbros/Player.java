@@ -51,6 +51,14 @@ public class Player {
 	public void addResource(int x) {
 		resource = resource + x;
 	}
+	
+	public List<String> getAttackTargets(){
+		List<String> attackTargets = new ArrayList<>();
+		for (int i=0;i<area.size();i++) {
+			attackTargets.add("1");
+		}
+		return attackTargets;
+	}
 
 	public String getName() {
 		return name;

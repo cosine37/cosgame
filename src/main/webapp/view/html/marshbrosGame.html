@@ -22,7 +22,9 @@
 	<table style="text-align:center">
 		<tr ng-repeat="singleAreaStyles in areaStyles track by $index" ng-init="playerIndex = $index">
 			<td ng-repeat="areaStyle in singleAreaStyles track by $index">
-				<div class="areaCard" ng-style="areaStyle" ng-click="openChoices(playerIndex, $index)">
+				<div class="areaCard" ng-style="areaStyle" ng-class="attackStyles[plyaerIndex][$index]" ng-click="clickAreaCard(playerIndex, $index)">
+					<div class="atk numOnCard noselect">{{atks[playerIndex][$index]}}</div>
+					<div class="hp numOnCard noselect">{{hps[playerIndex][$index]}}</div>
 				</div>
 			</td>
 		</tr>
@@ -31,20 +33,23 @@
 	<table style="text-align:center">
 		<tr>
 			<td>
-				<div class="handCard" ng-style="choosedRoleStyle"></div>
+				<div class="handCard" ng-style="choosedRoleStyle">
+					<div class="atkChoosed numOnChoosedCard noselect" ng-show="roleIndex != -1">{{choosedAtk}}</div>
+					<div class="hpChoosed numOnChoosedCard noselect" ng-show="roleIndex != -1">{{choosedHp}}</div>
+				</div>
 			</td>
-			<td ng-show="roleIndex != -1">
+			<td ng-show="roleIndex != -1 && attackMode == false">
 				<div>
 					<table>
 						<tr><td><button ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
 						<tr><td></td></tr>
-						<tr><td><button ng-mouseover="showInstructions('attack')"ng-click="attack()">攻击</button></td></tr>
+						<tr><td><button ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
 						<tr><td></td></tr>
 						<tr><td><button ng-mouseover="showInstructions('cancel')"ng-click="cancelChoosed()">取消</button></td></tr>
 					</table>
 				</div>
 			</td>
-			<td ng-show="roleIndex != -1" style="text-align:left">
+			<td ng-show="roleIndex != -1 && attackMode == false" style="text-align:left">
 				<div ng-show="shownInstruction=='raid'">
 					<h3>劫掠</h3>
 					<p>掷与你体力值数量相同的骰子。每有一个骰子的点数小于等于你的攻击力，你获得1点资源。</p>
@@ -53,6 +58,10 @@
 					<h3>攻击</h3>
 					<p>指定一名其他角色并掷与你体力值数量相同的骰子。每有一个骰子的点数小于等于你的攻击力，你对其造成1点伤害。</p>
 				</div>
+			</td>
+			<td ng-show="roleIndex != -1 && attackMode">
+				请选择攻击目标。
+				<button ng-mouseover="showInstructions('attack')"ng-click="cancelAttack()">取消</button>
 			</td>
 		</tr>
 	</table>

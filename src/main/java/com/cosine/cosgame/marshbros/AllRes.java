@@ -19,8 +19,11 @@ public class AllRes {
 	public void setOfficialCards() {
 		officialCards = new ArrayList<>();
 		//officialCards.add(new XieZhen());
-		for (int i=0;i<100;i++) {
+		for (int i=0;i<5;i++) {
 			officialCards.add(new XieZhen());
+			officialCards.add(new XieBao());
+			officialCards.add(new GuanSheng());
+			officialCards.add(new LiTianRun());
 		}
 	}
 }

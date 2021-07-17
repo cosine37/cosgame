@@ -175,6 +175,10 @@ public class Board {
 		}
 		return p;
 	}
+	
+	public Player getPlayerByIndex(int index) {
+		return players.get(index);
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -195,10 +199,12 @@ public class Board {
 		List<String> playerNames = new ArrayList<>();
 		List<String> hand = new ArrayList<>();
 		List<String> diceResults = new ArrayList<>();
+		List<String> resources = new ArrayList<>();
 		List<List<String>> areaCards = new ArrayList<>();
 		List<List<String>> atks = new ArrayList<>();
 		List<List<String>> hps = new ArrayList<>();
 		List<List<String>> choices = new ArrayList<>();
+		List<List<String>> attackTargets = new ArrayList<>();
 		String myIndex = "-1";
 		
 		for (i=0;i<dice.results.size();i++) {
@@ -225,6 +231,8 @@ public class Board {
 			atks.add(singleAtks);
 			hps.add(singleHps);
 			choices.add(singleChoices);
+			attackTargets.add(p.getAttackTargets());
+			resources.add(Integer.toString(p.getResource()));
 			
 			if (username.contentEquals(players.get(i).getName())) {
 				myIndex = Integer.toString(i);
@@ -247,6 +255,8 @@ public class Board {
 		entity.setHps(hps);
 		entity.setChoices(choices);
 		entity.setDiceResults(diceResults);
+		entity.setAttackTargets(attackTargets);
+		entity.setResources(resources);
 		
 		return entity;
 	}

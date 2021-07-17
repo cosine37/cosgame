@@ -24,6 +24,10 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.myIndex = 0;
 		$scope.roleIndex = -1;
 		$scope.shownInstruction = "";
+		$scope.attackRoleIndex = -1;
+		$scope.attackPlayerIndex = -1;
+		$scope.attackMode = false;
+		$scope.attackClasses = [];
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -42,7 +46,21 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
-		
+		setAttackClasses = function(){
+			$scope.attackClasses = []
+			for (i=0;i<$scope.attackTargets.length;i++){
+				var singleAttackTargets = $scope.attackTargets[i]
+				var singleAttackClasses = []
+				for (j=0;j<singleAttackTargets.length;j++){
+					if (singleAttackTargets[j] == "1"){
+						singleAttackClasses.push("attackable");
+					} else {
+						singleAttackClasses.push("");
+					}
+				}
+				$scope.attackClasses.push(singleAttackClasses);
+			}
+		}
 		
 		$scope.appoint = function(x){
 			var data = {"index" : x}
@@ -58,6 +76,23 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.openAttack = function(){
+			$scope.attackMode = true
+			setAttackClasses()
+		}
+		
+		$scope.cancelAttack = function(){
+			$scope.attackMode = false
+		}
+		
+		$scope.attack = function(){
+			var data = {"index" : $scope.roleIndex, "attackPlayer" : $scope.attackPlayerIndex, "attackRole" : $scope.attackRoleIndex}
+			$http({url: "/marshbros/attack", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+				$scope.attackMode = false
+			});
+		}
+		
 		$scope.showAreaCard = function(x){
 			$scope.curAreaCardIndex = x;
 			imgUrl = "url('/image/Marshbros/Empty/" + $scope.areaCards[$scope.myIndex][x] + ".png')"
@@ -66,6 +101,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				"background-size": "cover"
 			}
 			$scope.choosedRoleStyle = singleStyle
+			$scope.choosedAtk = $scope.atks[$scope.myIndex][x]
+			$scope.choosedHp = $scope.hps[$scope.myIndex][x]
 		}
 		
 		$scope.showInstructions = function(s){
@@ -80,6 +117,18 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			} else {
 				$scope.roleIndex = y;
 				$scope.showAreaCard($scope.roleIndex);
+			}
+		}
+		
+		$scope.clickAreaCard = function(x,y){
+			if ($scope.attackMode == true){
+				$scope.attackPlayerIndex = x
+				$scope.attackRoleIndex = y
+				$scope.attack()
+			} else {
+				if (x == $scope.myIndex){
+					$scope.openChoices(x,y)
+				}
 			}
 		}
 		
@@ -131,6 +180,9 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.hand = response.data.hand
 				$scope.areaCards = response.data.areaCards;
 				$scope.myIndex = parseInt(response.data.myIndex);
+				$scope.attackTargets = response.data.attackTargets;
+				$scope.hps = response.data.hps;
+				$scope.atks = response.data.atks;
 				
 				setUI();
 				//ws.send(id);

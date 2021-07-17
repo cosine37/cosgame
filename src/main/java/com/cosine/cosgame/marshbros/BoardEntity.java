@@ -12,10 +12,12 @@ public class BoardEntity {
 	List<String> players;
 	List<String> hand;
 	List<String> diceResults;
+	List<String> resources;
 	List<List<String>> areaCards;
 	List<List<String>> atks;
 	List<List<String>> hps;
 	List<List<String>> choices;
+	List<List<String>> attackTargets;
 
 	public String getId() {
 		return id;
@@ -88,6 +90,18 @@ public class BoardEntity {
 	}
 	public void setChoices(List<List<String>> choices) {
 		this.choices = choices;
+	}
+	public List<List<String>> getAttackTargets() {
+		return attackTargets;
+	}
+	public void setAttackTargets(List<List<String>> attackTargets) {
+		this.attackTargets = attackTargets;
+	}
+	public List<String> getResources() {
+		return resources;
+	}
+	public void setResources(List<String> resources) {
+		this.resources = resources;
 	}
 	
 	

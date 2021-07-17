@@ -32,6 +32,21 @@ public class Role {
 		player.addResource(x);
 	}
 	
+	public void attack(int playerIndex, int roleIndex) {
+		int x = board.diceFinalResult(atk, hp);
+		Player tp = board.getPlayerByIndex(playerIndex);
+		Role tr = tp.getArea().get(roleIndex);
+		tr.loseHp(x);
+	}
+	
+	public void addHp(int x) {
+		hp = hp+x;
+	}
+	
+	public void loseHp(int x) {
+		hp = hp-x;
+	}
+	
 	public Card getCard() {
 		return card;
 	}

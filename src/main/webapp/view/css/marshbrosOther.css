@@ -40,3 +40,55 @@ button:disabled{
 	width: 168px;
 	position: relative;
 }
+
+.attackable{
+	filter:brightness(120%) drop-shadow(0px 0px 10px yellow);
+}
+
+.numOnChoosedCard{
+	font-weight: bolder;
+	font-size: 32px;
+	-webkit-text-stroke: 1px black;
+	color: white;
+}
+
+.atkChoosed{
+	position: absolute;
+	left: 15px;
+	bottom: 0px;
+}
+
+.hpChoosed{
+	position: absolute;
+	right: 16px;
+	bottom: 0px;
+}
+
+.numOnCard{
+	font-weight: bolder;
+	font-size: 21px;
+	-webkit-text-stroke: 1px black;
+	color: white;
+}
+
+.atk{
+	position: absolute;
+	left: 9px;
+	bottom: 0px;
+}
+
+.hp{
+	position: absolute;
+	right: 10px;
+	bottom: 0px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
