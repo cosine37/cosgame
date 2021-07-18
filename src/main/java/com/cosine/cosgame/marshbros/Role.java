@@ -30,6 +30,7 @@ public class Role {
 	public void raid() {
 		int x = board.diceFinalResult(atk, hp);
 		player.addResource(x);
+		choice = Consts.RAID;
 	}
 	
 	public void attack(int playerIndex, int roleIndex) {
@@ -37,6 +38,7 @@ public class Role {
 		Player tp = board.getPlayerByIndex(playerIndex);
 		Role tr = tp.getArea().get(roleIndex);
 		tr.loseHp(x);
+		choice = Consts.ATTACK;
 	}
 	
 	public void addHp(int x) {

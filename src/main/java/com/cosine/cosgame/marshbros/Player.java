@@ -21,6 +21,31 @@ public class Player {
 		area = new ArrayList<>();
 	}
 	
+	public void startTurn() {
+		phase = Consts.REC1;
+	}
+	
+	public void endTurn() {
+		for (int i=0;i<area.size();i++) {
+			area.get(i).setChoice(Consts.NOTCHOOSED);
+		}
+		phase = Consts.OFFTURN;
+		Player p = nextPlayer();
+		p.startTurn();
+	}
+	
+	public void nextPhase() {
+		if (phase == Consts.REC1) {
+			phase = Consts.ACTION;
+		} else if (phase == Consts.ACTION) {
+			phase = Consts.REC2;
+		} else if (phase == Consts.REC2) {
+			phase = Consts.SACRIFICE;
+		} else if (phase == Consts.SACRIFICE) {
+			endTurn();
+		}
+	}
+	
 	public void draw() {
 		Card c = board.takeTopCard();
 		hand.add(c);
@@ -39,6 +64,10 @@ public class Player {
 		Card c = hand.remove(x);
 		Role r = new Role(c);
 		area.add(r);
+		board.addNextPhaseAsk();
+		
+		//TODO: On Appointment here
+		
 	}
 	
 	public void moveToTomb(int x) {
@@ -58,6 +87,14 @@ public class Player {
 			attackTargets.add("1");
 		}
 		return attackTargets;
+	}
+	
+	public Player nextPlayer() {
+		int x = index+1;
+		if (x==board.getPlayers().size()) {
+			x = 0;
+		}
+		return board.getPlayers().get(x);
 	}
 
 	public String getName() {

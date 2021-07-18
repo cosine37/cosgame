@@ -13,6 +13,7 @@ public class Board {
 	List<Player> players;
 	List<Card> deck;
 	List<Card> tomb;
+	List<Ask> asks;
 	Dice dice;
 	
 	int curPlayerIndex;
@@ -85,6 +86,28 @@ public class Board {
 		buildDeck();
 		shuffle();
 		dealAll();
+		int i;
+		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			p.setPhase(Consts.OFFTURN);
+		}
+		players.get(curPlayerIndex).setPhase(Consts.REC1);
+	}
+	
+	public void resolveAutoAsks() {
+		while (asks.size()>0) {
+			if (asks.get(0).isAutomatic()) {
+				Ask ask = asks.remove(0);
+				ask.resolveAutomatic();
+			} else {
+				break;
+			}
+		}
+	}
+	
+	public void addNextPhaseAsk() {
+		Ask ask = new Ask(Consts.AUTOMATIC, Consts.NEXTPHASE, true);
+		addAskToTop(ask);
 	}
 	
 	public int diceFinalResult(int atk, int hp) {
@@ -116,6 +139,9 @@ public class Board {
 		}
 	}
 
+	public void addAskToTop(Ask ask) {
+		asks.add(0,ask);
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -177,6 +203,9 @@ public class Board {
 	}
 	
 	public Player getPlayerByIndex(int index) {
+		if (index<0 || index>players.size()) {
+			return null;
+		}
 		return players.get(index);
 	}
 
@@ -287,6 +316,12 @@ public class Board {
 			tombs.add(deck.get(i).getImg());
 		}
 		doc.append("tomb", tombs);
+		List<Document> askDocs = new ArrayList<>();
+		for (i=0;i<asks.size();i++) {
+			Document doa = asks.get(i).toDocument();
+			askDocs.add(doa);
+		}
+		doc.append("asks", askDocs);
 		return doc;
 	}
 	
@@ -322,6 +357,14 @@ public class Board {
 		for (i=0;i<decks.size();i++) {
 			Card c = CardFactory.createCard(tombs.get(i));
 			tomb.add(c);
+		}
+		List<Document> askDocs = (List<Document>) doc.get("asks");
+		asks = new ArrayList<>();
+		for (i=0;i<askDocs.size();i++) {
+			Document doa = askDocs.get(i);
+			Ask ask = new Ask();
+			ask.setBoard(this);
+			ask.setFromDoc(doa);
 		}
 	}
 	

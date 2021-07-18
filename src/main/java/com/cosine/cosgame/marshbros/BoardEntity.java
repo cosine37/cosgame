@@ -6,6 +6,7 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String status;
+	String phase;
 	String curPlayerIndex;
 	String myIndex;
 	
@@ -102,6 +103,12 @@ public class BoardEntity {
 	}
 	public void setResources(List<String> resources) {
 		this.resources = resources;
+	}
+	public String getPhase() {
+		return phase;
+	}
+	public void setPhase(String phase) {
+		this.phase = phase;
 	}
 	
 	
