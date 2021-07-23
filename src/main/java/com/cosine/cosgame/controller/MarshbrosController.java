@@ -17,6 +17,7 @@ import com.cosine.cosgame.marshbros.Board;
 import com.cosine.cosgame.marshbros.Meta;
 import com.cosine.cosgame.marshbros.Player;
 import com.cosine.cosgame.marshbros.BoardEntity;
+import com.cosine.cosgame.marshbros.Consts;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -93,6 +94,51 @@ public class MarshbrosController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/marshbros/endaction", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> endaction(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				if (p.getPhase() == Consts.ACTION) {
+					board.addNextPhaseAsk(p);
+					board.resolveAutoAsks();
+					board.updateBasicDB();
+					board.updatePlayers();
+				}
+			}
+			
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/marshbros/draw", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> draw(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				if (p.getPhase() == Consts.REC1 || p.getPhase() == Consts.REC2) {
+					board.addNextPhaseAsk(p);
+					p.draw();
+					board.resolveAutoAsks();
+					board.updateBasicDB();
+					board.updatePlayers();
+				}
+			}
+			
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/marshbros/appoint", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> appoint(HttpServletRequest request, @RequestParam int index) {
 		Board board = new Board();
@@ -103,7 +149,9 @@ public class MarshbrosController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
+				board.addNextPhaseAsk(p);
 				p.appoint(index);
+				board.resolveAutoAsks();
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

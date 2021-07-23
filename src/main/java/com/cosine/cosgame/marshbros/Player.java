@@ -36,11 +36,20 @@ public class Player {
 	
 	public void nextPhase() {
 		if (phase == Consts.REC1) {
-			phase = Consts.ACTION;
+			if (area.size()==0) {
+				phase = Consts.REC2;
+			} else {
+				phase = Consts.ACTION;
+			}
 		} else if (phase == Consts.ACTION) {
 			phase = Consts.REC2;
 		} else if (phase == Consts.REC2) {
-			phase = Consts.SACRIFICE;
+			if (area.size()>3) {
+				phase = Consts.SACRIFICE;
+			} else {
+				endTurn();
+			}
+			
 		} else if (phase == Consts.SACRIFICE) {
 			endTurn();
 		}
@@ -64,10 +73,6 @@ public class Player {
 		Card c = hand.remove(x);
 		Role r = new Role(c);
 		area.add(r);
-		board.addNextPhaseAsk();
-		
-		//TODO: On Appointment here
-		
 	}
 	
 	public void moveToTomb(int x) {

@@ -65,7 +65,20 @@
 			</td>
 		</tr>
 	</table>
-	
+	<div>
+		<div ng-show="phase == '1'">
+			第一招募阶段：你可以摸一张牌或令一名角色登场。
+			<button ng-click="draw()">摸牌</button>
+		</div>
+		<div ng-show="phase == '2'">
+			行动阶段：点击你的角色执行行动。
+			<button ng-click="endAction()">结束</button>
+		</div>
+		<div ng-show="phase == '3'">
+			第二招募阶段：你可以摸一张牌或令一名角色登场。
+			<button ng-click="draw()">摸牌</button>
+		</div>
+	</div>
 	<table style="text-align:center">
 		<tr>
 			<td ng-repeat="handStyle in handStyles track by $index">

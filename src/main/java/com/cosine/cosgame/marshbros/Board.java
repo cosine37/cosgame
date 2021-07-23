@@ -30,6 +30,7 @@ public class Board {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		tomb = new ArrayList<>();
+		asks = new ArrayList<>();
 		dice = new Dice();
 		
 		String dbname = "marshbros";
@@ -91,7 +92,7 @@ public class Board {
 			Player p = players.get(i);
 			p.setPhase(Consts.OFFTURN);
 		}
-		players.get(curPlayerIndex).setPhase(Consts.REC1);
+		players.get(curPlayerIndex).startTurn();
 	}
 	
 	public void resolveAutoAsks() {
@@ -105,8 +106,9 @@ public class Board {
 		}
 	}
 	
-	public void addNextPhaseAsk() {
+	public void addNextPhaseAsk(Player p) {
 		Ask ask = new Ask(Consts.AUTOMATIC, Consts.NEXTPHASE, true);
+		ask.setPlayer(p);
 		addAskToTop(ask);
 	}
 	
@@ -235,6 +237,7 @@ public class Board {
 		List<List<String>> choices = new ArrayList<>();
 		List<List<String>> attackTargets = new ArrayList<>();
 		String myIndex = "-1";
+		String phase = "-1";
 		
 		for (i=0;i<dice.results.size();i++) {
 			diceResults.add(Integer.toString(dice.getResults().get(i)));
@@ -265,6 +268,7 @@ public class Board {
 			
 			if (username.contentEquals(players.get(i).getName())) {
 				myIndex = Integer.toString(i);
+				phase = Integer.toString(p.getPhase());
 				for (j=0;j<p.getHand().size();j++) {
 					hand.add(p.getHand().get(j).getImg());
 				}
@@ -286,6 +290,7 @@ public class Board {
 		entity.setDiceResults(diceResults);
 		entity.setAttackTargets(attackTargets);
 		entity.setResources(resources);
+		entity.setPhase(phase);
 		
 		return entity;
 	}
@@ -354,7 +359,7 @@ public class Board {
 		}
 		List<String> tombs = (List<String>) doc.get("tomb");
 		tomb = new ArrayList<>();
-		for (i=0;i<decks.size();i++) {
+		for (i=0;i<tombs.size();i++) {
 			Card c = CardFactory.createCard(tombs.get(i));
 			tomb.add(c);
 		}
@@ -406,10 +411,19 @@ public class Board {
 		}
 	}
 	
+	public void updateDeck() {
+		List<String> decks = new ArrayList<>();
+		for (int i=0;i<deck.size();i++) {
+			decks.add(deck.get(i).getImg());
+		}
+		dbutil.update("id", id, "deck", decks);
+	}
+	
 	public void updateBasicDB() {
 		updateDB("curPlayerIndex", curPlayerIndex);
 		updateDB("status", status);
 		updateDB("dice", dice.toDocument());
+		updateDeck();
 	}
 	
 	public void addPlayerToDB(String name) {
@@ -428,5 +442,4 @@ public class Board {
 			return true;
 		}
 	}
-	
 }

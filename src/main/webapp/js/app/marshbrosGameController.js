@@ -62,6 +62,18 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		$scope.draw = function(x){
+			$http({url: "/marshbros/draw", method: "POST"}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.endAction = function(){
+			$http({url: "/marshbros/endaction", method: "POST"}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
 		$scope.appoint = function(x){
 			var data = {"index" : x}
 			$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){
@@ -183,6 +195,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.attackTargets = response.data.attackTargets;
 				$scope.hps = response.data.hps;
 				$scope.atks = response.data.atks;
+				$scope.phase = response.data.phase;
 				
 				setUI();
 				//ws.send(id);
