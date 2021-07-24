@@ -112,6 +112,13 @@ public class Board {
 		addAskToTop(ask);
 	}
 	
+	public void addMoveToTombAsk(Player p, int roleIndex) {
+		Ask ask = new Ask(Consts.AUTOMATIC, Consts.MOVETOTOMB, true);
+		ask.setPlayer(p);
+		ask.setRoleIndex(roleIndex);
+		addAskToTop(ask);
+	}
+	
 	public int diceFinalResult(int atk, int hp) {
 		dice.roll(hp);
 		return dice.calcResult(atk);

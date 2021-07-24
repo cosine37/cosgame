@@ -206,7 +206,7 @@ public class MarshbrosController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/marshbros/sacrifice", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> sacrifice(HttpServletRequest request, @RequestParam List<Integer> indexes) {
+	public ResponseEntity<StringEntity> sacrifice(HttpServletRequest request, @RequestParam int roleIndex) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
@@ -215,8 +215,10 @@ public class MarshbrosController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
-				board.addNextPhaseAsk(p);
-				p.sacrifice(indexes);
+				p.sacrifice(roleIndex);
+				if (p.getArea().size()<=3) {
+					board.addNextPhaseAsk(p);
+				}
 				board.resolveAutoAsks();
 				board.updateBasicDB();
 				board.updatePlayer(username);

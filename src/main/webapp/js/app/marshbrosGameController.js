@@ -31,6 +31,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.numSacrifice = 0;
 		$scope.showSacrifice = false;
 		$scope.chooseSacrifice = [];
+		$scope.sacrificeIndex = -1;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -113,40 +114,15 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.chooseForSacrifice = function(x){
-			var total = 0;
-			$scope.showSacrifice = false;
-			for (i=0;i<$scope.chooseSacrifice.length;i++){
-				total = total + $scope.chooseSacrifice[i]
-			}
-			if ($scope.chooseSacrifice[x] == 1){
-				$scope.chooseSacrifice[x] = 0;
+			if ($scope.sacrificeIndex == x){
+				$scope.sacrificeIndex = -1;
 			} else {
-				if (total == $scope.numSacrifice){
-					$scope.showSacrifice = true;
-					if ($scope.numSacrifice == 1){
-						for (i=0;i<$scope.chooseSacrifice.length;i++){
-							$scope.chooseSacrifice[i] = 0
-						}
-						$scope.chooseSacrifice[x] = 1
-					}
-				} else {
-					$scope.chooseSacrifice[x] = 1;
-					total = total+1
-					if (total == $scope.numSacrifice){
-						$scope.showSacrifice = true;
-					}
-				}
+				$scope.sacrificeIndex = x;
 			}
 		}
 		
 		$scope.confirmSacrifice = function(){
-			var indexes = []
-			for (i=0;i<$scope.chooseSacrifice.length;i++){
-				if ($scope.chooseSacrifice[i] == 1){
-					indexes.push(i)
-				}
-			}
-			var data = {"indexes" : indexes}
+			var data = {"roleIndex" : $scope.sacrificeIndex}
 			$http({url: "/marshbros/sacrifice", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 			});
@@ -263,6 +239,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.phase = response.data.phase;
 				$scope.choices = response.data.choices;
 				$scope.numSacrifice = 0;
+				$scope.sacrificeIndex = -1;
+				$scope.showSacrifice = false;
 				
 				if ($scope.phase == "4") { //sacrifice
 					$scope.numSacrifice = $scope.areaCards[$scope.myIndex].length - 3;

@@ -23,5 +23,6 @@ public class Consts {
 	
 	// ask subtypes
 	public static final int NEXTPHASE = 0;
+	public static final int MOVETOTOMB = 1;
 }
 

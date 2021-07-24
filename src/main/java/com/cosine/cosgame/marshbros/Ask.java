@@ -9,6 +9,7 @@ public class Ask {
 	int type;
 	int subType;
 	boolean single;
+	int roleIndex;
 	
 	Board board;
 	Player player;
@@ -28,6 +29,8 @@ public class Ask {
 		if (type == Consts.AUTOMATIC) {
 			if (subType == Consts.NEXTPHASE) {
 				player.nextPhase();
+			} else if (subType == Consts.MOVETOTOMB) {
+				player.moveToTomb(roleIndex);
 			}
 		}
 	}
@@ -78,9 +81,14 @@ public class Ask {
 	public List<Player> getPlayers() {
 		return players;
 	}
-
 	public void setPlayers(List<Player> players) {
 		this.players = players;
+	}
+	public int getRoleIndex() {
+		return roleIndex;
+	}
+	public void setRoleIndex(int roleIndex) {
+		this.roleIndex = roleIndex;
 	}
 
 	public Document toDocument() {
@@ -88,6 +96,7 @@ public class Ask {
 		doc.append("type", type);
 		doc.append("subType", subType);
 		doc.append("single", single);
+		doc.append("roleIndex", roleIndex);
 		doc.append("playerIndex", player.getIndex());
 		int i;
 		List<Integer> playerIndexes = new ArrayList<>();
@@ -102,6 +111,7 @@ public class Ask {
 		type = doc.getInteger("type", 0);
 		subType = doc.getInteger("subType", 0);
 		single = doc.getBoolean("single", true);
+		roleIndex = doc.getInteger("roleIndex", -1);
 		int playerIndex = doc.getInteger("playerIndex", -1);
 		player = board.getPlayerByIndex(playerIndex);
 		int i;

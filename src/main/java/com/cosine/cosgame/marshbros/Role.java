@@ -39,8 +39,12 @@ public class Role {
 		Player tp = board.getPlayerByIndex(playerIndex);
 		Role tr = tp.getArea().get(roleIndex);
 		tr.loseHp(x);
+		if (tr.getHp() <= 0) {
+			board.addMoveToTombAsk(tp, roleIndex);
+			// TODO: Last Word Here
+			board.resolveAutoAsks();
+		}
 		choice = Consts.ATTACK;
-		
 	}
 	
 	public void addHp(int x) {
@@ -49,6 +53,9 @@ public class Role {
 	
 	public void loseHp(int x) {
 		hp = hp-x;
+		if (hp<0) {
+			hp = 0;
+		}
 	}
 	
 	public Card getCard() {

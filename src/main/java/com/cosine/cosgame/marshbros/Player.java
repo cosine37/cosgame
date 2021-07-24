@@ -74,13 +74,20 @@ public class Player {
 		area.add(r);
 	}
 	
+	public void sacrifice(int roleIndex) {
+		area.get(roleIndex).setHp(0);
+		board.addMoveToTombAsk(this, roleIndex);
+		// TODO: Last Word Here
+		board.resolveAutoAsks();
+	}
+	/*
 	public void sacrifice(List<Integer> indexes) {
 		for (int i=indexes.size()-1;i>=0;i--) {
 			int x = indexes.get(i);
-			moveToTomb(x);
+			//moveToTomb(x);
 		}
 	}
-	
+	*/
 	public void moveToTomb(int x) {
 		if (x>=0 && x<area.size()) {
 			Card c = area.remove(x).getCard();
