@@ -26,9 +26,6 @@ public class Player {
 	}
 	
 	public void endTurn() {
-		for (int i=0;i<area.size();i++) {
-			area.get(i).setChoice(Consts.NOTCHOOSED);
-		}
 		phase = Consts.OFFTURN;
 		Player p = nextPlayer();
 		p.startTurn();
@@ -42,6 +39,9 @@ public class Player {
 				phase = Consts.ACTION;
 			}
 		} else if (phase == Consts.ACTION) {
+			for (int i=0;i<area.size();i++) {
+				area.get(i).setChoice(Consts.NOTCHOOSED);
+			}
 			phase = Consts.REC2;
 		} else if (phase == Consts.REC2) {
 			if (area.size()>3) {
@@ -49,7 +49,6 @@ public class Player {
 			} else {
 				endTurn();
 			}
-			
 		} else if (phase == Consts.SACRIFICE) {
 			endTurn();
 		}
@@ -75,6 +74,13 @@ public class Player {
 		area.add(r);
 	}
 	
+	public void sacrifice(List<Integer> indexes) {
+		for (int i=indexes.size()-1;i>=0;i--) {
+			int x = indexes.get(i);
+			moveToTomb(x);
+		}
+	}
+	
 	public void moveToTomb(int x) {
 		if (x>=0 && x<area.size()) {
 			Card c = area.remove(x).getCard();
@@ -92,6 +98,18 @@ public class Player {
 			attackTargets.add("1");
 		}
 		return attackTargets;
+	}
+	
+	public boolean allActioned(int index) {
+		for (int i=0;i<area.size();i++) {
+			if (i==index) {
+				continue;
+			}
+			if (area.get(i).getChoice() == Consts.NOTCHOOSED) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public Player nextPlayer() {

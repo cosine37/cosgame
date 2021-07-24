@@ -83,6 +83,19 @@ button:disabled{
 	bottom: 0px;
 }
 
+.targeted{
+	position: absolute;
+	user-select:none;
+	float: left;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -40px;
+	height: 80px;
+	width: 80px;
+}
+
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

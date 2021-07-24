@@ -25,6 +25,7 @@ public class Role {
 		card.setRole(this);
 		hp = card.getHp();
 		atk = card.getAtk();
+		choice = Consts.NOTCHOOSED;
 	}
 	
 	public void raid() {
@@ -39,6 +40,7 @@ public class Role {
 		Role tr = tp.getArea().get(roleIndex);
 		tr.loseHp(x);
 		choice = Consts.ATTACK;
+		
 	}
 	
 	public void addHp(int x) {

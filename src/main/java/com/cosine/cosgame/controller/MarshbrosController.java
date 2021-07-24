@@ -170,7 +170,12 @@ public class MarshbrosController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
+				if (p.allActioned(index)) {
+					//System.out.println("All Actioned");
+					board.addNextPhaseAsk(p);
+				}
 				p.getArea().get(index).raid();
+				board.resolveAutoAsks();
 				board.updateBasicDB();
 				board.updatePlayer(username);
 			}
@@ -188,7 +193,31 @@ public class MarshbrosController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
+				if (p.allActioned(index)) {
+					board.addNextPhaseAsk(p);
+				}
 				p.getArea().get(index).attack(attackPlayer, attackRole);
+				board.resolveAutoAsks();
+				board.updateBasicDB();
+				board.updatePlayer(username);
+			}
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/marshbros/sacrifice", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> sacrifice(HttpServletRequest request, @RequestParam List<Integer> indexes) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				board.addNextPhaseAsk(p);
+				p.sacrifice(indexes);
+				board.resolveAutoAsks();
 				board.updateBasicDB();
 				board.updatePlayer(username);
 			}

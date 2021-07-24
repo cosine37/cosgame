@@ -28,6 +28,9 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.attackPlayerIndex = -1;
 		$scope.attackMode = false;
 		$scope.attackClasses = [];
+		$scope.numSacrifice = 0;
+		$scope.showSacrifice = false;
+		$scope.chooseSacrifice = [];
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -75,16 +78,19 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.appoint = function(x){
-			var data = {"index" : x}
-			$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
-			});
+			if ($scope.phase == "1" || $scope.phase == "3"){
+				var data = {"index" : x}
+				$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){
+					$scope.getBoard()
+				});
+			}
 		}
 		
 		$scope.raid = function(){
 			var data = {"index" : $scope.roleIndex}
 			$http({url: "/marshbros/raid", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
+				$scope.hideAreaCard();
 			});
 		}
 		
@@ -102,7 +108,54 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			$http({url: "/marshbros/attack", method: "POST", params: data}).then(function(response){
 				$scope.getBoard()
 				$scope.attackMode = false
+				$scope.hideAreaCard();
 			});
+		}
+		
+		$scope.chooseForSacrifice = function(x){
+			var total = 0;
+			$scope.showSacrifice = false;
+			for (i=0;i<$scope.chooseSacrifice.length;i++){
+				total = total + $scope.chooseSacrifice[i]
+			}
+			if ($scope.chooseSacrifice[x] == 1){
+				$scope.chooseSacrifice[x] = 0;
+			} else {
+				if (total == $scope.numSacrifice){
+					$scope.showSacrifice = true;
+					if ($scope.numSacrifice == 1){
+						for (i=0;i<$scope.chooseSacrifice.length;i++){
+							$scope.chooseSacrifice[i] = 0
+						}
+						$scope.chooseSacrifice[x] = 1
+					}
+				} else {
+					$scope.chooseSacrifice[x] = 1;
+					total = total+1
+					if (total == $scope.numSacrifice){
+						$scope.showSacrifice = true;
+					}
+				}
+			}
+		}
+		
+		$scope.confirmSacrifice = function(){
+			var indexes = []
+			for (i=0;i<$scope.chooseSacrifice.length;i++){
+				if ($scope.chooseSacrifice[i] == 1){
+					indexes.push(i)
+				}
+			}
+			var data = {"indexes" : indexes}
+			$http({url: "/marshbros/sacrifice", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+			});
+		}
+		
+		$scope.hideAreaCard = function(){
+			$scope.roleIndex = -1
+			$scope.curAreaCardIndex = -1;
+			$scope.choosedRoleStyle = {}
 		}
 		
 		$scope.showAreaCard = function(x){
@@ -126,9 +179,11 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.roleIndex = -1;
 				$scope.choosedRoleStyle = {}
 				$scope.showInstructions("")
-			} else {
+			} else if ($scope.phase == 2 && $scope.choices[$scope.myIndex][y] == "-1"){ // action phase
 				$scope.roleIndex = y;
 				$scope.showAreaCard($scope.roleIndex);
+			} else if ($scope.phase == 4){
+				$scope.chooseForSacrifice(y)
 			}
 		}
 		
@@ -158,10 +213,20 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 						"background": imgUrl,
 						"background-size": "cover"
 					}
+					if ($scope.choices[$scope.myIndex][i] != "-1"){
+						singleStyle = {
+							"background": imgUrl,
+							"background-color" : "gray",
+							"background-blend-mode" : "screen",
+							"background-size": "cover"
+						}
+					}
 					//alert(JSON.stringify(singleStyle))
 					singleAreaStyles.push(singleStyle)
 				}
 				$scope.areaStyles.push(singleAreaStyles)
+				
+				//alert(JSON.stringify($scope.areaStyles))
 			}
 		}
 		
@@ -196,7 +261,16 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.hps = response.data.hps;
 				$scope.atks = response.data.atks;
 				$scope.phase = response.data.phase;
+				$scope.choices = response.data.choices;
+				$scope.numSacrifice = 0;
 				
+				if ($scope.phase == "4") { //sacrifice
+					$scope.numSacrifice = $scope.areaCards[$scope.myIndex].length - 3;
+					$scope.chooseSacrifice = [];
+					for (i=0;i<$scope.areaCards[$scope.myIndex].length;i++){
+						$scope.chooseSacrifice.push(0);
+					}
+				}
 				setUI();
 				//ws.send(id);
 			});

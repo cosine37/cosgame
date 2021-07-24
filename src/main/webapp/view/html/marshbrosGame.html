@@ -23,6 +23,9 @@
 		<tr ng-repeat="singleAreaStyles in areaStyles track by $index" ng-init="playerIndex = $index">
 			<td ng-repeat="areaStyle in singleAreaStyles track by $index">
 				<div class="areaCard" ng-style="areaStyle" ng-class="attackStyles[plyaerIndex][$index]" ng-click="clickAreaCard(playerIndex, $index)">
+					<div ng-show="phase == '4' && playerIndex == myIndex && chooseSacrifice[$index] == 1">
+						<img src="/image/Marshbros/target.png" class="targeted">
+					</div>
 					<div class="atk numOnCard noselect">{{atks[playerIndex][$index]}}</div>
 					<div class="hp numOnCard noselect">{{hps[playerIndex][$index]}}</div>
 				</div>
@@ -77,6 +80,10 @@
 		<div ng-show="phase == '3'">
 			第二招募阶段：你可以摸一张牌或令一名角色登场。
 			<button ng-click="draw()">摸牌</button>
+		</div>
+		<div ng-show="phase == '4'">
+			献祭阶段：请献祭{{numSacrifice}}名角色。
+			<button ng-show="showSacrifice" ng-click="confirmSacrifice()">确定</button>
 		</div>
 	</div>
 	<table style="text-align:center">

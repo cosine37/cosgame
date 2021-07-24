@@ -419,11 +419,20 @@ public class Board {
 		dbutil.update("id", id, "deck", decks);
 	}
 	
+	public void updateTomb() {
+		List<String> tombs = new ArrayList<>();
+		for (int i=0;i<tomb.size();i++) {
+			tombs.add(tomb.get(i).getImg());
+		}
+		dbutil.update("id", id, "tomb", tombs);
+	}
+	
 	public void updateBasicDB() {
 		updateDB("curPlayerIndex", curPlayerIndex);
 		updateDB("status", status);
 		updateDB("dice", dice.toDocument());
 		updateDeck();
+		updateTomb();
 	}
 	
 	public void addPlayerToDB(String name) {
