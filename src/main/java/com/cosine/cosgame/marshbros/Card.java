@@ -7,6 +7,7 @@ public class Card {
 	protected int atk;
 	protected int hp;
 	protected int type;
+	protected int subType;
 	
 	protected Board board;
 	protected Player player;
@@ -18,6 +19,7 @@ public class Card {
 	public Card() {
 		taunt = false;
 		canAttack = true;
+		type = Consts.ROLE;
 	}
 	
 	public void activate() {

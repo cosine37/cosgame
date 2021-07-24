@@ -75,9 +75,10 @@ public class Player {
 	}
 	
 	public void sacrifice(int roleIndex) {
-		area.get(roleIndex).setHp(0);
+		Role r = area.get(roleIndex);
+		r.setHp(0);
 		board.addMoveToTombAsk(this, roleIndex);
-		// TODO: Last Word Here
+		r.getCard().lastWish();
 		board.resolveAutoAsks();
 	}
 	/*
@@ -210,9 +211,9 @@ public class Player {
 		area = new ArrayList<>();
 		for (i=0;i<doa.size();i++) {
 			Role r = new Role();
-			r.setFromDoc(doa.get(i));
 			r.setBoard(board);
 			r.setPlayer(this);
+			r.setFromDoc(doa.get(i));
 			area.add(r);
 		}
 	}

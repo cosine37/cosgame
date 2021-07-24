@@ -24,5 +24,10 @@ public class Consts {
 	// ask subtypes
 	public static final int NEXTPHASE = 0;
 	public static final int MOVETOTOMB = 1;
+	
+	
+	// card types
+	public static final int ROLE = 1;
+	public static final int BEAST = 2;
 }
 

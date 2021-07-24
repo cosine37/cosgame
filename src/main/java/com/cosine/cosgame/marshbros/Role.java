@@ -41,7 +41,7 @@ public class Role {
 		tr.loseHp(x);
 		if (tr.getHp() <= 0) {
 			board.addMoveToTombAsk(tp, roleIndex);
-			// TODO: Last Word Here
+			tr.getCard().lastWish();
 			board.resolveAutoAsks();
 		}
 		choice = Consts.ATTACK;
@@ -128,13 +128,15 @@ public class Role {
 	public void setFromDoc(Document doc) {
 		String cardName = doc.getString("card");
 		card = CardFactory.createCard(cardName);
+		card.setRole(this);
+		card.setBoard(board);
+		card.setPlayer(player);
 		hp = doc.getInteger("hp", 0);
 		atk = doc.getInteger("atk", 0);
 		owner = doc.getInteger("owner", -1);
 		tempOwner = doc.getInteger("tempOwner", -1);
 		choice = doc.getInteger("choice", -1);
 		extraInfo = (List<Integer>) doc.get("extraInfo");
-		card.setRole(this);
 	}
 	
 }
