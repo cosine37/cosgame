@@ -44,7 +44,12 @@ public class Role {
 			tr.getCard().lastWish();
 			board.resolveAutoAsks();
 		}
-		choice = Consts.ATTACK;
+		if (card.isAttackTwice() && choice == Consts.NOTCHOOSED) {
+			choice = Consts.ANOTHERATTACK;
+		} else {
+			choice = Consts.ATTACK;
+		}
+		
 	}
 	
 	public void addHp(int x) {
@@ -111,6 +116,22 @@ public class Role {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	
+	public RoleEntity toRoleEntity() {
+		RoleEntity re = new RoleEntity();
+		re.setAtk(Integer.toString(atk));
+		re.setHp(Integer.toString(hp));
+		re.setImg(card.getImg());
+		re.setChoice(Integer.toString(choice));
+		
+		if (card.isCanAttack()) {
+			re.setCanAttack("y");
+		} else {
+			re.setCanAttack("n");
+		}
+		
+		return re;
 	}
 	
 	public Document toDocument() {

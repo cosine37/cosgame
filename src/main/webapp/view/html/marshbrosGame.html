@@ -26,8 +26,8 @@
 					<div ng-show="phase == '4' && playerIndex == myIndex && $index == sacrificeIndex">
 						<img src="/image/Marshbros/target.png" class="targeted">
 					</div>
-					<div class="atk numOnCard noselect">{{atks[playerIndex][$index]}}</div>
-					<div class="hp numOnCard noselect">{{hps[playerIndex][$index]}}</div>
+					<div class="atk numOnCard noselect">{{roles[playerIndex][$index].atk}}</div>
+					<div class="hp numOnCard noselect">{{roles[playerIndex][$index].hp}}</div>
 				</div>
 			</td>
 		</tr>
@@ -44,9 +44,9 @@
 			<td ng-show="roleIndex != -1 && attackMode == false">
 				<div>
 					<table>
-						<tr><td><button ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
+						<tr><td><button ng-disabled="chosenRole.choice!='-1'" ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
 						<tr><td></td></tr>
-						<tr><td><button ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
+						<tr><td><button ng-disabled="chosenRole.canAttack=='n'"ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
 						<tr><td></td></tr>
 						<tr><td><button ng-mouseover="showInstructions('cancel')"ng-click="cancelChoosed()">取消</button></td></tr>
 					</table>

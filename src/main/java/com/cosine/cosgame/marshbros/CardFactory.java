@@ -20,6 +20,14 @@ public class CardFactory {
 			c = new ChaoGai();
 		} else if (img.contentEquals("Tiger")) {
 			c = new Tiger();
+		} else if (img.contentEquals("MuHong")) {
+			c = new MuHong();
+		} else if (img.contentEquals("MuChun")) {
+			c = new MuChun();
+		} else if (img.contentEquals("LiKui")) {
+			c = new LiKui();
+		} else if (img.contentEquals("HuYanZhuo")) {
+			c = new HuYanZhuo();
 		}
 		return c;
 	}

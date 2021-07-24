@@ -14,10 +14,11 @@ public class BoardEntity {
 	List<String> hand;
 	List<String> diceResults;
 	List<String> resources;
-	List<List<String>> areaCards;
-	List<List<String>> atks;
-	List<List<String>> hps;
-	List<List<String>> choices;
+	//List<List<String>> areaCards;
+	//List<List<String>> atks;
+	//List<List<String>> hps;
+	//List<List<String>> choices;
+	List<List<RoleEntity>> roles;
 	List<List<String>> attackTargets;
 
 	public String getId() {
@@ -62,35 +63,11 @@ public class BoardEntity {
 	public void setMyIndex(String myIndex) {
 		this.myIndex = myIndex;
 	}
-	public List<List<String>> getAreaCards() {
-		return areaCards;
-	}
-	public void setAreaCards(List<List<String>> areaCards) {
-		this.areaCards = areaCards;
-	}
-	public List<List<String>> getAtks() {
-		return atks;
-	}
-	public void setAtks(List<List<String>> atks) {
-		this.atks = atks;
-	}
-	public List<List<String>> getHps() {
-		return hps;
-	}
-	public void setHps(List<List<String>> hps) {
-		this.hps = hps;
-	}
 	public List<String> getDiceResults() {
 		return diceResults;
 	}
 	public void setDiceResults(List<String> diceResults) {
 		this.diceResults = diceResults;
-	}
-	public List<List<String>> getChoices() {
-		return choices;
-	}
-	public void setChoices(List<List<String>> choices) {
-		this.choices = choices;
 	}
 	public List<List<String>> getAttackTargets() {
 		return attackTargets;
@@ -109,6 +86,12 @@ public class BoardEntity {
 	}
 	public void setPhase(String phase) {
 		this.phase = phase;
+	}
+	public List<List<RoleEntity>> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<List<RoleEntity>> roles) {
+		this.roles = roles;
 	}
 	
 	

@@ -15,10 +15,12 @@ public class Card {
 	
 	protected boolean taunt;
 	protected boolean canAttack;
+	protected boolean attackTwice;
 	
 	public Card() {
 		taunt = false;
 		canAttack = true;
+		attackTwice = false;
 		type = Consts.ROLE;
 	}
 	
@@ -93,6 +95,24 @@ public class Card {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public int getSubType() {
+		return subType;
+	}
+	public void setSubType(int subType) {
+		this.subType = subType;
+	}
+	public boolean isAttackTwice() {
+		return attackTwice;
+	}
+	public void setAttackTwice(boolean attackTwice) {
+		this.attackTwice = attackTwice;
 	}
 	
 	

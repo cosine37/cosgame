@@ -28,6 +28,10 @@ public class AllRes {
 			officialCards.add(new ChaoGai());
 			officialCards.add(new Tiger());
 			officialCards.add(new Tiger());
+			officialCards.add(new MuHong());
+			officialCards.add(new MuChun());
+			officialCards.add(new LiKui());
+			officialCards.add(new HuYanZhuo());
 		}
 	}
 }

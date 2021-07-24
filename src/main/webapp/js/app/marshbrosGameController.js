@@ -136,14 +136,14 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.showAreaCard = function(x){
 			$scope.curAreaCardIndex = x;
-			imgUrl = "url('/image/Marshbros/Empty/" + $scope.areaCards[$scope.myIndex][x] + ".png')"
+			imgUrl = "url('/image/Marshbros/Empty/" + $scope.roles[$scope.myIndex][x].img + ".png')"
 			var singleStyle = {
 				"background": imgUrl,
 				"background-size": "cover"
 			}
 			$scope.choosedRoleStyle = singleStyle
-			$scope.choosedAtk = $scope.atks[$scope.myIndex][x]
-			$scope.choosedHp = $scope.hps[$scope.myIndex][x]
+			$scope.choosedAtk = $scope.roles[$scope.myIndex][x].atk
+			$scope.choosedHp = $scope.roles[$scope.myIndex][x].hp
 		}
 		
 		$scope.showInstructions = function(s){
@@ -155,8 +155,10 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.roleIndex = -1;
 				$scope.choosedRoleStyle = {}
 				$scope.showInstructions("")
-			} else if ($scope.phase == 2 && $scope.choices[$scope.myIndex][y] == "-1"){ // action phase
+			} else if ($scope.phase == 2 && 
+					($scope.roles[$scope.myIndex][y].choice == "-1" || $scope.roles[$scope.myIndex][y].choice == "-2")){ // action phase
 				$scope.roleIndex = y;
+				$scope.chosenRole = $scope.roles[$scope.myIndex][y]
 				$scope.showAreaCard($scope.roleIndex);
 			} else if ($scope.phase == 4){
 				$scope.chooseForSacrifice(y)
@@ -181,15 +183,15 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		setAreaStyle = function(){
 			$scope.areaStyles = [];
-			for (j=0;j<$scope.areaCards.length;j++){
+			for (j=0;j<$scope.roles.length;j++){
 				var singleAreaStyles = []
-				for (i=0;i<$scope.areaCards[j].length;i++){
-					imgUrl = "url('/image/Marshbros/Empty/" + $scope.areaCards[j][i] + ".png')"
+				for (i=0;i<$scope.roles[j].length;i++){
+					imgUrl = "url('/image/Marshbros/Empty/" + $scope.roles[j][i].img + ".png')"
 					var singleStyle = {
 						"background": imgUrl,
 						"background-size": "cover"
 					}
-					if ($scope.choices[$scope.myIndex][i] != "-1"){
+					if ($scope.roles[$scope.myIndex][i].choice != "-1" && $scope.roles[$scope.myIndex][i].choice != "-2"){
 						singleStyle = {
 							"background": imgUrl,
 							"background-color" : "gray",
@@ -231,21 +233,18 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.playerNames = response.data.players
 				$scope.lord = response.data.lord
 				$scope.hand = response.data.hand
-				$scope.areaCards = response.data.areaCards;
+				$scope.roles = response.data.roles
 				$scope.myIndex = parseInt(response.data.myIndex);
 				$scope.attackTargets = response.data.attackTargets;
-				$scope.hps = response.data.hps;
-				$scope.atks = response.data.atks;
 				$scope.phase = response.data.phase;
-				$scope.choices = response.data.choices;
 				$scope.numSacrifice = 0;
 				$scope.sacrificeIndex = -1;
 				$scope.showSacrifice = false;
 				
 				if ($scope.phase == "4") { //sacrifice
-					$scope.numSacrifice = $scope.areaCards[$scope.myIndex].length - 3;
+					$scope.numSacrifice = $scope.roles[$scope.myIndex].length - 3;
 					$scope.chooseSacrifice = [];
-					for (i=0;i<$scope.areaCards[$scope.myIndex].length;i++){
+					for (i=0;i<$scope.roles[$scope.myIndex].length;i++){
 						$scope.chooseSacrifice.push(0);
 					}
 				}

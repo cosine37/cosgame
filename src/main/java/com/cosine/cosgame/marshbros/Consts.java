@@ -13,6 +13,7 @@ public class Consts {
 	public static final int SACRIFICE = 4;
 	
 	//choices
+	public static final int ANOTHERATTACK = -2;
 	public static final int NOTCHOOSED = -1;
 	public static final int NOTHING = 0;
 	public static final int RAID = 1;

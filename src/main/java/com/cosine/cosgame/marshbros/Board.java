@@ -243,6 +243,7 @@ public class Board {
 		List<List<String>> hps = new ArrayList<>();
 		List<List<String>> choices = new ArrayList<>();
 		List<List<String>> attackTargets = new ArrayList<>();
+		List<List<RoleEntity>> roles = new ArrayList<>();
 		String myIndex = "-1";
 		String phase = "-1";
 		
@@ -253,23 +254,19 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(p.getName());
-			
+			/*
 			List<String> singleAreaCards = new ArrayList<>();
 			List<String> singleAtks = new ArrayList<>();
 			List<String> singleHps = new ArrayList<>();
 			List<String> singleChoices = new ArrayList<>();
+			*/
+			List<RoleEntity> singleRoles = new ArrayList<>();
 			for (j=0;j<p.getArea().size();j++) {
 				Role r = p.getArea().get(j);
-				singleAreaCards.add(r.getCard().getImg());
-				singleAtks.add(Integer.toString(r.getAtk()));
-				singleHps.add(Integer.toString(r.getHp()));
-				singleChoices.add(Integer.toString(r.getChoice()));
-				
+				RoleEntity re = r.toRoleEntity();
+				singleRoles.add(re);
 			}
-			areaCards.add(singleAreaCards);
-			atks.add(singleAtks);
-			hps.add(singleHps);
-			choices.add(singleChoices);
+			roles.add(singleRoles);
 			attackTargets.add(p.getAttackTargets());
 			resources.add(Integer.toString(p.getResource()));
 			
@@ -290,10 +287,7 @@ public class Board {
 		entity.setPlayers(playerNames);
 		entity.setHand(hand);
 		entity.setMyIndex(myIndex);
-		entity.setAreaCards(areaCards);
-		entity.setAtks(atks);
-		entity.setHps(hps);
-		entity.setChoices(choices);
+		entity.setRoles(roles);
 		entity.setDiceResults(diceResults);
 		entity.setAttackTargets(attackTargets);
 		entity.setResources(resources);

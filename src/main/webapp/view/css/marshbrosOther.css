@@ -16,7 +16,7 @@ button{
 
 button:disabled{
 	outline: none;
-	color: rgb(126,33,18);
+	color: rgb(218,165,32);
 	font-size: 16px;
 	text-align: center;
 	padding-top: 0px;
