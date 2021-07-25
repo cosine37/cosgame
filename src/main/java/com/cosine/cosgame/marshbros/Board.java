@@ -24,6 +24,7 @@ public class Board {
 	String id;
 	String lord;
 		
+	Logs logs;
 	MongoDBUtil dbutil;
 	
 	public Board() {
@@ -32,6 +33,7 @@ public class Board {
 		tomb = new ArrayList<>();
 		asks = new ArrayList<>();
 		dice = new Dice();
+		logs = new Logs();
 		
 		String dbname = "marshbros";
 		String col = "board";
@@ -199,7 +201,37 @@ public class Board {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public List<Ask> getAsks() {
+		return asks;
+	}
+	public void setAsks(List<Ask> asks) {
+		this.asks = asks;
+	}
+	public Dice getDice() {
+		return dice;
+	}
+	public void setDice(Dice dice) {
+		this.dice = dice;
+	}
+	public int getRuleVariant() {
+		return ruleVariant;
+	}
+	public void setRuleVariant(int ruleVariant) {
+		this.ruleVariant = ruleVariant;
+	}
+	public Logs getLogs() {
+		return logs;
+	}
+	public void setLogs(Logs logs) {
+		this.logs = logs;
+	}
+	public MongoDBUtil getDbutil() {
+		return dbutil;
+	}
+	public void setDbutil(MongoDBUtil dbutil) {
+		this.dbutil = dbutil;
+	}
+
 	public Player getPlayerByName(String name) {
 		Player p = null;
 		for (int i=0;i<players.size();i++) {
@@ -238,10 +270,6 @@ public class Board {
 		List<String> hand = new ArrayList<>();
 		List<String> diceResults = new ArrayList<>();
 		List<String> resources = new ArrayList<>();
-		List<List<String>> areaCards = new ArrayList<>();
-		List<List<String>> atks = new ArrayList<>();
-		List<List<String>> hps = new ArrayList<>();
-		List<List<String>> choices = new ArrayList<>();
 		List<List<String>> attackTargets = new ArrayList<>();
 		List<List<RoleEntity>> roles = new ArrayList<>();
 		String myIndex = "-1";
@@ -254,12 +282,6 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(p.getName());
-			/*
-			List<String> singleAreaCards = new ArrayList<>();
-			List<String> singleAtks = new ArrayList<>();
-			List<String> singleHps = new ArrayList<>();
-			List<String> singleChoices = new ArrayList<>();
-			*/
 			List<RoleEntity> singleRoles = new ArrayList<>();
 			for (j=0;j<p.getArea().size();j++) {
 				Role r = p.getArea().get(j);
@@ -292,6 +314,7 @@ public class Board {
 		entity.setAttackTargets(attackTargets);
 		entity.setResources(resources);
 		entity.setPhase(phase);
+		entity.setLogs(logs.getLogs());
 		
 		return entity;
 	}
@@ -304,6 +327,7 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("id", id);
 		doc.append("dice", dice.toDocument());
+		doc.append("logs", logs.getLogs());
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -340,6 +364,9 @@ public class Board {
 		
 		dice = new Dice();
 		dice.setFromDoc((Document) doc.get("dice"));
+		
+		logs = new Logs();
+		logs.setLogs((List<String>) doc.get("logs"));
 		
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -432,6 +459,7 @@ public class Board {
 		updateDB("curPlayerIndex", curPlayerIndex);
 		updateDB("status", status);
 		updateDB("dice", dice.toDocument());
+		updateDB("logs", logs.getLogs());
 		updateDeck();
 		updateTomb();
 	}

@@ -57,6 +57,7 @@ public class Player {
 	public void draw() {
 		Card c = board.takeTopCard();
 		hand.add(c);
+		board.getLogs().logDraw(this, 1);
 	}
 	
 	public void draw(int x) {
@@ -65,30 +66,25 @@ public class Player {
 			Card c = cards.get(i);
 			hand.add(c);
 		}
-		
+		board.getLogs().logDraw(this, x);
 	}
 	
 	public void appoint(int x) {
 		Card c = hand.remove(x);
 		Role r = new Role(c);
 		area.add(r);
+		board.getLogs().logAppoint(this, r);
 	}
 	
 	public void sacrifice(int roleIndex) {
 		Role r = area.get(roleIndex);
 		r.setHp(0);
+		board.getLogs().logSacrifice(this, r);
 		board.addMoveToTombAsk(this, roleIndex);
 		r.getCard().lastWish();
 		board.resolveAutoAsks();
 	}
-	/*
-	public void sacrifice(List<Integer> indexes) {
-		for (int i=indexes.size()-1;i>=0;i--) {
-			int x = indexes.get(i);
-			//moveToTomb(x);
-		}
-	}
-	*/
+	
 	public void moveToTomb(int x) {
 		if (x>=0 && x<area.size()) {
 			Card c = area.remove(x).getCard();

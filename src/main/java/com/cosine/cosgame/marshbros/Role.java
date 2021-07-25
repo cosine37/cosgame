@@ -32,6 +32,7 @@ public class Role {
 		int x = board.diceFinalResult(atk, hp);
 		player.addResource(x);
 		choice = Consts.RAID;
+		board.getLogs().logRaid(player, this, board.getDice().getResults(), x);
 	}
 	
 	public void attack(int playerIndex, int roleIndex) {
@@ -39,7 +40,9 @@ public class Role {
 		Player tp = board.getPlayerByIndex(playerIndex);
 		Role tr = tp.getArea().get(roleIndex);
 		tr.loseHp(x);
+		board.getLogs().logAttack(player, this, tp, tr, board.getDice().getResults(), x);
 		if (tr.getHp() <= 0) {
+			board.getLogs().logKnockdown(tp, tr);
 			board.addMoveToTombAsk(tp, roleIndex);
 			tr.getCard().lastWish();
 			board.resolveAutoAsks();

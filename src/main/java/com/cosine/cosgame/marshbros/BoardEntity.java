@@ -14,6 +14,7 @@ public class BoardEntity {
 	List<String> hand;
 	List<String> diceResults;
 	List<String> resources;
+	List<String> logs;
 	//List<List<String>> areaCards;
 	//List<List<String>> atks;
 	//List<List<String>> hps;
@@ -92,6 +93,12 @@ public class BoardEntity {
 	}
 	public void setRoles(List<List<RoleEntity>> roles) {
 		this.roles = roles;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 	
 	
