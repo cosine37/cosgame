@@ -27,7 +27,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.attackRoleIndex = -1;
 		$scope.attackPlayerIndex = -1;
 		$scope.attackMode = false;
-		$scope.attackClasses = [];
+		$scope.attackStyles = [];
 		$scope.numSacrifice = 0;
 		$scope.showSacrifice = false;
 		$scope.chooseSacrifice = [];
@@ -48,22 +48,6 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
 			});
-		}
-		
-		setAttackClasses = function(){
-			$scope.attackClasses = []
-			for (i=0;i<$scope.attackTargets.length;i++){
-				var singleAttackTargets = $scope.attackTargets[i]
-				var singleAttackClasses = []
-				for (j=0;j<singleAttackTargets.length;j++){
-					if (singleAttackTargets[j] == "1"){
-						singleAttackClasses.push("attackable");
-					} else {
-						singleAttackClasses.push("");
-					}
-				}
-				$scope.attackClasses.push(singleAttackClasses);
-			}
 		}
 		
 		$scope.draw = function(x){
@@ -97,7 +81,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.openAttack = function(){
 			$scope.attackMode = true
-			setAttackClasses()
+			//setAttackClasses()
 		}
 		
 		$scope.cancelAttack = function(){
@@ -167,9 +151,21 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.clickAreaCard = function(x,y){
 			if ($scope.attackMode == true){
-				$scope.attackPlayerIndex = x
-				$scope.attackRoleIndex = y
-				$scope.attack()
+				var f = false;
+				if ($scope.roles[x][y].attackTarget == "y" && (x!=$scope.myIndex || y!=$scope.roleIndex)){
+					f = true;
+				} 
+				
+				if ($scope.roles[x][y].attackTarget == "n" && x == $scope.myIndex && y!=$scope.roleIndex){
+					f = true;
+				}
+				
+				if (f){
+					$scope.attackPlayerIndex = x
+					$scope.attackRoleIndex = y
+					$scope.attack()
+				}
+				
 			} else {
 				if (x == $scope.myIndex){
 					$scope.openChoices(x,y)
@@ -181,10 +177,31 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			$scope.openChoices($scope.myIndex, $scope.roleIndex)
 		}
 		
+		$scope.getStyle = function(x,y){
+			if ($scope.attackMode){
+				if (x==$scope.myIndex && y==$scope.roleIndex){
+					var singleStyle = {
+						"background": imgUrl,
+						"background-color" : "gray",
+						"background-blend-mode" : "screen",
+						"background-size": "cover"
+					}
+					return singleStyle
+				} else {
+					return $scope.attackStyles[x][y]
+				}
+				
+			} else {
+				return $scope.areaStyles[x][y]
+			}
+		}
+		
 		setAreaStyle = function(){
 			$scope.areaStyles = [];
+			$scope.attackStyles = [];
 			for (j=0;j<$scope.roles.length;j++){
 				var singleAreaStyles = []
+				var singleAttackStyles = []
 				for (i=0;i<$scope.roles[j].length;i++){
 					imgUrl = "url('/image/Marshbros/Empty/" + $scope.roles[j][i].img + ".png')"
 					var singleStyle = {
@@ -199,12 +216,25 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 							"background-size": "cover"
 						}
 					}
-					//alert(JSON.stringify(singleStyle))
 					singleAreaStyles.push(singleStyle)
+					
+					singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover"
+					}
+					if ($scope.roles[j][i].attackTarget == "n" && j != $scope.myIndex){
+						singleStyle = {
+							"background": imgUrl,
+							"background-color" : "gray",
+							"background-blend-mode" : "screen",
+							"background-size": "cover"
+						}
+					}
+					singleAttackStyles.push(singleStyle);
 				}
 				$scope.areaStyles.push(singleAreaStyles)
-				
-				//alert(JSON.stringify($scope.areaStyles))
+				$scope.attackStyles.push(singleAttackStyles)
+				//alert(JSON.stringify($scope.attackStyles[0][0]))
 			}
 		}
 		

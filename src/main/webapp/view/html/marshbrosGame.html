@@ -22,13 +22,20 @@
 	<table style="text-align:center">
 		<tr ng-repeat="singleAreaStyles in areaStyles track by $index" ng-init="playerIndex = $index">
 			<td ng-repeat="areaStyle in singleAreaStyles track by $index">
-				<div class="areaCard" ng-style="areaStyle" ng-class="attackStyles[plyaerIndex][$index]" ng-click="clickAreaCard(playerIndex, $index)">
+				
+				<div class="areaCard" ng-style="getStyle(playerIndex, $index)" ng-click="clickAreaCard(playerIndex, $index)">
 					<div ng-show="phase == '4' && playerIndex == myIndex && $index == sacrificeIndex">
 						<img src="/image/Marshbros/target.png" class="targeted">
 					</div>
 					<div class="atk numOnCard noselect">{{roles[playerIndex][$index].atk}}</div>
 					<div class="hp numOnCard noselect">{{roles[playerIndex][$index].hp}}</div>
 				</div>
+				<!-- 
+				<div ng-show="attackMode == true" class="areaCard" ng-style="attackStyles[plyaerIndex][$index]" ng-click="clickAreaCard(playerIndex, $index)">
+					<div class="atk numOnCard noselect">{{roles[playerIndex][$index].atk}}</div>
+					<div class="hp numOnCard noselect">{{roles[playerIndex][$index].hp}}</div>
+				</div>
+				 -->
 			</td>
 		</tr>
 	</table>

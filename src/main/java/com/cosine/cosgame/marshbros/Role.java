@@ -134,6 +134,14 @@ public class Role {
 			re.setCanAttack("n");
 		}
 		
+		if (card.isTaunt()) {
+			re.setAttackTarget("y");
+		} else if (player.hasTaunt()) {
+			re.setAttackTarget("n");
+		} else {
+			re.setAttackTarget("y");
+		}
+		
 		return re;
 	}
 	

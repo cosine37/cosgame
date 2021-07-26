@@ -270,7 +270,6 @@ public class Board {
 		List<String> hand = new ArrayList<>();
 		List<String> diceResults = new ArrayList<>();
 		List<String> resources = new ArrayList<>();
-		List<List<String>> attackTargets = new ArrayList<>();
 		List<List<RoleEntity>> roles = new ArrayList<>();
 		String myIndex = "-1";
 		String phase = "-1";
@@ -289,7 +288,6 @@ public class Board {
 				singleRoles.add(re);
 			}
 			roles.add(singleRoles);
-			attackTargets.add(p.getAttackTargets());
 			resources.add(Integer.toString(p.getResource()));
 			
 			if (username.contentEquals(players.get(i).getName())) {
@@ -311,7 +309,6 @@ public class Board {
 		entity.setMyIndex(myIndex);
 		entity.setRoles(roles);
 		entity.setDiceResults(diceResults);
-		entity.setAttackTargets(attackTargets);
 		entity.setResources(resources);
 		entity.setPhase(phase);
 		entity.setLogs(logs.getLogs());

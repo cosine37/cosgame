@@ -28,6 +28,10 @@ public class CardFactory {
 			c = new LiKui();
 		} else if (img.contentEquals("HuYanZhuo")) {
 			c = new HuYanZhuo();
+		} else if (img.contentEquals("ZhuTong")) {
+			c = new ZhuTong();
+		} else if (img.contentEquals("LeiHeng")) {
+			c = new LeiHeng();
 		}
 		return c;
 	}

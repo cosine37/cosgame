@@ -6,6 +6,7 @@ public class RoleEntity {
 	String atk;
 	String canAttack;
 	String choice;
+	String attackTarget;
 	
 	public String getImg() {
 		return img;
@@ -36,6 +37,12 @@ public class RoleEntity {
 	}
 	public void setChoice(String choice) {
 		this.choice = choice;
+	}
+	public String getAttackTarget() {
+		return attackTarget;
+	}
+	public void setAttackTarget(String attackTarget) {
+		this.attackTarget = attackTarget;
 	}
 	
 	

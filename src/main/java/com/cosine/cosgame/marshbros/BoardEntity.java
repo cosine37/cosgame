@@ -15,12 +15,7 @@ public class BoardEntity {
 	List<String> diceResults;
 	List<String> resources;
 	List<String> logs;
-	//List<List<String>> areaCards;
-	//List<List<String>> atks;
-	//List<List<String>> hps;
-	//List<List<String>> choices;
 	List<List<RoleEntity>> roles;
-	List<List<String>> attackTargets;
 
 	public String getId() {
 		return id;
@@ -69,12 +64,6 @@ public class BoardEntity {
 	}
 	public void setDiceResults(List<String> diceResults) {
 		this.diceResults = diceResults;
-	}
-	public List<List<String>> getAttackTargets() {
-		return attackTargets;
-	}
-	public void setAttackTargets(List<List<String>> attackTargets) {
-		this.attackTargets = attackTargets;
 	}
 	public List<String> getResources() {
 		return resources;

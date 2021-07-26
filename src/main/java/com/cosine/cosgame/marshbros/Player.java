@@ -96,6 +96,17 @@ public class Player {
 		resource = resource + x;
 	}
 	
+	public boolean hasTaunt() {
+		boolean ans = false;
+		for (int i=0;i<area.size();i++) {
+			if (area.get(i).getCard().isTaunt()) {
+				ans = true;
+				break;
+			}
+		}
+		return ans;
+	}
+	
 	public List<String> getAttackTargets(){
 		List<String> attackTargets = new ArrayList<>();
 		for (int i=0;i<area.size();i++) {
@@ -109,7 +120,7 @@ public class Player {
 			if (i==index) {
 				continue;
 			}
-			if (area.get(i).getChoice() == Consts.NOTCHOOSED) {
+			if (area.get(i).getChoice() == Consts.NOTCHOOSED || area.get(i).getChoice() == Consts.ANOTHERATTACK) {
 				return false;
 			}
 		}
