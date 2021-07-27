@@ -16,11 +16,15 @@ public class Card {
 	protected boolean taunt;
 	protected boolean canAttack;
 	protected boolean attackTwice;
+	protected boolean hasAction;
+	
+	protected String actionText;
 	
 	public Card() {
 		taunt = false;
 		canAttack = true;
 		attackTwice = false;
+		hasAction = false;
 		type = Consts.ROLE;
 	}
 	
@@ -113,6 +117,18 @@ public class Card {
 	}
 	public void setAttackTwice(boolean attackTwice) {
 		this.attackTwice = attackTwice;
+	}
+	public boolean isHasAction() {
+		return hasAction;
+	}
+	public void setHasAction(boolean hasAction) {
+		this.hasAction = hasAction;
+	}
+	public String getActionText() {
+		return actionText;
+	}
+	public void setActionText(String actionText) {
+		this.actionText = actionText;
 	}
 	
 	

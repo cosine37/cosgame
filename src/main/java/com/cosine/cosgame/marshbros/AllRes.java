@@ -33,6 +33,7 @@ public class AllRes {
 			officialCards.add(new HuYanZhuo());
 			officialCards.add(new ZhuTong());
 			officialCards.add(new LeiHeng());
+			officialCards.add(new HuaRong());
 		}
 	}
 }

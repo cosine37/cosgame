@@ -31,6 +31,8 @@ public class Ask {
 				player.nextPhase();
 			} else if (subType == Consts.MOVETOTOMB) {
 				player.moveToTomb(roleIndex);
+			} else if (subType == Consts.RESOLVEACTION) {
+				player.getArea().get(roleIndex).setChoice(Consts.ACTION);
 			}
 		}
 	}

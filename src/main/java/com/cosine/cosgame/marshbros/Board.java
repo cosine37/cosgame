@@ -121,6 +121,13 @@ public class Board {
 		addAskToTop(ask);
 	}
 	
+	public void addResolveActionAsk(Player p, int roleIndex) {
+		Ask ask = new Ask(Consts.AUTOMATIC, Consts.RESOLVEACTION, true);
+		ask.setPlayer(p);
+		ask.setRoleIndex(roleIndex);
+		addAskToTop(ask);
+	}
+	
 	public int diceFinalResult(int atk, int hp) {
 		dice.roll(hp);
 		return dice.calcResult(atk);

@@ -32,6 +32,8 @@ public class CardFactory {
 			c = new ZhuTong();
 		} else if (img.contentEquals("LeiHeng")) {
 			c = new LeiHeng();
+		} else if (img.contentEquals("HuaRong")) {
+			c = new HuaRong();
 		}
 		return c;
 	}

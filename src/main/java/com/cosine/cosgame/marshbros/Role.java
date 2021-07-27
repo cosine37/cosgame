@@ -11,6 +11,7 @@ public class Role {
 	int owner;
 	int tempOwner;
 	int choice; // attack, raid, action, etc.
+	int index;
 	List<Integer> extraInfo;
 	
 	Player player;
@@ -53,6 +54,12 @@ public class Role {
 			choice = Consts.ATTACK;
 		}
 		
+	}
+	
+	public void action() {
+		board.addResolveActionAsk(player, index);
+		card.activate();
+		board.resolveAutoAsks();
 	}
 	
 	public void addHp(int x) {
@@ -120,13 +127,20 @@ public class Role {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public RoleEntity toRoleEntity() {
 		RoleEntity re = new RoleEntity();
 		re.setAtk(Integer.toString(atk));
 		re.setHp(Integer.toString(hp));
 		re.setImg(card.getImg());
 		re.setChoice(Integer.toString(choice));
+		re.setActionText(card.getActionText());
 		
 		if (card.isCanAttack()) {
 			re.setCanAttack("y");
@@ -140,6 +154,12 @@ public class Role {
 			re.setAttackTarget("n");
 		} else {
 			re.setAttackTarget("y");
+		}
+		
+		if (card.isHasAction()) {
+			re.setHasAction("y");
+		} else {
+			re.setHasAction("n");
 		}
 		
 		return re;

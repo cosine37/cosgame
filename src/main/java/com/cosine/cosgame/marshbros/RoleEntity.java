@@ -7,6 +7,8 @@ public class RoleEntity {
 	String canAttack;
 	String choice;
 	String attackTarget;
+	String hasAction;
+	String actionText;
 	
 	public String getImg() {
 		return img;
@@ -43,6 +45,18 @@ public class RoleEntity {
 	}
 	public void setAttackTarget(String attackTarget) {
 		this.attackTarget = attackTarget;
+	}
+	public String getHasAction() {
+		return hasAction;
+	}
+	public void setHasAction(String hasAction) {
+		this.hasAction = hasAction;
+	}
+	public String getActionText() {
+		return actionText;
+	}
+	public void setActionText(String actionText) {
+		this.actionText = actionText;
 	}
 	
 	

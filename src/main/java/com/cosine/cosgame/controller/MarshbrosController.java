@@ -171,7 +171,6 @@ public class MarshbrosController {
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
 				if (p.allActioned(index)) {
-					//System.out.println("All Actioned");
 					board.addNextPhaseAsk(p);
 				}
 				p.getArea().get(index).raid();
@@ -197,6 +196,28 @@ public class MarshbrosController {
 					board.addNextPhaseAsk(p);
 				}
 				p.getArea().get(index).attack(attackPlayer, attackRole);
+				board.resolveAutoAsks();
+				board.updateBasicDB();
+				board.updatePlayer(username);
+			}
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/marshbros/action", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> action(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				if (p.allActioned(index)) {
+					board.addNextPhaseAsk(p);
+				}
+				p.getArea().get(index).action();
 				board.resolveAutoAsks();
 				board.updateBasicDB();
 				board.updatePlayer(username);

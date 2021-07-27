@@ -97,6 +97,14 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.action = function(){
+			var data = {"index" : $scope.roleIndex}
+			$http({url: "/marshbros/action", method: "POST", params: data}).then(function(response){
+				$scope.getBoard()
+				$scope.hideAreaCard();
+			});
+		}
+		
 		$scope.chooseForSacrifice = function(x){
 			if ($scope.sacrificeIndex == x){
 				$scope.sacrificeIndex = -1;

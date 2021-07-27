@@ -55,6 +55,8 @@
 						<tr><td></td></tr>
 						<tr><td><button ng-disabled="chosenRole.canAttack=='n'"ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
 						<tr><td></td></tr>
+						<tr ng-show="chosenRole.hasAction=='y'"><td><button ng-mouseover="showInstructions('action')"ng-click="action()">行动</button></td></tr>
+						<tr ng-show="chosenRole.hasAction=='y'"><td></td></tr>
 						<tr><td><button ng-mouseover="showInstructions('cancel')"ng-click="cancelChoosed()">取消</button></td></tr>
 					</table>
 				</div>
@@ -67,6 +69,10 @@
 				<div ng-show="shownInstruction=='attack'">
 					<h3>攻击</h3>
 					<p>指定一名其他角色并掷与你体力值数量相同的骰子。每有一个骰子的点数小于等于你的攻击力，你对其造成1点伤害。</p>
+				</div>
+				<div ng-show="shownInstruction=='action'">
+					<h3>行动</h3>
+					<p>{{chosenRole.actionText}}</p>
 				</div>
 			</td>
 			<td ng-show="roleIndex != -1 && attackMode">

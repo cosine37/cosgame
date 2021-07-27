@@ -221,6 +221,7 @@ public class Player {
 			r.setBoard(board);
 			r.setPlayer(this);
 			r.setFromDoc(doa.get(i));
+			r.setIndex(i);
 			area.add(r);
 		}
 	}
