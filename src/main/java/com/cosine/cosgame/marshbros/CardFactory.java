@@ -34,6 +34,12 @@ public class CardFactory {
 			c = new LeiHeng();
 		} else if (img.contentEquals("HuaRong")) {
 			c = new HuaRong();
+		} else if (img.contentEquals("ShiWenGong")) {
+			c = new ShiWenGong();
+		} else if (img.contentEquals("AnDaoQuan")) {
+			c = new AnDaoQuan();
+		} else if (img.contentEquals("HuangFuDuan")) {
+			c = new HuangFuDuan();
 		}
 		return c;
 	}

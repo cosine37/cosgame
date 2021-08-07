@@ -226,6 +226,25 @@ public class MarshbrosController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/marshbros/resolveaction", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> resolveAsk(HttpServletRequest request, @RequestParam int index, @RequestParam int target) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.getArea().get(index).resolveAction(target);
+				board.resolveAutoAsks();
+				board.updateBasicDB();
+				board.updatePlayer(username);
+			}
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/marshbros/sacrifice", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> sacrifice(HttpServletRequest request, @RequestParam int roleIndex) {
 		Board board = new Board();

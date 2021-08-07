@@ -10,16 +10,23 @@ public class Ask {
 	int subType;
 	boolean single;
 	int roleIndex;
+	String msg;
 	
 	Board board;
 	Player player;
 	List<Player> players;
 	
 	public Ask() {
-		
+		players = new ArrayList<>();
+	}
+	
+	public Ask(int type) {
+		this();
+		this.type = type;
 	}
 	
 	public Ask(int type, int subType, boolean single) {
+		this(type);
 		this.type = type;
 		this.subType = subType;
 		this.single = single;
@@ -92,6 +99,20 @@ public class Ask {
 	public void setRoleIndex(int roleIndex) {
 		this.roleIndex = roleIndex;
 	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public AskEntity toEntity() {
+		AskEntity entity = new AskEntity();
+		entity.setType(Integer.toString(type));
+		entity.setSubType(Integer.toString(subType));
+		entity.setMsg(msg);
+		return entity;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -99,7 +120,13 @@ public class Ask {
 		doc.append("subType", subType);
 		doc.append("single", single);
 		doc.append("roleIndex", roleIndex);
-		doc.append("playerIndex", player.getIndex());
+		doc.append("msg", msg);
+		
+		int playerIndex = -1;
+		if (player != null) {
+			playerIndex = player.getIndex();
+		}
+		doc.append("playerIndex", playerIndex);
 		int i;
 		List<Integer> playerIndexes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -114,6 +141,7 @@ public class Ask {
 		subType = doc.getInteger("subType", 0);
 		single = doc.getBoolean("single", true);
 		roleIndex = doc.getInteger("roleIndex", -1);
+		msg = doc.getString("msg");
 		int playerIndex = doc.getInteger("playerIndex", -1);
 		player = board.getPlayerByIndex(playerIndex);
 		int i;

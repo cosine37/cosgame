@@ -34,6 +34,9 @@ public class AllRes {
 			officialCards.add(new ZhuTong());
 			officialCards.add(new LeiHeng());
 			officialCards.add(new HuaRong());
+			officialCards.add(new ShiWenGong());
+			officialCards.add(new AnDaoQuan());
+			officialCards.add(new HuangFuDuan());
 		}
 	}
 }

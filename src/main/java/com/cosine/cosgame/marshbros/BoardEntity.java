@@ -16,6 +16,8 @@ public class BoardEntity {
 	List<String> resources;
 	List<String> logs;
 	List<List<RoleEntity>> roles;
+	
+	AskEntity ask;
 
 	public String getId() {
 		return id;
@@ -88,6 +90,12 @@ public class BoardEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public AskEntity getAsk() {
+		return ask;
+	}
+	public void setAsk(AskEntity ask) {
+		this.ask = ask;
 	}
 	
 	

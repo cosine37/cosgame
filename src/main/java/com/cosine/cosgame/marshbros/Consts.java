@@ -21,7 +21,9 @@ public class Consts {
 	//public static final int ACTION = 2;
 	
 	// ask types
+	public static final int NOASK = -1;
 	public static final int AUTOMATIC = 0;
+	public static final int CHOOSEROLE = 1;
 	
 	// ask subtypes
 	public static final int NEXTPHASE = 0;

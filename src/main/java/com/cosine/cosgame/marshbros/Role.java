@@ -62,8 +62,14 @@ public class Role {
 		board.resolveAutoAsks();
 	}
 	
+	public void resolveAction(int target) {
+		choice = Consts.ACTION;
+		card.resolveAction(target);
+	}
+	
 	public void addHp(int x) {
 		hp = hp+x;
+		board.getLogs().logAddHp(player, this, x);
 	}
 	
 	public void loseHp(int x) {
@@ -141,6 +147,7 @@ public class Role {
 		re.setImg(card.getImg());
 		re.setChoice(Integer.toString(choice));
 		re.setActionText(card.getActionText());
+		re.setActionType(Integer.toString(card.getActionType()));
 		
 		if (card.isCanAttack()) {
 			re.setCanAttack("y");

@@ -52,6 +52,11 @@ public class Logs {
 		logRaidResult(p,r,result);
 	}
 	
+	public void logAction(Player p, Role r, String actionName) {
+		String s;
+		s = p.getName() + "寨中的" + r.getCard().getName() + "发动了特技：" + actionName + "。";
+		addLog(s);
+	}
 	
 	public void logAttack(Player p, Role r, Player tp, Role tr, List<Integer> results, int result) {
 		String s;
@@ -86,6 +91,12 @@ public class Logs {
 	public void logKnockdown(Player p, Role r) {
 		String s;
 		s = p.getName() + "帐下的" + r.getCard().name + "被击倒了。";
+		addLog(s);
+	}
+	
+	public void logAddHp(Player p, Role r, int x) {
+		String s;
+		s = p.getName() + "帐下的" + r.getCard().name + "增加了" + Integer.toString(x) + "点体力。";
 		addLog(s);
 	}
 	

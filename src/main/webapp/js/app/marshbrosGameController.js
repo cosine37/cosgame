@@ -27,6 +27,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.attackRoleIndex = -1;
 		$scope.attackPlayerIndex = -1;
 		$scope.attackMode = false;
+		$scope.actionMode = false;
+		$scope.askMode = false;
 		$scope.attackStyles = [];
 		$scope.numSacrifice = 0;
 		$scope.showSacrifice = false;
@@ -86,6 +88,14 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.cancelAttack = function(){
 			$scope.attackMode = false
+		}
+		
+		$scope.openAction = function(){
+			$scope.actionMode = true
+		}
+		
+		$scope.cancelAction = function(){
+			$scope.actionMode = false
 		}
 		
 		$scope.attack = function(){
@@ -157,6 +167,16 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		$scope.actionChooseRole = function(x,y){
+			var target = x*100+y;
+			var data = {"index": $scope.roleIndex, "target" : target}
+			$http({url: "/marshbros/resolveaction", method: "POST", params: data}).then(function(response){
+				$scope.actionMode = false;
+				$scope.getBoard()
+				$scope.hideAreaCard();
+			});
+		}
+		
 		$scope.clickAreaCard = function(x,y){
 			if ($scope.attackMode == true){
 				var f = false;
@@ -174,6 +194,9 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.attack()
 				}
 				
+			} else if ($scope.actionMode == true && $scope.chosenRole.actionType=="1"){
+				//alert("here")
+				$scope.actionChooseRole(x,y);
 			} else {
 				if (x == $scope.myIndex){
 					$scope.openChoices(x,y)
@@ -278,6 +301,13 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.numSacrifice = 0;
 				$scope.sacrificeIndex = -1;
 				$scope.showSacrifice = false;
+				$scope.ask = response.data.ask;
+				/*
+				$scope.askMode = false;
+				if ($scope.ask.type != "0"){
+					$scope.askMode = true;
+				}
+				*/
 				
 				if ($scope.phase == "4") { //sacrifice
 					$scope.numSacrifice = $scope.roles[$scope.myIndex].length - 3;

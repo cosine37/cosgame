@@ -23,7 +23,7 @@ public class Board {
 	
 	String id;
 	String lord;
-		
+	
 	Logs logs;
 	MongoDBUtil dbutil;
 	
@@ -95,6 +95,12 @@ public class Board {
 			p.setPhase(Consts.OFFTURN);
 		}
 		players.get(curPlayerIndex).startTurn();
+	}
+	
+	public void resolveTopAsk() {
+		if (asks.size() > 0) {
+			asks.remove(0);
+		}
 	}
 	
 	public void resolveAutoAsks() {
@@ -251,7 +257,7 @@ public class Board {
 	}
 	
 	public Player getPlayerByIndex(int index) {
-		if (index<0 || index>players.size()) {
+		if (index<0 || index>=players.size()) {
 			return null;
 		}
 		return players.get(index);
@@ -307,6 +313,14 @@ public class Board {
 			}
 		}
 		
+		AskEntity askEntity = new AskEntity();
+		if (asks.size() > 0) {
+			Ask a = asks.get(0);
+			if (a.getPlayer().getName().contentEquals(username)) {
+				askEntity = asks.get(0).toEntity();
+			}
+		}
+		
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
@@ -319,6 +333,7 @@ public class Board {
 		entity.setResources(resources);
 		entity.setPhase(phase);
 		entity.setLogs(logs.getLogs());
+		entity.setAsk(askEntity);
 		
 		return entity;
 	}
@@ -402,6 +417,7 @@ public class Board {
 			Ask ask = new Ask();
 			ask.setBoard(this);
 			ask.setFromDoc(doa);
+			asks.add(ask);
 		}
 	}
 	
@@ -459,6 +475,15 @@ public class Board {
 		dbutil.update("id", id, "tomb", tombs);
 	}
 	
+	public void updateAsks() {
+		List<Document> askDocs = new ArrayList<>();
+		for (int i=0;i<asks.size();i++) {
+			Document doa = asks.get(i).toDocument();
+			askDocs.add(doa);
+		}
+		dbutil.update("id", id, "asks", askDocs);
+	}
+	
 	public void updateBasicDB() {
 		updateDB("curPlayerIndex", curPlayerIndex);
 		updateDB("status", status);
@@ -466,6 +491,7 @@ public class Board {
 		updateDB("logs", logs.getLogs());
 		updateDeck();
 		updateTomb();
+		updateAsks();
 	}
 	
 	public void addPlayerToDB(String name) {

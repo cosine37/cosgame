@@ -6,18 +6,18 @@ import com.cosine.cosgame.marshbros.Consts;
 import com.cosine.cosgame.marshbros.Player;
 import com.cosine.cosgame.marshbros.Role;
 
-public class HuaRong extends Card {
-	public HuaRong() {
+public class HuangFuDuan extends Card {
+	public HuangFuDuan() {
 		super();
-		nickname = "小李广";
-		name = "花荣";
-		img = "HuaRong";
-		atk = 3;
+		nickname = "紫髯伯";
+		name = "皇甫端";
+		img = "HuangFuDuan";
+		atk = 2;
 		hp = 1;
 		hasAction = true;
-		actionText = "击倒一名你选择的在场角色。";
+		actionText = "增加一名角色一点体力，若该角色为兽，则额外增加一点体力。";
 		actionType = Consts.CHOOSEROLE;
-		actionName = "神箭";
+		actionName = "医术";
 	}
 	
 	public void activate() {
@@ -28,13 +28,14 @@ public class HuaRong extends Card {
 		int playerIndex = target / 100;
 		int roleIndex = target % 100;
 		
+		board.getLogs().logAction(player, role, actionName);
 		Player p = board.getPlayerByIndex(playerIndex);
 		Role r = p.getArea().get(roleIndex);
-		r.setHp(0);
-		board.getLogs().logAction(player, role, actionName);
-		board.getLogs().logKnockdown(p, r);
-		board.addMoveToTombAsk(p, roleIndex);
-		r.getCard().lastWish();
+		if (r.getCard().isBeast()) {
+			r.addHp(2);
+		} else {
+			r.addHp(1);
+		}
 		board.resolveAutoAsks();
 		
 	}

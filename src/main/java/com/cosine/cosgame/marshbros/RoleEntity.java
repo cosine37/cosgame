@@ -9,6 +9,7 @@ public class RoleEntity {
 	String attackTarget;
 	String hasAction;
 	String actionText;
+	String actionType;
 	
 	public String getImg() {
 		return img;
@@ -57,6 +58,12 @@ public class RoleEntity {
 	}
 	public void setActionText(String actionText) {
 		this.actionText = actionText;
+	}
+	public String getActionType() {
+		return actionType;
+	}
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
 	}
 	
 	

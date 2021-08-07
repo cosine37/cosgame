@@ -18,7 +18,9 @@ public class Card {
 	protected boolean attackTwice;
 	protected boolean hasAction;
 	
+	protected int actionType;
 	protected String actionText;
+	protected String actionName;
 	
 	public Card() {
 		taunt = false;
@@ -39,7 +41,19 @@ public class Card {
 	public void lastWish() {
 		
 	}
+	
+	public void resolveAction(int target) {
+		
+	}
 
+	public boolean isBeast() {
+		if (subType == Consts.BEAST) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -129,6 +143,12 @@ public class Card {
 	}
 	public void setActionText(String actionText) {
 		this.actionText = actionText;
+	}
+	public int getActionType() {
+		return actionType;
+	}
+	public void setActionType(int actionType) {
+		this.actionType = actionType;
 	}
 	
 	

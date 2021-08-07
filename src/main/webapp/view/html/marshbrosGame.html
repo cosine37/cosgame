@@ -48,20 +48,20 @@
 					<div class="hpChoosed numOnChoosedCard noselect" ng-show="roleIndex != -1">{{choosedHp}}</div>
 				</div>
 			</td>
-			<td ng-show="roleIndex != -1 && attackMode == false">
+			<td ng-show="roleIndex != -1 && attackMode == false && askMode == false && actionMode == false">
 				<div>
 					<table>
 						<tr><td><button ng-disabled="chosenRole.choice!='-1'" ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
 						<tr><td></td></tr>
 						<tr><td><button ng-disabled="chosenRole.canAttack=='n'"ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
 						<tr><td></td></tr>
-						<tr ng-show="chosenRole.hasAction=='y'"><td><button ng-mouseover="showInstructions('action')"ng-click="action()">行动</button></td></tr>
+						<tr ng-show="chosenRole.hasAction=='y'"><td><button ng-mouseover="showInstructions('action')"ng-click="openAction()">行动</button></td></tr>
 						<tr ng-show="chosenRole.hasAction=='y'"><td></td></tr>
 						<tr><td><button ng-mouseover="showInstructions('cancel')"ng-click="cancelChoosed()">取消</button></td></tr>
 					</table>
 				</div>
 			</td>
-			<td ng-show="roleIndex != -1 && attackMode == false" style="text-align:left">
+			<td ng-show="roleIndex != -1 && attackMode == false && askMode == false && actionMode == false" style="text-align:left">
 				<div ng-show="shownInstruction=='raid'">
 					<h3>劫掠</h3>
 					<p>掷与你体力值数量相同的骰子。每有一个骰子的点数小于等于你的攻击力，你获得1点资源。</p>
@@ -77,7 +77,14 @@
 			</td>
 			<td ng-show="roleIndex != -1 && attackMode">
 				请选择攻击目标。
-				<button ng-mouseover="showInstructions('attack')"ng-click="cancelAttack()">取消</button>
+				<button ng-click="cancelAttack()">取消</button>
+			</td>
+			<td ng-show="roleIndex != -1 && actionMode">
+				{{chosenRole.actionText}}
+				<button ng-click="cancelAction()">取消</button>
+			</td>
+			<td ng-show="askMode">
+				
 			</td>
 		</tr>
 	</table>
