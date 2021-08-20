@@ -198,7 +198,7 @@ public class MarshbrosController {
 				p.getArea().get(index).attack(attackPlayer, attackRole);
 				board.resolveAutoAsks();
 				board.updateBasicDB();
-				board.updatePlayer(username);
+				board.updatePlayers();
 			}
 		}
 		StringEntity entity = new StringEntity();
@@ -220,7 +220,7 @@ public class MarshbrosController {
 				p.getArea().get(index).action();
 				board.resolveAutoAsks();
 				board.updateBasicDB();
-				board.updatePlayer(username);
+				board.updatePlayers();
 			}
 		}
 		StringEntity entity = new StringEntity();
@@ -239,7 +239,7 @@ public class MarshbrosController {
 				p.getArea().get(index).resolveAction(target);
 				board.resolveAutoAsks();
 				board.updateBasicDB();
-				board.updatePlayer(username);
+				board.updatePlayers();
 			}
 		}
 		StringEntity entity = new StringEntity();
@@ -261,7 +261,7 @@ public class MarshbrosController {
 				}
 				board.resolveAutoAsks();
 				board.updateBasicDB();
-				board.updatePlayer(username);
+				board.updatePlayers();
 			}
 		}
 		StringEntity entity = new StringEntity();

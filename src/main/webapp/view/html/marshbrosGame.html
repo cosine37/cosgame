@@ -89,6 +89,9 @@
 		</tr>
 	</table>
 	<div>
+		<div ng-show="phase == '-1'">
+			现在不是你的回合。
+		</div>
 		<div ng-show="phase == '1'">
 			第一招募阶段：你可以摸一张牌或令一名角色登场。
 			<button ng-click="draw()">摸牌</button>

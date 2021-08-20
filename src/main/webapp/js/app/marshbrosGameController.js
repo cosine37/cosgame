@@ -42,7 +42,6 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$http.post('/username').then(function(response){
 			$scope.username = response.data.value[0];
-			
 			$scope.lord = $scope.username
 		});
 		
@@ -54,13 +53,15 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.draw = function(x){
 			$http({url: "/marshbros/draw", method: "POST"}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 			});
 		}
 		
 		$scope.endAction = function(){
 			$http({url: "/marshbros/endaction", method: "POST"}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 			});
 		}
 		
@@ -68,7 +69,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			if ($scope.phase == "1" || $scope.phase == "3"){
 				var data = {"index" : x}
 				$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){
-					$scope.getBoard()
+					$scope.allRefresh()
+					//$scope.getBoard()
 				});
 			}
 		}
@@ -76,7 +78,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.raid = function(){
 			var data = {"index" : $scope.roleIndex}
 			$http({url: "/marshbros/raid", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				$scope.hideAreaCard();
 			});
 		}
@@ -101,7 +104,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.attack = function(){
 			var data = {"index" : $scope.roleIndex, "attackPlayer" : $scope.attackPlayerIndex, "attackRole" : $scope.attackRoleIndex}
 			$http({url: "/marshbros/attack", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				$scope.attackMode = false
 				$scope.hideAreaCard();
 			});
@@ -110,7 +114,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.action = function(){
 			var data = {"index" : $scope.roleIndex}
 			$http({url: "/marshbros/action", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				$scope.hideAreaCard();
 			});
 		}
@@ -126,7 +131,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.confirmSacrifice = function(){
 			var data = {"roleIndex" : $scope.sacrificeIndex}
 			$http({url: "/marshbros/sacrifice", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 			});
 		}
 		
@@ -172,7 +178,9 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var data = {"index": $scope.roleIndex, "target" : target}
 			$http({url: "/marshbros/resolveaction", method: "POST", params: data}).then(function(response){
 				$scope.actionMode = false;
-				$scope.getBoard()
+				var json_data = '{"type":"notify","content":"refresh"}';
+		        ws.send(json_data);
+				//$scope.getBoard()
 				$scope.hideAreaCard();
 			});
 		}
@@ -239,12 +247,14 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 						"background": imgUrl,
 						"background-size": "cover"
 					}
-					if ($scope.roles[$scope.myIndex][i].choice != "-1" && $scope.roles[$scope.myIndex][i].choice != "-2"){
-						singleStyle = {
-							"background": imgUrl,
-							"background-color" : "gray",
-							"background-blend-mode" : "screen",
-							"background-size": "cover"
+					if ($scope.myIndex == j){
+						if ($scope.roles[$scope.myIndex][i].choice != "-1" && $scope.roles[$scope.myIndex][i].choice != "-2"){
+							singleStyle = {
+								"background": imgUrl,
+								"background-color" : "gray",
+								"background-blend-mode" : "screen",
+								"background-size": "cover"
+							}
 						}
 					}
 					singleAreaStyles.push(singleStyle)
@@ -327,6 +337,11 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		ws.onMessage(function(){
 			$scope.getBoard();
 		});
+		
+		$scope.allRefresh = function(){
+			var json_data = '{"type":"notify","content":"refresh"}';
+	        ws.send(json_data);
+		}
 		
 		/*
 		$scope.start = function(){

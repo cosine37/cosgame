@@ -28,6 +28,7 @@ public class Player {
 	public void endTurn() {
 		phase = Consts.OFFTURN;
 		Player p = nextPlayer();
+		//System.out.println(p.getName());
 		p.startTurn();
 	}
 	
@@ -42,6 +43,12 @@ public class Player {
 			for (int i=0;i<area.size();i++) {
 				area.get(i).setChoice(Consts.NOTCHOOSED);
 			}
+			/*
+			for (int i=0;i<area.size();i++) {
+				System.out.print(area.get(i).getChoice());
+				System.out.println();
+			}
+			*/
 			phase = Consts.REC2;
 		} else if (phase == Consts.REC2) {
 			if (area.size()>3) {
@@ -52,6 +59,7 @@ public class Player {
 		} else if (phase == Consts.SACRIFICE) {
 			endTurn();
 		}
+		//System.out.println("Curplayer phase:" + phase);
 	}
 	
 	public void draw() {
@@ -183,7 +191,6 @@ public class Player {
 		doc.append("name", name);
 		doc.append("phase", phase);
 		doc.append("resource", resource);
-		doc.append("index", index);
 		
 		int i;
 		List<String> hands = new ArrayList<>();
@@ -203,7 +210,6 @@ public class Player {
 		name = doc.getString("name");
 		phase = doc.getInteger("phase", Consts.OFFTURN);
 		resource = doc.getInteger("resource", 0);
-		index = doc.getInteger("index", -1);
 		
 		int i;
 		List<String> hands = (List<String>) doc.get("hand");
