@@ -43,12 +43,6 @@ public class Player {
 			for (int i=0;i<area.size();i++) {
 				area.get(i).setChoice(Consts.NOTCHOOSED);
 			}
-			/*
-			for (int i=0;i<area.size();i++) {
-				System.out.print(area.get(i).getChoice());
-				System.out.println();
-			}
-			*/
 			phase = Consts.REC2;
 		} else if (phase == Consts.REC2) {
 			if (area.size()>3) {

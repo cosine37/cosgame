@@ -21,8 +21,11 @@
 	
 	<table style="text-align:center">
 		<tr ng-repeat="singleAreaStyles in areaStyles track by $index" ng-init="playerIndex = $index">
+			<td>
+				<button ng-disabled="showRichest == false || richest[playerIndex]=='n'" ng-click="clickPlayerName(playerIndex)">{{playerNames[playerIndex]}}</button>
+				Res: {{resources[playerIndex]}}
+			</td>
 			<td ng-repeat="areaStyle in singleAreaStyles track by $index">
-				
 				<div class="areaCard" ng-style="getStyle(playerIndex, $index)" ng-click="clickAreaCard(playerIndex, $index)">
 					<div ng-show="phase == '4' && playerIndex == myIndex && $index == sacrificeIndex">
 						<img src="/image/Marshbros/target.png" class="targeted">

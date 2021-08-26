@@ -40,6 +40,10 @@ public class CardFactory {
 			c = new AnDaoQuan();
 		} else if (img.contentEquals("HuangFuDuan")) {
 			c = new HuangFuDuan();
+		} else if (img.contentEquals("ShiQian")) {
+			c = new ShiQian();
+		} else if (img.contentEquals("DuanJingZhu")) {
+			c = new DuanJingZhu();
 		}
 		return c;
 	}

@@ -100,6 +100,12 @@ public class Logs {
 		addLog(s);
 	}
 	
+	public void logSteal(Player p, Role r, Player v) {
+		String s;
+		s = p.getName() + "帐下的" + r.getCard().name + "从" + v.getName() + "处窃取了1点资源。";
+		addLog(s);
+	}
+	
 	public void logEndTurn(Player p) {
 		String s;
 		s = p.getName() + "结束了回合。";

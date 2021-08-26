@@ -34,6 +34,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.showSacrifice = false;
 		$scope.chooseSacrifice = [];
 		$scope.sacrificeIndex = -1;
+		$scope.showRichest = false;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -95,10 +96,14 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.openAction = function(){
 			$scope.actionMode = true
+			if ($scope.chosenRole.actionType == "2"){
+				$scope.showRichest = true
+			}
 		}
 		
 		$scope.cancelAction = function(){
 			$scope.actionMode = false
+			$scope.showRichest = false
 		}
 		
 		$scope.attack = function(){
@@ -181,8 +186,15 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
 				//$scope.getBoard()
+		        $scope.showRichest = false
 				$scope.hideAreaCard();
 			});
+		}
+		
+		$scope.clickPlayerName = function(x){
+			if ($scope.actionMode == true && $scope.chosenRole.actionType=="2"){
+				$scope.actionChooseRole(x,0);
+			}
 		}
 		
 		$scope.clickAreaCard = function(x,y){
@@ -195,7 +207,6 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				if ($scope.roles[x][y].attackTarget == "n" && x == $scope.myIndex && y!=$scope.roleIndex){
 					f = true;
 				}
-				
 				if (f){
 					$scope.attackPlayerIndex = x
 					$scope.attackRoleIndex = y
@@ -203,7 +214,6 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				
 			} else if ($scope.actionMode == true && $scope.chosenRole.actionType=="1"){
-				//alert("here")
 				$scope.actionChooseRole(x,y);
 			} else {
 				if (x == $scope.myIndex){
@@ -312,6 +322,8 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.sacrificeIndex = -1;
 				$scope.showSacrifice = false;
 				$scope.ask = response.data.ask;
+				$scope.richest = response.data.richest;
+				$scope.resources = response.data.resources;
 				/*
 				$scope.askMode = false;
 				if ($scope.ask.type != "0"){

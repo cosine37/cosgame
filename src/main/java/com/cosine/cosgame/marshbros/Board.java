@@ -283,6 +283,7 @@ public class Board {
 		List<String> hand = new ArrayList<>();
 		List<String> diceResults = new ArrayList<>();
 		List<String> resources = new ArrayList<>();
+		List<String> richest = new ArrayList<>();
 		List<List<RoleEntity>> roles = new ArrayList<>();
 		String myIndex = "-1";
 		String phase = "-1";
@@ -291,6 +292,8 @@ public class Board {
 			diceResults.add(Integer.toString(dice.getResults().get(i)));
 		}
 		
+		int maxRes = 1;
+		List<Integer> maxResIndexes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerNames.add(p.getName());
@@ -302,6 +305,7 @@ public class Board {
 			}
 			roles.add(singleRoles);
 			resources.add(Integer.toString(p.getResource()));
+			richest.add("n");
 			
 			if (username.contentEquals(players.get(i).getName())) {
 				myIndex = Integer.toString(i);
@@ -309,8 +313,19 @@ public class Board {
 				for (j=0;j<p.getHand().size();j++) {
 					hand.add(p.getHand().get(j).getImg());
 				}
-				
+			} else {
+				if (p.getResource() > maxRes) {
+					maxRes = p.getResource();
+					maxResIndexes = new ArrayList<>();
+					maxResIndexes.add(i);
+				} else if (p.getResource() == maxRes) {
+					maxResIndexes.add(i);
+				}
 			}
+		}
+		
+		for (i=0;i<maxResIndexes.size();i++) {
+			richest.set(maxResIndexes.get(i), "y");
 		}
 		
 		AskEntity askEntity = new AskEntity();
@@ -334,6 +349,7 @@ public class Board {
 		entity.setPhase(phase);
 		entity.setLogs(logs.getLogs());
 		entity.setAsk(askEntity);
+		entity.setRichest(richest);
 		
 		return entity;
 	}

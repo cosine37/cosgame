@@ -15,6 +15,7 @@ public class BoardEntity {
 	List<String> diceResults;
 	List<String> resources;
 	List<String> logs;
+	List<String> richest;
 	List<List<RoleEntity>> roles;
 	
 	AskEntity ask;
@@ -97,7 +98,11 @@ public class BoardEntity {
 	public void setAsk(AskEntity ask) {
 		this.ask = ask;
 	}
-	
-	
+	public List<String> getRichest() {
+		return richest;
+	}
+	public void setRichest(List<String> richest) {
+		this.richest = richest;
+	}
 	
 }
