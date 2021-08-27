@@ -27,6 +27,13 @@ public class Player {
 	
 	public void endTurn() {
 		phase = Consts.OFFTURN;
+		for (int i=area.size()-1;i>=0;i--) {
+			if (area.get(i).getOwner() != index) {
+				int x = area.get(i).getOwner();
+				Role r = area.remove(i);
+				board.getPlayerByIndex(x).getArea().add(r);
+			}
+		}
 		Player p = nextPlayer();
 		//System.out.println(p.getName());
 		p.startTurn();
@@ -74,6 +81,7 @@ public class Player {
 	public void appoint(int x) {
 		Card c = hand.remove(x);
 		Role r = new Role(c);
+		r.setOwner(index);
 		area.add(r);
 		board.getLogs().logAppoint(this, r);
 	}

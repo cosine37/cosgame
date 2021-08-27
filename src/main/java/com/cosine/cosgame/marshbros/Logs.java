@@ -106,6 +106,12 @@ public class Logs {
 		addLog(s);
 	}
 	
+	public void logStealRole(Player p, Role r) {
+		String s;
+		s = p.getName() + "帐下的" + r.getCard().name + "被劫走了。";
+		addLog(s);
+	}
+	
 	public void logEndTurn(Player p) {
 		String s;
 		s = p.getName() + "结束了回合。";
