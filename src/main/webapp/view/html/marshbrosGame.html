@@ -54,11 +54,13 @@
 			<td ng-show="roleIndex != -1 && attackMode == false && askMode == false && actionMode == false">
 				<div>
 					<table>
-						<tr><td><button ng-disabled="chosenRole.choice!='-1'" ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
+						<tr><td><button ng-disabled="chosenRole.choice!='-1' || canStealOrRaid=='n'" ng-mouseover="showInstructions('raid')" ng-click="raid()">劫掠</button></td></tr>
 						<tr><td></td></tr>
 						<tr><td><button ng-disabled="chosenRole.canAttack=='n'"ng-mouseover="showInstructions('attack')"ng-click="openAttack()">攻击</button></td></tr>
 						<tr><td></td></tr>
-						<tr ng-show="chosenRole.hasAction=='y'"><td><button ng-mouseover="showInstructions('action')"ng-click="openAction()">行动</button></td></tr>
+						<tr ng-show="chosenRole.hasAction=='y'">
+							<td><button ng-mouseover="showInstructions('action')" ng-disabled="chosenRole.stealAction=='y' && canStealOrRaid=='n'" ng-click="openAction()">行动</button></td>
+						</tr>
 						<tr ng-show="chosenRole.hasAction=='y'"><td></td></tr>
 						<tr><td><button ng-mouseover="showInstructions('cancel')"ng-click="cancelChoosed()">取消</button></td></tr>
 					</table>

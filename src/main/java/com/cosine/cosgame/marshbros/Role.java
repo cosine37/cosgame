@@ -149,6 +149,12 @@ public class Role {
 		re.setActionText(card.getActionText());
 		re.setActionType(Integer.toString(card.getActionType()));
 		
+		if (card.isStealAction()) {
+			re.setStealAction("y");
+		} else {
+			re.setStealAction("n");
+		}
+		
 		if (card.isCanAttack()) {
 			re.setCanAttack("y");
 		} else {
@@ -190,6 +196,7 @@ public class Role {
 		card.setRole(this);
 		card.setBoard(board);
 		card.setPlayer(player);
+		card.ruleChange();
 		hp = doc.getInteger("hp", 0);
 		atk = doc.getInteger("atk", 0);
 		owner = doc.getInteger("owner", -1);

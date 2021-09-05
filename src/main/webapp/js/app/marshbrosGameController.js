@@ -324,6 +324,7 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.ask = response.data.ask;
 				$scope.richest = response.data.richest;
 				$scope.resources = response.data.resources;
+				$scope.canStealOrRaid = response.data.canStealOrRaid;
 				/*
 				$scope.askMode = false;
 				if ($scope.ask.type != "0"){

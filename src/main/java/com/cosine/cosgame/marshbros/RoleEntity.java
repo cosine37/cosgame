@@ -10,6 +10,7 @@ public class RoleEntity {
 	String hasAction;
 	String actionText;
 	String actionType;
+	String stealAction;
 	
 	public String getImg() {
 		return img;
@@ -64,6 +65,12 @@ public class RoleEntity {
 	}
 	public void setActionType(String actionType) {
 		this.actionType = actionType;
+	}
+	public String getStealAction() {
+		return stealAction;
+	}
+	public void setStealAction(String stealAction) {
+		this.stealAction = stealAction;
 	}
 	
 	

@@ -18,6 +18,7 @@ public class ShiQian extends Card {
 		actionText = "从除你以外的一名资源最对的玩家处窃取一点资源。";
 		actionType = Consts.CHOOSERICHEST;
 		actionName = "神偷";
+		isStealAction = true;
 	}
 	
 	public void activate() {

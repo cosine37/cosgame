@@ -48,6 +48,10 @@ public class CardFactory {
 			c = new WangYing();
 		} else if (img.contentEquals("GaoYaNei")) {
 			c = new GaoYaNei();
+		} else if (img.contentEquals("ZhaoJi")) {
+			c = new ZhaoJi();
+		} else if (img.contentEquals("ZhaoHuan")) {
+			c = new ZhaoHuan();
 		}
 		return c;
 	}

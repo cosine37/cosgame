@@ -9,6 +9,7 @@ public class BoardEntity {
 	String phase;
 	String curPlayerIndex;
 	String myIndex;
+	String canStealOrRaid;
 	
 	List<String> players;
 	List<String> hand;
@@ -103,6 +104,12 @@ public class BoardEntity {
 	}
 	public void setRichest(List<String> richest) {
 		this.richest = richest;
+	}
+	public String getCanStealOrRaid() {
+		return canStealOrRaid;
+	}
+	public void setCanStealOrRaid(String canStealOrRaid) {
+		this.canStealOrRaid = canStealOrRaid;
 	}
 	
 }

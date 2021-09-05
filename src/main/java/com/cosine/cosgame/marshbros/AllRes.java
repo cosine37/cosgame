@@ -41,6 +41,8 @@ public class AllRes {
 			officialCards.add(new DuanJingZhu());
 			officialCards.add(new WangYing());
 			officialCards.add(new GaoYaNei());
+			officialCards.add(new ZhaoJi());
+			officialCards.add(new ZhaoHuan());
 		}
 	}
 }

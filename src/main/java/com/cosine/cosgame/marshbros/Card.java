@@ -21,12 +21,14 @@ public class Card {
 	protected int actionType;
 	protected String actionText;
 	protected String actionName;
+	protected boolean isStealAction;
 	
 	public Card() {
 		taunt = false;
 		canAttack = true;
 		attackTwice = false;
 		hasAction = false;
+		isStealAction = false;
 		type = Consts.ROLE;
 	}
 	
@@ -43,6 +45,10 @@ public class Card {
 	}
 	
 	public void resolveAction(int target) {
+		
+	}
+	
+	public void ruleChange() {
 		
 	}
 
@@ -149,6 +155,18 @@ public class Card {
 	}
 	public void setActionType(int actionType) {
 		this.actionType = actionType;
+	}
+	public String getActionName() {
+		return actionName;
+	}
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
+	}
+	public boolean isStealAction() {
+		return isStealAction;
+	}
+	public void setStealAction(boolean isStealAction) {
+		this.isStealAction = isStealAction;
 	}
 	
 	

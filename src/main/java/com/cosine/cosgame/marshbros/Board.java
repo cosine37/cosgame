@@ -24,6 +24,8 @@ public class Board {
 	String id;
 	String lord;
 	
+	boolean canStealOrRaid;
+	
 	Logs logs;
 	MongoDBUtil dbutil;
 	
@@ -34,6 +36,8 @@ public class Board {
 		asks = new ArrayList<>();
 		dice = new Dice();
 		logs = new Logs();
+		
+		canStealOrRaid = false;
 		
 		String dbname = "marshbros";
 		String col = "board";
@@ -162,7 +166,11 @@ public class Board {
 			return cards.get(0);
 		}
 	}
-
+	
+	
+	public void disableStealOrRaid() {
+		canStealOrRaid = false;
+	}
 	public void addAskToTop(Ask ask) {
 		asks.add(0,ask);
 	}
@@ -336,6 +344,12 @@ public class Board {
 			}
 		}
 		
+		if (canStealOrRaid) {
+			entity.setCanStealOrRaid("y");
+		} else {
+			entity.setCanStealOrRaid("n");
+		}
+		
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
@@ -391,6 +405,8 @@ public class Board {
 	}
 	
 	public void setFromDoc(Document doc) {
+		canStealOrRaid = true;
+		
 		curPlayerIndex = doc.getInteger("curPlayerIndex", 0);
 		status = doc.getInteger("status", -1);
 		winTarget = doc.getInteger("winTarget", 10);
