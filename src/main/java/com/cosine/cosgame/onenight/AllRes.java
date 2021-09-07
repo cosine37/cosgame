@@ -98,8 +98,11 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Gremlin();
 		allRoles.add(r);
+		r = new RepentWolf();
+		allRoles.add(r);
 		r = new Drunk();
 		allRoles.add(r);
+		
 		r = new Nun();
 		allRoles.add(r);
 		r = new Insomniac();
@@ -124,6 +127,7 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Detective();
 		allRoles.add(r);
+		
 		r = new SleepingWolf();
 		allRoles.add(r);
 		r = new Wolfdog();
@@ -149,6 +153,8 @@ public class AllRes {
 		r = new Link();
 		allRoles.add(r);
 		r = new StutteringJudge();
+		allRoles.add(r);
+		r = new RustyKnight();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

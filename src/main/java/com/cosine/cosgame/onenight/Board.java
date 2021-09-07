@@ -153,12 +153,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Pope();
+		r = new RepentWolf();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Warlock();
+		r = new RustyKnight();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -366,6 +366,7 @@ public class Board {
 			players.get(i).setVoted(false);
 			players.get(i).setNumVotes(0);
 			players.get(i).setVoteIndex(-1);
+			players.get(i).setVotedOut(false);
 		}
 	}
 	
@@ -455,6 +456,7 @@ public class Board {
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setNumVotes(0);
+			players.get(i).setVotedOut(false);
 		}
 		for (i=0;i<players.size();i++) {
 			Role r = players.get(i).getCurrentRole();

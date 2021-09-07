@@ -154,6 +154,10 @@ public class RoleFactory {
 			role = new Warlock();
 		} else if (img.contentEquals("r64")) {
 			role = new Gremlin();
+		} else if (img.contentEquals("r65")) {
+			role = new RepentWolf();
+		} else if (img.contentEquals("r66")) {
+			role = new RustyKnight();
 		}
 		
 		else {
@@ -306,6 +310,10 @@ public class RoleFactory {
 			role = new Warlock();
 		} else if (num == 64) {
 			role = new Gremlin();
+		} else if (num == 65) {
+			role = new RepentWolf();
+		} else if (num == 66) {
+			role = new RustyKnight();
 		}
 		
 		else {
