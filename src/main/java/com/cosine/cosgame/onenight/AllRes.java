@@ -48,6 +48,12 @@ public class AllRes {
 		allRoles.add(r);
 		r = new WolfGodFather();
 		allRoles.add(r);
+		r = new GreyWolf();
+		allRoles.add(r);
+		r = new RedWolf();
+		allRoles.add(r);
+		r = new Sadako();
+		allRoles.add(r);
 		r = new Minion();
 		allRoles.add(r);
 		r = new Pope();
@@ -155,6 +161,10 @@ public class AllRes {
 		r = new StutteringJudge();
 		allRoles.add(r);
 		r = new RustyKnight();
+		allRoles.add(r);
+		r = new MadDog();
+		allRoles.add(r);
+		r = new WolfHunter();
 		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();

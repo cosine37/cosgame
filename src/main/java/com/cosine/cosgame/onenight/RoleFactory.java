@@ -158,6 +158,22 @@ public class RoleFactory {
 			role = new RepentWolf();
 		} else if (img.contentEquals("r66")) {
 			role = new RustyKnight();
+		} else if (img.contentEquals("r67")) {
+			role = new MadDog();
+		} else if (img.contentEquals("r6700")) {
+			role = new MadDog();
+			role.setSide(Consts.HUMAN);
+		} else if (img.contentEquals("r6701")) {
+			role = new MadDog();
+			role.setSide(Consts.WOLF);
+		} else if (img.contentEquals("r68")) {
+			role = new WolfHunter();
+		} else if (img.contentEquals("r69")) {
+			role = new Sadako();
+		} else if (img.contentEquals("r70")) {
+			role = new GreyWolf();
+		} else if (img.contentEquals("r71")) {
+			role = new RedWolf();
 		}
 		
 		else {
@@ -314,6 +330,22 @@ public class RoleFactory {
 			role = new RepentWolf();
 		} else if (num == 66) {
 			role = new RustyKnight();
+		} else if (num == 67) {
+			role = new MadDog();
+		} else if (num == 6700) {
+			role = new MadDog();
+			role.setSide(Consts.HUMAN);
+		} else if (num == 6701) {
+			role = new MadDog();
+			role.setSide(Consts.WOLF);
+		} else if (num == 68) {
+			role = new WolfHunter();
+		} else if (num == 69) {
+			role = new Sadako();
+		} else if (num == 70) {
+			role = new GreyWolf();
+		} else if (num == 71) {
+			role = new RedWolf();
 		}
 		
 		else {

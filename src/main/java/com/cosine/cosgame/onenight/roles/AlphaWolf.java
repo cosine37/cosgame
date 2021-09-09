@@ -41,7 +41,7 @@ public class AlphaWolf extends Role{
 			}
 			Player p = board.getPlayers().get(i);
 			if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
-				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNum());
+				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNumToShow());
 			}
 		}
 		Manipulations.soleWolfHandle(player, board);

@@ -51,6 +51,7 @@ public class Idiot extends Role{
 			int k = -1;
 			while (k!=startPlayer) {
 				Role r = curRoles.get(t);
+				r.onExchange();
 				k = t-1;
 				if (k<0) {
 					k = k+board.getPlayers().size();
@@ -73,6 +74,7 @@ public class Idiot extends Role{
 			int k = -1;
 			while (k!=startPlayer) {
 				Role r = curRoles.get(t);
+				r.onExchange();
 				k = t+1;
 				if (k>=board.getPlayers().size()) {
 					k = k-board.getPlayers().size();

@@ -123,6 +123,10 @@ public class Role {
 		return true;
 	}
 	
+	public void onExchange() {
+		
+	}
+	
 	public void dayHandle() {
 		
 	}

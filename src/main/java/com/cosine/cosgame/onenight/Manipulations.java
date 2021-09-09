@@ -9,6 +9,8 @@ public class Manipulations {
 		Role r1 = p1.getCurrentRole();
 		Role r2 = p2.getCurrentRole();
 		if (r1.exchangable() && r2.exchangable() && (!p1.hasSentinel()) && (!p2.hasSentinel())) {
+			r1.onExchange();
+			r2.onExchange();
 			p2.addRole(r1);
 			p1.addRole(r2);
 		}
@@ -18,6 +20,8 @@ public class Manipulations {
 		Role r1 = board.getCurCenterRole(t);
 		Role r2 = p.getCurrentRole();
 		if (r1.exchangable() && r2.exchangable() && (!p.hasSentinel())) {
+			r1.onExchange();
+			r2.onExchange();
 			p.addRole(r1);
 			board.addCenterRole(t, r2);
 		}
@@ -72,6 +76,7 @@ public class Manipulations {
 			Role r = viewer.getCurrentRole();
 			r.onView(viewer);
 			viewer.setUpdatedRole(r);
+			//System.out.println(r.getName());
 			viewer.setShowUpdatedRole(true);
 		}
 		

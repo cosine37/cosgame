@@ -26,8 +26,10 @@ public class Board {
 	String lord;
 	boolean canNight;
 	boolean tannerWin;
+	boolean sadakoWin;
 	int detectiveIndex;
 	int weremeleonIndex;
+	int wolfHunterIndex;
 	int sentinelIndex;
 	String detectiveRoleImg;
 	boolean soleWolf;
@@ -79,8 +81,30 @@ public class Board {
 			int y = ris.remove(x);
 			Role r = rolesThisGame.get(y);
 			if (r.getSide() == Consts.HUMAN) {
-				if (r.getRoleNum() != Consts.PAGAN && r.getRoleNum() != Consts.BAKER && r.getRoleNum() != Consts.MONK) {
+				if (r.getRoleNum() != Consts.PAGAN && r.getRoleNum() != Consts.BAKER && r.getRoleNum() != Consts.MONK
+						&& r.getRoleNum() != Consts.WOLFHUNTER && r.getRoleNum() != Consts.MADDOG) {
 					weremeleonIndex = y;
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setWolfHunterIndex() {
+		List<Integer> ris = new ArrayList<>();
+		for (int i=0;i<rolesThisGame.size();i++) {
+			ris.add(i);
+		}
+		while (ris.size() > 0) {
+			Random rand = new Random();
+			int x = rand.nextInt(ris.size());
+			int y = ris.remove(x);
+			Role r = rolesThisGame.get(y);
+			if (r.getSide() == Consts.WOLF) {
+				if (r.getRoleNum() != Consts.WEREMELEON && r.getRoleNum() != Consts.WOLFHUNTER && r.getRoleNum() != Consts.SADAKO
+						 && r.getRoleNum() != Consts.WOLFDOG && r.getRoleNum() != Consts.MINION) {
+					wolfHunterIndex = y;
+					break;
 				}
 			}
 		}
@@ -107,6 +131,7 @@ public class Board {
 		restrictedIndex = -1;
 		firstPlayerIndex = -1;
 		weremeleonIndex = -1;
+		wolfHunterIndex = -1;
 	}
 	
 	public void restart() {
@@ -130,6 +155,7 @@ public class Board {
 	
 	public void distributeRoles() {
 		setWeremeleonIndex();
+		setWolfHunterIndex();
 		List<Role> tls = new ArrayList<>();
 		int i;
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -153,17 +179,17 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new RepentWolf();
+		r = new Detective();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new RustyKnight();
+		r = new WolfHunter();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Sheriff();
+		r = new GreyWolf();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -178,7 +204,7 @@ public class Board {
 		r.setBoard(this);
 		players.get(4).getRoles().set(0, r);
 		
-		r = new Sentinel();
+		r = new WolfHunter();
 		List<Role> rs = new ArrayList<>();
 		rs.add(r);
 		centerRoles.set(0, rs);
@@ -509,6 +535,7 @@ public class Board {
 		boolean votedWerewolf = false;
 		boolean votedMinion = false;
 		boolean votedTanner = false;
+		boolean votedSadako = false;
 		boolean missedWerewolf = false;
 		boolean votedSomeone = false;
 		for (i=0;i<players.size();i++) {
@@ -538,6 +565,8 @@ public class Board {
 					}
 				} else if (p.getSide() == Consts.TANNER) {
 					votedTanner = true;
+				} else if (p.getSide() == Consts.SADAKO) {
+					votedSadako = true;
 				}
 			} else {
 				if (p.getSide() == Consts.WOLF) {
@@ -550,7 +579,9 @@ public class Board {
 			tannerWin = true;
 		}
 		
-		if (votedWerewolf) {
+		if (votedSadako) {
+			winSide = Consts.SADAKO;
+		} else if (votedWerewolf) {
 			if (killedPope) {
 				winSide = Consts.WOLF;
 			} else {
@@ -706,6 +737,12 @@ public class Board {
 	public void setWeremeleonIndex(int weremeleonIndex) {
 		this.weremeleonIndex = weremeleonIndex;
 	}
+	public int getWolfHunterIndex() {
+		return wolfHunterIndex;
+	}
+	public void setWolfHunterIndex(int wolfHunterIndex) {
+		this.wolfHunterIndex = wolfHunterIndex;
+	}
 	public boolean isTannerWin() {
 		return tannerWin;
 	}
@@ -724,6 +761,22 @@ public class Board {
 	public Role getWeremeleonRole() {
 		if (weremeleonIndex != -1) {
 			Role r = rolesThisGame.get(weremeleonIndex);
+			return r;
+		} else {
+			return null;
+		}
+	}
+	public String getWolfHunterImg() {
+		if (wolfHunterIndex != -1) {
+			Role r = rolesThisGame.get(wolfHunterIndex);
+			return r.getImg();
+		} else {
+			return "";
+		}
+	}
+	public Role getWolfHunterRole() {
+		if (wolfHunterIndex != -1) {
+			Role r = rolesThisGame.get(wolfHunterIndex);
 			return r;
 		} else {
 			return null;
@@ -1049,6 +1102,7 @@ public class Board {
 		doc.append("firstPlayerIndex", firstPlayerIndex);
 		doc.append("restrictedIndex", restrictedIndex);
 		doc.append("weremeleonIndex", weremeleonIndex);
+		doc.append("wolfHunterIndex", wolfHunterIndex);
 		int i,j;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -1090,6 +1144,7 @@ public class Board {
 		firstPlayerIndex = doc.getInteger("firstPlayerIndex", 0);
 		restrictedIndex = doc.getInteger("restrictedIndex", -1);
 		weremeleonIndex = doc.getInteger("weremeleonIndex", -1);
+		wolfHunterIndex = doc.getInteger("wolfHunterIndex", -1);
 		int i,j;
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();

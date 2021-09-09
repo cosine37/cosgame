@@ -72,6 +72,12 @@ public class Consts {
 	public static final int LINK = 52;
 	public static final int REDHAT = 53;
 	
+	public static final int MADDOG = 67;
+	public static final int WOLFHUNTER = 68;
+	public static final int SADAKO = 69;
+	public static final int GREYWOLF = 70;
+	public static final int REDWOLF = 71;
+	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;

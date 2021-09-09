@@ -272,6 +272,8 @@ public class Player {
 	public void setUpdatedRole(Role updatedRole) {
 		if (updatedRole.getRoleNum() == Consts.WEREMELEON && board.getWeremeleonIndex() != -1) {
 			this.updatedRole = board.getWeremeleonRole();
+		} else if (updatedRole.getRoleNum() == Consts.WOLFHUNTER && board.getWolfHunterIndex() != -1) {
+			this.updatedRole = board.getWolfHunterRole();
 		} else {
 			this.updatedRole = updatedRole;
 		}
