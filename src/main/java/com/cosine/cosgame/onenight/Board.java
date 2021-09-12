@@ -16,6 +16,7 @@ public class Board {
 	List<Player> players;
 	List<Role> rolesThisGame;
 	List<List<Role>> centerRoles;
+	List<Question> questions;
 	
 	String id;
 	int status;
@@ -26,7 +27,6 @@ public class Board {
 	String lord;
 	boolean canNight;
 	boolean tannerWin;
-	boolean sadakoWin;
 	int detectiveIndex;
 	int weremeleonIndex;
 	int wolfHunterIndex;
@@ -43,6 +43,7 @@ public class Board {
 		players = new ArrayList<>();
 		rolesThisGame = new ArrayList<>();
 		centerRoles = new ArrayList<>();
+		questions = new ArrayList<>();
 		canNight = false;
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
@@ -107,6 +108,48 @@ public class Board {
 					break;
 				}
 			}
+		}
+	}
+	
+	public void genQuestions() {
+		int i;
+		boolean hasGypsy = false;
+		for (i=0;i<rolesThisGame.size();i++) {
+			Role r = rolesThisGame.get(i);
+			if (r.getRoleNum() == Consts.GYPSY) {
+				hasGypsy = true;
+			}
+		}
+		if (hasGypsy) {
+			AllRes allRes = new AllRes();
+			List<Question> tq = allRes.getAllQuestions();
+			List<Question> used = new ArrayList<>();
+			List<Question> unused = new ArrayList<>();
+			for (i=0;i<tq.size();i++) {
+				Question q = tq.get(i);
+				q.setBoard(this);
+				if (q.shouldContain()) {
+					used.add(q);
+				} else {
+					unused.add(q);
+				}
+			}
+			questions = new ArrayList<>();
+			while (used.size()>0) {
+				Random rand = new Random();
+				int n = used.size();
+				int x = rand.nextInt(n);
+				Question q = used.remove(x);
+				questions.add(q);
+			}
+			while (unused.size()>0) {
+				Random rand = new Random();
+				int n = unused.size();
+				int x = rand.nextInt(n);
+				Question q = unused.remove(x);
+				questions.add(q);
+			}
+			//System.out.println("qs size:" + questions.size());
 		}
 	}
 	
@@ -175,26 +218,26 @@ public class Board {
 			singleRole.add(tls.remove(0));
 			centerRoles.add(singleRole);
 		}
-		
+		genQuestions();
 		// TODO: test roles here
 		Role r;
-		/*
-		r = new Detective();
+		
+		r = new Gypsy();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		
-		r = new WolfHunter();
+		/*
+		r = new Werewolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new GreyWolf();
+		r = new Pope();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
 		
-		r = new Seer();
+		r = new RustyKnight();
 		r.setPlayer(players.get(3));
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
@@ -220,6 +263,18 @@ public class Board {
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
 		*/
+		int qindex = 0;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GYPSY) {
+				List<Integer> questionChoices = new ArrayList<>();
+				questionChoices.add(qindex);
+				qindex++;
+				questionChoices.add(qindex);
+				qindex++;
+				players.get(i).setQuestionChoices(questionChoices);
+			}
+		}
+		
 		boolean hasDusk = false;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getInitialRole().isHasDusk()) {
@@ -508,6 +563,7 @@ public class Board {
 		int i;
 		boolean killedPope = true;
 		boolean hasWerewolf = false;
+		boolean bladeWolfKilledPope = false;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getSide() == Consts.WOLF) {
 				hasWerewolf = true;
@@ -518,6 +574,8 @@ public class Board {
 					}
 					if (players.get(x).getCurrentRole().getRoleNum() != Consts.POPE) {
 						killedPope = false;
+					} else if (players.get(i).getCurrentRole().getRoleNum() == Consts.BLADEWOLF){
+						bladeWolfKilledPope = true;
 					}
 				} else {
 					killedPope = false;
@@ -526,6 +584,8 @@ public class Board {
 		}
 		if (hasWerewolf == false) {
 			killedPope = false;
+		} else if (bladeWolfKilledPope) {
+			killedPope = true;
 		}
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getNumVotes() > mostVote) {
@@ -748,6 +808,12 @@ public class Board {
 	}
 	public void setTannerWin(boolean tannerWin) {
 		this.tannerWin = tannerWin;
+	}
+	public List<Question> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 	public String getWeremeleonImg() {
@@ -1104,6 +1170,11 @@ public class Board {
 		doc.append("weremeleonIndex", weremeleonIndex);
 		doc.append("wolfHunterIndex", wolfHunterIndex);
 		int i,j;
+		List<Document> loq = new ArrayList<>();
+		for (i=0;i<questions.size();i++) {
+			loq.add(questions.get(i).toDocument());
+		}
+		doc.append("questions", loq);
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<rolesThisGame.size();i++) {
 			lor.add(rolesThisGame.get(i).getImg());
@@ -1146,6 +1217,12 @@ public class Board {
 		weremeleonIndex = doc.getInteger("weremeleonIndex", -1);
 		wolfHunterIndex = doc.getInteger("wolfHunterIndex", -1);
 		int i,j;
+		List<Document> loq = (List<Document>) doc.get("questions");
+		questions = new ArrayList<>();
+		for (i=0;i<loq.size();i++) {
+			Question q = QuestionFactory.createQuestion(loq.get(i));
+			questions.add(q);
+		}
 		List<String> lor = (List<String>) doc.get("rolesThisGame");
 		rolesThisGame = new ArrayList<>();
 		for (i=0;i<lor.size();i++) {
@@ -1193,6 +1270,14 @@ public class Board {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
+	}
+	
+	public void updateQuestions() {
+		List<Document> loq = new ArrayList<>();
+		for (int i=0;i<questions.size();i++) {
+			loq.add(questions.get(i).toDocument());
+		}
+		dbutil.update("id", id, "questions", loq);
 	}
 	
 	public void updatePlayer(String name) {

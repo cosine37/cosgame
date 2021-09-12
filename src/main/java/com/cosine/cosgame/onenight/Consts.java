@@ -72,11 +72,16 @@ public class Consts {
 	public static final int LINK = 52;
 	public static final int REDHAT = 53;
 	
+	public static final int GREMLIN = 64;
+	
 	public static final int MADDOG = 67;
 	public static final int WOLFHUNTER = 68;
 	public static final int SADAKO = 69;
 	public static final int GREYWOLF = 70;
 	public static final int REDWOLF = 71;
+	public static final int GYPSY = 72;
+	public static final int PARENT = 73;
+	public static final int BLADEWOLF = 74;
 	
 	// marks
 	public static final int UNKNOWN = -1;
@@ -95,4 +100,13 @@ public class Consts {
 	public static final int PLAGUE = 4;
 	public static final int ASSASSINATION = 5;
 	public static final int CANIS = 6;
+	
+	// questions
+	public static final int ANOTHERGYPSY = 1;
+	public static final int HASSADAKO = 2;
+	public static final int HASPOPE = 3;
+	public static final int HASWEREMELEON = 4;
+	public static final int HASWOLFCENTER = 5;
+	public static final int LEFTPLAERROLE = 6;
+	public static final int RIGHTPLAYERROLE = 7;
 }

@@ -174,6 +174,14 @@ public class RoleFactory {
 			role = new GreyWolf();
 		} else if (img.contentEquals("r71")) {
 			role = new RedWolf();
+		} else if (img.contentEquals("r72")) {
+			role = new Gypsy();
+		} else if (img.contentEquals("r73")) {
+			role = new Parent();
+		} else if (img.contentEquals("r74")) {
+			role = new BladeWolf();
+		} else if (img.contentEquals("r75")) {
+			role = new PoliceDetect();
 		}
 		
 		else {
@@ -346,6 +354,14 @@ public class RoleFactory {
 			role = new GreyWolf();
 		} else if (num == 71) {
 			role = new RedWolf();
+		} else if (num == 72) {
+			role = new Gypsy();
+		} else if (num == 73) {
+			role = new Parent();
+		} else if (num == 74) {
+			role = new BladeWolf();
+		} else if (num == 75) {
+			role = new PoliceDetect();
 		}
 		
 		else {

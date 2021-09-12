@@ -3,13 +3,35 @@ package com.cosine.cosgame.onenight;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cosine.cosgame.onenight.questions.*;
 import com.cosine.cosgame.onenight.roles.*;
 
 public class AllRes {
 	List<Role> allRoles;
+	List<Question> allQuestions;
 	
 	public AllRes() {
 		genAllRoles();
+		genAllQuestions();
+	}
+	
+	public void genAllQuestions() {
+		allQuestions = new ArrayList<>();
+		Question q;
+		q = new AnotherGypsy();
+		allQuestions.add(q);
+		q = new HasSadako();
+		allQuestions.add(q);
+		q = new HasPope();
+		allQuestions.add(q);
+		q = new HasWeremeleon();
+		allQuestions.add(q);
+		q = new HasWolfCenter();
+		allQuestions.add(q);
+		q = new LeftPlayerRole();
+		allQuestions.add(q);
+		q = new RightPlayerRole();
+		allQuestions.add(q);
 	}
 	
 	public void genAllRoles() {
@@ -52,6 +74,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new RedWolf();
 		allRoles.add(r);
+		r = new BladeWolf();
+		allRoles.add(r);
 		r = new Sadako();
 		allRoles.add(r);
 		r = new Minion();
@@ -68,11 +92,17 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Beggar();
 		allRoles.add(r);
+		for (i=0;i<2;i++) {
+			r = new Gypsy();
+			allRoles.add(r);
+		}
 		r = new Seer();
 		allRoles.add(r);
 		r = new ApprenticeSeer();
 		allRoles.add(r);
 		r = new Sorcerer();
+		allRoles.add(r);
+		r = new PoliceDetect();
 		allRoles.add(r);
 		r = new Investigator();
 		allRoles.add(r);
@@ -122,6 +152,8 @@ public class AllRes {
 		r = new Watcher();
 		allRoles.add(r);
 		r = new Bishop();
+		allRoles.add(r);
+		r = new Parent();
 		allRoles.add(r);
 		r = new VillageHead();
 		allRoles.add(r);
@@ -179,6 +211,14 @@ public class AllRes {
 
 	public void setAllRoles(List<Role> allRoles) {
 		this.allRoles = allRoles;
+	}
+
+	public List<Question> getAllQuestions() {
+		return allQuestions;
+	}
+
+	public void setAllQuestions(List<Question> allQuestions) {
+		this.allQuestions = allQuestions;
 	}
 	
 }

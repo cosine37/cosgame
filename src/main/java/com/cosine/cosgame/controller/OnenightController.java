@@ -107,6 +107,7 @@ public class OnenightController {
 			board.parseSettings(settings);
 			board.startGame();
 			board.updatePlayers();
+			board.updateQuestions();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("soleWolf", board.isSoleWolf());
 			board.updateDB("canNight", board.isCanNight());
@@ -132,6 +133,7 @@ public class OnenightController {
 		if (board.getLord().contentEquals(username)) {
 			board.restart();
 			board.updatePlayers();
+			board.updateQuestions();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("canNight", board.isCanNight());
 			board.updateDB("detectiveIndex", board.getDetectiveIndex());
@@ -173,6 +175,7 @@ public class OnenightController {
 			board.distributeRoles();
 			board.updateDB("status", board.getStatus());
 			board.updateDB("confirmed", board.getConfirmed());
+			board.updateQuestions();
 			board.updatePlayers();
 			board.updateCenterRoles();
 			board.updateDB("weremeleonIndex", board.getWeremeleonIndex());
@@ -208,6 +211,7 @@ public class OnenightController {
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
 			board.updatePlayers();
+			board.updateQuestions();
 			board.updateCenterRoles();
 		}
 		StringEntity entity = new StringEntity();
@@ -237,6 +241,7 @@ public class OnenightController {
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
 			board.updatePlayers();
+			board.updateQuestions();
 			board.updateCenterRoles();
 		}
 		StringEntity entity = new StringEntity();
@@ -261,6 +266,7 @@ public class OnenightController {
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
 			board.updatePlayers();
+			board.updateQuestions();
 			board.updateCenterRoles();
 		}
 		StringEntity entity = new StringEntity();

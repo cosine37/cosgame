@@ -17,6 +17,7 @@ public class Player {
 	int score;
 	int index;
 	int beggarIndex;
+	int questionChoosed;
 	boolean voted;
 	boolean votedOut;
 	boolean bot;
@@ -28,6 +29,7 @@ public class Player {
 	boolean confirmed;
 	boolean stoned;
 	
+	List<Integer> questionChoices;
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
 	List<Integer> statusMarks;
@@ -37,6 +39,7 @@ public class Player {
 	public Player() {
 		roles = new ArrayList<>();
 		statuses = new ArrayList<>();
+		questionChoices = new ArrayList<>();
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
 		statusMarks = new ArrayList<>();
@@ -50,6 +53,7 @@ public class Player {
 		showFinalStatus = false;
 		confirmed = false;
 		beggarIndex = -1;
+		questionChoosed = -1;
 		stoned = false;
 	}
 	
@@ -112,6 +116,7 @@ public class Player {
 		playerMarks = new ArrayList<>();
 		centerMarks = new ArrayList<>();
 		statusMarks = new ArrayList<>();
+		questionChoices = new ArrayList<>();
 		int i;
 		for (i=0;i<n;i++) {
 			playerMarks.add(-1);
@@ -121,6 +126,7 @@ public class Player {
 			centerMarks.add(-1);
 		}
 		beggarIndex = -1;
+		questionChoosed = -1;
 		stoned = false;
 	}
 	
@@ -338,6 +344,18 @@ public class Player {
 	public void setStoned(boolean stoned) {
 		this.stoned = stoned;
 	}
+	public int getQuestionChoosed() {
+		return questionChoosed;
+	}
+	public void setQuestionChoosed(int questionChoosed) {
+		this.questionChoosed = questionChoosed;
+	}
+	public List<Integer> getQuestionChoices() {
+		return questionChoices;
+	}
+	public void setQuestionChoices(List<Integer> questionChoices) {
+		this.questionChoices = questionChoices;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -346,6 +364,8 @@ public class Player {
 		doc.append("numVotes", numVotes);
 		doc.append("voteIndex", voteIndex);
 		doc.append("score", score);
+		doc.append("questionChoices", questionChoices);
+		doc.append("questionChoosed", questionChoosed);
 		doc.append("playerMarks", playerMarks);
 		doc.append("centerMarks", centerMarks);
 		doc.append("statusMarks", statusMarks);
@@ -380,6 +400,8 @@ public class Player {
 		numVotes = doc.getInteger("numVotes", 0);
 		voteIndex = doc.getInteger("voteIndex", 0);
 		score = doc.getInteger("score", 0);
+		questionChoices = (List<Integer>) doc.get("questionChoices");
+		questionChoosed = doc.getInteger("questionChoosed", -1);
 		playerMarks = (List<Integer>) doc.get("playerMarks");
 		centerMarks = (List<Integer>) doc.get("centerMarks");
 		statusMarks = (List<Integer>) doc.get("statusMarks");
