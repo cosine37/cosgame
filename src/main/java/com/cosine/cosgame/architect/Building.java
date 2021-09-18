@@ -2,6 +2,8 @@ package com.cosine.cosgame.architect;
 
 import java.util.List;
 
+import org.bson.Document;
+
 public class Building {
 	List<Integer> price;
 	int score;
@@ -43,6 +45,22 @@ public class Building {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("price", price);
+		doc.append("score", score);
+		doc.append("img", img);
+		doc.append("name", name);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		price = (List<Integer>) doc.get("price");
+		score = doc.getInteger("score", 0);
+		img = doc.getString("img");
+		name = doc.getString("name");
 	}
 	
 }

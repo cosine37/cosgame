@@ -3,6 +3,8 @@ package com.cosine.cosgame.architect;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	List<Integer> warehouse;
 	List<Card> hand;
@@ -165,6 +167,66 @@ public class Player {
 	}
 	public void setNum1vp(int num1vp) {
 		this.num1vp = num1vp;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("warehouse", warehouse);
+		doc.append("phase", phase);
+		doc.append("subPhase", subPhase);
+		doc.append("num1vp", num1vp);
+		doc.append("num3vp", num3vp);
+		int i;
+		List<Document> doh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			doh.add(hand.get(i).toDocument());
+		}
+		doc.append("hand", hand);
+		List<Document> dop = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			dop.add(play.get(i).toDocument());
+		}
+		doc.append("play", play);
+		List<Document> dob = new ArrayList<>();
+		for (i=0;i<buildings.size();i++) {
+			dob.add(buildings.get(i).toDocument());
+		}
+		doc.append("buildings", dob);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		warehouse = (List<Integer>) doc.get("warehouse");
+		phase = doc.getInteger("phase", Consts.OFFTURN);
+		subPhase = doc.getInteger("subPhase", Consts.OFFTURN);
+		num1vp = doc.getInteger("num1vp", 0);
+		num3vp = doc.getInteger("num3vp", 0);
+		int i;
+		List<Document> doh = (List<Document>) doc.get("hand");
+		hand = new ArrayList<>();
+		for (i=0;i<doh.size();i++) {
+			Card c = new Card();
+			c.setPlayer(this);
+			c.setBoard(board);
+			c.setFromDoc(doh.get(i));
+			hand.add(c);
+		}
+		List<Document> dop = (List<Document>) doc.get("play");
+		play = new ArrayList<>();
+		for (i=0;i<dop.size();i++) {
+			Card c = new Card();
+			c.setPlayer(this);
+			c.setBoard(board);
+			c.setFromDoc(dop.get(i));
+			play.add(c);
+		}
+		List<Document> dob = (List<Document>) doc.get("buildings");
+		buildings = new ArrayList<>();
+		for (i=0;i<dob.size();i++) {
+			Building b = new Building();
+			b.setFromDoc(dob.get(i));
+			buildings.add(b);
+		}
 	}
 	
 }

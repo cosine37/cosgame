@@ -2,6 +2,8 @@ package com.cosine.cosgame.architect;
 
 import java.util.List;
 
+import org.bson.Document;
+
 public class Card {
 	int type;
 	List<Integer> needRes;
@@ -139,6 +141,28 @@ public class Card {
 	}
 	public void setResOn(List<Integer> resOn) {
 		this.resOn = resOn;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("type", type);
+		doc.append("needRes", needRes);
+		doc.append("provideRes", provideRes);
+		doc.append("resOn", resOn);
+		doc.append("numUpgrade", numUpgrade);
+		doc.append("img", img);
+		doc.append("name", name);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		type = doc.getInteger("type", -1);
+		needRes = (List<Integer>) doc.get("needRes");
+		provideRes = (List<Integer>) doc.get("provideRes");
+		resOn = (List<Integer>) doc.get("resOn");
+		numUpgrade = doc.getInteger("numUpgrade", -1);
+		img = doc.getString("img");
+		name = doc.getString("name");
 	}
 	
 }

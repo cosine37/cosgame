@@ -1,6 +1,9 @@
 package com.cosine.cosgame.architect;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Board {
 	List<Card> cardDeck;
@@ -15,7 +18,7 @@ public class Board {
 	int curPlayerIndex;
 	int status;
 	int numBuildingFinish;
-	
+
 	public void playerBuild(Player p, int x) {
 		if (x<0 || x>=revealedBuildings.size()) {
 			return;
@@ -145,5 +148,96 @@ public class Board {
 	}
 	public void setNumBuildingFinish(int numBuildingFinish) {
 		this.numBuildingFinish = numBuildingFinish;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("num3vp", num3vp);
+		doc.append("num1vp", num1vp);
+		doc.append("roundCount", roundCount);
+		doc.append("firstPlayerIndex", firstPlayerIndex);
+		doc.append("curPlayerIndex", curPlayerIndex);
+		doc.append("status", status);
+		doc.append("numBuildingFinish", numBuildingFinish);
+		int i;
+		List<Document> docd = new ArrayList<>();
+		for (i=0;i<cardDeck.size();i++) {
+			docd.add(cardDeck.get(i).toDocument());
+		}
+		doc.append("cardDeck", cardDeck);
+		List<Document> dorc = new ArrayList<>();
+		for (i=0;i<revealedCards.size();i++) {
+			dorc.add(revealedCards.get(i).toDocument());
+		}
+		doc.append("revealedCards", dorc);
+		List<Document> dobd = new ArrayList<>();
+		for (i=0;i<buildingDeck.size();i++) {
+			dobd.add(buildingDeck.get(i).toDocument());
+		}
+		doc.append("buildingDeck", dobd);
+		List<Document> dorb = new ArrayList<>();
+		for (i=0;i<revealedBuildings.size();i++) {
+			dorb.add(revealedBuildings.get(i).toDocument());
+		}
+		doc.append("revealedBuildings", dorb);
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			String name = players.get(i).getName();
+			playerNames.add(name);
+			doc.append(name, players.get(i).toDocument());
+		}
+		doc.append("playerNames", playerNames);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		num3vp = doc.getInteger("num3vp", 0);
+		num1vp = doc.getInteger("num1vp", 0);
+		roundCount = doc.getInteger("roundCount", 0);
+		firstPlayerIndex = doc.getInteger("firstPlayerIndex", -1);
+		curPlayerIndex = doc.getInteger("curPlayerIndex", -1);
+		status = doc.getInteger("status", -1);
+		numBuildingFinish = doc.getInteger("numBuildingFinish",numBuildingFinish);
+		int i;
+		cardDeck = new ArrayList<>();
+		List<Document> docd = (List<Document>) doc.get("cardDeck");
+		for (i=0;i<docd.size();i++) {
+			Card c = new Card();
+			c.setBoard(this);
+			c.setFromDoc(docd.get(i));
+			cardDeck.add(c);
+		}
+		revealedCards = new ArrayList<>();
+		List<Document> dorc = (List<Document>) doc.get("revealedCards");
+		for (i=0;i<dorc.size();i++) {
+			Card c = new Card();
+			c.setBoard(this);
+			c.setFromDoc(dorc.get(i));
+			revealedCards.add(c);
+		}
+		buildingDeck = new ArrayList<>();
+		List<Document> dobd = (List<Document>) doc.get("buildingDeck");
+		for (i=0;i<dobd.size();i++) {
+			Building b = new Building();
+			b.setFromDoc(dobd.get(i));
+			buildingDeck.add(b);
+		}
+		revealedBuildings = new ArrayList<>();
+		List<Document> dorb = (List<Document>) doc.get("revealedBuildings");
+		for (i=0;i<dorb.size();i++) {
+			Building b = new Building();
+			b.setFromDoc(dorb.get(i));
+			revealedBuildings.add(b);
+		}
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String name = playerNames.get(i);
+			Document dop = (Document) doc.get(name);
+			Player p = new Player();
+			p.setBoard(this);
+			p.setFromDoc(dop);
+			players.add(p);
+		}
 	}
 }
