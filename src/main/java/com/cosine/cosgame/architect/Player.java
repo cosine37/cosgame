@@ -18,6 +18,12 @@ public class Player {
 	String name;
 	Board board;
 	
+	public Player() {
+		warehouse = new ArrayList<>();
+		hand = new ArrayList<>();
+		play = new ArrayList<>();
+		buildings = new ArrayList<>();
+	}
 	
 	public void pay(Building b) {
 		if (b.canBuy(this)) {
@@ -176,6 +182,7 @@ public class Player {
 		doc.append("subPhase", subPhase);
 		doc.append("num1vp", num1vp);
 		doc.append("num3vp", num3vp);
+		doc.append("name", name);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -201,6 +208,7 @@ public class Player {
 		subPhase = doc.getInteger("subPhase", Consts.OFFTURN);
 		num1vp = doc.getInteger("num1vp", 0);
 		num3vp = doc.getInteger("num3vp", 0);
+		name = doc.getString("name");
 		int i;
 		List<Document> doh = (List<Document>) doc.get("hand");
 		hand = new ArrayList<>();

@@ -1,9 +1,14 @@
 package com.cosine.cosgame.architect;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.architect.entity.*;
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	List<Card> cardDeck;
@@ -18,6 +23,23 @@ public class Board {
 	int curPlayerIndex;
 	int status;
 	int numBuildingFinish;
+	String lord;
+	String id;
+	
+	MongoDBUtil dbutil;
+	
+	public Board() {
+		cardDeck = new ArrayList<>();
+		revealedCards = new ArrayList<>();
+		buildingDeck = new ArrayList<>();
+		revealedBuildings = new ArrayList<>();
+		players = new ArrayList<>();
+		
+		String dbname = "architect";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
 
 	public void playerBuild(Player p, int x) {
 		if (x<0 || x>=revealedBuildings.size()) {
@@ -149,9 +171,47 @@ public class Board {
 	public void setNumBuildingFinish(int numBuildingFinish) {
 		this.numBuildingFinish = numBuildingFinish;
 	}
+	public String getLord() {
+		return lord;
+	}
+	public void setLord(String lord) {
+		this.lord = lord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		players.add(p);
+	}
+	
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setStatus(Integer.toString(status));
+		int i;
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+		}
+		entity.setPlayerNames(playerNames);
+		return entity;
+	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("lord", lord);
 		doc.append("num3vp", num3vp);
 		doc.append("num1vp", num1vp);
 		doc.append("roundCount", roundCount);
@@ -184,6 +244,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			String name = players.get(i).getName();
 			playerNames.add(name);
+			name = "player-" + name;
 			doc.append(name, players.get(i).toDocument());
 		}
 		doc.append("playerNames", playerNames);
@@ -191,6 +252,8 @@ public class Board {
 	}
 	
 	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		lord = doc.getString("lord");
 		num3vp = doc.getInteger("num3vp", 0);
 		num1vp = doc.getInteger("num1vp", 0);
 		roundCount = doc.getInteger("roundCount", 0);
@@ -233,11 +296,79 @@ public class Board {
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {
 			String name = playerNames.get(i);
+			name = "player-" + name;
 			Document dop = (Document) doc.get(name);
 			Player p = new Player();
 			p.setBoard(this);
 			p.setFromDoc(dop);
 			players.add(p);
+		}
+	}
+	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
+	
+	public Player getPlayerByIndex(int index) {
+		if (index<0 || index>=players.size()) {
+			return null;
+		}
+		return players.get(index);
+	}
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }
