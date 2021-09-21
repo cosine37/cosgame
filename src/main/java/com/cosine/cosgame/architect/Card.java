@@ -1,5 +1,6 @@
 package com.cosine.cosgame.architect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -15,6 +16,24 @@ public class Card {
 	
 	Player player;
 	Board board;
+	
+	public Card() {
+		needRes = new ArrayList<>();
+		provideRes = new ArrayList<>();
+		resOn = new ArrayList<>();
+	}
+	
+	public void addNeedRes(int res, int n) {
+		int x = needRes.get(res);
+		x = x+n;
+		needRes.set(res, x);
+	}
+	
+	public void addProvideRes(int res, int n) {
+		int x = provideRes.get(res);
+		x = x+n;
+		provideRes.set(res, x);
+	}
 	
 	public int maxPlayNum() {
 		int ans = 0;

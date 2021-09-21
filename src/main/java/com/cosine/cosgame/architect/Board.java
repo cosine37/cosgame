@@ -40,6 +40,29 @@ public class Board {
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
+	
+	public void start() {
+		AllRes allRes = new AllRes();
+		for (int i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			Card woodCutter = allRes.getWoodCutter();
+			woodCutter.setPlayer(p);
+			woodCutter.setBoard(this);
+			Card mage = allRes.getMage();
+			mage.setPlayer(p);
+			mage.setBoard(this);
+			p.addHand(woodCutter);
+			p.addHand(mage);
+			if (i == 0) {
+				p.addRes(Consts.WOOD, 3);
+			} else if (i==1 || i==2) {
+				p.addRes(Consts.WOOD, 4);
+			} else if (i==3 || i==4) {
+				p.addRes(Consts.WOOD, 3);
+				p.addRes(Consts.STONE, 1);
+			}
+		}
+	}
 
 	public void playerBuild(Player p, int x) {
 		if (x<0 || x>=revealedBuildings.size()) {

@@ -81,38 +81,31 @@ public class Player {
 		return ans;
 	}
 	public void removeRes(int res, int numRes) {
-		int count = 0;
-		if (numRes <= count) return;
-		for (int i=warehouse.size()-1;i>=0;i--) {
-			if (res == warehouse.get(i)) {
-				warehouse.remove(i);
-				count++;
-				if (numRes == count) return;
-			}
+		int x = warehouse.get(res);
+		if (x>=numRes) {
+			x = x-numRes;
+			warehouse.set(res, x);
 		}
-	}
-	public int numRes(int res) {
-		int ans = 0;
-		for (int i=0;i<warehouse.size();i++) {
-			if (warehouse.get(i) == res) {
-				ans++;
-			}
-		}
-		return ans;
 	}
 	public void addRes(int res, int numRes) {
-		for (int i=0;i<numRes;i++) {
-			warehouse.add(res);
-		}	
+		int x = warehouse.get(res);
+		x = x+numRes;
+		warehouse.set(res, x);
 	}
 	public void addRes(int res) {
-		warehouse.add(res);
+		addRes(res, 1);
+	}
+	public int numRes(int res) {
+		return warehouse.get(res);
 	}
 	public void add1vp() {
 		num1vp++;
 	}
 	public void add3vp() {
 		num3vp++;
+	}
+	public void addHand(Card c) {
+		hand.add(c);
 	}
 	public List<Integer> getWarehouse() {
 		return warehouse;
