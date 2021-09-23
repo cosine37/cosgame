@@ -4,8 +4,8 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("architectCreateGameApp", []);
-app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$document',
+var app = angular.module("architectGameApp", []);
+app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 	
 		$scope.goto = function(d){
@@ -23,5 +23,24 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		$scope.play = function(x){
+			var data = {"cardIndex" : x}
+			$http({url: "/architect/play", method: "POST", params: data}).then(function(response){
+				//$scope.allRefresh()
+				$scope.getBoard()
+				//$scope.hideAreaCard();
+			});
+		}
+		
+		$scope.getBoard = function(){
+			$http.get('/architect/getboard').then(function(response){
+				$scope.gamedata = response.data
+				$scope.myIndex = parseInt(response.data.myIndex)
+				$scope.hand = response.data.players[$scope.myIndex].hand
+				
+			});
+		}
+		
+		$scope.getBoard();
 		
 }]);

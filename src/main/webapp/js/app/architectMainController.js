@@ -43,10 +43,6 @@ app.controller("architectMainCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.newGame = function(){
-			$scope.goto('architectcreategame');
-		}
-		
-		$scope.newGame = function(){
 			$http({url: "/architect/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
@@ -62,6 +58,13 @@ app.controller("architectMainCtrl", ['$scope', '$window', '$http', '$document', 
 			        boardws.send($scope.boards[index]);
 					$scope.goto('architectcreategame')
 				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/architect/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('architectgame');
 			});
 		}
 		

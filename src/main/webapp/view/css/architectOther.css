@@ -28,3 +28,26 @@ button:disabled{
 	
 	background: white;
 }
+
+.card-hand{
+	height: 320px;
+	width: 210px;
+	border: none;
+	position: relative;	
+	border: 5px solid rgb(160,32,240);
+	border-radius: 16px;
+	background-image:url("/image/Architect/Cards/WoodCutter.png");
+	background-size: cover;
+}
+
+.card-title{
+	position: relative;
+	left: 105px;
+	margin-left: -40px;
+	top: 0px;
+	width: 80px;
+	font-size: 20px;
+	text-align: center;
+	color: white;
+	background-color: black;
+}

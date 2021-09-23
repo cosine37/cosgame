@@ -34,7 +34,9 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		}
 		
 		$scope.startGame = function(){
-			$scope.goto('architectgame');
+			$http.post('/architect/startgame').then(function(response){
+				$scope.goto('architectgame');
+			});
 		}
 		
 		$scope.getBoard = function(){

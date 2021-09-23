@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.architect.entity.CardEntity;
+import com.cosine.cosgame.architect.entity.PlayerEntity;
+
 public class Player {
 	List<Integer> warehouse;
 	List<Card> hand;
@@ -19,10 +22,17 @@ public class Player {
 	Board board;
 	
 	public Player() {
+		clearAll();
+	}
+	
+	public void clearAll() {
 		warehouse = new ArrayList<>();
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
 		buildings = new ArrayList<>();
+		for (int i=0;i<4;i++) {
+			warehouse.add(0);
+		}
 	}
 	
 	public void pay(Building b) {
@@ -168,6 +178,28 @@ public class Player {
 		this.num1vp = num1vp;
 	}
 	
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		int i;
+		List<String> lw = new ArrayList<>();
+		for (i=0;i<warehouse.size();i++) {
+			lw.add(Integer.toString(warehouse.get(i)));
+		}
+		entity.setWarehouse(lw);
+		List<CardEntity> lh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			lh.add(hand.get(i).toCardEntity());
+		}
+		entity.setHand(lh);
+		List<CardEntity> lp = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			lp.add(play.get(i).toCardEntity());
+		}
+		entity.setPlay(lp);
+		return entity;
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("warehouse", warehouse);
@@ -181,12 +213,12 @@ public class Player {
 		for (i=0;i<hand.size();i++) {
 			doh.add(hand.get(i).toDocument());
 		}
-		doc.append("hand", hand);
+		doc.append("hand", doh);
 		List<Document> dop = new ArrayList<>();
 		for (i=0;i<play.size();i++) {
 			dop.add(play.get(i).toDocument());
 		}
-		doc.append("play", play);
+		doc.append("play", dop);
 		List<Document> dob = new ArrayList<>();
 		for (i=0;i<buildings.size();i++) {
 			dob.add(buildings.get(i).toDocument());

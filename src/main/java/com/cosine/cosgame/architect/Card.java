@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.architect.entity.CardEntity;
+
 public class Card {
 	int type;
 	List<Integer> needRes;
@@ -21,6 +23,11 @@ public class Card {
 		needRes = new ArrayList<>();
 		provideRes = new ArrayList<>();
 		resOn = new ArrayList<>();
+		for (int i=0;i<4;i++) {
+			needRes.add(0);
+			provideRes.add(0);
+			resOn.add(0);
+		}
 	}
 	
 	public void addNeedRes(int res, int n) {
@@ -160,6 +167,25 @@ public class Card {
 	}
 	public void setResOn(List<Integer> resOn) {
 		this.resOn = resOn;
+	}
+	
+	public CardEntity toCardEntity() {
+		CardEntity entity = new CardEntity();
+		entity.setImg(img);
+		entity.setName(name);
+		entity.setType(Integer.toString(type));
+		int i;
+		List<String> lnr = new ArrayList<>();
+		for (i=0;i<needRes.size();i++) {
+			lnr.add(Integer.toString(needRes.get(i)));
+		}
+		entity.setNeedRes(lnr);
+		List<String> lpr = new ArrayList<>();
+		for (i=0;i<provideRes.size();i++) {
+			lpr.add(Integer.toString(provideRes.get(i)));
+		}
+		entity.setProvideRes(lpr);
+		return entity;
 	}
 	
 	public Document toDocument() {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cosine.cosgame.architect.Board;
 import com.cosine.cosgame.architect.Consts;
 import com.cosine.cosgame.architect.Meta;
+import com.cosine.cosgame.architect.Player;
 import com.cosine.cosgame.architect.entity.*;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -76,6 +77,43 @@ public class ArchitectController {
 			board.addPlayerToDB(username);
 		}
 		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/architect/startgame", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.startGame();
+			board.updateBasicDB();
+			board.updatePlayers();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/architect/play", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam int cardIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.playCard(cardIndex);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/architect/getboard", method = RequestMethod.GET)

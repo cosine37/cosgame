@@ -18,6 +18,7 @@ public class AllRes {
 	public Card getWoodCutter() {
 		Card card = new Card();
 		card.setName("伐木工");
+		card.setImg("WoodCutter");
 		card.setType(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 2);
 		
@@ -27,6 +28,7 @@ public class AllRes {
 	public Card getMage() {
 		Card card = new Card();
 		card.setName("法师");
+		card.setImg("Mage");
 		card.setType(Consts.MAGICIAN);
 		card.setNumUpgrade(2);
 		

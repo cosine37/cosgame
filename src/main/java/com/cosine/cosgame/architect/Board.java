@@ -41,10 +41,15 @@ public class Board {
 		dbutil.setCol(col);
 	}
 	
-	public void start() {
+	public void startGame() {
 		AllRes allRes = new AllRes();
+		Random rand = new Random();
+		firstPlayerIndex = rand.nextInt() % players.size();
+		curPlayerIndex = firstPlayerIndex;
+		int x = curPlayerIndex;
 		for (int i=0;i<players.size();i++) {
-			Player p = players.get(i);
+			Player p = players.get(x);
+			p.clearAll();
 			Card woodCutter = allRes.getWoodCutter();
 			woodCutter.setPlayer(p);
 			woodCutter.setBoard(this);
@@ -61,7 +66,11 @@ public class Board {
 				p.addRes(Consts.WOOD, 3);
 				p.addRes(Consts.STONE, 1);
 			}
+			x++;
+			x = x%players.size();
 		}
+		status = Consts.INGAME;
+		
 	}
 
 	public void playerBuild(Player p, int x) {
@@ -224,10 +233,18 @@ public class Board {
 		entity.setStatus(Integer.toString(status));
 		int i;
 		List<String> playerNames = new ArrayList<>();
+		List<PlayerEntity> lp = new ArrayList<>();
+		String myIndex = "-1";
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
+			lp.add(players.get(i).toPlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				myIndex = Integer.toString(i);
+			}
 		}
 		entity.setPlayerNames(playerNames);
+		entity.setPlayers(lp);
+		entity.setMyIndex(myIndex);
 		return entity;
 	}
 	
@@ -364,12 +381,52 @@ public class Board {
 		}
 	}
 	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
 	public void addPlayerToDB(String name) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
 			dbutil.push("id", id, "playerNames", name);
 			updatePlayer(name);
 		}
+	}
+	
+	public void updateAllCards() {
+		int i;
+		List<Document> docd = new ArrayList<>();
+		for (i=0;i<cardDeck.size();i++) {
+			docd.add(cardDeck.get(i).toDocument());
+		}
+		dbutil.update("id", id, "cardDeck", docd);
+		List<Document> dorc = new ArrayList<>();
+		for (i=0;i<revealedCards.size();i++) {
+			dorc.add(revealedCards.get(i).toDocument());
+		}
+		dbutil.update("id", id, "revealedCards", dorc);
+		List<Document> dobd = new ArrayList<>();
+		for (i=0;i<buildingDeck.size();i++) {
+			dobd.add(buildingDeck.get(i).toDocument());
+		}
+		dbutil.update("id", id, "buildingDeck", dobd);
+		List<Document> dorb = new ArrayList<>();
+		for (i=0;i<revealedBuildings.size();i++) {
+			dorb.add(revealedBuildings.get(i).toDocument());
+		}
+		dbutil.update("id", id, "revealedBuildings", dorb);
+	}
+	
+	public void updateBasicDB() {
+		dbutil.update("id", id, "status", status);
+		dbutil.update("id", id, "num1vp", num1vp);
+		dbutil.update("id", id, "num3vp", num3vp);
+		dbutil.update("id", id, "curPlayerIndex", curPlayerIndex);
+		dbutil.update("id", id, "firstPlayerIndex", firstPlayerIndex);
+		dbutil.update("id", id, "roundCount", roundCount);
+		updateAllCards();
 	}
 	
 	public void storeToDB() {
