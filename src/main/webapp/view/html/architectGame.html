@@ -33,16 +33,40 @@
 			</table>
 		</div>
 		<div>
-			<span ng-repeat="c in hand track by $index"><button ng-click="play($index)">{{c.name}}</button></span>
-		</div>
-		<div>
 			<button ng-click="rest()">休整</button>
 		</div>
+		<div>
+			<table>
+				<tr>
+					<td ng-repeat="c in hand track by $index">
+						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickHand($index)">
+							<div class="card-hand-title noselect">{{c.name}}</div>
+							<div class="card-hand-res-div noselect">
+								<table>
+									<tr>
+										<td ng-repeat="r in c.provideResStyles track by $index">
+											<div class="card-hand-res" ng-style="r"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td ng-repeat="c in hand track by $index" class="play-details">
+						<button ng-click="play($index)" ng-show="shownPlayDetails == $index">打出</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
 	</div>
+	<!-- 
 	<div>
 		{{gamedata}}
 	</div>
-	<!-- 
+	
 	<div>
 		<table>
 			<tr ng-repeat="p in playerNames track by $index">

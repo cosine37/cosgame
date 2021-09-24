@@ -7,6 +7,8 @@ var setUrl = function(d){
 var app = angular.module("architectGameApp", []);
 app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
+		var resNames = ["wood", "stone", "iron", "gold"];
+		$scope.shownPlayDetails = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -24,6 +26,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.play = function(x){
+			$scope.shownPlayDetails = -1
 			var data = {"cardIndex" : x}
 			$http({url: "/architect/play", method: "POST", params: data}).then(function(response){
 				//$scope.allRefresh()
@@ -50,8 +53,64 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.clickHand = function(x){
+			if ($scope.shownPlayDetails == x){
+				$scope.shownPlayDetails = -1
+			} else {
+				$scope.shownPlayDetails = x
+			}
+			
+		}
+		
+		setCardStyle = function(c){
+			var i
+			
+			var provideResArr = [];
+			var provideResStyles = [];
+			for (i=0;i<c.provideRes.length;i++){
+				var x = parseInt(c.provideRes[i])
+				for (j=0;j<x;j++){
+					provideResArr.push(i)
+					var imgUrl = "url('/image/Architect/Res/" + resNames[i] + ".png')" 
+					var singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover"
+					}
+					provideResStyles.push(singleStyle)
+				}
+			}
+			
+			var x = parseInt(c.numUpgrade)
+			for (i=0;i<x;i++){
+				provideResArr.push(4)
+				var imgUrl = "url('/image/Architect/Res/upgrade.png')" 
+				var singleStyle = {
+					"background": imgUrl,
+					"background-size": "cover"
+				}
+				provideResStyles.push(singleStyle)
+			}
+			
+			c.provideResArr = provideResArr
+			c.provideResStyles = provideResStyles
+			
+			var imgUrl = "url('/image/Architect/Cards/" + c.img + ".png')" 
+			var singleStyle = {
+				"background": imgUrl,
+				"background-size": "cover"
+			} 
+			c.cardStyle = singleStyle
+		}
+		
+		setCardStyles = function(){
+			var i
+			for (i=0;i<$scope.hand.length;i++){
+				setCardStyle($scope.hand[i])
+			}
+		}
+		
+		
 		setResources = function(){
-			var resNames = ["wood", "stone", "iron", "gold"];
 			for (i=0;i<$scope.players.length;i++){
 				var warehouseArr = []
 				var warehouseStyles = []
@@ -80,6 +139,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.revealedCards = response.data.revealedCards
 				$scope.hand = $scope.players[$scope.myIndex].hand
 				setResources()
+				setCardStyles()
 			});
 		}
 		

@@ -42,7 +42,7 @@ public class AllRes {
 		cardDeck.add(card);
 		
 		card = new Card();
-		card.setName("高级伐木工");
+		card.setName("高级木工");
 		card.setImg("Lumberjack");
 		card.setType(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 3);

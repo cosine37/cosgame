@@ -174,6 +174,7 @@ public class Card {
 		entity.setImg(img);
 		entity.setName(name);
 		entity.setType(Integer.toString(type));
+		entity.setNumUpgrade(Integer.toString(numUpgrade));
 		int i;
 		List<String> lnr = new ArrayList<>();
 		for (i=0;i<needRes.size();i++) {

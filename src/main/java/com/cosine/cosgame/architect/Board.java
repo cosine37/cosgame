@@ -104,7 +104,7 @@ public class Board {
 	}
 	
 	public void playerHire(Player p, int x, List<Integer> resources) {
-		if (x == resources.size() && x>=0 && x<revealedCards.size()) {
+		if (x <= resources.size() && x>=0 && x<revealedCards.size()) {
 			int i,j;
 			for (i=0;i<x;i++) {
 				Card c = revealedCards.get(i);

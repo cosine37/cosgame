@@ -6,6 +6,7 @@ public class CardEntity {
 	String name;
 	String img;
 	String type;
+	String numUpgrade;
 	List<String> provideRes;
 	List<String> needRes;
 	
@@ -38,6 +39,12 @@ public class CardEntity {
 	}
 	public void setNeedRes(List<String> needRes) {
 		this.needRes = needRes;
+	}
+	public String getNumUpgrade() {
+		return numUpgrade;
+	}
+	public void setNumUpgrade(String numUpgrade) {
+		this.numUpgrade = numUpgrade;
 	}
 	
 	
