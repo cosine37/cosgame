@@ -9,7 +9,7 @@ public class Consts {
 	// resources
 	public static final int WOOD = 0;
 	public static final int STONE = 1;
-	public static final int BRICK = 2;
+	public static final int IRON = 2;
 	public static final int GOLD = 3;
 	
 	// status

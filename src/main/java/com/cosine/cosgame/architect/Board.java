@@ -42,12 +42,13 @@ public class Board {
 	}
 	
 	public void startGame() {
+		int i;
 		AllRes allRes = new AllRes();
 		Random rand = new Random();
 		firstPlayerIndex = rand.nextInt() % players.size();
 		curPlayerIndex = firstPlayerIndex;
 		int x = curPlayerIndex;
-		for (int i=0;i<players.size();i++) {
+		for (i=0;i<players.size();i++) {
 			Player p = players.get(x);
 			p.clearAll();
 			Card woodCutter = allRes.getWoodCutter();
@@ -69,6 +70,14 @@ public class Board {
 			x++;
 			x = x%players.size();
 		}
+		cardDeck = allRes.getCardDeck();
+		int numReveal = 6;
+		revealedCards = new ArrayList<>();
+		for (i=0;i<numReveal;i++) {
+			Card c = cardDeck.remove(0);
+			revealedCards.add(c);
+		}
+		
 		status = Consts.INGAME;
 		
 	}
@@ -101,13 +110,20 @@ public class Board {
 				Card c = revealedCards.get(i);
 				for (j=0;j<resources.size();j++) {
 					int y = resources.get(j);
-					int res = p.getWarehouse().get(y);
-					c.addResOn(res);
+					if (y>=Consts.WOOD && y<=Consts.GOLD) {
+						c.addResOn(y);
+					}
+					
 				}
 			}
-			Card c = revealedCards.get(x);
+			Card c = revealedCards.remove(x);
 			for (i=0;i<c.getResOn().size();i++) {
 				p.addRes(c.getResOn().get(i));
+			}
+			p.getHand().add(c);
+			if (cardDeck.size()>0) {
+				Card nc = cardDeck.remove(0);
+				revealedCards.add(nc);
 			}
 		}
 	}
@@ -234,6 +250,7 @@ public class Board {
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();
+		List<CardEntity> lrc = new ArrayList<>();
 		String myIndex = "-1";
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
@@ -245,6 +262,11 @@ public class Board {
 		entity.setPlayerNames(playerNames);
 		entity.setPlayers(lp);
 		entity.setMyIndex(myIndex);
+		for (i=0;i<revealedCards.size();i++) {
+			lrc.add(revealedCards.get(i).toCardEntity());
+		}
+		entity.setRevealedCards(lrc);
+		
 		return entity;
 	}
 	

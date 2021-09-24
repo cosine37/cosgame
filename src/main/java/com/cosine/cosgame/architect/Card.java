@@ -90,8 +90,8 @@ public class Card {
 				if (player.getWarehouse().get(x) == Consts.WOOD) {
 					player.getWarehouse().set(x, Consts.STONE);
 				} else if (player.getWarehouse().get(x) == Consts.STONE) {
-					player.getWarehouse().set(x, Consts.BRICK);
-				} else if (player.getWarehouse().get(x) == Consts.BRICK) {
+					player.getWarehouse().set(x, Consts.IRON);
+				} else if (player.getWarehouse().get(x) == Consts.IRON) {
 					player.getWarehouse().set(x, Consts.GOLD);
 				}
 			}

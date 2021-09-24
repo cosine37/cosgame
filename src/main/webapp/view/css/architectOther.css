@@ -51,3 +51,8 @@ button:disabled{
 	color: white;
 	background-color: black;
 }
+
+.resource{
+	height: 40px;
+	width: 40px;
+}

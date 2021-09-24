@@ -17,7 +17,27 @@
 	<button ng-click="goto('architect')">back</button>
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<div>
-		<span ng-repeat="c in hand track by $index"><button ng-click="play($index)">{{c.name}}</button></span>
+		<div>
+			<span ng-repeat="c in revealedCards track by $index"><button ng-click="hire($index)">{{c.name}}</button></span>
+		</div>
+		<div>
+			<span ng-repeat="p in players[myIndex].play track by $index">{{p.name}}</span>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td ng-repeat = "a in players[myIndex].warehouseArr track by $index">
+						<div class="resource" ng-style="players[myIndex].warehouseStyles[$index]"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<span ng-repeat="c in hand track by $index"><button ng-click="play($index)">{{c.name}}</button></span>
+		</div>
+		<div>
+			<button ng-click="rest()">休整</button>
+		</div>
 	</div>
 	<div>
 		{{gamedata}}

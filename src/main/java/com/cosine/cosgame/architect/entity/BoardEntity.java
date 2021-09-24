@@ -9,6 +9,7 @@ public class BoardEntity {
 	String myIndex;
 	List<String> playerNames;
 	List<PlayerEntity> players;
+	List<CardEntity> revealedCards;
 
 	public String getId() {
 		return id;
@@ -45,6 +46,12 @@ public class BoardEntity {
 	}
 	public void setMyIndex(String myIndex) {
 		this.myIndex = myIndex;
+	}
+	public List<CardEntity> getRevealedCards() {
+		return revealedCards;
+	}
+	public void setRevealedCards(List<CardEntity> revealedCards) {
+		this.revealedCards = revealedCards;
 	}
 	
 }
