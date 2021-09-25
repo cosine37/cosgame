@@ -71,13 +71,20 @@ public class Board {
 			x = x%players.size();
 		}
 		cardDeck = allRes.getCardDeck();
-		int numReveal = 6;
+		buildingDeck = allRes.getBuildingDeck();
 		revealedCards = new ArrayList<>();
-		for (i=0;i<numReveal;i++) {
+		for (i=0;i<Consts.NUMCARDREVEAL;i++) {
 			Card c = cardDeck.remove(0);
 			revealedCards.add(c);
 		}
 		
+		revealedBuildings = new ArrayList<>();
+		for (i=0;i<Consts.NUMBUILDINGREVEAL;i++) {
+			Building b = buildingDeck.remove(0);
+			revealedBuildings.add(b);
+		}
+		num3vp = players.size()*2;
+		num1vp = players.size()*2;
 		status = Consts.INGAME;
 		
 	}
@@ -88,7 +95,7 @@ public class Board {
 		} else {
 			if (revealedBuildings.get(x).canBuy(p)) {
 				Building b = revealedBuildings.remove(x);
-				p.pay(b);
+				p.payAndBuild(b);
 				if (x == 0 && num3vp>0) {
 					num3vp--;
 					p.add3vp();
@@ -98,6 +105,10 @@ public class Board {
 				}
 				if (p.getBuildings().size() >= numBuildingFinish) {
 					status = Consts.LASTROUND;
+				}
+				if (buildingDeck.size()>0) {
+					Building nb = buildingDeck.remove(0);
+					revealedBuildings.add(nb);
 				}
 			}
 		}
@@ -250,12 +261,15 @@ public class Board {
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();
 		List<CardEntity> lrc = new ArrayList<>();
+		List<BuildingEntity> lrb = new ArrayList<>();
 		String myIndex = "-1";
+		Player p = null;
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
 			lp.add(players.get(i).toPlayerEntity());
 			if (players.get(i).getName().contentEquals(username)) {
 				myIndex = Integer.toString(i);
+				p = players.get(i);
 			}
 		}
 		entity.setPlayerNames(playerNames);
@@ -264,8 +278,19 @@ public class Board {
 		for (i=0;i<revealedCards.size();i++) {
 			lrc.add(revealedCards.get(i).toCardEntity());
 		}
+		for (i=0;i<revealedBuildings.size();i++) {
+			BuildingEntity be = revealedBuildings.get(i).toBuildingEntity();
+			if (p != null) {
+				if (revealedBuildings.get(i).canBuy(p)) {
+					be.setCanBuild("y");
+				} else {
+					be.setCanBuild("n");
+				}
+			}
+			lrb.add(be);
+		}
 		entity.setRevealedCards(lrc);
-		
+		entity.setRevealedBuildings(lrb);
 		return entity;
 	}
 	

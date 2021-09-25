@@ -10,6 +10,7 @@ public class BoardEntity {
 	List<String> playerNames;
 	List<PlayerEntity> players;
 	List<CardEntity> revealedCards;
+	List<BuildingEntity> revealedBuildings;
 
 	public String getId() {
 		return id;
@@ -52,6 +53,12 @@ public class BoardEntity {
 	}
 	public void setRevealedCards(List<CardEntity> revealedCards) {
 		this.revealedCards = revealedCards;
+	}
+	public List<BuildingEntity> getRevealedBuildings() {
+		return revealedBuildings;
+	}
+	public void setRevealedBuildings(List<BuildingEntity> revealedBuildings) {
+		this.revealedBuildings = revealedBuildings;
 	}
 	
 }

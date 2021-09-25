@@ -35,7 +35,7 @@ public class Player {
 		}
 	}
 	
-	public void pay(Building b) {
+	public void payAndBuild(Building b) {
 		if (b.canBuy(this)) {
 			int i,j;
 			for (i=0;i<b.price.size();i++) {
@@ -43,6 +43,7 @@ public class Player {
 				if (x == 0) continue;
 				removeRes(i,x);
 			}
+			buildings.add(b);
 		}
 	}
 	

@@ -116,6 +116,26 @@ public class ArchitectController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/architect/build", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> build(HttpServletRequest request, @RequestParam int buildingIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.build(buildingIndex);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/architect/rest", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> rest(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

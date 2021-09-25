@@ -25,4 +25,8 @@ public class Consts {
 	public static final int OFFTURN = 0;
 	public static final int INTURN = 1;
 	public static final int DISCARD = 2;
+	
+	// setup
+	public static final int NUMCARDREVEAL = 6;
+	public static final int NUMBUILDINGREVEAL = 5;
 }

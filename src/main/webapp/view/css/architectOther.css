@@ -29,6 +29,53 @@ button:disabled{
 	background: white;
 }
 
+.building-reveal{
+	height: 108px;
+	width: 192px;
+	border: none;
+	position: relative;	
+	border: 3px solid black;
+	border-radius: 16px;
+}
+
+.building-reveal-title{
+	position: relative;
+	left: 96px;
+	margin-left: -36px;
+	top: 0px;
+	width: 72px;
+	font-size: 15px;
+	text-align: center;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.building-reveal-score{
+	position: absolute;
+	top: -5px;
+	left: 8px;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	-webkit-text-stroke: 1px black;
+}
+
+.building-reveal-price-div{
+	position: absolute;
+	bottom: 0px;
+	width: 186px;
+	text-align: center;
+	background-color: rgba(127,127,127,0.7);
+	border-bottom-left-radius: 13px;
+	border-bottom-right-radius: 13px;
+}
+
+.building-reveal-price-div table{
+	margin: 0 auto;
+}
+
 .card-hand{
 	height: 240px;
 	width: 157px;
@@ -36,8 +83,6 @@ button:disabled{
 	position: relative;	
 	border: 3px solid black;
 	border-radius: 16px;
-	/* background-image:url("/image/Architect/Cards/WoodCutter.png");
-	background-size: cover;*/
 }
 
 .card-hand-title{

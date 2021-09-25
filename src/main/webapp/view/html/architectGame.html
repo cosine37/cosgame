@@ -20,6 +20,34 @@
 		<div>
 			<table>
 				<tr>
+					<td ng-repeat="b in revealedBuildings track by $index">
+						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
+							<div class="building-reveal-title noselect">{{b.name}}</div>
+							<div class="building-reveal-score noselect">
+								{{b.score}}
+							</div>
+							<div class="building-reveal-price-div noselect">
+								<table>
+									<tr>
+										<td ng-repeat="r in b.priceStyles track by $index">
+											<div class="card-hand-res" ng-style="r"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td ng-repeat="b in revealedBuildings track by $index" class="play-details">
+						<button ng-click="build($index)" ng-show="shownBuildingDetails == $index">建造</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table>
+				<tr>
 					<td ng-repeat="c in revealedCards track by $index">
 						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
 							<div class="card-hand-title noselect">{{c.name}}</div>
@@ -53,6 +81,7 @@
 					</td>
 				</tr>
 			</table>
+		</div>
 		<!-- 
 		<div>
 			<span ng-repeat="c in revealedCards track by $index"><button ng-click="hire($index)">{{c.name}}</button></span>

@@ -11,6 +11,7 @@ public class AllRes {
 		cardDeck = new ArrayList<>();
 		buildingDeck = new ArrayList<>();
 		genDeck();
+		genBuildings();
 	}
 	
 	
@@ -131,6 +132,74 @@ public class AllRes {
 		card.addProvideRes(Consts.IRON, 1);
 		cardDeck.add(card);
 		
+	}
+	
+	public void genBuildings() {
+		Building b;
+		
+		b = new Building();
+		b.setName("木屋");
+		b.setImg("Cabin");
+		b.setPrice(2,2,0,0);
+		b.setScore(6);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("木屋");
+		b.setImg("Cabin");
+		b.setPrice(3,2,0,0);
+		b.setScore(7);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("木屋");
+		b.setImg("Cabin");
+		b.setPrice(2,0,2,0);
+		b.setScore(8);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("石屋");
+		b.setImg("StoneHouse");
+		b.setPrice(2,3,0,0);
+		b.setScore(8);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("木屋");
+		b.setImg("Cabin");
+		b.setPrice(3,0,2,0);
+		b.setScore(9);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("石屋");
+		b.setImg("StoneHouse");
+		b.setPrice(0,4,0,0);
+		b.setScore(8);
+		buildingDeck.add(b);
+		b = new Building();
+		
+		b = new Building();
+		b.setName("石屋");
+		b.setImg("StoneHouse");
+		b.setPrice(0,5,0,0);
+		b.setScore(10);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("铁匠铺");
+		b.setImg("Smithy");
+		b.setPrice(0,2,2,0);
+		b.setScore(10);
+		buildingDeck.add(b);
+		
+		b = new Building();
+		b.setName("铁匠铺");
+		b.setImg("Smithy");
+		b.setPrice(0,3,2,0);
+		b.setScore(12);
+		buildingDeck.add(b);
 	}
 	
 	public Card getWoodCutter() {
