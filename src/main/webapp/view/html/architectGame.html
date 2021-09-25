@@ -53,7 +53,7 @@
 			<table>
 				<tr>
 					<td ng-repeat = "a in players[myIndex].warehouseArr track by $index">
-						<div class="resource" ng-style="players[myIndex].warehouseStyles[$index]"></div>
+						<div class="resource" ng-style="resStyle($index)" ng-click="clickRes($index)"></div>
 					</td>
 				</tr>
 			</table>
@@ -81,7 +81,7 @@
 				</tr>
 				<tr>
 					<td ng-repeat="c in hand track by $index" class="play-details">
-						<button ng-click="play($index)" ng-show="shownPlayDetails == $index">打出</button>
+						<button ng-click="play($index)" ng-disabled="disablePlay($index)" ng-show="shownPlayDetails == $index">打出</button>
 					</td>
 				</tr>
 			</table>

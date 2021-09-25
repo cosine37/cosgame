@@ -78,6 +78,13 @@ public class AllRes {
 		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.STONE, 2);
 		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("高级法师");
+		card.setImg("Magician");
+		card.setTypeWithQuote(Consts.MAGICIAN);
+		card.setNumUpgrade(3);
+		cardDeck.add(card);
 	}
 	
 	public Card getWoodCutter() {

@@ -97,7 +97,7 @@ public class ArchitectController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/architect/play", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam int cardIndex){
+	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam int cardIndex, @RequestParam List<Integer> targets){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -107,7 +107,7 @@ public class ArchitectController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
-				p.playCard(cardIndex);
+				p.playCard(cardIndex, targets);
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

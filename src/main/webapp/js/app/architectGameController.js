@@ -10,6 +10,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		var resNames = ["wood", "stone", "iron", "gold"];
 		$scope.shownPlayDetails = -1;
 		$scope.shownHireDetails = -1;
+		
+		$scope.selectedRes = []
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -53,10 +55,22 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.play = function(x){
-			$scope.shownPlayDetails = -1
-			var data = {"cardIndex" : x}
 			var c = $scope.hand[x]
 			playResolveQuote(c)
+			$scope.shownPlayDetails = -1
+			var targets = []
+			if (c.type == '3'){
+				for (var i=0;i<$scope.selectedRes.length;i++){
+					if ($scope.selectedRes[i] == 1){
+						var y = $scope.players[$scope.myIndex].warehouseArr[i]
+						targets.push(y)
+					}
+				}
+			}
+			if (targets.length==0){
+				targets.push(-1)
+			}
+			var data = {"cardIndex" : x, "targets": targets}
 			$http({url: "/architect/play", method: "POST", params: data}).then(function(response){
 				//$scope.allRefresh()
 				$scope.getBoard()
@@ -98,13 +112,72 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.clickHand = function(x){
 			if (x>$scope.hand.length) return
+			$scope.selectedRes = []
+			for (var i=0;i<$scope.players[$scope.myIndex].warehouseArr.length;i++){
+				$scope.selectedRes.push(0)
+			}
 			if ($scope.shownPlayDetails == x){
 				$scope.shownPlayDetails = -1
 			} else {
 				playClickQuote($scope.hand[x])
 				$scope.shownPlayDetails = x
 			}
-			
+		}
+		
+		$scope.resStyle = function(x){
+			var style = $scope.players[$scope.myIndex].warehouseStyles[x]
+			if (x>=0 && x<$scope.selectedRes.length){
+				if ($scope.selectedRes[x] == 1){
+					style.border = "2px solid rgb(160,32,240)"
+				} else {
+					style.border = "none"
+				}
+				
+			}
+			return style
+		}
+		
+		$scope.clickRes = function(x){
+			if ($scope.shownPlayDetails>=0 && $scope.shownPlayDetails<$scope.hand.length){
+				c = $scope.hand[$scope.shownPlayDetails]
+				if (c.type == '3'){
+					if ($scope.players[$scope.myIndex].warehouseArr[x]!=3){
+						if ($scope.selectedRes[x] == 1){
+							$scope.selectedRes[x] = 0;
+						} else {
+							var n = parseInt(c.numUpgrade)
+							var t = 0
+							for (i=0;i<$scope.selectedRes.length;i++){
+								t=t+$scope.selectedRes[i]
+							}
+							if (t<n){
+								$scope.selectedRes[x] = 1;
+							}
+						}
+					}
+				}
+			} 
+		}
+		
+		$scope.disablePlay = function(x){
+			c = $scope.hand[x]
+			if (c.type == '1'){
+				return false
+			} else if (c.type == '3'){
+				var n = parseInt(c.numUpgrade)
+				var m = 0
+				for (i=0;i<$scope.selectedRes.length;i++){
+					m = m+$scope.selectedRes[i]
+				}
+				if (n != m){
+					return true
+				} else {
+					return false
+				}
+			} else if (c.type == '2'){
+				
+			}
+			return true;
 		}
 		
 		setCardStyle = function(c){
@@ -163,6 +236,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			for (i=0;i<$scope.players.length;i++){
 				var warehouseArr = []
 				var warehouseStyles = []
+				$scope.selectedRes = []
 				for (j=0;j<$scope.players[i].warehouse.length;j++){
 					var x = parseInt($scope.players[i].warehouse[j])
 					for (k=0;k<x;k++){

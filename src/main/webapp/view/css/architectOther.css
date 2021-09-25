@@ -16,7 +16,7 @@ button{
 
 button:disabled{
 	outline: none;
-	color: rgb(12,137,24);
+	color: rgb(160,32,240);
 	font-size: 16px;
 	text-align: center;
 	padding-top: 0px;
@@ -34,7 +34,7 @@ button:disabled{
 	width: 157px;
 	border: none;
 	position: relative;	
-	border: 3px solid rgb(160,32,240);
+	border: 3px solid black;
 	border-radius: 16px;
 	/* background-image:url("/image/Architect/Cards/WoodCutter.png");
 	background-size: cover;*/

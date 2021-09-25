@@ -119,12 +119,15 @@ public class Card {
 		} else if (type == Consts.MAGICIAN) {
 			for (i=0;i<targets.size();i++) {
 				int x = targets.get(i);
-				if (player.getWarehouse().get(x) == Consts.WOOD) {
-					player.getWarehouse().set(x, Consts.STONE);
-				} else if (player.getWarehouse().get(x) == Consts.STONE) {
-					player.getWarehouse().set(x, Consts.IRON);
-				} else if (player.getWarehouse().get(x) == Consts.IRON) {
-					player.getWarehouse().set(x, Consts.GOLD);
+				System.out.println("x="+x);
+				if (x>=Consts.WOOD && x<Consts.GOLD) {
+					int y = x+1;
+					int rx = player.getWarehouse().get(x)-1;
+					int ry = player.getWarehouse().get(y)+1;
+					System.out.println(rx);
+					System.out.println(ry);
+					player.getWarehouse().set(x, rx);
+					player.getWarehouse().set(y, ry);
 				}
 			}
 		} else if (type == Consts.TRADER) {
