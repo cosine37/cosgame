@@ -9,6 +9,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 	function($scope, $window, $http, $document){
 		var resNames = ["wood", "stone", "iron", "gold"];
 		$scope.shownPlayDetails = -1;
+		$scope.shownHireDetails = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -25,9 +26,37 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		playClickQuote = function(c){
+			var n = c.clickQuote.length
+			var x = Math.floor(Math.random() * n);
+			var audio = new Audio("/sound/Architect/" + c.clickQuote[x] + ".mp3")
+			audio.play();
+		}
+		
+		playResolveQuote = function(c){
+			var n = c.resolveQuote.length
+			var x = Math.floor(Math.random() * n);
+			var audio = new Audio("/sound/Architect/" + c.resolveQuote[x] + ".mp3")
+			audio.play();
+		}
+		
+		playRecoverMusic = function(){
+			var quotes = ["recover01","recover02","recover03","recover04"]
+			var x = Math.floor(Math.random() * 4);
+			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
+			audio.play();
+		}
+		
+		playHiredMusic = function(){
+			var audio = new Audio("/sound/Architect/hired.mp3")
+			audio.play();
+		}
+		
 		$scope.play = function(x){
 			$scope.shownPlayDetails = -1
 			var data = {"cardIndex" : x}
+			var c = $scope.hand[x]
+			playResolveQuote(c)
 			$http({url: "/architect/play", method: "POST", params: data}).then(function(response){
 				//$scope.allRefresh()
 				$scope.getBoard()
@@ -36,6 +65,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.rest = function(){
+			playRecoverMusic()
 			$http({url: "/architect/rest", method: "POST"}).then(function(response){
 				//$scope.allRefresh()
 				$scope.getBoard()
@@ -44,8 +74,10 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.hire = function(x){
-			var resArr = [-1]
+			$scope.shownHireDetails = -1;
+			var resArr = [-1,-1,-1,-1,-1,-1]
 			var data = {"index" : x, "res": resArr}
+			playHiredMusic()
 			$http({url: "/architect/hire", method: "POST", params: data}).then(function(response){
 				//$scope.allRefresh()
 				$scope.getBoard()
@@ -53,10 +85,23 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.clickRevealedCard = function(x){
+			if (x>$scope.revealedCards.length) return
+			if ($scope.shownHireDetails == x){
+				$scope.shownHireDetails = -1
+			} else {
+				playClickQuote($scope.revealedCards[x])
+				$scope.shownHireDetails = x
+			}
+			
+		}
+		
 		$scope.clickHand = function(x){
+			if (x>$scope.hand.length) return
 			if ($scope.shownPlayDetails == x){
 				$scope.shownPlayDetails = -1
 			} else {
+				playClickQuote($scope.hand[x])
 				$scope.shownPlayDetails = x
 			}
 			
@@ -107,6 +152,10 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			for (i=0;i<$scope.hand.length;i++){
 				setCardStyle($scope.hand[i])
 			}
+			for (i=0;i<$scope.revealedCards.length;i++){
+				setCardStyle($scope.revealedCards[i])
+			}
+			
 		}
 		
 		

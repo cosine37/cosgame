@@ -9,6 +9,8 @@ public class CardEntity {
 	String numUpgrade;
 	List<String> provideRes;
 	List<String> needRes;
+	List<String> clickQuote;
+	List<String> resolveQuote;
 	
 	public String getName() {
 		return name;
@@ -45,6 +47,18 @@ public class CardEntity {
 	}
 	public void setNumUpgrade(String numUpgrade) {
 		this.numUpgrade = numUpgrade;
+	}
+	public List<String> getClickQuote() {
+		return clickQuote;
+	}
+	public void setClickQuote(List<String> clickQuote) {
+		this.clickQuote = clickQuote;
+	}
+	public List<String> getResolveQuote() {
+		return resolveQuote;
+	}
+	public void setResolveQuote(List<String> resolveQuote) {
+		this.resolveQuote = resolveQuote;
 	}
 	
 	

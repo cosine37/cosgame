@@ -20,7 +20,7 @@ public class AllRes {
 		card = new Card();
 		card.setName("樵夫");
 		card.setImg("Hiker");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 1);
 		card.addProvideRes(Consts.STONE, 1);
 		cardDeck.add(card);
@@ -28,7 +28,7 @@ public class AllRes {
 		card = new Card();
 		card.setName("樵夫");
 		card.setImg("Hiker");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 2);
 		card.addProvideRes(Consts.STONE, 1);
 		cardDeck.add(card);
@@ -36,7 +36,7 @@ public class AllRes {
 		card = new Card();
 		card.setName("樵夫");
 		card.setImg("Hiker");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 1);
 		card.addProvideRes(Consts.IRON, 1);
 		cardDeck.add(card);
@@ -44,35 +44,38 @@ public class AllRes {
 		card = new Card();
 		card.setName("高级木工");
 		card.setImg("Lumberjack");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 3);
 		cardDeck.add(card);
 		
 		card = new Card();
 		card.setName("大象");
 		card.setImg("Elephant");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
+		String[] c1 = {"elephant01"};
+		String[] r1 = {"elephant01"};
+		card.setQuotes(c1, r1);
 		card.addProvideRes(Consts.WOOD, 4);
 		cardDeck.add(card);
 		
 		card = new Card();
 		card.setName("矿工");
 		card.setImg("Miner");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.GOLD, 1);
 		cardDeck.add(card);
 		
 		card = new Card();
 		card.setName("矿工");
 		card.setImg("Miner");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.IRON, 1);
 		cardDeck.add(card);
 		
 		card = new Card();
 		card.setName("矿工");
 		card.setImg("Miner");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.STONE, 2);
 		cardDeck.add(card);
 	}
@@ -81,7 +84,7 @@ public class AllRes {
 		Card card = new Card();
 		card.setName("伐木工");
 		card.setImg("WoodCutter");
-		card.setType(Consts.WORKER);
+		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 2);
 		
 		return card;
@@ -91,7 +94,7 @@ public class AllRes {
 		Card card = new Card();
 		card.setName("法师");
 		card.setImg("Mage");
-		card.setType(Consts.MAGICIAN);
+		card.setTypeWithQuote(Consts.MAGICIAN);
 		card.setNumUpgrade(2);
 		
 		return card;

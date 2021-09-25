@@ -18,8 +18,34 @@
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<div>
 		<div>
+			<table>
+				<tr>
+					<td ng-repeat="c in revealedCards track by $index">
+						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
+							<div class="card-hand-title noselect">{{c.name}}</div>
+							<div class="card-hand-res-div noselect">
+								<table>
+									<tr>
+										<td ng-repeat="r in c.provideResStyles track by $index">
+											<div class="card-hand-res" ng-style="r"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td ng-repeat="c in revealedCards track by $index" class="play-details">
+						<button ng-click="hire($index)" ng-show="shownHireDetails == $index">招募</button>
+					</td>
+				</tr>
+			</table>
+		<!-- 
+		<div>
 			<span ng-repeat="c in revealedCards track by $index"><button ng-click="hire($index)">{{c.name}}</button></span>
 		</div>
+		 -->
 		<div>
 			<span ng-repeat="p in players[myIndex].play track by $index">{{p.name}}</span>
 		</div>
@@ -62,11 +88,11 @@
 		</div>
 		
 	</div>
-	<!-- 
+	
 	<div>
 		{{gamedata}}
 	</div>
-	
+	<!-- 
 	<div>
 		<table>
 			<tr ng-repeat="p in playerNames track by $index">

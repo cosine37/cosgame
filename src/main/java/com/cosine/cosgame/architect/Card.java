@@ -15,6 +15,8 @@ public class Card {
 	int numUpgrade;
 	String img;
 	String name;
+	List<String> clickQuote;
+	List<String> resolveQuote;
 	
 	Player player;
 	Board board;
@@ -23,11 +25,41 @@ public class Card {
 		needRes = new ArrayList<>();
 		provideRes = new ArrayList<>();
 		resOn = new ArrayList<>();
+		clickQuote = new ArrayList<>();
+		resolveQuote = new ArrayList<>();
 		for (int i=0;i<4;i++) {
 			needRes.add(0);
 			provideRes.add(0);
-			resOn.add(0);
 		}
+	}
+	
+	public void quoteCategory(int x) {
+		if (x == Consts.WORKER) {
+			String[] clickArr = {"worker01","worker02","worker03","worker04","worker05"};
+			String[] resolveArr = {"worker06","worker07","worker08"};
+			setQuotes(clickArr, resolveArr);
+		} if (x == Consts.MAGICIAN) {
+			String[] clickArr = {"mage01", "mage02"};
+			String[] resolveArr = {"mage03", "mage04"};
+			setQuotes(clickArr, resolveArr);
+		}
+	}
+	
+	public void setQuotes(String c[], String r[]) {
+		clickQuote = new ArrayList<>();
+		resolveQuote = new ArrayList<>();
+		int i;
+		for (i=0;i<c.length;i++) {
+			clickQuote.add(c[i]);
+		}
+		for (i=0;i<r.length;i++) {
+			resolveQuote.add(r[i]);
+		}
+	}
+	
+	public void setTypeWithQuote(int x) {
+		type = x;
+		quoteCategory(x);
 	}
 	
 	public void addNeedRes(int res, int n) {
@@ -168,13 +200,27 @@ public class Card {
 	public void setResOn(List<Integer> resOn) {
 		this.resOn = resOn;
 	}
-	
+	public List<String> getClickQuote() {
+		return clickQuote;
+	}
+	public void setClickQuote(List<String> clickQuote) {
+		this.clickQuote = clickQuote;
+	}
+	public List<String> getResolveQuote() {
+		return resolveQuote;
+	}
+	public void setResolveQuote(List<String> resolveQuote) {
+		this.resolveQuote = resolveQuote;
+	}
+
 	public CardEntity toCardEntity() {
 		CardEntity entity = new CardEntity();
 		entity.setImg(img);
 		entity.setName(name);
 		entity.setType(Integer.toString(type));
 		entity.setNumUpgrade(Integer.toString(numUpgrade));
+		entity.setClickQuote(clickQuote);
+		entity.setResolveQuote(resolveQuote);
 		int i;
 		List<String> lnr = new ArrayList<>();
 		for (i=0;i<needRes.size();i++) {
@@ -198,6 +244,8 @@ public class Card {
 		doc.append("numUpgrade", numUpgrade);
 		doc.append("img", img);
 		doc.append("name", name);
+		doc.append("clickQuote", clickQuote);
+		doc.append("resolveQuote", resolveQuote);
 		return doc;
 	}
 	
@@ -209,6 +257,8 @@ public class Card {
 		numUpgrade = doc.getInteger("numUpgrade", -1);
 		img = doc.getString("img");
 		name = doc.getString("name");
+		clickQuote = (List<String>) doc.get("clickQuote");
+		resolveQuote = (List<String>) doc.get("resolveQuote");
 	}
 	
 }
