@@ -38,11 +38,24 @@ public class Card {
 			String[] clickArr = {"worker01","worker02","worker03","worker04","worker05"};
 			String[] resolveArr = {"worker06","worker07","worker08"};
 			setQuotes(clickArr, resolveArr);
-		} if (x == Consts.MAGICIAN) {
+		} else if (x == Consts.MAGICIAN) {
 			String[] clickArr = {"mage01", "mage02"};
 			String[] resolveArr = {"mage03", "mage04"};
 			setQuotes(clickArr, resolveArr);
+		} else if (x == Consts.TRADER) {
+			String[] clickArr = {"trader01", "trader02"};
+			String[] resolveArr = {"trader03", "trader04"};
+			setQuotes(clickArr, resolveArr);
+		} else if (x == Consts.TRADERALT01) {
+			String[] clickArr = {"trader51", "trader52"};
+			String[] resolveArr = {"trader53", "trader54"};
+			setQuotes(clickArr, resolveArr);
+		} else if (x == Consts.TRADERALT02) {
+			String[] clickArr = {"trader11", "trader12"};
+			String[] resolveArr = {"trader13", "trader14"};
+			setQuotes(clickArr, resolveArr);
 		}
+		
 	}
 	
 	public void setQuotes(String c[], String r[]) {
@@ -58,7 +71,7 @@ public class Card {
 	}
 	
 	public void setTypeWithQuote(int x) {
-		type = x;
+		type = x%10;
 		quoteCategory(x);
 	}
 	
@@ -77,6 +90,7 @@ public class Card {
 	public int maxPlayNum() {
 		int ans = 0;
 		int i;
+		if (player==null) return 0;
 		if (type == Consts.WORKER) {
 			ans = 1;
 		} else if (type == Consts.MAGICIAN) {
@@ -107,7 +121,7 @@ public class Card {
 		return ans;
 	}
 	
-	public void play(int times, List<Integer> targets) {
+	public void play(List<Integer> targets) {
 		int i,j;
 		if (type == Consts.WORKER) {
 			for (i=0;i<provideRes.size();i++) {
@@ -131,6 +145,8 @@ public class Card {
 				}
 			}
 		} else if (type == Consts.TRADER) {
+			if (targets.size()<1) return;
+			int times = targets.get(0);
 			for (i=0;i<needRes.size();i++) {
 				int x = needRes.get(i)*times;
 				if (x>0) {
@@ -224,6 +240,7 @@ public class Card {
 		entity.setNumUpgrade(Integer.toString(numUpgrade));
 		entity.setClickQuote(clickQuote);
 		entity.setResolveQuote(resolveQuote);
+		entity.setMaxPlayNum(Integer.toString(maxPlayNum()));
 		int i;
 		List<String> lnr = new ArrayList<>();
 		for (i=0;i<needRes.size();i++) {

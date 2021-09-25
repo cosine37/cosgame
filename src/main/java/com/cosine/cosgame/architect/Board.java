@@ -113,7 +113,6 @@ public class Board {
 					if (y>=Consts.WOOD && y<=Consts.GOLD) {
 						c.addResOn(y);
 					}
-					
 				}
 			}
 			Card c = revealedCards.remove(x);

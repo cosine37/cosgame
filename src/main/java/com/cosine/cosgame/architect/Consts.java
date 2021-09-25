@@ -6,6 +6,9 @@ public class Consts {
 	public static final int TRADER = 2;
 	public static final int MAGICIAN = 3;
 	
+	public static final int TRADERALT01 = 12;
+	public static final int TRADERALT02 = 22;
+	
 	// resources
 	public static final int WOOD = 0;
 	public static final int STONE = 1;

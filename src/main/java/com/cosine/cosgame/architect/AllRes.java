@@ -85,6 +85,52 @@ public class AllRes {
 		card.setTypeWithQuote(Consts.MAGICIAN);
 		card.setNumUpgrade(3);
 		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("油田");
+		card.setImg("YouTian");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c2 = {"youtian01", "youtian03"};
+		String[] r2 = {"youtian02", "youtian04"};
+		card.setQuotes(c2, r2);
+		card.addNeedRes(Consts.IRON, 2);
+		card.addProvideRes(Consts.GOLD, 1);
+		card.addProvideRes(Consts.STONE, 2);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("金币商人");
+		card.setImg("Merchant03");
+		card.setTypeWithQuote(Consts.TRADERALT02);
+		card.addNeedRes(Consts.GOLD, 2);
+		card.addProvideRes(Consts.IRON, 2);
+		card.addProvideRes(Consts.STONE, 3);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("刘华强");
+		card.setImg("HuaQiang");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c3 = {"huaqiang01", "huaqiang02", "huaqiang03", "huaqiang04"};
+		String[] r3 = {"huaqiang05", "huaqiang06", "huaqiang07"};
+		card.setQuotes(c3, r3);
+		card.addNeedRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.WOOD, 4);
+		card.addProvideRes(Consts.STONE, 1);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("郝哥");
+		card.setImg("Gua");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c4 = {"gua01", "gua02", "gua03"};
+		String[] r4 = {"gua04", "gua05", "gua06"};
+		card.setQuotes(c4, r4);
+		card.addNeedRes(Consts.WOOD, 4);
+		card.addProvideRes(Consts.GOLD, 1);
+		card.addProvideRes(Consts.IRON, 1);
+		cardDeck.add(card);
+		
 	}
 	
 	public Card getWoodCutter() {

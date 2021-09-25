@@ -53,21 +53,17 @@ public class Player {
 		}
 	}
 	
-	public void playCard(int x, int y, List<Integer> targets) {
-		if (x>=0 && x<hand.size()) {
-			Card c = hand.remove(x);
-			c.play(y, targets);
-			play.add(c);
-		}
-	}
-	
 	public void playCard(int x) {
 		List<Integer> targets = new ArrayList<>();
-		playCard(x,1,targets);
+		playCard(x,targets);
 	}
 	
 	public void playCard(int x, List<Integer> targets) {
-		playCard(x,1,targets);
+		if (x>=0 && x<hand.size()) {
+			Card c = hand.remove(x);
+			c.play(targets);
+			play.add(c);
+		}
 	}
 	
 	public void build(int x) {

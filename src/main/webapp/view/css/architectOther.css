@@ -63,6 +63,20 @@ button:disabled{
 	border-bottom-right-radius: 13px;
 }
 
+.card-hand-res-need-div{
+	bottom: 0px;
+	width: 151px;
+	background-color: rgba(220,0,0,0.3);
+}
+
+.card-hand-res-provide{
+	bottom: 0px;
+	width: 151px;
+	background-color: rgba(127,127,127,0.7);
+	border-bottom-left-radius: 13px;
+	border-bottom-right-radius: 13px;
+}
+
 .card-hand-res-div table{
 	margin: 0 auto;
 }

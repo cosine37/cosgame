@@ -7,6 +7,7 @@ public class CardEntity {
 	String img;
 	String type;
 	String numUpgrade;
+	String maxPlayNum;
 	List<String> provideRes;
 	List<String> needRes;
 	List<String> clickQuote;
@@ -59,6 +60,12 @@ public class CardEntity {
 	}
 	public void setResolveQuote(List<String> resolveQuote) {
 		this.resolveQuote = resolveQuote;
+	}
+	public String getMaxPlayNum() {
+		return maxPlayNum;
+	}
+	public void setMaxPlayNum(String maxPlayNum) {
+		this.maxPlayNum = maxPlayNum;
 	}
 	
 	

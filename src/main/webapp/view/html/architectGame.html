@@ -24,13 +24,25 @@
 						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
 							<div class="card-hand-title noselect">{{c.name}}</div>
 							<div class="card-hand-res-div noselect">
-								<table>
-									<tr>
-										<td ng-repeat="r in c.provideResStyles track by $index">
-											<div class="card-hand-res" ng-style="r"></div>
-										</td>
-									</tr>
-								</table>
+								<div class="card-hand-res-need-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.needResStyles track by $index">
+												<div class="card-hand-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div class="card-hand-res-provide-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.provideResStyles track by $index">
+												<div class="card-hand-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								
 							</div>
 						</div>
 					</td>
@@ -68,19 +80,35 @@
 						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickHand($index)">
 							<div class="card-hand-title noselect">{{c.name}}</div>
 							<div class="card-hand-res-div noselect">
-								<table>
-									<tr>
-										<td ng-repeat="r in c.provideResStyles track by $index">
-											<div class="card-hand-res" ng-style="r"></div>
-										</td>
-									</tr>
-								</table>
+								<div class="card-hand-res-need-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.needResStyles track by $index">
+												<div class="card-hand-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div class="card-hand-res-provide-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.provideResStyles track by $index">
+												<div class="card-hand-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
 							</div>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td ng-repeat="c in hand track by $index" class="play-details">
+						<span ng-show="shownPlayDetails == $index && c.type == '2'">
+							<button ng-click="changePlayTime(-1)" ng-disabled="playTime <= 0">-</button>
+							{{playTime}}次
+							<button ng-click="changePlayTime(1)"  ng-disabled="playTime >= maxPlayNum">+</button>
+						</span>
 						<button ng-click="play($index)" ng-disabled="disablePlay($index)" ng-show="shownPlayDetails == $index">打出</button>
 					</td>
 				</tr>

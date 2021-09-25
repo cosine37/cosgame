@@ -10,7 +10,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		var resNames = ["wood", "stone", "iron", "gold"];
 		$scope.shownPlayDetails = -1;
 		$scope.shownHireDetails = -1;
-		
+		$scope.playTime = 0;
+		$scope.maxPlayTime = 0;
 		$scope.selectedRes = []
 	
 		$scope.goto = function(d){
@@ -66,6 +67,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 						targets.push(y)
 					}
 				}
+			} else if (c.type == '2'){
+				targets.push($scope.playTime)
 			}
 			if (targets.length==0){
 				targets.push(-1)
@@ -113,6 +116,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.clickHand = function(x){
 			if (x>$scope.hand.length) return
 			$scope.selectedRes = []
+			$scope.playTime = 0;
+			$scope.maxPlayNum = parseInt($scope.hand[x].maxPlayNum)
 			for (var i=0;i<$scope.players[$scope.myIndex].warehouseArr.length;i++){
 				$scope.selectedRes.push(0)
 			}
@@ -159,6 +164,10 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			} 
 		}
 		
+		$scope.changePlayTime = function(x){
+			$scope.playTime = $scope.playTime+x;
+		}
+		
 		$scope.disablePlay = function(x){
 			c = $scope.hand[x]
 			if (c.type == '1'){
@@ -175,13 +184,17 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 					return false
 				}
 			} else if (c.type == '2'){
-				
+				if ($scope.playTime == 0){
+					return true;
+				} else {
+					return false;
+				}
 			}
 			return true;
 		}
 		
 		setCardStyle = function(c){
-			var i
+			var i,j
 			
 			var provideResArr = [];
 			var provideResStyles = [];
@@ -211,6 +224,24 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 			c.provideResArr = provideResArr
 			c.provideResStyles = provideResStyles
+			
+			var needResArr = [];
+			var needResStyles = [];
+			for (i=0;i<c.needRes.length;i++){
+				var x = parseInt(c.needRes[i])
+				for (j=0;j<x;j++){
+					needResArr.push(i)
+					var imgUrl = "url('/image/Architect/Res/" + resNames[i] + ".png')" 
+					var singleStyle = {
+						"background": imgUrl,
+						"background-size": "cover"
+					}
+					needResStyles.push(singleStyle)
+				}
+			}
+			//alert(JSON.stringify(needResArr))
+			c.needResArr = needResArr
+			c.needResStyles = needResStyles
 			
 			var imgUrl = "url('/image/Architect/Cards/" + c.img + ".png')" 
 			var singleStyle = {
