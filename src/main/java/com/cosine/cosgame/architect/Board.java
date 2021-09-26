@@ -22,7 +22,6 @@ public class Board {
 	int firstPlayerIndex;
 	int curPlayerIndex;
 	int status;
-	int numBuildingFinish;
 	String lord;
 	String id;
 	
@@ -94,6 +93,12 @@ public class Board {
 		if (x<0 || x>=revealedBuildings.size()) {
 			return;
 		} else {
+			int numBuildingFinish;
+			if (players.size() <4) {
+				numBuildingFinish = 6;
+			} else {
+				numBuildingFinish = 5;
+			}
 			if (revealedBuildings.get(x).canBuy(p)) {
 				Building b = revealedBuildings.remove(x);
 				p.payAndBuild(b);
@@ -117,14 +122,13 @@ public class Board {
 	
 	public void playerHire(Player p, int x, List<Integer> resources) {
 		if (x <= resources.size() && x>=0 && x<revealedCards.size()) {
-			int i,j;
+			int i;
 			for (i=0;i<x;i++) {
 				Card c = revealedCards.get(i);
-				for (j=0;j<resources.size();j++) {
-					int y = resources.get(j);
-					if (y>=Consts.WOOD && y<=Consts.GOLD) {
-						c.addResOn(y);
-					}
+				int y = resources.get(i);
+				if (y>=Consts.WOOD && y<=Consts.GOLD) {
+					c.addResOn(y);
+					p.removeRes(y);
 				}
 			}
 			Card c = revealedCards.remove(x);
@@ -224,12 +228,6 @@ public class Board {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public int getNumBuildingFinish() {
-		return numBuildingFinish;
-	}
-	public void setNumBuildingFinish(int numBuildingFinish) {
-		this.numBuildingFinish = numBuildingFinish;
-	}
 	public String getLord() {
 		return lord;
 	}
@@ -305,7 +303,6 @@ public class Board {
 		doc.append("firstPlayerIndex", firstPlayerIndex);
 		doc.append("curPlayerIndex", curPlayerIndex);
 		doc.append("status", status);
-		doc.append("numBuildingFinish", numBuildingFinish);
 		int i;
 		List<Document> docd = new ArrayList<>();
 		for (i=0;i<cardDeck.size();i++) {
@@ -347,7 +344,6 @@ public class Board {
 		firstPlayerIndex = doc.getInteger("firstPlayerIndex", -1);
 		curPlayerIndex = doc.getInteger("curPlayerIndex", -1);
 		status = doc.getInteger("status", -1);
-		numBuildingFinish = doc.getInteger("numBuildingFinish",numBuildingFinish);
 		int i;
 		cardDeck = new ArrayList<>();
 		List<Document> docd = (List<Document>) doc.get("cardDeck");

@@ -37,7 +37,7 @@ public class Player {
 	
 	public void payAndBuild(Building b) {
 		if (b.canBuy(this)) {
-			int i,j;
+			int i;
 			for (i=0;i<b.price.size();i++) {
 				int x = b.price.get(i);
 				if (x == 0) continue;
@@ -45,6 +45,7 @@ public class Player {
 			}
 			buildings.add(b);
 		}
+		//endOrDiscard();
 	}
 	
 	public int warehouseSize() {
@@ -125,6 +126,9 @@ public class Player {
 			x = x-numRes;
 			warehouse.set(res, x);
 		}
+	}
+	public void removeRes(int res) {
+		removeRes(res, 1);
 	}
 	public void addRes(int res, int numRes) {
 		int x = warehouse.get(res);

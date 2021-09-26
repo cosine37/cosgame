@@ -249,6 +249,11 @@ public class Card {
 			lpr.add(Integer.toString(provideRes.get(i)));
 		}
 		entity.setProvideRes(lpr);
+		List<String> lro = new ArrayList<>();
+		for (i=0;i<resOn.size();i++) {
+			lro.add(Integer.toString(resOn.get(i)));
+		}
+		entity.setResOn(lro);
 		return entity;
 	}
 	

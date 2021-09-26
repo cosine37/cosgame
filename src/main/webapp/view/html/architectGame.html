@@ -48,9 +48,25 @@
 		<div>
 			<table>
 				<tr>
+					<td ng-repeat="c in revealedCards track by $index" style = "height: 30px;">
+						<div class="res-on-div">
+							<table>
+								<tr>
+									<td ng-repeat="r in c.resOnStyles">
+										<div ng-style = "r" class="resource-small"></div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+					</td>
+				</tr>
+				<tr>
 					<td ng-repeat="c in revealedCards track by $index">
 						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
 							<div class="card-hand-title noselect">{{c.name}}</div>
+							<div class="middle-resource" ng-show="showMiddleRes($index)" ng-style="middleResStyle($index)">
+							</div>
 							<div class="card-hand-res-div noselect">
 								<div class="card-hand-res-need-div noselect">
 									<table>
@@ -60,6 +76,11 @@
 											</td>
 										</tr>
 									</table>
+								</div>
+								<div>
+								
+								
+								
 								</div>
 								<div class="card-hand-res-provide-div noselect">
 									<table>
@@ -77,7 +98,7 @@
 				</tr>
 				<tr>
 					<td ng-repeat="c in revealedCards track by $index" class="play-details">
-						<button ng-click="hire($index)" ng-show="shownHireDetails == $index">招募</button>
+						<button ng-click="hire($index)" ng-show="shownHireDetails == $index" ng-disabled="disableHire($index)">招募</button>
 					</td>
 				</tr>
 			</table>
@@ -104,9 +125,7 @@
 			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。</span>
 			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
 		</div>
-		<div>
-			<button ng-click="rest()" ng-disabled="phase != '1'">休整</button>
-		</div>
+		
 		<div>
 			<table>
 				<tr>
@@ -148,7 +167,9 @@
 				</tr>
 			</table>
 		</div>
-		
+		<div>
+			<button ng-click="rest()" ng-disabled="phase != '1'">休整</button>
+		</div>
 	</div>
 	
 	<div>

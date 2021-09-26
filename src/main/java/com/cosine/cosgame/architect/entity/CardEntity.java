@@ -12,6 +12,7 @@ public class CardEntity {
 	List<String> needRes;
 	List<String> clickQuote;
 	List<String> resolveQuote;
+	List<String> resOn;
 	
 	public String getName() {
 		return name;
@@ -66,6 +67,12 @@ public class CardEntity {
 	}
 	public void setMaxPlayNum(String maxPlayNum) {
 		this.maxPlayNum = maxPlayNum;
+	}
+	public List<String> getResOn() {
+		return resOn;
+	}
+	public void setResOn(List<String> resOn) {
+		this.resOn = resOn;
 	}
 	
 	
