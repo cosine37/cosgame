@@ -14,6 +14,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.playTime = 0;
 		$scope.maxPlayTime = 0;
 		$scope.selectedRes = []
+		$scope.canDiscard = false;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -53,6 +54,11 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		playHiredMusic = function(){
 			var audio = new Audio("/sound/Architect/hired.mp3")
+			audio.play();
+		}
+		
+		playDiscardMusic = function(){
+			var audio = new Audio("/sound/Architect/discard.mp3")
 			audio.play();
 		}
 		
@@ -121,7 +127,25 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.discard = function(){
+			playDiscardMusic()
+			var targets = []
+			var i;
+			for (i=0;i<$scope.selectedRes.length;i++){
+				if ($scope.selectedRes[i] == 1){
+					targets.push($scope.players[$scope.myIndex].warehouseArr[i])
+				}
+			}
+			var data = {"targets": targets}
+			$http({url: "/architect/discard", method: "POST", params: data}).then(function(response){
+				//$scope.allRefresh()
+				$scope.getBoard()
+				//$scope.hideAreaCard();
+			});
+		}
+		
 		$scope.clickRevealedCard = function(x){
+			if ($scope.phase != '1') return
 			if (x>$scope.revealedCards.length) return
 			if ($scope.shownHireDetails == x){
 				$scope.shownHireDetails = -1
@@ -133,6 +157,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.clickHand = function(x){
+			if ($scope.phase != '1') return
 			if (x>$scope.hand.length) return
 			$scope.selectedRes = []
 			$scope.playTime = 0;
@@ -149,6 +174,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.clickRevealedBuilding = function(x){
+			if ($scope.phase != '1') return
 			if (x>$scope.revealedBuildings.length) return
 			if ($scope.revealedBuildings[x].canBuild != 'y') return
 			if ($scope.shownBuildingDetails == x){
@@ -172,25 +198,44 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.clickRes = function(x){
-			if ($scope.shownPlayDetails>=0 && $scope.shownPlayDetails<$scope.hand.length){
-				c = $scope.hand[$scope.shownPlayDetails]
-				if (c.type == '3'){
-					if ($scope.players[$scope.myIndex].warehouseArr[x]!=3){
-						if ($scope.selectedRes[x] == 1){
-							$scope.selectedRes[x] = 0;
-						} else {
-							var n = parseInt(c.numUpgrade)
-							var t = 0
-							for (i=0;i<$scope.selectedRes.length;i++){
-								t=t+$scope.selectedRes[i]
-							}
-							if (t<n){
-								$scope.selectedRes[x] = 1;
+			if ($scope.phase == '2'){
+				if ($scope.selectedRes[x] == 1){
+					$scope.selectedRes[x] = 0;
+					$scope.canDiscard = false;
+				} else {
+					var t = 0
+					for (i=0;i<$scope.selectedRes.length;i++){
+						t=t+$scope.selectedRes[i]
+					}
+					if (t+10 < $scope.selectedRes.length){
+						$scope.selectedRes[x] = 1;
+						t++;
+						if (t+10 == $scope.selectedRes.length){
+							$scope.canDiscard = true;
+						}
+					}
+				}
+			} else if ($scope.phase == '1'){
+				if ($scope.shownPlayDetails>=0 && $scope.shownPlayDetails<$scope.hand.length){
+					c = $scope.hand[$scope.shownPlayDetails]
+					if (c.type == '3'){
+						if ($scope.players[$scope.myIndex].warehouseArr[x]!=3){
+							if ($scope.selectedRes[x] == 1){
+								$scope.selectedRes[x] = 0;
+							} else {
+								var n = parseInt(c.numUpgrade)
+								var t = 0
+								for (i=0;i<$scope.selectedRes.length;i++){
+									t=t+$scope.selectedRes[i]
+								}
+								if (t<n){
+									$scope.selectedRes[x] = 1;
+								}
 							}
 						}
 					}
 				}
-			} 
+			}
 		}
 		
 		$scope.changePlayTime = function(x){
@@ -342,6 +387,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 					var x = parseInt($scope.players[i].warehouse[j])
 					for (k=0;k<x;k++){
 						warehouseArr.push(j)
+						$scope.selectedRes.push(0)
 						var imgUrl = "url('/image/Architect/Res/" + resNames[j] + ".png')" 
 						var singleStyle = {
 							"background": imgUrl,
@@ -363,6 +409,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.revealedCards = response.data.revealedCards
 				$scope.revealedBuildings = response.data.revealedBuildings
 				$scope.hand = $scope.players[$scope.myIndex].hand
+				$scope.phase = $scope.players[$scope.myIndex].phase
 				setResources()
 				setCardStyles()
 				setBuildingStyles()

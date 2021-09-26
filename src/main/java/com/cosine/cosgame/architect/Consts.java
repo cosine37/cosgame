@@ -29,4 +29,5 @@ public class Consts {
 	// setup
 	public static final int NUMCARDREVEAL = 6;
 	public static final int NUMBUILDINGREVEAL = 5;
+	public static final int MAXWAREHOUSESIZE = 10;
 }

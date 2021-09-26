@@ -47,11 +47,40 @@ public class Player {
 		}
 	}
 	
+	public int warehouseSize() {
+		int ans = 0;
+		for (int i=0;i<warehouse.size();i++) {
+			ans = ans+warehouse.get(i);
+		}
+		return ans;
+	}
+	
+	public void endOrDiscard() {
+		if (phase == Consts.INTURN) {
+			if (warehouseSize() > Consts.MAXWAREHOUSESIZE) {
+				phase = Consts.DISCARD;
+			} else {
+				endTurn();
+			}
+		}
+	}
+	
+	public void discard(List<Integer> targets) {
+		int i;
+		for (i=0;i<targets.size();i++) {
+			int x = targets.get(i);
+			int y = warehouse.get(x)-1;
+			warehouse.set(x, y);
+		}
+		endTurn();
+	}
+	
 	public void rest() {
 		while (play.size()>0) {
 			Card c = play.remove(0);
 			hand.add(c);
 		}
+		endOrDiscard();
 	}
 	
 	public void playCard(int x) {
@@ -65,14 +94,17 @@ public class Player {
 			c.play(targets);
 			play.add(c);
 		}
+		endOrDiscard();
 	}
 	
 	public void build(int x) {
 		board.playerBuild(this, x);
+		endOrDiscard();
 	}
 	
 	public void hire(int x, List<Integer> targets) {
 		board.playerHire(this, x, targets);
+		endOrDiscard();
 	}
 	
 	public void endTurn() {
@@ -178,6 +210,7 @@ public class Player {
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
+		entity.setPhase(Integer.toString(phase));
 		int i;
 		List<String> lw = new ArrayList<>();
 		for (i=0;i<warehouse.size();i++) {

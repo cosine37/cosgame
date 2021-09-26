@@ -70,6 +70,7 @@ public class Board {
 			x++;
 			x = x%players.size();
 		}
+		players.get(curPlayerIndex).setPhase(Consts.INTURN);
 		cardDeck = allRes.getCardDeck();
 		buildingDeck = allRes.getBuildingDeck();
 		revealedCards = new ArrayList<>();
@@ -146,7 +147,7 @@ public class Board {
 		Player p1 = players.get(curPlayerIndex);
 		p1.setPhase(Consts.OFFTURN);
 		curPlayerIndex++;
-		if (curPlayerIndex>players.size()) {
+		if (curPlayerIndex>=players.size()) {
 			curPlayerIndex = curPlayerIndex % players.size();
 		}
 		if ((curPlayerIndex == firstPlayerIndex) && (status == Consts.LASTROUND)) {

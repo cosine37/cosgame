@@ -100,7 +100,12 @@
 			</table>
 		</div>
 		<div>
-			<button ng-click="rest()">休整</button>
+			<span ng-show="phase == '0'">现在不是你的回合。</span>
+			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。</span>
+			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
+		</div>
+		<div>
+			<button ng-click="rest()" ng-disabled="phase != '1'">休整</button>
 		</div>
 		<div>
 			<table>

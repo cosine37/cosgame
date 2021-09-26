@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PlayerEntity {
 	String name;
+	String phase;
 	List<String> warehouse;
 	List<CardEntity> hand;
 	List<CardEntity> play;
@@ -31,5 +32,11 @@ public class PlayerEntity {
 	}
 	public void setPlay(List<CardEntity> play) {
 		this.play = play;
+	}
+	public String getPhase() {
+		return phase;
+	}
+	public void setPhase(String phase) {
+		this.phase = phase;
 	}
 }
