@@ -54,6 +54,10 @@ public class Card {
 			String[] clickArr = {"trader11", "trader12"};
 			String[] resolveArr = {"trader13", "trader14"};
 			setQuotes(clickArr, resolveArr);
+		} else if (x == Consts.TRADERALT03) {
+			String[] clickArr = {"villager01", "villager02", "villager03"};
+			String[] resolveArr = {"villager04", "villager05", "villager06"};
+			setQuotes(clickArr, resolveArr);
 		}
 		
 	}

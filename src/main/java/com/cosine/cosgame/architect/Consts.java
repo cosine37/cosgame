@@ -8,6 +8,7 @@ public class Consts {
 	
 	public static final int TRADERALT01 = 12;
 	public static final int TRADERALT02 = 22;
+	public static final int TRADERALT03 = 32;
 	
 	// resources
 	public static final int WOOD = 0;
