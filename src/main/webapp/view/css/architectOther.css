@@ -30,17 +30,17 @@ button:disabled{
 }
 
 .building-reveal{
-	height: 108px;
-	width: 192px;
+	height: 99px;
+	width: 171px;
 	border: none;
 	position: relative;	
-	border: 3px solid black;
+	border: 2px solid black;
 	border-radius: 16px;
 }
 
 .building-reveal-title{
 	position: relative;
-	left: 96px;
+	left: 85px;
 	margin-left: -42px;
 	top: 0px;
 	width: 84px;
@@ -65,20 +65,75 @@ button:disabled{
 .building-reveal-price-div{
 	position: absolute;
 	bottom: 0px;
-	width: 186px;
+	width: 167px;
 	text-align: center;
 	background-color: rgba(127,127,127,0.7);
-	border-bottom-left-radius: 13px;
-	border-bottom-right-radius: 13px;
+	border-bottom-left-radius: 14px;
+	border-bottom-right-radius: 14px;
 }
 
 .building-reveal-price-div table{
 	margin: 0 auto;
 }
 
+.card-play{
+	height: 120px;
+	width: 78px;
+	border: none;
+	position: relative;	
+	border: 2px solid black;
+	border-radius: 12px;
+}
+
+.card-play-title{
+	position: relative;
+	left: 39px;
+	margin-left: -20px;
+	top: 0px;
+	width: 40px;
+	font-size: 8px;
+	text-align: center;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.card-play-res-div{
+	position: absolute;
+	bottom: 0px;
+	width: 74px;
+	background-color: rgba(127,127,127,0.7);
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.card-play-res-need-div{
+	bottom: 0px;
+	width: 74px;
+	background-color: rgba(220,0,0,0.3);
+}
+
+.card-play-res-provide{
+	bottom: 0px;
+	width: 74px;
+	background-color: rgba(127,127,127,0.7);
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.card-play-res-div table{
+	margin: 0 auto;
+}
+
+.card-play-res{
+	height: 14px;
+	width: 14px;
+}
+
 .card-hand{
-	height: 240px;
-	width: 157px;
+	height: 224px;
+	width: 147px;
 	border: none;
 	position: relative;	
 	border: 3px solid black;
@@ -87,7 +142,7 @@ button:disabled{
 
 .card-hand-title{
 	position: relative;
-	left: 78px;
+	left: 70px;
 	margin-left: -36px;
 	top: 0px;
 	width: 72px;
@@ -102,7 +157,7 @@ button:disabled{
 .card-hand-res-div{
 	position: absolute;
 	bottom: 0px;
-	width: 151px;
+	width: 141px;
 	background-color: rgba(127,127,127,0.7);
 	border-bottom-left-radius: 13px;
 	border-bottom-right-radius: 13px;
@@ -110,13 +165,13 @@ button:disabled{
 
 .card-hand-res-need-div{
 	bottom: 0px;
-	width: 151px;
+	width: 141px;
 	background-color: rgba(220,0,0,0.3);
 }
 
 .card-hand-res-provide{
 	bottom: 0px;
-	width: 151px;
+	width: 141px;
 	background-color: rgba(127,127,127,0.7);
 	border-bottom-left-radius: 13px;
 	border-bottom-right-radius: 13px;
@@ -127,8 +182,8 @@ button:disabled{
 }
 
 .card-hand-res{
-	height: 28px;
-	width: 28px;
+	height: 26px;
+	width: 26px;
 }
 
 .play-details{
@@ -151,8 +206,8 @@ button:disabled{
 }
 
 .middle-resource{
-	margin-top: 100px;
-	margin-left: 52px;
+	margin-top: 90px;
+	margin-left: 45px;
 	height: 50px;
 	width: 50px;
 }

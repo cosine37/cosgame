@@ -26,8 +26,8 @@
 		</div>
 		<div>
 			<table>
-				<tr ng-repeat-start="p in players">
-					<td></td>
+				<tr ng-repeat-start="p in players track by $index">
+					<td><span ng-show="curPlayerIndex == $index">></span></td>
 					<td>{{p.name}}</td>
 					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.hand.length}}</td>
 					<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
@@ -53,6 +53,10 @@
 	<div id="board" style="float: left">
 		<div>
 			<table>
+				<tr>
+					<td style="text-align:center"><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{num3vp}}</td>
+					<td style="text-align:center"><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{num1vp}}</td>
+				</tr>
 				<tr>
 					<td ng-repeat="b in revealedBuildings track by $index">
 						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
@@ -112,9 +116,7 @@
 									</table>
 								</div>
 								<div>
-								
-								
-								
+
 								</div>
 								<div class="card-hand-res-provide-div noselect">
 									<table>
@@ -147,12 +149,58 @@
 	
 	<div id="player-div" style="clear:both">
 		<div>
+			<span>你的分数是：{{myScore}}。</span>
 			<span ng-show="phase == '0'">现在不是你的回合。</span>
-			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。</span>
+			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。<button ng-click="rest()" ng-disabled="phase != '1'">休整</button></span>
 			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
 		</div>
-		<div>
-			<span ng-repeat="p in players[myIndex].play track by $index">{{p.name}}</span>
+		<div style="height: 123px">
+			<table>
+				<tr>
+					<td ng-repeat="b in myBuildings track by $index">
+						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
+							<div class="building-reveal-title noselect">{{b.name}}</div>
+							<div class="building-reveal-score noselect">
+								{{b.score}}
+							</div>
+							<div class="building-reveal-price-div noselect">
+								<table>
+									<tr>
+										<td ng-repeat="r in b.priceStyles track by $index">
+											<div class="card-hand-res" ng-style="r"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+					<td ng-repeat="c in players[myIndex].play track by $index">
+						<div class="card-play noselect" ng-style="c.cardStyle">
+							<div class="card-play-title noselect">{{c.name}}</div>
+							<div class="card-play-res-div noselect">
+								<div class="card-play-res-need-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.needResStyles track by $index">
+												<div class="card-play-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+								<div class="card-play-res-provide-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in c.provideResStyles track by $index">
+												<div class="card-play-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
 		</div>
 		<div>
 			<table>
@@ -206,7 +254,7 @@
 			</table>
 		</div>
 		<div>
-			<button ng-click="rest()" ng-disabled="phase != '1'">休整</button>
+			
 		</div>
 	</div>
 	<!-- 

@@ -418,9 +418,14 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		setCardStyles = function(){
-			var i
+			var i,j
 			for (i=0;i<$scope.hand.length;i++){
 				setCardStyle($scope.hand[i])
+			}
+			for (i=0;i<$scope.players.length;i++){
+				for (j=0;j<$scope.players[i].play.length;j++){
+					setCardStyle($scope.players[i].play[j])
+				}
 			}
 			for (i=0;i<$scope.revealedCards.length;i++){
 				setCardStyle($scope.revealedCards[i])
@@ -466,6 +471,10 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var i
 			for (i=0;i<$scope.revealedBuildings.length;i++){
 				setBuildingStyle($scope.revealedBuildings[i])
+			}
+			
+			for (i=0;i<$scope.myBuildings.length;i++){
+				setBuildingStyle($scope.myBuildings[i])
 			}
 		}
 		
@@ -526,11 +535,18 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				$scope.lord = response.data.lord
 				$scope.myIndex = parseInt(response.data.myIndex)
+				$scope.num1vp = response.data.num1vp
+				$scope.num3vp = response.data.num3vp
 				$scope.players = response.data.players
 				$scope.revealedCards = response.data.revealedCards
 				$scope.revealedBuildings = response.data.revealedBuildings
 				$scope.hand = response.data.myHand
+				$scope.myBuildings = response.data.myBuildings
 				$scope.phase = $scope.players[$scope.myIndex].phase
+				$scope.myScore = response.data.myScore
+				$scope.myNum1vp = response.data.myNum1vp
+				$scope.myNum3vp = response.data.myNum3vp
+				$scope.curPlayerIndex = parseInt(response.data.curPlayerIndex)
 				setCardStyles()
 				setBuildingStyles()
 				setResources()

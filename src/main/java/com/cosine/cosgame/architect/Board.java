@@ -259,6 +259,7 @@ public class Board {
 		entity.setStatus(Integer.toString(status));
 		entity.setNum1vp(Integer.toString(num1vp));
 		entity.setNum3vp(Integer.toString(num3vp));
+		entity.setCurPlayerIndex(Integer.toString(curPlayerIndex));
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();
@@ -282,6 +283,10 @@ public class Board {
 					lhe.add(p.getHand().get(j).toCardEntity());
 				}
 				entity.setMyHand(lhe);
+				
+				entity.setMyScore(Integer.toString(p.getScore()));
+				entity.setMyNum1vp(Integer.toString(p.getNum1vp()));
+				entity.setMyNum3vp(Integer.toString(p.getNum3vp()));
 			}
 			lp.add(pe);
 		}

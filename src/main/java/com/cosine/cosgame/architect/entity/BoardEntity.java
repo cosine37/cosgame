@@ -9,6 +9,10 @@ public class BoardEntity {
 	String myIndex;
 	String num3vp;
 	String num1vp;
+	String myScore;
+	String myNum1vp;
+	String myNum3vp;
+	String curPlayerIndex;
 	List<String> playerNames;
 	List<PlayerEntity> players;
 	List<CardEntity> revealedCards;
@@ -87,6 +91,30 @@ public class BoardEntity {
 	}
 	public void setMyHand(List<CardEntity> myHand) {
 		this.myHand = myHand;
+	}
+	public String getMyScore() {
+		return myScore;
+	}
+	public void setMyScore(String myScore) {
+		this.myScore = myScore;
+	}
+	public String getMyNum1vp() {
+		return myNum1vp;
+	}
+	public void setMyNum1vp(String myNum1vp) {
+		this.myNum1vp = myNum1vp;
+	}
+	public String getMyNum3vp() {
+		return myNum3vp;
+	}
+	public void setMyNum3vp(String myNum3vp) {
+		this.myNum3vp = myNum3vp;
+	}
+	public String getCurPlayerIndex() {
+		return curPlayerIndex;
+	}
+	public void setCurPlayerIndex(String curPlayerIndex) {
+		this.curPlayerIndex = curPlayerIndex;
 	}
 	
 }
