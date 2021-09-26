@@ -215,17 +215,17 @@ public class Player {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
 		entity.setPhase(Integer.toString(phase));
+		entity.setNum1vp(Integer.toString(num1vp));
+		entity.setNum3vp(Integer.toString(num3vp));
+		entity.setNumBuildings(Integer.toString(buildings.size()));
+		entity.setHandSize(Integer.toString(hand.size()));
+		entity.setScore(Integer.toString(getScore()));
 		int i;
 		List<String> lw = new ArrayList<>();
 		for (i=0;i<warehouse.size();i++) {
 			lw.add(Integer.toString(warehouse.get(i)));
 		}
 		entity.setWarehouse(lw);
-		List<CardEntity> lh = new ArrayList<>();
-		for (i=0;i<hand.size();i++) {
-			lh.add(hand.get(i).toCardEntity());
-		}
-		entity.setHand(lh);
 		List<CardEntity> lp = new ArrayList<>();
 		for (i=0;i<play.size();i++) {
 			lp.add(play.get(i).toCardEntity());

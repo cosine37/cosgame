@@ -14,9 +14,43 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/architectGameController.js"></script>
 <body ng-app="architectGameApp" ng-controller="architectGameCtrl">
-	<button ng-click="goto('architect')">back</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<div>
+	
+	<div id="other-player-info" style="float: left">
+		<div>
+			<table>
+				<tr>
+					<td><button ng-click="goto('architect')">back</button></td>
+					<td><button ng-click="dismiss()" ng-show="lord == username">dismiss</button></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table>
+				<tr ng-repeat-start="p in players">
+					<td></td>
+					<td>{{p.name}}</td>
+					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.hand.length}}</td>
+					<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
+					<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
+					<td><img src="/image/Architect/house.png" class="player-info-icon">×{{p.numBuildings}}</td>
+				</tr>
+				<tr ng-repeat-end>
+					<td colspan="6">
+						<table>
+							<tr>
+								<td ng-repeat="a in p.warehouseStyles track by $index">
+									<div ng-style="a" class="resource-small"> </div>
+								</td>
+							</tr>
+						</table>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+	<div id="board" style="float: left">
 		<div>
 			<table>
 				<tr>
@@ -108,6 +142,15 @@
 			<span ng-repeat="c in revealedCards track by $index"><button ng-click="hire($index)">{{c.name}}</button></span>
 		</div>
 		 -->
+		
+	</div>
+	
+	<div id="player-div" style="clear:both">
+		<div>
+			<span ng-show="phase == '0'">现在不是你的回合。</span>
+			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。</span>
+			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
+		</div>
 		<div>
 			<span ng-repeat="p in players[myIndex].play track by $index">{{p.name}}</span>
 		</div>
@@ -119,11 +162,6 @@
 					</td>
 				</tr>
 			</table>
-		</div>
-		<div>
-			<span ng-show="phase == '0'">现在不是你的回合。</span>
-			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。</span>
-			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
 		</div>
 		
 		<div>
@@ -171,11 +209,11 @@
 			<button ng-click="rest()" ng-disabled="phase != '1'">休整</button>
 		</div>
 	</div>
-	
+	<!-- 
 	<div>
 		{{gamedata}}
 	</div>
-	<!-- 
+	
 	<div>
 		<table>
 			<tr ng-repeat="p in playerNames track by $index">

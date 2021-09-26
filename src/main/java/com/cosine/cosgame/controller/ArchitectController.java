@@ -36,6 +36,12 @@ public class ArchitectController {
 	public String architectGame() {
 		return "architectGame";
 	}
+	
+	@RequestMapping(value="/architectendgame", method = RequestMethod.GET)
+	public String architectEndGame() {
+		return "architectEndGame";
+	}
+	
 	@RequestMapping(value="/architect/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -188,7 +194,8 @@ public class ArchitectController {
 			Player p = board.getPlayerByName(username);
 			//System.out.println(p.getName());
 			if (p != null) {
-				board.playerHire(p, index, res);
+				p.hire(index, res);
+				//board.playerHire(p, index, res);
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

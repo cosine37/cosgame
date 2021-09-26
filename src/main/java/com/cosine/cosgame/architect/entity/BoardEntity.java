@@ -7,10 +7,14 @@ public class BoardEntity {
 	String lord;
 	String status;
 	String myIndex;
+	String num3vp;
+	String num1vp;
 	List<String> playerNames;
 	List<PlayerEntity> players;
 	List<CardEntity> revealedCards;
 	List<BuildingEntity> revealedBuildings;
+	List<BuildingEntity> myBuildings;
+	List<CardEntity> myHand;
 
 	public String getId() {
 		return id;
@@ -59,6 +63,30 @@ public class BoardEntity {
 	}
 	public void setRevealedBuildings(List<BuildingEntity> revealedBuildings) {
 		this.revealedBuildings = revealedBuildings;
+	}
+	public String getNum3vp() {
+		return num3vp;
+	}
+	public void setNum3vp(String num3vp) {
+		this.num3vp = num3vp;
+	}
+	public String getNum1vp() {
+		return num1vp;
+	}
+	public void setNum1vp(String num1vp) {
+		this.num1vp = num1vp;
+	}
+	public List<BuildingEntity> getMyBuildings() {
+		return myBuildings;
+	}
+	public void setMyBuildings(List<BuildingEntity> myBuildings) {
+		this.myBuildings = myBuildings;
+	}
+	public List<CardEntity> getMyHand() {
+		return myHand;
+	}
+	public void setMyHand(List<CardEntity> myHand) {
+		this.myHand = myHand;
 	}
 	
 }

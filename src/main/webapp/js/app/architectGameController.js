@@ -4,9 +4,19 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("architectGameApp", []);
-app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
-	function($scope, $window, $http, $document){
+var app = angular.module("architectGameApp", ["ngWebSocket"]);
+app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
+	function($scope, $window, $http, $document, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+	
 		var resNames = ["wood", "stone", "iron", "gold"];
 		$scope.shownPlayDetails = -1;
 		$scope.shownHireDetails = -1;
@@ -90,8 +100,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 			var data = {"cardIndex" : x, "targets": targets}
 			$http({url: "/architect/play", method: "POST", params: data}).then(function(response){
-				//$scope.allRefresh()
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				//$scope.hideAreaCard();
 			});
 		}
@@ -99,8 +109,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.rest = function(){
 			playRecoverMusic()
 			$http({url: "/architect/rest", method: "POST"}).then(function(response){
-				//$scope.allRefresh()
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				//$scope.hideAreaCard();
 			});
 		}
@@ -119,9 +129,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			var data = {"index" : x, "res": resArr}
 			playHiredMusic()
 			$http({url: "/architect/hire", method: "POST", params: data}).then(function(response){
-				//$scope.allRefresh()
-				$scope.getBoard()
-				//$scope.hideAreaCard();
+				$scope.allRefresh()
+				//$scope.getBoard()
 			});
 		}
 		
@@ -130,8 +139,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			playBuildMusic()
 			var data = {"buildingIndex" : x}
 			$http({url: "/architect/build", method: "POST", params: data}).then(function(response){
-				//$scope.allRefresh()
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				//$scope.hideAreaCard();
 			});
 		}
@@ -147,8 +156,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 			var data = {"targets": targets}
 			$http({url: "/architect/discard", method: "POST", params: data}).then(function(response){
-				//$scope.allRefresh()
-				$scope.getBoard()
+				$scope.allRefresh()
+				//$scope.getBoard()
 				//$scope.hideAreaCard();
 			});
 		}
@@ -208,7 +217,9 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.resStyle = function(x){
-			var style = $scope.players[$scope.myIndex].warehouseStyles[x]
+			var style ={}
+			style["background"] = $scope.players[$scope.myIndex].warehouseStyles[x]["background"]
+			style["background-size"] = $scope.players[$scope.myIndex].warehouseStyles[x]["background-size"]
 			if (x>=0 && x<$scope.selectedRes.length){
 				if ($scope.selectedRes[x] == 1){
 					style.border = "2px solid rgb(160,32,240)"
@@ -508,11 +519,17 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
 				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				if ($scope.status == '3'){
+					alert("Game ends");
+					$scope.goto('architectendgame');
+				}
+				$scope.lord = response.data.lord
 				$scope.myIndex = parseInt(response.data.myIndex)
 				$scope.players = response.data.players
 				$scope.revealedCards = response.data.revealedCards
 				$scope.revealedBuildings = response.data.revealedBuildings
-				$scope.hand = $scope.players[$scope.myIndex].hand
+				$scope.hand = response.data.myHand
 				$scope.phase = $scope.players[$scope.myIndex].phase
 				setCardStyles()
 				setBuildingStyles()
@@ -522,5 +539,14 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.getBoard();
+		
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
+		
+		$scope.allRefresh = function(){
+			var json_data = '{"type":"notify","content":"refresh"}';
+	        ws.send(json_data);
+		}
 		
 }]);

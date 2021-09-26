@@ -12,15 +12,18 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
-<script src="/js/app/architectCreateGameController.js"></script>
-<body ng-app="architectCreateGameApp" ng-controller="architectCreateGameCtrl">
+<script src="/js/app/architectEndGameController.js"></script>
+<body ng-app="architectEndGameApp" ng-controller="architectEndGameCtrl">
 	<button ng-click="goto('architect')">back</button>
 	<button ng-click="addbot()">add bot</button>
-	<button ng-click="startGame()" ng-show="lord == username">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<table>
+		<tr>
+			<td>player</td>
+			<td>score</td>
+		</tr>
 		<tr ng-repeat="p in players">
 			<td>{{p.name}}</td>
+			<td>{{p.score}}</td>
 		</tr>
 	</table>
 	<!-- 

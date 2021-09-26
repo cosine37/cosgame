@@ -4,8 +4,8 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("architectCreateGameApp", ["ngWebSocket"]);
-app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
+var app = angular.module("architectEndGameApp", ["ngWebSocket"]);
+app.controller("architectEndGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		
 		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
@@ -47,10 +47,6 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.status = response.data.status
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
-				
-				if ($scope.status == '1'){
-					$scope.goto('architectgame');
-				}
 
 			});
 		}

@@ -44,10 +44,11 @@ public class Board {
 		int i;
 		AllRes allRes = new AllRes();
 		Random rand = new Random();
-		firstPlayerIndex = rand.nextInt() % players.size();
+		firstPlayerIndex = rand.nextInt(players.size()); 
 		curPlayerIndex = firstPlayerIndex;
 		int x = curPlayerIndex;
 		for (i=0;i<players.size();i++) {
+			System.out.println(x);
 			Player p = players.get(x);
 			p.clearAll();
 			Card woodCutter = allRes.getWoodCutter();
@@ -67,7 +68,7 @@ public class Board {
 				p.addRes(Consts.STONE, 1);
 			}
 			x++;
-			x = x%players.size();
+			if (x == players.size()) x = 0;
 		}
 		players.get(curPlayerIndex).setPhase(Consts.INTURN);
 		cardDeck = allRes.getCardDeck();
@@ -256,7 +257,9 @@ public class Board {
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
-		int i;
+		entity.setNum1vp(Integer.toString(num1vp));
+		entity.setNum3vp(Integer.toString(num3vp));
+		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();
 		List<CardEntity> lrc = new ArrayList<>();
@@ -265,11 +268,22 @@ public class Board {
 		Player p = null;
 		for (i=0;i<players.size();i++) {
 			playerNames.add(players.get(i).getName());
-			lp.add(players.get(i).toPlayerEntity());
+			PlayerEntity pe = players.get(i).toPlayerEntity();
 			if (players.get(i).getName().contentEquals(username)) {
 				myIndex = Integer.toString(i);
 				p = players.get(i);
+				List<BuildingEntity> lbe = new ArrayList<>();
+				for (j=0;j<p.getBuildings().size();j++) {
+					lbe.add(p.getBuildings().get(j).toBuildingEntity());
+				}
+				entity.setMyBuildings(lbe);
+				List<CardEntity> lhe= new ArrayList<>();
+				for (j=0;j<p.getHand().size();j++) {
+					lhe.add(p.getHand().get(j).toCardEntity());
+				}
+				entity.setMyHand(lhe);
 			}
+			lp.add(pe);
 		}
 		entity.setPlayerNames(playerNames);
 		entity.setPlayers(lp);
