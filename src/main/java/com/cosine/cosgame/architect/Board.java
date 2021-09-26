@@ -72,7 +72,7 @@ public class Board {
 		}
 		players.get(curPlayerIndex).setPhase(Consts.INTURN);
 		cardDeck = allRes.getCardDeck();
-		buildingDeck = allRes.getBuildingDeck();
+		buildingDeck = allRes.getShuffledBuildingDeck();
 		revealedCards = new ArrayList<>();
 		for (i=0;i<Consts.NUMCARDREVEAL;i++) {
 			Card c = cardDeck.remove(0);
