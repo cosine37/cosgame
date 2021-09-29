@@ -29,7 +29,7 @@
 				<tr ng-repeat-start="p in players track by $index">
 					<td><span ng-show="curPlayerIndex == $index">></span></td>
 					<td>{{p.name}}</td>
-					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.hand.length}}</td>
+					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
 					<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
 					<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
 					<td><img src="/image/Architect/house.png" class="player-info-icon">×{{p.numBuildings}}</td>
@@ -158,7 +158,7 @@
 			<table>
 				<tr>
 					<td ng-repeat="b in myBuildings track by $index">
-						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
+						<div class="building-reveal noselect" ng-style="b.buildingStyle">
 							<div class="building-reveal-title noselect">{{b.name}}</div>
 							<div class="building-reveal-score noselect">
 								{{b.score}}

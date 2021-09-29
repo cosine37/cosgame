@@ -9,9 +9,11 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 	function($scope, $window, $http, $document, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
 		ws.onError(function(event) {
+			reconnect();
 		});
 	
 		ws.onClose(function(event) {
+			reconnect();
 		});
 	
 		ws.onOpen(function() {
@@ -107,6 +109,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.rest = function(){
+			$scope.shownPlayDetails = -1
+			$scope.shownHireDetails = -1
 			playRecoverMusic()
 			$http({url: "/architect/rest", method: "POST"}).then(function(response){
 				$scope.allRefresh()
@@ -136,6 +140,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.build = function(x){
 			$scope.shownBuildingDetails = -1
+			$scope.shownPlayDetails = -1
+			$scope.shownHireDetails = -1
 			playBuildMusic()
 			var data = {"buildingIndex" : x}
 			$http({url: "/architect/build", method: "POST", params: data}).then(function(response){
@@ -163,8 +169,9 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.clickRevealedCard = function(x){
-			if ($scope.phase != '1') return
+			if ($scope.phase != 1) return
 			if (x>$scope.revealedCards.length) return
+			$scope.shownPlayDetails = -1
 			$scope.selectedRes = []
 			$scope.hireRes = []
 			if ($scope.shownHireDetails == x){
@@ -189,8 +196,9 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.clickHand = function(x){
-			if ($scope.phase != '1') return
+			if ($scope.phase != 1) return
 			if (x>$scope.hand.length) return
+			$scope.shownHireDetails = -1;
 			$scope.selectedRes = []
 			$scope.playTime = 0;
 			$scope.maxPlayNum = parseInt($scope.hand[x].maxPlayNum)
@@ -206,7 +214,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.clickRevealedBuilding = function(x){
-			if ($scope.phase != '1') return
+			if ($scope.phase != 1) return
 			if (x>$scope.revealedBuildings.length) return
 			if ($scope.revealedBuildings[x].canBuild != 'y') return
 			if ($scope.shownBuildingDetails == x){
@@ -216,17 +224,17 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
-		$scope.resStyle = function(x){
+		$scope.resStyle = function(xx){
 			var style ={}
-			style["background"] = $scope.players[$scope.myIndex].warehouseStyles[x]["background"]
-			style["background-size"] = $scope.players[$scope.myIndex].warehouseStyles[x]["background-size"]
-			if (x>=0 && x<$scope.selectedRes.length){
-				if ($scope.selectedRes[x] == 1){
+			style["background"] = $scope.players[$scope.myIndex].warehouseStyles[xx]["background"]
+			style["background-size"] = $scope.players[$scope.myIndex].warehouseStyles[xx]["background-size"]
+			if (xx>=0 && xx<$scope.selectedRes.length){
+				if ($scope.selectedRes[xx] == 1){
 					style.border = "2px solid rgb(160,32,240)"
 				} else {
 					style.border = "none"
 				}
-				if (x>0 && x%5 == 0){
+				if (xx>0 && xx%5 == 0){
 					style["margin-left"] = "15px"
 				} else {
 					style["margin-left"] = "0px"
@@ -236,7 +244,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.clickRes = function(x){
-			if ($scope.phase == '2'){
+			if ($scope.phase == 2){
+				
 				if ($scope.selectedRes[x] == 1){
 					$scope.selectedRes[x] = 0;
 					$scope.canDiscard = false;
@@ -253,7 +262,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 						}
 					}
 				}
-			} else if ($scope.phase == '1'){
+			} else if ($scope.phase == 1){
 				if ($scope.shownPlayDetails>=0 && $scope.shownPlayDetails<$scope.hand.length){
 					c = $scope.hand[$scope.shownPlayDetails]
 					if (c.type == '3'){
@@ -292,7 +301,6 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 							}
 						}
 					}
-					//alert(JSON.stringify($scope.hireRes))
 				}
 			}
 		}
@@ -433,13 +441,13 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			
 		}
 		
-		setBuildingStyle = function(b){
+		setBuildingStyle = function(b,f){
 			var imgUrl = "url('/image/Architect/Buildings/" + b.img + ".png')" 
 			var singleStyle = {
 				"background": imgUrl,
 				"background-size": "cover"
 			} 
-			if (b.canBuild != "y"){
+			if (b.canBuild != "y" && f){
 				singleStyle = {
 					"background": imgUrl,
 					"background-size": "cover",
@@ -470,26 +478,26 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		setBuildingStyles = function(){
 			var i
 			for (i=0;i<$scope.revealedBuildings.length;i++){
-				setBuildingStyle($scope.revealedBuildings[i])
+				setBuildingStyle($scope.revealedBuildings[i], true)
 			}
 			
 			for (i=0;i<$scope.myBuildings.length;i++){
-				setBuildingStyle($scope.myBuildings[i])
+				setBuildingStyle($scope.myBuildings[i], false)
 			}
 		}
 		
 		
 		setResources = function(){
 			var i,j
+			$scope.selectedRes = []
 			for (i=0;i<$scope.players.length;i++){
 				var warehouseArr = []
 				var warehouseStyles = []
-				$scope.selectedRes = []
 				for (j=0;j<$scope.players[i].warehouse.length;j++){
 					var x = parseInt($scope.players[i].warehouse[j])
 					for (k=0;k<x;k++){
 						warehouseArr.push(j)
-						$scope.selectedRes.push(0)
+						if (i == $scope.myIndex) $scope.selectedRes.push(0)
 						var imgUrl = "url('/image/Architect/Res/" + resNames[j] + ".png')" 
 						var singleStyle = {
 							"background": imgUrl,
@@ -543,6 +551,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.hand = response.data.myHand
 				$scope.myBuildings = response.data.myBuildings
 				$scope.phase = $scope.players[$scope.myIndex].phase
+				
+				//alert($scope.phase)
 				$scope.myScore = response.data.myScore
 				$scope.myNum1vp = response.data.myNum1vp
 				$scope.myNum3vp = response.data.myNum3vp

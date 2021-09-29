@@ -29,6 +29,11 @@
 	color: rgb(126,33,18);
 }
 
+.architecttext{
+	font-weight: bold;
+	color: rgb(160,32,240);
+}
+
 .citadelshovertext{
 	font-weight: bold;
 	color: rgb(0,0,102);

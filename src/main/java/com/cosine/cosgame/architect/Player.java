@@ -114,10 +114,14 @@ public class Player {
 	
 	public int getScore() {
 		int ans = 0;
-		for (int i=0;i<buildings.size();i++) {
+		int i;
+		for (i=0;i<buildings.size();i++) {
 			ans = ans+buildings.get(i).getScore();
 		}
 		ans = ans+num1vp+3*num3vp;
+		for (i=1;i<warehouse.size();i++) {
+			ans = ans+warehouse.get(i);
+		}
 		return ans;
 	}
 	public void removeRes(int res, int numRes) {
