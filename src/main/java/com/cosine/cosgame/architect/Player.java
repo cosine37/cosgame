@@ -77,6 +77,7 @@ public class Player {
 	}
 	
 	public void rest() {
+		if (phase != Consts.INTURN) return;
 		while (play.size()>0) {
 			Card c = play.remove(0);
 			hand.add(c);
@@ -90,6 +91,7 @@ public class Player {
 	}
 	
 	public void playCard(int x, List<Integer> targets) {
+		if (phase != Consts.INTURN) return;
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
 			c.play(targets);
@@ -99,11 +101,13 @@ public class Player {
 	}
 	
 	public void build(int x) {
+		if (phase != Consts.INTURN) return;
 		board.playerBuild(this, x);
 		endOrDiscard();
 	}
 	
 	public void hire(int x, List<Integer> targets) {
+		if (phase != Consts.INTURN) return;
 		board.playerHire(this, x, targets);
 		endOrDiscard();
 	}

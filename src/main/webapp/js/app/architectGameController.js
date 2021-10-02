@@ -7,16 +7,37 @@ var setUrl = function(d){
 var app = angular.module("architectGameApp", ["ngWebSocket"]);
 app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
+		$scope.username = ""
+		$http.post('/username').then(function(response){
+			$scope.username = response.data.value[0];
+		});
+	
 		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
+	
 		ws.onError(function(event) {
-			reconnect();
+			//alert("error!")
 		});
 	
 		ws.onClose(function(event) {
-			reconnect();
+			//alert("closed!")
 		});
 	
 		ws.onOpen(function() {
+			heartCheck.start();
 		});
 	
 		var resNames = ["wood", "stone", "iron", "gold"];
@@ -28,6 +49,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.selectedRes = []
 		$scope.canDiscard = false;
 		$scope.hireRes = [];
+		$scope.maxNumBuilding = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -43,6 +65,8 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.goto('login');
 			});
 		}
+		
+		
 		
 		playClickQuote = function(c){
 			var n = c.clickQuote.length
@@ -65,6 +89,11 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			audio.play();
 		}
 		
+		playYourTurnMusic = function(){
+			var audio = new Audio("/sound/Architect/yourturn.mp3")
+			audio.play();
+		}
+		
 		playHiredMusic = function(){
 			var audio = new Audio("/sound/Architect/hired.mp3")
 			audio.play();
@@ -77,6 +106,13 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		playBuildMusic = function(){
 			var quotes = ["build01","build02"]
+			var x = Math.floor(Math.random() * quotes.length);
+			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
+			audio.play();
+		}
+		
+		playEndingMusic = function(){
+			var quotes = ["ending01","ending02"]
 			var x = Math.floor(Math.random() * quotes.length);
 			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
 			audio.play();
@@ -222,6 +258,28 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			} else {
 				$scope.shownBuildingDetails = x
 			}
+		}
+		
+		$scope.buildingTDStyle = function(x){
+			var style = {}
+			if (x == 0 && $scope.num3vp > 0){
+				style = {"background": "gold"}
+			} else if (x == 1 && $scope.num1vp > 0){
+				style = {"background": "silver"}
+			}
+			return style
+		}
+		
+		$scope.numBuildingStyle = function(x){
+			var t = parseInt(x)
+			//alert(t)
+			var style = {}
+			if (t == $scope.numBuildingFinish){
+				style = {"font-weight": "bold", "font-size": "24px", "color": "red"}
+			} else if (t == $scope.numBuildingFinish-1){
+				style = {"font-weight": "bold", "font-size": "20px", "color": "chocolate"}
+			}
+			return style
 		}
 		
 		$scope.resStyle = function(xx){
@@ -533,6 +591,21 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			
 		}
 		
+		var playEndingMusicHandle = function(){
+			var tempMax = -1;
+			var i
+			for (i=0;i<$scope.players.length;i++){
+				var x = parseInt($scope.players[i].numBuildings)
+				if (x>tempMax) tempMax = x
+			}
+			
+			if (tempMax >= $scope.numBuildingFinish-1 && $scope.maxNumBuilding < $scope.numBuildingFinish-1){
+				playEndingMusic()
+			}
+			
+			$scope.maxNumBuilding = tempMax;
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -541,17 +614,22 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 					alert("Game ends");
 					$scope.goto('architectendgame');
 				}
-				$scope.lord = response.data.lord
+				$scope.players = response.data.players
 				$scope.myIndex = parseInt(response.data.myIndex)
+				var tempPhase = $scope.players[$scope.myIndex].phase
+				if (tempPhase == '1' && $scope.phase == '0'){
+					playYourTurnMusic()
+				}
+				
+				$scope.lord = response.data.lord
 				$scope.num1vp = response.data.num1vp
 				$scope.num3vp = response.data.num3vp
-				$scope.players = response.data.players
 				$scope.revealedCards = response.data.revealedCards
 				$scope.revealedBuildings = response.data.revealedBuildings
 				$scope.hand = response.data.myHand
 				$scope.myBuildings = response.data.myBuildings
 				$scope.phase = $scope.players[$scope.myIndex].phase
-				
+				$scope.numBuildingFinish = parseInt(response.data.numBuildingFinish)
 				//alert($scope.phase)
 				$scope.myScore = response.data.myScore
 				$scope.myNum1vp = response.data.myNum1vp
@@ -560,19 +638,26 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				setCardStyles()
 				setBuildingStyles()
 				setResources()
+				playEndingMusicHandle()
 				
 			});
 		}
 		
 		$scope.getBoard();
 		
-		ws.onMessage(function(){
-			$scope.getBoard();
+		ws.onMessage(function(e){
+			//alert(JSON.stringify(e.data));
+			var message = e.data
+			heartCheck.reset();
+			if (message == 'refresh'){
+				$scope.getBoard();
+			}
+			
 		});
 		
 		$scope.allRefresh = function(){
-			var json_data = '{"type":"notify","content":"refresh"}';
-	        ws.send(json_data);
+			var msg = "refresh";
+	        ws.send(msg);
 		}
 		
 }]);

@@ -66,7 +66,17 @@ app.controller("marshbrosGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.cardClass = function(x){
+			if ($scope.playedCard == x){
+				return "handCard playCard"
+			} else {
+				return "handCard"
+			}
+		}
+		
 		$scope.appoint = function(x){
+			$scope.playedCard = x;
+			$scope.placeholder = x;
 			if ($scope.phase == "1" || $scope.phase == "3"){
 				var data = {"index" : x}
 				$http({url: "/marshbros/appoint", method: "POST", params: data}).then(function(response){

@@ -13,6 +13,7 @@ public class BoardEntity {
 	String myNum1vp;
 	String myNum3vp;
 	String curPlayerIndex;
+	String numBuildingFinish;
 	List<String> playerNames;
 	List<PlayerEntity> players;
 	List<CardEntity> revealedCards;
@@ -115,6 +116,12 @@ public class BoardEntity {
 	}
 	public void setCurPlayerIndex(String curPlayerIndex) {
 		this.curPlayerIndex = curPlayerIndex;
+	}
+	public String getNumBuildingFinish() {
+		return numBuildingFinish;
+	}
+	public void setNumBuildingFinish(String numBuildingFinish) {
+		this.numBuildingFinish = numBuildingFinish;
 	}
 	
 }

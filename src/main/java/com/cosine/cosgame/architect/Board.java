@@ -94,12 +94,8 @@ public class Board {
 		if (x<0 || x>=revealedBuildings.size()) {
 			return;
 		} else {
-			int numBuildingFinish;
-			if (players.size() <4) {
-				numBuildingFinish = 6;
-			} else {
-				numBuildingFinish = 5;
-			}
+			int numBuildingFinish = numBuildingFinish();
+			
 			if (revealedBuildings.get(x).canBuy(p)) {
 				Building b = revealedBuildings.remove(x);
 				p.payAndBuild(b);
@@ -161,6 +157,16 @@ public class Board {
 			Player p2 = players.get(curPlayerIndex);
 			p2.setPhase(Consts.INTURN);
 		}
+	}
+	
+	public int numBuildingFinish() {
+		int numBuildingFinish = 0;
+		if (players.size() <4) {
+			numBuildingFinish = 6;
+		} else {
+			numBuildingFinish = 5;
+		}
+		return numBuildingFinish;
 	}
 	
 	public List<Card> getCardDeck() {
@@ -260,6 +266,7 @@ public class Board {
 		entity.setNum1vp(Integer.toString(num1vp));
 		entity.setNum3vp(Integer.toString(num3vp));
 		entity.setCurPlayerIndex(Integer.toString(curPlayerIndex));
+		entity.setNumBuildingFinish(Integer.toString(numBuildingFinish()));
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();

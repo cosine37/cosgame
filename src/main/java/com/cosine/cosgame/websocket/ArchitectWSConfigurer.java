@@ -123,9 +123,15 @@ public class ArchitectWSConfigurer implements WebSocketConfigurer {
 
 		@Override
 		public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-			//System.out.println("Message here:" + message.toString());
-			//broadcastAllSessions("refresh");
-			broadcastAllSessionsInBoard("refresh");
+			System.out.println("Message here:" + message.getPayload());
+			String messageStr = (String) message.getPayload();
+			/*
+			if (messageStr.contentEquals("refresh")) {
+				broadcastAllSessionsInBoard("refresh");
+			}
+			*/
+			broadcastAllSessionsInBoard(messageStr);
+			
 		}
 
 		@Override

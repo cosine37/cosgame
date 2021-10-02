@@ -114,13 +114,23 @@
 			<button ng-show="sacrificeIndex != -1" ng-click="confirmSacrifice()">确定</button>
 		</div>
 	</div>
+	<div>
+		<div ng-repeat="handStyle in handStyles track by $index" style="float: left">
+			<div ng-style="handStyle" ng-class="cardClass($index)" ng-click="appoint($index)"></div>
+			<div class="handCard" ng-show="$index == placeholder"></div>
+		</div>
+	</div>
+	
+	<!-- 
 	<table style="text-align:center">
 		<tr>
 			<td ng-repeat="handStyle in handStyles track by $index">
-				<div class="handCard" ng-style="handStyle" ng-click="appoint($index)"></div>
+				<div ng-style="handStyle" ng-class="cardClass($index)" ng-click="appoint($index)"></div>
+				<div class="handCard" ng-show="$index == placeholder"></div>
 			</td>
 		</tr>
 	</table>
+	 -->
 	<div>
 		{{gamedata}}
 	</div>

@@ -24,7 +24,7 @@
 				</tr>
 			</table>
 		</div>
-		<div>
+		<div style="width: 450px">
 			<table>
 				<tr ng-repeat-start="p in players track by $index">
 					<td><span ng-show="curPlayerIndex == $index">></span></td>
@@ -32,7 +32,7 @@
 					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
 					<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
 					<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
-					<td><img src="/image/Architect/house.png" class="player-info-icon">×{{p.numBuildings}}</td>
+					<td><img src="/image/Architect/house.png" class="player-info-icon">×<span ng-style="numBuildingStyle(p.numBuildings)">{{p.numBuildings}}</span></td>
 				</tr>
 				<tr ng-repeat-end>
 					<td colspan="6">
@@ -54,11 +54,18 @@
 		<div>
 			<table>
 				<tr>
-					<td style="text-align:center"><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{num3vp}}</td>
-					<td style="text-align:center"><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{num1vp}}</td>
+					<td style="text-align:center" ng-style="buildingTDStyle(0)"><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{num3vp}}</td>
+					<td style="text-align:center" ng-style="buildingTDStyle(1)"><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{num1vp}}</td>
+					<td style="text-align:center; background-color:rgb(183,127,211)" colspan="3">
+						材料升级：
+						<img src="/image/Architect/Res/wood.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+						<img src="/image/Architect/Res/stone.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+						<img src="/image/Architect/Res/iron.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+						<img src="/image/Architect/Res/gold.png" class="resource">
+					</td>
 				</tr>
 				<tr>
-					<td ng-repeat="b in revealedBuildings track by $index">
+					<td ng-repeat="b in revealedBuildings track by $index" ng-style="buildingTDStyle($index)">
 						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
 							<div class="building-reveal-title noselect">{{b.name}}</div>
 							<div class="building-reveal-score noselect">
@@ -77,7 +84,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td ng-repeat="b in revealedBuildings track by $index" class="play-details">
+					<td ng-repeat="b in revealedBuildings track by $index" class="play-details" ng-style="buildingTDStyle($index)">
 						<button ng-click="build($index)" ng-show="shownBuildingDetails == $index">建造</button>
 					</td>
 				</tr>
