@@ -214,12 +214,22 @@ button:disabled{
 
 .player-info-icon{
 	height: 30px;
-	weight: 30px;
+	width: 30px;
 }
 
 .player-info-icon-larger{
 	height: 45px;
-	weight: 45px;
+	width: 45px;
+}
+
+.checked{
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	bottom: 0px;
+	right: 0px;
+	background-image: url("/image/Architect/checked.png");
+	background-size: cover
 }
 
 .noselect {

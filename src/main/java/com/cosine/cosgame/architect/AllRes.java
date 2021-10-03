@@ -6,15 +6,92 @@ import java.util.Random;
 
 public class AllRes {
 	List<Card> cardDeck;
+	List<Card> bonusCards;
 	List<Building> buildingDeck;
 	
 	public AllRes() {
 		cardDeck = new ArrayList<>();
 		buildingDeck = new ArrayList<>();
+		bonusCards = new ArrayList<>();
 		genDeck();
+		genBonusCards();
 		genBuildings();
 	}
 	
+	public void genBonusCards() {
+		Card card;
+		
+		card = new Card();
+		card.setName("谭警官");
+		card.setImg("TanQiao");
+		card.setTypeWithQuote(Consts.SPECIALTRADER);
+		String[] c5 = {"tanqiao01", "tanqiao02"};
+		String[] r5 = {"tanqiao03", "tanqiao04"};
+		card.setQuotes(c5, r5);
+		card.addNeedRes(Consts.WOOD, 3);
+		card.addProvideRes(Consts.STONE, 2);
+		card.addProvideResAlt(Consts.IRON, 1);
+		bonusCards.add(card);
+		
+		card = new Card();
+		card.setName("三轮大爷");
+		card.setImg("ErXianQiao");
+		card.setTypeWithQuote(Consts.TRADER);
+		card.setSubType(Consts.WORKER);
+		String[] c4 = {"erxianqiao01", "erxianqiao02", "erxianqiao03"};
+		String[] r4 = {"erxianqiao02", "erxianqiao03", "erxianqiao04", "erxianqiao05"};
+		card.setQuotes(c4, r4);
+		card.addNeedRes(Consts.WOOD, 4);
+		card.addProvideRes(Consts.STONE, 2);
+		card.addProvideRes(Consts.IRON, 1);
+		bonusCards.add(card);
+		
+		card = new Card();
+		card.setName("觉醒木工");
+		card.setImg("AwakenWoodCutter");
+		card.setTypeWithQuote(Consts.AWAKENING);
+		card.setSubType(Consts.WORKER);
+		String[] c3 = {"awakenwoodcutter01", "awakenwoodcutter02", "awakenwoodcutter03"};
+		String[] r3 = {"awakenwoodcutter04", "awakenwoodcutter05", "awakenwoodcutter06"};
+		card.setQuotes(c3, r3);
+		card.addProvideRes(Consts.WOOD, 2);
+		card.setNumAwaken(1);
+		bonusCards.add(card);
+		
+		card = new Card();
+		card.setName("觉醒法师");
+		card.setImg("AwakenMage");
+		card.setTypeWithQuote(Consts.AWAKENING);
+		card.setSubType(Consts.MAGICIAN);
+		String[] c2 = {"awakenmage01", "awakenmage02", "awakenmage03"};
+		String[] r2 = {"awakenmage04", "awakenmage05"};
+		card.setQuotes(c2, r2);
+		card.setNumUpgrade(2);
+		card.setNumAwaken(1);
+		bonusCards.add(card);
+		
+		card = new Card();
+		card.setName("流浪法师");
+		card.setImg("WanderingMage");
+		card.setTypeWithQuote(Consts.MAGICIAN);
+		card.setSubType(Consts.WORKER);
+		String[] c1 = {"oldmage01", "oldmage02", "oldmage03"};
+		String[] r1 = {"oldmage04", "oldmage05", "oldmage06"};
+		card.setQuotes(c1, r1);
+		card.setNumUpgrade(1);
+		card.addProvideRes(Consts.IRON, 1);
+		bonusCards.add(card);
+		
+		card = new Card();
+		card.setName("流浪法师");
+		card.setImg("WanderingMage");
+		card.setTypeWithQuote(Consts.MAGICIAN);
+		card.setSubType(Consts.WORKER);
+		card.setQuotes(c1, r1);
+		card.setNumUpgrade(1);
+		card.addProvideRes(Consts.STONE, 1);
+		bonusCards.add(card);
+	}
 	
 	public void genDeck() {
 		Card card;
@@ -698,13 +775,27 @@ public class AllRes {
 		return card;
 	}
 	
-	public List<Card> getShuffledCardDeck(){
+	public List<Card> getShuffledCardDeck(List<Integer> expansions){
 		List<Card> ans = new ArrayList<>();
 		List<Card> tb = new ArrayList<>();
 		int i;
 		for (i=0;i<cardDeck.size();i++) {
 			tb.add(cardDeck.get(i));
 		}
+		boolean includeBonus = false;
+		for (i=0;i<expansions.size();i++) {
+			if (i == 0) {
+				if (expansions.get(i) == 1) {
+					includeBonus = true;
+				}
+			}
+		}
+		if (includeBonus) {
+			for (i=0;i<bonusCards.size();i++) {
+				tb.add(bonusCards.get(i));
+			}
+		}
+		
 		while (tb.size()>0) {
 			int n = tb.size();
 			Random rand = new Random();

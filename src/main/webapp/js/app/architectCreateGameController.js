@@ -17,6 +17,8 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 	
 		ws.onOpen(function() {
 		});
+		
+		$scope.settings = [1]
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -33,8 +35,19 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		$scope.includeBonus = function(){
+			if ($scope.settings[0] == 0){
+				$scope.settings[0] = 1
+			} else {
+				$scope.settings[0] = 0
+			}
+		}
+		
 		$scope.startGame = function(){
-			$http.post('/architect/startgame').then(function(response){
+			var data = {
+				"settings" : $scope.settings	
+			}
+			$http({url: "/architect/startgame", method: "POST", params:data}).then(function(response){
 				ws.send("start");
 				$scope.goto('architectgame');
 			});

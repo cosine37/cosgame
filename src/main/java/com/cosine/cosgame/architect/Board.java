@@ -16,6 +16,7 @@ public class Board {
 	List<Building> buildingDeck;
 	List<Building> revealedBuildings;
 	List<Player> players;
+	List<Integer> settings;
 	int num3vp;
 	int num1vp;
 	int roundCount;
@@ -33,6 +34,7 @@ public class Board {
 		buildingDeck = new ArrayList<>();
 		revealedBuildings = new ArrayList<>();
 		players = new ArrayList<>();
+		settings = new ArrayList<>();
 		
 		String dbname = "architect";
 		String col = "board";
@@ -71,7 +73,7 @@ public class Board {
 			if (x == players.size()) x = 0;
 		}
 		players.get(curPlayerIndex).setPhase(Consts.INTURN);
-		cardDeck = allRes.getShuffledCardDeck();
+		cardDeck = allRes.getShuffledCardDeck(settings);
 		buildingDeck = allRes.getShuffledBuildingDeck();
 		revealedCards = new ArrayList<>();
 		for (i=0;i<Consts.NUMCARDREVEAL;i++) {
@@ -251,7 +253,14 @@ public class Board {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
 	}
-	
+	public List<Integer> getSettings() {
+		return settings;
+	}
+
+	public void setSettings(List<Integer> settings) {
+		this.settings = settings;
+	}
+
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
@@ -329,6 +338,7 @@ public class Board {
 		doc.append("firstPlayerIndex", firstPlayerIndex);
 		doc.append("curPlayerIndex", curPlayerIndex);
 		doc.append("status", status);
+		doc.append("settings", settings);
 		int i;
 		List<Document> docd = new ArrayList<>();
 		for (i=0;i<cardDeck.size();i++) {
@@ -370,6 +380,7 @@ public class Board {
 		firstPlayerIndex = doc.getInteger("firstPlayerIndex", -1);
 		curPlayerIndex = doc.getInteger("curPlayerIndex", -1);
 		status = doc.getInteger("status", -1);
+		settings = (List<Integer>) doc.get("settings");
 		int i;
 		cardDeck = new ArrayList<>();
 		List<Document> docd = (List<Document>) doc.get("cardDeck");

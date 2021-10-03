@@ -182,7 +182,7 @@
 						</div>
 					</td>
 					<td ng-repeat="c in players[myIndex].play track by $index">
-						<div class="card-play noselect" ng-style="c.cardStyle">
+						<div class="card-play noselect" ng-style="c.cardStyle" ng-click="clickPlay($index)">
 							<div class="card-play-title noselect">{{c.name}}</div>
 							<div class="card-play-res-div noselect">
 								<div class="card-play-res-need-div noselect">
@@ -204,6 +204,7 @@
 									</table>
 								</div>
 							</div>
+							<div class="checked" ng-show="showPlayChecked($index)"></div>
 						</div>
 					</td>
 				</tr>
@@ -254,6 +255,11 @@
 							<button ng-click="changePlayTime(-1)" ng-disabled="playTime <= 0">-</button>
 							{{playTime}}次
 							<button ng-click="changePlayTime(1)"  ng-disabled="playTime >= maxPlayNum">+</button>
+						</span>
+						<span ng-show="shownPlayDetails == $index && c.type == '5'">
+							<button ng-click="changePlayTime(-1)" ng-disabled="playTime <= 0">-</button>
+							{{altOptions[playTime]}}
+							<button ng-click="changePlayTime(1)"  ng-disabled="playTime >= altMax[maxPlayNum]">+</button>
 						</span>
 						<button ng-click="play($index)" ng-disabled="disablePlay($index)" ng-show="shownPlayDetails == $index">打出</button>
 					</td>

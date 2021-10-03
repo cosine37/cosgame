@@ -6,9 +6,12 @@ public class CardEntity {
 	String name;
 	String img;
 	String type;
+	String subType;
 	String numUpgrade;
+	String numAwaken;
 	String maxPlayNum;
 	List<String> provideRes;
+	List<String> provideResAlt;
 	List<String> needRes;
 	List<String> clickQuote;
 	List<String> resolveQuote;
@@ -73,6 +76,24 @@ public class CardEntity {
 	}
 	public void setResOn(List<String> resOn) {
 		this.resOn = resOn;
+	}
+	public String getSubType() {
+		return subType;
+	}
+	public void setSubType(String subType) {
+		this.subType = subType;
+	}
+	public String getNumAwaken() {
+		return numAwaken;
+	}
+	public void setNumAwaken(String numAwaken) {
+		this.numAwaken = numAwaken;
+	}
+	public List<String> getProvideResAlt() {
+		return provideResAlt;
+	}
+	public void setProvideResAlt(List<String> provideResAlt) {
+		this.provideResAlt = provideResAlt;
 	}
 	
 	

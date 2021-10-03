@@ -86,7 +86,7 @@ public class ArchitectController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/architect/startgame", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> startGame(HttpServletRequest request){
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -94,6 +94,7 @@ public class ArchitectController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
+			board.setSettings(settings);
 			board.startGame();
 			board.updateBasicDB();
 			board.updatePlayers();

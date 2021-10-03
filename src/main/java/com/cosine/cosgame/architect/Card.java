@@ -9,10 +9,13 @@ import com.cosine.cosgame.architect.entity.CardEntity;
 
 public class Card {
 	int type;
+	int subType;
 	List<Integer> needRes;
 	List<Integer> provideRes;
+	List<Integer> provideResAlt;
 	List<Integer> resOn;
 	int numUpgrade;
+	int numAwaken;
 	String img;
 	String name;
 	List<String> clickQuote;
@@ -24,13 +27,17 @@ public class Card {
 	public Card() {
 		needRes = new ArrayList<>();
 		provideRes = new ArrayList<>();
+		provideResAlt = new ArrayList<>();
 		resOn = new ArrayList<>();
 		clickQuote = new ArrayList<>();
 		resolveQuote = new ArrayList<>();
 		for (int i=0;i<4;i++) {
 			needRes.add(0);
 			provideRes.add(0);
+			provideResAlt.add(0);
 		}
+		numUpgrade = 0;
+		numAwaken = 0;
 	}
 	
 	public void quoteCategory(int x) {
@@ -91,6 +98,12 @@ public class Card {
 		provideRes.set(res, x);
 	}
 	
+	public void addProvideResAlt(int res, int n) {
+		int x = provideResAlt.get(res);
+		x = x+n;
+		provideResAlt.set(res, x);
+	}
+	
 	public int maxPlayNum() {
 		int ans = 0;
 		int i;
@@ -109,7 +122,7 @@ public class Card {
 			} else {
 				ans = 0;
 			}
-		} else if (type == Consts.TRADER) {
+		} else if (type == Consts.TRADER || type == Consts.SPECIALTRADER) {
 			ans = 999;
 			for (i=0;i<needRes.size();i++) {
 				int x = needRes.get(i);
@@ -121,6 +134,24 @@ public class Card {
 				}
 			}
 			if (ans == 999) ans = 0;
+		} else if (type == Consts.AWAKENING) {
+			if (player.getPlay().size() < numAwaken) {
+				ans = 0;
+			} else {
+				if (subType == Consts.MAGICIAN) {
+					int count = 0;
+					for (i=0;i<player.getWarehouse().size();i++) {
+						if (player.getWarehouse().get(i) != Consts.GOLD) {
+							count++;
+						}
+					}
+					if (count>=numUpgrade) {
+						ans = 1;
+					} else {
+						ans = 0;
+					}
+				}
+			}
 		}
 		return ans;
 	}
@@ -145,6 +176,14 @@ public class Card {
 					player.getWarehouse().set(y, ry);
 				}
 			}
+			if (subType == Consts.WORKER) {
+				for (i=0;i<provideRes.size();i++) {
+					int x = provideRes.get(i);
+					for (j=0;j<x;j++) {
+						player.addRes(i);
+					}
+				}
+			}
 		} else if (type == Consts.TRADER) {
 			if (targets.size()<1) return;
 			int times = targets.get(0);
@@ -156,6 +195,71 @@ public class Card {
 			}
 			for (i=0;i<provideRes.size();i++) {
 				int x = provideRes.get(i)*times;
+				if (x>0) {
+					player.addRes(i,x);
+				}
+			}
+		} else if (type == Consts.AWAKENING) {
+			for (i=numAwaken-1;i>=0;i--) {
+				int x = targets.get(i);
+				Card c = player.getPlay().remove(x);
+				player.getHand().add(c);
+			}
+			if (subType == Consts.WORKER) {
+				for (i=0;i<provideRes.size();i++) {
+					int x = provideRes.get(i);
+					for (j=0;j<x;j++) {
+						player.addRes(i);
+					}
+				}
+			} else if (subType == Consts.MAGICIAN) {
+				for (i=numAwaken;i<targets.size();i++) {
+					int x = targets.get(i);
+					if (x>=Consts.WOOD && x<Consts.GOLD) {
+						int y = x+1;
+						int rx = player.getWarehouse().get(x)-1;
+						int ry = player.getWarehouse().get(y)+1;
+						player.getWarehouse().set(x, rx);
+						player.getWarehouse().set(y, ry);
+					}
+				}
+			}
+		} else if (type == Consts.SPECIALTRADER) {
+			if (targets.size()<1) return;
+			int option = targets.get(0);
+			int times=0;
+			int t1 = 0;
+			int t2 = 0;
+			if (option == 2 || option == 4 || option == 7) {
+				t1 = 1;
+			} else if (option == 5 || option == 8) {
+				t1 = 2;
+			} else if (option == 9) {
+				t1 = 3;
+			}
+			
+			if (option == 1 || option == 4 || option == 8) {
+				t2 = 1;
+			} else if (option == 3 || option == 7) {
+				t2 = 2;
+			} else if (option == 6) {
+				t2 = 3;
+			}
+			times = t1+t2;
+			for (i=0;i<needRes.size();i++) {
+				int x = needRes.get(i)*times;
+				if (x>0) {
+					player.removeRes(i, x);
+				}
+			}
+			for (i=0;i<provideRes.size();i++) {
+				int x = provideRes.get(i)*t1;
+				if (x>0) {
+					player.addRes(i,x);
+				}
+			}
+			for (i=0;i<provideResAlt.size();i++) {
+				int x = provideResAlt.get(i)*t2;
 				if (x>0) {
 					player.addRes(i,x);
 				}
@@ -232,13 +336,27 @@ public class Card {
 	public void setResolveQuote(List<String> resolveQuote) {
 		this.resolveQuote = resolveQuote;
 	}
+	public int getSubType() {
+		return subType;
+	}
+	public void setSubType(int subType) {
+		this.subType = subType;
+	}
+	public int getNumAwaken() {
+		return numAwaken;
+	}
+	public void setNumAwaken(int numAwaken) {
+		this.numAwaken = numAwaken;
+	}
 
 	public CardEntity toCardEntity() {
 		CardEntity entity = new CardEntity();
 		entity.setImg(img);
 		entity.setName(name);
 		entity.setType(Integer.toString(type));
+		entity.setSubType(Integer.toString(subType));
 		entity.setNumUpgrade(Integer.toString(numUpgrade));
+		entity.setNumAwaken(Integer.toString(numAwaken));
 		entity.setClickQuote(clickQuote);
 		entity.setResolveQuote(resolveQuote);
 		entity.setMaxPlayNum(Integer.toString(maxPlayNum()));
@@ -253,6 +371,11 @@ public class Card {
 			lpr.add(Integer.toString(provideRes.get(i)));
 		}
 		entity.setProvideRes(lpr);
+		List<String> lpra = new ArrayList<>();
+		for (i=0;i<provideResAlt.size();i++) {
+			lpra.add(Integer.toString(provideResAlt.get(i)));
+		}
+		entity.setProvideResAlt(lpra);
 		List<String> lro = new ArrayList<>();
 		for (i=0;i<resOn.size();i++) {
 			lro.add(Integer.toString(resOn.get(i)));
@@ -264,10 +387,13 @@ public class Card {
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("type", type);
+		doc.append("subType", subType);
 		doc.append("needRes", needRes);
 		doc.append("provideRes", provideRes);
+		doc.append("provideResAlt", provideResAlt);
 		doc.append("resOn", resOn);
 		doc.append("numUpgrade", numUpgrade);
+		doc.append("numAwaken", numAwaken);
 		doc.append("img", img);
 		doc.append("name", name);
 		doc.append("clickQuote", clickQuote);
@@ -277,10 +403,13 @@ public class Card {
 	
 	public void setFromDoc(Document doc) {
 		type = doc.getInteger("type", -1);
+		subType = doc.getInteger("subType", -1);
 		needRes = (List<Integer>) doc.get("needRes");
 		provideRes = (List<Integer>) doc.get("provideRes");
+		provideResAlt = (List<Integer>) doc.get("provideResAlt");
 		resOn = (List<Integer>) doc.get("resOn");
 		numUpgrade = doc.getInteger("numUpgrade", -1);
+		numAwaken = doc.getInteger("numAwaken", -1);
 		img = doc.getString("img");
 		name = doc.getString("name");
 		clickQuote = (List<String>) doc.get("clickQuote");
