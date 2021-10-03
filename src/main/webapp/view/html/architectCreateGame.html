@@ -13,20 +13,58 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/architectCreateGameController.js"></script>
+<style>
+body {
+	background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('/image/Architect/create_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="architectCreateGameApp" ng-controller="architectCreateGameCtrl">
-	<button ng-click="goto('architect')">back</button>
-	<button ng-click="addbot()">add bot</button>
-	<button ng-click="startGame()" ng-show="lord == username">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<table>
-		<tr ng-repeat="p in players">
-			<td>{{p.name}}</td>
-		</tr>
-	</table>
-	<div>
-		<input type="checkbox" ng-checked="settings[0]==1" ng-click="includeBonus()">
-		<label>额外卡牌</label>
+	
+	<div class="create-div">
+		<table>
+			<tr>
+				<td colspan="2"><h1 class="create-title">雕梁画栋</h1></td>
+			</tr>
+			<tr style="height: 270px; color: white">
+				<td style="vertical-align: top">
+					<table>
+						<tr>
+							<td><h4>玩家列表</h4></td>
+						</tr>
+						<tr ng-repeat="p in players">
+							<td>{{p.name}}</td>
+						</tr>
+					</table>
+				</td>
+				<td style="vertical-align: top">
+					<table>
+						<tr>
+							<td><h4>游戏设置</h4></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" ng-checked="settings[0]==1" ng-click="includeBonus()" ng-disabled="lord != username">
+								<label>额外卡牌</label>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
+					<button ng-click="goto('architect')">退出</button>
+					<button ng-click="dismiss()" ng-show="lord == username">解散</button>
+				</td>
+			</tr>
+			
+		</table>
 	</div>
+	
 	<!-- 
 	<div>
 		{{gamedata}}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.architect.entity.BuildingEntity;
 import com.cosine.cosgame.architect.entity.CardEntity;
 import com.cosine.cosgame.architect.entity.PlayerEntity;
 
@@ -239,6 +240,13 @@ public class Player {
 			lp.add(play.get(i).toCardEntity());
 		}
 		entity.setPlay(lp);
+		List<BuildingEntity> lb = new ArrayList<>();
+		if (board.getStatus() == Consts.ENDGAME) {
+			for (i=0;i<buildings.size();i++) {
+				lb.add(buildings.get(i).toBuildingEntity());
+			}
+		}
+		entity.setBuildings(lb);
 		return entity;
 	}
 	

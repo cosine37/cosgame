@@ -76,6 +76,13 @@ button:disabled{
 	margin: 0 auto;
 }
 
+.building-reveal-option{
+	width: 167px;
+	text-align: center;
+	margin-top: 5px;
+	background-color: rgba(255,255,0,0.3);
+}
+
 .card-play{
 	height: 120px;
 	width: 78px;
@@ -163,6 +170,22 @@ button:disabled{
 	border-bottom-right-radius: 13px;
 }
 
+.hire-div{
+	position: absolute;
+	top: 80px;
+	width: 141px;
+	background-color: rgba(255,255,255,0.3);
+	text-align:center;
+}
+
+.card-hand-play-options{
+	position: absolute;
+	top: 110px;
+	width: 141px;
+	background-color: rgba(255,255,255,0.3);
+	text-align:center;
+}
+
 .card-hand-res-need-div{
 	bottom: 0px;
 	width: 141px;
@@ -230,6 +253,119 @@ button:disabled{
 	right: 0px;
 	background-image: url("/image/Architect/checked.png");
 	background-size: cover
+}
+
+.create-div{
+	position: absolute; 
+	top: 50%;
+	left: 50%;
+	background-color: rgba(255,255,255,0.5);
+	height: 400px;
+	width: 600px;
+	margin-top: -200px;
+	margin-left: -300px;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.create-div table{
+	width:100%;
+	text-align:center;
+}
+
+.create-title{
+	color: white;
+	font-weight: bold;
+}
+
+.game-area{
+	position: absolute;
+	margin-left: 10px;
+	left: 50%;
+	width: 1800px;
+	margin-left: -900px;
+	margin-top: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: rgba(255,255,255,0.4);
+	border: 1px solid rgba(120,120,120);
+	border-radius: 20px;
+}
+
+.player-area{
+	border: 1px solid black;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 0px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.player-tab{
+	color: white;
+}
+
+.player-tab span{
+	margin: 0px;
+	padding: 0px;
+}
+
+.name-tab{
+	color: black;
+	border: 0px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	background: yellow;
+}
+
+.name-tab-offturn{
+	color: white;
+	border: 0px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	background: black;
+}
+
+.rest-button{
+	background: none;
+	color: yellow;
+	border: none;
+	padding: 0px;
+}
+
+.end-game-area{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 1080px;
+	height: 640px;
+	margin-left: -540px;
+	margin-top: -320px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: rgba(255,255,255,0.4);
+	border: 1px solid rgba(120,120,120);
+	border-radius: 20px;
+	color: white
+}
+
+.end-game-table{
+	width:100%;
+	text-align:center;
 }
 
 .noselect {

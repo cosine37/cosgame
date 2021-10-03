@@ -13,283 +13,305 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/architectGameController.js"></script>
+<style>
+body {
+	background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('/image/Architect/game_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="architectGameApp" ng-controller="architectGameCtrl">
-	
-	<div id="other-player-info" style="float: left">
-		<div>
-			<table>
-				<tr>
-					<td><button ng-click="goto('architect')">back</button></td>
-					<td><button ng-click="dismiss()" ng-show="lord == username">dismiss</button></td>
-				</tr>
-			</table>
+	<div id="in-game" class="game-area" ng-show="status == '1' || status == '2'">
+		<div id="other-player-info" style="float: left; color: white">
+			<div>
+				<table>
+					<tr>
+						<td><button ng-click="goto('architect')">退出</button></td>
+						<td><button ng-click="dismiss()" ng-show="lord == username">解散</button></td>
+					</tr>
+				</table>
+			</div>
+			<div style="width: 450px">
+				<table>
+					<tr ng-repeat-start="p in players track by $index" ng-style="playerInfoClass($index)">
+						<td>&ensp;<b>{{p.name}}</b></td>
+						<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
+						<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
+						<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
+						<td><img src="/image/Architect/house.png" class="player-info-icon">×<span ng-style="numBuildingStyle(p.numBuildings)">{{p.numBuildings}}</span></td>
+					</tr>
+					<tr ng-repeat-end ng-style="playerInfoClass($index)">
+						<td colspan="5">
+							<table>
+								<tr>
+									<td ng-repeat="a in p.warehouseStyles track by $index">
+										<div ng-style="a" class="resource-small"> </div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						
+					</tr>
+				</table>
+			</div>
+			
 		</div>
-		<div style="width: 450px">
-			<table>
-				<tr ng-repeat-start="p in players track by $index">
-					<td><span ng-show="curPlayerIndex == $index">></span></td>
-					<td>{{p.name}}</td>
-					<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
-					<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
-					<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
-					<td><img src="/image/Architect/house.png" class="player-info-icon">×<span ng-style="numBuildingStyle(p.numBuildings)">{{p.numBuildings}}</span></td>
-				</tr>
-				<tr ng-repeat-end>
-					<td colspan="6">
-						<table>
-							<tr>
-								<td ng-repeat="a in p.warehouseStyles track by $index">
-									<div ng-style="a" class="resource-small"> </div>
-								</td>
-							</tr>
-						</table>
-					</td>
-					
-				</tr>
-			</table>
-		</div>
-		
-	</div>
-	<div id="board" style="float: left">
-		<div>
-			<table>
-				<tr>
-					<td style="text-align:center" ng-style="buildingTDStyle(0)"><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{num3vp}}</td>
-					<td style="text-align:center" ng-style="buildingTDStyle(1)"><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{num1vp}}</td>
-					<td style="text-align:center; background-color:rgb(183,127,211)" colspan="3">
-						材料升级：
-						<img src="/image/Architect/Res/wood.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
-						<img src="/image/Architect/Res/stone.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
-						<img src="/image/Architect/Res/iron.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
-						<img src="/image/Architect/Res/gold.png" class="resource">
-					</td>
-				</tr>
-				<tr>
-					<td ng-repeat="b in revealedBuildings track by $index" ng-style="buildingTDStyle($index)">
-						<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
-							<div class="building-reveal-title noselect">{{b.name}}</div>
-							<div class="building-reveal-score noselect">
-								{{b.score}}
+		<div id="board" style="float: left">
+			<div>
+				<table>
+					<tr>
+						<td style="text-align:center" ng-style="buildingTDStyle(0)"><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{num3vp}}</td>
+						<td style="text-align:center" ng-style="buildingTDStyle(1)"><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{num1vp}}</td>
+						<td style="text-align:center; background-color:rgb(183,127,211)" colspan="3">
+							材料升级顺序：
+							<img src="/image/Architect/Res/wood.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+							<img src="/image/Architect/Res/stone.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+							<img src="/image/Architect/Res/iron.png" class="resource"> <span style="font-size: 18px; font-weight:bold">&rarr;</span> 
+							<img src="/image/Architect/Res/gold.png" class="resource">
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="b in revealedBuildings track by $index" ng-style="buildingTDStyle($index)">
+							<div class="building-reveal noselect" ng-style="b.buildingStyle" ng-click="clickRevealedBuilding($index)">
+								<div class="building-reveal-title noselect">{{b.name}}</div>
+								<div class="building-reveal-score noselect">
+									{{b.score}}
+								</div>
+								<div class="building-reveal-option noselect">
+									<button ng-click="build($index); $event.stopPropagation();" ng-show="shownBuildingDetails == $index">建造</button>
+								</div>
+								<div class="building-reveal-price-div noselect">
+									<table>
+										<tr>
+											<td ng-repeat="r in b.priceStyles track by $index">
+												<div class="card-hand-res" ng-style="r"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
 							</div>
-							<div class="building-reveal-price-div noselect">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<td ng-repeat="c in revealedCards track by $index" style = "height: 30px;">
+							<div class="res-on-div">
 								<table>
 									<tr>
-										<td ng-repeat="r in b.priceStyles track by $index">
-											<div class="card-hand-res" ng-style="r"></div>
+										<td ng-repeat="r in c.resOnStyles">
+											<div ng-style = "r" class="resource-small"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+						</td>
+					</tr>
+					<tr>
+						<td ng-repeat="c in revealedCards track by $index">
+							<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
+								<div class="card-hand-title noselect">{{c.name}}</div>
+								<div class="hire-div">
+									<button ng-click="hire($index); $event.stopPropagation();" ng-show="shownHireDetails == $index" ng-disabled="disableHire($index)">招募</button>
+								</div>
+								<div class="middle-resource" ng-show="showMiddleRes($index)" ng-style="middleResStyle($index)">
+								</div>
+								<div class="card-hand-res-div noselect">
+									<div class="card-hand-res-need-div noselect">
+										<table>
+											<tr>
+												<td ng-repeat="r in c.needResStyles track by $index">
+													<div class="card-hand-res" ng-style="r"></div>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<div class="card-hand-res-provide-div noselect">
+										<table>
+											<tr>
+												<td ng-repeat="r in c.provideResStyles track by $index">
+													<div class="card-hand-res" ng-style="r"></div>
+												</td>
+											</tr>
+										</table>
+									</div>
+									
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+		</div>
+		<div style="clear:both; padding-top: 20px;" class="player-tab">
+			<span ng-class="nameTabClass">&ensp;&ensp;<b>{{username}}</b> &ensp; 分数：<b>{{myScore}}</b>&ensp;&ensp;</span>
+			<span>&ensp;&ensp;</span>
+			<span ng-show="phase == '0'">现在不是你的回合。</span>
+			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；<button class="rest-button" ng-click="rest()" ng-disabled="phase != '1'"><u><b>休整</b></u></button>&ensp;。</span>
+			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
+		</div>
+		<div id="player-div" class="player-area">
+			<div style="height: 123px">
+				<div id="built">
+					<div ng-repeat="b in myBuildings track by $index" class="building-reveal noselect" ng-style="b.buildingStyle" style="float:left">
+						<div class="building-reveal-title noselect">{{b.name}}</div>
+						<div class="building-reveal-score noselect">
+							{{b.score}}
+						</div>
+						<div class="building-reveal-price-div noselect">
+							<table>
+								<tr>
+									<td ng-repeat="r in b.priceStyles track by $index">
+										<div class="card-hand-res" ng-style="r"></div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div id="played">
+					<div ng-repeat="c in players[myIndex].play track by $index" class="card-play noselect" ng-style="c.cardStyle" ng-click="clickPlay($index)" style="float:left">
+						<div class="card-play-title noselect">{{c.name}}</div>
+						<div class="card-play-res-div noselect">
+						<div class="card-play-res-need-div noselect">
+							<table>
+									<tr>
+										<td ng-repeat="r in c.needResStyles track by $index">
+											<div class="card-play-res" ng-style="r"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="card-play-res-provide-div noselect">
+								<table>
+									<tr>
+										<td ng-repeat="r in c.provideResStyles track by $index">
+											<div class="card-play-res" ng-style="r"></div>
 										</td>
 									</tr>
 								</table>
 							</div>
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<td ng-repeat="b in revealedBuildings track by $index" class="play-details" ng-style="buildingTDStyle($index)">
-						<button ng-click="build($index)" ng-show="shownBuildingDetails == $index">建造</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			<table>
-				<tr>
-					<td ng-repeat="c in revealedCards track by $index" style = "height: 30px;">
-						<div class="res-on-div">
+						<div class="checked" ng-show="showPlayChecked($index)"></div>
+					</div>
+				</div>
+			</div>
+			<div style="clear: both; height: 43px">
+				<table>
+					<tr>
+						<td ng-repeat = "a in players[myIndex].warehouseArr track by $index">
+							<div class="resource" ng-style="resStyle($index)" ng-click="clickRes($index)"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div style="height: 230px; clear:both">
+				<div ng-repeat="c in hand track by $index" class="card-hand noselect" ng-style="handCardStyle($index)" ng-click="clickHand($index)" style="float:left">
+					<div class="card-hand-title noselect">{{c.name}}</div>
+					<div class="card-hand-play-options noselect" ng-show="shownPlayDetails == $index">
+						<span ng-show="shownPlayDetails == $index && c.type == '2'">
+							<button ng-click="changePlayTime(-1); $event.stopPropagation();" ng-disabled="playTime <= 0">-</button>
+							{{playTime}}次
+							<button ng-click="changePlayTime(1); $event.stopPropagation();"  ng-disabled="playTime >= maxPlayNum">+</button>
+						</span>
+						<span ng-show="shownPlayDetails == $index && c.type == '5'">
+							<button ng-click="changePlayTime(-1); $event.stopPropagation();" ng-disabled="playTime <= 0">-</button>
+							{{altOptions[playTime]}}
+							<button ng-click="changePlayTime(1); $event.stopPropagation();"  ng-disabled="playTime >= altMax[maxPlayNum]">+</button>
+						</span>
+						<button ng-click="play($index); $event.stopPropagation();" ng-disabled="disablePlay($index)" ng-show="shownPlayDetails == $index">打出</button>
+					</div>
+					<div class="card-hand-res-div noselect">
+						<div class="card-hand-res-need-div noselect">
 							<table>
 								<tr>
-									<td ng-repeat="r in c.resOnStyles">
-										<div ng-style = "r" class="resource-small"></div>
+									<td ng-repeat="r in c.needResStyles track by $index">
+										<div class="card-hand-res" ng-style="r"></div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="card-hand-res-provide-div noselect">
+							<table>
+								<tr>
+									<td ng-repeat="r in c.provideResStyles track by $index">
+										<div class="card-hand-res" ng-style="r"></div>
 									</td>
 								</tr>
 							</table>
 						</div>
 						
-					</td>
-				</tr>
-				<tr>
-					<td ng-repeat="c in revealedCards track by $index">
-						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickRevealedCard($index)">
-							<div class="card-hand-title noselect">{{c.name}}</div>
-							<div class="middle-resource" ng-show="showMiddleRes($index)" ng-style="middleResStyle($index)">
-							</div>
-							<div class="card-hand-res-div noselect">
-								<div class="card-hand-res-need-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.needResStyles track by $index">
-												<div class="card-hand-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div>
-
-								</div>
-								<div class="card-hand-res-provide-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.provideResStyles track by $index">
-												<div class="card-hand-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td ng-repeat="c in revealedCards track by $index" class="play-details">
-						<button ng-click="hire($index)" ng-show="shownHireDetails == $index" ng-disabled="disableHire($index)">招募</button>
-					</td>
-				</tr>
-			</table>
+					</div>
+				</div>
+			</div>
 		</div>
-		<!-- 
-		<div>
-			<span ng-repeat="c in revealedCards track by $index"><button ng-click="hire($index)">{{c.name}}</button></span>
-		</div>
-		 -->
-		
 	</div>
 	
-	<div id="player-div" style="clear:both">
-		<div>
-			<span>你的分数是：{{myScore}}。</span>
-			<span ng-show="phase == '0'">现在不是你的回合。</span>
-			<span ng-show="phase == '1'">现在是你的回合，请选择一项：出牌；招募；建造；休整。<button ng-click="rest()" ng-disabled="phase != '1'">休整</button></span>
-			<span ng-show="phase == '2'">你的资源已溢出，请将你的资源弃置至10个。<button ng-click="discard()" ng-disabled="canDiscard == false">确定</button></span>
-		</div>
-		<div style="height: 123px">
-			<table>
-				<tr>
-					<td ng-repeat="b in myBuildings track by $index">
-						<div class="building-reveal noselect" ng-style="b.buildingStyle">
-							<div class="building-reveal-title noselect">{{b.name}}</div>
-							<div class="building-reveal-score noselect">
-								{{b.score}}
-							</div>
-							<div class="building-reveal-price-div noselect">
-								<table>
-									<tr>
-										<td ng-repeat="r in b.priceStyles track by $index">
-											<div class="card-hand-res" ng-style="r"></div>
-										</td>
-									</tr>
-								</table>
-							</div>
+	<div id="end-game" class="end-game-area" ng-show="status == '3'">
+		<table class="end-game-table">
+			<tr>
+				<td colspan="7"><h1>游戏结束</h1></td>
+			</tr>
+			<tr>
+				<td>排名</td>
+				<td>玩家</td>
+				<td>分数</td>
+				<td><img src="/image/Architect/crown.png" class="player-info-icon-larger"></td>
+				<td><img src="/image/Architect/hat.png" class="player-info-icon-larger"></td>
+				<td>资源</td>
+				<td>所有建筑</td>
+			</tr>
+			<tr ng-repeat-start="p in sortedPlayers track by $index">
+				<td>{{$index+1}}</td>
+				<td>{{p.name}}</td>
+				<td>{{p.score}}</td>
+				<td>{{p.num3vp}}</td>
+				<td>{{p.num1vp}}</td>
+				<td>
+					<table>
+						<tr>
+							<td ng-repeat="a in p.warehouseStyles track by $index">
+								<div ng-style="a" class="resource-small"> </div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<button ng-click="showPlayerBuildings($index)" ng-show="shownPlayerBuildings != $index">+</button>
+					<button ng-click="showPlayerBuildings($index)" ng-show="shownPlayerBuildings == $index">-</button>
+				</td>
+			</tr>
+			<tr ng-repeat-end ng-show="shownPlayerBuildings == $index">
+				<td colspan="7">
+					<div ng-repeat="b in p.buildings track by $index" class="building-reveal noselect" ng-style="b.buildingStyle" style="float:left">
+						<div class="building-reveal-title noselect">{{b.name}}</div>
+						<div class="building-reveal-score noselect">
+							{{b.score}}
 						</div>
-					</td>
-					<td ng-repeat="c in players[myIndex].play track by $index">
-						<div class="card-play noselect" ng-style="c.cardStyle" ng-click="clickPlay($index)">
-							<div class="card-play-title noselect">{{c.name}}</div>
-							<div class="card-play-res-div noselect">
-								<div class="card-play-res-need-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.needResStyles track by $index">
-												<div class="card-play-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="card-play-res-provide-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.provideResStyles track by $index">
-												<div class="card-play-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-							<div class="checked" ng-show="showPlayChecked($index)"></div>
+						<div class="building-reveal-price-div noselect">
+							<table>
+								<tr>
+									<td ng-repeat="r in b.priceStyles track by $index">
+										<div class="card-hand-res" ng-style="r"></div>
+									</td>
+								</tr>
+							</table>
 						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			<table>
-				<tr>
-					<td ng-repeat = "a in players[myIndex].warehouseArr track by $index">
-						<div class="resource" ng-style="resStyle($index)" ng-click="clickRes($index)"></div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<div>
-			<table>
-				<tr>
-					<td ng-repeat="c in hand track by $index">
-						<div class="card-hand noselect" ng-style="c.cardStyle" ng-click="clickHand($index)">
-							<div class="card-hand-title noselect">{{c.name}}</div>
-							<div class="card-hand-res-div noselect">
-								<div class="card-hand-res-need-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.needResStyles track by $index">
-												<div class="card-hand-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="card-hand-res-provide-div noselect">
-									<table>
-										<tr>
-											<td ng-repeat="r in c.provideResStyles track by $index">
-												<div class="card-hand-res" ng-style="r"></div>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td ng-repeat="c in hand track by $index" class="play-details">
-						<span ng-show="shownPlayDetails == $index && c.type == '2'">
-							<button ng-click="changePlayTime(-1)" ng-disabled="playTime <= 0">-</button>
-							{{playTime}}次
-							<button ng-click="changePlayTime(1)"  ng-disabled="playTime >= maxPlayNum">+</button>
-						</span>
-						<span ng-show="shownPlayDetails == $index && c.type == '5'">
-							<button ng-click="changePlayTime(-1)" ng-disabled="playTime <= 0">-</button>
-							{{altOptions[playTime]}}
-							<button ng-click="changePlayTime(1)"  ng-disabled="playTime >= altMax[maxPlayNum]">+</button>
-						</span>
-						<button ng-click="play($index)" ng-disabled="disablePlay($index)" ng-show="shownPlayDetails == $index">打出</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			
-		</div>
-	</div>
-	<!-- 
-	<div>
-		{{gamedata}}
-	</div>
-	
-	<div>
-		<table>
-			<tr ng-repeat="p in playerNames track by $index">
-				<td>{{p}}</td>
-				<td><span ng-show="$index == curPlayer">起始玩家</span></td>
-				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">设为起始玩家</button></td>
-				<td><button ng-show="lord == username && $index != '0'" ng-click="kick($index)">踢</button></td>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="7"><button ng-click="goto('architect')">退出</button></td>
 			</tr>
 		</table>
-		<p>每名玩家初始红包数量：{{initialRevealedMoney}}</p>
 	</div>
-	<div ng-show="username == lord">
-		<p>你可以调整每名玩家初始红包数量：</p>
-		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
-	</div>
-	 -->
+
 </body>
 </html>

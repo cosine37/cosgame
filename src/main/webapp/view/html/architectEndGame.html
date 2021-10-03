@@ -14,12 +14,11 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/architectEndGameController.js"></script>
 <body ng-app="architectEndGameApp" ng-controller="architectEndGameCtrl">
-	<button ng-click="goto('architect')">back</button>
-	<button ng-click="addbot()">add bot</button>
+	<button ng-click="goto('architect')">退出</button>
 	<table>
 		<tr>
-			<td>player</td>
-			<td>score</td>
+			<td>玩家</td>
+			<td>分数</td>
 		</tr>
 		<tr ng-repeat="p in players">
 			<td>{{p.name}}</td>

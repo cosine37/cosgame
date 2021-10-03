@@ -8,6 +8,7 @@ var app = angular.module("architectGameApp", ["ngWebSocket"]);
 app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		$scope.username = ""
+		$scope.nameTabClass = "name-tab-offturn"
 		$http.post('/username').then(function(response){
 			$scope.username = response.data.value[0];
 		});
@@ -55,6 +56,11 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.hireRes = [];
 		$scope.maxNumBuilding = -1;
 		$scope.selectedPlay = []
+		$scope.canDiscard = false;
+		$scope.playingEndingMusic = false;
+		$scope.sortedPlayers = []
+		
+		$scope.shownPlayerBuildings = -1
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -94,6 +100,11 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		playYourTurnMusic = function(){
 			var audio = new Audio("/sound/Architect/yourturn.mp3")
+			audio.play();
+		}
+		
+		playNeedDiscardMusic = function(){
+			var audio = new Audio("/sound/Architect/uhoh.mp3")
 			audio.play();
 		}
 		
@@ -641,6 +652,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			
 			var priceArr = []
 			var priceStyles = []
+			var i,j
 			for (i=0;i<b.price.length;i++){
 				var x = parseInt(b.price[i])
 				for (j=0;j<x;j++){
@@ -659,13 +671,19 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		setBuildingStyles = function(){
-			var i
+			var i,j
 			for (i=0;i<$scope.revealedBuildings.length;i++){
 				setBuildingStyle($scope.revealedBuildings[i], true)
 			}
 			
 			for (i=0;i<$scope.myBuildings.length;i++){
 				setBuildingStyle($scope.myBuildings[i], false)
+			}
+			
+			for (i=0;i<$scope.players.length;i++){
+				for (j=0;j<$scope.players[i].buildings.length;j++){
+					setBuildingStyle($scope.players[i].buildings[j], false)
+				}
 			}
 		}
 		
@@ -719,6 +737,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		var playEndingMusicHandle = function(){
 			var tempMax = -1;
 			var i
+			if ($scope.playingEndingMusic) return
 			for (i=0;i<$scope.players.length;i++){
 				var x = parseInt($scope.players[i].numBuildings)
 				if (x>tempMax) tempMax = x
@@ -726,24 +745,104 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			
 			if (tempMax >= $scope.numBuildingFinish-1 && $scope.maxNumBuilding < $scope.numBuildingFinish-1){
 				playEndingMusic()
+				$scope.playingEndingMusic = true;
 			}
 			
 			$scope.maxNumBuilding = tempMax;
 		}
 		
+		$scope.playerInfoClass = function(x){
+			var style = {}
+			if ($scope.curPlayerIndex == x){
+				style = {
+					"background": "yellow",
+					"color": "black"
+				}
+			}
+			return style
+		}
+		
+		$scope.handCardStyle = function(x){
+			var c = $scope.hand[x]
+			var style = JSON.parse(JSON.stringify(c.cardStyle))
+			if ($scope.shownPlayDetails == x){
+				style["border-color"] = "rgb(160,32,240)"
+				style["z-index"] = "1000"
+			}
+			if (x == 0) return style;
+			if ($scope.hand.length < 12){
+				return c.cardStyle;
+			} else {
+				
+				if ($scope.hand.length == 12){
+					style["margin-left"] = "-10px"
+				} else if ($scope.hand.length < 18){
+					style["margin-left"] = "-50px"
+				} else if ($scope.hand.length < 21){
+					style["margin-left"] = "-65px"
+				} else if ($scope.hand.length < 26){
+					style["margin-left"] = "-80px"
+				} else {
+					style["margin-left"] = "-100px"
+				}
+				return style
+			}
+		}
+		
+		$scope.showPlayerBuildings = function(x){
+			if ($scope.shownPlayerBuildings != x){
+				$scope.shownPlayerBuildings = x
+			} else {
+				$scope.shownPlayerBuildings = -1
+			}
+		}
+		
+		higherRank = function(x,y){
+			var p1 = $scope.players[x]
+			var p2 = $scope.players[y]
+			var s1 = parseInt(p1.score)
+			var s2 = parseInt(p2.score)
+			if (s1>s2) return true;
+			if (s1<s2) return false;
+			if (x <= $scope.curPlayerIndex) x = x+$scope.players.length
+			if (y <= $scope.curPlayerIndex) y = y+$scope.players.length
+			if (x>y) return true
+			return false;
+		}
+		
+		sortPlayers = function(){
+			var i,j;
+			$scope.sortedPlayers = []
+			for (i=0;i<$scope.players.length;i++){
+				$scope.sortedPlayers.push($scope.players[i])
+			}
+			for (i=0;i<$scope.sortedPlayers.length;i++){
+				for (j=i+1;j<$scope.sortedPlayers.length;j++){
+					if (higherRank(j,i)){
+						var p = $scope.sortedPlayers[i]
+						$scope.sortedPlayers[i] = $scope.sortedPlayers[j]
+						$scope.sortedPlayers[j] = p
+					}
+				}
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
 				$scope.gamedata = response.data
-				$scope.status = response.data.status
-				if ($scope.status == '3'){
-					alert("Game ends");
-					$scope.goto('architectendgame');
+				var tempStatus = response.data.status
+				if ($scope.status == '2' && tempStatus == '3'){
+					alert("游戏结束");
 				}
+				$scope.status = response.data.status
 				$scope.players = response.data.players
-				$scope.myIndex = parseInt(response.data.myIndex)
+				$scope.myIndex = parseInt(response.data.myIndex);
 				var tempPhase = $scope.players[$scope.myIndex].phase
 				if (tempPhase == '1' && $scope.phase == '0'){
 					playYourTurnMusic()
+				}
+				if (tempPhase == '2' && $scope.phase == '1'){
+					playNeedDiscardMusic()
 				}
 				
 				$scope.lord = response.data.lord
@@ -755,15 +854,25 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.myBuildings = response.data.myBuildings
 				$scope.phase = $scope.players[$scope.myIndex].phase
 				$scope.numBuildingFinish = parseInt(response.data.numBuildingFinish)
-				//alert($scope.phase)
 				$scope.myScore = response.data.myScore
 				$scope.myNum1vp = response.data.myNum1vp
 				$scope.myNum3vp = response.data.myNum3vp
 				$scope.curPlayerIndex = parseInt(response.data.curPlayerIndex)
+				$scope.canDiscard = false;
+				
+				$scope.nameTabClass = "name-tab-offturn"
+				if ($scope.phase == '1' || $scope.phase == '2'){
+					$scope.nameTabClass = "name-tab"
+				}
+				
 				setCardStyles()
 				setBuildingStyles()
 				setResources()
 				playEndingMusicHandle()
+				
+				if ($scope.status == '3'){
+					sortPlayers()
+				}
 				
 			});
 		}
