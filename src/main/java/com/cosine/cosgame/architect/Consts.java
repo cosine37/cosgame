@@ -29,8 +29,12 @@ public class Consts {
 	public static final int INTURN = 1;
 	public static final int DISCARD = 2;
 	
-	// setup
+	// rule based
 	public static final int NUMCARDREVEAL = 6;
 	public static final int NUMBUILDINGREVEAL = 5;
 	public static final int MAXWAREHOUSESIZE = 10;
+	
+	// settings
+	public static final int BONUSCARDINDEX = 0;
+	public static final int SHOWSCOREINDEX = 1;
 }

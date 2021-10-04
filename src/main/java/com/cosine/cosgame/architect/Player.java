@@ -34,6 +34,9 @@ public class Player {
 		for (int i=0;i<4;i++) {
 			warehouse.add(0);
 		}
+		num1vp = 0;
+		num3vp = 0;
+		phase = Consts.OFFTURN;
 	}
 	
 	public void payAndBuild(Building b) {
@@ -228,7 +231,13 @@ public class Player {
 		entity.setNum3vp(Integer.toString(num3vp));
 		entity.setNumBuildings(Integer.toString(buildings.size()));
 		entity.setHandSize(Integer.toString(hand.size()));
-		entity.setScore(Integer.toString(getScore()));
+		
+		if (board.showScore() || board.getStatus() == Consts.ENDGAME) {
+			entity.setScore(Integer.toString(getScore()));
+		} else {
+			entity.setScore("--");
+		}
+		
 		int i;
 		List<String> lw = new ArrayList<>();
 		for (i=0;i<warehouse.size();i++) {

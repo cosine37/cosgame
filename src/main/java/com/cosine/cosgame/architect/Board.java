@@ -36,6 +36,8 @@ public class Board {
 		players = new ArrayList<>();
 		settings = new ArrayList<>();
 		
+		lord = "";
+		
 		String dbname = "architect";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
@@ -90,7 +92,10 @@ public class Board {
 		num3vp = players.size()*2;
 		num1vp = players.size()*2;
 		status = Consts.INGAME;
-		
+	}
+	
+	public void restart() {
+		status = Consts.PREGAME;
 	}
 
 	public void playerBuild(Player p, int x) {
@@ -172,6 +177,21 @@ public class Board {
 		return numBuildingFinish;
 	}
 	
+	public boolean showScore() {
+		boolean ans = false;
+		if (settings.size()>Consts.SHOWSCOREINDEX) {
+			if (settings.get(Consts.SHOWSCOREINDEX) == 1) {
+				ans = true;
+			}
+		}
+		return ans;
+	}
+	public boolean isLord(String username) {
+		if (username == null) return false;
+		if (lord == null) return true;
+		if (lord.contentEquals(username)) return true;
+		return false;
+	}
 	public List<Card> getCardDeck() {
 		return cardDeck;
 	}
@@ -507,6 +527,7 @@ public class Board {
 		dbutil.update("id", id, "curPlayerIndex", curPlayerIndex);
 		dbutil.update("id", id, "firstPlayerIndex", firstPlayerIndex);
 		dbutil.update("id", id, "roundCount", roundCount);
+		dbutil.update("id", id, "settings", settings);
 		updateAllCards();
 	}
 	

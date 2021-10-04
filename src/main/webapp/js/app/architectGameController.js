@@ -77,6 +77,13 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.restart = function(){
+			if ($scope.status != '3') return;
+			$http({url: "/architect/restart", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
 		playClickQuote = function(c){
 			var n = c.clickQuote.length
 			var x = Math.floor(Math.random() * n);
@@ -827,14 +834,27 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		backToCreate = function(){
+			var ows = $websocket("ws://" + $window.location.host + "/architect/allboardsrefresh");
+			ows.onError(function(event) {
+			});
+		
+			ows.onClose(function(event) {
+			});
+		
+			ows.onOpen(function() {
+			});
+			
+			var json_data = '{"type":"notify","content":"refresh"}';
+	        ows.send(json_data);
+			$scope.goto('/architectcreategame');
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
 				$scope.gamedata = response.data
 				var tempStatus = response.data.status
-				if ($scope.status == '2' && tempStatus == '3'){
-					alert("游戏结束");
-				}
-				$scope.status = response.data.status
+				
 				$scope.players = response.data.players
 				$scope.myIndex = parseInt(response.data.myIndex);
 				var tempPhase = $scope.players[$scope.myIndex].phase
@@ -869,9 +889,15 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				setBuildingStyles()
 				setResources()
 				playEndingMusicHandle()
-				
+				if ($scope.status == '2' && tempStatus == '3'){
+					alert("游戏结束");
+				}
+				$scope.status = response.data.status
 				if ($scope.status == '3'){
 					sortPlayers()
+				}
+				if ($scope.status == '0'){
+					backToCreate()
 				}
 				
 			});

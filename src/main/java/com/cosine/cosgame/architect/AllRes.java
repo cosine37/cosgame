@@ -97,6 +97,27 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("羊巴鲁");
+		card.setImg("YangBaLu");
+		card.setTypeWithQuote(Consts.WORKER);
+		String[] c19 = {"yangbalu01", "yangbalu02"};
+		String[] r19 = {"yangbalu03"};
+		card.setQuotes(c19, r19);
+		card.addProvideRes(Consts.WOOD, 1);
+		card.addProvideRes(Consts.IRON, 1);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("黄金矿工");
+		card.setImg("GoldMiner");
+		card.setTypeWithQuote(Consts.WORKER);
+		String[] c18 = {"goldminer01", "goldminer05"};
+		String[] r18 = {"goldminer02", "goldminer04", "goldminer03"};
+		card.setQuotes(c18, r18);
+		card.addProvideRes(Consts.GOLD, 1);
+		cardDeck.add(card);
+		
+		card = new Card();
 		card.setName("雪王");
 		card.setImg("Snow");
 		card.setTypeWithQuote(Consts.TRADER);
@@ -411,14 +432,6 @@ public class AllRes {
 		cardDeck.add(card);
 		
 		card = new Card();
-		card.setName("樵夫");
-		card.setImg("Hiker");
-		card.setTypeWithQuote(Consts.WORKER);
-		card.addProvideRes(Consts.WOOD, 1);
-		card.addProvideRes(Consts.IRON, 1);
-		cardDeck.add(card);
-		
-		card = new Card();
 		card.setName("高级木工");
 		card.setImg("Lumberjack");
 		card.setTypeWithQuote(Consts.WORKER);
@@ -433,13 +446,6 @@ public class AllRes {
 		String[] r1 = {"elephant01"};
 		card.setQuotes(c1, r1);
 		card.addProvideRes(Consts.WOOD, 4);
-		cardDeck.add(card);
-		
-		card = new Card();
-		card.setName("矿工");
-		card.setImg("Miner");
-		card.setTypeWithQuote(Consts.WORKER);
-		card.addProvideRes(Consts.GOLD, 1);
 		cardDeck.add(card);
 		
 		card = new Card();
@@ -787,7 +793,7 @@ public class AllRes {
 		return card;
 	}
 	
-	public List<Card> getShuffledCardDeck(List<Integer> expansions){
+	public List<Card> getShuffledCardDeck(List<Integer> settings){
 		List<Card> ans = new ArrayList<>();
 		List<Card> tb = new ArrayList<>();
 		int i;
@@ -795,9 +801,9 @@ public class AllRes {
 			tb.add(cardDeck.get(i));
 		}
 		boolean includeBonus = false;
-		for (i=0;i<expansions.size();i++) {
-			if (i == 0) {
-				if (expansions.get(i) == 1) {
+		for (i=0;i<settings.size();i++) {
+			if (i == Consts.BONUSCARDINDEX) {
+				if (settings.get(i) == 1) {
 					includeBonus = true;
 				}
 			}

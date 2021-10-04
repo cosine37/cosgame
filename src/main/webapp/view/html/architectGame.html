@@ -37,13 +37,14 @@ body {
 				<table>
 					<tr ng-repeat-start="p in players track by $index" ng-style="playerInfoClass($index)">
 						<td>&ensp;<b>{{p.name}}</b></td>
+						<td>&ensp;分数：<b>{{p.score}}</b>&ensp;</td>
 						<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
 						<td><img src="/image/Architect/crown.png" class="player-info-icon-larger">×{{p.num3vp}}</td>
 						<td><img src="/image/Architect/hat.png" class="player-info-icon-larger">×{{p.num1vp}}</td>
 						<td><img src="/image/Architect/house.png" class="player-info-icon">×<span ng-style="numBuildingStyle(p.numBuildings)">{{p.numBuildings}}</span></td>
 					</tr>
 					<tr ng-repeat-end ng-style="playerInfoClass($index)">
-						<td colspan="5">
+						<td colspan="6">
 							<table>
 								<tr>
 									<td ng-repeat="a in p.warehouseStyles track by $index">
@@ -308,7 +309,10 @@ body {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="7"><button ng-click="goto('architect')">退出</button></td>
+				<td colspan="7">
+					<button ng-click="restart()" ng-show="lord == username">再来一局</button>
+					<button ng-click="goto('architect')">退出</button>
+				</td>
 			</tr>
 		</table>
 	</div>

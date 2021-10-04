@@ -18,7 +18,7 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		ws.onOpen(function() {
 		});
 		
-		$scope.settings = [1]
+		$scope.settings = [1,1]
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -40,6 +40,14 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.settings[0] = 1
 			} else {
 				$scope.settings[0] = 0
+			}
+		}
+		
+		$scope.showScore = function(){
+			if ($scope.settings[1] == 0){
+				$scope.settings[1] = 1
+			} else {
+				$scope.settings[1] = 0
 			}
 		}
 		
