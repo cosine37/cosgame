@@ -97,6 +97,64 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("冬泳怪鸽");
+		card.setImg("AoLiGei");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c24 = {"aoligei01", "aoligei02"};
+		String[] r24 = {"aoligei03", "aoligei04", "aoligei05"};
+		card.setQuotes(c24, r24);
+		card.addNeedRes(Consts.STONE, 3);
+		card.addProvideRes(Consts.IRON, 2);
+		card.addProvideRes(Consts.WOOD, 2);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("风小逸");
+		card.setImg("TaoTao");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c23 = {"taotao01"};
+		String[] r23 = {"taotao02", "taotao03"};
+		card.setQuotes(c23, r23);
+		card.addNeedRes(Consts.WOOD, 4);
+		card.addProvideRes(Consts.IRON, 2);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("悦悦大叔");
+		card.setImg("GieGie");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c22 = {"giegie01"};
+		String[] r22 = {"giegie02"};
+		card.setQuotes(c22, r22);
+		card.addNeedRes(Consts.IRON, 2);
+		card.addProvideRes(Consts.WOOD, 2);
+		card.addProvideRes(Consts.STONE, 3);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("林参谋");
+		card.setImg("Lin");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c21 = {"lin01"};
+		String[] r21 = {"lin02"};
+		card.setQuotes(c21, r21);
+		card.addNeedRes(Consts.GOLD, 1);
+		card.addProvideRes(Consts.WOOD, 2);
+		card.addProvideRes(Consts.STONE, 2);
+		cardDeck.add(card);
+		
+		card = new Card();
+		card.setName("鲁班七号");
+		card.setImg("LuBan");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c20 = {"luban01", "luban02", "luban06"};
+		String[] r20 = {"luban03", "luban04", "luban05"};
+		card.setQuotes(c20, r20);
+		card.addNeedRes(Consts.WOOD, 3);
+		card.addProvideRes(Consts.GOLD, 1);
+		cardDeck.add(card);
+		
+		card = new Card();
 		card.setName("羊巴鲁");
 		card.setImg("YangBaLu");
 		card.setTypeWithQuote(Consts.WORKER);
@@ -308,15 +366,6 @@ public class AllRes {
 		card.setName("村民");
 		card.setImg("Villager");
 		card.setTypeWithQuote(Consts.TRADERALT03);
-		card.addNeedRes(Consts.STONE, 3);
-		card.addProvideRes(Consts.IRON, 2);
-		card.addProvideRes(Consts.WOOD, 2);
-		cardDeck.add(card);
-		
-		card = new Card();
-		card.setName("村民");
-		card.setImg("Villager");
-		card.setTypeWithQuote(Consts.TRADERALT03);
 		card.addNeedRes(Consts.STONE, 2);
 		card.addProvideRes(Consts.IRON, 1);
 		card.addProvideRes(Consts.WOOD, 3);
@@ -350,15 +399,6 @@ public class AllRes {
 		
 		card = new Card();
 		card.setName("商人");
-		card.setImg("Merchant02");
-		card.setTypeWithQuote(Consts.TRADERALT01);
-		card.addNeedRes(Consts.IRON, 2);
-		card.addProvideRes(Consts.WOOD, 2);
-		card.addProvideRes(Consts.STONE, 3);
-		cardDeck.add(card);
-		
-		card = new Card();
-		card.setName("商人");
 		card.setImg("Merchant01");
 		card.setTypeWithQuote(Consts.TRADER);
 		card.addNeedRes(Consts.WOOD, 2);
@@ -375,22 +415,6 @@ public class AllRes {
 		cardDeck.add(card);
 		
 		card = new Card();
-		card.setName("商人");
-		card.setImg("Merchant01");
-		card.setTypeWithQuote(Consts.TRADER);
-		card.addNeedRes(Consts.WOOD, 4);
-		card.addProvideRes(Consts.IRON, 2);
-		cardDeck.add(card);
-		
-		card = new Card();
-		card.setName("商人");
-		card.setImg("Merchant01");
-		card.setTypeWithQuote(Consts.TRADER);
-		card.addNeedRes(Consts.WOOD, 3);
-		card.addProvideRes(Consts.GOLD, 1);
-		cardDeck.add(card);
-		
-		card = new Card();
 		card.setName("金币商人");
 		card.setImg("Merchant03");
 		card.setTypeWithQuote(Consts.TRADERALT02);
@@ -404,15 +428,6 @@ public class AllRes {
 		card.setTypeWithQuote(Consts.TRADERALT02);
 		card.addNeedRes(Consts.GOLD, 1);
 		card.addProvideRes(Consts.STONE, 3);
-		cardDeck.add(card);
-		
-		card = new Card();
-		card.setName("金币商人");
-		card.setImg("Merchant03");
-		card.setTypeWithQuote(Consts.TRADERALT02);
-		card.addNeedRes(Consts.GOLD, 1);
-		card.addProvideRes(Consts.WOOD, 2);
-		card.addProvideRes(Consts.STONE, 2);
 		cardDeck.add(card);
 		
 		card = new Card();

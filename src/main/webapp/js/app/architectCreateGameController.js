@@ -35,6 +35,19 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		$scope.dismiss = function(){
+			$http.post("/architect/dismiss").then(function(response){
+				ws.send("dismiss");
+			});
+		}
+		
+		$scope.kick = function(x){
+			var data = {"index" : x}
+			$http({url: "/architect/kick", method: "POST", params: data}).then(function(response){
+				ws.send("kick");
+			});
+		}
+		
 		$scope.includeBonus = function(){
 			if ($scope.settings[0] == 0){
 				$scope.settings[0] = 1
@@ -63,11 +76,28 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
+				if (response.data.id == "NE"){
+					alert("该游戏已解散");
+					$scope.goto('architect');
+					return;
+				}
 				$scope.gamedata = response.data
 				$scope.id = response.data.id
 				$scope.status = response.data.status
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
+				var i
+				var kicked = true;
+				for (i=0;i<$scope.players.length;i++){
+					if ($scope.players[i].name == $scope.username){
+						kicked = false;
+					}
+				}
+				if (kicked){
+					alert("你已被" + $scope.lord + "踢出");
+					$scope.goto('architect');
+					return;
+				}
 				
 				if ($scope.status == '1'){
 					$scope.goto('architectgame');

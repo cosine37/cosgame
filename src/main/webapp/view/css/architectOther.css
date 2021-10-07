@@ -240,6 +240,10 @@ button:disabled{
 	width: 30px;
 }
 
+.start-icon{
+	height: 30px;
+}
+
 .player-info-icon-larger{
 	height: 45px;
 	width: 45px;
@@ -285,9 +289,8 @@ button:disabled{
 .game-area{
 	position: absolute;
 	margin-left: 10px;
-	left: 50%;
 	width: 1800px;
-	margin-left: -900px;
+	margin-left: 15px;
 	margin-top: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;

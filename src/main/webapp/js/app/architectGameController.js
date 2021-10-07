@@ -59,6 +59,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.canDiscard = false;
 		$scope.playingEndingMusic = false;
 		$scope.sortedPlayers = []
+		$scope.playerOrder = []
 		
 		$scope.shownPlayerBuildings = -1
 	
@@ -80,6 +81,12 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.restart = function(){
 			if ($scope.status != '3') return;
 			$http({url: "/architect/restart", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.dismiss = function(){
+			$http.post("/architect/dismiss").then(function(response){
 				$scope.allRefresh()
 			});
 		}
@@ -133,9 +140,9 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		playEndingMusic = function(){
-			var quotes = ["ending01","ending02"]
-			var x = Math.floor(Math.random() * quotes.length);
-			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
+			if ($scope.endingIndex == '-1') return
+			var	endingMusic = "ending0" + $scope.endingIndex
+			var audio = new Audio("/sound/Architect/" + endingMusic + ".mp3")
 			audio.play();
 		}
 		
@@ -852,10 +859,17 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.getBoard = function(){
 			$http.get('/architect/getboard').then(function(response){
+				if (response.data.id == "NE"){
+					alert("该游戏已解散")
+					$scope.goto('architect');
+					return;
+				}
 				$scope.gamedata = response.data
 				var tempStatus = response.data.status
 				
 				$scope.players = response.data.players
+				
+				
 				$scope.myIndex = parseInt(response.data.myIndex);
 				var tempPhase = $scope.players[$scope.myIndex].phase
 				if (tempPhase == '1' && $scope.phase == '0'){
@@ -877,8 +891,10 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.myScore = response.data.myScore
 				$scope.myNum1vp = response.data.myNum1vp
 				$scope.myNum3vp = response.data.myNum3vp
+				$scope.firstPlayerIndex = parseInt(response.data.firstPlayerIndex)
 				$scope.curPlayerIndex = parseInt(response.data.curPlayerIndex)
 				$scope.canDiscard = false;
+				$scope.endingIndex = response.data.endingIndex
 				
 				$scope.nameTabClass = "name-tab-offturn"
 				if ($scope.phase == '1' || $scope.phase == '2'){

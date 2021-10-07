@@ -17,12 +17,14 @@ public class Board {
 	List<Building> revealedBuildings;
 	List<Player> players;
 	List<Integer> settings;
+	List<Integer> playerOrder;
 	int num3vp;
 	int num1vp;
 	int roundCount;
 	int firstPlayerIndex;
 	int curPlayerIndex;
 	int status;
+	int endingIndex;
 	String lord;
 	String id;
 	
@@ -74,6 +76,17 @@ public class Board {
 			x++;
 			if (x == players.size()) x = 0;
 		}
+		/*
+		List<Integer> ti = new ArrayList<>();
+		playerOrder = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			ti.add(i);
+		}
+		while (ti.size()>0) {
+			int y = rand.nextInt(ti.size());
+			int tx = ti.remove(y);
+			playerOrder.add(tx);
+		}*/
 		players.get(curPlayerIndex).setPhase(Consts.INTURN);
 		cardDeck = allRes.getShuffledCardDeck(settings);
 		//cardDeck = allRes.getCardDeck();
@@ -92,6 +105,7 @@ public class Board {
 		num3vp = players.size()*2;
 		num1vp = players.size()*2;
 		status = Consts.INGAME;
+		endingIndex = rand.nextInt(5)+1;
 	}
 	
 	public void restart() {
@@ -277,9 +291,20 @@ public class Board {
 	public List<Integer> getSettings() {
 		return settings;
 	}
-
 	public void setSettings(List<Integer> settings) {
 		this.settings = settings;
+	}
+	public List<Integer> getPlayerOrder() {
+		return playerOrder;
+	}
+	public void setPlayerOrder(List<Integer> playerOrder) {
+		this.playerOrder = playerOrder;
+	}
+	public int getEndingIndex() {
+		return endingIndex;
+	}
+	public void setEndingIndex(int endingIndex) {
+		this.endingIndex = endingIndex;
 	}
 
 	public void addPlayer(String name) {
@@ -295,8 +320,10 @@ public class Board {
 		entity.setStatus(Integer.toString(status));
 		entity.setNum1vp(Integer.toString(num1vp));
 		entity.setNum3vp(Integer.toString(num3vp));
+		entity.setFirstPlayerIndex(Integer.toString(firstPlayerIndex));
 		entity.setCurPlayerIndex(Integer.toString(curPlayerIndex));
 		entity.setNumBuildingFinish(Integer.toString(numBuildingFinish()));
+		entity.setEndingIndex(Integer.toString(endingIndex));
 		int i,j;
 		List<String> playerNames = new ArrayList<>();
 		List<PlayerEntity> lp = new ArrayList<>();
@@ -360,6 +387,8 @@ public class Board {
 		doc.append("curPlayerIndex", curPlayerIndex);
 		doc.append("status", status);
 		doc.append("settings", settings);
+		doc.append("endingIndex", endingIndex);
+		doc.append("playerOrder", playerOrder);
 		int i;
 		List<Document> docd = new ArrayList<>();
 		for (i=0;i<cardDeck.size();i++) {
@@ -402,6 +431,8 @@ public class Board {
 		curPlayerIndex = doc.getInteger("curPlayerIndex", -1);
 		status = doc.getInteger("status", -1);
 		settings = (List<Integer>) doc.get("settings");
+		endingIndex = doc.getInteger("endingIndex", -1);
+		playerOrder = (List<Integer>) doc.get("playerOrder");
 		int i;
 		cardDeck = new ArrayList<>();
 		List<Document> docd = (List<Document>) doc.get("cardDeck");
@@ -528,6 +559,8 @@ public class Board {
 		dbutil.update("id", id, "firstPlayerIndex", firstPlayerIndex);
 		dbutil.update("id", id, "roundCount", roundCount);
 		dbutil.update("id", id, "settings", settings);
+		dbutil.update("id", id, "endingIndex", endingIndex);
+		dbutil.update("id", id, "playerOrder", playerOrder);
 		updateAllCards();
 	}
 	
@@ -543,6 +576,33 @@ public class Board {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
+	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
 	}
 	
 	public boolean exists(String id) {

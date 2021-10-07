@@ -36,6 +36,7 @@ body {
 			<div style="width: 450px">
 				<table>
 					<tr ng-repeat-start="p in players track by $index" ng-style="playerInfoClass($index)">
+						<td><img src="/image/Architect/start.png" class="start-icon" ng-show="$index == firstPlayerIndex"></td>
 						<td>&ensp;<b>{{p.name}}</b></td>
 						<td>&ensp;分数：<b>{{p.score}}</b>&ensp;</td>
 						<td><img src="/image/Architect/card.png" class="player-info-icon">×{{p.handSize}}</td>
@@ -44,7 +45,7 @@ body {
 						<td><img src="/image/Architect/house.png" class="player-info-icon">×<span ng-style="numBuildingStyle(p.numBuildings)">{{p.numBuildings}}</span></td>
 					</tr>
 					<tr ng-repeat-end ng-style="playerInfoClass($index)">
-						<td colspan="6">
+						<td colspan="7">
 							<table>
 								<tr>
 									<td ng-repeat="a in p.warehouseStyles track by $index">

@@ -12,14 +12,17 @@ public class BoardEntity {
 	String myScore;
 	String myNum1vp;
 	String myNum3vp;
+	String firstPlayerIndex;
 	String curPlayerIndex;
 	String numBuildingFinish;
+	String endingIndex;
 	List<String> playerNames;
 	List<PlayerEntity> players;
 	List<CardEntity> revealedCards;
 	List<BuildingEntity> revealedBuildings;
 	List<BuildingEntity> myBuildings;
 	List<CardEntity> myHand;
+	List<String> playerOrders;
 
 	public String getId() {
 		return id;
@@ -122,6 +125,24 @@ public class BoardEntity {
 	}
 	public void setNumBuildingFinish(String numBuildingFinish) {
 		this.numBuildingFinish = numBuildingFinish;
+	}
+	public String getEndingIndex() {
+		return endingIndex;
+	}
+	public void setEndingIndex(String endingIndex) {
+		this.endingIndex = endingIndex;
+	}
+	public String getFirstPlayerIndex() {
+		return firstPlayerIndex;
+	}
+	public void setFirstPlayerIndex(String firstPlayerIndex) {
+		this.firstPlayerIndex = firstPlayerIndex;
+	}
+	public List<String> getPlayerOrders() {
+		return playerOrders;
+	}
+	public void setPlayerOrders(List<String> playerOrders) {
+		this.playerOrders = playerOrders;
 	}
 	
 }

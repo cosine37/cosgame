@@ -33,10 +33,14 @@ body {
 				<td style="vertical-align: top">
 					<table>
 						<tr>
-							<td><h4>玩家列表</h4></td>
+							<td colspan="2"><h4>玩家列表</h4></td>
 						</tr>
-						<tr ng-repeat="p in players">
+						<tr ng-repeat="p in players track by $index">
 							<td>{{p.name}}</td>
+							<td>
+								<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
+								<span ng-show="$index == 0" style="color:yellow">(房主)</span>
+							</td>
 						</tr>
 					</table>
 				</td>
