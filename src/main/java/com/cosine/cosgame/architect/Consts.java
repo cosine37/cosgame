@@ -37,4 +37,5 @@ public class Consts {
 	// settings
 	public static final int BONUSCARDINDEX = 0;
 	public static final int SHOWSCOREINDEX = 1;
+	public static final int KX1CARDINDEX = 2;
 }
