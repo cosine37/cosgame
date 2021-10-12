@@ -25,11 +25,61 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("李根");
+		card.setImg("LiGen");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c3 = {"ligen01"};
+		String[] r3 = {"ligen02"};
+		card.setQuotes(c3, r3);
+		card.addNeedRes(Consts.STONE, 2);
+		card.addProvideRes(Consts.STONE, 3);
+		card.addProvideRes(Consts.WOOD, 1);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("何胜");
+		card.setImg("HeSheng");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c2 = {"hesheng01"};
+		String[] r2 = {"hesheng02"};
+		card.setQuotes(c2, r2);
+		card.addNeedRes(Consts.GOLD, 3);
+		card.addProvideRes(Consts.GOLD, 4);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("见习骑士");
+		card.setImg("Page");
+		card.setTypeWithQuote(Consts.MAGICIAN);
+		card.setSubType(Consts.WORKER);
+		String[] c1 = {"oldmage01", "oldmage02", "oldmage03"};
+		String[] r1 = {"oldmage04", "oldmage05", "oldmage06"};
+		card.setQuotes(c1, r1);
+		card.setNumUpgrade(2);
+		card.addProvideRes(Consts.WOOD, 2);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("铁甲法师");
+		card.setImg("IronMage");
+		card.setTypeWithQuote(Consts.MAGICIAN);
+		card.setNumUpgrade(2);
+		card.addResOn(Consts.IRON);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("铁甲木工");
+		card.setImg("IronWoodCutter");
+		card.setTypeWithQuote(Consts.WORKER);
+		card.addProvideRes(Consts.WOOD, 2);
+		card.addResOn(Consts.IRON);
+		kx1Cards.add(card);
+		
+		card = new Card();
 		card.setName("老年木工");
 		card.setImg("OldWoodcutter");
 		card.setTypeWithQuote(Consts.WORKER);
 		card.addProvideRes(Consts.WOOD, 1);
-		card.addResOn(Consts.IRON);
 		card.addResOn(Consts.GOLD);
 		kx1Cards.add(card);
 	}
@@ -880,7 +930,7 @@ public class AllRes {
 				tb.add(bonusCards.get(i));
 			}
 		}
-		//includeKX1 = true;
+		includeKX1 = true;
 		if (includeKX1) {
 			for (i=0;i<kx1Cards.size();i++) {
 				ans.add(kx1Cards.get(i));
