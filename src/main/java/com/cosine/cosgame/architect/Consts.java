@@ -7,6 +7,7 @@ public class Consts {
 	public static final int MAGICIAN = 3;
 	public static final int AWAKENING = 4;
 	public static final int SPECIALTRADER = 5;
+	public static final int SPECIALMAGICIAN = 6;
 	
 	public static final int TRADERALT01 = 12;
 	public static final int TRADERALT02 = 22;

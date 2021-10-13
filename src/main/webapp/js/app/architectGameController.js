@@ -151,7 +151,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			playResolveQuote(c)
 			$scope.shownPlayDetails = -1
 			var targets = []
-			if (c.type == '3'){
+			if (c.type == '3' || c.type == '6'){
 				for (var i=0;i<$scope.selectedRes.length;i++){
 					if ($scope.selectedRes[i] == 1){
 						var y = $scope.players[$scope.myIndex].warehouseArr[i]
@@ -409,7 +409,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			} else if ($scope.phase == 1){
 				if ($scope.shownPlayDetails>=0 && $scope.shownPlayDetails<$scope.hand.length){
 					c = $scope.hand[$scope.shownPlayDetails]
-					if (c.type == '3' || c.subType == '3'){
+					if (c.type == '3' || c.subType == '3' || c.type == '6'){
 						if ($scope.players[$scope.myIndex].warehouseArr[x]!=3){
 							if ($scope.selectedRes[x] == 1){
 								$scope.selectedRes[x] = 0;
@@ -419,7 +419,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 								for (i=0;i<$scope.selectedRes.length;i++){
 									t=t+$scope.selectedRes[i]
 								}
-								if (t<n){
+								if (t<n || c.type == '6'){
 									$scope.selectedRes[x] = 1;
 								}
 							}
@@ -499,6 +499,34 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 					}
 				}
 				
+			} else if (c.type == '6'){
+				var n = parseInt(c.numUpgrade)
+				var m = 0
+				var i
+				for (i=0;i<$scope.selectedRes.length;i++){
+					m = m+$scope.selectedRes[i]
+				}
+				if (m%n==0 && m!=0){
+					var times = m/n;
+					var tempRes = [0,0,0,0];
+					for (i=0;i<$scope.selectedRes.length;i++){
+						if ($scope.selectedRes[i] == 0){
+							var res = $scope.players[$scope.myIndex].warehouseArr[i];
+							tempRes[res] = tempRes[res] + 1;
+						}
+					}
+					//alert(JSON.stringify(c.needRes))
+					//alert(JSON.stringify(tempRes))
+					//alert(times)
+					for (i=0;i<4;i++){
+						var tx = parseInt(c.needRes[i])*times;
+						//alert(tx)
+						if (tempRes[i]<tx) return true;
+					}
+					return false;
+				} else {
+					return true
+				}
 			}
 			return true;
 		}

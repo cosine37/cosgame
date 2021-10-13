@@ -25,6 +25,77 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("程书林");
+		card.setImg("MianJin");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c9 = {"mianjin01"};
+		String[] r9 = {"mianjin02"};
+		card.setQuotes(c9, r9);
+		card.addNeedRes(Consts.WOOD, 2);
+		card.addProvideRes(Consts.WOOD, 5);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("韩红");
+		card.setImg("HanHong");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c8 = {"hanhong01"};
+		String[] r8 = {"hanhong02"};
+		card.setQuotes(c8, r8);
+		card.addNeedRes(Consts.STONE, 2);
+		card.addNeedRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.GOLD, 2);
+		card.addProvideRes(Consts.WOOD, 1);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("吴强");
+		card.setImg("GaoYin");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c7 = {"gaoyin01"};
+		String[] r7 = {"gaoyin02"};
+		card.setQuotes(c7, r7);
+		card.addNeedRes(Consts.GOLD, 1);
+		card.addNeedRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.STONE, 5);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("唐林康");
+		card.setImg("BoLan");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c6 = {"bolan01"};
+		String[] r6 = {"bolan02"};
+		card.setQuotes(c6, r6);
+		card.addNeedRes(Consts.IRON, 3);
+		card.addProvideRes(Consts.IRON, 4);
+		card.addProvideRes(Consts.WOOD, 1);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("森林法师");
+		card.setImg("ForestMage");
+		card.setTypeWithQuote(Consts.SPECIALMAGICIAN);
+		String[] c5 = {"awakenmage01", "awakenmage02", "awakenmage03"};
+		String[] r5 = {"awakenmage04", "awakenmage05"};
+		card.setQuotes(c5, r5);
+		card.addNeedRes(Consts.WOOD, 1);
+		card.setNumUpgrade(2);
+		card.addResOn(Consts.WOOD);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("丁凯乐");
+		card.setImg("LeLe");
+		card.setTypeWithQuote(Consts.SPECIALMAGICIAN);
+		String[] c4 = {"lele01"};
+		String[] r4 = {"lele02"};
+		card.setQuotes(c4, r4);
+		card.addNeedRes(Consts.STONE, 1);
+		card.setNumUpgrade(4);
+		kx1Cards.add(card);
+		
+		card = new Card();
 		card.setName("李根");
 		card.setImg("LiGen");
 		card.setTypeWithQuote(Consts.TRADER);
@@ -930,7 +1001,7 @@ public class AllRes {
 				tb.add(bonusCards.get(i));
 			}
 		}
-		includeKX1 = true;
+		//includeKX1 = true;
 		if (includeKX1) {
 			for (i=0;i<kx1Cards.size();i++) {
 				ans.add(kx1Cards.get(i));

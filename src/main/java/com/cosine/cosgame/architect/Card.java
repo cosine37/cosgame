@@ -264,6 +264,25 @@ public class Card {
 					player.addRes(i,x);
 				}
 			}
+		} else if (type == Consts.SPECIALMAGICIAN) {
+			int times = targets.size() / numUpgrade;
+			System.out.println("times:" + times);
+			for (i=0;i<needRes.size();i++) {
+				int z = needRes.get(i)*times;
+				if (z>0) {
+					player.removeRes(i,z);
+				}
+			}
+			for (i=0;i<targets.size();i++) {
+				int x = targets.get(i);
+				if (x>=Consts.WOOD && x<Consts.GOLD) {
+					int y = x+1;
+					int rx = player.getWarehouse().get(x)-1;
+					int ry = player.getWarehouse().get(y)+1;
+					player.getWarehouse().set(x, rx);
+					player.getWarehouse().set(y, ry);
+				}
+			}
 		}
 	}
 	
