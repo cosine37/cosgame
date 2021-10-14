@@ -25,6 +25,33 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("邢道荣");
+		card.setImg("XingDaoRong");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c11 = {"xingdaorong01", "xingdaorong02", "xingdaorong03"};
+		String[] r11 = {"xingdaorong04", "xingdaorong05", "xingdaorong06"};
+		card.setQuotes(c11, r11);
+		card.addNeedRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.STONE, 1);
+		card.addProvideRes(Consts.WOOD, 2);
+		card.addResOn(Consts.IRON);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("潘凤");
+		card.setImg("PanFeng");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c10 = {"panfeng01", "panfeng02"};
+		String[] r10 = {"panfeng03", "panfeng04"};
+		card.setQuotes(c10, r10);
+		card.addNeedRes(Consts.IRON, 2);
+		card.addProvideRes(Consts.GOLD, 1);
+		card.addProvideRes(Consts.STONE, 1);
+		card.addProvideRes(Consts.WOOD, 1);
+		card.addResOn(Consts.IRON);
+		kx1Cards.add(card);
+		
+		card = new Card();
 		card.setName("程书林");
 		card.setImg("MianJin");
 		card.setTypeWithQuote(Consts.TRADER);
