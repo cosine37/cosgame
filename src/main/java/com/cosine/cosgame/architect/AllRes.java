@@ -25,6 +25,68 @@ public class AllRes {
 		Card card;
 		
 		card = new Card();
+		card.setName("觉醒矿工");
+		card.setImg("AwakenMiner");
+		card.setTypeWithQuote(Consts.AWAKENING);
+		card.setSubType(Consts.WORKER);
+		String[] c20 = {"awakenwoodcutter01", "awakenwoodcutter02", "awakenwoodcutter03"};
+		String[] r20 = {"awakenwoodcutter04", "awakenwoodcutter05", "awakenwoodcutter06"};
+		card.setQuotes(c20, r20);
+		card.addProvideRes(Consts.STONE, 2);
+		card.setNumAwaken(1);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("觉醒法师");
+		card.setImg("AwakenMage");
+		card.setTypeWithQuote(Consts.AWAKENING);
+		card.setSubType(Consts.MAGICIAN);
+		String[] c19 = {"awakenmage01", "awakenmage02", "awakenmage03"};
+		String[] r19 = {"awakenmage04", "awakenmage05"};
+		card.setQuotes(c19, r19);
+		card.setNumUpgrade(1);
+		card.setNumAwaken(2);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("章承恩");
+		card.setImg("ZhangChengEn");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c18 = {"zhangchengen01", "zhangchengen02"};
+		String[] r18 = {"zhangchengen03", "zhangchengen04"};
+		card.setQuotes(c18, r18);
+		card.addNeedRes(Consts.STONE, 4);
+		card.addProvideRes(Consts.GOLD, 3);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("吕布");
+		card.setImg("LvBu");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c17 = {"lvbu01", "lvbu02", "lvbu03"};
+		String[] r17 = {"lvbu04", "lvbu05", "lvbu06", "lvbu07"};
+		card.setQuotes(c17, r17);
+		card.addNeedRes(Consts.WOOD, 5);
+		card.addProvideRes(Consts.GOLD, 1);
+		card.addProvideRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.STONE, 1);
+		kx1Cards.add(card);
+		
+		card = new Card();
+		card.setName("杨超越");
+		card.setImg("YangChaoYue");
+		card.setTypeWithQuote(Consts.TRADER);
+		String[] c16 = {"yangchaoyue01"};
+		String[] r16 = {"yangchaoyue02", "yangchaoyue03"};
+		card.setQuotes(c16, r16);
+		card.addNeedRes(Consts.WOOD, 3);
+		card.addProvideRes(Consts.IRON, 1);
+		card.addProvideRes(Consts.WOOD, 1);
+		card.addResOn(Consts.WOOD);
+		card.addResOn(Consts.WOOD);
+		kx1Cards.add(card);
+		
+		card = new Card();
 		card.setName("矮人矿工");
 		card.setImg("Saboteur");
 		card.setTypeWithQuote(Consts.WORKER);
@@ -1096,16 +1158,26 @@ public class AllRes {
 		//includeKX1 = true;
 		if (includeKX1) {
 			for (i=0;i<kx1Cards.size();i++) {
-				ans.add(kx1Cards.get(i));
+				tb.add(kx1Cards.get(i));
 			}
 		}
-		
+		List<Card> tempResOnRevealCards = new ArrayList<>();
 		while (tb.size()>0) {
 			int n = tb.size();
 			Random rand = new Random();
 			int x = rand.nextInt(n);
 			Card b = tb.remove(x);
-			ans.add(b);
+			if (b.getResOn().size() > 0 && ans.size() < 3) {
+				tempResOnRevealCards.add(b);
+			} else {
+				ans.add(b);
+				if (ans.size() == 3) {
+					while (tempResOnRevealCards.size()>0) {
+						Card tc = tempResOnRevealCards.remove(0);
+						tb.add(tc);
+					}
+				}
+			}
 		}
 		return ans;
 	}
@@ -1126,8 +1198,6 @@ public class AllRes {
 		}
 		return ans;
 	}
-	
-	
 
 	public List<Card> getCardDeck() {
 		return cardDeck;

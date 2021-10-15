@@ -51,13 +51,19 @@ body {
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" ng-checked="settings[0]==1" ng-click="includeBonus()" ng-disabled="lord != username">
+								<input type="checkbox" ng-checked="settings[0]==1" ng-click="settingSwitch(1)" ng-disabled="lord != username">
 								<label>额外卡牌</label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" ng-checked="settings[1]==1" ng-click="showScore()" ng-disabled="lord != username">
+								<input type="checkbox" ng-checked="settings[2]==1" ng-click="settingSwitch(2)" ng-disabled="lord != username">
+								<label>孔性一扩</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" ng-checked="settings[1]==1" ng-click="settingSwitch(1)" ng-disabled="lord != username">
 								<label>显示分数</label>
 							</td>
 						</tr>
