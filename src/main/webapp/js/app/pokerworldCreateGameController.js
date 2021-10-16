@@ -7,7 +7,21 @@ var setUrl = function(d){
 var app = angular.module("pokerworldCreateGameApp", ["ngWebSocket"]);
 app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
+		var ws = $websocket("ws://" + $window.location.host + "/pokerworld/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
 		ws.onError(function(event) {
 		});
 	
@@ -15,6 +29,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		});
 	
 		ws.onOpen(function() {
+			heartCheck.start();
 		});
 		
 		$scope.settings = [0]
@@ -78,9 +93,19 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		
 		$scope.getBoard();
 		
-		ws.onMessage(function(){
-			$scope.getBoard();
+		ws.onMessage(function(e){
+			var message = e.data
+			heartCheck.reset();
+			if (message == 'refresh' || message == 'start'){
+				$scope.getBoard();
+			}
+			
 		});
+		
+		$scope.allRefresh = function(){
+			var msg = "refresh";
+	        ws.send(msg);
+		}
 		
 		
 }]);

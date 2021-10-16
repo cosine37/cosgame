@@ -51,6 +51,24 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			
 		}
 		
+		$scope.goToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/pokerworld/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/pokerworld/join").then(function(response){
+					//var json_data = '{"type":"notify","content":"refresh"}';
+			        boardws.send("refresh");
+					$scope.goto('pokerworldcreategame')
+				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/pokerworld/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('pokerworldgame');
+			});
+		}
+		
 		$scope.getAllBoards = function(){
 			$http.get('/pokerworld/allboards').then(function(response){
 				var n = response.data.value.length / 4;
