@@ -5,6 +5,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosgame.sfsj.play.Hand;
+import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 
 public class Player {
 	String name;
@@ -48,6 +49,11 @@ public class Player {
 	}
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
+	}
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		return entity;
 	}
 	
 }

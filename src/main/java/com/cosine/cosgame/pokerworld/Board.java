@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.pokerworld.entity.BoardEntity;
+import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -25,12 +27,21 @@ public class Board {
 		
 		lord = "";
 		
-		String dbname = "architect";
+		String dbname = "pokerworld";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
+	public void startGame() {
+		status = Consts.INGAME;
+	}
 	
+	public boolean isLord(String username) {
+		if (username == null) return false;
+		if (lord == null) return true;
+		if (lord.contentEquals(username)) return true;
+		return false;
+	}
 	public String getId() {
 		return id;
 	}
@@ -73,6 +84,11 @@ public class Board {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		players.add(p);
+	}
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
@@ -90,6 +106,7 @@ public class Board {
 	}
 	public void updateBasicDB() {
 		//TODO: Add more items for general updates
+		dbutil.update("id", id, "status", status);
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -204,6 +221,19 @@ public class Board {
 			p.setFromDoc(dop);
 			players.add(p);
 		}
+	}
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setStatus(Integer.toString(status));
+		int i;
+		List<PlayerEntity> playerEntities = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerEntities.add(players.get(i).toPlayerEntity());
+		}
+		entity.setPlayers(playerEntities);
+		return entity;
 	}
 	
 }
