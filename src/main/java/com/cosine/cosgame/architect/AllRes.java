@@ -32,7 +32,7 @@ public class AllRes {
 		String[] c20 = {"awakenwoodcutter01", "awakenwoodcutter02", "awakenwoodcutter03"};
 		String[] r20 = {"awakenwoodcutter04", "awakenwoodcutter05", "awakenwoodcutter06"};
 		card.setQuotes(c20, r20);
-		card.addProvideRes(Consts.STONE, 2);
+		card.addProvideRes(Consts.STONE, 1);
 		card.setNumAwaken(1);
 		kx1Cards.add(card);
 		
@@ -247,6 +247,7 @@ public class AllRes {
 		card.setQuotes(c4, r4);
 		card.addNeedRes(Consts.STONE, 1);
 		card.setNumUpgrade(4);
+		card.addResOn(Consts.STONE);
 		kx1Cards.add(card);
 		
 		card = new Card();
