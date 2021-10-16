@@ -2,10 +2,13 @@ package com.cosine.cosgame.pokerworld;
 
 import java.util.List;
 
+import org.bson.Document;
+
 import com.cosgame.sfsj.play.Hand;
 
 public class Player {
 	String name;
+	int phase;
 	Hand hand;
 	Hand playArea;
 	Board board;
@@ -38,6 +41,13 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		return doc;
+	}
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+	}
 	
 }
