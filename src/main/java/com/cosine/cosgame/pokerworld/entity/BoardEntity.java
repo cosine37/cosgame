@@ -6,6 +6,7 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String status;
+	String myCards;
 	
 	List<PlayerEntity> players;
 
@@ -32,6 +33,12 @@ public class BoardEntity {
 	}
 	public void setPlayers(List<PlayerEntity> players) {
 		this.players = players;
+	}
+	public String getMyCards() {
+		return myCards;
+	}
+	public void setMyCards(String myCards) {
+		this.myCards = myCards;
 	}
 	
 }

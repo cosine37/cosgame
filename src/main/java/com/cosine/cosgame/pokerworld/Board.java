@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosgame.sfsj.play.Game;
 import com.cosine.cosgame.pokerworld.entity.BoardEntity;
 import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -19,6 +20,8 @@ public class Board {
 	List<Integer> settings;
 	List<Player> players;
 	
+	GameUtil gameUtil;
+	
 	MongoDBUtil dbutil;
 	
 	public Board() {
@@ -26,6 +29,8 @@ public class Board {
 		players = new ArrayList<>();
 		
 		lord = "";
+		gameUtil = new GameUtil();
+		gameUtil.setBoard(this);
 		
 		String dbname = "pokerworld";
 		String col = "board";
@@ -34,6 +39,11 @@ public class Board {
 	}
 	public void startGame() {
 		status = Consts.INGAME;
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setInnerId(i);
+		}
+		gameUtil.newGame();
 	}
 	
 	public boolean isLord(String username) {
@@ -83,6 +93,15 @@ public class Board {
 	}
 	public void setPlayers(List<Player> players) {
 		this.players = players;
+	}
+	public GameUtil getGameUtil() {
+		return gameUtil;
+	}
+	public void setGameUtil(GameUtil gameUtil) {
+		this.gameUtil = gameUtil;
+	}
+	public Game getGame() {
+		return gameUtil.getGame();
 	}
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -192,6 +211,7 @@ public class Board {
 		doc.append("firstPlayer", firstPlayer);
 		doc.append("curPlayer", curPlayer);
 		doc.append("settings", settings);
+		doc.append("cards", gameUtil.toRawCards());
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -210,6 +230,8 @@ public class Board {
 		firstPlayer = doc.getInteger("firstPlayer", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
 		settings = (List<Integer>) doc.get("settings");
+		List<String> rawCards = (List<String>) doc.get("cards");
+		gameUtil.buildCards(rawCards);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -218,6 +240,7 @@ public class Board {
 			n = "player-" + n;
 			Document dop = (Document) doc.get(n);
 			Player p = new Player();
+			p.setBoard(this);
 			p.setFromDoc(dop);
 			players.add(p);
 		}
@@ -231,6 +254,10 @@ public class Board {
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			playerEntities.add(players.get(i).toPlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				Player p = players.get(i);
+				entity.setMyCards(p.getMyRawCards());
+			}
 		}
 		entity.setPlayers(playerEntities);
 		return entity;

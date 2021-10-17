@@ -4,37 +4,34 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosgame.sfsj.common.Card;
 import com.cosgame.sfsj.play.Hand;
 import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 
 public class Player {
 	String name;
 	int phase;
-	Hand hand;
-	Hand playArea;
+	int innerId;
 	Board board;
 	
 	public Player() {
 		
 	}
-
+	
+	public List<Card> getMyCards(){
+		List<Card> cards = board.getGame().getPlayerCards().get(innerId);
+		return cards;
+	}
+	
+	public String getMyRawCards() {
+		return board.getGameUtil().playerRawCards(innerId);
+	}
+	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Hand getHand() {
-		return hand;
-	}
-	public void setHand(Hand hand) {
-		this.hand = hand;
-	}
-	public Hand getPlayArea() {
-		return playArea;
-	}
-	public void setPlayArea(Hand playArea) {
-		this.playArea = playArea;
 	}
 	public Board getBoard() {
 		return board;
@@ -42,13 +39,27 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	public int getInnerId() {
+		return innerId;
+	}
+	public void setInnerId(int innerId) {
+		this.innerId = innerId;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
+		doc.append("innerId", innerId);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
+		innerId = doc.getInteger("innerId", -1);
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();

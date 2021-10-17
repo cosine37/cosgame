@@ -28,3 +28,101 @@ button:disabled{
 	
 	background: white;
 }
+
+.card-hand{
+	position: relative;
+	float: left;
+	height: 176px;
+	width: 126px;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+.rank-hand{
+	position: absolute;
+	left: 6px;
+	top: 0px;
+	font-weight: bold;
+	font-size: 24px;
+	width: 20px;
+	text-align: center;
+	margin: 0px;
+	
+}
+
+.rank-10-hand{
+	position: absolute;
+	left: 2px;
+	top: 0px;
+	font-weight: bold;
+	font-size: 24px;
+	width: 20px;
+	text-align: center;
+	margin: 0px;
+	
+}
+
+.joker-hand{
+	position: absolute;
+	left: 3px;
+	top: 0px;
+	font-weight: bold;
+	font-size: 18px;
+	width: 20px;
+	text-align: center;
+	margin: 0px;
+	margin-top: 10px;
+}
+
+.joker-hand-letter{
+	margin-top: -7px;
+}
+
+.joker-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/lcds.png');
+	height: 150px;
+	width: 100px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.suit-hand{
+	position: absolute;
+	left: 6px;
+	font-size: 30px;
+	width: 20px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.suit-big-hand{
+	position: absolute;
+	bottom: -20px;
+	right: 10px;
+	font-size: 100px;
+}
+
+.red{
+	color: red;
+}
+
+.black{
+	color: black;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
