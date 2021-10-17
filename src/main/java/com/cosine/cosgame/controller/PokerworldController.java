@@ -102,7 +102,26 @@ public class PokerworldController {
 			if (board.isLord(username)) {
 				board.setSettings(settings);
 				board.startGame();
-				System.out.println(board.getStatus());
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/pokerworld/playcards", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> playCards(HttpServletRequest request, @RequestParam List<Integer> playedIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.play(playedIndex);
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

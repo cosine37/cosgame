@@ -33,7 +33,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		});
 		
 		$scope.cardStyles = [];
-		$scope.cardDisplay = [];
+		$scope.hand = [];
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -47,6 +47,34 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
+			});
+		}
+		
+		$scope.clickCard = function(x){
+			if (x>=0 && x<$scope.hand.length){
+				$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+			}
+		}
+		
+		$scope.resetChosen = function(){
+			var i
+			for (i=0;i<$scope.hand.length;i++){
+				$scope.hand[i].chosen = 0
+			}
+		}
+		
+		$scope.play = function(){
+			var playedIndex = []
+			for (i=0;i<$scope.hand.length;i++){
+				if ($scope.hand[i].chosen == 1){
+					playedIndex.push(i);
+				}
+			}
+			var data = {"playedIndex": playedIndex}
+			$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+				//$scope.getBoard()
+				//$scope.hideAreaCard();
 			});
 		}
 		
@@ -85,18 +113,29 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			card["rank"] = r
 			card["suit"] = s
 			card["color"] = c
+			card["chosen"] = 0;
 			return card
 		}
 		
 		setCardStyles = function(){
-			$scope.cardDisplay = [];
+			$scope.hand = [];
 			var i = 0;
 			while (i<$scope.myCards.length){
 				var rawCard = $scope.myCards.substring(i,i+2);
-				
-				$scope.cardDisplay.push(translateRawCard(rawCard));
+				$scope.hand.push(translateRawCard(rawCard));
 				i=i+2;
 			}
+			for (i=0;i<$scope.players.length;i++){
+				var j = 0;
+				var played = [];
+				while (j<$scope.players[i].playedCards.length){
+					var rawCard = $scope.players[i].playedCards.substring(j,j+2);
+					played.push(translateRawCard(rawCard));
+					j = j+2;
+				}
+				$scope.players[i]["played"] = played
+			}
+			
 		}
 		
 		$scope.getBoard = function(){

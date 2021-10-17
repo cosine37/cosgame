@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cosgame.sfsj.common.Card;
+import com.cosgame.sfsj.common.Card.CardRank;
+import com.cosgame.sfsj.common.Card.CardSuit;
 import com.cosgame.sfsj.play.Game;
 import com.cosgame.sfsj.util.CardUtils;
 
@@ -17,6 +19,12 @@ public class GameUtil {
 	
 	public void newGame() {
 		game = new Game(null, 0);
+		List<List<Card>> playerCards = game.getPlayerCards();
+		int i;
+		for (i=0;i<playerCards.size();i++) {
+			playerCards.get(i).sort(CardUtils.cardComparator(CardRank.TWO, CardSuit.SPADE));
+		}
+		game.setPlayerCards(playerCards);
 	}
 	
 	public void buildCards(List<String> rawCards) {

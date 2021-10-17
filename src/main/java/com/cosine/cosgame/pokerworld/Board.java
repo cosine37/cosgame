@@ -45,7 +45,6 @@ public class Board {
 		}
 		gameUtil.newGame();
 	}
-	
 	public boolean isLord(String username) {
 		if (username == null) return false;
 		if (lord == null) return true;
@@ -126,6 +125,7 @@ public class Board {
 	public void updateBasicDB() {
 		//TODO: Add more items for general updates
 		dbutil.update("id", id, "status", status);
+		dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -256,7 +256,7 @@ public class Board {
 			playerEntities.add(players.get(i).toPlayerEntity());
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
-				entity.setMyCards(p.getMyRawCards());
+				entity.setMyCards(p.getMyRawCardsAfterPlay());
 			}
 		}
 		entity.setPlayers(playerEntities);

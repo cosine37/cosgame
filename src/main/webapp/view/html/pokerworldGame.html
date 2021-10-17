@@ -15,8 +15,42 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
-	<div>
-		<div class="card-hand noselect" ng-repeat="c in cardDisplay" ng-class="c.color">
+	<div style="height: 135px" >
+		<div ng-repeat="p in players">
+			<div class="card-play card-size noselect" ng-repeat="c in p.played track by $index" ng-class="c.color" ng-click="clickCard($index)">
+				<div class="rank-hand" ng-show="c.rank != 'joker' && c.rank != '10'">
+					{{c.rank}}
+				</div>
+				<div class="rank-10-hand" ng-show="c.rank == '10'">
+					{{c.rank}}
+				</div>
+				<div class="joker-hand" ng-show="c.rank == 'joker'">
+					<div class="joker-hand-letter">L</div>
+					<div class="joker-hand-letter">C</div>
+					<div class="joker-hand-letter">D</div>
+					<div class="joker-hand-letter">S</div>
+				</div>
+				<div class="suit-hand" ng-show="c.rank != 'joker'">
+					{{c.suit}}
+				</div>
+				<div class="suit-big-hand" ng-show="c.rank != 'joker'">
+					{{c.suit}}
+				</div>
+				<div class="joker-big-hand" ng-show="c.rank == 'joker'">
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div style="clear:both">
+		<button ng-click="resetChosen()">重选</button>
+		<button ng-click="play()">打出</button>
+	</div>
+	<div style="margin-left: 60px; margin-top: 80px">
+		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-class="c.color" ng-click="clickCard($index)">
+			<div class="card-hand-select card-size" ng-show="c.chosen == 1">
+			</div>
 			<div class="rank-hand" ng-show="c.rank != 'joker' && c.rank != '10'">
 				{{c.rank}}
 			</div>
