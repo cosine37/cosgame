@@ -9,5 +9,8 @@ public class Consts {
 	
 	// game statuses
 	public static final int PREGAME = 0;
-	public static final int INGAME = 1;
+	public static final int DISTRIBUTECARDS = 1;
+	public static final int DRAWTREASURE = 2;
+	public static final int PLAYCARDS = 3;
+	public static final int SCORING = 4;
 }

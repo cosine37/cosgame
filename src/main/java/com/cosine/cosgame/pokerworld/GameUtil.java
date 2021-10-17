@@ -19,6 +19,9 @@ public class GameUtil {
 	
 	public void newGame() {
 		game = new Game(null, 0);
+	}
+	
+	public void sortCards() {
 		List<List<Card>> playerCards = game.getPlayerCards();
 		int i;
 		for (i=0;i<playerCards.size();i++) {

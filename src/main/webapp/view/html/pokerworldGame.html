@@ -44,8 +44,9 @@
 	</div>
 	
 	<div style="clear:both">
-		<button ng-click="resetChosen()">重选</button>
-		<button ng-click="play()">打出</button>
+		<button ng-click="resetChosen()" ng-show="status == '3'">重选</button>
+		<button ng-click="play()" ng-show="status == '3'">打出</button>
+		<button ng-click="endDistribute()" ng-show="status == '1' && showEndDistribute">结束摸牌</button>
 	</div>
 	<div style="margin-left: 60px; margin-top: 80px">
 		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-class="c.color" ng-click="clickCard($index)">
@@ -74,7 +75,9 @@
 		</div>
 	</div>
 	<div style="clear:both"></div>
+	<!-- 
 	{{gamedata}}
+	 -->
 	<!-- 
 	<button ng-click="addbot()">add bot</button>
 	<button ng-click="startGame()">start game</button>

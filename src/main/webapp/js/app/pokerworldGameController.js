@@ -4,6 +4,10 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
+var sleep = function(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 var app = angular.module("pokerworldGameApp", ["ngWebSocket"]);
 app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
@@ -51,8 +55,10 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.clickCard = function(x){
-			if (x>=0 && x<$scope.hand.length){
-				$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+			if ($scope.status == '3'){
+				if (x>=0 && x<$scope.hand.length){
+					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+				}
 			}
 		}
 		
@@ -73,8 +79,6 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			var data = {"playedIndex": playedIndex}
 			$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
 				$scope.allRefresh()
-				//$scope.getBoard()
-				//$scope.hideAreaCard();
 			});
 		}
 		
@@ -135,7 +139,32 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				$scope.players[i]["played"] = played
 			}
-			
+		}
+		
+		$scope.endDistribute = function(){
+			$http({url: "/pokerworld/enddistribute", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		distributeOneCard = function(){
+			var rawCard = $scope.myCards.substring($scope.curDistributeCardIndex,$scope.curDistributeCardIndex+2);
+			$scope.hand.push(translateRawCard(rawCard));
+			$timeout(function(){
+				$scope.curDistributeCardIndex = $scope.curDistributeCardIndex+2
+				if ($scope.curDistributeCardIndex < $scope.myCards.length){
+					distributeOneCard();
+				} else {
+					$scope.showEndDistribute = true;
+				}
+			}, 500);
+		}
+		
+		distributeCards = function(){
+			$scope.hand = [];
+			$scope.curDistributeCardIndex = 0;
+			$scope.showEndDistribute = false;
+			distributeOneCard();
 		}
 		
 		$scope.getBoard = function(){
@@ -163,8 +192,12 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('pokerworld');
 					return;
 				}
+				if ($scope.status == "1"){
+					distributeCards();
+				} else {
+					setCardStyles()
+				}
 				
-				setCardStyles()
 
 			});
 		}

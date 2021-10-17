@@ -37,14 +37,27 @@ public class Board {
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
+	
 	public void startGame() {
-		status = Consts.INGAME;
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setInnerId(i);
 		}
 		gameUtil.newGame();
+		status = Consts.DISTRIBUTECARDS;
 	}
+	
+	public void drawTreasure() {
+		gameUtil.sortCards();
+		status = Consts.DRAWTREASURE;
+	}
+	
+	public void discardTreasure() {
+		// TODO: remove sort cards;
+		gameUtil.sortCards();
+		status = Consts.PLAYCARDS;
+	}
+	
 	public boolean isLord(String username) {
 		if (username == null) return false;
 		if (lord == null) return true;
