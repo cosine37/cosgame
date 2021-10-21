@@ -40,7 +40,6 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 	
 	<div style="clear:both">
@@ -49,7 +48,7 @@
 		<button ng-click="endDistribute()" ng-show="status == '1' && showEndDistribute">结束摸牌</button>
 	</div>
 	<div style="margin-left: 60px; margin-top: 80px">
-		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-class="c.color" ng-click="clickCard($index)">
+		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-show="(status != '1' || showCard[$index])" ng-class="c.color" ng-click="clickCard($index)">
 			<div class="card-hand-select card-size" ng-show="c.chosen == 1">
 			</div>
 			<div class="rank-hand" ng-show="c.rank != 'joker' && c.rank != '10'">
@@ -75,9 +74,26 @@
 		</div>
 	</div>
 	<div style="clear:both"></div>
-	<!-- 
+	<div ng-show="status == '1'">
+		<h4>抢主</h4>
+		<div ng-show="dominantRankSuits['s'] > numDominant" class="claim-button black noselect" ng-click="claimDominant('s', dominantRankSuits['s'])">&spades;</div>
+		<div ng-show="dominantRankSuits['s'] <= numDominant" class="claim-button claim-button-disabled noselect">&spades;</div>
+		<div ng-show="dominantRankSuits['h'] > numDominant" class="claim-button red noselect" ng-click="claimDominant('h', dominantRankSuits['h'])">&hearts;</div>
+		<div ng-show="dominantRankSuits['h'] <= numDominant" class="claim-button claim-button-disabled noselect">&hearts;</div>
+		<div ng-show="dominantRankSuits['c'] > numDominant" class="claim-button black noselect" ng-click="claimDominant('c', dominantRankSuits['c'])">&clubs;</div>
+		<div ng-show="dominantRankSuits['c'] <= numDominant" class="claim-button claim-button-disabled noselect">&clubs;</div>
+		<div ng-show="dominantRankSuits['d'] > numDominant" class="claim-button red noselect" ng-click="claimDominant('d', dominantRankSuits['d'])">&diams;</div>
+		<div ng-show="dominantRankSuits['d'] <= numDominant" class="claim-button claim-button-disabled noselect">&diams;</div>
+	</div>
+	<div ng-show="status == '1'">
+		<h4 ng-show="curClaimedPlayer == -1 || curClaimedPlayer >= 4">没有人抢主</h4>
+		<h4 ng-show="curClaimedPlayer >= 0 && curClaimedPlayer < 4">{{players[curClaimedPlayer].name}}抢了 <span ng-class="dominantSuitDisplayClass" style="font-size:30px">{{dominantSuitDisplay}}</span>
+		（共<b>{{numDominant}}</b>张）</h4>
+	</div>
+	{{dominantRankSuits}}
+	
 	{{gamedata}}
-	 -->
+	
 	<!-- 
 	<button ng-click="addbot()">add bot</button>
 	<button ng-click="startGame()">start game</button>

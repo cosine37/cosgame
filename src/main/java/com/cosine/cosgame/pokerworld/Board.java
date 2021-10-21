@@ -14,11 +14,17 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Board {
 	String id;
 	String lord;
+	String dominantRank;
+	String dominantSuit;
+	
+	int numDominant;
+	int curClaimedPlayer;
 	int status;
 	int firstPlayer;
 	int curPlayer;
 	List<Integer> settings;
 	List<Player> players;
+	List<List<Integer>> sequences;
 	
 	GameUtil gameUtil;
 	
@@ -27,6 +33,7 @@ public class Board {
 	public Board() {
 		settings = new ArrayList<>();
 		players = new ArrayList<>();
+		sequences = new ArrayList<>();
 		
 		lord = "";
 		gameUtil = new GameUtil();
@@ -44,17 +51,20 @@ public class Board {
 			players.get(i).setInnerId(i);
 		}
 		gameUtil.newGame();
+		gameUtil.sortCards();
+		sequences = gameUtil.getSequences();
+		dominantRank = "2";
+		dominantSuit = "x";
+		numDominant = 0;
+		curClaimedPlayer = -1;
 		status = Consts.DISTRIBUTECARDS;
 	}
 	
 	public void drawTreasure() {
-		gameUtil.sortCards();
 		status = Consts.DRAWTREASURE;
 	}
 	
 	public void discardTreasure() {
-		// TODO: remove sort cards;
-		gameUtil.sortCards();
 		status = Consts.PLAYCARDS;
 	}
 	
@@ -63,6 +73,14 @@ public class Board {
 		if (lord == null) return true;
 		if (lord.contentEquals(username)) return true;
 		return false;
+	}
+	
+	public void claimDominant(String dominantSuit, int numDominant, int curClaimedPlayer) {
+		if (this.numDominant < numDominant) {
+			this.dominantSuit = dominantSuit;
+			this.numDominant = numDominant;
+			this.curClaimedPlayer = curClaimedPlayer;
+		}
 	}
 	public String getId() {
 		return id;
@@ -115,6 +133,30 @@ public class Board {
 	public Game getGame() {
 		return gameUtil.getGame();
 	}
+	public String getDominantRank() {
+		return dominantRank;
+	}
+	public void setDominantRank(String dominantRank) {
+		this.dominantRank = dominantRank;
+	}
+	public String getDominantSuit() {
+		return dominantSuit;
+	}
+	public void setDominantSuit(String dominantSuit) {
+		this.dominantSuit = dominantSuit;
+	}
+	public List<List<Integer>> getSequences() {
+		return sequences;
+	}
+	public void setSequences(List<List<Integer>> sequences) {
+		this.sequences = sequences;
+	}
+	public int getNumDominant() {
+		return numDominant;
+	}
+	public void setNumDominant(int numDominant) {
+		this.numDominant = numDominant;
+	}
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
@@ -138,7 +180,17 @@ public class Board {
 	public void updateBasicDB() {
 		//TODO: Add more items for general updates
 		dbutil.update("id", id, "status", status);
+		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
+	}
+	public void updateCardsDB() {
 		dbutil.update("id", id, "cards", gameUtil.toRawCards());
+	}
+	public void updateDominantDB() {
+		//TODO: Add more items for general updates
+		dbutil.update("id", id, "dominantRank", dominantRank);
+		dbutil.update("id", id, "dominantSuit", dominantSuit);
+		dbutil.update("id", id, "numDominant", numDominant);
+		dbutil.update("id", id, "curClaimedPlayer", curClaimedPlayer);
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -225,6 +277,11 @@ public class Board {
 		doc.append("curPlayer", curPlayer);
 		doc.append("settings", settings);
 		doc.append("cards", gameUtil.toRawCards());
+		doc.append("sequences", sequences);
+		doc.append("dominantRank", dominantRank);
+		doc.append("dominantSuit", dominantSuit);
+		doc.append("numDominant", numDominant);
+		doc.append("curClaimedPlayer", curClaimedPlayer);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -243,6 +300,11 @@ public class Board {
 		firstPlayer = doc.getInteger("firstPlayer", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
 		settings = (List<Integer>) doc.get("settings");
+		sequences = (List<List<Integer>>) doc.get("sequences");
+		dominantRank = doc.getString("dominantRank");
+		dominantSuit = doc.getString("dominantSuit");
+		numDominant = doc.getInteger("numDominant", 0);
+		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
 		List<String> rawCards = (List<String>) doc.get("cards");
 		gameUtil.buildCards(rawCards);
 		int i;
@@ -263,6 +325,10 @@ public class Board {
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(Integer.toString(status));
+		entity.setDominantRank(dominantRank);
+		entity.setDominantSuit(dominantSuit);
+		entity.setNumDominant(numDominant);
+		entity.setCurClaimedPlayer(curClaimedPlayer);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -270,6 +336,12 @@ public class Board {
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
 				entity.setMyCards(p.getMyRawCardsAfterPlay());
+				if (sequences == null || sequences.size()<=i) {
+					entity.setSequence(new ArrayList<>());
+				} else {
+					entity.setSequence(sequences.get(i));
+				}
+				
 			}
 		}
 		entity.setPlayers(playerEntities);

@@ -103,8 +103,31 @@ public class PokerworldController {
 				board.setSettings(settings);
 				board.startGame();
 				board.updateBasicDB();
+				board.updateCardsDB();
 				board.updatePlayers();
+				board.updateDB("sequences", board.getSequences());
+				board.updateDominantDB();
 			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> claimDominant(HttpServletRequest request, @RequestParam String dominantSuit, @RequestParam int numDominant){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				board.claimDominant(dominantSuit, numDominant, p.getInnerId());
+				board.updateDominantDB();
+			}
+			
 		} else {
 			board.setId("NE");
 		}

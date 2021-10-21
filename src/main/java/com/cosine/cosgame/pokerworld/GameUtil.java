@@ -12,6 +12,7 @@ import com.cosgame.sfsj.util.CardUtils;
 public class GameUtil {
 	Board board;
 	Game game;
+	List<List<Integer>> sequences;
 	
 	public GameUtil() {
 		game = new Game(null, 0);
@@ -23,9 +24,37 @@ public class GameUtil {
 	
 	public void sortCards() {
 		List<List<Card>> playerCards = game.getPlayerCards();
-		int i;
+		List<String> rawCardsBefore = toRawCards();
+		int i,j,k;
 		for (i=0;i<playerCards.size();i++) {
 			playerCards.get(i).sort(CardUtils.cardComparator(CardRank.TWO, CardSuit.SPADE));
+		}
+		List<String> rawCardsAfter = toRawCards();
+		sequences = new ArrayList<>();
+		int n = rawCardsBefore.get(0).length() / 2;
+		for (i=0;i<playerCards.size();i++) {
+			List<Boolean> used = new ArrayList<>();
+			List<Integer> singleSequence = new ArrayList<>();
+			String rb = rawCardsBefore.get(i);
+			String ra = rawCardsAfter.get(i);
+			for (j=0;j<n;j++) {
+				used.add(false);
+			}
+			for (j=0;j<n;j++) {
+				String ca = "" + ra.charAt(j*2) + ra.charAt(j*2+1);
+				for (k=0;k<n;k++) {
+					if (used.get(k)) {
+						continue;
+					}
+					String cb = "" + rb.charAt(k*2) + rb.charAt(k*2+1);
+					if (ca.contentEquals(cb)) {
+						singleSequence.add(k);
+						used.set(k, true);
+						break;
+					}
+				}
+			}
+			sequences.add(singleSequence);
 		}
 		game.setPlayerCards(playerCards);
 	}
@@ -68,7 +97,9 @@ public class GameUtil {
 	public Game getGame() {
 		return game;
 	}
-	
+	public List<List<Integer>> getSequences() {
+		return sequences;
+	}
 	public void setBoard(Board board) {
 		this.board = board;
 	}

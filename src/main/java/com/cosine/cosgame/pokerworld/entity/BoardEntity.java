@@ -7,7 +7,12 @@ public class BoardEntity {
 	String lord;
 	String status;
 	String myCards;
+	String dominantRank;
+	String dominantSuit;
+	int numDominant;
+	int curClaimedPlayer;
 	
+	List<Integer> sequence;
 	List<PlayerEntity> players;
 
 	public String getId() {
@@ -39,6 +44,36 @@ public class BoardEntity {
 	}
 	public void setMyCards(String myCards) {
 		this.myCards = myCards;
+	}
+	public List<Integer> getSequence() {
+		return sequence;
+	}
+	public void setSequence(List<Integer> sequence) {
+		this.sequence = sequence;
+	}
+	public String getDominantRank() {
+		return dominantRank;
+	}
+	public void setDominantRank(String dominantRank) {
+		this.dominantRank = dominantRank;
+	}
+	public String getDominantSuit() {
+		return dominantSuit;
+	}
+	public void setDominantSuit(String dominantSuit) {
+		this.dominantSuit = dominantSuit;
+	}
+	public int getNumDominant() {
+		return numDominant;
+	}
+	public void setNumDominant(int numDominant) {
+		this.numDominant = numDominant;
+	}
+	public int getCurClaimedPlayer() {
+		return curClaimedPlayer;
+	}
+	public void setCurClaimedPlayer(int curClaimedPlayer) {
+		this.curClaimedPlayer = curClaimedPlayer;
 	}
 	
 }

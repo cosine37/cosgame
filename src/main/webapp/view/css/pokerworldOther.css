@@ -141,6 +141,29 @@ button:disabled{
 	color: black;
 }
 
+.gold {
+	color: red;
+	background-color: gold;
+}
+
+.claim-button{
+	font-size: 36px;
+	border: 1px solid black;
+	height: 48px;
+	width: 48px;
+	border-radius: 24px;
+	padding-left: 10px;
+	background-color: gold;
+	float: left;
+	cursor: pointer;
+}
+
+.claim-button-disabled{
+	color: grey;
+	cursor: auto;
+	background-color: white;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

@@ -38,6 +38,18 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.cardStyles = [];
 		$scope.hand = [];
+		$scope.showCard = [];
+		var i;
+		for (i=0;i<52;i++){
+			$scope.showCard.push(false);
+		}
+		$scope.dominantRankSuits = {};
+		$scope.dominantRankSuits["s"] = 0;
+		$scope.dominantRankSuits["d"] = 0;
+		$scope.dominantRankSuits["h"] = 0;
+		$scope.dominantRankSuits["c"] = 0;
+		$scope.curDistributeCardIndex = 0;
+		$scope.distributing = false;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -82,16 +94,30 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.endDistribute = function(){
+			$http({url: "/pokerworld/enddistribute", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.claimDominant = function(suit, n){
+			var data = {"dominantSuit": suit, "numDominant":n}
+			$http({url: "/pokerworld/claimdominant", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
 		translateRawCard = function(raw){
 			var card = {}
 			var r = raw.substring(0,1);
 			var s = raw.substring(1,2);
 			var c = "black";
 			if (r == "T") r = "10";
+			card["suitRaw"] = s;
 			if (raw == "JO"){
 				r = "joker"
 				s = "\u265b";
-				c = "red";
+				c = "gold";
 			}
 			if (raw == "jo"){
 				r = "joker"
@@ -141,18 +167,19 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
-		$scope.endDistribute = function(){
-			$http({url: "/pokerworld/enddistribute", method: "POST"}).then(function(response){
-				$scope.allRefresh()
-			});
-		}
-		
 		distributeOneCard = function(){
-			var rawCard = $scope.myCards.substring($scope.curDistributeCardIndex,$scope.curDistributeCardIndex+2);
-			$scope.hand.push(translateRawCard(rawCard));
+			//var rawCard = $scope.myCards.substring($scope.curDistributeCardIndex,$scope.curDistributeCardIndex+2);
+			//$scope.hand.push(translateRawCard(rawCard));
+			if ($scope.curDistributeCardIndex >= $scope.distributeSequence.length) return
+			var x = $scope.distributeSequence[$scope.curDistributeCardIndex]
+			var c = $scope.hand[x];
+			if (c.rank == $scope.dominantRank){
+				$scope.dominantRankSuits[c.suitRaw] = $scope.dominantRankSuits[c.suitRaw]+1;
+			}
+			$scope.showCard[x] = true
 			$timeout(function(){
-				$scope.curDistributeCardIndex = $scope.curDistributeCardIndex+2
-				if ($scope.curDistributeCardIndex < $scope.myCards.length){
+				$scope.curDistributeCardIndex = $scope.curDistributeCardIndex+1
+				if ($scope.curDistributeCardIndex < $scope.distributeSequence.length){
 					distributeOneCard();
 				} else {
 					$scope.showEndDistribute = true;
@@ -161,8 +188,6 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		distributeCards = function(){
-			$scope.hand = [];
-			$scope.curDistributeCardIndex = 0;
 			$scope.showEndDistribute = false;
 			distributeOneCard();
 		}
@@ -180,6 +205,27 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
 				$scope.myCards = response.data.myCards
+				$scope.distributeSequence = response.data.sequence;
+				$scope.dominantRank = response.data.dominantRank;
+				$scope.dominantSuit = response.data.dominantSuit;
+				$scope.numDominant = response.data.numDominant;
+				$scope.curClaimedPlayer = response.data.curClaimedPlayer;
+				$scope.dominantSuitDisplay = "";
+				$scope.dominantSuitDisplayClass = "";
+				if ($scope.dominantSuit == "s"){
+					$scope.dominantSuitDisplay = "\u2660";
+					$scope.dominantSuitDisplayClass = "black";
+				} else if ($scope.dominantSuit == "h"){
+					$scope.dominantSuitDisplay = "\u2665";
+					$scope.dominantSuitDisplayClass = "red";
+				} else if ($scope.dominantSuit == "c"){
+					$scope.dominantSuitDisplay = "\u2663";
+					$scope.dominantSuitDisplayClass = "black";
+				} else if ($scope.dominantSuit == "d"){
+					$scope.dominantSuitDisplay = "\u2666";
+					$scope.dominantSuitDisplayClass = "red";
+				} 
+				
 				var i
 				var kicked = true;
 				for (i=0;i<$scope.players.length;i++){
@@ -192,10 +238,12 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('pokerworld');
 					return;
 				}
-				if ($scope.status == "1"){
+				setCardStyles()
+				if ($scope.status == "1" && $scope.distributing == false){
+					$scope.distributing = true;
 					distributeCards();
 				} else {
-					setCardStyles()
+					
 				}
 				
 
