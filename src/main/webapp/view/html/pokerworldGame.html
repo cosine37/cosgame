@@ -46,6 +46,9 @@
 		<button ng-click="resetChosen()" ng-show="status == '3'">重选</button>
 		<button ng-click="play()" ng-show="status == '3'">打出</button>
 		<button ng-click="endDistribute()" ng-show="status == '1' && showEndDistribute">结束摸牌</button>
+		<button ng-click="resetChosen()" ng-show="status == '2' && curClaimedPlayer == myIndex">重选</button>
+		<button ng-click="confirmHide()" ng-show="status == '2' && curClaimedPlayer == myIndex" ng-disabled="disableHide">确认底牌</button>
+		<span ng-show="status == '2' && curClaimedPlayer != myIndex">正等待{{players[curClaimedPlayer].name}}埋底牌。</span>
 	</div>
 	<div style="margin-left: 60px; margin-top: 80px">
 		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-show="(status != '1' || showCard[$index])" ng-class="c.color" ng-click="clickCard($index)">

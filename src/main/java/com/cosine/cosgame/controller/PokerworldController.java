@@ -127,6 +127,7 @@ public class PokerworldController {
 			if (p != null) {
 				board.claimDominant(dominantSuit, numDominant, p.getInnerId());
 				board.updateDominantDB();
+				board.updatePlayer(username);
 			}
 			
 		} else {
@@ -146,9 +147,10 @@ public class PokerworldController {
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
 				//TODO: change this to confirm by Player
-				board.discardTreasure();
+				board.endDistribute(p.getInnerId());
 				board.updateBasicDB();
 				board.updatePlayers();
+				board.updateCardsDB();
 			}
 		} else {
 			board.setId("NE");
@@ -169,6 +171,28 @@ public class PokerworldController {
 				p.play(playedIndex);
 				board.updateBasicDB();
 				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/pokerworld/confirmhide", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmHide(HttpServletRequest request, @RequestParam List<Integer> playedIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				board.hide(p.getInnerId(),playedIndex);
+				board.updateBasicDB();
+				board.updatePlayers();
+				board.updateCardsDB();
+				board.updateDB("rawHidden", board.getRawHidden());
 			}
 		} else {
 			board.setId("NE");

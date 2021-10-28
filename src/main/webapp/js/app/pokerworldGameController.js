@@ -50,6 +50,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.dominantRankSuits["c"] = 0;
 		$scope.curDistributeCardIndex = 0;
 		$scope.distributing = false;
+		$scope.disableHide = true;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -71,6 +72,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				if (x>=0 && x<$scope.hand.length){
 					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
 				}
+			} else if ($scope.status == '2' && $scope.curClaimedPlayer == $scope.myIndex){
+				if (x>=0 && x<$scope.hand.length){
+					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+				}
+				var i
+				var t = 0
+				for (i=0;i<$scope.hand.length;i++){
+					t = t+$scope.hand[i].chosen
+				}
+				if (t == 12){
+					$scope.disableHide = false;
+				} else {
+					$scope.disableHide = true;
+				}
 			}
 		}
 		
@@ -79,6 +94,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			for (i=0;i<$scope.hand.length;i++){
 				$scope.hand[i].chosen = 0
 			}
+		}
+		
+		$scope.confirmHide = function(){
+			var playedIndex = []
+			for (i=0;i<$scope.hand.length;i++){
+				if ($scope.hand[i].chosen == 1){
+					playedIndex.push(i);
+				}
+			}
+			//alert(JSON.stringify(playedIndex))
+			var data = {"playedIndex": playedIndex}
+			$http({url: "/pokerworld/confirmhide", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
 		}
 		
 		$scope.play = function(){
@@ -212,6 +241,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.curClaimedPlayer = response.data.curClaimedPlayer;
 				$scope.dominantSuitDisplay = "";
 				$scope.dominantSuitDisplayClass = "";
+				$scope.myIndex = response.data.myIndex;
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

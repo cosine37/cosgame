@@ -31,12 +31,12 @@ public class GameUtil {
 		}
 		List<String> rawCardsAfter = toRawCards();
 		sequences = new ArrayList<>();
-		int n = rawCardsBefore.get(0).length() / 2;
 		for (i=0;i<playerCards.size();i++) {
 			List<Boolean> used = new ArrayList<>();
 			List<Integer> singleSequence = new ArrayList<>();
 			String rb = rawCardsBefore.get(i);
 			String ra = rawCardsAfter.get(i);
+			int n = rawCardsBefore.get(i).length() / 2;
 			for (j=0;j<n;j++) {
 				used.add(false);
 			}
@@ -111,16 +111,18 @@ public class GameUtil {
 		return rawTreasures;
 	}
 	*/
-	public void buildHidden(String rawHidden) {
+	public List<Card> buildHidden(String rawHidden) {
 		List<Card> hiddenCards = new ArrayList<>();
 		int i=0;
 		while (i<rawHidden.length()) {
 			String rawCard = rawHidden.substring(i,i+2);
 			Card card = CardUtils.deSerializeCard(rawCard);
 			hiddenCards.add(card);
+			i = i+2;
 		}
 		//game.setTreasureCards(treasureCards);
 		//game.getGameDeck().
+		return hiddenCards;
 	}
 	
 	public String toRawHidden() {
@@ -135,6 +137,15 @@ public class GameUtil {
 	
 	public String playerRawCards(int x) {
 		return toRawCards().get(x);
+	}
+	
+	public String toRaw(List<Card> cards) {
+		int i;
+		String ans = "";
+		for (i=0;i<cards.size();i++) {
+			ans = ans + CardUtils.serializeCard(cards.get(i));
+		}
+		return ans;
 	}
 	
 	Card.CardSuit toCardSuit(String suitRaw){
@@ -157,10 +168,25 @@ public class GameUtil {
 		game.claimDominantSuit(suit, index);
 	}
 	
-	public void addTreasureCardsToHand(int x) {
+	public void addHiddenCardsToHand(int x, String rawHidden) {
 		List<Card> hand = game.getPlayerCards().get(x);
-		List<Card> treasure = game.getTreasureCards();
-		hand.addAll(treasure);
+		List<Card> hidden = buildHidden(rawHidden);
+		hand.addAll(hidden);
+		game.getPlayerCards().set(x, hand);
+		this.sortCards();
+	}
+	
+	public String removeHiddenCardsFromHand(int x, List<Integer> playedIndexes) {
+		List<Card> hand = game.getPlayerCards().get(x);
+		List<Card> hidden = new ArrayList<>();
+		int i;
+		for (i=playedIndexes.size()-1;i>=0;i--) {
+			int y = playedIndexes.get(i);
+			Card c = hand.remove(y);
+			hidden.add(c);
+		}
+		game.getPlayerCards().set(x, hand);
+		return toRaw(hidden);
 	}
 
 	public Game getGame() {

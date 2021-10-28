@@ -9,6 +9,7 @@ public class BoardEntity {
 	String myCards;
 	String dominantRank;
 	String dominantSuit;
+	int myIndex;
 	int numDominant;
 	int curClaimedPlayer;
 	
@@ -74,6 +75,12 @@ public class BoardEntity {
 	}
 	public void setCurClaimedPlayer(int curClaimedPlayer) {
 		this.curClaimedPlayer = curClaimedPlayer;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
 	}
 	
 }

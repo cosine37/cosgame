@@ -65,10 +65,12 @@ public class Board {
 	}
 	
 	public void drawHidden() {
+		gameUtil.addHiddenCardsToHand(curClaimedPlayer, rawHidden);
 		status = Consts.DRAWHIDDEN;
 	}
 	
-	public void discardTreasure() {
+	public void hide(int index, List<Integer> playedIndex) {
+		rawHidden = gameUtil.removeHiddenCardsFromHand(index, playedIndex);
 		status = Consts.PLAYCARDS;
 	}
 	
@@ -377,6 +379,7 @@ public class Board {
 			playerEntities.add(players.get(i).toPlayerEntity());
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
+				entity.setMyIndex(p.getInnerId());
 				entity.setMyCards(p.getMyRawCardsAfterPlay());
 				if (sequences == null || sequences.size()<=i) {
 					entity.setSequence(new ArrayList<>());
