@@ -13,6 +13,7 @@ public class Player {
 	String name;
 	int phase;
 	int innerId;
+	boolean confirmedClaim;
 	Board board;
 	
 	List<Integer> playedIndex;
@@ -84,17 +85,25 @@ public class Player {
 	public void setPlayedIndex(List<Integer> playedIndex) {
 		this.playedIndex = playedIndex;
 	}
+	public boolean isConfirmedClaim() {
+		return confirmedClaim;
+	}
+	public void setConfirmedClaim(boolean confirmedClaim) {
+		this.confirmedClaim = confirmedClaim;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("innerId", innerId);
 		doc.append("playedIndex", playedIndex);
+		doc.append("confirmedClaim", confirmedClaim);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
 		innerId = doc.getInteger("innerId", -1);
 		playedIndex = (List<Integer>) doc.get("playedIndex");
+		confirmedClaim = doc.getBoolean("confirmedClaim", false);
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();

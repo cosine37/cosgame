@@ -106,6 +106,7 @@ public class PokerworldController {
 				board.updateCardsDB();
 				board.updatePlayers();
 				board.updateDB("sequences", board.getSequences());
+				board.updateDB("rawHidden", board.getRawHidden());
 				board.updateDominantDB();
 			}
 		} else {

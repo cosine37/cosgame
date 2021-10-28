@@ -16,12 +16,14 @@ public class Board {
 	String lord;
 	String dominantRank;
 	String dominantSuit;
+	String rawHidden;
 	
 	int numDominant;
 	int curClaimedPlayer;
 	int status;
 	int firstPlayer;
 	int curPlayer;
+	int banker;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -43,6 +45,7 @@ public class Board {
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
+		rawHidden = "";
 	}
 	
 	public void startGame() {
@@ -57,11 +60,12 @@ public class Board {
 		dominantSuit = "x";
 		numDominant = 0;
 		curClaimedPlayer = -1;
+		rawHidden = gameUtil.toRawHidden();
 		status = Consts.DISTRIBUTECARDS;
 	}
 	
-	public void drawTreasure() {
-		status = Consts.DRAWTREASURE;
+	public void drawHidden() {
+		status = Consts.DRAWHIDDEN;
 	}
 	
 	public void discardTreasure() {
@@ -82,6 +86,23 @@ public class Board {
 			this.curClaimedPlayer = curClaimedPlayer;
 		}
 	}
+	
+	public void endDistribute(int index) {
+		if (index >=0 && index<players.size()) {
+			players.get(index).setConfirmedClaim(true);
+		}
+		boolean allConfirmed = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmedClaim() == false) {
+				allConfirmed = false;
+			}
+		}
+		if (allConfirmed) {
+			gameUtil.claimDominantSuit(dominantSuit, curClaimedPlayer);
+			drawHidden();
+		}
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -157,6 +178,25 @@ public class Board {
 	public void setNumDominant(int numDominant) {
 		this.numDominant = numDominant;
 	}
+	public int getCurClaimedPlayer() {
+		return curClaimedPlayer;
+	}
+	public void setCurClaimedPlayer(int curClaimedPlayer) {
+		this.curClaimedPlayer = curClaimedPlayer;
+	}
+	public int getBanker() {
+		return banker;
+	}
+	public void setBanker(int banker) {
+		this.banker = banker;
+	}
+	public String getRawHidden() {
+		return rawHidden;
+	}
+	public void setRawHidden(String rawHidden) {
+		this.rawHidden = rawHidden;
+	}
+
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
@@ -282,6 +322,7 @@ public class Board {
 		doc.append("dominantSuit", dominantSuit);
 		doc.append("numDominant", numDominant);
 		doc.append("curClaimedPlayer", curClaimedPlayer);
+		doc.append("rawHidden", rawHidden);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -307,6 +348,7 @@ public class Board {
 		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
 		List<String> rawCards = (List<String>) doc.get("cards");
 		gameUtil.buildCards(rawCards);
+		rawHidden = doc.getString("rawHidden");
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();

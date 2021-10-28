@@ -89,9 +89,78 @@ public class GameUtil {
 		}
 		return rawCards;
 	}
+	/*
+	public void buildTreasures(String rawTreasures) {
+		List<Card> treasureCards = new ArrayList<>();
+		int i=0;
+		while (i<rawTreasures.length()) {
+			String rawCard = rawTreasures.substring(i,i+2);
+			Card card = CardUtils.deSerializeCard(rawCard);
+			treasureCards.add(card);
+		}
+		game.setTreasureCards(treasureCards);
+	}
+	
+	public String toRawTreasures() {
+		String rawTreasures = "";
+		int i;
+		for (i=0;i<game.getTreasureCards().size();i++) {
+			Card c = game.getTreasureCards().get(i);
+			rawTreasures = rawTreasures + CardUtils.serializeCard(c);
+		}
+		return rawTreasures;
+	}
+	*/
+	public void buildHidden(String rawHidden) {
+		List<Card> hiddenCards = new ArrayList<>();
+		int i=0;
+		while (i<rawHidden.length()) {
+			String rawCard = rawHidden.substring(i,i+2);
+			Card card = CardUtils.deSerializeCard(rawCard);
+			hiddenCards.add(card);
+		}
+		//game.setTreasureCards(treasureCards);
+		//game.getGameDeck().
+	}
+	
+	public String toRawHidden() {
+		String rawHidden = "";
+		int i;
+		for (i=0;i<game.getGameDeck().getHiddenCards().size();i++) {
+			Card c = game.getGameDeck().getHiddenCards().get(i);
+			rawHidden = rawHidden + CardUtils.serializeCard(c);
+		}
+		return rawHidden;
+	}
 	
 	public String playerRawCards(int x) {
 		return toRawCards().get(x);
+	}
+	
+	Card.CardSuit toCardSuit(String suitRaw){
+		Card.CardSuit suit = Card.CardSuit.RED_JOKER;
+		if (suitRaw.contentEquals("s")) {
+			suit = Card.CardSuit.SPADE;
+		} else if (suitRaw.contentEquals("h")) {
+			suit = Card.CardSuit.HEART;
+		} else if (suitRaw.contentEquals("c")) {
+			suit = Card.CardSuit.CLUB;
+		} else if (suitRaw.contentEquals("d")) {
+			suit = Card.CardSuit.DIAMOND;
+		}
+		
+		return suit;
+	}
+	
+	public void claimDominantSuit(String suitRaw, int index) {
+		Card.CardSuit suit = toCardSuit(suitRaw);
+		game.claimDominantSuit(suit, index);
+	}
+	
+	public void addTreasureCardsToHand(int x) {
+		List<Card> hand = game.getPlayerCards().get(x);
+		List<Card> treasure = game.getTreasureCards();
+		hand.addAll(treasure);
 	}
 
 	public Game getGame() {
