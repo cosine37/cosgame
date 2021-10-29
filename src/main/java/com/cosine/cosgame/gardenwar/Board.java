@@ -3,6 +3,10 @@ package com.cosine.cosgame.gardenwar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
+import com.cosine.cosgame.util.MongoDBUtil;
+
 public class Board {
 	String id;
 	String lord;
@@ -14,6 +18,8 @@ public class Board {
 	List<Card> supplyDeck;
 	List<Card> supply;
 	List<List<Card>> basicPiles;
+	
+	MongoDBUtil dbutil;
 	
 	public Board() {
 		players = new ArrayList<>();
@@ -81,5 +87,168 @@ public class Board {
 	}
 	public void setRoundCount(int roundCount) {
 		this.roundCount = roundCount;
+	}
+	List<Document> toCardDocumentList(List<Card> cards){
+		List<Document> docs = new ArrayList<>();
+		for (int i=0;i<cards.size();i++) {
+			docs.add(cards.get(i).toDocument());
+		}
+		return docs;
+	}
+	List<Card> toCardList(List<Document> docs){
+		List<Card> cards = new ArrayList<>();
+		for (int i=0;i<docs.size();i++) {
+			Card c = CardFactory.makeCard(docs.get(i));
+			cards.add(c);
+		}
+		return cards;
+	}
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("lord", lord);
+		doc.append("firstPlayer", firstPlayer);
+		doc.append("curPlayer", curPlayer);
+		doc.append("status", status);
+		doc.append("roundCount", roundCount);
+		doc.append("supplyDeck", toCardDocumentList(supplyDeck));
+		doc.append("supply", toCardDocumentList(supply));
+		int i;
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			playerNames.add(players.get(i).getName());
+			String name = "player-" + players.get(i).getName();
+			doc.append(name, players.get(i).toDocument());
+		}
+		doc.append("playerNames", playerNames);
+		List<List<Document>> dob = new ArrayList<>();
+		for (i=0;i<basicPiles.size();i++) {
+			dob.add(toCardDocumentList(basicPiles.get(i)));
+		}
+		doc.append("basicPiles", dob);
+		return doc;
+	}
+	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		lord = doc.getString("lord");
+		firstPlayer = doc.getInteger("firstPlayer", -1);
+		curPlayer = doc.getInteger("curPlayer", -1);
+		status = doc.getInteger("status", -1);
+		roundCount = doc.getInteger("roundCount", -1);
+		supplyDeck = toCardList((List<Document>)doc.get("supplyDeck"));
+		supply = toCardList((List<Document>)doc.get("supply"));
+		basicPiles = new ArrayList<>();
+		List<List<Document>> dob = (List<List<Document>>) doc.get("basicPiles");
+		int i;
+		for (i=0;i<dob.size();i++) {
+			basicPiles.add(toCardList(dob.get(i)));
+		}
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		for (i=0;i<playerNames.size();i++) {
+			String name = "player-" + playerNames.get(i);
+			Document dop = (Document) doc.get(name);
+			Player p = new Player();
+			p.setBoard(this);
+			p.setFromDoc(dop);
+		}
+	}
+	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
+	
+	public Player getPlayerByIndex(int index) {
+		if (index<0 || index>=players.size()) {
+			return null;
+		}
+		return players.get(index);
+	}
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

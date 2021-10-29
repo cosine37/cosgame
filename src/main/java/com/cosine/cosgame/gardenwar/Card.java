@@ -3,6 +3,8 @@ package com.cosine.cosgame.gardenwar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Card {
 	// card basic info
 	int id;
@@ -11,6 +13,7 @@ public class Card {
 	int cost;
 	int type;
 	List<Integer> clan;
+	List<Integer> extraBits;
 	
 	// card bonuses
 	int sun;
@@ -125,7 +128,18 @@ public class Card {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
+	public List<Integer> getExtraBits() {
+		return extraBits;
+	}
+	public void setExtraBits(List<Integer> extraBits) {
+		this.extraBits = extraBits;
+	}
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("extraBits", extraBits);
+		return doc;
+	}
 	
 	
 }
