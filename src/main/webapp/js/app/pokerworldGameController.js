@@ -51,6 +51,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.curDistributeCardIndex = 0;
 		$scope.distributing = false;
 		$scope.disableHide = true;
+		$scope.disablePlayButton = true;
+		$scope.indexSequence = [0,1,2,3];
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -68,10 +70,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.clickCard = function(x){
-			if ($scope.status == '3'){
+			if ($scope.status == '3' && $scope.myIndex == $scope.curPlayer){
+				//$scope.disablePlayButton = true;
 				if (x>=0 && x<$scope.hand.length){
 					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
 				}
+				/*
+				var t = 0
+				for (i=0;i<$scope.hand.length;i++){
+					t = t+$scope.hand[i].chosen
+				}
+				if (t == $scope.numPlayed){
+					$scope.disablePlayButton = false;
+				}
+				*/
 			} else if ($scope.status == '2' && $scope.curClaimedPlayer == $scope.myIndex){
 				if (x>=0 && x<$scope.hand.length){
 					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
@@ -86,6 +98,26 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				} else {
 					$scope.disableHide = true;
 				}
+			}
+		}
+		
+		$scope.disablePlay = function(){
+			if ($scope.status == '3'){
+				if ($scope.numPlayed == -1){
+					return false;
+				} else {
+					var t = 0
+					for (i=0;i<$scope.hand.length;i++){
+						t = t+$scope.hand[i].chosen
+					}
+					if (t == $scope.numPlayed){
+						return false;
+					} else {
+						return true;
+					}
+				}
+			} else if ($scope.status == '2'){
+				return false;
 			}
 		}
 		
@@ -196,6 +228,15 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setIndexes = function(){
+			$scope.indexSequence = [0,1,2,3];
+			var i;
+			for (i=0;i<4;i++){
+				var x = ($scope.myIndex + i)%4;
+				$scope.indexSequence[i] = x;
+			}
+		}
+		
 		distributeOneCard = function(){
 			//var rawCard = $scope.myCards.substring($scope.curDistributeCardIndex,$scope.curDistributeCardIndex+2);
 			//$scope.hand.push(translateRawCard(rawCard));
@@ -242,6 +283,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.dominantSuitDisplay = "";
 				$scope.dominantSuitDisplayClass = "";
 				$scope.myIndex = response.data.myIndex;
+				$scope.numPlayed = response.data.numPlay;
+				$scope.curPlayer = response.data.curPlayer;
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

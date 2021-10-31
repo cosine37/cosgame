@@ -52,7 +52,14 @@ public class Player {
 	}
 	
 	public void play(List<Integer> playedIndex) {
-		setPlayedIndex(playedIndex);
+		int numPlayed = board.getNumPlayed();
+		if (numPlayed == -1) {
+			setPlayedIndex(playedIndex);
+			board.setNumPlayed(playedIndex.size());
+		} else if (numPlayed == playedIndex.size()){
+			setPlayedIndex(playedIndex);
+		}
+		board.nextPlayerPlay();
 	}
 	
 	public String getName() {

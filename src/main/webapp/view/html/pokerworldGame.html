@@ -15,6 +15,36 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
+	<div class="table-div">
+		<div class="player-div" ng-repeat="i in indexSequence">
+			<div class="played-card-div">
+				<div class="card-play card-play-size noselect" ng-repeat="c in players[i].played track by $index" ng-class="c.color">
+					<div class="rank-play" ng-show="c.rank != 'joker' && c.rank != '10'">
+						{{c.rank}}
+					</div>
+					<div class="rank-10-play" ng-show="c.rank == '10'">
+						{{c.rank}}
+					</div>
+					<div class="joker-play" ng-show="c.rank == 'joker'">
+						<div class="joker-play-letter">L</div>
+						<div class="joker-play-letter">C</div>
+						<div class="joker-play-letter">D</div>
+						<div class="joker-play-letter">S</div>
+					</div>
+					<div class="suit-play" ng-show="c.rank != 'joker'">
+						{{c.suit}}
+					</div>
+					<div class="suit-big-play" ng-show="c.rank != 'joker'">
+						{{c.suit}}
+					</div>
+					<div class="joker-big-play" ng-show="c.rank == 'joker'">
+					</div>
+				</div>
+			</div>
+			<div class="player-name">{{players[i].name}}</div>
+		</div>
+	</div>
+	<!-- 
 	<div style="height: 135px" >
 		<div ng-repeat="p in players">
 			<div class="card-play card-size noselect" ng-repeat="c in p.played track by $index" ng-class="c.color" ng-click="clickCard($index)">
@@ -41,14 +71,15 @@
 			</div>
 		</div>
 	</div>
-	
+	 -->
 	<div style="clear:both">
-		<button ng-click="resetChosen()" ng-show="status == '3'">重选</button>
-		<button ng-click="play()" ng-show="status == '3'">打出</button>
+		<button ng-click="resetChosen()" ng-show="status == '3' && curPlayer == myIndex">重选</button>
+		<button ng-click="play()" ng-show="status == '3' && curPlayer == myIndex" ng-disabled="disablePlay()">打出</button>
 		<button ng-click="endDistribute()" ng-show="status == '1' && showEndDistribute">结束摸牌</button>
 		<button ng-click="resetChosen()" ng-show="status == '2' && curClaimedPlayer == myIndex">重选</button>
 		<button ng-click="confirmHide()" ng-show="status == '2' && curClaimedPlayer == myIndex" ng-disabled="disableHide">确认底牌</button>
 		<span ng-show="status == '2' && curClaimedPlayer != myIndex">正等待{{players[curClaimedPlayer].name}}埋底牌。</span>
+		<span ng-show="status == '3' && curPlayer != myIndex">现在不是你的回合。</span>
 	</div>
 	<div style="margin-left: 60px; margin-top: 80px">
 		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-show="(status != '1' || showCard[$index])" ng-class="c.color" ng-click="clickCard($index)">

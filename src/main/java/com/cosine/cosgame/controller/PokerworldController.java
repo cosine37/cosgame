@@ -151,6 +151,7 @@ public class PokerworldController {
 				board.updateBasicDB();
 				board.updatePlayers();
 				board.updateCardsDB();
+				board.updateDB("firstPlayer", board.getFirstPlayer());
 			}
 		} else {
 			board.setId("NE");

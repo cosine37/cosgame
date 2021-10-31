@@ -12,6 +12,9 @@ public class BoardEntity {
 	int myIndex;
 	int numDominant;
 	int curClaimedPlayer;
+	int curPlayer;
+	int firstPlayer;
+	int numPlay;
 	
 	List<Integer> sequence;
 	List<PlayerEntity> players;
@@ -81,6 +84,24 @@ public class BoardEntity {
 	}
 	public void setMyIndex(int myIndex) {
 		this.myIndex = myIndex;
+	}
+	public int getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(int curPlayer) {
+		this.curPlayer = curPlayer;
+	}
+	public int getFirstPlayer() {
+		return firstPlayer;
+	}
+	public void setFirstPlayer(int firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+	public int getNumPlay() {
+		return numPlay;
+	}
+	public void setNumPlay(int numPlay) {
+		this.numPlay = numPlay;
 	}
 	
 }

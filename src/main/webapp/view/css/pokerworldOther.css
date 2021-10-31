@@ -29,15 +29,53 @@ button:disabled{
 	background: white;
 }
 
+.table-div{
+	height: 570px;
+	width: 800px;
+	margin-left: 30px;
+	border: 1px solid black;
+}
+
+.player-div{
+	height: 140px;
+	width: 300px;
+	border: 1px solid black;
+	position: relative;
+	
+}
+
+.played-card-div{
+	width: 300px;
+	padding-left: 55px;
+	margin: 0px;
+	display: inline-block;
+}
+
+.player-name{
+	width: 300px;
+	position: absolute;
+	text-align: center;
+	margin: 0px;
+	bottom: 3px;
+}
+
 .card-play{
 	position: relative;
 	float: left;
 	border: 1px solid black;
 	background-color: white;
+	margin-left: -55px;
+	width: 100%;
+}
+
+.card-play-size{
+	height: 105px;
+	width: 75px;
+	border-radius: 8px;
 }
 
 .card-size{
-	height: 132px;
+	height: 133px;
 	width: 95px;
 	border-radius: 10px;
 }
@@ -70,7 +108,17 @@ button:disabled{
 	width: 20px;
 	text-align: center;
 	margin: 0px;
-	
+}
+
+.rank-play{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	font-weight: bold;
+	font-size: 18px;
+	width: 20px;
+	text-align: center;
+	margin: 0px;
 }
 
 .rank-10-hand{
@@ -79,6 +127,18 @@ button:disabled{
 	top: 0px;
 	font-weight: bold;
 	font-size: 24px;
+	width: 20px;
+	text-align: center;
+	margin: 0px;
+	
+}
+
+.rank-10-play{
+	position: absolute;
+	left: -1px;
+	top: 0px;
+	font-weight: bold;
+	font-size: 18px;
 	width: 20px;
 	text-align: center;
 	margin: 0px;
@@ -99,6 +159,38 @@ button:disabled{
 	font-size: 17px;
 	text-align: center;
 	margin-top: -8px;
+}
+
+.joker-play{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 15px;
+	margin: 0px;
+	margin-top: 8px;
+}
+
+.joker-play-letter{
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin-top: -5px;
+}
+
+.joker-big-play{
+	position: absolute;
+	background-image: url('/image/Pokerworld/lcds.png');
+	height: 110px;
+	width: 73px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 .joker-big-hand{
@@ -126,11 +218,27 @@ button:disabled{
 	margin-top: 20px;
 }
 
+.suit-play{
+	position: absolute;
+	left: 0px;
+	font-size: 22px;
+	width: 20px;
+	text-align: center;
+	margin-top: 15px;
+}
+
 .suit-big-hand{
 	position: absolute;
 	bottom: -20px;
 	right: 5px;
 	font-size: 95px;
+}
+
+.suit-big-play{
+	position: absolute;
+	bottom: -15px;
+	right: 5px;
+	font-size: 70px;
 }
 
 .red{

@@ -24,6 +24,7 @@ public class Board {
 	int firstPlayer;
 	int curPlayer;
 	int banker;
+	int numPlayed;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -60,12 +61,16 @@ public class Board {
 		dominantSuit = "x";
 		numDominant = 0;
 		curClaimedPlayer = -1;
+		numPlayed = -1;
 		rawHidden = gameUtil.toRawHidden();
 		status = Consts.DISTRIBUTECARDS;
 	}
 	
 	public void drawHidden() {
-		gameUtil.addHiddenCardsToHand(curClaimedPlayer, rawHidden);
+		if (curClaimedPlayer != -1) {
+			firstPlayer = curClaimedPlayer;
+		}
+		gameUtil.addHiddenCardsToHand(firstPlayer, rawHidden);
 		status = Consts.DRAWHIDDEN;
 	}
 	
@@ -103,6 +108,11 @@ public class Board {
 			gameUtil.claimDominantSuit(dominantSuit, curClaimedPlayer);
 			drawHidden();
 		}
+	}
+	
+	public void nextPlayerPlay() {
+		curPlayer++;
+		curPlayer = curPlayer % players.size();
 	}
 	
 	public String getId() {
@@ -198,6 +208,12 @@ public class Board {
 	public void setRawHidden(String rawHidden) {
 		this.rawHidden = rawHidden;
 	}
+	public int getNumPlayed() {
+		return numPlayed;
+	}
+	public void setNumPlayed(int numPlayed) {
+		this.numPlayed = numPlayed;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -222,6 +238,8 @@ public class Board {
 	public void updateBasicDB() {
 		//TODO: Add more items for general updates
 		dbutil.update("id", id, "status", status);
+		dbutil.update("id", id, "curPlayer", curPlayer);
+		dbutil.update("id", id, "numPlayed", numPlayed);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {
@@ -325,6 +343,7 @@ public class Board {
 		doc.append("numDominant", numDominant);
 		doc.append("curClaimedPlayer", curClaimedPlayer);
 		doc.append("rawHidden", rawHidden);
+		doc.append("numPlayed", numPlayed);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -351,6 +370,7 @@ public class Board {
 		List<String> rawCards = (List<String>) doc.get("cards");
 		gameUtil.buildCards(rawCards);
 		rawHidden = doc.getString("rawHidden");
+		numPlayed = doc.getInteger("numPlayed", -1);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -373,6 +393,9 @@ public class Board {
 		entity.setDominantSuit(dominantSuit);
 		entity.setNumDominant(numDominant);
 		entity.setCurClaimedPlayer(curClaimedPlayer);
+		entity.setCurPlayer(curPlayer);
+		entity.setFirstPlayer(firstPlayer);
+		entity.setNumPlay(numPlayed);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
