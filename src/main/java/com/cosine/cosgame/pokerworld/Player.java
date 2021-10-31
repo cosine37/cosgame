@@ -62,6 +62,10 @@ public class Player {
 		board.nextPlayerPlay();
 	}
 	
+	public void emptyPlayedIndex() {
+		playedIndex = new ArrayList<>();
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -113,6 +113,18 @@ public class Board {
 	public void nextPlayerPlay() {
 		curPlayer++;
 		curPlayer = curPlayer % players.size();
+		/*
+		Player p = players.get(curPlayer);
+		if (p.getPlayedIndex() != null && p.getPlayedIndex().size() != 0) {
+			endRound();
+		}*/
+		if (curPlayer == firstPlayer) {
+			endRound();
+		}
+	}
+	
+	public void endRound() {
+		gameUtil.judgeRound(this);
 	}
 	
 	public String getId() {

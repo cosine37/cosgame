@@ -76,6 +76,26 @@ public class GameUtil {
 		game.setPlayerCards(playerCards);
 	}
 	
+	public void judgeRound(Board board) {
+		List<List<Card>> cards = game.getPlayerCards();
+		List<List<Card>> hands = new ArrayList<>();
+		List<Player> players = board.getPlayers();
+		int i;
+		for (i=0;i<players.size();i++) {
+			List<Integer> playedIndex = players.get(i).getPlayedIndex();
+			int x = players.get(i).getInnerId();
+			List<Card> singleHand = new ArrayList<>();
+			int j;
+			for (j=0;j<playedIndex.size();j++) {
+				int y = playedIndex.get(j);
+				singleHand.add(cards.get(x).get(y));
+			}
+			hands.add(singleHand);
+			players.get(i).emptyPlayedIndex();
+		}
+		game.playRound(board.getFirstPlayer(), hands);
+	}
+	
 	public List<String> toRawCards() {
 		List<String> rawCards = new ArrayList<>();
 		int i,j;
