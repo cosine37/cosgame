@@ -76,7 +76,22 @@ public class GameUtil {
 		game.setPlayerCards(playerCards);
 	}
 	
+	
 	public void judgeRound(Board board) {
+		String dominantSuitRaw = board.getDominantSuit();
+		Card.CardSuit suit = Card.CardSuit.RED_JOKER;
+		if (dominantSuitRaw.contentEquals("s")) {
+			suit = Card.CardSuit.SPADE;
+		} else if (dominantSuitRaw.contentEquals("h")) {
+			suit = Card.CardSuit.HEART;
+		} else if (dominantSuitRaw.contentEquals("c")) {
+			suit = Card.CardSuit.CLUB;
+		} else if (dominantSuitRaw.contentEquals("d")) {
+			suit = Card.CardSuit.DIAMOND;
+		}
+		
+		game.claimDominantSuit(suit, board.getCurClaimedPlayer());
+		
 		List<List<Card>> cards = game.getPlayerCards();
 		List<List<Card>> hands = new ArrayList<>();
 		List<Player> players = board.getPlayers();

@@ -76,6 +76,7 @@ public class Board {
 	
 	public void hide(int index, List<Integer> playedIndex) {
 		rawHidden = gameUtil.removeHiddenCardsFromHand(index, playedIndex);
+		curPlayer = firstPlayer;
 		status = Consts.PLAYCARDS;
 	}
 	
@@ -105,6 +106,7 @@ public class Board {
 			}
 		}
 		if (allConfirmed) {
+			this.firstPlayer = curClaimedPlayer;
 			gameUtil.claimDominantSuit(dominantSuit, curClaimedPlayer);
 			drawHidden();
 		}
@@ -252,6 +254,7 @@ public class Board {
 		dbutil.update("id", id, "status", status);
 		dbutil.update("id", id, "curPlayer", curPlayer);
 		dbutil.update("id", id, "numPlayed", numPlayed);
+		dbutil.update("id", id, "firstPlayer", firstPlayer);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {

@@ -7,6 +7,7 @@ var setUrl = function(d){
 var app = angular.module("gardenwarMainApp", ["ngWebSocket"]);
 app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
+		$scope.card = {}
 		var ws = $websocket("ws://" + $window.location.host + "/gardenwar/allboardsrefresh");
 		ws.onError(function(event) {
 		});
@@ -95,6 +96,28 @@ app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 			});
 		}
+		
+		$scope.makeCard = function(){
+			buildCard($scope.card)
+		}
+		
+		var initializeCard = function(){
+			$scope.card = {}
+			$scope.card.sun = 1;
+			$scope.card.pea = 2;
+			$scope.card.cost = 2;
+			
+			$scope.card.name = "豌豆射手";
+			$scope.card.clan = "豌豆";
+			$scope.card.img = "peaShooter.png"
+			
+			$scope.cardDisplay = buildCard($scope.card)
+		}
+		
+		initializeCard();
+		
+		//buildCard(0)
+		
 		/*
 		$scope.getAllBoards();
 		

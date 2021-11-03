@@ -172,6 +172,7 @@ public class PokerworldController {
 				p.play(playedIndex);
 				board.updateBasicDB();
 				board.updatePlayers();
+				board.updateCardsDB();
 			}
 		} else {
 			board.setId("NE");

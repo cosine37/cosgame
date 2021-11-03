@@ -6,11 +6,13 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/gardenwarCard.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/lib/gardenwarCardMaker.js"></script>
 <script src="/js/app/gardenwarMainController.js"></script>
 <body ng-app="gardenwarMainApp" ng-controller="gardenwarMainCtrl">
 	<div id="header" class="header">
@@ -76,6 +78,37 @@
 							</td>
 						</tr>
 					</table>
+					<div>
+						<div>
+							<div class="card-size noselect" ng-style="cardDisplay.base">
+								<div class="card-img" ng-style="cardDisplay.img">
+									<img class="card-plant" ng-src="{{cardDisplay.plant}}"/>
+								</div>
+								<div class="card-name" ng-style="cardDisplay.name">
+									{{cardDisplay.card.name}}
+								</div>
+								<div class="card-desc" ng-style="cardDisplay.desc">
+									<div class="card-sun">
+									</div>
+									<div class="card-pea">
+										<div class="card-pea-value">
+											{{cardDisplay.card.pea}}
+										</div>
+									</div>
+								</div>
+								<div class="card-clan" ng-style="cardDisplay.clan">
+									{{cardDisplay.card.clan}}
+								</div>
+								<div class="card-cost">
+									<div class="card-cost-text">
+										{{cardDisplay.card.cost}}
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 				
 				<div id="rulestab" class="content container tab-pane fade">
@@ -84,7 +117,9 @@
 				</div>
 				<div id="cardstab" class="content container tab-pane fade">
 					<h2><b>卡牌</b></h2>
+					<!-- 
 					
+					 -->
 				</div>
 			</div>
 		</div>
