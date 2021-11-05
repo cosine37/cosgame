@@ -4,7 +4,7 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("gardenwarMainApp", ["ngWebSocket"]);
+var app = angular.module("gardenwarMainApp", ["ngWebSocket", "ngSanitize"]);
 app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		$scope.card = {}
@@ -103,13 +103,17 @@ app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		var initializeCard = function(){
 			$scope.card = {}
-			$scope.card.sun = 1;
-			$scope.card.pea = 2;
+			$scope.card.sun = 0;
+			$scope.card.pea = 0;
 			$scope.card.cost = 2;
+			$scope.card.shield = 10;
+			$scope.card.taunt = true;
 			
-			$scope.card.name = "豌豆射手";
-			$scope.card.clan = "豌豆";
-			$scope.card.img = "peaShooter.png"
+			$scope.card.name = "噬碑藤";
+			$scope.card.type = "基本";
+			$scope.card.clan = "藤蔓";
+			$scope.card.img = "sunflower.png"
+			$scope.card.desc = "抽1张牌，你可以消耗该牌并弃置一名玩家的放置植物。"
 			
 			$scope.cardDisplay = buildCard($scope.card)
 		}
