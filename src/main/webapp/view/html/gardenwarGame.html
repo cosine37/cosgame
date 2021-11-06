@@ -7,13 +7,27 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/gardenwarCard.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/lib/angular-sanitize.js"></script>
+<script src="/js/lib/gardenwarCardMaker.js"></script>
 <script src="/js/app/gardenwarGameController.js"></script>
 <body ng-app="gardenwarGameApp" ng-controller="gardenwarGameCtrl">
 	<button ng-click="goto('gardenwar')">back</button>
+	<div>
+		<div ng-repeat="cardDisplay in handDisplay" ng-include="'/view/html/gardenwarCard.html'" style="float:left">
+			
+		</div>
+	</div>
+	<div style="clear: both">
+		{{handDisplay}}
+	</div>
+	<div>
+		{{gamedata}}
+	</div>
 </body>
 </html>

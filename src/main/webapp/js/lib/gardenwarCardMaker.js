@@ -78,16 +78,21 @@ function setDescStyle(cardDisplay){
 		}
 	} else if (cardDisplay.showPea){
 		cardDisplay.pea = {
-			"top": "0px",
-			"height": "40px",
-			"width": "40px",
-			"left": "65px"
+			"top": "20px"
 		}
-		cardDisplay.peaValue = {
-			"width": "40px",
-			"font-size": "24px"
+		if (cardDisplay.showDescText){
+			cardDisplay.pea = {
+				"top": "0px",
+				"height": "40px",
+				"width": "40px",
+				"left": "65px"
+			}
+			cardDisplay.peaValue = {
+				"width": "40px",
+				"font-size": "24px"
+			}
+			cardDisplay.descText["top"] = "50px"
 		}
-		cardDisplay.descText["top"] = "50px"
 	} else {
 		if (c.desc.length>30){
 			cardDisplay.descText["top"] = "0px"
@@ -187,7 +192,7 @@ function renderKeywords(cardDisplay){
 function buildCard(c){
 	var cardDisplay = {}
 	cardDisplay.card = c
-	cardDisplay.plant = "/image/Gardenwar/gen1/" + c.img
+	cardDisplay.plant = "/image/Gardenwar/gen1/" + c.img + ".png"
 	cardDisplay.base = {
 		"background-color": "beige"
 	}

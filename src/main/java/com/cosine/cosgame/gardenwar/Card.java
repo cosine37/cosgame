@@ -5,27 +5,31 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.gardenwar.entity.CardEntity;
+
 public class Card {
 	// card basic info
-	int id;
-	String name;
-	String img;
-	int cost;
-	int type;
-	List<Integer> clan;
-	List<Integer> extraBits;
+	protected int id;
+	protected String name;
+	protected String img;
+	protected String desc;
+	protected int cost;
+	protected int type;
+	protected int shield;
+	protected List<Integer> clan;
+	protected List<Integer> extraBits;
 	
 	// card bonuses
-	int sun;
-	int atk;
-	int def;
-	int draw;
+	protected int sun;
+	protected int atk;
+	protected int def;
+	protected int draw;
 	
-	Player player;
-	Board board;
+	protected Player player;
+	protected Board board;
 	
-	boolean taunt;
-	boolean autoplay;
+	protected boolean taunt;
+	protected boolean autoplay;
 	
 	public Card() {
 		taunt = false;
@@ -36,6 +40,11 @@ public class Card {
 		for (i=0;i<Consts.NUMCLANS;i++) {
 			clan.add(0);
 		}
+		sun = 0;
+		atk = 0;
+		shield = 0;
+		cost = 0;
+		desc = "";
 	}
 	
 	public void play() {
@@ -43,6 +52,22 @@ public class Card {
 	}
 	public void startTurn() {
 		
+	}
+	public void addClan(int x) {
+		if (x>=0 && x<Consts.NUMCLANS) {
+			clan.set(x, 1);
+		}
+	}
+	public boolean isClan(int x) {
+		if (x>=0 && x<Consts.NUMCLANS) {
+			if (clan.get(x) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 	public int getId() {
 		return id;
@@ -134,11 +159,59 @@ public class Card {
 	public void setExtraBits(List<Integer> extraBits) {
 		this.extraBits = extraBits;
 	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getClanDisplay() {
+		boolean flag = true;
+		String ans = "";
+		int i;
+		final String[] clanNames = {"蘑菇", "豌豆", "花朵"};
+		for (i=0;i<clan.size();i++) {
+			if (clan.get(i) == 1 && i<clanNames.length) {
+				String s = clanNames[i];
+				if (flag) {
+					ans = s;
+					flag = false;
+				} else {
+					ans = ans + "，" + s;
+				}
+			}
+		}
+		return ans;
+	}
+	public String getTypeDisplay() {
+		String ans = "";
+		if (type == Consts.CARD) {
+			ans = "基本";
+		} else if (type == Consts.EQUIP) {
+			ans = "放置";
+		}
+		return ans;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
-		doc.append("name", name);
+		doc.append("id", id);
+		doc.append("img", img);
 		doc.append("extraBits", extraBits);
 		return doc;
+	}
+	public CardEntity toCardEntity() {
+		CardEntity entity = new CardEntity();
+		entity.setName(name);
+		entity.setImg(img);
+		entity.setDesc(desc);
+		entity.setClan(getClanDisplay());
+		entity.setCost(cost);
+		entity.setShield(shield);
+		entity.setType(getTypeDisplay());
+		entity.setSun(sun);
+		entity.setPea(atk);
+		entity.setTaunt(taunt);
+		return entity;
 	}
 	
 	

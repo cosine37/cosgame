@@ -2,8 +2,13 @@ package com.cosine.cosgame.gardenwar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.gardenwar.base.PuffShroom;
+import com.cosine.cosgame.gardenwar.base.SunShroom;
+import com.cosine.cosgame.gardenwar.entity.PlayerEntity;
 
 public class Player {
 	String name;
@@ -19,6 +24,51 @@ public class Player {
 	List<Card> equip;
 	
 	Board board;
+	
+	public Player() {
+		hand = new ArrayList<>();
+		deck = new ArrayList<>();
+		play = new ArrayList<>();
+		discard = new ArrayList<>();
+		equip = new ArrayList<>();
+	}
+	
+	public void initialize() {
+		int i;
+		for (i=0;i<2;i++) {
+			Card puffShroom = new PuffShroom();
+			discard.add(puffShroom);
+		}
+		for (i=0;i<8;i++) {
+			Card sunShroom = new SunShroom();
+			discard.add(sunShroom);
+		}
+		draw(5);
+	}
+	
+	public void shuffle() {
+		while (discard.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(discard.size());
+			Card c = discard.remove(x);
+			deck.add(c);
+		}
+	}
+	
+	public void draw(int n) {
+		int i;
+		for (i=0;i<n;i++) {
+			if (deck.size() == 0) {
+				shuffle();
+			}
+			if (deck.size() == 0) {
+				break;
+			} else {
+				Card c = deck.remove(0);
+				hand.add(c);
+			}
+		}
+	}
 	
 	public String getName() {
 		return name;
@@ -128,6 +178,11 @@ public class Player {
 		play = toCardList((List<Document>) doc.get("play"));
 		discard = toCardList((List<Document>) doc.get("discard"));
 		equip = toCardList((List<Document>) doc.get("equip"));
+	}
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		return entity;
 	}
 	
 }

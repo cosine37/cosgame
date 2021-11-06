@@ -9,6 +9,7 @@ public class Consts {
 	public static final int NUMCLANS = 10;
 	public static final int MUSHROOM = 0;
 	public static final int PEA = 1;
+	public static final int FLOWER = 2;
 	
 	//board statuses
 	public static final int PREGAME = 0;

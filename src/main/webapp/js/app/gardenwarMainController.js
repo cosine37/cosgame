@@ -96,7 +96,7 @@ app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 			});
 		}
-		
+		/*
 		$scope.makeCard = function(){
 			buildCard($scope.card)
 		}
@@ -119,14 +119,14 @@ app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		initializeCard();
-		
+		*/
 		//buildCard(0)
 		
-		/*
+		
 		$scope.getAllBoards();
 		
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
-		*/
+		
 }]);

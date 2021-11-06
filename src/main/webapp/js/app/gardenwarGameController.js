@@ -36,6 +36,8 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			heartCheck.start();
 		});
 		
+		$scope.handDisplay = []
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -51,6 +53,17 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		buildHandDisplay = function(){
+			$scope.handDisplay = []
+			var i;
+			for (i=0;i<$scope.gamedata.myHand.length;i++){
+				var c = $scope.gamedata.myHand[i];
+				var cd = buildCard(c);
+				$scope.handDisplay.push(cd);
+			}
+		
+		}
+		
 		
 		$scope.getBoard = function(){
 			$http.get('/gardenwar/getboard').then(function(response){
@@ -59,6 +72,8 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.goto('gardenwar');
 					return;
 				}
+				$scope.gamedata = response.data
+				buildHandDisplay()
 			});
 		}
 		

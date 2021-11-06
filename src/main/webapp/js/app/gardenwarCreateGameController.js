@@ -53,13 +53,11 @@ app.controller("gardenwarCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			var data = {
 				"settings" : $scope.settings	
 			}
-			$scope.goto('gardenwargame');
-			/*
 			$http({url: "/gardenwar/startgame", method: "POST", params:data}).then(function(response){
 				ws.send("start");
-				$scope.goto('gardenwargame');
+				//$scope.goto('gardenwargame');
 			})
-			*/;
+			
 		}
 		
 		$scope.getBoard = function(){
@@ -81,13 +79,14 @@ app.controller("gardenwarCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 						kicked = false;
 					}
 				}
+				
 				if (kicked){
 					alert("你已被" + $scope.lord + "踢出");
-					$scope.goto('pokerworld');
+					$scope.goto('gardenwar');
 					return;
 				}
 				
-				if ($scope.status == '1'){
+				if ($scope.status == 1){
 					$scope.goto('gardenwargame');
 				}
 
