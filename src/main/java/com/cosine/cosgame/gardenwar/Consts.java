@@ -18,7 +18,8 @@ public class Consts {
 	
 	//player phases
 	public static final int OFFTURN = 0;
-	public static final int PLAY = 1;
-	public static final int ATTACK = 2;
-	public static final int BUY = 3;
+	public static final int STATUSES = 1;
+	public static final int PLAY = 2;
+	public static final int ATTACK = 3;
+	public static final int BUY = 4;
 }

@@ -6,6 +6,7 @@ public class BoardEntity {
 	String id;
 	String lord;
 	int status;
+	int phase;
 	int curPlayer;
 	int myIndex;
 	List<PlayerEntity> players;
@@ -15,6 +16,8 @@ public class BoardEntity {
 	int curPlayerSun;
 	int curPlayerPea;
 	List<CardEntity> curPlayerPlay;
+	List<CardEntity> baseCards;
+	List<Boolean> curPlayerCanBuy;
 
 	public String getId() {
 		return id;
@@ -81,6 +84,24 @@ public class BoardEntity {
 	}
 	public void setCanAutoPlay(boolean canAutoPlay) {
 		this.canAutoPlay = canAutoPlay;
+	}
+	public List<Boolean> getCurPlayerCanBuy() {
+		return curPlayerCanBuy;
+	}
+	public void setCurPlayerCanBuy(List<Boolean> curPlayerCanBuy) {
+		this.curPlayerCanBuy = curPlayerCanBuy;
+	}
+	public List<CardEntity> getBaseCards() {
+		return baseCards;
+	}
+	public void setBaseCards(List<CardEntity> baseCards) {
+		this.baseCards = baseCards;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
 	}
 	
 }

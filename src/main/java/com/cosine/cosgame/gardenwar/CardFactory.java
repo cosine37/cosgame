@@ -14,6 +14,10 @@ public class CardFactory {
 			card = new PuffShroom();
 		} else if (img.contentEquals("sunShroom")) {
 			card = new SunShroom();
+		} else if (img.contentEquals("peaShooter")) {
+			card = new PeaShooter();
+		} else if (img.contentEquals("sunflower")) {
+			card = new Sunflower();
 		}
 		return card;
 	}

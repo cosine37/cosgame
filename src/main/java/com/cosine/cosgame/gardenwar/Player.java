@@ -23,6 +23,8 @@ public class Player {
 	List<Card> discard;
 	List<Card> equip;
 	
+	List<Boolean> canBuy;
+	
 	Board board;
 	
 	public Player() {
@@ -31,6 +33,7 @@ public class Player {
 		play = new ArrayList<>();
 		discard = new ArrayList<>();
 		equip = new ArrayList<>();
+		canBuy = new ArrayList<>();
 	}
 	
 	public void initialize() {
@@ -73,6 +76,30 @@ public class Player {
 	public void startTurn() {
 		sun = 0;
 		atk = 0;
+		canBuy = new ArrayList<>();
+		int i;
+		for (i=0;i<4;i++) {
+			canBuy.add(true);
+		}
+	}
+	
+	public void buyBasic(int x) {
+		Card c = board.getBasic(x);
+		if (c != null) {
+			if (canBuy.get(x) == true) {
+				if (sun >= c.getCost()) {
+					if (c.getCost() == 0) {
+						canBuy.set(x, false);
+					}
+					sun = sun - c.getCost();
+					gain(c);
+				}
+			}
+		}
+	}
+	
+	public void gain(Card c) {
+		discard.add(c);
 	}
 	
 	public void playCard(int x) {
@@ -81,6 +108,9 @@ public class Player {
 			play.add(c);
 			c.play();
 		}
+		if (hand.size() == 0) {
+			nextPhase();
+		}
 	}
 	
 	public void autoplay() {
@@ -88,6 +118,44 @@ public class Player {
 			Card c = hand.remove(0);
 			play.add(c);
 			c.play();
+		}
+		if (hand.size() == 0) {
+			nextPhase();
+		}
+	}
+	
+	public void cleanUp() {
+		while (play.size() > 0) {
+			Card c = play.remove(0);
+			discard.add(c);
+		}
+		while (hand.size() > 0) {
+			Card c = hand.remove(0);
+			discard.add(c);
+		}
+		draw(5);
+	}
+	
+	public void nextPhase() {
+		if (phase == Consts.OFFTURN) {
+			startTurn();
+			// TODO: Statuses
+			//phase = Consts.STATUSES;
+			phase = Consts.PLAY;
+		} else if (phase == Consts.STATUSES) {
+			phase = Consts.PLAY;
+		} else if (phase == Consts.PLAY) {
+			if (atk > 0) {
+				phase = Consts.ATTACK;
+			} else {
+				phase = Consts.BUY;
+			}
+		} else if (phase == Consts.ATTACK) {
+			phase = Consts.BUY;
+		} else if (phase == Consts.BUY) {
+			cleanUp();
+			phase = Consts.OFFTURN;
+			board.nextPlayer();
 		}
 	}
 	
@@ -163,6 +231,12 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public List<Boolean> getCanBuy() {
+		return canBuy;
+	}
+	public void setCanBuy(List<Boolean> canBuy) {
+		this.canBuy = canBuy;
+	}
 	List<Document> toCardDocumentList(List<Card> cards){
 		List<Document> docs = new ArrayList<>();
 		for (int i=0;i<cards.size();i++) {
@@ -192,6 +266,7 @@ public class Player {
 		doc.append("play", toCardDocumentList(play));
 		doc.append("discard", toCardDocumentList(discard));
 		doc.append("equip", toCardDocumentList(equip));
+		doc.append("canBuy", canBuy);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -205,6 +280,7 @@ public class Player {
 		play = toCardList((List<Document>) doc.get("play"));
 		discard = toCardList((List<Document>) doc.get("discard"));
 		equip = toCardList((List<Document>) doc.get("equip"));
+		canBuy = (List<Boolean>) doc.get("canBuy");
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();

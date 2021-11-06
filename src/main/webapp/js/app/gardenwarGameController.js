@@ -37,6 +37,8 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		});
 		
 		$scope.handDisplay = []
+		$scope.playDisplay = []
+		$scope.baseCardDisplay = []
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -54,7 +56,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.clickHand = function(x){
-			if ($scope.gamedata.curPlayer == $scope.gamedata.myIndex){
+			if ($scope.gamedata.curPlayer == $scope.gamedata.myIndex && $scope.gamedata.phase == 2){
 				var data = {"x" : x}
 				$http({url: "/gardenwar/play", method: "POST", params: data}).then(function(response){
 					$scope.allRefresh()
@@ -67,6 +69,67 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$http({url: "/gardenwar/autoplay", method: "POST"}).then(function(response){
 					$scope.allRefresh()
 				});
+			}
+		}
+		
+		canAfford = function(c){
+			//alert($scope.gamedata.curPlayerSun)
+			if (c.cost > $scope.gamedata.curPlayerSun){
+				return false;
+			}
+			return true;
+		}
+		
+		canAffordBasic = function(x){
+			var c = $scope.gamedata.baseCards[x]
+			if (canAfford(c) && $scope.gamedata.curPlayerCanBuy[x]){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		$scope.buyBasic = function(x){
+			if ($scope.gamedata.phase != 4) return
+			if (canAffordBasic(x)){
+				var data = {"x" : x}
+				$http({url: "/gardenwar/buybasic", method: "POST", params: data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
+		$scope.nextPhase = function(){
+			var flag = true
+			if ($scope.gamedata.phase == 2){
+				if ($scope.handDisplay.length > 0){
+					flag = confirm("你还有没打出的牌，确定吗？")
+				}
+			} else if ($scope.gamedata.phase == 3){
+				if ($scope.gamedata.curPlayerPea > 0){
+					flag = confirm("你还有未使用的攻击点数，确定吗？")
+				}
+			} else if ($scope.gamedata.phase == 4){
+				if ($scope.gamedata.curPlayerSun > 0){
+					flag = confirm("你还有未使用的阳光，确定吗？")
+				}
+			}
+			if (flag){
+				$http({url: "/gardenwar/nextphase", method: "POST"}).then(function(response){
+					$scope.allRefresh()
+				});
+			}			
+		}
+		
+		setMsgByPhase = function(){
+			if ($scope.gamedata.phase == 0){
+				$scope.playerMsg = "现在不是你的回合";
+			} else if ($scope.gamedata.phase == 2){
+				$scope.playerMsg = "出牌阶段";
+			} else if ($scope.gamedata.phase == 3){
+				$scope.playerMsg = "你可以对一名玩家（和该玩家放置的植物）造成伤害";
+			} else if ($scope.gamedata.phase == 4){
+				$scope.playerMsg = "你可以购买卡牌";
 			}
 		}
 		
@@ -90,6 +153,23 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		buildBaseCardDisplay = function(){
+			$scope.baseCardDisplay = []
+			var i;
+			for (i=0;i<$scope.gamedata.baseCards.length;i++){
+				var c = $scope.gamedata.baseCards[i];
+				var cd = buildCard(c);
+				
+				if (canAffordBasic(i) || $scope.gamedata.phase != 4){
+					cd.affordStyle = {}
+				} else {
+					cd.affordStyle = {"filter": "brightness(50%)"}
+				}
+				
+				$scope.baseCardDisplay.push(cd);
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/gardenwar/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -98,8 +178,11 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 					return;
 				}
 				$scope.gamedata = response.data
+				//alert(JSON.stringify($scope.gamedata.baseCards[2]))
+				setMsgByPhase()
 				buildHandDisplay()
 				buildPlayDisplay()
+				buildBaseCardDisplay()
 			});
 		}
 		

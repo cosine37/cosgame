@@ -23,8 +23,8 @@
 }
 
 .card-plant{
-	height: auto;
-	width: 70px;
+	height: 70px;
+	width: auto;
 	margin-bottom: 10px;
 	display: inline-block;
 }

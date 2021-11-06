@@ -19,15 +19,34 @@
 <body ng-app="gardenwarGameApp" ng-controller="gardenwarGameCtrl">
 	<button ng-click="goto('gardenwar')">back</button>
 	<div>
-		<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
-			style="float:left" class="play-size">
+		<div id="supply-area">
+			<div id = "base-supplu-area" style="width: 210px">
+				<div ng-repeat="cardDisplay in baseCardDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+					style="float:left" ng-style="cardDisplay.affordStyle" class="play-size" ng-click="buyBasic($index)"></div>
+			</div>
+			<div>
+			</div>
 		</div>
-		<div style="clear: both"> sun: {{gamedata.curPlayerSun}} pea: {{gamedata.curPlayerPea}}</div>
-		<div><button ng-show="gamedata.canAutoPlay == true && gamedata.curPlayer == gamedata.myIndex" ng-click="autoplay()">全部打出</button></div>
-		<div ng-repeat="cardDisplay in handDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
-			style="float:left" class="hand-size" ng-click="clickHand($index)">
+		<div style="clear:both"></div>
+		<div id="player-area">
+			<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+				style="float:left" class="play-size">
+			</div>
+			<div style="clear: both"> sun: {{gamedata.curPlayerSun}} pea: {{gamedata.curPlayerPea}}</div>
+			<div>
+				<span>{{playerMsg}}</span>
+				<button ng-show="gamedata.phase == 2 && gamedata.canAutoPlay == true && gamedata.curPlayer == gamedata.myIndex" ng-click="autoplay()">全部打出</button>
+				<button ng-show="gamedata.phase == 2" ng-click="nextPhase()">结束出牌</button>
+				<button ng-show="gamedata.phase == 3" ng-click="nextPhase()">结束攻击</button>
+				<button ng-show="gamedata.phase == 4" ng-click="nextPhase()">结束回合</button>
+			</div>
+			
+			<div ng-repeat="cardDisplay in handDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+				style="float:left" class="hand-size" ng-click="clickHand($index)">
+			</div>
 		</div>
 	</div>
+	
 	<!-- 
 	<div style="clear: both">
 		{{handDisplay}}

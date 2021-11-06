@@ -7,6 +7,8 @@ import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.gardenwar.base.PuffShroom;
+import com.cosine.cosgame.gardenwar.base.SunShroom;
 import com.cosine.cosgame.gardenwar.entity.BoardEntity;
 import com.cosine.cosgame.gardenwar.entity.CardEntity;
 import com.cosine.cosgame.gardenwar.entity.PlayerEntity;
@@ -22,7 +24,6 @@ public class Board {
 	List<Player> players;
 	List<Card> supplyDeck;
 	List<Card> supply;
-	List<List<Card>> basicPiles;
 	List<Integer> settings;
 	
 	MongoDBUtil dbutil;
@@ -31,7 +32,6 @@ public class Board {
 		players = new ArrayList<>();
 		supplyDeck = new ArrayList<>();
 		supply = new ArrayList<>();
-		basicPiles = new ArrayList<>();
 		
 		lord = "";
 		
@@ -50,6 +50,19 @@ public class Board {
 		Random rand = new Random();
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
+		players.get(curPlayer).nextPhase();
+	}
+	
+	public Card getBasic(int x) {
+		return AllRes.getBasic(x);
+	}
+	
+	public void nextPlayer() {
+		curPlayer = curPlayer+1;
+		if (curPlayer >= players.size()) {
+			curPlayer = curPlayer - players.size();
+		}
+		players.get(curPlayer).nextPhase();
 	}
 	
 	public void genBoardId() {
@@ -104,12 +117,6 @@ public class Board {
 	}
 	public void setSupply(List<Card> supply) {
 		this.supply = supply;
-	}
-	public List<List<Card>> getBasicPiles() {
-		return basicPiles;
-	}
-	public void setBasicPiles(List<List<Card>> basicPiles) {
-		this.basicPiles = basicPiles;
 	}
 	public int getStatus() {
 		return status;
@@ -273,11 +280,6 @@ public class Board {
 			doc.append(name, players.get(i).toDocument());
 		}
 		doc.append("playerNames", playerNames);
-		List<List<Document>> dob = new ArrayList<>();
-		for (i=0;i<basicPiles.size();i++) {
-			dob.add(toCardDocumentList(basicPiles.get(i)));
-		}
-		doc.append("basicPiles", dob);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -289,12 +291,8 @@ public class Board {
 		roundCount = doc.getInteger("roundCount", -1);
 		supplyDeck = toCardList((List<Document>)doc.get("supplyDeck"));
 		supply = toCardList((List<Document>)doc.get("supply"));
-		basicPiles = new ArrayList<>();
 		List<List<Document>> dob = (List<List<Document>>) doc.get("basicPiles");
 		int i;
-		for (i=0;i<dob.size();i++) {
-			basicPiles.add(toCardList(dob.get(i)));
-		}
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		
 		players = new ArrayList<>();
@@ -318,16 +316,23 @@ public class Board {
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		List<CardEntity> myHand = new ArrayList<>();
 		List<CardEntity> curPlayerPlay = new ArrayList<>();
+		List<Boolean> curPlayerCanBuy = new ArrayList<>();
 		int myIndex = -1;
+		int phase = Consts.OFFTURN;
 		int curPlayerSun = 0;
 		int curPlayerPea = 0;
 		boolean canAutoPlay = true;
+		List<CardEntity> baseCards = new ArrayList<>();
+		for (i=0;i<4;i++) {
+			baseCards.add(AllRes.getBasic(i).toCardEntity());
+		}
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerEntities.add(players.get(i).toPlayerEntity());
 			int j;
 			if (p.getName().contentEquals(username)) {
 				myIndex = i;
+				phase = p.getPhase();
 				for (j=0;j<p.getHand().size();j++) {
 					Card c = p.getHand().get(j);
 					myHand.add(c.toCardEntity());
@@ -335,10 +340,12 @@ public class Board {
 						canAutoPlay = false;
 					}
 				}
+				if (p.getHand().size()==0) canAutoPlay = false;
 			}
 			if (i == curPlayer) {
 				curPlayerSun = p.getSun();
 				curPlayerPea = p.getAtk();
+				curPlayerCanBuy = p.getCanBuy();
 				for (j=0;j<p.getPlay().size();j++) {
 					curPlayerPlay.add(p.getPlay().get(j).toCardEntity());
 				}
@@ -346,11 +353,14 @@ public class Board {
 		}
 		entity.setCanAutoPlay(canAutoPlay);
 		entity.setMyIndex(myIndex);
+		entity.setPhase(phase);
 		entity.setMyHand(myHand);
 		entity.setCurPlayerSun(curPlayerSun);
 		entity.setCurPlayerPea(curPlayerPea);
 		entity.setCurPlayerPlay(curPlayerPlay);
+		entity.setCurPlayerCanBuy(curPlayerCanBuy);
 		entity.setPlayers(playerEntities);
+		entity.setBaseCards(baseCards);
 		return entity;
 	}
 }
