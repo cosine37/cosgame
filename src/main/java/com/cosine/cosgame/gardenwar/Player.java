@@ -70,6 +70,33 @@ public class Player {
 		}
 	}
 	
+	public void startTurn() {
+		sun = 0;
+		atk = 0;
+	}
+	
+	public void playCard(int x) {
+		if (x>=0 && x<hand.size()) {
+			Card c = hand.remove(x);
+			play.add(c);
+			c.play();
+		}
+	}
+	
+	public void autoplay() {
+		while (hand.size()>0) {
+			Card c = hand.remove(0);
+			play.add(c);
+			c.play();
+		}
+	}
+	
+	public void addSun(int x) {
+		sun = sun+x;
+	}
+	public void addAtk(int x) {
+		atk = atk+x;
+	}
 	public String getName() {
 		return name;
 	}

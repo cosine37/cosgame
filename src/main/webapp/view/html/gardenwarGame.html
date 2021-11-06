@@ -19,15 +19,23 @@
 <body ng-app="gardenwarGameApp" ng-controller="gardenwarGameCtrl">
 	<button ng-click="goto('gardenwar')">back</button>
 	<div>
-		<div ng-repeat="cardDisplay in handDisplay" ng-include="'/view/html/gardenwarCard.html'" style="float:left">
-			
+		<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+			style="float:left" class="play-size">
+		</div>
+		<div style="clear: both"> sun: {{gamedata.curPlayerSun}} pea: {{gamedata.curPlayerPea}}</div>
+		<div><button ng-show="gamedata.canAutoPlay == true && gamedata.curPlayer == gamedata.myIndex" ng-click="autoplay()">全部打出</button></div>
+		<div ng-repeat="cardDisplay in handDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+			style="float:left" class="hand-size" ng-click="clickHand($index)">
 		</div>
 	</div>
+	<!-- 
 	<div style="clear: both">
 		{{handDisplay}}
 	</div>
-	<div>
+	 -->
+	<div style="clear: both">
 		{{gamedata}}
 	</div>
+	
 </body>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cosine.cosgame.gardenwar.Board;
 import com.cosine.cosgame.gardenwar.Consts;
 import com.cosine.cosgame.gardenwar.Meta;
+import com.cosine.cosgame.gardenwar.Player;
 import com.cosine.cosgame.gardenwar.entity.BoardEntity;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -103,6 +104,47 @@ public class GardenwarController {
 			if (board.isLord(username)) {
 				board.setSettings(settings);
 				board.startGame();
+				board.updateDB("firstPlayer", board.getFirstPlayer());
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/gardenwar/play", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> play(HttpServletRequest request, @RequestParam int x){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.playCard(x);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/gardenwar/autoplay", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> autoplay(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.autoplay();
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

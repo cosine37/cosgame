@@ -3,6 +3,7 @@ package com.cosine.cosgame.gardenwar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -46,6 +47,9 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).initialize();
 		}
+		Random rand = new Random();
+		firstPlayer = rand.nextInt(players.size());
+		curPlayer = firstPlayer;
 	}
 	
 	public void genBoardId() {
@@ -211,10 +215,6 @@ public class Board {
 		dbutil.update("id", id, key, value);
 	}
 	
-	public void updateBasicDB() {
-		updateDB("status", status);
-	}
-	
 	public void removePlayerFromDB(int index) {
 		String playerName = "player-" + players.get(index).getName();
 		players.remove(index);
@@ -248,6 +248,11 @@ public class Board {
 		} else {
 			return true;
 		}
+	}
+	
+	public void updateBasicDB() {
+		updateDB("status", status);
+		updateDB("curPlayer", curPlayer);
 	}
 	
 	public Document toDocument() {
@@ -308,20 +313,43 @@ public class Board {
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(status);
+		entity.setCurPlayer(curPlayer);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		List<CardEntity> myHand = new ArrayList<>();
+		List<CardEntity> curPlayerPlay = new ArrayList<>();
+		int myIndex = -1;
+		int curPlayerSun = 0;
+		int curPlayerPea = 0;
+		boolean canAutoPlay = true;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerEntities.add(players.get(i).toPlayerEntity());
 			int j;
 			if (p.getName().contentEquals(username)) {
+				myIndex = i;
 				for (j=0;j<p.getHand().size();j++) {
-					myHand.add(p.getHand().get(j).toCardEntity());
+					Card c = p.getHand().get(j);
+					myHand.add(c.toCardEntity());
+					if (c.isAutoplay() == false) {
+						canAutoPlay = false;
+					}
+				}
+			}
+			if (i == curPlayer) {
+				curPlayerSun = p.getSun();
+				curPlayerPea = p.getAtk();
+				for (j=0;j<p.getPlay().size();j++) {
+					curPlayerPlay.add(p.getPlay().get(j).toCardEntity());
 				}
 			}
 		}
+		entity.setCanAutoPlay(canAutoPlay);
+		entity.setMyIndex(myIndex);
 		entity.setMyHand(myHand);
+		entity.setCurPlayerSun(curPlayerSun);
+		entity.setCurPlayerPea(curPlayerPea);
+		entity.setCurPlayerPlay(curPlayerPlay);
 		entity.setPlayers(playerEntities);
 		return entity;
 	}

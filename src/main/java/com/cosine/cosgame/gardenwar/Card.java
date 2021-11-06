@@ -33,7 +33,7 @@ public class Card {
 	
 	public Card() {
 		taunt = false;
-		autoplay = true;
+		autoplay = false;
 		type = Consts.CARD;
 		clan = new ArrayList<>();
 		int i;
@@ -48,9 +48,10 @@ public class Card {
 	}
 	
 	public void play() {
-		
+		player.addSun(sun);
+		player.addAtk(atk);
 	}
-	public void startTurn() {
+	public void activate() {
 		
 	}
 	public void addClan(int x) {

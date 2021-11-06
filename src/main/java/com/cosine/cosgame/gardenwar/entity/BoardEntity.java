@@ -6,9 +6,15 @@ public class BoardEntity {
 	String id;
 	String lord;
 	int status;
+	int curPlayer;
+	int myIndex;
 	List<PlayerEntity> players;
-	
 	List<CardEntity> myHand;
+	boolean canAutoPlay;
+	
+	int curPlayerSun;
+	int curPlayerPea;
+	List<CardEntity> curPlayerPlay;
 
 	public String getId() {
 		return id;
@@ -39,6 +45,42 @@ public class BoardEntity {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public int getCurPlayerSun() {
+		return curPlayerSun;
+	}
+	public void setCurPlayerSun(int curPlayerSun) {
+		this.curPlayerSun = curPlayerSun;
+	}
+	public int getCurPlayerPea() {
+		return curPlayerPea;
+	}
+	public void setCurPlayerPea(int curPlayerPea) {
+		this.curPlayerPea = curPlayerPea;
+	}
+	public List<CardEntity> getCurPlayerPlay() {
+		return curPlayerPlay;
+	}
+	public void setCurPlayerPlay(List<CardEntity> curPlayerPlay) {
+		this.curPlayerPlay = curPlayerPlay;
+	}
+	public int getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(int curPlayer) {
+		this.curPlayer = curPlayer;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
+	}
+	public boolean isCanAutoPlay() {
+		return canAutoPlay;
+	}
+	public void setCanAutoPlay(boolean canAutoPlay) {
+		this.canAutoPlay = canAutoPlay;
 	}
 	
 }

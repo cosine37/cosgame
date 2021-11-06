@@ -10,6 +10,7 @@ public class PuffShroom extends Card{
 		cost = 0;
 		type = Consts.CARD;
 		atk = 1;
+		autoplay = true;
 		addClan(Consts.MUSHROOM);
 	}
 }

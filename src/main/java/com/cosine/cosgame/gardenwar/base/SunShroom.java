@@ -10,6 +10,8 @@ public class SunShroom extends Card{
 		cost = 0;
 		type = Consts.CARD;
 		sun = 1;
+		autoplay = true;
 		addClan(Consts.MUSHROOM);
+		
 	}
 }
