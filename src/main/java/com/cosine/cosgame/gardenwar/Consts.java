@@ -10,6 +10,8 @@ public class Consts {
 	public static final int MUSHROOM = 0;
 	public static final int PEA = 1;
 	public static final int FLOWER = 2;
+	public static final int WOOD = 3;
+	public static final int FRUIT = 4;
 	
 	//board statuses
 	public static final int PREGAME = 0;
@@ -22,4 +24,7 @@ public class Consts {
 	public static final int PLAY = 2;
 	public static final int ATTACK = 3;
 	public static final int BUY = 4;
+	
+	//rule related
+	public static final int SUPPLYSIZE = 5;
 }

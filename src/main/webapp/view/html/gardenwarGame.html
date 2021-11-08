@@ -19,16 +19,18 @@
 <body ng-app="gardenwarGameApp" ng-controller="gardenwarGameCtrl">
 	<button ng-click="goto('gardenwar')">back</button>
 	<div>
-		<div id="supply-area">
-			<div id = "base-supplu-area" style="width: 210px">
+		<div id="supply-area" style="position: relative; height: 350px">
+			<div id="base-supply-area" style="position:absolute; width: 210px">
 				<div ng-repeat="cardDisplay in baseCardDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
 					style="float:left" ng-style="cardDisplay.affordStyle" class="play-size" ng-click="buyBasic($index)"></div>
 			</div>
-			<div>
+			<div id="supply-area"  style="position:absolute; left: 220px">
+				<div ng-repeat="cardDisplay in supplyCardDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+					style="float:left" ng-style="cardDisplay.affordStyle" class="hand-size" ng-click="buy($index)"></div>
 			</div>
 		</div>
 		<div style="clear:both"></div>
-		<div id="player-area">
+		<div id="player-area" style="position: relative">
 			<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
 				style="float:left" class="play-size">
 			</div>

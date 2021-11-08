@@ -16,6 +16,7 @@ public class Card {
 	protected int cost;
 	protected int type;
 	protected int shield;
+	protected int level;
 	protected List<Integer> clan;
 	protected List<Integer> extraBits;
 	
@@ -44,6 +45,7 @@ public class Card {
 		atk = 0;
 		shield = 0;
 		cost = 0;
+		level = 0;
 		desc = "";
 	}
 	
@@ -166,11 +168,23 @@ public class Card {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+	public int getShield() {
+		return shield;
+	}
+	public void setShield(int shield) {
+		this.shield = shield;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public String getClanDisplay() {
 		boolean flag = true;
 		String ans = "";
 		int i;
-		final String[] clanNames = {"蘑菇", "豌豆", "花朵"};
+		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实"};
 		for (i=0;i<clan.size();i++) {
 			if (clan.get(i) == 1 && i<clanNames.length) {
 				String s = clanNames[i];
@@ -204,7 +218,7 @@ public class Card {
 		CardEntity entity = new CardEntity();
 		entity.setName(name);
 		entity.setImg(img);
-		entity.setDesc(desc);
+		entity.setDesc(getDesc());
 		entity.setClan(getClanDisplay());
 		entity.setCost(cost);
 		entity.setShield(shield);
@@ -212,6 +226,7 @@ public class Card {
 		entity.setSun(sun);
 		entity.setPea(atk);
 		entity.setTaunt(taunt);
+		entity.setLevel(level);
 		return entity;
 	}
 	

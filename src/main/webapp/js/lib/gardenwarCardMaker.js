@@ -1,3 +1,19 @@
+function setNameStyle(cardDisplay){
+	var c = cardDisplay.card
+	if (c.level == 1){
+		cardDisplay.name = {
+			"background-color": "deepskyblue"
+		}
+	} else if (c.level == 2){
+		cardDisplay.name = {
+			"background-color": "gold"
+		}
+	} else {
+		cardDisplay.name = {
+			"background-color": "lightgrey"
+		}
+	}
+}
 function setStyleByType(cardDisplay){
 	var c = cardDisplay.card
 	if (c.type == "放置"){
@@ -65,7 +81,7 @@ function setDescStyle(cardDisplay){
 		}
 		if (cardDisplay.showDescText){
 			cardDisplay.sun = {
-				"top": "0px",
+				"top": "5px",
 				"height": "40px",
 				"width": "40px",
 				"left": "65px"
@@ -74,32 +90,49 @@ function setDescStyle(cardDisplay){
 				"width": "40px",
 				"font-size": "24px"
 			}
-			cardDisplay.descText["top"] = "50px"
+			cardDisplay.descText["top"] = "55px"
 		}
 	} else if (cardDisplay.showPea){
 		cardDisplay.pea = {
 			"top": "20px"
 		}
 		if (cardDisplay.showDescText){
-			cardDisplay.pea = {
-				"top": "0px",
-				"height": "40px",
-				"width": "40px",
-				"left": "65px"
+			if (c.desc.length > 10){
+				cardDisplay.pea = {
+					"top": "0px",
+					"height": "40px",
+					"width": "40px",
+					"left": "65px"
+				}
+				cardDisplay.peaValue = {
+					"width": "40px",
+					"font-size": "24px"
+				}
+				cardDisplay.descText["top"] = "50px"
+			} else {
+				cardDisplay.pea = {
+					"top": "5px",
+					"height": "40px",
+					"width": "40px",
+					"left": "65px"
+				}
+				cardDisplay.peaValue = {
+					"width": "40px",
+					"font-size": "24px"
+				}
+				cardDisplay.descText["top"] = "55px"
 			}
-			cardDisplay.peaValue = {
-				"width": "40px",
-				"font-size": "24px"
-			}
-			cardDisplay.descText["top"] = "50px"
+			
 		}
 	} else {
 		if (c.desc.length>30){
 			cardDisplay.descText["top"] = "0px"
 		} else if (c.desc.length>20){
 			cardDisplay.descText["top"] = "7px"
-		} else {
+		} else if (c.desc.length>10){
 			cardDisplay.descText["top"] = "15px"
+		} else {
+			cardDisplay.descText["top"] = "25px"
 		}
 		
 	}
@@ -196,9 +229,6 @@ function buildCard(c){
 	cardDisplay.base = {
 		"background-color": "beige"
 	}
-	cardDisplay.name = {
-		"background-color": "lightgrey"
-	}
 	cardDisplay.clan = {
 		"background-color": "lightgrey"
 	}
@@ -206,6 +236,7 @@ function buildCard(c){
 		"color": "black"
 	}
 	cardDisplay.showShield = false
+	setNameStyle(cardDisplay)
 	setStyleByType(cardDisplay)
 	setDescStyle(cardDisplay)
 	renderKeywords(cardDisplay)

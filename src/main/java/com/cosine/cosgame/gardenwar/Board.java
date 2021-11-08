@@ -51,10 +51,32 @@ public class Board {
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
 		players.get(curPlayer).nextPhase();
+		
+		AllRes allRes = new AllRes();
+		supplyDeck = allRes.getSupplyDeck();
+		supply = new ArrayList<>();
+		for (i=0;i<Consts.SUPPLYSIZE;i++) {
+			if (supplyDeck.size() == 0) break;
+			Card c = supplyDeck.remove(0);
+			supply.add(c);
+		}
 	}
 	
 	public Card getBasic(int x) {
 		return AllRes.getBasic(x);
+	}
+	
+	public Card popSupply(int x) {
+		if (x>=0 && x<supply.size()) {
+			Card card = supply.remove(x);
+			if (supplyDeck.size() > 0) {
+				Card c = supplyDeck.remove(0);
+				supply.add(c);
+			}
+			return card;
+		} else {
+			return null;
+		}
 	}
 	
 	public void nextPlayer() {
@@ -260,6 +282,8 @@ public class Board {
 	public void updateBasicDB() {
 		updateDB("status", status);
 		updateDB("curPlayer", curPlayer);
+		updateDB("supplyDeck", toCardDocumentList(supplyDeck));
+		updateDB("supply", toCardDocumentList(supply));
 	}
 	
 	public Document toDocument() {
@@ -326,6 +350,10 @@ public class Board {
 		for (i=0;i<4;i++) {
 			baseCards.add(AllRes.getBasic(i).toCardEntity());
 		}
+		List<CardEntity> supplyCards = new ArrayList<>();
+		for (i=0;i<supply.size();i++) {
+			supplyCards.add(supply.get(i).toCardEntity());
+		}
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerEntities.add(players.get(i).toPlayerEntity());
@@ -361,6 +389,7 @@ public class Board {
 		entity.setCurPlayerCanBuy(curPlayerCanBuy);
 		entity.setPlayers(playerEntities);
 		entity.setBaseCards(baseCards);
+		entity.setSupply(supplyCards);
 		return entity;
 	}
 }

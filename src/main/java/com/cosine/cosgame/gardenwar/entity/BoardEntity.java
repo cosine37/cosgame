@@ -17,6 +17,7 @@ public class BoardEntity {
 	int curPlayerPea;
 	List<CardEntity> curPlayerPlay;
 	List<CardEntity> baseCards;
+	List<CardEntity> supply;
 	List<Boolean> curPlayerCanBuy;
 
 	public String getId() {
@@ -102,6 +103,12 @@ public class BoardEntity {
 	}
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	public List<CardEntity> getSupply() {
+		return supply;
+	}
+	public void setSupply(List<CardEntity> supply) {
+		this.supply = supply;
 	}
 	
 }

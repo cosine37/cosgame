@@ -1,8 +1,17 @@
 package com.cosine.cosgame.gardenwar;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.cosine.cosgame.gardenwar.base.*;
 
 public class AllRes {
+	public List<Card> baseCards;
+	
+	public AllRes() {
+		buildBaseCards();
+	}
 	public static Card getBasic(int x) {
 		Card c = null;
 		if (x == 2) {
@@ -15,5 +24,51 @@ public class AllRes {
 			c = new Sunflower();
 		}
 		return c;
+	}
+	public void buildBaseCards() {
+		int i;
+		baseCards = new ArrayList<>();
+		for (i=0;i<3;i++) {
+			baseCards.add(new Repeater());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new TwinSunflower());
+		}
+		for (i=0;i<3;i++) {
+			baseCards.add(new MagnetShroom());
+		}
+		for (i=0;i<4;i++) {
+			baseCards.add(new Cactus());
+		}
+		for (i=0;i<3;i++) {
+			baseCards.add(new Starfruit());
+		}
+		for (i=0;i<4;i++) {
+			baseCards.add(new FumeShroom());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new GloomShroom());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new GoldMagnet());
+		}
+	}
+	public List<Card> getSupplyDeck() {
+		int i;
+		List<Card> supplyDeck = new ArrayList<>();
+		List<Card> tempCards = new ArrayList<>();
+		
+		for (i=0;i<baseCards.size();i++) {
+			tempCards.add(baseCards.get(i));
+		}
+		
+		while(tempCards.size() > 0) {
+			Random rand = new Random();
+			int x = rand.nextInt(tempCards.size());
+			Card c = tempCards.remove(x);
+			supplyDeck.add(c);
+		}
+		
+		return supplyDeck;
 	}
 }

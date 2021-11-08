@@ -18,6 +18,22 @@ public class CardFactory {
 			card = new PeaShooter();
 		} else if (img.contentEquals("sunflower")) {
 			card = new Sunflower();
+		} else if (img.contentEquals("repeater")) {
+			card = new Repeater();
+		} else if (img.contentEquals("twinSunflower")) {
+			card = new TwinSunflower();
+		} else if (img.contentEquals("magnetShroom")) {
+			card = new MagnetShroom();
+		} else if (img.contentEquals("cactus")) {
+			card = new Cactus();
+		} else if (img.contentEquals("starfruit")) {
+			card = new Starfruit();
+		} else if (img.contentEquals("fumeShroom")) {
+			card = new FumeShroom();
+		} else if (img.contentEquals("gloomShroom")) {
+			card = new GloomShroom();
+		} else if (img.contentEquals("goldMagnet")) {
+			card = new GoldMagnet();
 		}
 		return card;
 	}

@@ -8,7 +8,7 @@ var sleep = function(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var app = angular.module("gardenwarGameApp", ["ngWebSocket"]);
+var app = angular.module("gardenwarGameApp", ["ngWebSocket", "ngSanitize"]);
 app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/gardenwar/boardrefresh");
@@ -39,6 +39,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.handDisplay = []
 		$scope.playDisplay = []
 		$scope.baseCardDisplay = []
+		$scope.supplyCardDisplay = []
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -88,12 +89,30 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 				return false;
 			}
 		}
+		canAffordSupply = function(x){
+			var c = $scope.gamedata.supply[x]
+			if (canAfford(c)){
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 		$scope.buyBasic = function(x){
 			if ($scope.gamedata.phase != 4) return
 			if (canAffordBasic(x)){
 				var data = {"x" : x}
 				$http({url: "/gardenwar/buybasic", method: "POST", params: data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
+		$scope.buy = function(x){
+			if ($scope.gamedata.phase != 4) return
+			if (canAffordSupply(x)){
+				var data = {"x" : x}
+				$http({url: "/gardenwar/buy", method: "POST", params: data}).then(function(response){
 					$scope.allRefresh()
 				});
 			}
@@ -170,6 +189,22 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		buildSupplyCardDisplay = function(){
+			$scope.supplyCardDisplay = []
+			var i;
+			for (i=0;i<$scope.gamedata.supply.length;i++){
+				var c = $scope.gamedata.supply[i];
+				var cd = buildCard(c);
+				
+				if (canAfford(c) || $scope.gamedata.phase != 4){
+					cd.affordStyle = {}
+				} else {
+					cd.affordStyle = {"filter": "brightness(50%)"}
+				}
+				$scope.supplyCardDisplay.push(cd);
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/gardenwar/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -183,6 +218,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 				buildHandDisplay()
 				buildPlayDisplay()
 				buildBaseCardDisplay()
+				buildSupplyCardDisplay()
 			});
 		}
 		

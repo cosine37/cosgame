@@ -98,6 +98,17 @@ public class Player {
 		}
 	}
 	
+	public void buy(int x) {
+		if (x>=0 && x<board.getSupply().size()) {
+			Card c = board.getSupply().get(x);
+			if (sun >= c.getCost()) {
+				board.popSupply(x);
+				sun = sun-c.getCost();
+				gain(c);
+			}
+		}
+	}
+	
 	public void gain(Card c) {
 		discard.add(c);
 	}
@@ -157,6 +168,16 @@ public class Player {
 			phase = Consts.OFFTURN;
 			board.nextPlayer();
 		}
+	}
+	
+	public int numCards() {
+		int ans = 0;
+		ans = ans + hand.size();
+		ans = ans + deck.size();
+		ans = ans + discard.size();
+		ans = ans + play.size();
+		ans = ans + equip.size();
+		return ans;
 	}
 	
 	public void addSun(int x) {

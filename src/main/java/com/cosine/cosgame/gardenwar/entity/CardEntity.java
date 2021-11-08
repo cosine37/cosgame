@@ -11,6 +11,7 @@ public class CardEntity {
 	int pea;
 	int cost;
 	int shield;
+	int level;
 	boolean taunt;
 	
 	public String getName() {
@@ -72,5 +73,11 @@ public class CardEntity {
 	}
 	public void setTaunt(boolean taunt) {
 		this.taunt = taunt;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }
