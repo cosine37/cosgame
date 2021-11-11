@@ -40,6 +40,8 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.playDisplay = []
 		$scope.baseCardDisplay = []
 		$scope.supplyCardDisplay = []
+		$scope.target = -1
+		$scope.targets = []
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -58,10 +60,60 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.clickHand = function(x){
 			if ($scope.gamedata.curPlayer == $scope.gamedata.myIndex && $scope.gamedata.phase == 2){
-				var data = {"x" : x}
-				$http({url: "/gardenwar/play", method: "POST", params: data}).then(function(response){
+				if ($scope.gamedata.askType == 0){ // play card
+					var data = {"x" : x}
+					$http({url: "/gardenwar/play", method: "POST", params: data}).then(function(response){
+						$scope.allRefresh()
+					});
+				} else if ($scope.gamedata.askType == 2){
+					if (x>=0 && x<$scope.gamedata.myHand.length && $scope.gamedata.myHand[x].type != 2){
+						if ($scope.target != x){
+							$scope.target = x
+						} else {
+							$scope.target = -1
+						}
+						
+					}
+				}
+			}
+		}
+		
+		$scope.resolve = function(){
+			if ($scope.gamedata.askType == 2){
+				var targets = [];
+				targets.push($scope.target)
+				var data = {"targets" : targets}
+				$http({url: "/gardenwar/resolve", method: "POST", params: data}).then(function(response){
 					$scope.allRefresh()
 				});
+			}
+		}
+		
+		$scope.cancelResolve = function(){
+			if ($scope.gamedata.askType == 2){
+				var flag = confirm("你确定不选择目标吗？");
+				if (flag = false) return;
+				var targets = [];
+				targets.push(-1)
+				var data = {"targets" : targets}
+				$http({url: "/gardenwar/resolve", method: "POST", params: data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
+		$scope.disableResolve = function(){
+			if ($scope.gamedata == null) return true;
+			if ($scope.gamedata.askType == 2){
+				if ($scope.target>=0 && $scope.target<$scope.gamedata.myHand.length){
+					return false;
+				} else {
+					return true;
+				}
+			}
+			
+			else {
+				return true;
 			}
 		}
 		
@@ -205,6 +257,16 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		setTargets = function(){
+			$scope.target = -1
+			$scope.targets = []
+			if ($scope.gamedata.type == 2){
+				for (i=0;i<$scope.gamedata.myHand.length;i++){
+					$scope,targets.push(0);
+				}
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/gardenwar/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -219,6 +281,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 				buildPlayDisplay()
 				buildBaseCardDisplay()
 				buildSupplyCardDisplay()
+				setTargets()
 			});
 		}
 		

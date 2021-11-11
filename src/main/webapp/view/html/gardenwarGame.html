@@ -36,16 +36,22 @@
 			</div>
 			<div style="clear: both"> sun: {{gamedata.curPlayerSun}} pea: {{gamedata.curPlayerPea}}</div>
 			<div>
-				<span>{{playerMsg}}</span>
-				<button ng-show="gamedata.phase == 2 && gamedata.canAutoPlay == true && gamedata.curPlayer == gamedata.myIndex" ng-click="autoplay()">全部打出</button>
-				<button ng-show="gamedata.phase == 2" ng-click="nextPhase()">结束出牌</button>
+				<span ng-show="gamedata.askType == 0">{{playerMsg}}</span>
+				<button ng-show="gamedata.phase == 2 && gamedata.askType == 0 && 
+					gamedata.canAutoPlay == true && gamedata.curPlayer == gamedata.myIndex" ng-click="autoplay()">全部打出</button>
+				<button ng-show="gamedata.phase == 2 && gamedata.askType == 0" ng-click="nextPhase()">结束出牌</button>
 				<button ng-show="gamedata.phase == 3" ng-click="nextPhase()">结束攻击</button>
 				<button ng-show="gamedata.phase == 4" ng-click="nextPhase()">结束回合</button>
+				
+				<span ng-show="gamedata.askType != 0">{{gamedata.askMsg}}</span>
+				<button ng-show="gamedata.askType != 0" ng-disabled="disableResolve()" ng-click="resolve()">确认</button>
+				<button ng-show="gamedata.askType != 0" ng-click="cancelResolve()">取消</button>
+			</div>
+			<div ng-repeat="cardDisplay in handDisplay track by $index" style="float:left; position: relative" class="hand-size" ng-click="clickHand($index)">
+				<div ng-include="'/view/html/gardenwarCard.html'"></div>
+				<div class="choosehand" ng-show="target == $index">
 			</div>
 			
-			<div ng-repeat="cardDisplay in handDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
-				style="float:left" class="hand-size" ng-click="clickHand($index)">
-			</div>
 		</div>
 	</div>
 	

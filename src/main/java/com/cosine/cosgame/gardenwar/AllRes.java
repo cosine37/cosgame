@@ -52,6 +52,15 @@ public class AllRes {
 		for (i=0;i<2;i++) {
 			baseCards.add(new GoldMagnet());
 		}
+		for (i=0;i<4;i++) {
+			baseCards.add(new CabbagePult());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new MelonPult());
+		}
+		for (i=0;i<3;i++) {
+			baseCards.add(new Gravebuster());
+		}
 	}
 	public List<Card> getSupplyDeck() {
 		int i;

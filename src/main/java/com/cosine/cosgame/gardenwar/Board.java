@@ -24,6 +24,7 @@ public class Board {
 	List<Player> players;
 	List<Card> supplyDeck;
 	List<Card> supply;
+	List<Card> trash;
 	List<Integer> settings;
 	
 	MongoDBUtil dbutil;
@@ -32,6 +33,7 @@ public class Board {
 		players = new ArrayList<>();
 		supplyDeck = new ArrayList<>();
 		supply = new ArrayList<>();
+		trash = new ArrayList<>();
 		
 		lord = "";
 		
@@ -157,6 +159,12 @@ public class Board {
 	}
 	public void setSettings(List<Integer> settings) {
 		this.settings = settings;
+	}
+	public List<Card> getTrash() {
+		return trash;
+	}
+	public void setTrash(List<Card> trash) {
+		this.trash = trash;
 	}
 	List<Document> toCardDocumentList(List<Card> cards){
 		List<Document> docs = new ArrayList<>();
@@ -284,6 +292,7 @@ public class Board {
 		updateDB("curPlayer", curPlayer);
 		updateDB("supplyDeck", toCardDocumentList(supplyDeck));
 		updateDB("supply", toCardDocumentList(supply));
+		updateDB("trash", toCardDocumentList(trash));
 	}
 	
 	public Document toDocument() {
@@ -296,6 +305,7 @@ public class Board {
 		doc.append("roundCount", roundCount);
 		doc.append("supplyDeck", toCardDocumentList(supplyDeck));
 		doc.append("supply", toCardDocumentList(supply));
+		doc.append("trash", toCardDocumentList(trash));
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -315,6 +325,7 @@ public class Board {
 		roundCount = doc.getInteger("roundCount", -1);
 		supplyDeck = toCardList((List<Document>)doc.get("supplyDeck"));
 		supply = toCardList((List<Document>)doc.get("supply"));
+		trash = toCardList((List<Document>)doc.get("trash"));
 		List<List<Document>> dob = (List<List<Document>>) doc.get("basicPiles");
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -346,6 +357,9 @@ public class Board {
 		int curPlayerSun = 0;
 		int curPlayerPea = 0;
 		boolean canAutoPlay = true;
+		int askType = 0;
+		int askSubType = 0;
+		String askMsg = "";
 		List<CardEntity> baseCards = new ArrayList<>();
 		for (i=0;i<4;i++) {
 			baseCards.add(AllRes.getBasic(i).toCardEntity());
@@ -369,6 +383,10 @@ public class Board {
 					}
 				}
 				if (p.getHand().size()==0) canAutoPlay = false;
+				
+				askType = p.getAskType();
+				askSubType = p.getAskSubType();
+				askMsg = p.getAskMsg();
 			}
 			if (i == curPlayer) {
 				curPlayerSun = p.getSun();
@@ -390,6 +408,9 @@ public class Board {
 		entity.setPlayers(playerEntities);
 		entity.setBaseCards(baseCards);
 		entity.setSupply(supplyCards);
+		entity.setAskMsg(askMsg);
+		entity.setAskType(askType);
+		entity.setAskSubType(askSubType);
 		return entity;
 	}
 }

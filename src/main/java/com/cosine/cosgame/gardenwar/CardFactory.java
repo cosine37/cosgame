@@ -34,6 +34,12 @@ public class CardFactory {
 			card = new GloomShroom();
 		} else if (img.contentEquals("goldMagnet")) {
 			card = new GoldMagnet();
+		} else if (img.contentEquals("cabbagePult")) {
+			card = new CabbagePult();
+		} else if (img.contentEquals("melonPult")) {
+			card = new MelonPult();
+		} else if (img.contentEquals("gravebuster")) {
+			card = new Gravebuster();
 		}
 		return card;
 	}

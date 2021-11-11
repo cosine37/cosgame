@@ -19,6 +19,10 @@ public class BoardEntity {
 	List<CardEntity> baseCards;
 	List<CardEntity> supply;
 	List<Boolean> curPlayerCanBuy;
+	
+	int askType;
+	int askSubType;
+	String askMsg;
 
 	public String getId() {
 		return id;
@@ -109,6 +113,24 @@ public class BoardEntity {
 	}
 	public void setSupply(List<CardEntity> supply) {
 		this.supply = supply;
+	}
+	public int getAskType() {
+		return askType;
+	}
+	public void setAskType(int askType) {
+		this.askType = askType;
+	}
+	public int getAskSubType() {
+		return askSubType;
+	}
+	public void setAskSubType(int askSubType) {
+		this.askSubType = askSubType;
+	}
+	public String getAskMsg() {
+		return askMsg;
+	}
+	public void setAskMsg(String askMsg) {
+		this.askMsg = askMsg;
 	}
 	
 }

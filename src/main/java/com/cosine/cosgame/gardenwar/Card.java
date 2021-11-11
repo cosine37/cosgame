@@ -31,10 +31,12 @@ public class Card {
 	
 	protected boolean taunt;
 	protected boolean autoplay;
+	protected boolean trashable;
 	
 	public Card() {
 		taunt = false;
 		autoplay = false;
+		trashable = true;
 		type = Consts.CARD;
 		clan = new ArrayList<>();
 		int i;
@@ -52,6 +54,14 @@ public class Card {
 	public void play() {
 		player.addSun(sun);
 		player.addAtk(atk);
+	}
+	public void resolve(List<Integer> targets) {
+		
+	}
+	public void resolve(int x) {
+		List<Integer> targets = new ArrayList<>();
+		targets.add(x);
+		resolve(targets);
 	}
 	public void activate() {
 		
@@ -180,11 +190,17 @@ public class Card {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	public boolean isTrashable() {
+		return trashable;
+	}
+	public void setTrashable(boolean trashable) {
+		this.trashable = trashable;
+	}
 	public String getClanDisplay() {
 		boolean flag = true;
 		String ans = "";
 		int i;
-		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实"};
+		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手"};
 		for (i=0;i<clan.size();i++) {
 			if (clan.get(i) == 1 && i<clanNames.length) {
 				String s = clanNames[i];

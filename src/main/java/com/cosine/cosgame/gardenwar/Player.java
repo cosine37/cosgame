@@ -26,6 +26,12 @@ public class Player {
 	List<Boolean> canBuy;
 	
 	Board board;
+
+	// ask
+	int askType;
+	int askSubType;
+	List<Integer> askExtraBits;
+	String askMsg;
 	
 	public Player() {
 		hand = new ArrayList<>();
@@ -34,6 +40,8 @@ public class Player {
 		discard = new ArrayList<>();
 		equip = new ArrayList<>();
 		canBuy = new ArrayList<>();
+		
+		emptyAsk();
 	}
 	
 	public void initialize() {
@@ -69,6 +77,15 @@ public class Player {
 			} else {
 				Card c = deck.remove(0);
 				hand.add(c);
+			}
+		}
+	}
+	
+	public void trash(int x) {
+		if (x>=0 && x<hand.size()) {
+			if (hand.get(x).isTrashable()) {
+				Card c = hand.remove(x);
+				board.getTrash().add(c);
 			}
 		}
 	}
@@ -122,6 +139,13 @@ public class Player {
 		if (hand.size() == 0) {
 			nextPhase();
 		}
+	}
+	
+	public void resolveCard(List<Integer> targets) {
+		// TODO: may need some work here
+		int x = play.size()-1;
+		Card card = play.get(x);
+		card.resolve(targets);
 	}
 	
 	public void autoplay() {
@@ -180,6 +204,12 @@ public class Player {
 		return ans;
 	}
 	
+	public void emptyAsk() {
+		askType = Consts.NONE;
+		askSubType = Consts.NONE;
+		askExtraBits = new ArrayList<>();
+		askMsg = "";
+	}
 	public void addSun(int x) {
 		sun = sun+x;
 	}
@@ -258,6 +288,31 @@ public class Player {
 	public void setCanBuy(List<Boolean> canBuy) {
 		this.canBuy = canBuy;
 	}
+	public int getAskType() {
+		return askType;
+	}
+	public void setAskType(int askType) {
+		this.askType = askType;
+	}
+	public int getAskSubType() {
+		return askSubType;
+	}
+	public void setAskSubType(int askSubType) {
+		this.askSubType = askSubType;
+	}
+	public List<Integer> getAskExtraBits() {
+		return askExtraBits;
+	}
+	public void setAskExtraBits(List<Integer> askExtraBits) {
+		this.askExtraBits = askExtraBits;
+	}
+	public String getAskMsg() {
+		return askMsg;
+	}
+	public void setAskMsg(String askMsg) {
+		this.askMsg = askMsg;
+	}
+
 	List<Document> toCardDocumentList(List<Card> cards){
 		List<Document> docs = new ArrayList<>();
 		for (int i=0;i<cards.size();i++) {
@@ -288,6 +343,10 @@ public class Player {
 		doc.append("discard", toCardDocumentList(discard));
 		doc.append("equip", toCardDocumentList(equip));
 		doc.append("canBuy", canBuy);
+		doc.append("askType", askType);
+		doc.append("askSubType", askSubType);
+		doc.append("askExtraBits", askExtraBits);
+		doc.append("askMsg", askMsg);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -302,6 +361,10 @@ public class Player {
 		discard = toCardList((List<Document>) doc.get("discard"));
 		equip = toCardList((List<Document>) doc.get("equip"));
 		canBuy = (List<Boolean>) doc.get("canBuy");
+		askType = doc.getInteger("askType", Consts.NONE);
+		askSubType = doc.getInteger("astSubType", Consts.NONE);
+		askExtraBits = (List<Integer>) doc.get("askExtraBits");
+		askMsg = doc.getString("askMsg");
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();

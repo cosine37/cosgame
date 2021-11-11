@@ -4,6 +4,7 @@ public class Consts {
 	//types
 	public static final int CARD = 0;
 	public static final int EQUIP = 1;
+	public static final int ZOMBIE = 2;
 	
 	//clans
 	public static final int NUMCLANS = 10;
@@ -12,6 +13,7 @@ public class Consts {
 	public static final int FLOWER = 2;
 	public static final int WOOD = 3;
 	public static final int FRUIT = 4;
+	public static final int CATAPULT = 5;
 	
 	//board statuses
 	public static final int PREGAME = 0;
@@ -27,4 +29,11 @@ public class Consts {
 	
 	//rule related
 	public static final int SUPPLYSIZE = 5;
+	
+	//ask types
+	public static final int NONE = 0;
+	public static final int CHOOSEONEHAND = 1;
+	public static final int CHOOSEONEHANDNONZOMBIE = 2;
+	
+	
 }

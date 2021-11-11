@@ -133,6 +133,26 @@ public class GardenwarController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/gardenwar/resolve", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> resolve(HttpServletRequest request, @RequestParam List<Integer> targets){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.resolveCard(targets);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/gardenwar/autoplay", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> autoplay(HttpServletRequest request){
 		StringEntity entity = new StringEntity();
