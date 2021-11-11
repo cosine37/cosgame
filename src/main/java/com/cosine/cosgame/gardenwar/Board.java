@@ -27,15 +27,16 @@ public class Board {
 	List<Card> trash;
 	List<Integer> settings;
 	
-	MongoDBUtil dbutil;
+	Logger logger;
+	MongoDBUtil dbutil;	
 	
 	public Board() {
 		players = new ArrayList<>();
 		supplyDeck = new ArrayList<>();
 		supply = new ArrayList<>();
 		trash = new ArrayList<>();
-		
 		lord = "";
+		logger = new Logger();
 		
 		String dbname = "gardenwar";
 		String col = "board";
@@ -89,6 +90,9 @@ public class Board {
 		players.get(curPlayer).nextPhase();
 	}
 	
+	public void log(String s) {
+		logger.log(s);
+	}
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
@@ -290,6 +294,7 @@ public class Board {
 	public void updateBasicDB() {
 		updateDB("status", status);
 		updateDB("curPlayer", curPlayer);
+		updateDB("logs", logger.getLogs());
 		updateDB("supplyDeck", toCardDocumentList(supplyDeck));
 		updateDB("supply", toCardDocumentList(supply));
 		updateDB("trash", toCardDocumentList(trash));
@@ -306,6 +311,7 @@ public class Board {
 		doc.append("supplyDeck", toCardDocumentList(supplyDeck));
 		doc.append("supply", toCardDocumentList(supply));
 		doc.append("trash", toCardDocumentList(trash));
+		doc.append("logs", logger.getLogs());
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -326,6 +332,8 @@ public class Board {
 		supplyDeck = toCardList((List<Document>)doc.get("supplyDeck"));
 		supply = toCardList((List<Document>)doc.get("supply"));
 		trash = toCardList((List<Document>)doc.get("trash"));
+		List<String> logs = (List<String>) doc.get("logs");
+		logger.setLogs(logs);
 		List<List<Document>> dob = (List<List<Document>>) doc.get("basicPiles");
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -411,6 +419,7 @@ public class Board {
 		entity.setAskMsg(askMsg);
 		entity.setAskType(askType);
 		entity.setAskSubType(askSubType);
+		entity.setLogs(logger.getLogs());
 		return entity;
 	}
 }

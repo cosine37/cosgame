@@ -20,6 +20,8 @@ public class BoardEntity {
 	List<CardEntity> supply;
 	List<Boolean> curPlayerCanBuy;
 	
+	List<String> logs;
+	
 	int askType;
 	int askSubType;
 	String askMsg;
@@ -131,6 +133,12 @@ public class BoardEntity {
 	}
 	public void setAskMsg(String askMsg) {
 		this.askMsg = askMsg;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 	
 }

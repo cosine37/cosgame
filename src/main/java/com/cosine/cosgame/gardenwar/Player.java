@@ -64,6 +64,7 @@ public class Player {
 			Card c = discard.remove(x);
 			deck.add(c);
 		}
+		board.log(name + "将弃牌堆洗为摸牌堆。");
 	}
 	
 	public void draw(int n) {
@@ -79,12 +80,14 @@ public class Player {
 				hand.add(c);
 			}
 		}
+		board.log(name + "摸了" + n + "张牌。");
 	}
 	
 	public void trash(int x) {
 		if (x>=0 && x<hand.size()) {
 			if (hand.get(x).isTrashable()) {
 				Card c = hand.remove(x);
+				board.log(name + "消耗了 " + c.getName() + "。");
 				board.getTrash().add(c);
 			}
 		}
@@ -109,6 +112,7 @@ public class Player {
 						canBuy.set(x, false);
 					}
 					sun = sun - c.getCost();
+					board.log(name + "购买了 " + c.getName() + "。");
 					gain(c);
 				}
 			}
@@ -121,6 +125,7 @@ public class Player {
 			if (sun >= c.getCost()) {
 				board.popSupply(x);
 				sun = sun-c.getCost();
+				board.log(name + "购买了 " + c.getName() + "。");
 				gain(c);
 			}
 		}
@@ -133,8 +138,11 @@ public class Player {
 	public void playCard(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
-			play.add(c);
-			c.play();
+			if (c.getType() == Consts.CARD) {
+				board.log(name + "打出了" + c.getName() + "。");
+				play.add(c);
+				c.play();
+			}
 		}
 		if (hand.size() == 0) {
 			nextPhase();
@@ -151,6 +159,7 @@ public class Player {
 	public void autoplay() {
 		while (hand.size()>0) {
 			Card c = hand.remove(0);
+			board.log(name + "打出了" + c.getName() + "。");
 			play.add(c);
 			c.play();
 		}
@@ -168,12 +177,14 @@ public class Player {
 			Card c = hand.remove(0);
 			discard.add(c);
 		}
+		board.log(name + "弃置了所有手牌和出牌区的牌。");
 		draw(5);
 	}
 	
 	public void nextPhase() {
 		if (phase == Consts.OFFTURN) {
 			startTurn();
+			board.log(name + "开始了回合。");
 			// TODO: Statuses
 			//phase = Consts.STATUSES;
 			phase = Consts.PLAY;
@@ -189,6 +200,7 @@ public class Player {
 			phase = Consts.BUY;
 		} else if (phase == Consts.BUY) {
 			cleanUp();
+			board.log(name + "结束了回合。");
 			phase = Consts.OFFTURN;
 			board.nextPlayer();
 		}
@@ -212,9 +224,16 @@ public class Player {
 	}
 	public void addSun(int x) {
 		sun = sun+x;
+		if (x!=0) {
+			board.log(name + "获得了s" + x + "。");
+		}
+		
 	}
 	public void addAtk(int x) {
 		atk = atk+x;
+		if (x!=0) {
+			board.log(name + "获得了p" + x + "。");
+		}
 	}
 	public String getName() {
 		return name;
