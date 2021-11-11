@@ -7,8 +7,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
-import com.cosine.cosgame.gardenwar.base.PuffShroom;
-import com.cosine.cosgame.gardenwar.base.SunShroom;
+import com.cosine.cosgame.gardenwar.base.*;
 import com.cosine.cosgame.gardenwar.entity.BoardEntity;
 import com.cosine.cosgame.gardenwar.entity.CardEntity;
 import com.cosine.cosgame.gardenwar.entity.PlayerEntity;
@@ -57,6 +56,10 @@ public class Board {
 		
 		AllRes allRes = new AllRes();
 		supplyDeck = allRes.getSupplyDeck();
+		
+		// TODO test cards here
+		supplyDeck.add(0, new GatlingPea());
+		
 		supply = new ArrayList<>();
 		for (i=0;i<Consts.SUPPLYSIZE;i++) {
 			if (supplyDeck.size() == 0) break;
@@ -358,6 +361,7 @@ public class Board {
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		List<CardEntity> myHand = new ArrayList<>();
+		List<CardEntity> myEquip = new ArrayList<>();
 		List<CardEntity> curPlayerPlay = new ArrayList<>();
 		List<Boolean> curPlayerCanBuy = new ArrayList<>();
 		int myIndex = -1;
@@ -392,6 +396,11 @@ public class Board {
 				}
 				if (p.getHand().size()==0) canAutoPlay = false;
 				
+				for (j=0;j<p.getEquip().size();j++) {
+					Card c = p.getEquip().get(j);
+					myEquip.add(c.toCardEntity());
+				}
+				
 				askType = p.getAskType();
 				askSubType = p.getAskSubType();
 				askMsg = p.getAskMsg();
@@ -409,6 +418,7 @@ public class Board {
 		entity.setMyIndex(myIndex);
 		entity.setPhase(phase);
 		entity.setMyHand(myHand);
+		entity.setMyEquip(myEquip);
 		entity.setCurPlayerSun(curPlayerSun);
 		entity.setCurPlayerPea(curPlayerPea);
 		entity.setCurPlayerPlay(curPlayerPlay);

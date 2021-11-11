@@ -37,8 +37,11 @@
 		</div>
 	</div>
 	<div class="card-shield" ng-show="cardDisplay.showShield">
-		<div class="card-shield-text">
+		<div class="card-shield-text" ng-show="cardDisplay.card.inEquipArea == false">
 			{{cardDisplay.card.shield}}
+		</div>
+		<div class="card-shield-text" ng-show="cardDisplay.card.inEquipArea">
+			{{cardDisplay.card.hp}}
 		</div>
 	</div>
 </div>

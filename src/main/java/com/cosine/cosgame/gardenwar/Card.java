@@ -17,6 +17,7 @@ public class Card {
 	protected int type;
 	protected int shield;
 	protected int level;
+	protected int hp;
 	protected List<Integer> clan;
 	protected List<Integer> extraBits;
 	
@@ -32,11 +33,13 @@ public class Card {
 	protected boolean taunt;
 	protected boolean autoplay;
 	protected boolean trashable;
+	protected boolean hasStartTurn;
 	
 	public Card() {
 		taunt = false;
 		autoplay = false;
 		trashable = true;
+		hasStartTurn = false;
 		type = Consts.CARD;
 		clan = new ArrayList<>();
 		int i;
@@ -64,6 +67,9 @@ public class Card {
 		resolve(targets);
 	}
 	public void activate() {
+		
+	}
+	public void startTurn() {
 		
 	}
 	public void addClan(int x) {
@@ -196,11 +202,23 @@ public class Card {
 	public void setTrashable(boolean trashable) {
 		this.trashable = trashable;
 	}
+	public boolean isHasStartTurn() {
+		return hasStartTurn;
+	}
+	public void setHasStartTurn(boolean hasStartTurn) {
+		this.hasStartTurn = hasStartTurn;
+	}
+	public int getHp() {
+		return hp;
+	}
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
 	public String getClanDisplay() {
 		boolean flag = true;
 		String ans = "";
 		int i;
-		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手"};
+		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手","土间"};
 		for (i=0;i<clan.size();i++) {
 			if (clan.get(i) == 1 && i<clanNames.length) {
 				String s = clanNames[i];
@@ -227,6 +245,7 @@ public class Card {
 		Document doc = new Document();
 		doc.append("id", id);
 		doc.append("img", img);
+		doc.append("hp", hp);
 		doc.append("extraBits", extraBits);
 		return doc;
 	}
@@ -243,6 +262,7 @@ public class Card {
 		entity.setPea(atk);
 		entity.setTaunt(taunt);
 		entity.setLevel(level);
+		entity.setHp(hp);
 		return entity;
 	}
 	

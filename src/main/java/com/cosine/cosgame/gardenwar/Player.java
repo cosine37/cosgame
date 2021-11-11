@@ -101,6 +101,12 @@ public class Player {
 		for (i=0;i<4;i++) {
 			canBuy.add(true);
 		}
+		for (i=0;i<equip.size();i++) {
+			if (equip.get(i).isHasStartTurn()) {
+				board.log(name + "的 " + equip.get(i).getName() + "效果触发。");
+				equip.get(i).startTurn();
+			}
+		}
 	}
 	
 	public void buyBasic(int x) {
@@ -142,6 +148,10 @@ public class Player {
 				board.log(name + "打出了" + c.getName() + "。");
 				play.add(c);
 				c.play();
+			} else if (c.getType() == Consts.EQUIP) {
+				board.log(name + "放置了" + c.getName() + "。");
+				c.setHp(c.getShield());
+				equip.add(c);
 			}
 		}
 		if (hand.size() == 0) {

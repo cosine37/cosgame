@@ -43,7 +43,7 @@ public class AllRes {
 		for (i=0;i<3;i++) {
 			baseCards.add(new Starfruit());
 		}
-		for (i=0;i<4;i++) {
+		for (i=0;i<3;i++) {
 			baseCards.add(new FumeShroom());
 		}
 		for (i=0;i<2;i++) {
@@ -60,6 +60,27 @@ public class AllRes {
 		}
 		for (i=0;i<3;i++) {
 			baseCards.add(new Gravebuster());
+		}
+		for (i=0;i<4;i++) {
+			baseCards.add(new Spikeweed());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new Spikerock());
+		}
+		for (i=0;i<3;i++) {
+			baseCards.add(new Marigold());
+		}
+		for (i=0;i<5;i++) {
+			baseCards.add(new ScaredyShroom());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new Threepeater());
+		}
+		for (i=0;i<4;i++) {
+			baseCards.add(new FlowerPot());
+		}
+		for (i=0;i<2;i++) {
+			baseCards.add(new GatlingPea());
 		}
 	}
 	public List<Card> getSupplyDeck() {

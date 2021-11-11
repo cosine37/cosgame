@@ -18,6 +18,7 @@ public class BoardEntity {
 	List<CardEntity> curPlayerPlay;
 	List<CardEntity> baseCards;
 	List<CardEntity> supply;
+	List<CardEntity> myEquip;
 	List<Boolean> curPlayerCanBuy;
 	
 	List<String> logs;
@@ -139,6 +140,12 @@ public class BoardEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public List<CardEntity> getMyEquip() {
+		return myEquip;
+	}
+	public void setMyEquip(List<CardEntity> myEquip) {
+		this.myEquip = myEquip;
 	}
 	
 }

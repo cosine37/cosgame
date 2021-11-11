@@ -47,10 +47,19 @@
 				<button ng-show="gamedata.askType != 0" ng-disabled="disableResolve()" ng-click="resolve()">确认</button>
 				<button ng-show="gamedata.askType != 0" ng-click="cancelResolve()">取消</button>
 			</div>
-			<div ng-repeat="cardDisplay in handDisplay track by $index" style="float:left; position: relative" class="hand-size" ng-click="clickHand($index)">
-				<div ng-include="'/view/html/gardenwarCard.html'"></div>
-				<div class="choosehand" ng-show="target == $index">
+			<div>
+				<div ng-repeat="cardDisplay in handDisplay track by $index" style="float:left; position: relative" class="hand-size" ng-click="clickHand($index)">
+					<div ng-include="'/view/html/gardenwarCard.html'"></div>
+					<div class="choosehand" ng-show="target == $index">
+				</div>
 			</div>
+			<div style="clear: both"></div>
+			<div>
+				<div ng-repeat="cardDisplay in equipDisplay track by $index" style="float:left; position: relative" class="equip-size">
+					<div ng-include="'/view/html/gardenwarCard.html'"></div>
+				</div>
+			</div>
+			
 			
 		</div>
 	</div>

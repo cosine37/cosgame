@@ -40,6 +40,20 @@ public class CardFactory {
 			card = new MelonPult();
 		} else if (img.contentEquals("gravebuster")) {
 			card = new Gravebuster();
+		} else if (img.contentEquals("spikeweed")) {
+			card = new Spikeweed();
+		} else if (img.contentEquals("spikerock")) {
+			card = new Spikerock();
+		} else if (img.contentEquals("marigold")) {
+			card = new Marigold();
+		} else if (img.contentEquals("scaredyShroom")) {
+			card = new ScaredyShroom();
+		} else if (img.contentEquals("threepeater")) {
+			card = new Threepeater();
+		} else if (img.contentEquals("flowerPot")) {
+			card = new FlowerPot();
+		} else if (img.contentEquals("gatlingPea")) {
+			card = new GatlingPea();
 		}
 		return card;
 	}
@@ -48,9 +62,11 @@ public class CardFactory {
 		String img = doc.getString("img");
 		int id = doc.getInteger("id", -1);
 		List<Integer> extraBits = (List<Integer>) doc.get("extraBits");
+		int hp = doc.getInteger("hp", 0);
 		Card card = makeCard(img);
 		card.setId(id);
 		card.setExtraBits(extraBits);
+		card.setHp(hp);
 		return card;
 	}
 }

@@ -14,6 +14,7 @@ public class Consts {
 	public static final int WOOD = 3;
 	public static final int FRUIT = 4;
 	public static final int CATAPULT = 5;
+	public static final int DIRT = 6;
 	
 	//board statuses
 	public static final int PREGAME = 0;

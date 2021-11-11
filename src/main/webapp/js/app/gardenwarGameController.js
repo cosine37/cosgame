@@ -38,6 +38,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.handDisplay = []
 		$scope.playDisplay = []
+		$scope.equipDisplay = []
 		$scope.baseCardDisplay = []
 		$scope.supplyCardDisplay = []
 		$scope.target = -1
@@ -224,6 +225,16 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		buildEquipDisplay = function(){
+			$scope.equipDisplay = []
+			var i;
+			for (i=0;i<$scope.gamedata.myEquip.length;i++){
+				var c = $scope.gamedata.myEquip[i];
+				var cd = buildCard(c, true);
+				$scope.equipDisplay.push(cd);
+			}
+		}
+		
 		buildBaseCardDisplay = function(){
 			$scope.baseCardDisplay = []
 			var i;
@@ -279,6 +290,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 				setMsgByPhase()
 				buildHandDisplay()
 				buildPlayDisplay()
+				buildEquipDisplay()
 				buildBaseCardDisplay()
 				buildSupplyCardDisplay()
 				setTargets()

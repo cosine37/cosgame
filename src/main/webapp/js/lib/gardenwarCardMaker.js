@@ -22,14 +22,14 @@ function setStyleByType(cardDisplay){
 			"border": "2px solid white"
 		}
 		cardDisplay.base = {
-			"background-color": "darkslategrey"
+			"background-color": "saddlebrown"
 		}
 		cardDisplay.clanText = {
 			"width": "130px",
 			"right": "30px"
 		}
 		cardDisplay.type = {
-			"background": "darkblue",
+			"background": "darkslategrey",
 			"color": "white",
 			"border": "2px solid white"
 		}
@@ -97,7 +97,20 @@ function setDescStyle(cardDisplay){
 			"top": "20px"
 		}
 		if (cardDisplay.showDescText){
-			if (c.desc.length > 10){
+			if (c.desc.length > 20){
+				cardDisplay.pea = {
+					"top": "0px",
+					"height": "34px",
+					"width": "34px",
+					"left": "65px"
+				}
+				cardDisplay.peaValue = {
+					"width": "34px",
+					"font-size": "21px"
+				}
+				cardDisplay.descText["top"] = "36px"
+				
+			} else if (c.desc.length > 10){
 				cardDisplay.pea = {
 					"top": "0px",
 					"height": "40px",
@@ -222,7 +235,8 @@ function renderKeywords(cardDisplay){
 }
 
 
-function buildCard(c){
+function buildCard(c, b = false){
+	c.inEquipArea = b
 	var cardDisplay = {}
 	cardDisplay.card = c
 	cardDisplay.plant = "/image/Gardenwar/gen1/" + c.img + ".png"
@@ -242,3 +256,4 @@ function buildCard(c){
 	renderKeywords(cardDisplay)
 	return cardDisplay
 }
+
