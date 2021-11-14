@@ -54,6 +54,8 @@ public class CardFactory {
 			card = new FlowerPot();
 		} else if (img.contentEquals("gatlingPea")) {
 			card = new GatlingPea();
+		} else if (img.contentEquals("garlic")) {
+			card = new Garlic();
 		}
 		return card;
 	}
@@ -63,10 +65,12 @@ public class CardFactory {
 		int id = doc.getInteger("id", -1);
 		List<Integer> extraBits = (List<Integer>) doc.get("extraBits");
 		int hp = doc.getInteger("hp", 0);
+		boolean activated = doc.getBoolean("activated", true);
 		Card card = makeCard(img);
 		card.setId(id);
 		card.setExtraBits(extraBits);
 		card.setHp(hp);
+		card.setActivated(activated);
 		return card;
 	}
 }

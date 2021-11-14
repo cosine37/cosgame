@@ -55,7 +55,7 @@
 			</div>
 			<div style="clear: both"></div>
 			<div>
-				<div ng-repeat="cardDisplay in equipDisplay track by $index" style="float:left; position: relative" class="equip-size">
+				<div ng-repeat="cardDisplay in equipDisplay track by $index" style="float:left; position: relative" class="equip-size" ng-click="clickEquip($index)">
 					<div ng-include="'/view/html/gardenwarCard.html'"></div>
 				</div>
 			</div>

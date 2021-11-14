@@ -16,6 +16,7 @@ public class Player {
 	int phase;
 	int sun;
 	int atk;
+	int index;
 	
 	List<Card> hand;
 	List<Card> deck;
@@ -32,6 +33,8 @@ public class Player {
 	int askSubType;
 	List<Integer> askExtraBits;
 	String askMsg;
+	int askPlace;
+	int askIndex;
 	
 	public Player() {
 		hand = new ArrayList<>();
@@ -106,6 +109,10 @@ public class Player {
 				board.log(name + "的 " + equip.get(i).getName() + "效果触发。");
 				equip.get(i).startTurn();
 			}
+			equip.get(i).setActivated(true);
+			if (equip.get(i).isActivatable()) {
+				equip.get(i).setActivated(false);
+			}
 		}
 	}
 	
@@ -147,10 +154,16 @@ public class Player {
 			if (c.getType() == Consts.CARD) {
 				board.log(name + "打出了" + c.getName() + "。");
 				play.add(c);
+				c.setPlace(Consts.PLAY);
+				c.setIndex(play.size()-1);
 				c.play();
 			} else if (c.getType() == Consts.EQUIP) {
 				board.log(name + "放置了" + c.getName() + "。");
 				c.setHp(c.getShield());
+				c.activated = true;
+				if (c.isActivatable()) {
+					c.activated = false;
+				}
 				equip.add(c);
 			}
 		}
@@ -159,13 +172,42 @@ public class Player {
 		}
 	}
 	
-	public void resolveCard(List<Integer> targets) {
-		// TODO: may need some work here
-		int x = play.size()-1;
-		Card card = play.get(x);
-		card.resolve(targets);
+	public void activateEquip(int x) {
+		if (x>=0 && x<equip.size()) {
+			Card c = equip.get(x);
+			if (c.isActivatable()) {
+				c.activate();
+			}
+		}
 	}
 	
+	public void removeFromEquip(Card c) {
+		int index = c.getIndex();
+		if (index>=0 && index<equip.size()) {
+			Card e = equip.remove(index);
+			discard.add(e);
+		}
+	}
+	
+	public void setAskTargets(Card c) {
+		askPlace = c.getPlace();
+		askIndex = c.getIndex();
+	}
+	
+	public void resolveCard(List<Integer> targets) {
+		if (askPlace == Consts.PLAY) {
+			if (askIndex>=0 && askIndex<play.size()) {
+				Card card = play.get(askIndex);
+				card.resolve(targets);
+			}
+		} else if (askPlace == Consts.EQUIP) {
+			if (askIndex>=0 && askIndex<equip.size()) {
+				Card card = equip.get(askIndex);
+				card.resolve(targets);
+			}
+		}
+	}
+
 	public void autoplay() {
 		while (hand.size()>0) {
 			Card c = hand.remove(0);
@@ -226,11 +268,21 @@ public class Player {
 		return ans;
 	}
 	
+	public Player nextPlayer() {
+		int x = index+1;
+		if (x >= board.getPlayers().size()) {
+			x = x - board.getPlayers().size();
+		}
+		return board.getPlayerByIndex(x);
+	}
+	
 	public void emptyAsk() {
 		askType = Consts.NONE;
 		askSubType = Consts.NONE;
 		askExtraBits = new ArrayList<>();
 		askMsg = "";
+		askPlace = Consts.NONE;
+		askIndex = -1;
 	}
 	public void addSun(int x) {
 		sun = sun+x;
@@ -341,7 +393,24 @@ public class Player {
 	public void setAskMsg(String askMsg) {
 		this.askMsg = askMsg;
 	}
-
+	public int getAskPlace() {
+		return askPlace;
+	}
+	public void setAskPlace(int askPlace) {
+		this.askPlace = askPlace;
+	}
+	public int getAskIndex() {
+		return askIndex;
+	}
+	public void setAskIndex(int askIndex) {
+		this.askIndex = askIndex;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
 	List<Document> toCardDocumentList(List<Card> cards){
 		List<Document> docs = new ArrayList<>();
 		for (int i=0;i<cards.size();i++) {
@@ -358,6 +427,19 @@ public class Player {
 			cards.add(c);
 		}
 		return cards;
+	}
+	void setCardsIndexPlace() {
+		int i;
+		for (i=0;i<equip.size();i++) {
+			Card c = equip.get(i);
+			c.setPlace(Consts.EQUIP);
+			c.setIndex(i);
+		}
+		for (i=0;i<play.size();i++) {
+			Card c = play.get(i);
+			c.setPlace(Consts.PLAY);
+			c.setIndex(i);
+		}
 	}
 	public Document toDocument() {
 		Document doc = new Document();
@@ -376,6 +458,8 @@ public class Player {
 		doc.append("askSubType", askSubType);
 		doc.append("askExtraBits", askExtraBits);
 		doc.append("askMsg", askMsg);
+		doc.append("askPlace", askPlace);
+		doc.append("askIndex", askIndex);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -394,6 +478,9 @@ public class Player {
 		askSubType = doc.getInteger("astSubType", Consts.NONE);
 		askExtraBits = (List<Integer>) doc.get("askExtraBits");
 		askMsg = doc.getString("askMsg");
+		askPlace = doc.getInteger("askPlace", 0);
+		askIndex = doc.getInteger("askIndex", -1);
+		setCardsIndexPlace();
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();

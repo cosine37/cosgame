@@ -66,21 +66,33 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$http({url: "/gardenwar/play", method: "POST", params: data}).then(function(response){
 						$scope.allRefresh()
 					});
-				} else if ($scope.gamedata.askType == 2){
-					if (x>=0 && x<$scope.gamedata.myHand.length && $scope.gamedata.myHand[x].type != 2){
-						if ($scope.target != x){
-							$scope.target = x
-						} else {
-							$scope.target = -1
+				} else if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
+					if (x>=0 && x<$scope.gamedata.myHand.length){
+						if ($scope.gamedata.askType == 1 || ($scope.gamedata.askType == 2 && $scope.gamedata.myHand[x].type != 2)){
+							if ($scope.target != x){
+								$scope.target = x
+							} else {
+								$scope.target = -1
+							}
 						}
-						
 					}
 				}
 			}
 		}
 		
+		$scope.clickEquip = function(x){
+			if ($scope.gamedata.curPlayer == $scope.gamedata.myIndex && $scope.gamedata.phase == 2){
+				if ($scope.gamedata.myEquip[x].activated == false){
+					var data = {"x" : x}
+					$http({url: "/gardenwar/activate", method: "POST", params: data}).then(function(response){
+						$scope.allRefresh()
+					});
+				}
+			}
+		}
+		
 		$scope.resolve = function(){
-			if ($scope.gamedata.askType == 2){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
 				var targets = [];
 				targets.push($scope.target)
 				var data = {"targets" : targets}
@@ -91,7 +103,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.cancelResolve = function(){
-			if ($scope.gamedata.askType == 2){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
 				var flag = confirm("你确定不选择目标吗？");
 				if (flag = false) return;
 				var targets = [];
@@ -105,7 +117,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.disableResolve = function(){
 			if ($scope.gamedata == null) return true;
-			if ($scope.gamedata.askType == 2){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
 				if ($scope.target>=0 && $scope.target<$scope.gamedata.myHand.length){
 					return false;
 				} else {

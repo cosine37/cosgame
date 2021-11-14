@@ -33,6 +33,7 @@ public class MelonPult extends Card{
 			player.setAskType(Consts.CHOOSEONEHANDNONZOMBIE);
 			player.setAskSubType(Consts.NONE);
 			player.setAskMsg("你可以消耗一张非僵尸手牌。");
+			player.setAskTargets(this);
 		}
 		
 	}

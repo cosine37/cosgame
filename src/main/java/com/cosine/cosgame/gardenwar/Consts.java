@@ -36,5 +36,9 @@ public class Consts {
 	public static final int CHOOSEONEHAND = 1;
 	public static final int CHOOSEONEHANDNONZOMBIE = 2;
 	
+	//card places
+	//EQUIP = 1;
+	//PLAY = 2;
+	
 	
 }

@@ -18,6 +18,8 @@ public class Card {
 	protected int shield;
 	protected int level;
 	protected int hp;
+	protected int index;
+	protected int place;
 	protected List<Integer> clan;
 	protected List<Integer> extraBits;
 	
@@ -34,12 +36,16 @@ public class Card {
 	protected boolean autoplay;
 	protected boolean trashable;
 	protected boolean hasStartTurn;
+	protected boolean activatable;
+	protected boolean activated;
 	
 	public Card() {
 		taunt = false;
 		autoplay = false;
 		trashable = true;
 		hasStartTurn = false;
+		activatable = false;
+		activated = true;
 		type = Consts.CARD;
 		clan = new ArrayList<>();
 		int i;
@@ -214,6 +220,30 @@ public class Card {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
+	public boolean isActivatable() {
+		return activatable;
+	}
+	public void setActivatable(boolean activatable) {
+		this.activatable = activatable;
+	}
+	public boolean isActivated() {
+		return activated;
+	}
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public int getPlace() {
+		return place;
+	}
+	public void setPlace(int place) {
+		this.place = place;
+	}
 	public String getClanDisplay() {
 		boolean flag = true;
 		String ans = "";
@@ -246,6 +276,7 @@ public class Card {
 		doc.append("id", id);
 		doc.append("img", img);
 		doc.append("hp", hp);
+		doc.append("activated", activated);
 		doc.append("extraBits", extraBits);
 		return doc;
 	}
@@ -263,6 +294,7 @@ public class Card {
 		entity.setTaunt(taunt);
 		entity.setLevel(level);
 		entity.setHp(hp);
+		entity.setActivated(activated);
 		return entity;
 	}
 	

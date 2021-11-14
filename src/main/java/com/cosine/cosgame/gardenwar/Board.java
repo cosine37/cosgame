@@ -58,7 +58,7 @@ public class Board {
 		supplyDeck = allRes.getSupplyDeck();
 		
 		// TODO test cards here
-		supplyDeck.add(0, new GatlingPea());
+		//supplyDeck.add(0, new Garlic());
 		
 		supply = new ArrayList<>();
 		for (i=0;i<Consts.SUPPLYSIZE;i++) {
@@ -348,6 +348,7 @@ public class Board {
 			Player p = new Player();
 			p.setBoard(this);
 			p.setFromDoc(dop);
+			p.setIndex(i);
 			players.add(p);
 		}
 	}

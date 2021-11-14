@@ -14,6 +14,7 @@ public class CardEntity {
 	int level;
 	int hp;
 	boolean taunt;
+	boolean activated;
 	
 	public String getName() {
 		return name;
@@ -86,5 +87,11 @@ public class CardEntity {
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	public boolean isActivated() {
+		return activated;
+	}
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 }
