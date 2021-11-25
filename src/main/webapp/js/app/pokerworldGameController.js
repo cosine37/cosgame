@@ -285,6 +285,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.myIndex = response.data.myIndex;
 				$scope.numPlayed = response.data.numPlay;
 				$scope.curPlayer = response.data.curPlayer;
+				$scope.confirmed = response.data.confirmed;
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

@@ -25,9 +25,11 @@ public class Board {
 	int curPlayer;
 	int banker;
 	int numPlayed;
+	int winPlayer;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
+	List<Boolean> confirmed;
 	
 	GameUtil gameUtil;
 	
@@ -37,6 +39,7 @@ public class Board {
 		settings = new ArrayList<>();
 		players = new ArrayList<>();
 		sequences = new ArrayList<>();
+		confirmed = new ArrayList<>();
 		
 		lord = "";
 		gameUtil = new GameUtil();
@@ -51,8 +54,10 @@ public class Board {
 	
 	public void startGame() {
 		int i;
+		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			players.get(i).setInnerId(i);
+			confirmed.add(false);
 		}
 		gameUtil.newGame();
 		gameUtil.sortCards();
@@ -126,7 +131,9 @@ public class Board {
 	}
 	
 	public void endRound() {
-		gameUtil.judgeRound(this);
+		List<Integer> roundResult = gameUtil.judgeRound(this);
+		winPlayer = roundResult.get(0);
+		firstPlayer = winPlayer;
 	}
 	
 	public String getId() {
@@ -228,6 +235,18 @@ public class Board {
 	public void setNumPlayed(int numPlayed) {
 		this.numPlayed = numPlayed;
 	}
+	public int getWinPlayer() {
+		return winPlayer;
+	}
+	public void setWinPlayer(int winPlayer) {
+		this.winPlayer = winPlayer;
+	}
+	public List<Boolean> getConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(List<Boolean> confirmed) {
+		this.confirmed = confirmed;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -254,7 +273,9 @@ public class Board {
 		dbutil.update("id", id, "status", status);
 		dbutil.update("id", id, "curPlayer", curPlayer);
 		dbutil.update("id", id, "numPlayed", numPlayed);
+		dbutil.update("id", id, "winPlayer", winPlayer);
 		dbutil.update("id", id, "firstPlayer", firstPlayer);
+		dbutil.update("id", id, "confirmed", confirmed);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {
@@ -359,6 +380,8 @@ public class Board {
 		doc.append("curClaimedPlayer", curClaimedPlayer);
 		doc.append("rawHidden", rawHidden);
 		doc.append("numPlayed", numPlayed);
+		doc.append("winPlayer", winPlayer);
+		doc.append("confirmed", confirmed);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -382,10 +405,12 @@ public class Board {
 		dominantSuit = doc.getString("dominantSuit");
 		numDominant = doc.getInteger("numDominant", 0);
 		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
+		confirmed = (List<Boolean>) doc.get("confirmed");
 		List<String> rawCards = (List<String>) doc.get("cards");
 		gameUtil.buildCards(rawCards);
 		rawHidden = doc.getString("rawHidden");
 		numPlayed = doc.getInteger("numPlayed", -1);
+		winPlayer = doc.getInteger("winPlayer", -1);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -411,6 +436,7 @@ public class Board {
 		entity.setCurPlayer(curPlayer);
 		entity.setFirstPlayer(firstPlayer);
 		entity.setNumPlay(numPlayed);
+		entity.setWinPlayer(winPlayer);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -419,6 +445,7 @@ public class Board {
 				Player p = players.get(i);
 				entity.setMyIndex(p.getInnerId());
 				entity.setMyCards(p.getMyRawCardsAfterPlay());
+				entity.setConfirmed(p.isConfirmedClaim());
 				if (sequences == null || sequences.size()<=i) {
 					entity.setSequence(new ArrayList<>());
 				} else {

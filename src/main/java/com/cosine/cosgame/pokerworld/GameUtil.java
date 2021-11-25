@@ -7,6 +7,7 @@ import com.cosgame.sfsj.common.Card;
 import com.cosgame.sfsj.common.Card.CardRank;
 import com.cosgame.sfsj.common.Card.CardSuit;
 import com.cosgame.sfsj.play.Game;
+//import com.cosgame.sfsj.play.Game.RoundResult;
 import com.cosgame.sfsj.util.CardUtils;
 
 public class GameUtil {
@@ -77,7 +78,7 @@ public class GameUtil {
 	}
 	
 	
-	public void judgeRound(Board board) {
+	public List<Integer> judgeRound(Board board) {
 		String dominantSuitRaw = board.getDominantSuit();
 		Card.CardSuit suit = Card.CardSuit.RED_JOKER;
 		if (dominantSuitRaw.contentEquals("s")) {
@@ -95,12 +96,11 @@ public class GameUtil {
 		List<List<Card>> cards = game.getPlayerCards();
 		List<List<Card>> hands = new ArrayList<>();
 		List<Player> players = board.getPlayers();
-		int i;
+		int i,j;
 		for (i=0;i<players.size();i++) {
 			List<Integer> playedIndex = players.get(i).getPlayedIndex();
 			int x = players.get(i).getInnerId();
 			List<Card> singleHand = new ArrayList<>();
-			int j;
 			for (j=0;j<playedIndex.size();j++) {
 				int y = playedIndex.get(j);
 				singleHand.add(cards.get(x).get(y));
@@ -108,7 +108,19 @@ public class GameUtil {
 			hands.add(singleHand);
 			players.get(i).emptyPlayedIndex();
 		}
-		game.playRound(board.getFirstPlayer(), hands);
+		/*
+		for (i=0;i<hands.size();i++) {
+			for (j=0;j<hands.get(i).size();j++) {
+				System.out.print(hands.get(i).get(j).toString());
+			}
+			System.out.println();
+		}
+		*/
+		Game.RoundResult roundResult = game.playRound(board.getFirstPlayer(), hands);
+		List<Integer> ans = new ArrayList<>();
+		ans.add(roundResult.getWinner());
+		ans.add(roundResult.getPointsGained());
+		return ans;
 	}
 	
 	public List<String> toRawCards() {

@@ -15,7 +15,7 @@
 <script src="/js/app/pokerworldCreateGameController.js"></script>
 <body ng-app="pokerworldCreateGameApp" ng-controller="pokerworldCreateGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
-	<button ng-click="startGame()">start game</button>
+	<button ng-click="startGame()" ng-show="lord == username">start game</button>
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->

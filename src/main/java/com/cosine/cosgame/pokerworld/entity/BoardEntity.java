@@ -15,6 +15,9 @@ public class BoardEntity {
 	int curPlayer;
 	int firstPlayer;
 	int numPlay;
+	int winPlayer;
+
+	boolean confirmed;
 	
 	List<Integer> sequence;
 	List<PlayerEntity> players;
@@ -103,5 +106,16 @@ public class BoardEntity {
 	public void setNumPlay(int numPlay) {
 		this.numPlay = numPlay;
 	}
-	
+	public int getWinPlayer() {
+		return winPlayer;
+	}
+	public void setWinPlayer(int winPlayer) {
+		this.winPlayer = winPlayer;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 }
