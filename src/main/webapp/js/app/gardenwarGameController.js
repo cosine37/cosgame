@@ -76,6 +76,24 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 							}
 						}
 					}
+				} else if ($scope.gamedata.askType == 3){
+					if (x>=0 && x<$scope.gamedata.myHand.length){
+						/*
+						if ($scope.gamedata.askType == 1 || ($scope.gamedata.askType == 2 && $scope.gamedata.myHand[x].type != 2)){
+							if ($scope.target != x){
+								$scope.target = x
+							} else {
+								$scope.target = -1
+							}
+						}*/
+						if ($scope.gamedata.myHand[x].img == "sunShroom" || $scope.gamedata.myHand[x].img == "sunShroom2"){
+							if ($scope.target != x){
+								$scope.target = x
+							} else {
+								$scope.target = -1
+							}
+						}
+					}
 				}
 			}
 		}
@@ -92,7 +110,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.resolve = function(){
-			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1 || $scope.gamedata.askType == 3){
 				var targets = [];
 				targets.push($scope.target)
 				var data = {"targets" : targets}
@@ -103,7 +121,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.cancelResolve = function(){
-			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1 || $scope.gamedata.askType == 3){
 				var flag = confirm("你确定不选择目标吗？");
 				if (flag = false) return;
 				var targets = [];
@@ -117,7 +135,7 @@ app.controller("gardenwarGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.disableResolve = function(){
 			if ($scope.gamedata == null) return true;
-			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1){
+			if ($scope.gamedata.askType == 2 || $scope.gamedata.askType == 1 || $scope.gamedata.askType == 3){
 				if ($scope.target>=0 && $scope.target<$scope.gamedata.myHand.length){
 					return false;
 				} else {

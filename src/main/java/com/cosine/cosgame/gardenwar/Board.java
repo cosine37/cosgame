@@ -58,7 +58,7 @@ public class Board {
 		supplyDeck = allRes.getSupplyDeck();
 		
 		// TODO test cards here
-		//supplyDeck.add(0, new Garlic());
+		//supplyDeck.add(0, new CoffeeBean());
 		
 		supply = new ArrayList<>();
 		for (i=0;i<Consts.SUPPLYSIZE;i++) {

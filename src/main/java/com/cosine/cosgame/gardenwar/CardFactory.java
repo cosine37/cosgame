@@ -12,7 +12,7 @@ public class CardFactory {
 		//TODO: build cards here
 		if (img.contentEquals("puffShroom")) {
 			card = new PuffShroom();
-		} else if (img.contentEquals("sunShroom")) {
+		} else if (img.contentEquals("sunShroom") || img.contentEquals("sunShroom2") || img.contentEquals("sunShroom3")) {
 			card = new SunShroom();
 		} else if (img.contentEquals("peaShooter")) {
 			card = new PeaShooter();
@@ -56,6 +56,8 @@ public class CardFactory {
 			card = new GatlingPea();
 		} else if (img.contentEquals("garlic")) {
 			card = new Garlic();
+		} else if (img.contentEquals("coffeeBean")) {
+			card = new CoffeeBean();
 		}
 		return card;
 	}

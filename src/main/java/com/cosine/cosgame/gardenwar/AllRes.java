@@ -85,6 +85,9 @@ public class AllRes {
 		for (i=0;i<3;i++) {
 			baseCards.add(new Garlic());
 		}
+		for (i=0;i<3;i++) {
+			baseCards.add(new CoffeeBean());
+		}
 	}
 	public List<Card> getSupplyDeck() {
 		int i;

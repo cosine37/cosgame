@@ -48,6 +48,7 @@ public class Card {
 		activated = true;
 		type = Consts.CARD;
 		clan = new ArrayList<>();
+		extraBits = new ArrayList<>();
 		int i;
 		for (i=0;i<Consts.NUMCLANS;i++) {
 			clan.add(0);
@@ -61,8 +62,8 @@ public class Card {
 	}
 	
 	public void play() {
-		player.addSun(sun);
-		player.addAtk(atk);
+		player.addSun(getSun());
+		player.addAtk(getAtk());
 	}
 	public void resolve(List<Integer> targets) {
 		
@@ -248,7 +249,7 @@ public class Card {
 		boolean flag = true;
 		String ans = "";
 		int i;
-		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手","土间"};
+		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手","土间","种子"};
 		for (i=0;i<clan.size();i++) {
 			if (clan.get(i) == 1 && i<clanNames.length) {
 				String s = clanNames[i];
@@ -283,13 +284,15 @@ public class Card {
 	public CardEntity toCardEntity() {
 		CardEntity entity = new CardEntity();
 		entity.setName(name);
-		entity.setImg(img);
+		//entity.setImg(img);
+		entity.setImg(getImg());
 		entity.setDesc(getDesc());
 		entity.setClan(getClanDisplay());
 		entity.setCost(cost);
 		entity.setShield(shield);
 		entity.setType(getTypeDisplay());
-		entity.setSun(sun);
+		//entity.setSun(sun);
+		entity.setSun(getSun());
 		entity.setPea(atk);
 		entity.setTaunt(taunt);
 		entity.setLevel(level);

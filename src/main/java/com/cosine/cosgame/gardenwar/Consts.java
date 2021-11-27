@@ -15,6 +15,7 @@ public class Consts {
 	public static final int FRUIT = 4;
 	public static final int CATAPULT = 5;
 	public static final int DIRT = 6;
+	public static final int SEED = 7;
 	
 	//board statuses
 	public static final int PREGAME = 0;
@@ -35,6 +36,7 @@ public class Consts {
 	public static final int NONE = 0;
 	public static final int CHOOSEONEHAND = 1;
 	public static final int CHOOSEONEHANDNONZOMBIE = 2;
+	public static final int CHOOSESUNSHROOM = 3;
 	
 	//card places
 	//EQUIP = 1;
