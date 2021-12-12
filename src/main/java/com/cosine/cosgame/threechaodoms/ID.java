@@ -3,6 +3,8 @@ package com.cosine.cosgame.threechaodoms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class ID {
 	List<Integer> forces;
 	
@@ -36,6 +38,16 @@ public class ID {
 		} else {
 			return false;
 		}
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("forces", forces);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		forces = (List<Integer>) doc.get("forces");
 	}
 	
 }

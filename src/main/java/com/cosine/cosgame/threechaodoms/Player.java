@@ -1,6 +1,9 @@
 package com.cosine.cosgame.threechaodoms;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Player {
 	String name;
@@ -82,6 +85,58 @@ public class Player {
 	}
 	public void setJail(List<Card> jail) {
 		this.jail = jail;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("id", id.toDocument());
+		int i;
+		List<Document> doh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			doh.add(hand.get(i).toDocument());
+		}
+		doc.append("hand", doh);
+		List<Document> dop = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			doh.add(play.get(i).toDocument());
+		}
+		doc.append("play", dop);
+		List<Document> doj = new ArrayList<>();
+		for (i=0;i<jail.size();i++) {
+			doh.add(jail.get(i).toDocument());
+		}
+		doc.append("jail", doj);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		Document idDoc = (Document) doc.get("id");
+		id = new ID();
+		id.setFromDoc(idDoc);
+		int i;
+		hand = new ArrayList<>();
+		List<Document> doh = (List<Document>) doc.get("hand");
+		for (i=0;i<doh.size();i++) {
+			Card c = CardFactory.makeCard(doh.get(i));
+			c.setWhere(Consts.HAND);
+			hand.add(c);
+		}
+		play = new ArrayList<>();
+		List<Document> dop = (List<Document>) doc.get("play");
+		for (i=0;i<dop.size();i++) {
+			Card c = CardFactory.makeCard(dop.get(i));
+			c.setWhere(Consts.PLAY);
+			play.add(c);
+		}
+		jail = new ArrayList<>();
+		List<Document> doj = (List<Document>) doc.get("jail");
+		for (i=0;i<doj.size();i++) {
+			Card c = CardFactory.makeCard(doj.get(i));
+			c.setWhere(Consts.JAIL);
+			play.add(c);
+		}
 	}
 	
 }

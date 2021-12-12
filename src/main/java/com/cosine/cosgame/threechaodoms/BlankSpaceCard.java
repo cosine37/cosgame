@@ -4,5 +4,6 @@ public class BlankSpaceCard extends Card{
 	public BlankSpaceCard() {
 		super();
 		blankSpace = true;
+		img = "blankspace";
 	}
 }
