@@ -1,0 +1,40 @@
+@charset "UTF-8";
+button{
+	outline: none;
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid orangered;
+	border-radius: 8px;
+	
+	background: orangered;
+}
+
+button:disabled{
+	outline: none;
+	color: orangered;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid orangered;
+	border-radius: 8px;
+	
+	background: white;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
