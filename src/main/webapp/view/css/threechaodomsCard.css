@@ -1,0 +1,262 @@
+@charset "UTF-8";
+
+@font-face{
+     font-family: 'xingkai'; 
+     src:url('/font/xingkai.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'jmm'; 
+     src:url('/font/jm.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'weibei'; 
+     src:url('/font/weibei.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'ktl'; 
+     src:url('/font/ktl.woff') format('woff')
+}
+
+.card-size{
+	height: 300px;
+	width: 200px;
+	position: relative;
+	
+	border: 12px solid black;
+	border-radius: 10px;
+}
+/*
+.card-img{
+	position: absolute;
+	height: 105px;
+	width: 160px;
+	left: 15px;
+	top: 25px;
+	padding-top: 15px;
+	background-image: url('/image/Gardenwar/lawn.jpg');
+	background-size: cover;
+	text-align: center;
+	
+	border: 2px solid black;
+}
+*/
+.card-img{
+	position: absolute;
+	width: 176px;
+	height: 276px;
+	bottom: 0px;
+	right: 0px;
+	background-image: url('/image/Threechaodoms/card_bg.jpg');
+	background-size: cover;
+	/*
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	*/
+	border-radius: 0px;
+}
+
+.card-role{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 154px;
+	height: auto;
+	display: inline-block;
+	z-index: 10;
+}
+/*
+.card-top-bar{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 26px;
+	width: 196px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom: 2px solid white;
+	z-index: 10;
+}
+
+.card-left-bar{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 296px;
+	width: 26px;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-right: 2px solid white;
+	z-index: 10;
+}
+
+.card-faction-div-bottom{
+	position: absolute;
+	height: 42px;
+	width: 38px;
+	padding-left: 5px;
+	padding-right: 5px;
+	z-index: 8;
+	border-bottom: 2px solid white;
+	border-right: 2px solid white;
+	border-top-left-radius: 5px;
+	
+}
+*/
+
+.card-left-bar{
+	position: absolute;
+	/*
+	width: 150px;
+    height: 220px;
+    border-width: 22px;
+    border-style: solid;
+    border-color: transparent transparent transparent lightgrey;
+	*/
+	width: 22px;
+	height: 276px;
+	background-color: lightgrey;
+	z-index: 20;
+}
+
+.card-faction-div{
+	position: absolute;
+	height: 38px;
+	width: 38px;
+	padding-left: 5px;
+	margin-left: -5px;
+	margin-top: -5px;
+	z-index: 25;
+	border-radius: 10px;
+	box-shadow: 2px 2px 15px black;
+}
+
+.card-faction{
+	font-size: 32px;
+	font-family: "xingkai";
+	margin-top: -3px;
+	margin-left: -3px;
+	text-shadow: 2px 2px #ff0000;
+}
+
+.role-title-name-div{
+	position: absolute;
+	top: 42px;
+	/*
+	writing-mode: vertical-rl;
+	*/
+}
+
+.role-title{
+	position: relative;
+	left: 0px;
+	/*
+	width: 24px;
+	*/
+	z-index: 30;
+	margin-left: 0px;
+	
+	color: yellow;
+	font-size: 18px;
+	font-weight: 100000;
+	font-family: "xingkai";
+	line-height: 1;
+	
+	writing-mode: vertical-rl;
+	
+	-webkit-text-stroke: 0.5px black; 
+	
+}
+
+.role-name{
+	position: relative;
+	left: 0px;
+	z-index: 30;
+	margin-top: 10px;
+	margin-left: -18px;
+	
+	color: white;
+	font-size: 30px;
+	font-weight: 600;
+	font-family: "ktl";
+	
+	writing-mode: vertical-rl;
+	-webkit-text-stroke: 0.5px black; 
+	
+	letter-spacing: 10px;
+	
+}
+
+.desc-div{
+	position: absolute;
+	height: 86px;
+	width: 154px;
+	bottom: 0px;
+	right: 0px;
+	opacity: 0.8;
+	z-index: 30;
+}
+
+.desc{
+	margin-top: 5px;
+	margin-left: 8px;
+	
+	color: white;
+	font-size: 14px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.hand-size{
+	zoom: 0.85;
+}
+
+.play-size{
+	zoom: 0.5;
+}
+
+.equip-size{
+	zoom: 0.5;
+}
+
+.supply-size{
+	zoom: 0.85;
+}
+
+.orange{
+	color: orange;
+}
+.dark-orange{
+	color: darkorange;
+}
+.yellow{
+	color: yellow;
+}
+.taunt{
+	color: yellow;
+}
+.activate{
+	color: violet;
+}
+.light-sea-green{
+	color: lightseagreen;
+}
+.blue{
+	color: blue;
+}
+.dark-blue{
+	color: darkblue;
+}
+.red{
+	color: red;
+}

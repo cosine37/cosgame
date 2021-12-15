@@ -8,11 +8,13 @@ public class Card {
 	String name;
 	String img;
 	String desc;
+	String title;
 	int han;
 	int wei;
 	boolean blankSpace;
 	List<Integer> extraBits;
 	int where;
+	int faction;
 	
 	Player player;
 	Board board;
@@ -86,6 +88,18 @@ public class Card {
 	}
 	public void setWhere(int where) {
 		this.where = where;
+	}
+	public int getFaction() {
+		return faction;
+	}
+	public void setFaction(int faction) {
+		this.faction = faction;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Document toDocument() {

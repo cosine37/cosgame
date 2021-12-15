@@ -7,11 +7,13 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/threechaodomsTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/threechaodomsOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/threechaodomsCard.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/lib/threechaodomsCardMaker.js"></script>
 <script src="/js/app/threechaodomsGameController.js"></script>
 <body ng-app="threechaodomsGameApp" ng-controller="threechaodomsGameCtrl">
 	<button ng-click="goto('threechaodomscreategame')">back</button>
@@ -25,5 +27,6 @@
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
 	 -->
+	 <div ng-include="'/view/html/threechaodomsCard.html'"></div>
 </body>
 </html>

@@ -48,6 +48,14 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				$scope.goto('login');
 			});
 		}
+		
+		var card = {}
+		card.img="LiuBei";
+		card.faction=1;
+		card.name="劉備";
+		card.title="漢昭烈帝"
+		card.desc="王道+1，霸道-1。"
+		$scope.cardDisplay = buildCard(card)
 		/*
 		$scope.startGame = function(){
 			var data = {
