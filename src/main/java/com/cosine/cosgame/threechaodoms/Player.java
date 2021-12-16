@@ -16,6 +16,13 @@ public class Player {
 	
 	Board board;
 	
+	public Player() {
+		id = new ID();
+		hand = new ArrayList<>();
+		play = new ArrayList<>();
+		jail = new ArrayList<>();
+	}
+	
 	public void exile(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);

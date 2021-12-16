@@ -21,4 +21,9 @@ public class Consts {
 	public static int HAND = 4;
 	public static int PLAY = 5;
 	public static int JAIL = 6;
+	
+	//board statuses
+	public static final int PREGAME = 0;
+	public static final int INGAME = 1;
+	public static final int ENDGAME = 2;
 }

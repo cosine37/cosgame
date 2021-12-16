@@ -4,7 +4,7 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("threechaodomsGameApp", ["ngWebSocket"]);
+var app = angular.module("threechaodomsGameApp", ["ngWebSocket", "ngSanitize"]);
 app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/threechaodoms/boardrefresh");
@@ -51,11 +51,12 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		
 		var card = {}
 		card.img="LiuBei";
-		card.faction=1;
-		card.name="劉備";
-		card.title="漢昭烈帝"
+		card.faction=3;
+		card.name="呂奉先";
+		card.title="三姓家奴"
 		card.desc="王道+1，霸道-1。"
 		$scope.cardDisplay = buildCard(card)
+		
 		/*
 		$scope.startGame = function(){
 			var data = {

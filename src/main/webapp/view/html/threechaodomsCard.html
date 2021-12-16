@@ -24,7 +24,9 @@
 	</div>
 	
 	<div class="desc-div" ng-style="cardDisplay.descDivStyle">
-		<div class="desc" ng-style="cardDisplay.descStyle" =>{{cardDisplay.card.desc}}</div>
+		<div class="desc" ng-style="cardDisplay.descStyle" ng-bind-html="cardDisplay.card.desc">
+			
+		</div>
 	</div>
 	
 	

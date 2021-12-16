@@ -54,12 +54,13 @@ app.controller("threechaodomsCreateGameCtrl", ['$scope', '$window', '$http', '$d
 			var data = {
 				"settings" : $scope.settings	
 			}
+			*/
 			$http({url: "/threechaodoms/startgame", method: "POST", params:data}).then(function(response){
 				ws.send("start");
-				$scope.goto('pokerworldgame');
+				$scope.goto('threechaodomsgame');
 			});
-			*/
-			$scope.goto('threechaodomsgame');
+			
+			
 		}
 		
 		/*
