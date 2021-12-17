@@ -2,28 +2,29 @@ package com.cosine.cosgame.threechaodoms;
 
 public class Consts {
 	// Forces
-	public static int WEI = 0;
-	public static int HAN = 1;
-	public static int WU = 2;
-	public static int QUN = 3;
+	public static final int WEI = 0;
+	public static final int HAN = 1;
+	public static final int WU = 2;
+	public static final int QUN = 3;
 	
 	// Rule related
-	public static int STARTPOS = 4;
-	public static int CHAOSPOS = 9;
-	public static int MINPOS = 0;
-	public static int MAXPOS = 12;
+	public static final int STARTPOS = 4;
+	public static final int CHAOSPOS = 9;
+	public static final int MINPOS = 0;
+	public static final int MAXPOS = 12;
 	
 	// Card where
-	public static int DECK = 0;
-	public static int TAVERN = 1;
-	public static int EXILE = 2;
-	public static int TOMB = 3;
-	public static int HAND = 4;
-	public static int PLAY = 5;
-	public static int JAIL = 6;
+	public static final int DECK = 0;
+	public static final int TAVERN = 1;
+	public static final int EXILE = 2;
+	public static final int TOMB = 3;
+	public static final int HAND = 4;
+	public static final int PLAY = 5;
+	public static final int JAIL = 6;
 	
 	//board statuses
 	public static final int PREGAME = 0;
-	public static final int INGAME = 1;
-	public static final int ENDGAME = 2;
+	public static final int SETUP = 1;
+	public static final int INGAME = 2;
+	public static final int ENDGAME = 3;
 }

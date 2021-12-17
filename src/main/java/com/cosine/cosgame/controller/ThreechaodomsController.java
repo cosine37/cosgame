@@ -94,9 +94,9 @@ public class ThreechaodomsController {
 			board.getFromDB(boardId);
 			if (board.isLord(username)) {
 				//board.setSettings(settings);
-				//board.startGame();
+				board.startGame();
 				//board.updateDB("firstPlayer", board.getFirstPlayer());
-				//board.updateBasicDB();
+				board.updateBasicDB();
 				board.updatePlayers();
 			}
 		} else {

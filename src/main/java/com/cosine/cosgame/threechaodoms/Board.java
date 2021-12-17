@@ -37,6 +37,12 @@ public class Board {
 		dbutil.setCol(col);
 	}
 	
+	public void startGame() {
+		AllRes allRes = new AllRes();
+		deck = allRes.getDeck();
+		status = Consts.SETUP;
+	}
+	
 	public Card takeFromTavern(int x) {
 		if (x>=0 && x<tavern.size()) {
 			Card c = tavern.get(x);
@@ -270,6 +276,25 @@ public class Board {
 		} else {
 			return true;
 		}
+	}
+	
+	List<Document> toCardDocumentList(List<Card> cards){
+		List<Document> docs = new ArrayList<>();
+		for (int i=0;i<cards.size();i++) {
+			docs.add(cards.get(i).toDocument());
+		}
+		return docs;
+	}
+	
+	public void updateBasicDB() {
+		updateDB("status", status);
+		updateDB("curPlayer", curPlayer);
+		updateDB("weiPos", weiPos);
+		updateDB("hanPos", hanPos);
+		updateDB("deck", toCardDocumentList(deck));
+		updateDB("tavern", toCardDocumentList(tavern));
+		updateDB("exile", toCardDocumentList(exile));
+		updateDB("tomb", toCardDocumentList(tomb));
 	}
 	
 	public Document toDocument() {

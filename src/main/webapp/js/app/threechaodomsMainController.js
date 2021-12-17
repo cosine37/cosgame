@@ -43,11 +43,28 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 		}
 		
 		$scope.newGame = function(){
-			
 			$http({url: "/threechaodoms/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
 		        $scope.goto('threechaodomscreategame')
+			});
+		}
+		
+		$scope.goToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/threechaodoms/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/architect/join").then(function(response){
+					//var json_data = '{"type":"notify","content":"refresh"}';
+			        boardws.send($scope.boards[index]);
+					$scope.goto('threechaodomscreategame')
+				});
+			});
+		}
+		
+		$scope.backToBoard = function(index){
+			var data = {"boardId" : $scope.boards[index]}
+			$http({url: "/threechaodoms/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('threechaodomsgame');
 			});
 		}
 		
@@ -66,7 +83,7 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 					var t = ''
 					if (x == '0'){
 						t = '准备中'
-					} else if (x == '5'){
+					} else if (x == '3'){
 						t = '游戏结束'
 					} else {
 						t = '游戏中'
