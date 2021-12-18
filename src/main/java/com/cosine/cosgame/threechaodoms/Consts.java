@@ -1,7 +1,7 @@
 package com.cosine.cosgame.threechaodoms;
 
 public class Consts {
-	// Forces
+	// Factions
 	public static final int WEI = 0;
 	public static final int HAN = 1;
 	public static final int WU = 2;
@@ -22,9 +22,16 @@ public class Consts {
 	public static final int PLAY = 5;
 	public static final int JAIL = 6;
 	
-	//board statuses
+	// Board statuses
 	public static final int PREGAME = 0;
 	public static final int SETUP = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
+	
+	// Phases
+	public static final int OFFTURN = -1;
+	public static final int MAKEHAND = 0;
+	public static final int PLAYCARD = 1;
+	public static final int RECRUIT = 2;
+	public static final int DISCARD = 3;
 }

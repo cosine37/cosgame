@@ -31,8 +31,6 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		ws.onOpen(function() {
 			heartCheck.start();
 		});
-		
-		$scope.settings = [0]
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -49,29 +47,63 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			});
 		}
 		
-		/*
-		var card = {}
-		card.img="LiuBei";
-		card.faction=3;
-		card.name="呂奉先";
-		card.title="三姓家奴"
-		card.desc="王道+1，霸道-1。"
-		$scope.cardDisplay = buildCard(card)
-		*/
+		$scope.OFFTURN = -1;
+		$scope.MAKEHAND = 0;
+		$scope.PLAYCARD = 1;
+		$scope.RECRUIT = 2;
+		$scope.DISCARD = 3;
+		
+		$scope.setupJail = -1;
+		$scope.setupExile = -1;
+		$scope.handSetup = function(x){
+			if ($scope.setupJail == x){
+				$scope.setupJail = -1
+			} else if ($scope.setupExile == x){
+				$scope.setupExile = -1;
+			} else if ($scope.setupJail == -1){
+				$scope.setupJail = x
+			} else if ($scope.setupExile == -1){
+				$scope.setupExile = x;
+			}
+		}
+		$scope.canSubmitHandSetup = function(){
+			if ($scope.setupJail != -1 && $scope.setupExile != -1){
+				return true
+			} else {
+				return false
+			}
+		}
+		$scope.submitHandSetup = function(){
+			if ($scope.canSubmitHandSetup()){
+				var data = {
+					"jail": $scope.setupJail,
+					"exile": $scope.setupExile
+				}
+				alert(JSON.stringify(data))
+				$http({url: "/threechaodoms/setuphand", method: "POST", params: data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
 		
 		$scope.playCard = function(x, targets){
 			var data = {
 				"cardIndex": x,
 				"targets": targets
 			}
-			//alert(JSON.stringify(data))
 			$http({url: "/threechaodoms/play", method: "POST", params: data}).then(function(response){
 				$scope.allRefresh()
 			});
 		}
 		
 		$scope.clickHand = function(x){
-			$scope.playCard(x, [0])
+			if ($scope.gamedata.phase == $scope.MAKEHAND){
+				$scope.handSetup(x)
+			} else if ($scope.gamedata.phase == $scope.PLAYCARD){
+				$scope.playCard(x, [0])
+			}
+			
 		}
 		
 		$scope.handStyles = []

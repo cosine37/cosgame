@@ -13,7 +13,7 @@ public class DianWei extends Card {
 		title = "汉之樊哙";
 		faction = Consts.WEI;
 		
-		desc = "如果你阵面有群势力角色，王道-2。";
+		desc = "如果你阵面有群势力武将，王道-2。";
 	}
 	
 	public void play(List<Integer> targets) {

@@ -3,6 +3,7 @@ package com.cosine.cosgame.threechaodoms;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -14,8 +15,8 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Board {
 	String id;
 	String lord;
-	int phase;
 	int status;
+	int firstPlayer;
 	int curPlayer;
 	int weiPos;
 	int hanPos;
@@ -49,8 +50,13 @@ public class Board {
 		int i;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
+			p.setPhase(Consts.OFFTURN);
 			p.draw(5);
 		}
+		Random rand = new Random();
+		firstPlayer = rand.nextInt(players.size());
+		curPlayer = firstPlayer;
+		players.get(firstPlayer).setPhase(Consts.MAKEHAND);
 	}
 	
 	public Card takeFromTavern(int x) {
@@ -92,9 +98,13 @@ public class Board {
 	
 	public void moveWei(int x) {
 		weiPos = weiPos+x;
+		if (weiPos > Consts.MAXPOS) weiPos = Consts.MAXPOS;
+		if (weiPos < Consts.MINPOS) weiPos = Consts.MINPOS;
 	}
 	public void moveHan(int x) {
 		hanPos = hanPos+x;
+		if (hanPos > Consts.MAXPOS) hanPos = Consts.MAXPOS;
+		if (hanPos < Consts.MINPOS) hanPos = Consts.MINPOS;
 	}
 	public void addToExile(Card c) {
 		exile.add(c);
@@ -178,19 +188,19 @@ public class Board {
 	public void setTomb(List<Card> tomb) {
 		this.tomb = tomb;
 	}
-	public int getPhase() {
-		return phase;
-	}
-	public void setPhase(int phase) {
-		this.phase = phase;
-	}
 	public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+	public int getFirstPlayer() {
+		return firstPlayer;
+	}
+	public void setFirstPlayer(int firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
@@ -320,7 +330,7 @@ public class Board {
 		doc.append("id", id);
 		doc.append("lord", lord);
 		doc.append("status", status);
-		doc.append("phase", phase);
+		doc.append("firstPlayer", firstPlayer);
 		doc.append("curPlayer", curPlayer);
 		doc.append("weiPos", weiPos);
 		doc.append("hanPos", hanPos);
@@ -360,7 +370,7 @@ public class Board {
 		id = doc.getString("id");
 		lord = doc.getString("lord");
 		status = doc.getInteger("status", -1);
-		phase = doc.getInteger("phase", -1);
+		firstPlayer = doc.getInteger("firstPlayer", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
 		weiPos = doc.getInteger("weiPos", -1);
 		hanPos = doc.getInteger("hanPos", -1);
@@ -412,7 +422,6 @@ public class Board {
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(status);
-		entity.setPhase(phase);
 		entity.setCurPlayer(curPlayer);
 		entity.setHanPos(hanPos);
 		entity.setWeiPos(weiPos);
@@ -425,6 +434,7 @@ public class Board {
 		List<CardEntity> myHand = new ArrayList<>();
 		List<CardEntity> myJail = new ArrayList<>();
 		List<Integer> myID = new ArrayList<>();
+		int phase = Consts.OFFTURN;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerEntity.add(players.get(i).toPlayerEntity());
@@ -436,13 +446,14 @@ public class Board {
 					myJail.add(p.getJail().get(j).toCardEntity());
 				}
 				myID = p.getId().getFactions();
+				phase = p.getPhase();
 			}
-			
 		}
 		entity.setPlayers(playerEntity);
 		entity.setMyHand(myHand);
 		entity.setMyJail(myJail);
 		entity.setMyID(myID);
+		entity.setPhase(phase);
 		List<CardEntity> tavernEntity = new ArrayList<>();
 		for (i=0;i<tavern.size();i++) {
 			tavernEntity.add(tavern.get(i).toCardEntity());

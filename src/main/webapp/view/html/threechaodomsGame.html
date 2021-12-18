@@ -28,12 +28,29 @@
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
 	 -->
-	{{gamedata}}
-	<div id="hand">
-		<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left" 
-			ng-click="clickHand($index)">
-			<div ng-include="'/view/html/threechaodomsCard.html'"></div>
+	<div id="messages">
+		<div ng-show="gamedata.phase == MAKEHAND">
+			<span>请将一名武将翻面，并驱逐另一名武将。</span>
+			<button ng-disabled="canSubmitHandSetup() == false" ng-click="submitHandSetup()">确定</button>
 		</div>
+		<div ng-show="gamedata.phase == OFFTURN">
+			<span>现在不是你的回合。</span>
+		</div>
+		<div ng-show="gamedata.phase == PLAYCARD">
+			<span>请打出一张手牌。</span>
+			<button>确定</button>
+		</div>
+	</div>
+	<div id="hand">
+		<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left; position:relative" 
+			ng-click="clickHand($index)">
+			<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+			<div class="jail" ng-show="gamedata.phase == MAKEHAND && setupJail == $index"></div>
+			<div class="exile" ng-show="gamedata.phase == MAKEHAND && setupExile == $index"></div>
+		</div>
+	</div>
+	<div style="clear:both">
+		{{gamedata}}
 	</div>
 </body>
 </html>

@@ -13,7 +13,7 @@ public class YueJin extends Card {
 		title = "驍果顯名";
 		faction = Consts.WEI;
 		
-		desc = "如果你阵面有吴势力角色，霸道+2。";
+		desc = "如果你阵面有吴势力武将，霸道+2。";
 	}
 	
 	public void play(List<Integer> targets) {

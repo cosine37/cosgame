@@ -113,6 +113,26 @@ public class ThreechaodomsController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/threechaodoms/setuphand", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setupHand(HttpServletRequest request, @RequestParam int jail, @RequestParam int exile){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.setupHand(jail, exile);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/threechaodoms/play", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam int cardIndex, @RequestParam List<Integer> targets){
 		StringEntity entity = new StringEntity();

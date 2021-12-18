@@ -29,6 +29,35 @@ button:disabled{
 	background: white;
 }
 
+.jail{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -40px;
+	margin-top: -45px;
+	height: 80px;
+	width: 80px;
+	z-index: 100;
+	background:url("/image/Threechaodoms/jail.png");
+	background-size:cover;
+}
+
+.exile{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -50px;
+	margin-top: -55px;
+	height: 100px;
+	width: 100px;
+	z-index: 100;
+	background:url("/image/Threechaodoms/kick.jpg");
+	background-size:cover;
+}
+
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

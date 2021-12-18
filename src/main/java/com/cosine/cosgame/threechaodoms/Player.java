@@ -11,6 +11,7 @@ import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
 public class Player {
 	String name;
 	int index;
+	int phase;
 	
 	ID id;
 	List<Card> hand;
@@ -25,6 +26,18 @@ public class Player {
 		play = new ArrayList<>();
 		jail = new ArrayList<>();
 	}
+	
+	public void setupHand(int jailIndex, int exileIndex) {
+		if (jailIndex > exileIndex) {
+			putInJail(jailIndex);
+			exile(exileIndex);
+		} else {
+			exile(exileIndex);
+			putInJail(jailIndex);
+		}
+		endTurn();
+	}
+	
 	
 	public void playCard(int x, List<Integer> targets) {
 		if (x>=0 && x<hand.size()) {
@@ -66,6 +79,30 @@ public class Player {
 			Card c = hand.remove(x);
 			jail.add(c);
 		}
+	}
+	
+	public void endTurn() {
+		phase = Consts.OFFTURN;
+		Player p = nextPlayer();
+		if (board.getStatus() == Consts.SETUP){
+			board.setCurPlayer(p.getIndex());
+			if (board.getCurPlayer() == board.getFirstPlayer()) {
+				board.setStatus(Consts.INGAME);
+				p.setPhase(Consts.PLAYCARD);
+			} else {
+				p.setPhase(Consts.MAKEHAND);
+			}
+			
+		} 
+	}
+	
+	public Player nextPlayer() {
+		int n = board.getPlayers().size();
+		int x = index+1;
+		if (x>=n) x=x-n;
+		
+		Player p = board.getPlayers().get(x);
+		return p;
 	}
 	
 	public String getName() {
@@ -110,11 +147,18 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("id", id.toDocument());
+		doc.append("phase", phase);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -137,6 +181,7 @@ public class Player {
 	
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
+		phase = doc.getInteger("phase", Consts.OFFTURN);
 		Document idDoc = (Document) doc.get("id");
 		id = new ID();
 		id.setFromDoc(idDoc);
