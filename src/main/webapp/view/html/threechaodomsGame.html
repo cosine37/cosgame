@@ -17,7 +17,7 @@
 <script src="/js/lib/threechaodomsCardMaker.js"></script>
 <script src="/js/app/threechaodomsGameController.js"></script>
 <body ng-app="threechaodomsGameApp" ng-controller="threechaodomsGameCtrl">
-	<button ng-click="goto('threechaodomscreategame')">back</button>
+	<button ng-click="goto('threechaodoms')">back</button>
 	<!--
 	<button ng-click="startGame()" ng-show="lord == username">start game</button>
 	 
@@ -30,7 +30,8 @@
 	 -->
 	{{gamedata}}
 	<div id="hand">
-		<div ng-repeat="cardDisplay in handStyles" style="float: left">
+		<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left" 
+			ng-click="clickHand($index)">
 			<div ng-include="'/view/html/threechaodomsCard.html'"></div>
 		</div>
 	</div>

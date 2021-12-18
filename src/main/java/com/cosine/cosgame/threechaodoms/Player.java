@@ -26,7 +26,7 @@ public class Player {
 		jail = new ArrayList<>();
 	}
 	
-	public void play(int x, List<Integer> targets) {
+	public void playCard(int x, List<Integer> targets) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
 			play.add(c);
@@ -118,17 +118,18 @@ public class Player {
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
+			System.out.println(hand.get(i).getName());
 			doh.add(hand.get(i).toDocument());
 		}
 		doc.append("hand", doh);
 		List<Document> dop = new ArrayList<>();
 		for (i=0;i<play.size();i++) {
-			doh.add(play.get(i).toDocument());
+			dop.add(play.get(i).toDocument());
 		}
 		doc.append("play", dop);
 		List<Document> doj = new ArrayList<>();
 		for (i=0;i<jail.size();i++) {
-			doh.add(jail.get(i).toDocument());
+			doj.add(jail.get(i).toDocument());
 		}
 		doc.append("jail", doj);
 		return doc;
@@ -145,6 +146,8 @@ public class Player {
 		for (i=0;i<doh.size();i++) {
 			Card c = CardFactory.makeCard(doh.get(i));
 			c.setWhere(Consts.HAND);
+			c.setBoard(board);
+			c.setPlayer(this);
 			hand.add(c);
 		}
 		play = new ArrayList<>();
@@ -152,6 +155,8 @@ public class Player {
 		for (i=0;i<dop.size();i++) {
 			Card c = CardFactory.makeCard(dop.get(i));
 			c.setWhere(Consts.PLAY);
+			c.setBoard(board);
+			c.setPlayer(this);
 			play.add(c);
 		}
 		jail = new ArrayList<>();
@@ -159,6 +164,8 @@ public class Player {
 		for (i=0;i<doj.size();i++) {
 			Card c = CardFactory.makeCard(doj.get(i));
 			c.setWhere(Consts.JAIL);
+			c.setBoard(board);
+			c.setPlayer(this);
 			play.add(c);
 		}
 	}

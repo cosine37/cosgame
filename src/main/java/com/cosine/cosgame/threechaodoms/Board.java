@@ -372,9 +372,9 @@ public class Board {
 			name = "player-" + name;
 			Document dop = (Document) doc.get(name);
 			Player p = new Player();
-			p.setFromDoc(dop);
 			p.setIndex(i);
 			p.setBoard(this);
+			p.setFromDoc(dop);
 			players.add(p);
 		}
 		List<Document> dod = (List<Document>) doc.get("deck");

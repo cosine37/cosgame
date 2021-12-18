@@ -17,6 +17,7 @@ import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
 import com.cosine.cosgame.threechaodoms.Board;
 import com.cosine.cosgame.threechaodoms.Consts;
 import com.cosine.cosgame.threechaodoms.Meta;
+import com.cosine.cosgame.threechaodoms.Player;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -104,6 +105,28 @@ public class ThreechaodomsController {
 				//board.setSettings(settings);
 				board.startGame();
 				//board.updateDB("firstPlayer", board.getFirstPlayer());
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/threechaodoms/play", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> playCard(HttpServletRequest request, @RequestParam int cardIndex, @RequestParam List<Integer> targets){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.playCard(cardIndex, targets);
+				//System.out.println(p.getHand().size());
+				//System.out.println(p.getPlay().size());
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

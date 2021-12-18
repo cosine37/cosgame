@@ -13,6 +13,26 @@ public class CardFactory {
 			c = new BlankSpaceCard();
 		} else if (img.contentEquals("LiuBei")) {
 			c = new LiuBei();
+		} else if (img.contentEquals("CaoCao")) {
+			c = new CaoCao();
+		} else if (img.contentEquals("ZhaoYun")) {
+			c = new ZhaoYun();
+		} else if (img.contentEquals("MaChao")) {
+			c = new MaChao();
+		} else if (img.contentEquals("CaoRen")) {
+			c = new CaoRen();
+		} else if (img.contentEquals("JiaXu")) {
+			c = new JiaXu();
+		} else if (img.contentEquals("DianWei")) {
+			c = new DianWei();
+		} else if (img.contentEquals("MiZhu")) {
+			c = new MiZhu();
+		} else if (img.contentEquals("SunCe")) {
+			c = new SunCe();
+		} else if (img.contentEquals("YuJin")) {
+			c = new YuJin();
+		} else if (img.contentEquals("YueJin")) {
+			c = new YueJin();
 		}
 		return c;
 	}

@@ -59,6 +59,21 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.cardDisplay = buildCard(card)
 		*/
 		
+		$scope.playCard = function(x, targets){
+			var data = {
+				"cardIndex": x,
+				"targets": targets
+			}
+			//alert(JSON.stringify(data))
+			$http({url: "/threechaodoms/play", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.clickHand = function(x){
+			$scope.playCard(x, [0])
+		}
+		
 		$scope.handStyles = []
 		var buildHandStyles = function(){
 			$scope.handStyles = []

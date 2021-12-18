@@ -20,6 +20,11 @@
      src:url('/font/ktl.woff') format('woff')
 }
 
+@font-face{
+     font-family: 'name'; 
+     src:url('/font/ktl.woff') format('woff')
+}
+
 .card-size{
 	height: 300px;
 	width: 200px;
@@ -179,7 +184,7 @@
 	color: white;
 	font-size: 30px;
 	font-weight: 600;
-	font-family: "ktl";
+	font-family: "name";
 	
 	writing-mode: vertical-rl;
 	-webkit-text-stroke: 0.5px black; 

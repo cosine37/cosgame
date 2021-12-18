@@ -18,10 +18,16 @@ public class AllRes {
 	
 	public void genBase() {
 		base = new ArrayList<>();
-		int i;
-		for (i=0;i<100;i++) {
-			Card c = new LiuBei();
-			base.add(c);
-		}
+		base.add(new DianWei());
+		base.add(new MiZhu());
+		base.add(new SunCe());
+		base.add(new YuJin());
+		base.add(new YueJin());
+		base.add(new CaoRen());
+		base.add(new JiaXu());
+		base.add(new MaChao());
+		base.add(new ZhaoYun());
+		base.add(new CaoCao());
+		base.add(new LiuBei());
 	}
 }
