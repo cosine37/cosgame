@@ -4,20 +4,22 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
+
 public class Card {
-	String name;
-	String img;
-	String desc;
-	String title;
-	int han;
-	int wei;
-	boolean blankSpace;
-	List<Integer> extraBits;
-	int where;
-	int faction;
-	
-	Player player;
-	Board board;
+	protected String name;
+	protected String courtesy;
+	protected String img;
+	protected String desc;
+	protected String title;
+	protected int han;
+	protected int wei;
+	protected boolean blankSpace;
+	protected List<Integer> extraBits;
+	protected int where;
+	protected int faction;
+	protected Player player;
+	protected Board board;
 	
 	public Card() {
 		han = 0;
@@ -25,8 +27,9 @@ public class Card {
 		blankSpace = false;
 	}
 	
-	public void play() {
-		
+	public void play(List<Integer> targets) {
+		board.moveHan(han);
+		board.moveWei(wei);
 	}
 	
 	public String getName() {
@@ -108,6 +111,18 @@ public class Card {
 		//doc.append("where", where);
 		doc.append("extraBits", extraBits);
 		return doc;
+	}
+	
+	public CardEntity toCardEntity() {
+		CardEntity entity = new CardEntity();
+		entity.setName(name);
+		entity.setImg(img);
+		entity.setCourtesy(courtesy);
+		entity.setTitle(title);
+		entity.setFaction(faction);
+		entity.setDesc(desc);
+		entity.setBlankSpace(blankSpace);
+		return entity;
 	}
 	
 }

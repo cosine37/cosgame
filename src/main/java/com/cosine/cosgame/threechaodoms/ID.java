@@ -46,6 +46,14 @@ public class ID {
 		return doc;
 	}
 	
+	public List<Integer> getFactions() {
+		return factions;
+	}
+
+	public void setFactions(List<Integer> factions) {
+		this.factions = factions;
+	}
+
 	public void setFromDoc(Document doc) {
 		factions = (List<Integer>) doc.get("factions");
 	}

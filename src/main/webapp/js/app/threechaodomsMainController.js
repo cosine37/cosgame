@@ -53,7 +53,7 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/threechaodoms/setboardid", method: "POST", params: data}).then(function(response){
-				$http.post("/architect/join").then(function(response){
+				$http.post("/threechaodoms/join").then(function(response){
 					//var json_data = '{"type":"notify","content":"refresh"}';
 			        boardws.send($scope.boards[index]);
 					$scope.goto('threechaodomscreategame')

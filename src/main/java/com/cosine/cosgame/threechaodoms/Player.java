@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
+import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
+
 public class Player {
 	String name;
 	int index;
@@ -21,6 +24,14 @@ public class Player {
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
 		jail = new ArrayList<>();
+	}
+	
+	public void play(int x, List<Integer> targets) {
+		if (x>=0 && x<hand.size()) {
+			Card c = hand.remove(x);
+			play.add(c);
+			c.play(targets);
+		}
 	}
 	
 	public void exile(int x) {
@@ -93,7 +104,13 @@ public class Player {
 	public void setJail(List<Card> jail) {
 		this.jail = jail;
 	}
-	
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -144,6 +161,18 @@ public class Player {
 			c.setWhere(Consts.JAIL);
 			play.add(c);
 		}
+	}
+	
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		int i;
+		List<CardEntity> playEntity = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			playEntity.add(play.get(i).toCardEntity());
+		}
+		entity.setPlay(playEntity);
+		return entity;
 	}
 	
 }

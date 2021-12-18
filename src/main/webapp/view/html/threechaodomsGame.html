@@ -28,6 +28,11 @@
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
 	 -->
-	 <div ng-include="'/view/html/threechaodomsCard.html'"></div>
+	{{gamedata}}
+	<div id="hand">
+		<div ng-repeat="cardDisplay in handStyles" style="float: left">
+			<div ng-include="'/view/html/threechaodomsCard.html'"></div>
+		</div>
+	</div>
 </body>
 </html>

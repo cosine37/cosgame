@@ -104,6 +104,23 @@ app.controller("threechaodomsCreateGameCtrl", ['$scope', '$window', '$http', '$d
 				}
 
 			});
+		}*/
+		
+		$scope.getBoard = function(){
+			$http.get('/threechaodoms/getboard').then(function(response){
+				if (response.data.id == "NE"){
+					alert("该游戏已解散");
+					$scope.goto('pokerworld');
+					return;
+				}
+				$scope.gamedata = response.data
+				$scope.status = response.data.status
+				$scope.lord = response.data.lord
+				$scope.players = response.data.players
+				if ($scope.status == '1'){
+					$scope.goto('threechaodomsgame');
+				}
+			});
 		}
 		
 		$scope.getBoard();
@@ -121,6 +138,6 @@ app.controller("threechaodomsCreateGameCtrl", ['$scope', '$window', '$http', '$d
 			var msg = "refresh";
 	        ws.send(msg);
 		}
-		*/
+		
 		
 }]);

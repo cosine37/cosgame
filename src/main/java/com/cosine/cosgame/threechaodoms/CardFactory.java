@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.base.*;
+
 public class CardFactory {
 	public static Card makeCard(String img) {
 		Card c = new Card();
 		if (img.contentEquals("blankspace")) {
 			c = new BlankSpaceCard();
+		} else if (img.contentEquals("LiuBei")) {
+			c = new LiuBei();
 		}
 		return c;
 	}

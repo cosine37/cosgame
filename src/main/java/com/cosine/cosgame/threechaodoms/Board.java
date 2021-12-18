@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
+import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -41,6 +44,13 @@ public class Board {
 		AllRes allRes = new AllRes();
 		deck = allRes.getDeck();
 		status = Consts.SETUP;
+		weiPos = Consts.STARTPOS;
+		hanPos = Consts.STARTPOS;
+		int i;
+		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			p.draw(5);
+		}
 	}
 	
 	public Card takeFromTavern(int x) {
@@ -98,6 +108,14 @@ public class Board {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	public Card topTomb() {
+		if (tomb.size() == 0) {
+			return new BlankSpaceCard();
+		} else {
+			int x = tomb.size()-1;
+			return tomb.get(x);
 		}
 	}
 	public String getId() {
@@ -356,6 +374,8 @@ public class Board {
 			Player p = new Player();
 			p.setFromDoc(dop);
 			p.setIndex(i);
+			p.setBoard(this);
+			players.add(p);
 		}
 		List<Document> dod = (List<Document>) doc.get("deck");
 		deck = new ArrayList<>();
@@ -385,6 +405,67 @@ public class Board {
 			c.setWhere(Consts.TOMB);
 			tomb.add(c);
 		}
+	}
+	
+	public BoardEntity toBoardEntity(String name) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setStatus(status);
+		entity.setPhase(phase);
+		entity.setCurPlayer(curPlayer);
+		entity.setHanPos(hanPos);
+		entity.setWeiPos(weiPos);
+		entity.setNumDeck(deck.size());
+		entity.setNumExile(exile.size());
+		entity.setNumTomb(tomb.size());
+		entity.setTopTomb(topTomb().toCardEntity());
+		int i,j;
+		List<PlayerEntity> playerEntity = new ArrayList<>();
+		List<CardEntity> myHand = new ArrayList<>();
+		List<CardEntity> myJail = new ArrayList<>();
+		List<Integer> myID = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			playerEntity.add(players.get(i).toPlayerEntity());
+			if (name.contentEquals(name)) {
+				for (j=0;j<p.getHand().size();j++) {
+					myHand.add(p.getHand().get(j).toCardEntity());
+				}
+				for (j=0;j<p.getJail().size();j++) {
+					myJail.add(p.getJail().get(j).toCardEntity());
+				}
+				myID = p.getId().getFactions();
+			}
+			
+		}
+		entity.setPlayers(playerEntity);
+		entity.setMyHand(myHand);
+		entity.setMyJail(myJail);
+		entity.setMyID(myID);
+		List<CardEntity> tavernEntity = new ArrayList<>();
+		for (i=0;i<tavern.size();i++) {
+			tavernEntity.add(tavern.get(i).toCardEntity());
+		}
+		entity.setTavern(tavernEntity);
+		/*
+		List<CardEntity> deckEntity = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			deckEntity.add(deck.get(i).toCardEntity());
+		}
+		entity.setDeck(deckEntity);
+		List<CardEntity> exileEntity = new ArrayList<>();
+		for (i=0;i<exile.size();i++) {
+			exileEntity.add(exile.get(i).toCardEntity());
+		}
+		entity.setExile(exileEntity);
+		List<CardEntity> exileEntity = new ArrayList<>();
+		for (i=0;i<exile.size();i++) {
+			exileEntity.add(exile.get(i).toCardEntity());
+		}
+		entity.setExile(exileEntity);
+		*/
+		return entity;
 	}
 	
 }

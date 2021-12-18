@@ -49,6 +49,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			});
 		}
 		
+		/*
 		var card = {}
 		card.img="LiuBei";
 		card.faction=3;
@@ -56,16 +57,15 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		card.title="三姓家奴"
 		card.desc="王道+1，霸道-1。"
 		$scope.cardDisplay = buildCard(card)
+		*/
 		
-		/*
-		$scope.startGame = function(){
-			var data = {
-				"settings" : $scope.settings	
+		$scope.handStyles = []
+		var buildHandStyles = function(){
+			$scope.handStyles = []
+			for (i=0;i<$scope.gamedata.myHand.length;i++){
+				var c = $scope.gamedata.myHand[i]
+				$scope.handStyles.push(buildCard(c))
 			}
-			$http({url: "/threechaodoms/startgame", method: "POST", params:data}).then(function(response){
-				ws.send("start");
-				$scope.goto('pokerworldgame');
-			});
 		}
 		
 		$scope.getBoard = function(){
@@ -93,9 +93,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					return;
 				}
 				
-				if ($scope.status == '1'){
-					$scope.goto('pokerworldgame');
-				}
+				buildHandStyles()
 
 			});
 		}
@@ -115,6 +113,6 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			var msg = "refresh";
 	        ws.send(msg);
 		}
-		*/
+		
 		
 }]);
