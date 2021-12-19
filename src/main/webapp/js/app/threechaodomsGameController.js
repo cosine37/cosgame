@@ -53,6 +53,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.RECRUIT = 2;
 		$scope.DISCARD = 3;
 		
+		// Setup Section
 		$scope.setupJail = -1;
 		$scope.setupExile = -1;
 		$scope.handSetup = function(x){
@@ -79,29 +80,109 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					"jail": $scope.setupJail,
 					"exile": $scope.setupExile
 				}
-				alert(JSON.stringify(data))
 				$http({url: "/threechaodoms/setuphand", method: "POST", params: data}).then(function(response){
 					$scope.allRefresh()
 				});
 			}
 		}
+		// end setup section
 		
-		
-		$scope.playCard = function(x, targets){
+		// Play or Discard Section
+		$scope.playMode = 0;
+		$scope.selectedCard = -1;
+		$scope.targets = [0,0,0,0,0];
+		$scope.changeMode = function(x){
+			$scope.playMode = x;
+			for (var i=0;i<$scope.gamedata.myHand.length;i++){
+				$scope.gamedata.myHand.selected = 0
+			}
+			$scope.selectedCard = -1;
+			$scope.targets = [0,0,0,0,0];
+		}
+			// Play or Discard -- Discard
+		$scope.exileCards = function(){
+			var exileIndexes = []
+			for (var i=0;i<$scope.gamedata.myHand.length;i++){
+				if ($scope.gamedata.myHand.selected == 1){
+					exileIndexes.push(i)
+				}
+			}
 			var data = {
-				"cardIndex": x,
-				"targets": targets
+					"targets": exileIndexes
+				}
+			$http({url: "/threechaodoms/exilecards", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.selectCardToExile = function(x){
+			if ($scope.gamedata.myHand[x].selected == 1){
+				$scope.gamedata.myHand[x].selected = 0
+			} else {
+				var t = 0
+				for (var i=0;i<$scope.gamedata.myHand.length;i++){
+					if ($scope.gamedata.myHand[i].selected == 1){
+						t=t+1;
+					}
+					if (t<3){
+						$scope.gamedata.myHand[x].selected = 1
+					}
+				}
+			}
+				
+		}
+		
+		$scope.canExile = function(){
+			var t = 0
+			for (var i=0;i<$scope.gamedata.myHand.length;i++){
+				if ($scope.gamedata.myHand[i].selected == 1){
+					t=t+1;
+				}
+			}
+			if (t==0 || t>3){
+				return false
+			} else {
+				return true
+			}
+		}
+			// end Play or Discard -- Discard
+			// Play or Discard -- Play
+		$scope.playCard = function(){
+			var data = {
+				"cardIndex": $scope.selectedCard,
+				"targets": $scope.targets
 			}
 			$http({url: "/threechaodoms/play", method: "POST", params: data}).then(function(response){
 				$scope.allRefresh()
 			});
 		}
+		$scope.canPlaySelectedCard = function(){
+			if ($scope.selectedCard == -1){
+				return false;
+			} else {
+				return true;
+			}
+			
+		}
+			// end Play or Discard -- Play
+		// End Play or Discard Section
 		
 		$scope.clickHand = function(x){
 			if ($scope.gamedata.phase == $scope.MAKEHAND){
 				$scope.handSetup(x)
 			} else if ($scope.gamedata.phase == $scope.PLAYCARD){
-				$scope.playCard(x, [0])
+				if ($scope.playMode == 0){
+					//$scope.playCard(x, [0])
+					if ($scope.selectedCard == x){
+						$scope.selectedCard = -1;
+					} else {
+						$scope.selectedCard = x;
+					}
+					
+				} else if ($scope.playMode == 1){
+					$scope.selectCardToExile(x)
+				}
+				
 			}
 			
 		}

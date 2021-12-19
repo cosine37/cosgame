@@ -44,7 +44,27 @@ public class Player {
 			Card c = hand.remove(x);
 			play.add(c);
 			c.play(targets);
+			
+			//TODO: May need fix here
+			phase = Consts.RECRUIT;
 		}
+	}
+	
+	public void exileCards(List<Integer> targets) {
+		int i,j;
+		for (i=0;i<targets.size();i++) {
+			for (j=i+1;j<targets.size();j++) {
+				if (targets.get(i)>targets.get(j)) {
+					int x = targets.get(i);
+					targets.set(i, targets.get(j));
+					targets.set(j, x);
+				}
+			}
+		}
+		for (i=targets.size()-1;i>=1;i--) {
+			exile(targets.get(i));
+		}
+		phase = Consts.RECRUIT;
 	}
 	
 	public void exile(int x) {

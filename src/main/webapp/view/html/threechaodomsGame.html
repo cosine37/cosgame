@@ -37,16 +37,28 @@
 			<span>现在不是你的回合。</span>
 		</div>
 		<div ng-show="gamedata.phase == PLAYCARD">
-			<span>请打出一张手牌。</span>
-			<button>确定</button>
+			<span ng-show="playMode == 0">请打出一张手牌。</span>
+			<button ng-show="playMode == 0" ng-click="changeMode(1)">我要驱逐</button>
+			<span ng-show="playMode == 1">请驱逐1~3张手牌。</span>
+			<button ng-show="playMode == 1" ng-click="exileCards()" ng-disabled="canExile() == false">驱逐</button>
+			<button ng-show="playMode == 1" ng-click="changeMode(0)">我要打出手牌</button>
+		</div>
+		<div ng-show="gamedata.phase == RECRUIT">
+			<span>请招募英雄</span>
 		</div>
 	</div>
 	<div id="hand">
 		<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left; position:relative" 
 			ng-click="clickHand($index)">
 			<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+			
 			<div class="jail" ng-show="gamedata.phase == MAKEHAND && setupJail == $index"></div>
 			<div class="exile" ng-show="gamedata.phase == MAKEHAND && setupExile == $index"></div>
+			
+			<div class="exile" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[$index].selected == 1"></div>
+			<div class="play-button" ng-show="gamedata.phase == PLAYCARD && selectedCard == $index">
+				<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard()">打出</button>
+			</div>	
 		</div>
 	</div>
 	<div style="clear:both">

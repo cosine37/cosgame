@@ -57,6 +57,15 @@ button:disabled{
 	background-size:cover;
 }
 
+.play-button{
+	position: absolute;
+	top: 10px;
+	width: 50px;
+	margin-left: -25px;
+	left: 50%;
+	z-index: 100;
+}
+
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
