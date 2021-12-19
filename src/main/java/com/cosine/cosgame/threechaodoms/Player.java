@@ -42,8 +42,8 @@ public class Player {
 	public void playCard(int x, List<Integer> targets) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
-			play.add(c);
 			c.play(targets);
+			play.add(c);
 			
 			//TODO: May need fix here
 			phase = Consts.RECRUIT;
@@ -231,7 +231,7 @@ public class Player {
 			c.setWhere(Consts.JAIL);
 			c.setBoard(board);
 			c.setPlayer(this);
-			play.add(c);
+			jail.add(c);
 		}
 	}
 	

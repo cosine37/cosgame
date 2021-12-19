@@ -23,11 +23,13 @@
 	 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
-	<!-- 
+	 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
-	 -->
+	<div>
+		王道：{{gamedata.hanPos}} 霸道：{{gamedata.weiPos}}
+	</div>
 	<div id="messages">
 		<div ng-show="gamedata.phase == MAKEHAND">
 			<span>请将一名武将翻面，并驱逐另一名武将。</span>
@@ -37,14 +39,37 @@
 			<span>现在不是你的回合。</span>
 		</div>
 		<div ng-show="gamedata.phase == PLAYCARD">
-			<span ng-show="playMode == 0">请打出一张手牌。</span>
 			<button ng-show="playMode == 0" ng-click="changeMode(1)">我要驱逐</button>
+			<span ng-show="playMode == 0">请打出一张手牌。</span>
+			<button ng-show="playMode == 1" ng-click="changeMode(0)">我要打出手牌</button>
 			<span ng-show="playMode == 1">请驱逐1~3张手牌。</span>
 			<button ng-show="playMode == 1" ng-click="exileCards()" ng-disabled="canExile() == false">驱逐</button>
-			<button ng-show="playMode == 1" ng-click="changeMode(0)">我要打出手牌</button>
 		</div>
 		<div ng-show="gamedata.phase == RECRUIT">
 			<span>请招募英雄</span>
+		</div>
+	</div>
+	<div id="card options">
+		<div ng-show="gamedata.myHand[selectedCard].playType == CHOOSEONE">
+			请选择一项：
+			<span ng-show="gamedata.myHand[selectedCard].options.length>0">
+				<input type="radio" ng-model="chosenOption" value="0">
+				<label>{{gamedata.myHand[selectedCard].options[0]}}</label>
+			</span>
+			<span ng-show="gamedata.myHand[selectedCard].options.length>1">
+				<input type="radio" ng-model="chosenOption" value="1">
+				<label>{{gamedata.myHand[selectedCard].options[1]}}</label>
+			</span>
+			<span ng-show="gamedata.myHand[selectedCard].options.length>2">
+				<input type="radio" ng-model="chosenOption" value="2">
+				<label>{{gamedata.myHand[selectedCard].options[2]}}</label>
+			</span>
+			<!-- 
+			<span ng-repeat="o in gamedata.myHand[selectedCard].options track by $index">
+				<input type="radio" ng-model="chosenOption" ng-value="o">
+				<label>{{o}}</label>
+			</span>
+			 -->
 		</div>
 	</div>
 	<div id="hand">

@@ -88,16 +88,18 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		// end setup section
 		
 		// Play or Discard Section
+		$scope.CHOOSEONE = 1
+		
 		$scope.playMode = 0;
 		$scope.selectedCard = -1;
-		$scope.targets = [0,0,0,0,0];
+		$scope.targets = [-1,-1,-1,-1,-1];
+		$scope.chosenOption = -1;
 		$scope.changeMode = function(x){
 			$scope.playMode = x;
 			for (var i=0;i<$scope.gamedata.myHand.length;i++){
 				$scope.gamedata.myHand.selected = 0
 			}
 			$scope.selectedCard = -1;
-			$scope.targets = [0,0,0,0,0];
 		}
 			// Play or Discard -- Discard
 		$scope.exileCards = function(){
@@ -148,6 +150,11 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			// end Play or Discard -- Discard
 			// Play or Discard -- Play
 		$scope.playCard = function(){
+			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
+			if (type == $scope.CHOOSEONE){
+				$scope.targets[0] = $scope.chosenOption
+			}
+			
 			var data = {
 				"cardIndex": $scope.selectedCard,
 				"targets": $scope.targets
@@ -160,9 +167,14 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			if ($scope.selectedCard == -1){
 				return false;
 			} else {
-				return true;
+				if ($scope.gamedata.myHand[$scope.selectedCard].playType == $scope.CHOOSEONE){
+					if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+						return true;
+					} else {
+						return false;
+					}
+				}
 			}
-			
 		}
 			// end Play or Discard -- Play
 		// End Play or Discard Section
@@ -177,6 +189,8 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 						$scope.selectedCard = -1;
 					} else {
 						$scope.selectedCard = x;
+						$scope.chosenOption = -1;
+						$scope.targets = [-1,-1,-1,-1,-1];
 					}
 					
 				} else if ($scope.playMode == 1){

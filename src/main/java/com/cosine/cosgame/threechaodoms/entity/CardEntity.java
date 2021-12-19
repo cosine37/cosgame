@@ -1,5 +1,7 @@
 package com.cosine.cosgame.threechaodoms.entity;
 
+import java.util.List;
+
 public class CardEntity {
 	String name;
 	String courtesy;
@@ -8,6 +10,9 @@ public class CardEntity {
 	String desc;
 	int faction;
 	boolean blankSpace;
+	int playType;
+	int playSubType;
+	List<String> options;
 	
 	public String getName() {
 		return name;
@@ -50,5 +55,23 @@ public class CardEntity {
 	}
 	public void setBlankSpace(boolean blankSpace) {
 		this.blankSpace = blankSpace;
+	}
+	public int getPlayType() {
+		return playType;
+	}
+	public void setPlayType(int playType) {
+		this.playType = playType;
+	}
+	public int getPlaySubType() {
+		return playSubType;
+	}
+	public void setPlaySubType(int playSubType) {
+		this.playSubType = playSubType;
+	}
+	public List<String> getOptions() {
+		return options;
+	}
+	public void setOptions(List<String> options) {
+		this.options = options;
 	}
 }

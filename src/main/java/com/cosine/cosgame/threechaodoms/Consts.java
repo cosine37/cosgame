@@ -34,4 +34,8 @@ public class Consts {
 	public static final int PLAYCARD = 1;
 	public static final int RECRUIT = 2;
 	public static final int DISCARD = 3;
+	
+	// Play Types
+	public static final int DIRECTPLAY = 0;
+	public static final int CHOOSEONE = 1;
 }

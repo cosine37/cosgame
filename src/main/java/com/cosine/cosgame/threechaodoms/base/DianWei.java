@@ -10,7 +10,7 @@ public class DianWei extends Card {
 		name = "典韋";
 		courtesy = "";
 		img = "DianWei";
-		title = "汉之樊哙";
+		title = "漢之樊噲";
 		faction = Consts.WEI;
 		
 		desc = "如果你阵面有群势力武将，王道-2。";

@@ -1,5 +1,6 @@
 package com.cosine.cosgame.threechaodoms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -21,17 +22,30 @@ public class Card {
 	protected Player player;
 	protected Board board;
 	
+	protected int playType;
+	protected int playSubType;
+	protected List<String> options;
+	
 	public Card() {
 		han = 0;
 		wei = 0;
 		blankSpace = false;
+		playType = 0;
+		playSubType = 0;
+		extraBits = new ArrayList<>();
+		options = new ArrayList<>();
 	}
 	
 	public void play(List<Integer> targets) {
 		board.moveHan(han);
 		board.moveWei(wei);
 	}
-	
+	public String getDescDisplay() {
+		return desc;
+	}
+	public List<String> getOptionsDisplay() {
+		return options;
+	}
 	public String getName() {
 		return name;
 	}
@@ -104,6 +118,30 @@ public class Card {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public String getCourtesy() {
+		return courtesy;
+	}
+	public void setCourtesy(String courtesy) {
+		this.courtesy = courtesy;
+	}
+	public int getPlayType() {
+		return playType;
+	}
+	public void setPlayType(int playType) {
+		this.playType = playType;
+	}
+	public int getPlaySubType() {
+		return playSubType;
+	}
+	public void setPlaySubType(int playSubType) {
+		this.playSubType = playSubType;
+	}
+	public List<String> getOptions() {
+		return options;
+	}
+	public void setOptions(List<String> options) {
+		this.options = options;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -122,6 +160,12 @@ public class Card {
 		entity.setFaction(faction);
 		entity.setDesc(desc);
 		entity.setBlankSpace(blankSpace);
+		entity.setPlayType(playType);
+		entity.setPlaySubType(playSubType);
+		if (where == Consts.HAND) {
+			entity.setDesc(getDescDisplay());
+		}
+		entity.setOptions(getOptionsDisplay());
 		return entity;
 	}
 	
