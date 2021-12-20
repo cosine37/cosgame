@@ -43,8 +43,8 @@ public class LiaoHua extends Card {
 			}
 		}
 		if (x>3) x = 3;
-		desc = desc + " (X为" + x + ")";
-		return desc;
+		String ans = desc + " (X为" + x + ")";
+		return ans;
 	}
 	
 	public void play(List<Integer> targets) {

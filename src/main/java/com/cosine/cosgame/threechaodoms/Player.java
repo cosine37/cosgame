@@ -182,7 +182,6 @@ public class Player {
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
-			System.out.println(hand.get(i).getName());
 			doh.add(hand.get(i).toDocument());
 		}
 		doc.append("hand", doh);

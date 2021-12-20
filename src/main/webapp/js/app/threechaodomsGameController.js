@@ -89,11 +89,15 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		
 		// Play or Discard Section
 		$scope.CHOOSEONE = 1
+		$scope.CHOOSEHAND = 2
+		
+		$scope.INJAIL = 101;
 		
 		$scope.playMode = 0;
 		$scope.selectedCard = -1;
 		$scope.targets = [-1,-1,-1,-1,-1];
 		$scope.chosenOption = -1;
+		$scope.chosenHand = -1;
 		$scope.changeMode = function(x){
 			$scope.playMode = x;
 			for (var i=0;i<$scope.gamedata.myHand.length;i++){
@@ -153,6 +157,12 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
 			if (type == $scope.CHOOSEONE){
 				$scope.targets[0] = $scope.chosenOption
+			} else if (type == $scope.CHOOSEHAND){
+				var x = $scope.chosenHand;
+				if (x>$scope.selectedCard){
+					x = x-1;
+				}
+				$scope.targets[0] = x
 			}
 			
 			var data = {
@@ -163,12 +173,26 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				$scope.allRefresh()
 			});
 		}
+		$scope.cancelCard = function(){
+			$scope.selectedCard = -1
+			//alert($scope.selectedCard)
+		}
 		$scope.canPlaySelectedCard = function(){
 			if ($scope.selectedCard == -1){
 				return false;
 			} else {
-				if ($scope.gamedata.myHand[$scope.selectedCard].playType == $scope.CHOOSEONE){
+				var type = $scope.gamedata.myHand[$scope.selectedCard].playType
+				if (type == $scope.CHOOSEONE){
+					if ($scope.gamedata.myHand[$scope.selectedCard].options.length == 0){
+						return true;
+					}
 					if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+						return true;
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEHAND){
+					if ($scope.chosenHand != -1){
 						return true;
 					} else {
 						return false;
@@ -187,10 +211,24 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					//$scope.playCard(x, [0])
 					if ($scope.selectedCard == x){
 						$scope.selectedCard = -1;
-					} else {
+					} else if ($scope.selectedCard == -1){ 
 						$scope.selectedCard = x;
-						$scope.chosenOption = -1;
-						$scope.targets = [-1,-1,-1,-1,-1];
+					} else {
+						var playType = $scope.gamedata.myHand[$scope.selectedCard].playType
+						
+						if (playType == $scope.CHOOSEHAND){
+							if ($scope.chosenHand == x){
+								$scope.chosenHand = -1
+							} else {
+								$scope.chosenHand = x;
+							}
+						} else {
+							$scope.selectedCard = x;
+							$scope.chosenOption = -1;
+							$scope.chosenHand = -1;
+							$scope.targets = [-1,-1,-1,-1,-1];
+						}
+						
 					}
 					
 				} else if ($scope.playMode == 1){

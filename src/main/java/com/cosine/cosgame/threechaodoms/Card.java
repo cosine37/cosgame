@@ -25,6 +25,7 @@ public class Card {
 	protected int playType;
 	protected int playSubType;
 	protected List<String> options;
+	protected String instruction;
 	
 	public Card() {
 		han = 0;
@@ -142,6 +143,12 @@ public class Card {
 	public void setOptions(List<String> options) {
 		this.options = options;
 	}
+	public String getInstruction() {
+		return instruction;
+	}
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -166,6 +173,7 @@ public class Card {
 			entity.setDesc(getDescDisplay());
 		}
 		entity.setOptions(getOptionsDisplay());
+		entity.setInstruction(instruction);
 		return entity;
 	}
 	

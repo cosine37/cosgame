@@ -49,6 +49,20 @@ public class CardFactory {
 			c = new ChengYu();
 		} else if (img.contentEquals("LiaoHua")) {
 			c = new LiaoHua();
+		} else if (img.contentEquals("SiMaYi")) {
+			c = new SiMaYi();
+		} else if (img.contentEquals("MengHuo")) {
+			c = new MengHuo();
+		} else if (img.contentEquals("XiaoQiao")) {
+			c = new XiaoQiao();
+		} else if (img.contentEquals("YuanShao")) {
+			c = new YuanShao();
+		} else if (img.contentEquals("HanDang")) {
+			c = new HanDang();
+		} else if (img.contentEquals("ChengPu")) {
+			c = new ChengPu();
+		} else if (img.contentEquals("ZhouTai")) {
+			c = new ZhouTai();
 		}
 		return c;
 	}

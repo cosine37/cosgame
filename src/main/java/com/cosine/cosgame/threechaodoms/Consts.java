@@ -38,4 +38,8 @@ public class Consts {
 	// Play Types
 	public static final int DIRECTPLAY = 0;
 	public static final int CHOOSEONE = 1;
+	public static final int CHOOSEHAND = 2;
+	
+	// Play SubTypes
+	public static final int INJAIL = 101;
 }

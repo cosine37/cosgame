@@ -49,8 +49,12 @@
 			<span>请招募英雄</span>
 		</div>
 	</div>
-	<div id="card options">
-		<div ng-show="gamedata.myHand[selectedCard].playType == CHOOSEONE">
+	<div id="card instructions">
+		<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
+		<div ng-show="gamedata.myHand[selectedCard].playType == CHOOSEONE && gamedata.myHand[selectedCard].options.length==0">
+			无可用选项。
+		</div>
+		<div ng-show="gamedata.myHand[selectedCard].playType == CHOOSEONE && gamedata.myHand[selectedCard].options.length>0">
 			请选择一项：
 			<span ng-show="gamedata.myHand[selectedCard].options.length>0">
 				<input type="radio" ng-model="chosenOption" value="0">
@@ -64,13 +68,12 @@
 				<input type="radio" ng-model="chosenOption" value="2">
 				<label>{{gamedata.myHand[selectedCard].options[2]}}</label>
 			</span>
-			<!-- 
-			<span ng-repeat="o in gamedata.myHand[selectedCard].options track by $index">
-				<input type="radio" ng-model="chosenOption" ng-value="o">
-				<label>{{o}}</label>
+			<span ng-show="gamedata.myHand[selectedCard].options.length>3">
+				<input type="radio" ng-model="chosenOption" value="3">
+				<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
 			</span>
-			 -->
 		</div>
+		<div ng-show="gamedata.myHand[selectedCard].playType>1">{{gamedata.myHand[selectedCard].instruction}}</div>
 	</div>
 	<div id="hand">
 		<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left; position:relative" 
@@ -82,8 +85,13 @@
 			
 			<div class="exile" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[$index].selected == 1"></div>
 			<div class="play-button" ng-show="gamedata.phase == PLAYCARD && selectedCard == $index">
-				<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard()">打出</button>
-			</div>	
+				<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard();$event.stopPropagation();">打出</button>
+				<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
+			</div>
+			
+			<div class="jail" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
+				gamedata.myHand[selectedCard].playSubType == INJAIL && chosenHand == $index"></div>
+			
 		</div>
 	</div>
 	<div style="clear:both">
