@@ -63,6 +63,16 @@ public class CardFactory {
 			c = new ChengPu();
 		} else if (img.contentEquals("ZhouTai")) {
 			c = new ZhouTai();
+		} else if (img.contentEquals("XuChu")) {
+			c = new XuChu();
+		} else if (img.contentEquals("ZhangFei")) {
+			c = new ZhangFei();
+		} else if (img.contentEquals("WangPing")) {
+			c = new WangPing();
+		} else if (img.contentEquals("WeiYan")) {
+			c = new WeiYan();
+		} else if (img.contentEquals("JianYong")) {
+			c = new JianYong();
 		}
 		return c;
 	}

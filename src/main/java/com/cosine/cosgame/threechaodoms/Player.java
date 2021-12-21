@@ -112,6 +112,7 @@ public class Player {
 		}
 		if (hand.size() == 4) {
 			phase = Consts.DISCARD;
+			board.refillTavern();
 		}
 	}
 	/*
@@ -132,6 +133,10 @@ public class Player {
 			Card c = hand.remove(x);
 			jail.add(c);
 		}
+	}
+	
+	public void putInJail(Card c) {
+		jail.add(c);
 	}
 	
 	public void endTurn() {

@@ -245,6 +245,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				"target": $scope.recruitTarget
 			}
 			$http({url: "/threechaodoms/recruit", method: "POST", params: data}).then(function(response){
+				$scope.recruitTarget = -1
 				$scope.allRefresh()
 			});
 		}
