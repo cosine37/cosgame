@@ -200,9 +200,6 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				}
 			}
 		}
-			// end Play or Discard -- Play
-		// End Play or Discard Section
-		
 		$scope.clickHand = function(x){
 			if ($scope.gamedata.phase == $scope.MAKEHAND){
 				$scope.handSetup(x)
@@ -238,6 +235,43 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			}
 			
 		}
+			// end Play or Discard -- Play
+		// End Play or Discard Section
+		
+		// Tavern Section
+		$scope.recruitTarget = -1
+		$scope.recruit = function(){
+			var data = {
+				"target": $scope.recruitTarget
+			}
+			$http({url: "/threechaodoms/recruit", method: "POST", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		$scope.clickDeck = function(){
+			if ($scope.gamedata.phase == $scope.RECRUIT){
+				if ($scope.recruitTarget == 4){
+					$scope.recruitTarget = -1
+				} else {
+					$scope.recruitTarget = 4
+				}
+			}
+		}
+		$scope.clickTavern = function(x){
+			if ($scope.gamedata.phase == $scope.RECRUIT){
+				if ($scope.gamedata.tavern[x].blankSpace) return;
+				if ($scope.recruitTarget == x){
+					$scope.recruitTarget = -1
+				} else {
+					$scope.recruitTarget = x
+				}
+			}
+		}
+		$scope.cancelTavern = function(){
+			if ($scope.gamedata.phase == $scope.RECRUIT){
+				$scope.recruitTarget = -1
+			}
+		}
 		
 		$scope.handStyles = []
 		var buildHandStyles = function(){
@@ -245,6 +279,15 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			for (i=0;i<$scope.gamedata.myHand.length;i++){
 				var c = $scope.gamedata.myHand[i]
 				$scope.handStyles.push(buildCard(c))
+			}
+		}
+		
+		$scope.tavernStyles = []
+		var buildTavernStyles = function(){
+			$scope.tavernStyles = []
+			for (i=0;i<$scope.gamedata.tavern.length;i++){
+				var c = $scope.gamedata.tavern[i]
+				$scope.tavernStyles.push(buildCard(c))
 			}
 		}
 		
@@ -274,7 +317,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				}
 				
 				buildHandStyles()
-
+				buildTavernStyles()
 			});
 		}
 		

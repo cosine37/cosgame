@@ -5,29 +5,33 @@
 	
 	<div class="card-faction-div-bottom" ng-style="cardDisplay.background"></div>
 	 -->
-	<div class="card-left-bar"></div>
-	<div class="card-img" ng-style="cardDisplay.img">
-		<img class="card-role" ng-src="{{cardDisplay.role}}"/>
+	<div ng-show="cardDisplay.card.blankSpace" class="blank-space">
+		X
 	</div>
-	
-	<div class="card-faction-div" ng-style="cardDisplay.factionStyle">
-		<div class="card-faction">{{cardDisplay.faction}}</div>
-	</div>
-	
-	<div class="role-title-name-div">
-		<div class="role-title">
-			<div>{{cardDisplay.card.title}}</div>
+	<div ng-show="cardDisplay.card.blankSpace == false">
+		<div class="card-left-bar"></div>
+		<div class="card-img" ng-style="cardDisplay.img">
+			<img class="card-role" ng-src="{{cardDisplay.role}}"/>
 		</div>
-		<div class="role-name">
-			<div>{{cardDisplay.card.name}}</div>
+		
+		<div class="card-faction-div" ng-style="cardDisplay.factionStyle">
+			<div class="card-faction">{{cardDisplay.faction}}</div>
+		</div>
+		
+		<div class="role-title-name-div">
+			<div class="role-title">
+				<div>{{cardDisplay.card.title}}</div>
+			</div>
+			<div class="role-name">
+				<div>{{cardDisplay.card.name}}</div>
+			</div>
+		</div>
+		
+		<div class="desc-div" ng-style="cardDisplay.descDivStyle">
+			<div class="desc" ng-style="cardDisplay.descStyle" ng-bind-html="cardDisplay.card.desc">
+				
+			</div>
 		</div>
 	</div>
-	
-	<div class="desc-div" ng-style="cardDisplay.descDivStyle">
-		<div class="desc" ng-style="cardDisplay.descStyle" ng-bind-html="cardDisplay.card.desc">
-			
-		</div>
-	</div>
-	
 	
 </div>

@@ -7,7 +7,7 @@ import com.cosine.cosgame.threechaodoms.Consts;
 
 public class LvMeng extends Card {
 	public LvMeng() {
-		name = "呂蒙";
+		name = "吕蒙";
 		courtesy = "子明";
 		img = "LvMeng";
 		title = "吳下阿蒙";

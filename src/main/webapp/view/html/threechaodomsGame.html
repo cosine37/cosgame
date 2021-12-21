@@ -30,9 +30,27 @@
 	<div>
 		王道：{{gamedata.hanPos}} 霸道：{{gamedata.weiPos}}
 	</div>
+	<div id="tavern">
+		<div style="float: left; position:relative" ng-click="clickDeck()">
+			<div class="card-size hand-size qs noselect">?</div>
+			<div class="play-button" ng-show="gamedata.phase == RECRUIT && recruitTarget == 4">
+				<button ng-click="recruit();$event.stopPropagation();">招募</button>
+				<button ng-click="cancelTavern();$event.stopPropagation();">取消</button>
+			</div>
+		</div>
+		<div ng-repeat="cardDisplay in tavernStyles track by $index" style="float: left; position:relative"
+			ng-click="clickTavern($index)">
+			<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+			<div class="play-button" ng-show="gamedata.phase == RECRUIT && recruitTarget == $index">
+				<button ng-click="recruit();$event.stopPropagation();">招募</button>
+				<button ng-click="cancelTavern();$event.stopPropagation();">取消</button>
+			</div>
+		</div>
+	</div>
+	<div style="clear:both"></div>
 	<div id="messages">
 		<div ng-show="gamedata.phase == MAKEHAND">
-			<span>请将一名武将翻面，并驱逐另一名武将。</span>
+			<span>请将一名武将置于你的监狱，并驱逐另一名武将。</span>
 			<button ng-disabled="canSubmitHandSetup() == false" ng-click="submitHandSetup()">确定</button>
 		</div>
 		<div ng-show="gamedata.phase == OFFTURN">
@@ -48,8 +66,11 @@
 		<div ng-show="gamedata.phase == RECRUIT">
 			<span>请招募英雄</span>
 		</div>
+		<div ng-show="gamedata.phase == DISCARD">
+			<span>请将手牌弃置至3张</span>
+		</div>
 	</div>
-	<div id="card instructions">
+	<div id="card instructions" ng-show="gamedata.phase == PLAYCARD">
 		<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
 		<div ng-show="gamedata.myHand[selectedCard].playType == CHOOSEONE && gamedata.myHand[selectedCard].options.length==0">
 			无可用选项。

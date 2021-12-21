@@ -59,11 +59,12 @@ button:disabled{
 
 .play-button{
 	position: absolute;
-	top: 10px;
-	width: 110px;
-	margin-left: -55px;
+	top: 225px;
+	width: 105px;
+	margin-left: -45px;
 	left: 50%;
 	z-index: 100;
+	
 }
 
 

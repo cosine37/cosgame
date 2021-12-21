@@ -22,7 +22,23 @@
 
 @font-face{
      font-family: 'name'; 
-     src:url('/font/ktl.woff') format('woff')
+     src:url('/font/pwt.woff') format('woff')
+}
+
+.blank-space{
+	font-size: 180px;
+	padding-left: 20px;
+	font-family: "name";
+	color: red;
+}
+
+.qs{
+	font-size: 180px;
+	padding-left: 20px;
+	font-family: "name";
+	background-color: darkslategrey;
+	color: gold;
+	text-shadow: 5px 5px 5px black;
 }
 
 .card-size{
@@ -182,12 +198,12 @@
 	margin-left: -18px;
 	
 	color: white;
-	font-size: 30px;
-	font-weight: 600;
+	font-size: 32px;
+	font-weight: 700;
 	font-family: "name";
 	
 	writing-mode: vertical-rl;
-	-webkit-text-stroke: 0.5px black; 
+	-webkit-text-stroke: 0.7px black; 
 	
 	letter-spacing: 10px;
 	

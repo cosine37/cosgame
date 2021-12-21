@@ -71,6 +71,7 @@ function setFactionStyle(cardDisplay){
 function buildCard(c){
 	var cardDisplay = {}
 	cardDisplay.card = c
+	if (c.blankSpace) return cardDisplay
 	cardDisplay.role = "/image/Threechaodoms/Roles/" + c.img + ".png"
 	setFactionStyle(cardDisplay)
 	setDescStyle(cardDisplay)

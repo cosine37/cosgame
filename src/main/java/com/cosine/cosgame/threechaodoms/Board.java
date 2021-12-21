@@ -53,6 +53,11 @@ public class Board {
 			p.setPhase(Consts.OFFTURN);
 			p.draw(5);
 		}
+		tavern = new ArrayList<>();
+		for (i=0;i<Consts.TAVERNSIZE;i++) {
+			Card c = deck.remove(0);
+			tavern.add(c);
+		}
 		Random rand = new Random();
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
@@ -403,7 +408,7 @@ public class Board {
 		}
 		List<Document> doe = (List<Document>) doc.get("exile");
 		exile = new ArrayList<>();
-		for (i=0;i<dot.size();i++) {
+		for (i=0;i<doe.size();i++) {
 			Card c = CardFactory.makeCard(doe.get(i));
 			c.setWhere(Consts.EXILE);
 			exile.add(c);

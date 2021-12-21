@@ -46,7 +46,12 @@ public class Player {
 			play.add(c);
 			
 			//TODO: May need fix here
-			phase = Consts.RECRUIT;
+			if (hand.size()>=4) {
+				phase = Consts.DISCARD;
+			} else {
+				phase = Consts.RECRUIT;
+			}
+			
 		}
 	}
 	
@@ -64,7 +69,11 @@ public class Player {
 		for (i=targets.size()-1;i>=1;i--) {
 			exile(targets.get(i));
 		}
-		phase = Consts.RECRUIT;
+		if (hand.size()>=4) {
+			phase = Consts.DISCARD;
+		} else {
+			phase = Consts.RECRUIT;
+		}
 	}
 	
 	public void exile(int x) {
@@ -93,7 +102,31 @@ public class Player {
 			hand.add(c);
 		}
 	}
+	public void recruit(int x) {
+		if (x == -1) {
+			return;
+		} else if (x>=0 && x<3) {
+			takeFromTavern(x);
+		} else {
+			draw();
+		}
+		if (hand.size() == 4) {
+			phase = Consts.DISCARD;
+		}
+	}
+	/*
+	public void takeFromTavern(List<Integer> targets) {
+		for (int i=0;i<targets.size();i++) {
+			takeFromTavern(targets.get(i));
+		}
+	}
 	
+	public void refillHand() {
+		while (hand.size() < Consts.REFILLSIZE) {
+			draw(1);
+		}
+	}
+	*/
 	public void putInJail(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);

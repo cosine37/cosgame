@@ -12,6 +12,9 @@ public class Consts {
 	public static final int CHAOSPOS = 9;
 	public static final int MINPOS = 0;
 	public static final int MAXPOS = 12;
+	public static final int TAVERNSIZE = 3;
+	public static final int REFILLSIZE = 4;
+	public static final int DISCARDTOSIZE = 3;
 	
 	// Card where
 	public static final int DECK = 0;

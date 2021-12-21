@@ -166,13 +166,14 @@ public class Card {
 		entity.setTitle(title);
 		entity.setFaction(faction);
 		entity.setDesc(desc);
+		entity.setOptions(options);
 		entity.setBlankSpace(blankSpace);
 		entity.setPlayType(playType);
 		entity.setPlaySubType(playSubType);
 		if (where == Consts.HAND) {
 			entity.setDesc(getDescDisplay());
+			entity.setOptions(getOptionsDisplay());
 		}
-		entity.setOptions(getOptionsDisplay());
 		entity.setInstruction(instruction);
 		return entity;
 	}
