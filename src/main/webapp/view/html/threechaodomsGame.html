@@ -25,7 +25,18 @@
 	 -->
 	 
 	<div>
-		<p ng-repeat="p in players">{{p.name}}</p>
+		<table>
+			<tr ng-repeat="p in players track by $index">
+				<td style="height: 20px; width: 20px">
+					<div ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEPLAYER">
+						<div class="checked" ng-show="selectedPlayer == $index"></div>
+						<div class="not-checked" ng-show="selectedPlayer != $index"></div>
+					</div>
+				</td>
+				<td><button ng-disabled="username == p.name || gamedata.phase != PLAYCARD || gamedata.myHand[selectedCard].playType != CHOOSEPLAYER"
+						ng-click="clickPlayer($index)">{{p.name}}</button></td>
+			</tr>
+		</table>
 	</div>
 	<div>
 		王道：{{gamedata.hanPos}} 霸道：{{gamedata.weiPos}}

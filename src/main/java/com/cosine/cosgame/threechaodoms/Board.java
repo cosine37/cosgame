@@ -112,7 +112,7 @@ public class Board {
 		if (hanPos < Consts.MINPOS) hanPos = Consts.MINPOS;
 	}
 	public void addToExile(Card c) {
-		exile.add(c);
+		exile.add(0,c);
 	}
 	public void genBoardId() {
 		Date date = new Date();
@@ -132,6 +132,9 @@ public class Board {
 			int x = tomb.size()-1;
 			return tomb.get(x);
 		}
+	}
+	public void addToTomb(Card c) {
+		tomb.add(0,c);
 	}
 	public String getId() {
 		return id;
@@ -322,6 +325,7 @@ public class Board {
 	public void updateBasicDB() {
 		updateDB("status", status);
 		updateDB("curPlayer", curPlayer);
+		updateDB("firstPlayer", firstPlayer);
 		updateDB("weiPos", weiPos);
 		updateDB("hanPos", hanPos);
 		updateDB("deck", toCardDocumentList(deck));
@@ -443,7 +447,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			playerEntity.add(players.get(i).toPlayerEntity());
-			if (name.contentEquals(name)) {
+			if (name.contentEquals(p.getName())) {
 				for (j=0;j<p.getHand().size();j++) {
 					myHand.add(p.getHand().get(j).toCardEntity());
 				}

@@ -29,6 +29,22 @@ button:disabled{
 	background: white;
 }
 
+.checked{
+	height: 20px;
+	width: 20px;
+	z-index: 100;
+	background:url("/image/Threechaodoms/checked.png");
+	background-size:cover;
+}
+
+.not-checked{
+	height: 20px;
+	width: 20px;
+	z-index: 100;
+	background:url("/image/Threechaodoms/not-checked.png");
+	background-size:cover;
+}
+
 .jail{
 	position: absolute;
 	user-select:none;

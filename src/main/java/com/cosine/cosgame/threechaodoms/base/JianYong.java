@@ -14,7 +14,7 @@ public class JianYong extends Card {
 		title = "彼有器具";
 		faction = Consts.HAN;
 		
-		desc = "若你从酒馆中驱逐一张群势力武将，霸道-2。";
+		desc = "若你从酒馆中驱逐一名群势力武将，霸道-2。";
 		
 		playType = Consts.CHOOSEONE;
 	}

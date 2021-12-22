@@ -14,7 +14,7 @@ public class WeiYan extends Card {
 		title = "面如重棗";
 		faction = Consts.HAN;
 		
-		desc = "若你从酒馆中驱逐一张魏势力武将，王道+2。";
+		desc = "若你从酒馆中驱逐一名魏势力武将，王道+2。";
 		
 		playType = Consts.CHOOSEONE;
 	}

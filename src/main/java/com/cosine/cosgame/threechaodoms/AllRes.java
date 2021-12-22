@@ -18,6 +18,11 @@ public class AllRes {
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new GuoSi());
+		base.add(new DingFeng());
+		base.add(new GuanYu());
+		base.add(new ZhangLiao());
+		base.add(new XuHuang());
 		base.add(new JianYong());
 		base.add(new WeiYan());
 		base.add(new WangPing());

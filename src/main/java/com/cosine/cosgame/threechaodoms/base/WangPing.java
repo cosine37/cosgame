@@ -14,7 +14,7 @@ public class WangPing extends Card {
 		title = "警朗有思理";
 		faction = Consts.HAN;
 		
-		desc = "将酒馆中的一张牌置于你的监狱，驱逐其他酒馆中的牌。";
+		desc = "将酒馆中的一名武将置于你的监狱，驱逐其他酒馆中的武将。";
 		
 		playType = Consts.CHOOSEONE;
 	}
