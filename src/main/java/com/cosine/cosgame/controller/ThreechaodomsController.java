@@ -199,6 +199,28 @@ public class ThreechaodomsController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/threechaodoms/discard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> discard(HttpServletRequest request, @RequestParam int target){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.discard(target);
+				//System.out.println(p.getHand().size());
+				//System.out.println(p.getPlay().size());
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/threechaodoms/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

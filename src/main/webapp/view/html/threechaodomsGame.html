@@ -67,7 +67,7 @@
 			<span>请招募英雄</span>
 		</div>
 		<div ng-show="gamedata.phase == DISCARD">
-			<span>请将手牌弃置至3张</span>
+			<span>请将手牌驱逐至3张。</span>
 		</div>
 	</div>
 	<div id="card instructions" ng-show="gamedata.phase == PLAYCARD">
@@ -107,6 +107,11 @@
 			<div class="exile" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[$index].selected == 1"></div>
 			<div class="play-button" ng-show="gamedata.phase == PLAYCARD && selectedCard == $index">
 				<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard();$event.stopPropagation();">打出</button>
+				<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
+			</div>
+			
+			<div class="play-button" ng-show="gamedata.phase == DISCARD && selectedCard == $index">
+				<button ng-click="discard();$event.stopPropagation();">驱逐</button>
 				<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
 			</div>
 			

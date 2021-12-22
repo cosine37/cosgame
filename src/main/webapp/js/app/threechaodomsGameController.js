@@ -170,6 +170,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				"targets": $scope.targets
 			}
 			$http({url: "/threechaodoms/play", method: "POST", params: data}).then(function(response){
+				$scope.selectedCard = -1
 				$scope.allRefresh()
 			});
 		}
@@ -200,6 +201,19 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				}
 			}
 		}
+			// end Play or Discard -- Play
+			// Play or Discard -- Discard
+		$scope.discard = function(){
+			var data = {
+				"target": $scope.selectedCard
+			}
+			$http({url: "/threechaodoms/discard", method: "POST", params: data}).then(function(response){
+				$scope.selectedCard = -1
+				$scope.allRefresh()
+			});
+		}
+			// end Play or Discard -- Discard
+			
 		$scope.clickHand = function(x){
 			if ($scope.gamedata.phase == $scope.MAKEHAND){
 				$scope.handSetup(x)
@@ -230,12 +244,17 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					
 				} else if ($scope.playMode == 1){
 					$scope.selectCardToExile(x)
+				} 
+			} else if ($scope.gamedata.phase == $scope.DISCARD){
+				if ($scope.selectedCard == x){
+					$scope.selectedCard = -1;
+				} else { 
+					$scope.selectedCard = x;
 				}
-				
 			}
 			
 		}
-			// end Play or Discard -- Play
+			
 		// End Play or Discard Section
 		
 		// Tavern Section

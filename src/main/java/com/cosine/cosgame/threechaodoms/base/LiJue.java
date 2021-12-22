@@ -7,7 +7,7 @@ import com.cosine.cosgame.threechaodoms.Consts;
 
 public class LiJue extends Card {
 	public LiJue() {
-		name = "李傕";
+		name = "李榷";
 		courtesy = "稚然";
 		img = "LiJue";
 		title = "彭越挠楚";

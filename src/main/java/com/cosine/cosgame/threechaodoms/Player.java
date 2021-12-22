@@ -115,6 +115,12 @@ public class Player {
 			board.refillTavern();
 		}
 	}
+	public void discard(int x) {
+		exile(x);
+		if (hand.size() <= 3) {
+			endTurn();
+		}
+	}
 	/*
 	public void takeFromTavern(List<Integer> targets) {
 		for (int i=0;i<targets.size();i++) {
@@ -151,7 +157,9 @@ public class Player {
 				p.setPhase(Consts.MAKEHAND);
 			}
 			
-		} 
+		} else if (board.getStatus() == Consts.INGAME) {
+			p.setPhase(Consts.PLAYCARD);
+		}
 	}
 	
 	public Player nextPlayer() {
