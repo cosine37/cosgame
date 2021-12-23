@@ -43,6 +43,7 @@ public class ZhangFei extends Card {
 			Card c = board.getTavern().get(i);
 			if (c.getFaction() == Consts.QUN || c.getFaction() == Consts.WEI) {
 				Card tc = board.takeFromTavern(i);
+				board.getLogger().log(c.getName() + "被驱逐了。", c, "被驱逐");
 				board.getExile().add(tc);
 				x--;
 			}

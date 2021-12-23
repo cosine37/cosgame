@@ -13,7 +13,7 @@ public class SunCe extends Card {
 		title = "江東小霸王";
 		faction = Consts.WU;
 		
-		desc = "翻开隐居堆顶的武将，若该武将不为群势力，王道-3，霸道-3。";
+		desc = "展示隐居堆顶的武将，若该武将不为群势力，王道-3，霸道-3。";
 	}
 	
 	public void play(List<Integer> targets) {
@@ -21,6 +21,7 @@ public class SunCe extends Card {
 		boolean flag = false;
 		if (board.getExile().size()>0) {
 			Card c = board.getExile().get(0);
+			board.getLogger().log("孙笨十分激昂地展示了" + c.getName(), c, "隐居堆顶");
 			if (c.getFaction() != Consts.QUN) {
 				flag = true;
 			}

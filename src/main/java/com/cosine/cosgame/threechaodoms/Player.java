@@ -35,6 +35,7 @@ public class Player {
 			exile(exileIndex);
 			putInJail(jailIndex);
 		}
+		board.log(name + "初始化了手牌。");
 		endTurn();
 	}
 	
@@ -42,6 +43,7 @@ public class Player {
 	public void playCard(int x, List<Integer> targets) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
+			board.log(name, c);
 			c.play(targets);
 			play.add(c);
 			
@@ -66,7 +68,7 @@ public class Player {
 				}
 			}
 		}
-		for (i=targets.size()-1;i>=1;i--) {
+		for (i=targets.size()-1;i>=0;i--) {
 			exile(targets.get(i));
 		}
 		if (hand.size()>=4) {
@@ -106,9 +108,12 @@ public class Player {
 		if (x == -1) {
 			return;
 		} else if (x>=0 && x<3) {
+			Card c = board.getTavern().get(x);
 			takeFromTavern(x);
+			board.getLogger().logRecruitTavern(name, c);
 		} else {
 			draw();
+			board.getLogger().logRecruitDeck(name);
 		}
 		if (hand.size() == 4) {
 			phase = Consts.DISCARD;
@@ -117,6 +122,7 @@ public class Player {
 	}
 	public void discard(int x) {
 		exile(x);
+		board.log(name + "驱逐了一名武将。");
 		if (hand.size() <= 3) {
 			endTurn();
 		}
@@ -158,6 +164,8 @@ public class Player {
 			}
 			
 		} else if (board.getStatus() == Consts.INGAME) {
+			board.log(name + "结束了回合。");
+			board.log(p.getName() + "开始了回合。");
 			p.setPhase(Consts.PLAYCARD);
 		}
 	}

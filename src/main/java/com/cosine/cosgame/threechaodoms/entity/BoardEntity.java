@@ -13,6 +13,7 @@ public class BoardEntity {
 	int numExile;
 	int numDeck;
 	int numTomb;
+	LoggerEntity logger;
 	CardEntity topTomb;
 	List<PlayerEntity> players;
 	List<CardEntity> tavern;
@@ -114,5 +115,11 @@ public class BoardEntity {
 	}
 	public void setTopTomb(CardEntity topTomb) {
 		this.topTomb = topTomb;
+	}
+	public LoggerEntity getLogger() {
+		return logger;
+	}
+	public void setLogger(LoggerEntity logger) {
+		this.logger = logger;
 	}
 }

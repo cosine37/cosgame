@@ -111,13 +111,17 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.exileCards = function(){
 			var exileIndexes = []
 			for (var i=0;i<$scope.gamedata.myHand.length;i++){
-				if ($scope.gamedata.myHand.selected == 1){
+				if ($scope.gamedata.myHand[i].selected == 1){
 					exileIndexes.push(i)
 				}
+			}
+			if (exileIndexes.length == 0){
+				alert("请至少选择一名武将！");
 			}
 			var data = {
 					"targets": exileIndexes
 				}
+			//alert(exileIndexes)
 			$http({url: "/threechaodoms/exilecards", method: "POST", params: data}).then(function(response){
 				$scope.allRefresh()
 			});

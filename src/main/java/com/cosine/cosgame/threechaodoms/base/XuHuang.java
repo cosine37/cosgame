@@ -26,6 +26,7 @@ public class XuHuang extends Card {
 		if (targets.size() > 0) {
 			int x = targets.get(0);
 			Player p = board.getPlayerByIndex(x);
+			board.log(player.getName() + "选择了" + p.getName() + "。");
 			int t = 0;
 			for (int i=0;i<p.getPlay().size();i++) {
 				if (p.getPlay().get(i).getFaction() == Consts.HAN) {

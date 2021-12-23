@@ -44,6 +44,7 @@ public class WeiYan extends Card {
 					t++;
 					if (t == x) {
 						Card tc = board.takeFromTavern(i);
+						board.getLogger().log(c.getName() + "被驱逐了。", c, "被驱逐");
 						board.addToExile(tc);
 						board.moveHan(2);
 					}

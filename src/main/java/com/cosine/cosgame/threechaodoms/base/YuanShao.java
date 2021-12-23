@@ -29,6 +29,7 @@ public class YuanShao extends Card {
 		if (targets.size() > 0) {
 			int x = targets.get(0);
 			player.putInJail(x);
+			board.log(player.getName() + "将一张手牌放入了监狱。");
 		}
 	}
 }

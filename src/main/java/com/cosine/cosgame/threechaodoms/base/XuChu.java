@@ -43,6 +43,7 @@ public class XuChu extends Card {
 			Card c = board.getTavern().get(i);
 			if (c.getFaction() == Consts.HAN || c.getFaction() == Consts.QUN) {
 				Card tc = board.takeFromTavern(i);
+				board.getLogger().log(c.getName() + "被驱逐了。", c, "被驱逐");
 				board.getExile().add(tc);
 				x--;
 			}

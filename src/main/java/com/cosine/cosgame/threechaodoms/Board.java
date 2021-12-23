@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
+import com.cosine.cosgame.threechaodoms.logs.Logger;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -26,6 +27,8 @@ public class Board {
 	List<Card> exile;
 	List<Card> tomb;
 	
+	Logger logger;
+	
 	MongoDBUtil dbutil;
 	
 	public Board() {
@@ -34,6 +37,8 @@ public class Board {
 		tavern = new ArrayList<>();
 		exile = new ArrayList<>();
 		tomb = new ArrayList<>();
+		
+		logger = new Logger();
 		
 		String dbname = "threechaodoms";
 		String col = "board";
@@ -62,6 +67,7 @@ public class Board {
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
 		players.get(firstPlayer).setPhase(Consts.MAKEHAND);
+		logger.log("游戏开始");
 	}
 	
 	public Card takeFromTavern(int x) {
@@ -105,11 +111,13 @@ public class Board {
 		weiPos = weiPos+x;
 		if (weiPos > Consts.MAXPOS) weiPos = Consts.MAXPOS;
 		if (weiPos < Consts.MINPOS) weiPos = Consts.MINPOS;
+		logger.logMove(1, x);
 	}
 	public void moveHan(int x) {
 		hanPos = hanPos+x;
 		if (hanPos > Consts.MAXPOS) hanPos = Consts.MAXPOS;
 		if (hanPos < Consts.MINPOS) hanPos = Consts.MINPOS;
+		logger.logMove(0, x);
 	}
 	public void addToExile(Card c) {
 		exile.add(0,c);
@@ -132,6 +140,12 @@ public class Board {
 			int x = tomb.size()-1;
 			return tomb.get(x);
 		}
+	}
+	public void log(String s) {
+		logger.log(s);
+	}
+	public void log(String name, Card c) {
+		logger.logPlayCard(name,c);
 	}
 	public void addToTomb(Card c) {
 		tomb.add(0,c);
@@ -207,6 +221,12 @@ public class Board {
 	}
 	public void setFirstPlayer(int firstPlayer) {
 		this.firstPlayer = firstPlayer;
+	}
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 
 	public void addPlayer(String name) {
@@ -332,6 +352,7 @@ public class Board {
 		updateDB("tavern", toCardDocumentList(tavern));
 		updateDB("exile", toCardDocumentList(exile));
 		updateDB("tomb", toCardDocumentList(tomb));
+		updateDB("logger", logger.toDocument());
 	}
 	
 	public Document toDocument() {
@@ -343,6 +364,7 @@ public class Board {
 		doc.append("curPlayer", curPlayer);
 		doc.append("weiPos", weiPos);
 		doc.append("hanPos", hanPos);
+		doc.append("logger", logger.toDocument());
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -383,6 +405,8 @@ public class Board {
 		curPlayer = doc.getInteger("curPlayer", -1);
 		weiPos = doc.getInteger("weiPos", -1);
 		hanPos = doc.getInteger("hanPos", -1);
+		Document dol = (Document) doc.get("logger");
+		logger.setFromDoc(dol);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -438,6 +462,7 @@ public class Board {
 		entity.setNumExile(exile.size());
 		entity.setNumTomb(tomb.size());
 		entity.setTopTomb(topTomb().toCardEntity());
+		entity.setLogger(logger.toLoggerEntity());
 		int i,j;
 		List<PlayerEntity> playerEntity = new ArrayList<>();
 		List<CardEntity> myHand = new ArrayList<>();
@@ -468,23 +493,6 @@ public class Board {
 			tavernEntity.add(tavern.get(i).toCardEntity());
 		}
 		entity.setTavern(tavernEntity);
-		/*
-		List<CardEntity> deckEntity = new ArrayList<>();
-		for (i=0;i<deck.size();i++) {
-			deckEntity.add(deck.get(i).toCardEntity());
-		}
-		entity.setDeck(deckEntity);
-		List<CardEntity> exileEntity = new ArrayList<>();
-		for (i=0;i<exile.size();i++) {
-			exileEntity.add(exile.get(i).toCardEntity());
-		}
-		entity.setExile(exileEntity);
-		List<CardEntity> exileEntity = new ArrayList<>();
-		for (i=0;i<exile.size();i++) {
-			exileEntity.add(exile.get(i).toCardEntity());
-		}
-		entity.setExile(exileEntity);
-		*/
 		return entity;
 	}
 	

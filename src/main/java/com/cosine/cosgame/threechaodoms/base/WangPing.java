@@ -34,6 +34,7 @@ public class WangPing extends Card {
 			int x = targets.get(0);
 			Card c = board.takeFromTavern(x);
 			player.putInJail(c);
+			board.getLogger().log(player.getName() + "把" + c.getName() + "放入了监狱。", c, "置入监狱");
 			for (int i=0;i<board.getTavern().size();i++) {
 				if (board.getTavern().get(i).isBlankSpace() == false) {
 					Card tc = board.takeFromTavern(i);

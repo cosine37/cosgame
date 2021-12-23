@@ -13,7 +13,7 @@ public class GuanYu extends Card {
 		courtesy = "雲長";
 		img = "GuanYu";
 		title = "威震華夏";
-		faction = Consts.WEI;
+		faction = Consts.HAN;
 		
 		desc = "选择一名玩家，该玩家阵面每有一名魏势力武将，王道+1（最多+3）。";
 		instruction = "请选择一名玩家。";
@@ -26,6 +26,7 @@ public class GuanYu extends Card {
 		if (targets.size() > 0) {
 			int x = targets.get(0);
 			Player p = board.getPlayerByIndex(x);
+			board.log(player.getName() + "选择了" + p.getName() + "。");
 			int t = 0;
 			for (int i=0;i<p.getPlay().size();i++) {
 				if (p.getPlay().get(i).getFaction() == Consts.WEI) {
