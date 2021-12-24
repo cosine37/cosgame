@@ -147,6 +147,9 @@ public class Board {
 	public void log(String name, Card c) {
 		logger.logPlayCard(name,c);
 	}
+	public void log(String s, Card c, String i) {
+		logger.log(s, c, i);
+	}
 	public void addToTomb(Card c) {
 		tomb.add(0,c);
 	}

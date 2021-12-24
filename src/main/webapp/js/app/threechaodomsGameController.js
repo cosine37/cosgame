@@ -91,6 +91,8 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.CHOOSEONE = 1
 		$scope.CHOOSEHAND = 2
 		$scope.CHOOSEPLAYER = 3;
+		$scope.CHOOSEPLAY = 4;
+		$scope.CHOOSEPLAYOPTION = 5;
 		
 		$scope.INJAIL = 101;
 		
@@ -100,6 +102,8 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.chosenOption = -1;
 		$scope.chosenHand = -1;
 		$scope.selectedPlayer = -1;
+		$scope.selectedPlayerIndex = -1
+		$scope.selectedCardIndex = -1
 		$scope.changeMode = function(x){
 			$scope.playMode = x;
 			for (var i=0;i<$scope.gamedata.myHand.length;i++){
@@ -169,6 +173,14 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		}
 			// end Play or Discard -- Discard
 			// Play or Discard -- Play
+		$scope.canChoosePlay = function(x,y){
+			if ($scope.gamedata.phase != $scope.PLAYCARD) return false;
+			if ($scope.selectedCard == -1) return false;
+			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
+			if (type != $scope.CHOOSEPLAY && type != $scope.CHOOSEPLAYOPTION) return false;
+			return true;
+		}
+		
 		$scope.playCard = function(){
 			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
 			if (type == $scope.CHOOSEONE){
@@ -181,6 +193,13 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				$scope.targets[0] = x
 			} else if (type == $scope.CHOOSEPLAYER){
 				$scope.targets[0] = $scope.selectedPlayer
+			} else if (type == $scope.CHOOSEPLAY){
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedCardIndex
+			} else  if (type == $scope.CHOOSEPLAYOPTION){
+				$scope.targets[0] = $scope.chosenOption
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedCardIndex
 			}
 			
 			var data = {
@@ -222,6 +241,25 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					} else {
 						return false;
 					}
+				} else if (type == $scope.CHOOSEPLAY){
+					if ($scope.selectedPlayerIndex != -1 && $scope.selectedCardIndex != -1){
+						return true;
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEPLAYOPTION){
+					if ($scope.selectedPlayerIndex != -1 && $scope.selectedCardIndex != -1){
+						if ($scope.gamedata.myHand[$scope.selectedCard].options.length == 0){
+							return true;
+						}
+						if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				}
 			}
 		}
@@ -235,6 +273,21 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 						$scope.selectedPlayer = -1;
 					} else {
 						$scope.selectedPlayer = x;
+					}
+				}
+			}
+		}
+		
+		$scope.clickPlay = function(x,y){
+			if ($scope.gamedata.phase == $scope.PLAYCARD){
+				var type = $scope.gamedata.myHand[$scope.selectedCard].playType
+				if (type == $scope.CHOOSEPLAY || type == $scope.CHOOSEPLAYOPTION){
+					if ($scope.selectedPlayerIndex == x && $scope.selectedCardIndex == y){
+						$scope.selectedPlayerIndex = -1
+						$scope.selectedCardIndex = -1
+					} else {
+						$scope.selectedPlayerIndex = x
+						$scope.selectedCardIndex = y
 					}
 				}
 			}
@@ -254,6 +307,8 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 						$scope.selectedPlayer = -1
 						$scope.chosenHand = -1;
 						$scope.targets = [-1,-1,-1,-1,-1];
+						$scope.selectedPlayerIndex = -1
+						$scope.selectedCardIndex = -1
 					} else {
 						var playType = $scope.gamedata.myHand[$scope.selectedCard].playType
 						
@@ -324,7 +379,9 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				$scope.recruitTarget = -1
 			}
 		}
+		// End Tavern Section
 		
+		// Set Styles Section
 		$scope.handStyles = []
 		var buildHandStyles = function(){
 			$scope.handStyles = []
@@ -342,6 +399,20 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				$scope.tavernStyles.push(buildCard(c))
 			}
 		}
+		
+		var buildPlayerStyles = function(){
+			var i,j;
+			for (i=0;i<$scope.gamedata.players.length;i++){
+				var p = $scope.gamedata.players[i]
+				var playStyles = []
+				for (j=0;j<$scope.gamedata.players[i].play.length;j++){
+					var c=$scope.gamedata.players[i].play[j]
+					playStyles.push(buildCard(c))
+				}
+				$scope.gamedata.players[i].playStyles = playStyles
+			}
+		}
+		// End Set Styles Section
 		
 		$scope.getBoard = function(){
 			$http.get('/threechaodoms/getboard').then(function(response){
@@ -370,6 +441,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				
 				buildHandStyles()
 				buildTavernStyles()
+				buildPlayerStyles()
 			});
 		}
 		

@@ -83,6 +83,10 @@ public class CardFactory {
 			c = new DingFeng();
 		} else if (img.contentEquals("GuoSi")) {
 			c = new GuoSi();
+		} else if (img.contentEquals("JiLing")) {
+			c = new JiLing();
+		} else if (img.contentEquals("XuSheng")) {
+			c = new XuSheng();
 		}
 		return c;
 	}

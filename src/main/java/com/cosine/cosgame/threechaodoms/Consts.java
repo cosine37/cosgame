@@ -43,6 +43,8 @@ public class Consts {
 	public static final int CHOOSEONE = 1;
 	public static final int CHOOSEHAND = 2;
 	public static final int CHOOSEPLAYER = 3;
+	public static final int CHOOSEPLAY = 4;
+	public static final int CHOOSEPLAYOPTION = 5;
 	
 	// Play SubTypes
 	public static final int INJAIL = 101;

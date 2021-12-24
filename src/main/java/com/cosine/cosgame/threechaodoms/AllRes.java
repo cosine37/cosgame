@@ -2,6 +2,7 @@ package com.cosine.cosgame.threechaodoms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.threechaodoms.base.*;
 
@@ -13,11 +14,25 @@ public class AllRes {
 	}
 	
 	public List<Card> getDeck(){
-		return base;
+		List<Card> cards = new ArrayList<>();
+		List<Card> deck = new ArrayList<>();
+		int i;
+		for (i=0;i<base.size();i++) {
+			cards.add(base.get(i));
+		}
+		while (cards.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(cards.size());
+			Card c = cards.remove(x);
+			deck.add(c);
+		}
+		return deck;
 	}
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new XuSheng());
+		base.add(new JiLing());
 		base.add(new GuoSi());
 		base.add(new DingFeng());
 		base.add(new GuanYu());
