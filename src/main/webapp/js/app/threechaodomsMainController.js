@@ -95,6 +95,39 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 			});
 		}
 		
+		$scope.dailyReward = function(){
+			$http.post('/threechaodoms/dailyreward').then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.cleanAccount = function(){
+			$http.post('/threechaodoms/cleanaccount').then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.buySkin = function(x){
+			var data = {"id" : x}
+			$http({url: "/threechaodoms/buyskin", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.useSkin = function(x){
+			var data = {"id" : x}
+			$http({url: "/threechaodoms/useskin", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.getAccountInfo = function(){
+			$http.get('/threechaodoms/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
+		
+		$scope.getAccountInfo()
 		$scope.getAllBoards();
 		
 		ws.onMessage(function(){

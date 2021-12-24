@@ -13,11 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.threechaodoms.entity.AccountEntity;
 import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
+import com.cosine.cosgame.threechaodoms.entity.ShopEntity;
+import com.cosine.cosgame.threechaodoms.shop.Account;
+import com.cosine.cosgame.threechaodoms.shop.Shop;
+import com.cosine.cosgame.threechaodoms.shop.Transaction;
 import com.cosine.cosgame.threechaodoms.Board;
 import com.cosine.cosgame.threechaodoms.Consts;
 import com.cosine.cosgame.threechaodoms.Meta;
 import com.cosine.cosgame.threechaodoms.Player;
+import com.cosine.cosgame.threechaodoms.Skin;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -36,6 +42,81 @@ public class ThreechaodomsController {
 	public String threechaodomsGame() {
 		return "threechaodomsGame";
 	}
+	
+	@RequestMapping(value="/threechaodoms/accountinfo", method = RequestMethod.GET)
+	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		AccountEntity entity = account.toAccountEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/shopinfo", method = RequestMethod.GET)
+	public ResponseEntity<ShopEntity> shopInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Shop shop = new Shop();
+		ShopEntity entity = shop.toShopEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/cleanaccount", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> cleanAccount(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.cleanAccount();
+		account.updateAcountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/dailyreward", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dailyReward(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		List<Transaction> ts = shop.dailyReward();
+		account.addNewTransactions(ts);
+		account.updateAcountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/buyskin", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> buySkin(HttpServletRequest request, @RequestParam int id) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		Skin s = shop.genSkin(id);
+		if (s != null && account.canAffordSkin(s)) {
+			account.buySkin(s);
+			account.updateAcountDB(username);
+		}
+		
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/useskin", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> useSkin(HttpServletRequest request, @RequestParam int id) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.useSkin(id);
+		account.updateAcountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/threechaodoms/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();

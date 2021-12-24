@@ -48,6 +48,12 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
 				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#shopstab" ng-click="hideTablesTab()">商城</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#skinstab" ng-click="hideTablesTab()">皮肤</a>
+				    </li>
 				  </ul>
 			</div>
 			<div class="tab-content">
@@ -79,6 +85,18 @@
 				
 				<div id="rulestab" class="content container tab-pane fade">
 					<h2><b>规则</b></h2>
+					
+				</div>
+				<div id="shopstab" class="content container tab-pane fade">
+					<h2><b>商城</b></h2>
+					{{accountInfo}}
+					<button ng-click="dailyReward()">每日奖励</button>
+					<button ng-click="cleanAccount()">清空</button>
+					<button ng-click="buySkin(1)">购买貂蝉</button>
+					<button ng-click="useSkin(1)">使用貂蝉</button>
+				</div>
+				<div id="skinstab" class="content container tab-pane fade">
+					<h2><b>皮肤</b></h2>
 					
 				</div>
 			</div>
