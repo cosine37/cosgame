@@ -26,11 +26,17 @@ public class AllRes {
 			Card c = cards.remove(x);
 			deck.add(c);
 		}
-		return deck;
+		return base;
 	}
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new DiaoChan());
+		base.add(new DaQiao());
+		base.add(new LiuBiao());
+		base.add(new GanNing());
+		base.add(new WeiYan());
+		base.add(new ZhangHe());
 		base.add(new XuSheng());
 		base.add(new JiLing());
 		base.add(new GuoSi());
@@ -39,7 +45,7 @@ public class AllRes {
 		base.add(new ZhangLiao());
 		base.add(new XuHuang());
 		base.add(new JianYong());
-		base.add(new WeiYan());
+		base.add(new HuangZhong());
 		base.add(new WangPing());
 		base.add(new ZhangFei());
 		base.add(new XuChu());

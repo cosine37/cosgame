@@ -48,4 +48,9 @@ public class Consts {
 	
 	// Play SubTypes
 	public static final int INJAIL = 101;
+	public static final int OTHERPLAYER = 102;
+	public static final int CHOOSEPLAYWEI = 200;
+	public static final int CHOOSEPLAYHAN = 201;
+	public static final int CHOOSEPLAYWU = 202;
+	public static final int CHOOSEPLAYQUN = 203;
 }

@@ -13,6 +13,7 @@ public class BoardEntity {
 	int numExile;
 	int numDeck;
 	int numTomb;
+	int myIndex;
 	LoggerEntity logger;
 	CardEntity topTomb;
 	List<PlayerEntity> players;
@@ -121,5 +122,11 @@ public class BoardEntity {
 	}
 	public void setLogger(LoggerEntity logger) {
 		this.logger = logger;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
 	}
 }

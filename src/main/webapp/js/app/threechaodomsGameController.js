@@ -95,6 +95,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.CHOOSEPLAYOPTION = 5;
 		
 		$scope.INJAIL = 101;
+		$scope.OTHERPLAYER = 102;
 		
 		$scope.playMode = 0;
 		$scope.selectedCard = -1;
@@ -178,7 +179,26 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			if ($scope.selectedCard == -1) return false;
 			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
 			if (type != $scope.CHOOSEPLAY && type != $scope.CHOOSEPLAYOPTION) return false;
-			return true;
+			var subType = $scope.gamedata.myHand[$scope.selectedCard].playSubType;
+			if (subType >= 200){
+				var t = subType-200;
+				var f = $scope.gamedata.players[x].play[y].faction
+				if (t == f){
+					return true;
+				} else {
+					return false;
+				}
+			} else if (subType == 102){
+				if (x != $scope.gamedata.myIndex){
+					return true;
+				} else {
+					return false;
+				}
+			} 
+			
+			else {
+				return true;
+			}
 		}
 		
 		$scope.playCard = function(){

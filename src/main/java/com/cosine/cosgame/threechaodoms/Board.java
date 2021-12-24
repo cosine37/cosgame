@@ -471,6 +471,7 @@ public class Board {
 		List<CardEntity> myHand = new ArrayList<>();
 		List<CardEntity> myJail = new ArrayList<>();
 		List<Integer> myID = new ArrayList<>();
+		int myIndex = -1;
 		int phase = Consts.OFFTURN;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
@@ -484,12 +485,14 @@ public class Board {
 				}
 				myID = p.getId().getFactions();
 				phase = p.getPhase();
+				myIndex = i;
 			}
 		}
 		entity.setPlayers(playerEntity);
 		entity.setMyHand(myHand);
 		entity.setMyJail(myJail);
 		entity.setMyID(myID);
+		entity.setMyIndex(myIndex);
 		entity.setPhase(phase);
 		List<CardEntity> tavernEntity = new ArrayList<>();
 		for (i=0;i<tavern.size();i++) {
