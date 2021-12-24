@@ -7,8 +7,8 @@ public class PlayerEntity {
 	String name;
 	/*
 	List<CardEntity> hand;
-	List<CardEntity> jail;
 	*/
+	List<CardEntity> jail;
 	List<CardEntity> play;
 	
 	public int getIndex() {
@@ -28,6 +28,12 @@ public class PlayerEntity {
 	}
 	public void setPlay(List<CardEntity> play) {
 		this.play = play;
+	}
+	public List<CardEntity> getJail() {
+		return jail;
+	}
+	public void setJail(List<CardEntity> jail) {
+		this.jail = jail;
 	}
 	
 }

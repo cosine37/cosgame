@@ -99,6 +99,16 @@ public class CardFactory {
 			c = new DaQiao();
 		} else if (img.contentEquals("DiaoChan")) {
 			c = new DiaoChan();
+		} else if (img.contentEquals("ZhuGeLiang")) {
+			c = new ZhuGeLiang();
+		} else if (img.contentEquals("WenChou")) {
+			c = new WenChou();
+		} else if (img.contentEquals("CaoHong")) {
+			c = new CaoHong();
+		} else if (img.contentEquals("CaoPi")) {
+			c = new CaoPi();
+		} else if (img.contentEquals("YanLiang")) {
+			c = new YanLiang();
 		}
 		return c;
 	}

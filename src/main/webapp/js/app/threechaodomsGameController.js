@@ -93,6 +93,11 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.CHOOSEPLAYER = 3;
 		$scope.CHOOSEPLAY = 4;
 		$scope.CHOOSEPLAYOPTION = 5;
+		$scope.CHOOSEPLAYEROPTION = 6;
+		$scope.CHOOSEJAIL = 7;
+		$scope.CHOOSEJAILOPTION = 8;
+		$scope.CHOOSEPLAYJAIL = 9;
+		$scope.CHOOSEPLAYJAILOPTION = 10;
 		
 		$scope.INJAIL = 101;
 		$scope.OTHERPLAYER = 102;
@@ -105,6 +110,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.selectedPlayer = -1;
 		$scope.selectedPlayerIndex = -1
 		$scope.selectedCardIndex = -1
+		$scope.selectedJailIndex = -1
 		$scope.changeMode = function(x){
 			$scope.playMode = x;
 			for (var i=0;i<$scope.gamedata.myHand.length;i++){
@@ -178,7 +184,8 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			if ($scope.gamedata.phase != $scope.PLAYCARD) return false;
 			if ($scope.selectedCard == -1) return false;
 			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
-			if (type != $scope.CHOOSEPLAY && type != $scope.CHOOSEPLAYOPTION) return false;
+			if (type != $scope.CHOOSEPLAY && type != $scope.CHOOSEPLAYOPTION && 
+					type != $scope.CHOOSEPLAYJAIL && type != $scope.CHOOSEPLAYJAILOPTION) return false;
 			var subType = $scope.gamedata.myHand[$scope.selectedCard].playSubType;
 			if (subType >= 200){
 				var t = subType-200;
@@ -201,6 +208,26 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			}
 		}
 		
+		$scope.canChooseJail = function(x,y){
+			if ($scope.gamedata.phase != $scope.PLAYCARD) return false;
+			if ($scope.selectedCard == -1) return false;
+			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
+			if (type != $scope.CHOOSEJAIL && type != $scope.CHOOSEJAILOPTION && 
+					type != $scope.CHOOSEPLAYJAIL && type != $scope.CHOOSEPLAYJAILOPTION) return false;
+			var subType = $scope.gamedata.myHand[$scope.selectedCard].playSubType;
+			if (subType == 102){
+				if (x != $scope.gamedata.myIndex){
+					return true;
+				} else {
+					return false;
+				}
+			}
+			
+			else{
+				return true;
+			}
+		}
+		
 		$scope.playCard = function(){
 			var type = $scope.gamedata.myHand[$scope.selectedCard].playType;
 			if (type == $scope.CHOOSEONE){
@@ -216,11 +243,30 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			} else if (type == $scope.CHOOSEPLAY){
 				$scope.targets[1] = $scope.selectedPlayerIndex
 				$scope.targets[2] = $scope.selectedCardIndex
-			} else  if (type == $scope.CHOOSEPLAYOPTION){
+			} else if (type == $scope.CHOOSEPLAYOPTION){
 				$scope.targets[0] = $scope.chosenOption
 				$scope.targets[1] = $scope.selectedPlayerIndex
 				$scope.targets[2] = $scope.selectedCardIndex
-			}
+			} else if (type == $scope.CHOOSEPLAYEROPTION){
+				$scope.targets[0] = $scope.chosenOption
+				$scope.targets[1] = $scope.selectedPlayer
+			} else if (type == $scope.CHOOSEJAIL){
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedJailIndex
+			} else if (type == $scope.CHOOSEJAILOPTION){
+				$scope.targets[0] = $scope.chosenOption
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedJailIndex
+			} else if (type == $scope.CHOOSEPLAYJAIL){
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedCardIndex
+				$scope.targets[3] = $scope.selectedJailIndex
+			}  else if (type == $scope.CHOOSEPLAYJAILOPTION){
+				$scope.targets[0] = $scope.chosenOption
+				$scope.targets[1] = $scope.selectedPlayerIndex
+				$scope.targets[2] = $scope.selectedCardIndex
+				$scope.targets[3] = $scope.selectedJailIndex
+			} 
 			
 			var data = {
 				"cardIndex": $scope.selectedCard,
@@ -280,6 +326,57 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					} else {
 						return false;
 					}
+				} else if (type == $scope.CHOOSEPLAYEROPTION){
+					if ($scope.selectedPlayer != -1){
+						if ($scope.gamedata.myHand[$scope.selectedCard].options.length == 0){
+							return true;
+						}
+						if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEJAIL){
+					if ($scope.selectedPlayerIndex != -1 && $scope.selectedJailIndex != -1){
+						return true;
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEJAILOPTION){
+					if ($scope.selectedPlayerIndex != -1 && $scope.selectedJailIndex != -1){
+						if ($scope.gamedata.myHand[$scope.selectedCard].options.length == 0){
+							return true;
+						}
+						if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEPLAYJAIL){
+					if ($scope.selectedPlayerIndex != -1 || $scope.selectedJailIndex != -1){
+						return true;
+					} else {
+						return false;
+					}
+				} else if (type == $scope.CHOOSEPLAYJAILOPTION){
+					if ($scope.selectedPlayerIndex != -1 || $scope.selectedJailIndex != -1){
+						if ($scope.gamedata.myHand[$scope.selectedCard].options.length == 0){
+							return true;
+						}
+						if ($scope.chosenOption>=0 && $scope.chosenOption<$scope.gamedata.myHand[$scope.selectedCard].options.length){
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				}
 			}
 		}
@@ -288,7 +385,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.clickPlayer = function(x){			
 			if ($scope.gamedata.phase == $scope.PLAYCARD){
 				var type = $scope.gamedata.myHand[$scope.selectedCard].playType
-				if (type == $scope.CHOOSEPLAYER){
+				if (type == $scope.CHOOSEPLAYER || type == $scope.CHOOSEPLAYEROPTION){
 					if ($scope.selectedPlayer == x){
 						$scope.selectedPlayer = -1;
 					} else {
@@ -301,13 +398,32 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.clickPlay = function(x,y){
 			if ($scope.gamedata.phase == $scope.PLAYCARD){
 				var type = $scope.gamedata.myHand[$scope.selectedCard].playType
-				if (type == $scope.CHOOSEPLAY || type == $scope.CHOOSEPLAYOPTION){
+				if (type == $scope.CHOOSEPLAY || type == $scope.CHOOSEPLAYOPTION || 
+						type == $scope.CHOOSEPLAYJAIL || type == $scope.CHOOSEPLAYJAILOPTION){
+					$scope.selectedJailIndex = -1
 					if ($scope.selectedPlayerIndex == x && $scope.selectedCardIndex == y){
 						$scope.selectedPlayerIndex = -1
 						$scope.selectedCardIndex = -1
 					} else {
 						$scope.selectedPlayerIndex = x
 						$scope.selectedCardIndex = y
+					}
+				}
+			}
+		}
+		
+		$scope.clickJail = function(x,y){
+			if ($scope.gamedata.phase == $scope.PLAYCARD){
+				var type = $scope.gamedata.myHand[$scope.selectedCard].playType
+				if (type == $scope.CHOOSEJAIL || type == $scope.CHOOSEJAILOPTION
+						|| type == $scope.CHOOSEPLAYJAIL || type == $scope.CHOOSEPLAYJAILOPTION){
+					$scope.selectedCardIndex = -1
+					if ($scope.selectedPlayerIndex == x && $scope.selectedJailIndex == y){
+						$scope.selectedPlayerIndex = -1
+						$scope.selectedJailIndex = -1
+					} else {
+						$scope.selectedPlayerIndex = x
+						$scope.selectedJailIndex = y
 					}
 				}
 			}
@@ -329,6 +445,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 						$scope.targets = [-1,-1,-1,-1,-1];
 						$scope.selectedPlayerIndex = -1
 						$scope.selectedCardIndex = -1
+						$scope.selectedJailIndex = -1
 					} else {
 						var playType = $scope.gamedata.myHand[$scope.selectedCard].playType
 						
@@ -430,6 +547,12 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					playStyles.push(buildCard(c))
 				}
 				$scope.gamedata.players[i].playStyles = playStyles
+				var jailStyles = []
+				for (j=0;j<$scope.gamedata.players[i].jail.length;j++){
+					var c=$scope.gamedata.players[i].jail[j]
+					jailStyles.push(buildCard(c))
+				}
+				$scope.gamedata.players[i].jailStyles = jailStyles
 			}
 		}
 		// End Set Styles Section

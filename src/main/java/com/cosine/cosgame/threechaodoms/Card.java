@@ -41,6 +41,34 @@ public class Card {
 		board.moveHan(han);
 		board.moveWei(wei);
 	}
+	public String getTitleDisplay(Player p) {
+		if (p == null) {
+			return title;
+		}
+		if (p.getAccount() == null) {
+			return title;
+		}
+		Skin s = p.getAccount().findSkinByImg(img);
+		if (s == null) {
+			return title;
+		} else {
+			return s.getTitle();
+		}
+	}
+	public String getImgDisplay(Player p) {
+		if (p == null) {
+			return img;
+		} else if (p.getAccount() == null) {
+			return img;
+		}
+		
+		Skin s = p.getAccount().findSkinByImg(img);
+		if (s == null) {
+			return img;
+		} else {
+			return s.getNewImg();
+		}
+	}
 	public String getDescDisplay() {
 		return desc;
 	}
@@ -158,12 +186,14 @@ public class Card {
 		return doc;
 	}
 	
-	public CardEntity toCardEntity() {
+	public CardEntity toCardEntity(Player p) {
 		CardEntity entity = new CardEntity();
 		entity.setName(name);
-		entity.setImg(img);
+		//entity.setImg(img);
+		entity.setImg(getImgDisplay(p));
 		entity.setCourtesy(courtesy);
-		entity.setTitle(title);
+		//entity.setTitle(title);
+		entity.setTitle(getTitleDisplay(p));
 		entity.setFaction(faction);
 		entity.setDesc(desc);
 		entity.setOptions(options);
@@ -176,6 +206,10 @@ public class Card {
 		}
 		entity.setInstruction(instruction);
 		return entity;
+	}
+	
+	public CardEntity toCardEntity() {
+		return toCardEntity(null);
 	}
 	
 }

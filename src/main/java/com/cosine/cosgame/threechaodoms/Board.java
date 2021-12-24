@@ -464,7 +464,7 @@ public class Board {
 		entity.setNumDeck(deck.size());
 		entity.setNumExile(exile.size());
 		entity.setNumTomb(tomb.size());
-		entity.setTopTomb(topTomb().toCardEntity());
+		
 		entity.setLogger(logger.toLoggerEntity());
 		int i,j;
 		List<PlayerEntity> playerEntity = new ArrayList<>();
@@ -473,20 +473,25 @@ public class Board {
 		List<Integer> myID = new ArrayList<>();
 		int myIndex = -1;
 		int phase = Consts.OFFTURN;
+		Player me = null;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
-			playerEntity.add(players.get(i).toPlayerEntity());
+			//playerEntity.add(players.get(i).toPlayerEntity());
 			if (name.contentEquals(p.getName())) {
 				for (j=0;j<p.getHand().size();j++) {
-					myHand.add(p.getHand().get(j).toCardEntity());
+					myHand.add(p.getHand().get(j).toCardEntity(p));
 				}
 				for (j=0;j<p.getJail().size();j++) {
-					myJail.add(p.getJail().get(j).toCardEntity());
+					myJail.add(p.getJail().get(j).toCardEntity(p));
 				}
 				myID = p.getId().getFactions();
 				phase = p.getPhase();
 				myIndex = i;
+				me = p;
 			}
+		}
+		for (i=0;i<players.size();i++) {
+			playerEntity.add(players.get(i).toPlayerEntity(me));
 		}
 		entity.setPlayers(playerEntity);
 		entity.setMyHand(myHand);
@@ -496,9 +501,10 @@ public class Board {
 		entity.setPhase(phase);
 		List<CardEntity> tavernEntity = new ArrayList<>();
 		for (i=0;i<tavern.size();i++) {
-			tavernEntity.add(tavern.get(i).toCardEntity());
+			tavernEntity.add(tavern.get(i).toCardEntity(me));
 		}
 		entity.setTavern(tavernEntity);
+		entity.setTopTomb(topTomb().toCardEntity(me));
 		return entity;
 	}
 	

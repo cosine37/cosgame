@@ -31,6 +31,11 @@ public class AllRes {
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new YanLiang());
+		base.add(new CaoPi());
+		base.add(new CaoHong());
+		base.add(new WenChou());
+		base.add(new ZhuGeLiang());
 		base.add(new DiaoChan());
 		base.add(new DaQiao());
 		base.add(new LiuBiao());

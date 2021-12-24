@@ -21,6 +21,7 @@ public class BoardEntity {
 	List<CardEntity> myHand;
 	List<CardEntity> myJail;
 	List<Integer> myID;
+	List<Integer> myKnownJails;
 	public String getId() {
 		return id;
 	}
@@ -128,5 +129,11 @@ public class BoardEntity {
 	}
 	public void setMyIndex(int myIndex) {
 		this.myIndex = myIndex;
+	}
+	public List<Integer> getMyKnownJails() {
+		return myKnownJails;
+	}
+	public void setMyKnownJails(List<Integer> myKnownJails) {
+		this.myKnownJails = myKnownJails;
 	}
 }

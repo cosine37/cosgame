@@ -99,6 +99,16 @@ public class Account {
 		}
 	}
 	
+	public Skin findSkinByImg(String img) {
+		int i;
+		for (i=0;i<skins.size();i++) {
+			if (skins.get(i).getOriginalImg().contentEquals(img) && skins.get(i).isInUse()) {
+				return skins.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public void cleanAccount() {
 		money = 0;
 		ingot = 0;

@@ -7,6 +7,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
+import com.cosine.cosgame.threechaodoms.shop.Account;
 
 public class Player {
 	String name;
@@ -18,13 +19,17 @@ public class Player {
 	List<Card> play;
 	List<Card> jail;
 	
+	List<Integer> knownJails;
+	
 	Board board;
+	Account account;
 	
 	public Player() {
 		id = new ID();
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
 		jail = new ArrayList<>();
+		knownJails = new ArrayList<>();
 	}
 	
 	public void setupHand(int jailIndex, int exileIndex) {
@@ -127,19 +132,6 @@ public class Player {
 			endTurn();
 		}
 	}
-	/*
-	public void takeFromTavern(List<Integer> targets) {
-		for (int i=0;i<targets.size();i++) {
-			takeFromTavern(targets.get(i));
-		}
-	}
-	
-	public void refillHand() {
-		while (hand.size() < Consts.REFILLSIZE) {
-			draw(1);
-		}
-	}
-	*/
 	public void putInJail(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
@@ -164,6 +156,7 @@ public class Player {
 			}
 			
 		} else if (board.getStatus() == Consts.INGAME) {
+			knownJails = new ArrayList<>();
 			board.log(name + "结束了回合。");
 			board.log(p.getName() + "开始了回合。");
 			p.setPhase(Consts.PLAYCARD);
@@ -177,6 +170,12 @@ public class Player {
 		
 		Player p = board.getPlayers().get(x);
 		return p;
+	}
+	
+	public void findAccount() {
+		Account account = new Account();
+		account.getFromDB(name);
+		this.account = account;
 	}
 	
 	public String getName() {
@@ -227,12 +226,25 @@ public class Player {
 	public void setPhase(int phase) {
 		this.phase = phase;
 	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	public List<Integer> getKnownJails() {
+		return knownJails;
+	}
+	public void setKnownJails(List<Integer> knownJails) {
+		this.knownJails = knownJails;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("id", id.toDocument());
 		doc.append("phase", phase);
+		doc.append("knownJails", knownJails);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -255,6 +267,7 @@ public class Player {
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
 		phase = doc.getInteger("phase", Consts.OFFTURN);
+		knownJails = (List<Integer>) doc.get("knownJails");
 		Document idDoc = (Document) doc.get("id");
 		id = new ID();
 		id.setFromDoc(idDoc);
@@ -286,18 +299,47 @@ public class Player {
 			c.setPlayer(this);
 			jail.add(c);
 		}
+		findAccount();
 	}
 	
-	public PlayerEntity toPlayerEntity() {
+	public PlayerEntity toPlayerEntity(Player p) {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
 		int i;
 		List<CardEntity> playEntity = new ArrayList<>();
 		for (i=0;i<play.size();i++) {
-			playEntity.add(play.get(i).toCardEntity());
+			playEntity.add(play.get(i).toCardEntity(this));
 		}
 		entity.setPlay(playEntity);
+		List<CardEntity> jailEntity = new ArrayList<>();
+		for (i=0;i<jail.size();i++) {
+			Card blank = new BlankSpaceCard();
+			if (p == null) {
+				jailEntity.add(blank.toCardEntity());
+			} else if (p.getIndex() == index) {
+				jailEntity.add(jail.get(i).toCardEntity(p));
+			} else {
+				List<Integer> knownJails = p.getKnownJails();
+				boolean flag = true;
+				int j;
+				for (j=0;j<knownJails.size();j++) {
+					int x = knownJails.get(j) / 10;
+					int y = knownJails.get(j) % 10;
+					if (x == index && y == i);
+					jailEntity.add(jail.get(i).toCardEntity(p));
+					flag = false;
+				}
+				if (flag) {
+					jailEntity.add(blank.toCardEntity());
+				}
+			}
+		}
+		entity.setJail(jailEntity);
 		return entity;
+	}
+	
+	public PlayerEntity toPlayerEntity() {
+		return toPlayerEntity(null);
 	}
 	
 }
