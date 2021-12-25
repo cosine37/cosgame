@@ -22,7 +22,7 @@ public class DianWei extends Card {
 		boolean flag = false;
 		for (i=0;i<player.getPlay().size();i++) {
 			Card c = player.getPlay().get(i);
-			if (c.getFaction() == Consts.QUN) {
+			if (c.isFaction(Consts.QUN)) {
 				flag = true;
 			}
 		}

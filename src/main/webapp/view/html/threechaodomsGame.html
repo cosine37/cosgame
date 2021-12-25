@@ -112,6 +112,11 @@
 				</div>
 			</div>
 		</div>
+		<div id="tomb" style="float:left">
+			<div ng-repeat="cardDisplay in tombStyles">
+				<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+			</div>
+		</div>
 		<div style="clear:both"></div>
 		<div id="messages">
 			<div ng-show="gamedata.phase == MAKEHAND">
@@ -139,13 +144,15 @@
 			<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
 			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
 				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION) 
+				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
+				|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
 				&& gamedata.myHand[selectedCard].options.length==0">
 				无可用选项。
 			</div>
 			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
 				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION) 
+				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
+				|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
 				&& gamedata.myHand[selectedCard].options.length>0">
 				请选择一项：
 				<span ng-show="gamedata.myHand[selectedCard].options.length>0">
@@ -163,6 +170,26 @@
 				<span ng-show="gamedata.myHand[selectedCard].options.length>3">
 					<input type="radio" ng-model="chosenOption" value="3">
 					<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
+				</span>
+			</div>
+			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO)
+				&& gamedata.myHand[selectedCard].options2.length>0">
+				请选择一项：
+				<span ng-show="gamedata.myHand[selectedCard].options2.length>0">
+					<input type="radio" ng-model="chosenOption2" value="0">
+					<label>{{gamedata.myHand[selectedCard].options2[0]}}</label>
+				</span>
+				<span ng-show="gamedata.myHand[selectedCard].options2.length>1">
+					<input type="radio" ng-model="chosenOption2" value="1">
+					<label>{{gamedata.myHand[selectedCard].options2[1]}}</label>
+				</span>
+				<span ng-show="gamedata.myHand[selectedCard].options2.length>2">
+					<input type="radio" ng-model="chosenOption2" value="2">
+					<label>{{gamedata.myHand[selectedCard].options2[2]}}</label>
+				</span>
+				<span ng-show="gamedata.myHand[selectedCard].options2.length>3">
+					<input type="radio" ng-model="chosenOption2" value="3">
+					<label>{{gamedata.myHand[selectedCard].options2[3]}}</label>
 				</span>
 			</div>
 			<div ng-show="gamedata.myHand[selectedCard].playType>1">{{gamedata.myHand[selectedCard].instruction}}</div>

@@ -25,6 +25,7 @@ public class Card {
 	protected int playType;
 	protected int playSubType;
 	protected List<String> options;
+	protected List<String> options2;
 	protected String instruction;
 	
 	public Card() {
@@ -35,6 +36,7 @@ public class Card {
 		playSubType = 0;
 		extraBits = new ArrayList<>();
 		options = new ArrayList<>();
+		options2 = new ArrayList<>();
 	}
 	
 	public void play(List<Integer> targets) {
@@ -69,11 +71,21 @@ public class Card {
 			return s.getNewImg();
 		}
 	}
+	public boolean isFaction(int x) {
+		if (x == faction) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public String getDescDisplay() {
 		return desc;
 	}
 	public List<String> getOptionsDisplay() {
 		return options;
+	}
+	public List<String> getOptions2Display() {
+		return options2;
 	}
 	public String getName() {
 		return name;
@@ -177,6 +189,12 @@ public class Card {
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
 	}
+	public List<String> getOptions2() {
+		return options2;
+	}
+	public void setOptions2(List<String> options2) {
+		this.options2 = options2;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -197,12 +215,14 @@ public class Card {
 		entity.setFaction(faction);
 		entity.setDesc(desc);
 		entity.setOptions(options);
+		entity.setOptions2(options2);
 		entity.setBlankSpace(blankSpace);
 		entity.setPlayType(playType);
 		entity.setPlaySubType(playSubType);
 		if (where == Consts.HAND) {
 			entity.setDesc(getDescDisplay());
 			entity.setOptions(getOptionsDisplay());
+			entity.setOptions2(getOptions2Display());
 		}
 		entity.setInstruction(instruction);
 		return entity;

@@ -22,7 +22,7 @@ public class SunCe extends Card {
 		if (board.getExile().size()>0) {
 			Card c = board.getExile().get(0);
 			board.getLogger().log("孙笨十分激昂地展示了" + c.getName(), c, "隐居堆顶");
-			if (c.getFaction() != Consts.QUN) {
+			if (!c.isFaction(Consts.QUN)) {
 				flag = true;
 			}
 		}

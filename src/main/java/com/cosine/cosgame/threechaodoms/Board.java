@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.base.LiuHong;
 import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
@@ -66,6 +67,9 @@ public class Board {
 			Card c = deck.remove(0);
 			tavern.add(c);
 		}
+		tomb = new ArrayList<>();
+		Card liuHong = new LiuHong();
+		tomb.add(liuHong);
 		Random rand = new Random();
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
@@ -109,10 +113,23 @@ public class Board {
 	
 	public Card popTopDeck() {
 		if (deck.size() == 0) {
+			reshuffle();
+		} 
+		if (deck.size() == 0) {
 			return null;
-		} else {
+		}
+		else {
 			Card c = deck.remove(0);
 			return c;
+		}
+	}
+	
+	public void reshuffle() {
+		while (exile.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(exile.size());
+			Card c = exile.remove(x);
+			deck.add(c);
 		}
 	}
 	
@@ -187,7 +204,7 @@ public class Board {
 	}
 	
 	public boolean gameEnds() {
-		int[] arr = {1,1,8,7,7,6,5};
+		int[] arr = {1,3,8,7,7,6,5};
 		int gameEndSize = arr[players.size()];
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getPlay().size() >= gameEndSize) return true;
@@ -225,8 +242,7 @@ public class Board {
 		if (tomb.size() == 0) {
 			return new BlankSpaceCard();
 		} else {
-			int x = tomb.size()-1;
-			return tomb.get(x);
+			return tomb.get(0);
 		}
 	}
 	public void log(String s) {

@@ -109,6 +109,21 @@ public class CardFactory {
 			c = new CaoPi();
 		} else if (img.contentEquals("YanLiang")) {
 			c = new YanLiang();
+		} else if (img.contentEquals("TaiShiCi")) {
+			c = new TaiShiCi();
+		} else if (img.contentEquals("ZhangZhao")) {
+			c = new ZhangZhao();
+		} else if (img.contentEquals("YuanShu")) {
+			c = new YuanShu();
+		} else if (img.contentEquals("ZhuRong")) {
+			c = new ZhuRong();
+		} else if (img.contentEquals("SunShangXiang")) {
+			c = new SunShangXiang();
+		}
+		
+		
+		else if (img.contentEquals("LiuHong")) {
+			c = new LiuHong();
 		}
 		return c;
 	}

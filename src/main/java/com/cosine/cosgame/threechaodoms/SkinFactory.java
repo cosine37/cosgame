@@ -12,7 +12,7 @@ public class SkinFactory {
 			s.setOriginalImg("DiaoChan");
 			s.setNewImg("DiaoChan_01");
 			s.setSkinName("貂蝉");
-			s.setTitle("薄幸的美人");
+			s.setTitle("絕世的舞姬");
 			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
 		}
 		

@@ -62,6 +62,13 @@ function setFactionStyle(cardDisplay){
 		factionStyle["background-color"] = "darkslategrey"
 		factionStyle["text-shadow"] = "2px 2px grey"
 		descDivStyle["background-color"] = "darkslategrey"
+	} else if (c.faction == 10){
+		cardDisplay.faction="靈"
+		background["background-color"] = "black"
+		factionStyle["color"] = "white"
+		factionStyle["background-color"] = "black"
+		factionStyle["text-shadow"] = "2px 2px grey"
+		descDivStyle["background-color"] = "black"
 	}
 	cardDisplay.background = background
 	cardDisplay.factionStyle = factionStyle

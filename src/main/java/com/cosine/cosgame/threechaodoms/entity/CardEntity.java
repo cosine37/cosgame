@@ -13,6 +13,7 @@ public class CardEntity {
 	int playType;
 	int playSubType;
 	List<String> options;
+	List<String> options2;
 	String instruction;
 	
 	public String getName() {
@@ -80,5 +81,11 @@ public class CardEntity {
 	}
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
+	}
+	public List<String> getOptions2() {
+		return options2;
+	}
+	public void setOptions2(List<String> options2) {
+		this.options2 = options2;
 	}
 }

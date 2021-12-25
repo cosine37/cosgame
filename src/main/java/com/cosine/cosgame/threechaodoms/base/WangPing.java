@@ -38,7 +38,7 @@ public class WangPing extends Card {
 			for (int i=0;i<board.getTavern().size();i++) {
 				if (board.getTavern().get(i).isBlankSpace() == false) {
 					Card tc = board.takeFromTavern(i);
-					board.getExile().add(tc);
+					board.addToExile(tc);
 				}
 			}
 		}

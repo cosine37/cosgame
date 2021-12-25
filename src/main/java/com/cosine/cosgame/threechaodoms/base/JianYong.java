@@ -24,7 +24,7 @@ public class JianYong extends Card {
 		options.add("不驱逐，无事发生");
 		for (int i=0;i<board.getTavern().size();i++) {
 			Card c = board.getTavern().get(i);
-			if (c.getFaction() == Consts.QUN) {
+			if (c.isFaction(Consts.QUN)) {
 				options.add("驱逐" + c.getName() + "，霸道-2");
 			}
 			
@@ -40,7 +40,7 @@ public class JianYong extends Card {
 			int t = 0;
 			for (int i=0;i<board.getTavern().size();i++) {
 				Card c = board.getTavern().get(i);
-				if (c.getFaction() == Consts.QUN) {
+				if (c.isFaction(Consts.QUN)) {
 					t++;
 					if (t == x) {
 						Card tc = board.takeFromTavern(i);

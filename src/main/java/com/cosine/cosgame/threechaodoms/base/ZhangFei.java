@@ -23,7 +23,7 @@ public class ZhangFei extends Card {
 		int x = 0;
 		for (i=0;i<board.getTavern().size();i++) {
 			Card c = board.getTavern().get(i);
-			if (c.getFaction() == Consts.QUN || c.getFaction() == Consts.WEI) {
+			if (c.isFaction(Consts.QUN) || c.isFaction(Consts.WEI)) {
 				x++;
 			}
 		}
@@ -41,10 +41,10 @@ public class ZhangFei extends Card {
 		int x = 0;
 		for (i=0;i<board.getTavern().size();i++) {
 			Card c = board.getTavern().get(i);
-			if (c.getFaction() == Consts.QUN || c.getFaction() == Consts.WEI) {
+			if (c.isFaction(Consts.QUN) || c.isFaction(Consts.WEI)) {
 				Card tc = board.takeFromTavern(i);
 				board.getLogger().log(c.getName() + "被驱逐了。", c, "被驱逐");
-				board.getExile().add(tc);
+				board.addToExile(tc);
 				x--;
 			}
 		}

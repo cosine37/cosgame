@@ -50,7 +50,7 @@ public class YanLiang extends Card {
 				Player p = board.getPlayerByIndex(x);
 				if (p != null && p.getPlay().size() > y) {
 					Card c = p.getPlay().remove(y);
-					board.getTomb().add(c);
+					board.addToTomb(c);
 					board.log(p.getName() + "阵面的" + c.getName() + "被击杀了。", c, "颜良击杀");
 				}
 			} else if (y2!=-1) {
@@ -58,7 +58,7 @@ public class YanLiang extends Card {
 				Player p = board.getPlayerByIndex(x);
 				if (p != null && p.getJail().size() > y) {
 					Card c = p.getJail().remove(y);
-					board.getTomb().add(c);
+					board.addToTomb(c);
 					board.log(p.getName() + "监狱中的" + c.getName() + "被击杀了。", c, "颜良击杀");
 				}
 			}

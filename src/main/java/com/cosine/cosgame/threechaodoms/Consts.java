@@ -7,6 +7,8 @@ public class Consts {
 	public static final int WU = 2;
 	public static final int QUN = 3;
 	
+	public static final int KING = 10;
+	
 	// Rule related
 	public static final int STARTPOS = 4;
 	public static final int CHAOSPOS = 9;
@@ -50,12 +52,16 @@ public class Consts {
 	public static final int CHOOSEJAILOPTION = 8;
 	public static final int CHOOSEPLAYJAIL = 9;
 	public static final int CHOOSEPLAYJAILOPTION = 10;
+	public static final int CHOOSETWO = 11;
+	public static final int CHOOSEJAILOPTIONTWO = 12;
 	
 	// Play SubTypes
 	public static final int INJAIL = 101;
 	public static final int OTHERPLAYER = 102;
+	public static final int MYCARD = 103;
 	public static final int CHOOSEPLAYWEI = 200;
 	public static final int CHOOSEPLAYHAN = 201;
 	public static final int CHOOSEPLAYWU = 202;
 	public static final int CHOOSEPLAYQUN = 203;
+	
 }

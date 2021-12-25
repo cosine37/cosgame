@@ -26,12 +26,17 @@ public class AllRes {
 			Card c = cards.remove(x);
 			deck.add(c);
 		}
-		return deck;
-		//return base;
+		//return deck;
+		return base;
 	}
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new SunShangXiang());
+		base.add(new ZhuRong());
+		base.add(new YuanShu());
+		base.add(new ZhangZhao());
+		base.add(new TaiShiCi());
 		base.add(new YanLiang());
 		base.add(new CaoPi());
 		base.add(new CaoHong());

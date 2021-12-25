@@ -32,7 +32,7 @@ public class ZhangLiao extends Card {
 			Random rand = new Random();
 			int t = rand.nextInt(p.getHand().size());
 			Card c = p.getHand().remove(t);
-			player.getJail().add(c);
+			player.putInJail(c);
 			board.log(player.getName() + "从" + p.getName() + "处获得了一张牌并将其加入监狱。");
 		}
 	}

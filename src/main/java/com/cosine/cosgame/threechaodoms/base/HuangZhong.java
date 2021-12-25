@@ -24,7 +24,7 @@ public class HuangZhong extends Card {
 		options.add("不驱逐，无事发生");
 		for (int i=0;i<board.getTavern().size();i++) {
 			Card c = board.getTavern().get(i);
-			if (c.getFaction() == Consts.WEI) {
+			if (c.isFaction(Consts.WEI)) {
 				options.add("驱逐" + c.getName() + "，王道+2");
 			}
 			
@@ -40,7 +40,7 @@ public class HuangZhong extends Card {
 			int t = 0;
 			for (int i=0;i<board.getTavern().size();i++) {
 				Card c = board.getTavern().get(i);
-				if (c.getFaction() == Consts.WEI) {
+				if (c.isFaction(Consts.WEI)) {
 					t++;
 					if (t == x) {
 						Card tc = board.takeFromTavern(i);

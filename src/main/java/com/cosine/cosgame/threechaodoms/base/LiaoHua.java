@@ -23,7 +23,7 @@ public class LiaoHua extends Card {
 		int x = 0;
 		for (int i=0;i<player.getPlay().size();i++) {
 			Card c = player.getPlay().get(i);
-			if (c.getFaction() != Consts.HAN) {
+			if (!c.isFaction(Consts.HAN)) {
 				x++;
 			}
 		}
@@ -38,7 +38,7 @@ public class LiaoHua extends Card {
 		int x = 0;
 		for (int i=0;i<player.getPlay().size();i++) {
 			Card c = player.getPlay().get(i);
-			if (c.getFaction() != Consts.HAN) {
+			if (!c.isFaction(Consts.HAN)) {
 				x++;
 			}
 		}
@@ -52,7 +52,7 @@ public class LiaoHua extends Card {
 		int x = 0;
 		for (int i=0;i<player.getPlay().size();i++) {
 			Card c = player.getPlay().get(i);
-			if (c.getFaction() != Consts.HAN) {
+			if (!c.isFaction(Consts.HAN)) {
 				x++;
 			}
 		}

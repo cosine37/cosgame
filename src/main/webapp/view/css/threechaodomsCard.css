@@ -211,7 +211,7 @@
 
 .desc-div{
 	position: absolute;
-	height: 86px;
+	height: 90px;
 	width: 154px;
 	bottom: 0px;
 	right: 0px;
@@ -222,6 +222,7 @@
 .desc{
 	margin-top: 5px;
 	margin-left: 8px;
+	margin-right: 4px;
 	
 	color: white;
 	font-size: 14px;

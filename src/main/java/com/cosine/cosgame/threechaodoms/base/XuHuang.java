@@ -29,7 +29,7 @@ public class XuHuang extends Card {
 			board.log(player.getName() + "选择了" + p.getName() + "。");
 			int t = 0;
 			for (int i=0;i<p.getPlay().size();i++) {
-				if (p.getPlay().get(i).getFaction() == Consts.HAN) {
+				if (p.getPlay().get(i).isFaction(Consts.HAN)) {
 					t++;
 				}
 			}
