@@ -28,7 +28,7 @@ public class ID {
 		}
 	}
 	
-	public boolean hasForce(int x) {
+	public boolean hasFaction(int x) {
 		if (x>=0 && x<4) {
 			if (factions.get(x) == 1) {
 				return true;

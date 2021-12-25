@@ -14,6 +14,7 @@ public class BoardEntity {
 	int numDeck;
 	int numTomb;
 	int myIndex;
+	int winnerId;
 	LoggerEntity logger;
 	CardEntity topTomb;
 	List<PlayerEntity> players;
@@ -135,5 +136,11 @@ public class BoardEntity {
 	}
 	public void setMyKnownJails(List<Integer> myKnownJails) {
 		this.myKnownJails = myKnownJails;
+	}
+	public int getWinnerId() {
+		return winnerId;
+	}
+	public void setWinnerId(int winnerId) {
+		this.winnerId = winnerId;
 	}
 }

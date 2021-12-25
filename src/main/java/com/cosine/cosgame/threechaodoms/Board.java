@@ -53,10 +53,13 @@ public class Board {
 		weiPos = Consts.STARTPOS;
 		hanPos = Consts.STARTPOS;
 		int i;
+		List<ID> ids = shuffleIDs();
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			p.setPhase(Consts.OFFTURN);
 			p.draw(5);
+			ID e = ids.get(i);
+			p.setId(e);
 		}
 		tavern = new ArrayList<>();
 		for (i=0;i<Consts.TAVERNSIZE;i++) {
@@ -68,6 +71,26 @@ public class Board {
 		curPlayer = firstPlayer;
 		players.get(firstPlayer).setPhase(Consts.MAKEHAND);
 		logger.log("游戏开始");
+	}
+	
+	public List<ID> shuffleIDs() {
+		int i,j;
+		List<ID> tempIds = new ArrayList<>();
+		for (i=0;i<4;i++) {
+			for (j=i+1;j<4;j++) {
+				ID e = new ID();
+				e.setFactions(i, j);
+				tempIds.add(e);
+			}
+		}
+		List<ID> ids = new ArrayList<>();
+		while (tempIds.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(tempIds.size());
+			ID e = tempIds.remove(x);
+			ids.add(e);
+		}
+		return ids;
 	}
 	
 	public Card takeFromTavern(int x) {
@@ -105,6 +128,71 @@ public class Board {
 				}
 			}
 		}
+	}
+	
+	public int winFaction() {
+		int ans = -1;
+		if (status == Consts.ENDGAME) {
+			if (weiPos >= Consts.CHAOSPOS && hanPos >= Consts.CHAOSPOS) {
+				ans = Consts.QUN;
+			} else if (weiPos - hanPos >=2) {
+				ans = Consts.WEI;
+			} else if (hanPos - weiPos >=2) {
+				ans = Consts.HAN;
+			} else {
+				ans = Consts.WU;
+			}
+		}
+		return ans;
+	}
+	
+	public int winnerId() {
+		int ans = -1;
+		if (status == Consts.ENDGAME) {
+			int winFaction = winFaction();
+			int winner1 = -1;
+			int winner2 = -1;
+			for (int i=0;i<players.size();i++) {
+				if (players.get(i).getId().hasFaction(winFaction)) {
+					if (winner1 == -1) {
+						winner1 = i;
+					} else if (winner2 == -1) {
+						winner2 = i;
+					}
+				}
+			}
+			if (winner1 == -1) {
+				return ans;
+			} else if (winner2 == -1) {
+				ans = winner1;
+			} else {
+				if (players.get(winner1).numFaction(winFaction) > players.get(winner2).numFaction(winFaction)) {
+					return winner1;
+				} else if (players.get(winner1).numFaction(winFaction) < players.get(winner2).numFaction(winFaction)) {
+					return winner2;
+				} else {
+					if (players.get(winner1).totalCards() < players.get(winner2).totalCards()) {
+						return winner1;
+					} else {
+						return winner2;
+					}
+				}
+			}
+		}
+		return ans;
+	}
+	
+	public void endGame() {
+		status = Consts.ENDGAME;
+	}
+	
+	public boolean gameEnds() {
+		int[] arr = {1,1,8,7,7,6,5};
+		int gameEndSize = arr[players.size()];
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getPlay().size() >= gameEndSize) return true;
+		}
+		return false;
 	}
 	
 	public void moveWei(int x) {
@@ -464,7 +552,7 @@ public class Board {
 		entity.setNumDeck(deck.size());
 		entity.setNumExile(exile.size());
 		entity.setNumTomb(tomb.size());
-		
+		entity.setWinnerId(winnerId());
 		entity.setLogger(logger.toLoggerEntity());
 		int i,j;
 		List<PlayerEntity> playerEntity = new ArrayList<>();

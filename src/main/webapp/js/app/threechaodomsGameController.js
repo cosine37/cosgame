@@ -557,6 +557,36 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		}
 		// End Set Styles Section
 		
+		var buildWinCondition = function(){
+			$scope.winCondition = "";
+			var factions = ["魏","蜀","吴","群"];
+			for (i=0;i<$scope.gamedata.myID.length;i++){
+				if ($scope.gamedata.myID[i] == 1){
+					if ($scope.winCondition == ""){
+						$scope.winCondition = factions[i]
+					} else {
+						$scope.winCondition = $scope.winCondition + "," + factions[i]
+					}
+				}
+			}
+			if ($scope.status == 3){
+				var i,j
+				for (i=0;i<$scope.players.length;i++){
+					var idDisplay = "";
+					for (j=0;j<$scope.players[i].id.length;j++){
+						if ($scope.players[i].id[j] == 1){
+							if (idDisplay == ""){
+								idDisplay = factions[j]
+							} else {
+								idDisplay = idDisplay + "," + factions[j]
+							}
+						}
+					}
+					$scope.players[i].idDisplay = idDisplay
+				}
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/threechaodoms/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -585,6 +615,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				buildHandStyles()
 				buildTavernStyles()
 				buildPlayerStyles()
+				buildWinCondition()
 			});
 		}
 		

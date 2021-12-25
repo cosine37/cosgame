@@ -26,7 +26,8 @@ public class AllRes {
 			Card c = cards.remove(x);
 			deck.add(c);
 		}
-		return base;
+		return deck;
+		//return base;
 	}
 	
 	public void genBase() {

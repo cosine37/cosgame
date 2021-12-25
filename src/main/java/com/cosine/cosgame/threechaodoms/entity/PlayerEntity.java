@@ -10,6 +10,7 @@ public class PlayerEntity {
 	*/
 	List<CardEntity> jail;
 	List<CardEntity> play;
+	List<Integer> id;
 	
 	public int getIndex() {
 		return index;
@@ -34,6 +35,12 @@ public class PlayerEntity {
 	}
 	public void setJail(List<CardEntity> jail) {
 		this.jail = jail;
+	}
+	public List<Integer> getId() {
+		return id;
+	}
+	public void setId(List<Integer> id) {
+		this.id = id;
 	}
 	
 }

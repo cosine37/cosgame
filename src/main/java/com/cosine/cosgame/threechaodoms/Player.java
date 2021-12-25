@@ -132,6 +132,7 @@ public class Player {
 			endTurn();
 		}
 	}
+	
 	public void putInJail(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
@@ -160,6 +161,9 @@ public class Player {
 			board.log(name + "结束了回合。");
 			board.log(p.getName() + "开始了回合。");
 			p.setPhase(Consts.PLAYCARD);
+			if (board.gameEnds()) {
+				board.endGame();
+			}
 		}
 	}
 	
@@ -176,6 +180,26 @@ public class Player {
 		Account account = new Account();
 		account.getFromDB(name);
 		this.account = account;
+	}
+	
+	public int numFaction(int x) {
+		int ans = 0;
+		int i;
+		for (i=0;i<play.size();i++) {
+			if (play.get(i).getFaction() == x) {
+				ans++;
+			}
+		}
+		for (i=0;i<jail.size();i++) {
+			if (jail.get(i).getFaction() == x) {
+				ans++;
+			}
+		}
+		return ans;
+	}
+	
+	public int totalCards() {
+		return play.size() + jail.size();
 	}
 	
 	public String getName() {
@@ -305,6 +329,12 @@ public class Player {
 	public PlayerEntity toPlayerEntity(Player p) {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
+		if (board.getStatus() == Consts.ENDGAME) {
+			entity.setId(id.getFactions());
+		} else {
+			List<Integer> empty = new ArrayList<>();
+			entity.setId(empty);
+		}
 		int i;
 		List<CardEntity> playEntity = new ArrayList<>();
 		for (i=0;i<play.size();i++) {
@@ -317,6 +347,8 @@ public class Player {
 			if (p == null) {
 				jailEntity.add(blank.toCardEntity());
 			} else if (p.getIndex() == index) {
+				jailEntity.add(jail.get(i).toCardEntity(p));
+			} else if (board.getStatus() == Consts.ENDGAME) {
 				jailEntity.add(jail.get(i).toCardEntity(p));
 			} else {
 				List<Integer> knownJails = p.getKnownJails();
