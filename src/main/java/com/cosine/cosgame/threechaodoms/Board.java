@@ -217,7 +217,7 @@ public class Board {
 	}
 	
 	public boolean gameEnds() {
-		int[] arr = {1,1,8,7,7,6,5};
+		int[] arr = {1,4,8,7,7,6,5};
 		int gameEndSize = arr[players.size()];
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getPlay().size() >= gameEndSize) return true;
@@ -226,16 +226,20 @@ public class Board {
 	}
 	
 	public void moveWei(int x) {
+		int oldWeiPos = weiPos;
 		weiPos = weiPos+x;
 		if (weiPos > Consts.MAXPOS) weiPos = Consts.MAXPOS;
 		if (weiPos < Consts.MINPOS) weiPos = Consts.MINPOS;
-		logger.logMove(1, x);
+		int newWeiPos = weiPos;
+		logger.logMove(1, x, oldWeiPos, newWeiPos);
 	}
 	public void moveHan(int x) {
+		int oldHanPos = hanPos;
 		hanPos = hanPos+x;
 		if (hanPos > Consts.MAXPOS) hanPos = Consts.MAXPOS;
 		if (hanPos < Consts.MINPOS) hanPos = Consts.MINPOS;
-		logger.logMove(0, x);
+		int newHanPos = hanPos;
+		logger.logMove(0, x, oldHanPos, newHanPos);
 	}
 	public void addToExile(Card c) {
 		exile.add(0,c);

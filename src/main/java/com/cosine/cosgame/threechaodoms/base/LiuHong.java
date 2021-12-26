@@ -11,6 +11,6 @@ public class LiuHong extends Card {
 		title = "漢靈帝";
 		faction = Consts.KING;
 		
-		desc = "这张牌被视为任意势力。打出后无效果";
+		desc = "这张牌被视为任意势力。打出后无效果。";
 	}
 }

@@ -17,8 +17,9 @@
 <script src="/js/lib/threechaodomsCardMaker.js"></script>
 <script src="/js/app/threechaodomsGameController.js"></script>
 <body ng-app="threechaodomsGameApp" ng-controller="threechaodomsGameCtrl">
-	<button ng-click="goto('threechaodoms')">back</button>
 	<!--
+	<button ng-click="goto('threechaodoms')">退出</button>
+	
 	<button ng-click="startGame()" ng-show="lord == username">start game</button>
 	 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
@@ -30,39 +31,76 @@
 		<div ng-show="gamedata.winnerId == -1">
 			游戏结束，没有获胜者
 		</div>
-		
-		<table>
-			<tr>
-				<td>姓名</td>
-				<td>身份</td>
-				<td>阵面</td>
-				<td>监狱</td>
-			</tr>
-			<tr ng-repeat="p in players track by $index">
-				<td>{{p.name}}</td>
-				<td>{{p.idDisplay}}</td>
-				<td>
-					<div style="float: left; position:relative" ng-repeat="cardDisplay in p.playStyles track by $index" ng-init="j = $index">
-						<div ng-include="'/view/html/threechaodomsCard.html'" class="play-size"></div>
-					</div>
-				</td>
-				<td>
-					<div style="float: left; position:relative" ng-repeat="cardDisplay in p.jailStyles track by $index" ng-init="j = $index">
-						<div ng-include="'/view/html/threechaodomsCard.html'" class="play-size"></div>
-					</div>
-				</td>
-			</tr>
-		</table>
+		<div style="clear: both">
+			<table>
+				<tr>
+					<td>王道：</td>
+					<td ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12]" class="mark-grid">
+						<div ng-show="i<9 && i!=gamedata.hanPos">{{i}}</div>
+						<div ng-show="i<9 && i==gamedata.hanPos" style="background-color: orangered; color:white">{{i}}</div>
+						<div ng-show="i>=9 && i!=gamedata.hanPos" style="background-color: grey">{{i}}</div>
+						<div ng-show="i>=9 && i==gamedata.hanPos" style="background-color: orangered; color: grey">{{i}}</div>
+					</td>
+				</tr>
+				<tr>
+					<td>霸道：</td>
+					<td ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12]" class="mark-grid">
+						<div ng-show="i<9 && i!=gamedata.weiPos">{{i}}</div>
+						<div ng-show="i<9 && i==gamedata.weiPos" style="background-color: darkblue; color:white">{{i}}</div>
+						<div ng-show="i>=9 && i!=gamedata.weiPos" style="background-color: grey">{{i}}</div>
+						<div ng-show="i>=9 && i==gamedata.weiPos" style="background-color: darkblue; color: grey">{{i}}</div>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table class="game-end-table">
+				<tr>
+					<td style="width: 150px; text-align: center">姓名</td>
+					<td style="width: 60px; text-align: center">身份</td>
+					<td style="width: 710px; text-align: center">阵面</td>
+					<td style="width: 205px; text-align: center; background-color:grey">监狱</td>
+				</tr>
+				<tr ng-repeat="p in players track by $index">
+					<td style="text-align:center">{{p.name}}</td>
+					<td style="text-align:center">{{p.idDisplay}}</td>
+					<td>
+						<div style="float: left; position:relative" ng-repeat="cardDisplay in p.playStyles track by $index" ng-init="j = $index">
+							<div ng-include="'/view/html/threechaodomsCard.html'" class="play-size"></div>
+						</div>
+					</td>
+					<td style="background-color: grey">
+						<div style="float: left; position:relative" ng-repeat="cardDisplay in p.jailStyles track by $index" ng-init="j = $index">
+							<div ng-include="'/view/html/threechaodomsCard.html'" class="play-size"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			你获得了
+			<div>
+				<div ng-repeat="r in rewards">{{r}}</div>
+			</div>
+			<button ng-click="goto('threechaodoms')">退出</button>
+		</div>
 		
 	</div>
 	<div id="game-content" ng-show="gamedata.status == 2  || gamedata.status == 1">
-		<div>
+		<div id="playerArea" style="float:left; width: 1000px;">
 			<table>
+				<tr>
+					<td></td>
+					<td></td>
+					<td style="width: 710px">阵面</td>
+					<td style="width: 205px" style="background-color:grey">监狱</td>
+				</tr>
 				<tr ng-repeat="p in players track by $index" ng-init="i = $index">
 					<td style="height: 20px; width: 20px">
 						<div ng-show="gamedata.phase == PLAYCARD && (gamedata.myHand[selectedCard].playType == CHOOSEPLAYER || gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION)">
-							<div class="checked" ng-show="selectedPlayer == $index"></div>
-							<div class="not-checked" ng-show="selectedPlayer != $index"></div>
+							<div class="checked" ng-show="selectedPlayer == $index && username != p.name" ng-click="clickPlayer($index)"></div>
+							<div class="not-checked" ng-show="selectedPlayer != $index && username != p.name" ng-click="clickPlayer($index)"></div>
 						</div>
 					</td>
 					<td><button ng-disabled="username == p.name || gamedata.phase != PLAYCARD || 
@@ -78,7 +116,7 @@
 							</div>
 						</div>
 					</td>
-					<td>
+					<td style="background-color:grey">
 						<div style="float: left; position:relative" ng-repeat="cardDisplay in p.jailStyles track by $index" ng-init="j = $index"
 							ng-click="clickJail(i,j)">
 							<div ng-include="'/view/html/threechaodomsCard.html'" ng-show="cardDisplay.card.blankSpace == false" class="play-size"></div>
@@ -92,139 +130,186 @@
 				</tr>
 			</table>
 		</div>
-		<div>
-			王道：{{gamedata.hanPos}} 霸道：{{gamedata.weiPos}}
-		</div>
-		<div id="tavern">
-			<div style="float: left; position:relative" ng-click="clickDeck()">
-				<div class="card-size hand-size qs noselect">?</div>
-				<div class="play-button" ng-show="gamedata.phase == RECRUIT && recruitTarget == 4">
-					<button ng-click="recruit();$event.stopPropagation();">招募</button>
-					<button ng-click="cancelTavern();$event.stopPropagation();">取消</button>
-				</div>
-			</div>
-			<div ng-repeat="cardDisplay in tavernStyles track by $index" style="float: left; position:relative"
-				ng-click="clickTavern($index)">
-				<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
-				<div class="play-button" ng-show="gamedata.phase == RECRUIT && recruitTarget == $index">
-					<button ng-click="recruit();$event.stopPropagation();">招募</button>
-					<button ng-click="cancelTavern();$event.stopPropagation();">取消</button>
-				</div>
-			</div>
-		</div>
-		<div id="tomb" style="float:left">
-			<div ng-repeat="cardDisplay in tombStyles">
-				<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
-			</div>
-		</div>
-		<div style="clear:both"></div>
-		<div id="messages">
-			<div ng-show="gamedata.phase == MAKEHAND">
-				<span>请将一名武将置于你的监狱，并驱逐另一名武将。</span>
-				<button ng-disabled="canSubmitHandSetup() == false" ng-click="submitHandSetup()">确定</button>
-			</div>
-			<div ng-show="gamedata.phase == OFFTURN">
-				<span>现在不是你的回合。</span>
-			</div>
-			<div ng-show="gamedata.phase == PLAYCARD">
-				<button ng-show="playMode == 0" ng-click="changeMode(1)">我要驱逐</button>
-				<span ng-show="playMode == 0">请打出一张手牌。</span>
-				<button ng-show="playMode == 1" ng-click="changeMode(0)">我要打出手牌</button>
-				<span ng-show="playMode == 1">请驱逐1~3张手牌。</span>
-				<button ng-show="playMode == 1" ng-click="exileCards()" ng-disabled="canExile() == false">驱逐</button>
-			</div>
-			<div ng-show="gamedata.phase == RECRUIT">
-				<span>请招募英雄</span>
-			</div>
-			<div ng-show="gamedata.phase == DISCARD">
-				<span>请将手牌驱逐至3张。</span>
-			</div>
-		</div>
-		<div id="card instructions" ng-show="gamedata.phase == PLAYCARD">
-			<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
-			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-				|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
-				&& gamedata.myHand[selectedCard].options.length==0">
-				无可用选项。
-			</div>
-			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-				|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-				|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
-				&& gamedata.myHand[selectedCard].options.length>0">
-				请选择一项：
-				<span ng-show="gamedata.myHand[selectedCard].options.length>0">
-					<input type="radio" ng-model="chosenOption" value="0">
-					<label>{{gamedata.myHand[selectedCard].options[0]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options.length>1">
-					<input type="radio" ng-model="chosenOption" value="1">
-					<label>{{gamedata.myHand[selectedCard].options[1]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options.length>2">
-					<input type="radio" ng-model="chosenOption" value="2">
-					<label>{{gamedata.myHand[selectedCard].options[2]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options.length>3">
-					<input type="radio" ng-model="chosenOption" value="3">
-					<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
-				</span>
-			</div>
-			<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO)
-				&& gamedata.myHand[selectedCard].options2.length>0">
-				请选择一项：
-				<span ng-show="gamedata.myHand[selectedCard].options2.length>0">
-					<input type="radio" ng-model="chosenOption2" value="0">
-					<label>{{gamedata.myHand[selectedCard].options2[0]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options2.length>1">
-					<input type="radio" ng-model="chosenOption2" value="1">
-					<label>{{gamedata.myHand[selectedCard].options2[1]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options2.length>2">
-					<input type="radio" ng-model="chosenOption2" value="2">
-					<label>{{gamedata.myHand[selectedCard].options2[2]}}</label>
-				</span>
-				<span ng-show="gamedata.myHand[selectedCard].options2.length>3">
-					<input type="radio" ng-model="chosenOption2" value="3">
-					<label>{{gamedata.myHand[selectedCard].options2[3]}}</label>
-				</span>
-			</div>
-			<div ng-show="gamedata.myHand[selectedCard].playType>1">{{gamedata.myHand[selectedCard].instruction}}</div>
-		</div>
-		<div id="hand">
-			<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left; position:relative" 
-				ng-click="clickHand($index)">
-				<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
-				
-				<div class="jail" ng-show="gamedata.phase == MAKEHAND && setupJail == $index"></div>
-				<div class="exile" ng-show="gamedata.phase == MAKEHAND && setupExile == $index"></div>
-				
-				<div class="exile" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[$index].selected == 1"></div>
-				<div class="play-button" ng-show="gamedata.phase == PLAYCARD && selectedCard == $index">
-					<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard();$event.stopPropagation();">打出</button>
-					<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
-				</div>
-				
-				<div class="play-button" ng-show="gamedata.phase == DISCARD && selectedCard == $index">
-					<button ng-click="discard();$event.stopPropagation();">驱逐</button>
-					<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
-				</div>
-				
-				<div class="jail" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
-					gamedata.myHand[selectedCard].playSubType == INJAIL && chosenHand == $index"></div>
-				
-			</div>
-		</div>
-		<div style="clear:both">
-			胜利条件：{{winCondition}}
-		</div>
 		
+		<div id="mark-tavern-tomb-card" style="float:left">
+			<div style="clear: both">
+				<table>
+					<tr>
+						<td>王道：</td>
+						<td ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12]" class="mark-grid">
+							<div ng-show="i<9 && i!=gamedata.hanPos">{{i}}</div>
+							<div ng-show="i<9 && i==gamedata.hanPos" style="background-color: orangered; color:white">{{i}}</div>
+							<div ng-show="i>=9 && i!=gamedata.hanPos" style="background-color: grey">{{i}}</div>
+							<div ng-show="i>=9 && i==gamedata.hanPos" style="background-color: orangered; color: grey">{{i}}</div>
+						</td>
+					</tr>
+					<tr>
+						<td>霸道：</td>
+						<td ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12]" class="mark-grid">
+							<div ng-show="i<9 && i!=gamedata.weiPos">{{i}}</div>
+							<div ng-show="i<9 && i==gamedata.weiPos" style="background-color: darkblue; color:white">{{i}}</div>
+							<div ng-show="i>=9 && i!=gamedata.weiPos" style="background-color: grey">{{i}}</div>
+							<div ng-show="i>=9 && i==gamedata.weiPos" style="background-color: darkblue; color: grey">{{i}}</div>
+						</td>
+						
+					</tr>
+				</table>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<td>
+							酒馆
+						</td>
+						<td ng-repeat="cardDisplay in tavernStyles track by $index">
+							<div style="position:relative" ng-click="clickTavern($index)">
+								<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+								<div class="play-button" ng-show="gamedata.phase == RECRUIT && recruitTarget == $index">
+									<button ng-click="recruit();$event.stopPropagation();">招募</button>
+									<button ng-click="cancelTavern();$event.stopPropagation();">取消</button>
+								</div>
+							</div>
+						</td>
+						<td rowspan="2">
+							<div id="logs" class="logs">
+								<p ng-repeat="log in gamedata.logger.logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
+							</div>
+							<div>
+								<button ng-click="goto('threechaodoms')">退出</button>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							墓地顶
+						</td>
+						<td>
+							<div id="tomb" style="float:left">
+								<div ng-repeat="cardDisplay in tombStyles">
+									<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+								</div>
+							</div>
+						</td>
+						<td colspan="2">
+							<div>牌堆数量：{{gamedata.numDeck}} <button ng-show="gamedata.phase == RECRUIT" ng-click="recruitFromDeck()">暗抽</button></div>
+							<div>隐居数量：{{gamedata.numExile}}</div>
+							<div>墓地数量：{{gamedata.numTomb}}</div>
+							<div>你的胜利条件：{{winCondition}}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			
+			<div style="clear:both"></div>
+			<div id="messages" style="height: 80px;">
+				<div ng-show="gamedata.phase == MAKEHAND">
+					<span>请将一名武将置于你的监狱，并驱逐另一名武将。</span>
+					<button ng-disabled="canSubmitHandSetup() == false" ng-click="submitHandSetup()">确定</button>
+				</div>
+				<div ng-show="gamedata.phase == OFFTURN">
+					<span>现在不是你的回合。</span>
+				</div>
+				<div ng-show="gamedata.phase == PLAYCARD">
+					<button ng-show="playMode == 0" ng-click="changeMode(1)">我要驱逐手牌</button>
+					<span ng-show="playMode == 0">请打出一张手牌。</span>
+					<button ng-show="playMode == 1" ng-click="changeMode(0)">我要打出手牌</button>
+					<span ng-show="playMode == 1">请驱逐1~3张手牌。</span>
+					<button ng-show="playMode == 1" ng-click="exileCards()" ng-disabled="canExile() == false">驱逐</button>
+				</div>
+				<div ng-show="gamedata.phase == RECRUIT">
+					<span>请招募英雄</span>
+				</div>
+				<div ng-show="gamedata.phase == DISCARD">
+					<span>请将手牌驱逐至3张。</span>
+				</div>
+				<div id="card instructions" ng-show="gamedata.phase == PLAYCARD">
+					<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
+					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
+						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
+						&& gamedata.myHand[selectedCard].options.length==0">
+						无可用选项。
+					</div>
+					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
+						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
+						&& gamedata.myHand[selectedCard].options.length>0">
+						请选择一项：
+						<span ng-show="gamedata.myHand[selectedCard].options.length>0">
+							<input type="radio" ng-model="chosenOption" value="0">
+							<label>{{gamedata.myHand[selectedCard].options[0]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options.length>1">
+							<input type="radio" ng-model="chosenOption" value="1">
+							<label>{{gamedata.myHand[selectedCard].options[1]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options.length>2">
+							<input type="radio" ng-model="chosenOption" value="2">
+							<label>{{gamedata.myHand[selectedCard].options[2]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options.length>3">
+							<input type="radio" ng-model="chosenOption" value="3">
+							<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
+						</span>
+					</div>
+					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO)
+						&& gamedata.myHand[selectedCard].options2.length>0">
+						请选择一项：
+						<span ng-show="gamedata.myHand[selectedCard].options2.length>0">
+							<input type="radio" ng-model="chosenOption2" value="0">
+							<label>{{gamedata.myHand[selectedCard].options2[0]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options2.length>1">
+							<input type="radio" ng-model="chosenOption2" value="1">
+							<label>{{gamedata.myHand[selectedCard].options2[1]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options2.length>2">
+							<input type="radio" ng-model="chosenOption2" value="2">
+							<label>{{gamedata.myHand[selectedCard].options2[2]}}</label>
+						</span>
+						<span ng-show="gamedata.myHand[selectedCard].options2.length>3">
+							<input type="radio" ng-model="chosenOption2" value="3">
+							<label>{{gamedata.myHand[selectedCard].options2[3]}}</label>
+						</span>
+					</div>
+					<div ng-show="gamedata.myHand[selectedCard].playType>1">{{gamedata.myHand[selectedCard].instruction}}</div>
+				</div>
+			</div>
+			
+			<div id="hand">
+				<div ng-repeat="cardDisplay in handStyles track by $index" style="float: left; position:relative" 
+					ng-click="clickHand($index)">
+					<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+					
+					<div class="jail" ng-show="gamedata.phase == MAKEHAND && setupJail == $index"></div>
+					<div class="exile" ng-show="gamedata.phase == MAKEHAND && setupExile == $index"></div>
+					
+					<div class="exile" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[$index].selected == 1"></div>
+					<div class="play-button" ng-show="gamedata.phase == PLAYCARD && selectedCard == $index">
+						<button ng-disabled="canPlaySelectedCard() == false" ng-click="playCard();$event.stopPropagation();">打出</button>
+						<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
+					</div>
+					
+					<div class="play-button" ng-show="gamedata.phase == DISCARD && selectedCard == $index">
+						<button ng-click="discard();$event.stopPropagation();">驱逐</button>
+						<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
+					</div>
+					
+					<div class="jail" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
+						gamedata.myHand[selectedCard].playSubType == INJAIL && chosenHand == $index"></div>
+					
+				</div>
+			</div>
+			
+		</div>
 	</div>
+	<!-- 
 	<div style="clear:both">
 		{{gamedata}}
 	</div>
+	 -->
 </body>
 </html>

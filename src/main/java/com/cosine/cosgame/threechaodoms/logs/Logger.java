@@ -48,7 +48,7 @@ public class Logger {
 		log(log);
 	}
 	
-	public void logMove(int hw, int x) {
+	public void logMove(int hw, int x, int oldPos, int newPos) {
 		String log = "";
 		if (hw == 0) {
 			log = "王道";
@@ -63,7 +63,7 @@ public class Logger {
 				log = log + "向前移动";
 			}
 			if (x!=0) {
-				log = log+x+"。";
+				log = log+x+"（" + oldPos + "->" + newPos + "）。";
 				log(log);
 			}
 		}

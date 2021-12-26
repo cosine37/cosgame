@@ -107,6 +107,28 @@ button:disabled{
 	
 }
 
+.mark-grid{
+	width: 25px;
+	border: 1px solid black;
+	text-align: center;
+}
+
+.chaos-grid{
+	color:"grey";
+}
+
+.logs{
+	border: 1px solid;
+	overflow-y: scroll;
+	overflow:auto;
+	height: 430px;
+	width: 301px;
+	padding-left: 10px;
+}
+
+.game-end-table td{
+	border: 1px solid black;
+}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

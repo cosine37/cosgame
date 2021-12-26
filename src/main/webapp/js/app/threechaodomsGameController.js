@@ -529,6 +529,10 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 		
 		// Tavern Section
 		$scope.recruitTarget = -1
+		$scope.recruitFromDeck = function(){
+			$scope.recruitTarget = 4
+			$scope.recruit();
+		}
 		$scope.recruit = function(){
 			var data = {
 				"target": $scope.recruitTarget
@@ -615,7 +619,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					if ($scope.winCondition == ""){
 						$scope.winCondition = factions[i]
 					} else {
-						$scope.winCondition = $scope.winCondition + "," + factions[i]
+						$scope.winCondition = $scope.winCondition + "，" + factions[i]
 					}
 				}
 			}
@@ -635,6 +639,17 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 					$scope.players[i].idDisplay = idDisplay
 				}
 			}
+		}
+		
+		var buildRewards = function(){
+			$scope.rewards = []
+			var p = $scope.players[$scope.gamedata.myIndex]
+			$scope.rewards = p.receives
+		}
+		
+		var adjustLogs = function(){
+			var logcontent = document.getElementById("logs");
+			logcontent.scrollTop = logcontent.scrollHeight;
 		}
 		
 		$scope.getBoard = function(){
@@ -667,6 +682,11 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 				buildPlayerStyles()
 				buildTombStyle()
 				buildWinCondition()
+				buildRewards()
+				$http.post('/citadelsgame/empty').then(function(response){
+					adjustLogs()
+				});
+				
 			});
 		}
 		

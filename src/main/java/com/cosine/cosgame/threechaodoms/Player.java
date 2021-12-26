@@ -124,6 +124,7 @@ public class Player {
 			board.getLogger().logRecruitDeck(name);
 		}
 		if (hand.size() == 4) {
+			board.log(name + "招募结束。");
 			phase = Consts.DISCARD;
 			board.refillTavern();
 		}
@@ -208,7 +209,7 @@ public class Player {
 	public void setReceivesFromTransaction(List<Transaction> ts) {
 		receives = new ArrayList<>();
 		for (int i=0;i<ts.size();i++) {
-			String s = ts.get(i).getInfo() + "-" + ts.get(i).getAmount();
+			String s = ts.get(i).getInfo() + "：" + ts.get(i).getAmount();
 			if (ts.get(i).getType() == ts.get(i).MONEY) {
 				s = s+"枚铜钱";
 			} else if (ts.get(i).getType() == ts.get(i).INGOT) {

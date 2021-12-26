@@ -93,19 +93,22 @@
 				</div>
 				<div id="shopstab" class="content container tab-pane fade">
 					<h2><b>商城</b></h2>
+					敬请期待
+					<!-- 
 					{{accountInfo}}
 					<button ng-click="dailyReward()">每日奖励</button>
 					<button ng-click="cleanAccount()">清空</button>
 					<button ng-click="buySkin(2)">购买貂蝉</button>
 					<button ng-click="useSkin(2)">使用貂蝉</button>
 					<button ng-click="unuseSkin(1)">不使用貂蝉</button>
+					 -->
 				</div>
 				<div id="skinstab" class="content container tab-pane fade">
 					<h2><b>皮肤</b></h2>
-					<div>
+					<div ng-show="skinCardStyles.length>0">
 						<table>
 							<tr ng-repeat="cardDisplay in skinCardStyles track by $index">
-								<td>
+								<td style="text-align: left">
 									<div ng-include="'/view/html/threechaodomsCard.html'" class="skin-size"></div>
 								</td>
 								<td>
@@ -127,6 +130,9 @@
 								</td>
 							</tr>
 						</table>
+					</div>
+					<div ng-show="skinCardStyles.length==0">
+						你暂时没有皮肤
 					</div>
 				</div>
 			</div>
