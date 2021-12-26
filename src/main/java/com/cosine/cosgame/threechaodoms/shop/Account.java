@@ -1,13 +1,17 @@
 package com.cosine.cosgame.threechaodoms.shop;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.threechaodoms.Card;
+import com.cosine.cosgame.threechaodoms.CardFactory;
 import com.cosine.cosgame.threechaodoms.Skin;
 import com.cosine.cosgame.threechaodoms.SkinFactory;
 import com.cosine.cosgame.threechaodoms.entity.AccountEntity;
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.SkinEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -16,6 +20,9 @@ public class Account {
 	int money;
 	int ingot;
 	int key;
+	int goldenKey;
+	int numGames;
+	int winStrike;
 	String lastLoginDate;
 	
 	List<Transaction> transactions;
@@ -28,6 +35,9 @@ public class Account {
 		money = 0;
 		ingot = 0;
 		key = 0;
+		goldenKey = 0;
+		numGames = 0;
+		winStrike = 0;
 		lastLoginDate = "";
 		transactions = new ArrayList<>();
 		skins = new ArrayList<>();
@@ -49,6 +59,48 @@ public class Account {
 		for (int i=0;i<ts.size();i++) {
 			addNewTransaction(ts.get(i));
 		}
+	}
+	
+	List<Transaction> getGeneralReward() {
+		Shop shop = new Shop();
+		List<Transaction> ts = new ArrayList<>();
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		int date = Calendar.getInstance().get(Calendar.DATE);
+		String today = "" + year + month + date;
+		if (lastLoginDate.contentEquals("")) {
+			ts.addAll(shop.entryReward());
+		}
+		if (today.contentEquals(lastLoginDate)) {
+			
+		} else {
+			ts.addAll(shop.dailyReward());
+			lastLoginDate = today;
+		}
+		ts.addAll(shop.numGameReward(this));
+		return ts;
+	}
+	
+	public List<Transaction> receiveWinReward(String name) {
+		Shop shop = new Shop();
+		numGames++;
+		List<Transaction> ts = getGeneralReward();
+		winStrike++;
+		ts.addAll(shop.winReward(this));
+		addNewTransactions(ts);
+		updateAccountDB(name);
+		return ts;
+	}
+	
+	public List<Transaction> receiveLoseReward(String name) {
+		Shop shop = new Shop();
+		numGames++;
+		List<Transaction> ts = getGeneralReward();
+		winStrike=0;
+		ts.addAll(shop.loseReward(this));
+		addNewTransactions(ts);
+		updateAccountDB(name);
+		return ts;
 	}
 	
 	public int getSkinIndexById(int id) {
@@ -83,6 +135,11 @@ public class Account {
 			addNewTransaction(skin.getPrice());
 			skins.add(skin);
 		}
+	}
+	
+	public void unuseSkin(int id) {
+		int x = getSkinIndexById(id);
+		skins.get(x).setInUse(false);
 	}
 	
 	public void useSkin(int id) {
@@ -169,7 +226,24 @@ public class Account {
 	public void setLastLoginDate(String lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
-	
+	public int getGoldenKey() {
+		return goldenKey;
+	}
+	public void setGoldenKey(int goldenKey) {
+		this.goldenKey = goldenKey;
+	}
+	public int getNumGames() {
+		return numGames;
+	}
+	public void setNumGames(int numGames) {
+		this.numGames = numGames;
+	}
+	public int getWinStrike() {
+		return winStrike;
+	}
+	public void setWinStrike(int winStrike) {
+		this.winStrike = winStrike;
+	}
 	public void getFromDB(String username) {
 		Document userDoc = dbutil.read("username", username);
 		if (userDoc.get("threechaodoms") == null) {
@@ -182,7 +256,7 @@ public class Account {
 		}
 	}
 	
-	public void updateAcountDB(String username) {
+	public void updateAccountDB(String username) {
 		Document doc = toDocument();
 		dbutil.update("username", username, "threechaodoms", doc);
 	}
@@ -194,6 +268,9 @@ public class Account {
 		doc.append("ingot", ingot);
 		doc.append("key", key);
 		doc.append("lastLoginDate", lastLoginDate);
+		doc.append("goldenKey", goldenKey);
+		doc.append("numGames", numGames);
+		doc.append("winStrike", winStrike);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -214,6 +291,9 @@ public class Account {
 		ingot = doc.getInteger("ingot", 0);
 		key = doc.getInteger("key", 0);
 		lastLoginDate = doc.getString("lastLoginDate");
+		goldenKey = doc.getInteger("goldenKey", 0);
+		numGames = doc.getInteger("numGames", 0);
+		winStrike = doc.getInteger("winStrike", 0);
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -238,10 +318,18 @@ public class Account {
 		entity.setKey(key);
 		int i;
 		List<SkinEntity> skinEntities = new ArrayList<>();
+		List<CardEntity> cardEntities = new ArrayList<>();
 		for (i=0;i<skins.size();i++) {
 			skinEntities.add(skins.get(i).toSkinEntity());
+			String img = skins.get(i).getOriginalImg();
+			Card c = CardFactory.makeCard(img);
+			CardEntity ce = c.toCardEntity();
+			ce.setImg(skins.get(i).getNewImg());
+			ce.setTitle(skins.get(i).getTitle());
+			cardEntities.add(ce);
 		}
 		entity.setSkins(skinEntities);
+		entity.setSkinCards(cardEntities);
 		return entity;
 	}
 }

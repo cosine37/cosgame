@@ -4,7 +4,7 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("threechaodomsMainApp", ["ngWebSocket"]);
+var app = angular.module("threechaodomsMainApp", ["ngWebSocket", "ngSanitize"]);
 app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/pokerworld/allboardsrefresh");
@@ -121,9 +121,27 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 			});
 		}
 		
+		$scope.unuseSkin = function(x){
+			var data = {"id" : x}
+			$http({url: "/threechaodoms/unuseskin", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		var setSkinCards = function(){
+			$scope.skinCardStyles = []
+			var i;
+			for (i=0;i<$scope.accountInfo.skinCards.length;i++){
+				var cardStyle = buildCard($scope.accountInfo.skinCards[i])
+				$scope.skinCardStyles.push(cardStyle)
+			}
+		}
+		
 		$scope.getAccountInfo = function(){
 			$http.get('/threechaodoms/accountinfo').then(function(response){
 				$scope.accountInfo = response.data;
+				
+				setSkinCards()
 			});
 		}
 		

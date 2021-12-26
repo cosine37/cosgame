@@ -12,6 +12,8 @@ import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
 import com.cosine.cosgame.threechaodoms.logs.Logger;
+import com.cosine.cosgame.threechaodoms.shop.Shop;
+import com.cosine.cosgame.threechaodoms.shop.Transaction;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -201,10 +203,21 @@ public class Board {
 	
 	public void endGame() {
 		status = Consts.ENDGAME;
+		int winnerId = winnerId();
+		int i;
+		for (i=0;i<players.size();i++) {
+			List<Transaction> ts;
+			if (i == winnerId) {
+				ts = players.get(i).getAccount().receiveWinReward(players.get(i).getName());
+			} else {
+				ts = players.get(i).getAccount().receiveLoseReward(players.get(i).getName());
+			}
+			players.get(i).setReceivesFromTransaction(ts);
+		}
 	}
 	
 	public boolean gameEnds() {
-		int[] arr = {1,3,8,7,7,6,5};
+		int[] arr = {1,1,8,7,7,6,5};
 		int gameEndSize = arr[players.size()];
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getPlay().size() >= gameEndSize) return true;

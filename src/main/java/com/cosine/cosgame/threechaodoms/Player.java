@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
 import com.cosine.cosgame.threechaodoms.shop.Account;
+import com.cosine.cosgame.threechaodoms.shop.Transaction;
 
 public class Player {
 	String name;
@@ -20,6 +21,7 @@ public class Player {
 	List<Card> jail;
 	
 	List<Integer> knownJails;
+	List<String> receives;
 	
 	Board board;
 	Account account;
@@ -30,6 +32,7 @@ public class Player {
 		play = new ArrayList<>();
 		jail = new ArrayList<>();
 		knownJails = new ArrayList<>();
+		receives = new ArrayList<>();
 	}
 	
 	public void setupHand(int jailIndex, int exileIndex) {
@@ -202,6 +205,19 @@ public class Player {
 		return play.size() + jail.size();
 	}
 	
+	public void setReceivesFromTransaction(List<Transaction> ts) {
+		receives = new ArrayList<>();
+		for (int i=0;i<ts.size();i++) {
+			String s = ts.get(i).getInfo() + "-" + ts.get(i).getAmount();
+			if (ts.get(i).getType() == ts.get(i).MONEY) {
+				s = s+"枚铜钱";
+			} else if (ts.get(i).getType() == ts.get(i).INGOT) {
+				s = s+"个元宝";
+			}
+			receives.add(s);
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -269,6 +285,7 @@ public class Player {
 		doc.append("id", id.toDocument());
 		doc.append("phase", phase);
 		doc.append("knownJails", knownJails);
+		doc.append("receives", receives);
 		int i;
 		List<Document> doh = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
@@ -292,6 +309,7 @@ public class Player {
 		name = doc.getString("name");
 		phase = doc.getInteger("phase", Consts.OFFTURN);
 		knownJails = (List<Integer>) doc.get("knownJails");
+		receives = (List<String>) doc.get("receives");
 		Document idDoc = (Document) doc.get("id");
 		id = new ID();
 		id.setFromDoc(idDoc);
@@ -329,6 +347,7 @@ public class Player {
 	public PlayerEntity toPlayerEntity(Player p) {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
+		entity.setReceives(receives);
 		if (board.getStatus() == Consts.ENDGAME) {
 			entity.setId(id.getFactions());
 		} else {

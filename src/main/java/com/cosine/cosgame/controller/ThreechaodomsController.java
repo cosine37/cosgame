@@ -69,7 +69,7 @@ public class ThreechaodomsController {
 		Account account = new Account();
 		account.getFromDB(username);
 		account.cleanAccount();
-		account.updateAcountDB(username);
+		account.updateAccountDB(username);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -83,7 +83,7 @@ public class ThreechaodomsController {
 		Shop shop = new Shop();
 		List<Transaction> ts = shop.dailyReward();
 		account.addNewTransactions(ts);
-		account.updateAcountDB(username);
+		account.updateAccountDB(username);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -98,7 +98,7 @@ public class ThreechaodomsController {
 		Skin s = shop.genSkin(id);
 		if (s != null && account.canAffordSkin(s)) {
 			account.buySkin(s);
-			account.updateAcountDB(username);
+			account.updateAccountDB(username);
 		}
 		
 		StringEntity entity = new StringEntity();
@@ -112,7 +112,19 @@ public class ThreechaodomsController {
 		Account account = new Account();
 		account.getFromDB(username);
 		account.useSkin(id);
-		account.updateAcountDB(username);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/unuseskin", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> unuseSkin(HttpServletRequest request, @RequestParam int id) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.unuseSkin(id);
+		account.updateAccountDB(username);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

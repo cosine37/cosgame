@@ -11,6 +11,7 @@ public class PlayerEntity {
 	List<CardEntity> jail;
 	List<CardEntity> play;
 	List<Integer> id;
+	List<String> receives;
 	
 	public int getIndex() {
 		return index;
@@ -41,6 +42,12 @@ public class PlayerEntity {
 	}
 	public void setId(List<Integer> id) {
 		this.id = id;
+	}
+	public List<String> getReceives() {
+		return receives;
+	}
+	public void setReceives(List<String> receives) {
+		this.receives = receives;
 	}
 	
 }

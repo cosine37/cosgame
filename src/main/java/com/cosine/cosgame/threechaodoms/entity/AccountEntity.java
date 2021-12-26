@@ -7,6 +7,7 @@ public class AccountEntity {
 	int ingot;
 	int key;
 	List<SkinEntity> skins;
+	List<CardEntity> skinCards;
 	
 	public int getMoney() {
 		return money;
@@ -31,6 +32,12 @@ public class AccountEntity {
 	}
 	public void setSkins(List<SkinEntity> skins) {
 		this.skins = skins;
+	}
+	public List<CardEntity> getSkinCards() {
+		return skinCards;
+	}
+	public void setSkinCards(List<CardEntity> skinCards) {
+		this.skinCards = skinCards;
 	}
 	
 }
