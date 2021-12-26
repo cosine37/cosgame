@@ -37,8 +37,10 @@
 		<button ng-click="goto('gravepsycho')">盗墓惊魂</button>
 		<button ng-click="goto('onenight')">狼人不杀</button>
 		<button ng-click="goto('architect')">雕梁画栋</button>
+		<!-- 
 		<button ng-click="goto('pokerworld')">棋牌世界</button>
 		<button ng-click="goto('gardenwar')">花园战争</button>
+		 -->
 		<button style="padding-top: 0px; color: orangered; font-size: 24px; background-color:white">混沌三国</button>
 	</div>
 	
@@ -93,19 +95,43 @@
 				</div>
 				<div id="shopstab" class="content container tab-pane fade">
 					<h2><b>商城</b></h2>
-					敬请期待
+					<div>铜币：{{accountInfo.money}}&nbsp;元宝：{{accountInfo.ingot}}&nbsp;钥匙：{{accountInfo.key}}</div>
+					<div ng-show="showNewSkin == false && loadingSkin == false">
+						你可以花费88枚铜币挖掘皮肤：<button ng-click="dig()" ng-disabled='accountInfo.money<88'>挖掘</button>
+					</div>
+					<div ng-show="loadingSkin">
+						<div>
+							<img src="/image/Threechaodoms/dig.gif"/>
+						</div>
+						<div>
+							正在挖掘。。。
+						</div>
+					</div>
+					<div ng-show="showNewSkin">
+						<div>
+							<div ng-repeat="cardDisplay in newSkinCardStyles">
+								<div ng-include="'/view/html/threechaodomsCard.html'" class="skin-size"></div>
+							</div>
+						</div>
+						<div>获得皮肤：{{newSkinCard.title}} - {{newSkinCard.name}}</div>
+						<button ng-click="showNewSkin = false">谢谢</button>
+					</div>
 					<!-- 
 					{{accountInfo}}
+					 -->
+					<!-- 
 					<button ng-click="dailyReward()">每日奖励</button>
 					<button ng-click="cleanAccount()">清空</button>
+					
 					<button ng-click="buySkin(2)">购买貂蝉</button>
 					<button ng-click="useSkin(2)">使用貂蝉</button>
 					<button ng-click="unuseSkin(1)">不使用貂蝉</button>
 					 -->
+					
 				</div>
 				<div id="skinstab" class="content container tab-pane fade">
 					<h2><b>皮肤</b></h2>
-					<div ng-show="skinCardStyles.length>0">
+					<div ng-show="skinCardStyles.length>0" style="overflow-y: auto; height: 650px;">
 						<table>
 							<tr ng-repeat="cardDisplay in skinCardStyles track by $index">
 								<td style="text-align: left">

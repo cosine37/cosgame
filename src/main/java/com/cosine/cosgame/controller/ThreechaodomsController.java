@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.threechaodoms.entity.AccountEntity;
 import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.ShopEntity;
 import com.cosine.cosgame.threechaodoms.shop.Account;
 import com.cosine.cosgame.threechaodoms.shop.Shop;
@@ -50,6 +51,17 @@ public class ThreechaodomsController {
 		Account account = new Account();
 		account.getFromDB(username);
 		AccountEntity entity = account.toAccountEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/threechaodoms/dig", method = RequestMethod.POST)
+	public ResponseEntity<CardEntity> dig(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		CardEntity entity = shop.dig(account);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

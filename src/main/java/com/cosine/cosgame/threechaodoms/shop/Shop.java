@@ -2,9 +2,13 @@ package com.cosine.cosgame.threechaodoms.shop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import com.cosine.cosgame.threechaodoms.Card;
+import com.cosine.cosgame.threechaodoms.CardFactory;
 import com.cosine.cosgame.threechaodoms.Skin;
 import com.cosine.cosgame.threechaodoms.SkinFactory;
+import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.ShopEntity;
 
 public class Shop {
@@ -12,6 +16,42 @@ public class Shop {
 	
 	public Shop() {
 		
+	}
+	
+	public CardEntity dig(Account a) {
+		CardEntity entity = new CardEntity();
+		if (a.getMoney() < 88) return entity;
+		final int totalSkin = 27;
+		int i;
+		List<Integer> ls = new ArrayList<>();
+		for (i=1;i<=totalSkin;i++) {
+			ls.add(i);
+		}
+		boolean flag = false;
+		Skin s = new Skin();
+		while (ls.size() > 0) {
+			Random rand = new Random();
+			int k = rand.nextInt(ls.size());
+			int x = ls.remove(k);
+			if (a.getSkinIndexById(x) == -1) {
+				flag = true;
+				s = SkinFactory.makeSkin(x);
+				break;
+			}
+		}
+		
+		if (flag) {
+			Transaction t = new Transaction(Transaction.MONEY, -88, "挖掘");
+			a.addSkin(s);
+			a.addNewTransaction(t);
+			a.updateAccountDB();
+			String img = s.getOriginalImg();
+			Card c = CardFactory.makeCard(img);
+			entity = c.toCardEntity();
+			entity.setImg(s.getNewImg());
+			entity.setTitle(s.getTitle());
+		}
+		return entity;
 	}
 	
 	public List<Transaction> entryReward() {

@@ -1,3 +1,5 @@
+//import time
+
 var setUrl = function(d){
 	hearder = "http://";
 	server = "localhost:8080";
@@ -104,6 +106,23 @@ app.controller("threechaodomsMainCtrl", ['$scope', '$window', '$http', '$documen
 		$scope.cleanAccount = function(){
 			$http.post('/threechaodoms/cleanaccount').then(function(response){
 				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.showNewSkin = false;
+		$scope.loadingSkin = false;
+		$scope.dig = function(){
+			$scope.loadingSkin = true;
+			$http({url: "/threechaodoms/dig", method: "POST"}).then(function(response){
+				$scope.newSkinCard = response.data;
+				$scope.newSkinCardStyles = []
+				var cardStyle = buildCard($scope.newSkinCard)
+				$scope.newSkinCardStyles.push(cardStyle)
+				$scope.getAccountInfo()
+				for (var i=0;i<2500000000;i++){}
+				//time.sleep(2)
+				$scope.loadingSkin = false;
+				$scope.showNewSkin = true;
 			});
 		}
 		

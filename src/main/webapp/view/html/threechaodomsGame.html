@@ -96,7 +96,7 @@
 					<td style="width: 710px">阵面</td>
 					<td style="width: 205px" style="background-color:grey">监狱</td>
 				</tr>
-				<tr ng-repeat="p in players track by $index" ng-init="i = $index">
+				<tr ng-repeat="p in players track by $index" ng-init="i = $index" style="height: 135px">
 					<td style="height: 20px; width: 20px">
 						<div ng-show="gamedata.phase == PLAYCARD && (gamedata.myHand[selectedCard].playType == CHOOSEPLAYER || gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION)">
 							<div class="checked" ng-show="selectedPlayer == $index && username != p.name" ng-click="clickPlayer($index)"></div>

@@ -34,6 +34,11 @@
 	color: rgb(160,32,240);
 }
 
+.threechaodomstext{
+	font-weight: bold;
+	color: orangered;
+}
+
 .citadelshovertext{
 	font-weight: bold;
 	color: rgb(0,0,102);

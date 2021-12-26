@@ -130,6 +130,10 @@ public class Account {
 		}
 	}
 	
+	public void addSkin(Skin skin) {
+		skins.add(skin);
+	}
+	
 	public void buySkin(Skin skin) {
 		if (canAffordSkin(skin)) {
 			addNewTransaction(skin.getPrice());
@@ -259,6 +263,10 @@ public class Account {
 	public void updateAccountDB(String username) {
 		Document doc = toDocument();
 		dbutil.update("username", username, "threechaodoms", doc);
+	}
+	
+	public void updateAccountDB() {
+		updateAccountDB(name);
 	}
 	
 	public Document toDocument() {
