@@ -83,6 +83,20 @@ button:disabled{
 	background-size:cover;
 }
 
+.exchange{
+	position: absolute;
+	user-select:none;
+	left: 50%;
+	top: 50%;
+	margin-left: -50px;
+	margin-top: -55px;
+	height: 100px;
+	width: 100px;
+	z-index: 100;
+	background:url("/image/Threechaodoms/exchange.png");
+	background-size:cover;
+}
+
 .exile{
 	position: absolute;
 	user-select:none;

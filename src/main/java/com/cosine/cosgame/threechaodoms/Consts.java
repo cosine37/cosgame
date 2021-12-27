@@ -54,6 +54,11 @@ public class Consts {
 	public static final int CHOOSEPLAYJAILOPTION = 10;
 	public static final int CHOOSETWO = 11;
 	public static final int CHOOSEJAILOPTIONTWO = 12;
+	public static final int CHOOSETWOJAILOPTION = 13;
+	public static final int CHOOSEPLAYMEOTHEROPTION = 14;
+	public static final int CHOOSEPLAYOPTIONTWO = 15;
+	public static final int CHOOSEJAILHAND = 16;
+	public static final int CHOOSEPLAYHAND = 17;
 	
 	// Play SubTypes
 	public static final int INJAIL = 101;
@@ -63,5 +68,6 @@ public class Consts {
 	public static final int CHOOSEPLAYHAN = 201;
 	public static final int CHOOSEPLAYWU = 202;
 	public static final int CHOOSEPLAYQUN = 203;
+	public static final int CHOOSEMYPLAYNOTHAN = 211;
 	
 }

@@ -111,8 +111,8 @@
 							ng-click="clickPlay(i,j)">
 							<div ng-include="'/view/html/threechaodomsCard.html'" class="play-size"></div>
 							<div ng-show="canChoosePlay(i,j)" >
-								<div class="play-checked" ng-show="selectedPlayerIndex == i && selectedCardIndex == j"></div>
-								<div class="play-not-checked" ng-show="selectedPlayerIndex != i || selectedCardIndex != j"></div>
+								<div class="play-checked" ng-show="(selectedPlayerIndex == i && selectedCardIndex == j) || (selectedPlayerIndex2 == i && selectedCardIndex2 == j)"></div>
+								<div class="play-not-checked" ng-show="(selectedPlayerIndex != i || selectedCardIndex != j) && (selectedPlayerIndex2 != i || selectedCardIndex2 != j)"></div>
 							</div>
 						</div>
 					</td>
@@ -122,8 +122,8 @@
 							<div ng-include="'/view/html/threechaodomsCard.html'" ng-show="cardDisplay.card.blankSpace == false" class="play-size"></div>
 							<div class="card-size play-size qs noselect" ng-show="cardDisplay.card.blankSpace == true">?</div>
 							<div ng-show="canChooseJail(i,j)" >
-								<div class="play-checked" ng-show="selectedPlayerIndex == i && selectedJailIndex == j"></div>
-								<div class="play-not-checked" ng-show="selectedPlayerIndex != i || selectedJailIndex != j"></div>
+								<div class="play-checked" ng-show="(selectedPlayerIndex == i && selectedJailIndex == j) || (selectedPlayerIndex2 == i && selectedJailIndex2 == j)"></div>
+								<div class="play-not-checked" ng-show="(selectedPlayerIndex != i || selectedJailIndex != j) && (selectedPlayerIndex2 != i || selectedJailIndex2 != j)"></div>
 							</div>
 						</div>
 					</td>
@@ -202,7 +202,7 @@
 			
 			
 			<div style="clear:both"></div>
-			<div id="messages" style="height: 80px;">
+			<div id="messages" style="height: 85px;">
 				<div ng-show="gamedata.phase == MAKEHAND">
 					<span>请将一名武将置于你的监狱，并驱逐另一名武将。</span>
 					<button ng-disabled="canSubmitHandSetup() == false" ng-click="submitHandSetup()">确定</button>
@@ -228,14 +228,16 @@
 					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
 						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
 						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
+						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO || gamedata.myHand[selectedCard].playType == CHOOSETWOJAILOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYMEOTHEROPTION) 
 						&& gamedata.myHand[selectedCard].options.length==0">
 						无可用选项。
 					</div>
 					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
 						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
 						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO) 
+						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO || gamedata.myHand[selectedCard].playType == CHOOSETWOJAILOPTION
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYMEOTHEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTIONTWO) 
 						&& gamedata.myHand[selectedCard].options.length>0">
 						请选择一项：
 						<span ng-show="gamedata.myHand[selectedCard].options.length>0">
@@ -255,7 +257,8 @@
 							<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
 						</span>
 					</div>
-					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO)
+					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO
+						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTIONTWO)
 						&& gamedata.myHand[selectedCard].options2.length>0">
 						请选择一项：
 						<span ng-show="gamedata.myHand[selectedCard].options2.length>0">
@@ -298,9 +301,12 @@
 						<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
 					</div>
 					
-					<div class="jail" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
-						gamedata.myHand[selectedCard].playSubType == INJAIL && chosenHand == $index"></div>
+					<div class="jail" ng-show="gamedata.phase == PLAYCARD && ((gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
+						gamedata.myHand[selectedCard].playSubType == INJAIL) || (gamedata.myHand[selectedCard].playType == CHOOSEJAILHAND)) && 
+						chosenHand == $index"></div>
 					
+					<div class="exchange" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEPLAYHAND && 
+						chosenHand == $index"></div>
 				</div>
 			</div>
 			

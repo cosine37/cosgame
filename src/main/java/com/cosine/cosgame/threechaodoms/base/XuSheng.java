@@ -36,7 +36,7 @@ public class XuSheng extends Card {
 			if (player != null && p.getPlay().size() > y) {
 				Card c = p.getPlay().remove(y);
 				board.addToTomb(c);
-				board.log(p.getName() + "阵面的" + c.getName() + "被击杀了。", c, "纪灵击杀");
+				board.log(p.getName() + "阵面的" + c.getName() + "被击杀了。", c, "徐盛击杀");
 			}
 		}
 		

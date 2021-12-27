@@ -377,8 +377,9 @@ public class Player {
 				for (j=0;j<knownJails.size();j++) {
 					int x = knownJails.get(j) / 10;
 					int y = knownJails.get(j) % 10;
-					if (x == index && y == i);
-					jailEntity.add(jail.get(i).toCardEntity(p));
+					if (x == index && y == i) {
+						jailEntity.add(jail.get(i).toCardEntity(p));
+					}
 					flag = false;
 				}
 				if (flag) {
