@@ -171,6 +171,9 @@
 							</div>
 						</td>
 						<td rowspan="2">
+							<div>身份难度系数：</div>
+							<div>吴群>魏蜀>蜀群>魏群>蜀吴>魏吴</div>
+							<div>若平局，难度系数高的身份胜利</div>
 							<div id="logs" class="logs">
 								<p ng-repeat="log in gamedata.logger.logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
 							</div>
@@ -190,12 +193,13 @@
 								</div>
 							</div>
 						</td>
-						<td colspan="2">
+						<td colspan>
 							<div>牌堆数量：{{gamedata.numDeck}} <button ng-show="gamedata.phase == RECRUIT" ng-click="recruitFromDeck()">暗抽</button></div>
 							<div>隐居数量：{{gamedata.numExile}}</div>
 							<div>墓地数量：{{gamedata.numTomb}}</div>
-							<div>你的胜利条件：{{winCondition}}</div>
+							<div>胜利条件：{{winCondition}}</div>
 						</td>
+						<td></td>
 					</tr>
 				</table>
 			</div>

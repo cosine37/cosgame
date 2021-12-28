@@ -761,8 +761,15 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			}
 		}
 		
+		$scope.tombIndex = 0;
 		var buildTombStyle = function(){
-			$scope.tombStyles = [buildCard($scope.gamedata.topTomb)]
+			$scope.tombStyles = []
+			for (i=0;i<$scope.gamedata.tomb.length;i++){
+				var singleStyle = buildCard($scope.gamedata.tomb[i])
+				$scope.tombStyles.push(singleStyle);
+				
+				break;
+			}
 		}
 		// End Set Styles Section
 		
@@ -811,7 +818,7 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 			$http.get('/threechaodoms/getboard').then(function(response){
 				if (response.data.id == "NE"){
 					alert("该游戏已解散");
-					$scope.goto('pokerworld');
+					$scope.goto('threechaodoms');
 					return;
 				}
 				$scope.gamedata = response.data
@@ -826,11 +833,12 @@ app.controller("threechaodomsGameCtrl", ['$scope', '$window', '$http', '$documen
 						kicked = false;
 					}
 				}
+				/*
 				if (kicked){
 					alert("你已被" + $scope.lord + "踢出");
-					$scope.goto('pokerworld');
+					$scope.goto('threechaodoms');
 					return;
-				}
+				}*/
 				
 				buildHandStyles()
 				buildTavernStyles()

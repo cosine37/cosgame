@@ -110,7 +110,7 @@ app.controller("threechaodomsCreateGameCtrl", ['$scope', '$window', '$http', '$d
 			$http.get('/threechaodoms/getboard').then(function(response){
 				if (response.data.id == "NE"){
 					alert("该游戏已解散");
-					$scope.goto('pokerworld');
+					$scope.goto('threechaodoms');
 					return;
 				}
 				$scope.gamedata = response.data

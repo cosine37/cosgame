@@ -14,7 +14,10 @@ public class YuJi extends Card {
 		title = "符水治病";
 		faction = Consts.QUN;
 		
-		desc = "将墓地顶的两名武将的其中一名加入你的监狱，将另一名驱逐.";
+		han = -1;
+		wei = -1;
+		
+		desc = "王道-1，霸道-1，将墓地顶的两名武将的其中一名加入你的监狱，将另一名驱逐.";
 		
 		playType = Consts.CHOOSEONE;
 	}

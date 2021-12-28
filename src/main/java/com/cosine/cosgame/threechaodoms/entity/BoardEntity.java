@@ -16,13 +16,15 @@ public class BoardEntity {
 	int myIndex;
 	int winnerId;
 	LoggerEntity logger;
-	CardEntity topTomb;
+	//CardEntity topTomb;
 	List<PlayerEntity> players;
+	List<CardEntity> tomb;
 	List<CardEntity> tavern;
 	List<CardEntity> myHand;
 	List<CardEntity> myJail;
 	List<Integer> myID;
 	List<Integer> myKnownJails;
+	int myDifficulty;
 	public String getId() {
 		return id;
 	}
@@ -113,11 +115,11 @@ public class BoardEntity {
 	public void setNumTomb(int numTomb) {
 		this.numTomb = numTomb;
 	}
-	public CardEntity getTopTomb() {
-		return topTomb;
+	public List<CardEntity> getTomb() {
+		return tomb;
 	}
-	public void setTopTomb(CardEntity topTomb) {
-		this.topTomb = topTomb;
+	public void setTomb(List<CardEntity> tomb) {
+		this.tomb = tomb;
 	}
 	public LoggerEntity getLogger() {
 		return logger;
@@ -142,5 +144,11 @@ public class BoardEntity {
 	}
 	public void setWinnerId(int winnerId) {
 		this.winnerId = winnerId;
+	}
+	public int getMyDifficulty() {
+		return myDifficulty;
+	}
+	public void setMyDifficulty(int myDifficulty) {
+		this.myDifficulty = myDifficulty;
 	}
 }

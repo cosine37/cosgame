@@ -135,7 +135,7 @@ button:disabled{
 	border: 1px solid;
 	overflow-y: scroll;
 	overflow:auto;
-	height: 430px;
+	height: 420px;
 	width: 301px;
 	padding-left: 10px;
 }

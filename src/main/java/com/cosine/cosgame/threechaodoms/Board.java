@@ -169,32 +169,28 @@ public class Board {
 		int ans = -1;
 		if (status == Consts.ENDGAME) {
 			int winFaction = winFaction();
-			int winner1 = -1;
-			int winner2 = -1;
-			for (int i=0;i<players.size();i++) {
+			int i;
+			int maxNumFaction = -1;
+			int minNumCard = 999;
+			int maxDifficulty = -1;
+			for (i=0;i<players.size();i++) {
 				if (players.get(i).getId().hasFaction(winFaction)) {
-					if (winner1 == -1) {
-						winner1 = i;
-					} else if (winner2 == -1) {
-						winner2 = i;
+					if (players.get(i).numFaction(winFaction)>maxNumFaction) {
+						maxNumFaction = players.get(i).numFaction(winFaction);
+						minNumCard = players.get(i).totalCards();
+						maxDifficulty = players.get(i).getId().getDifficulty();
+						ans = i;
+					} else if (players.get(i).numFaction(winFaction) == maxNumFaction) {
+						if (players.get(i).totalCards()<minNumCard) {
+							minNumCard = players.get(i).totalCards();
+							maxDifficulty = players.get(i).getId().getDifficulty();
+							ans = i;
+						} else if (players.get(i).getId().getDifficulty() > maxDifficulty) {
+							maxDifficulty = players.get(i).getId().getDifficulty();
+							ans = i;
+						}
 					}
-				}
-			}
-			if (winner1 == -1) {
-				return ans;
-			} else if (winner2 == -1) {
-				ans = winner1;
-			} else {
-				if (players.get(winner1).numFaction(winFaction) > players.get(winner2).numFaction(winFaction)) {
-					return winner1;
-				} else if (players.get(winner1).numFaction(winFaction) < players.get(winner2).numFaction(winFaction)) {
-					return winner2;
-				} else {
-					if (players.get(winner1).totalCards() < players.get(winner2).totalCards()) {
-						return winner1;
-					} else {
-						return winner2;
-					}
+					
 				}
 			}
 		}
@@ -594,6 +590,7 @@ public class Board {
 		List<Integer> myID = new ArrayList<>();
 		int myIndex = -1;
 		int phase = Consts.OFFTURN;
+		int myDifficulty = -1;
 		Player me = null;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
@@ -606,6 +603,7 @@ public class Board {
 					myJail.add(p.getJail().get(j).toCardEntity(p));
 				}
 				myID = p.getId().getFactions();
+				myDifficulty = p.getId().getDifficulty();
 				phase = p.getPhase();
 				myIndex = i;
 				me = p;
@@ -618,6 +616,7 @@ public class Board {
 		entity.setMyHand(myHand);
 		entity.setMyJail(myJail);
 		entity.setMyID(myID);
+		entity.setMyDifficulty(myDifficulty);
 		entity.setMyIndex(myIndex);
 		entity.setPhase(phase);
 		List<CardEntity> tavernEntity = new ArrayList<>();
@@ -625,7 +624,12 @@ public class Board {
 			tavernEntity.add(tavern.get(i).toCardEntity(me));
 		}
 		entity.setTavern(tavernEntity);
-		entity.setTopTomb(topTomb().toCardEntity(me));
+		List<CardEntity> tombEntity = new ArrayList<>();
+		for (i=0;i<tomb.size();i++) {
+			tombEntity.add(tomb.get(i).toCardEntity());
+		}
+		entity.setTomb(tombEntity);
+		//entity.setTopTomb(topTomb().toCardEntity(me));
 		return entity;
 	}
 	

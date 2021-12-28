@@ -40,6 +40,24 @@ public class ID {
 		}
 	}
 	
+	public int getDifficulty() {
+		if (hasFaction(Consts.WEI) && hasFaction(Consts.WU)) {
+			return 1;
+		} else if (hasFaction(Consts.HAN) && hasFaction(Consts.WU)) {
+			return 2;
+		} else if (hasFaction(Consts.WEI) && hasFaction(Consts.QUN)) {
+			return 3;
+		} else if (hasFaction(Consts.HAN) && hasFaction(Consts.QUN)){
+			return 4;
+		} else if (hasFaction(Consts.HAN) && hasFaction(Consts.WEI)) {
+			return 5;
+		} else if (hasFaction(Consts.WU) && hasFaction(Consts.QUN)) {
+			return 6;
+		} else {
+			return -1;
+		}
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("factions", factions);

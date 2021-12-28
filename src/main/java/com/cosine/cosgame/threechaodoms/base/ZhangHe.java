@@ -14,7 +14,7 @@ public class ZhangHe extends Card {
 		title = "用兵巧變";
 		faction = Consts.WEI;
 		
-		desc = "王道+1或霸道--1。击杀任意一名玩家阵面的一名蜀势力武将。";
+		desc = "王道+1或霸道-1。击杀任意一名玩家阵面的一名蜀势力武将。";
 		
 		playType = Consts.CHOOSEPLAYOPTION;
 		playSubType = Consts.CHOOSEPLAYHAN;

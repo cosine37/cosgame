@@ -16,6 +16,7 @@ public class GuoSi extends Card {
 		title = "盜馬虜";
 		faction = Consts.QUN;
 		
+		wei = 1;
 		han = 1;
 		
 		desc = "王道+1，霸道+1，选择一名玩家，随机击杀其一名阵面武将。";
