@@ -8,7 +8,7 @@ import com.cosine.cosgame.threechaodoms.Consts;
 
 public class YuJi extends Card {
 	public YuJi() {
-		name = "於吉";
+		name = "于吉";
 		courtesy = "";
 		img = "YuJi";
 		title = "符水治病";

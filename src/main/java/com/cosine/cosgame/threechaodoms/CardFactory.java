@@ -137,6 +137,8 @@ public class CardFactory {
 			c = new FaZheng();
 		} else if (img.contentEquals("YuJi")) {
 			c = new YuJi();
+		} else if (img.contentEquals("HuaTuo")) {
+			c = new HuaTuo();
 		}
 		
 		

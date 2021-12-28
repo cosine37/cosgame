@@ -17,7 +17,7 @@ public class SkinFactory {
 		} else if (id == 2) {
 			s.setOriginalImg("SunCe");
 			s.setNewImg("SunCe_01");
-			s.setSkinName("孙策");
+			s.setSkinName("孫笨");
 			s.setTitle("五四三二零");
 			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
 		} else if (id == 3) {
@@ -166,10 +166,40 @@ public class SkinFactory {
 			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
 		} else if (id == 27) {
 			s.setOriginalImg("MaChao");
-			s.setNewImg("MaChao_01");
+			s.setNewImg("MaChao_02");
 			s.setSkinName("馬超");
 			s.setTitle("馬四連");
 			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
+		} else if (id == 28) {
+			s.setOriginalImg("LvBu");
+			s.setNewImg("LvBu_02");
+			s.setSkinName("吕布");
+			s.setTitle("步驚雲");
+			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
+		} else if (id == 29) {
+			s.setOriginalImg("XiaHouDun");
+			s.setNewImg("XiaHouDun_01");
+			s.setSkinName("夏侯惇");
+			s.setTitle("獨眼的羅剎");
+			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
+		} else if (id == 30) {
+			s.setOriginalImg("ZhuGeLiang");
+			s.setNewImg("ZhuGeLiang_03");
+			s.setSkinName("諸葛亮");
+			s.setTitle("智揮猩");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 31) {
+			s.setOriginalImg("HuaTuo");
+			s.setNewImg("HuaTuo_02");
+			s.setSkinName("華佗");
+			s.setTitle("萬受無疆");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 32) {
+			s.setOriginalImg("YuJi");
+			s.setNewImg("YuJi_01");
+			s.setSkinName("于吉");
+			s.setTitle("猜猜看吶");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
 		}
 	
 		

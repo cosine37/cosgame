@@ -113,6 +113,15 @@ public class Board {
 		}
 	}
 	
+	public Card takeFromTomb(int x) {
+		if (x>=0 && x<tomb.size()) {
+			Card c = tomb.remove(x);
+			return c;
+		} else {
+			return null;
+		}
+	}
+	
 	public Card popTopDeck() {
 		if (deck.size() == 0) {
 			reshuffle();
@@ -627,6 +636,10 @@ public class Board {
 		List<CardEntity> tombEntity = new ArrayList<>();
 		for (i=0;i<tomb.size();i++) {
 			tombEntity.add(tomb.get(i).toCardEntity());
+		}
+		if (tomb.size() == 0) {
+			Card c = new BlankSpaceCard();
+			tombEntity.add(c.toCardEntity());
 		}
 		entity.setTomb(tombEntity);
 		//entity.setTopTomb(topTomb().toCardEntity(me));

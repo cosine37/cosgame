@@ -135,9 +135,16 @@ button:disabled{
 	border: 1px solid;
 	overflow-y: scroll;
 	overflow:auto;
-	height: 420px;
+	height: 400px;
 	width: 301px;
 	padding-left: 10px;
+}
+
+.tomb-nav{
+	position: absolute;
+	bottom: 2px;
+	color: white;
+	z-index: 100;
 }
 
 .game-end-table td{

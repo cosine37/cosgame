@@ -184,12 +184,26 @@
 					</tr>
 					<tr>
 						<td>
-							墓地顶
+							墓地
 						</td>
 						<td>
-							<div id="tomb" style="float:left">
-								<div ng-repeat="cardDisplay in tombStyles">
+							<div id="tomb">
+								<div style="position:relative" ng-repeat="cardDisplay in tombStyles track by $index" ng-show="tombIndex == $index">
 									<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+									<div style="position:absolute;top: 2px;width: 100px; left: 50%; margin-left: -50px;text-align: center;color:white;font-size: 20px;z-index: 500">
+										({{tombIndex+1}}/{{gamedata.numTomb}})
+									</div>
+									<div ng-show="tombIndex > 0" class="tomb-nav noselect" style="left: 2px;">
+										<button ng-click="changeTombIndex(-1)">&lt;</button>
+									</div>
+									<div ng-show="tombIndex < gamedata.numTomb-1" class="tomb-nav noselect" style="right: 2px;">
+										<button ng-click="changeTombIndex(1)">&gt;</button>
+									</div>
+									<div style="position:absolute;bottom: 2px;width: 100px; left: 50%; margin-left: -50px;text-align: center;color:white;font-size: 20px;z-index: 500"
+										ng-show="canChooseTomb()">
+										<button ng-show="selectedTomb != tombIndex" ng-click="clickTomb(tombIndex)">选择</button>
+										<span ng-show="selectedTomb == tombIndex">已选择</span>
+									</div>
 								</div>
 							</div>
 						</td>
@@ -316,10 +330,10 @@
 			
 		</div>
 	</div>
-	<!-- 
+	
 	<div style="clear:both">
 		{{gamedata}}
 	</div>
-	 -->
+	
 </body>
 </html>

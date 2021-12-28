@@ -59,6 +59,7 @@ public class Consts {
 	public static final int CHOOSEPLAYOPTIONTWO = 15;
 	public static final int CHOOSEJAILHAND = 16;
 	public static final int CHOOSEPLAYHAND = 17;
+	public static final int CHOOSETOMB = 18;
 	
 	// Play SubTypes
 	public static final int INJAIL = 101;
