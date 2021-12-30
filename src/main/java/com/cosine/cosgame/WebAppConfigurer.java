@@ -23,7 +23,8 @@ public class WebAppConfigurer implements WebMvcConfigurer {
 				"/architect", "/architectcreategame", "/architectgame",
 				"/pokerworld", "/pokerworldcreategame", "/pokerworldgame",
 				"/gardenwar", "/gardenwarcreategame", "/gardenwargame",
-				"/threechaodoms","threechaodomscreategame","threechaodomsgame");
+				"/threechaodoms","threechaodomscreategame","threechaodomsgame",
+				"/propnight","propnightcreategame","propnightgame");
 		//registration.excludePathPatterns("/login","/error","/view/css/**","/image/**","/js/**"); 
 	}
 }

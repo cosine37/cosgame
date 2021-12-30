@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Three Chaodoms</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/propnightTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/propnightOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/app/propnightGameController.js"></script>
+<body ng-app="propnightGameApp" ng-controller="propnightGameCtrl">
+	<button ng-click="goto('propnight')">back</button>
+	<button ng-click="startGame()">start game</button>
+	<!-- 
+	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+	 -->
+	<div>
+		<p ng-repeat="p in players">{{p.name}}</p>
+	</div>
+</body>
+</html>
