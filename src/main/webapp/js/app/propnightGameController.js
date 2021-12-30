@@ -64,7 +64,7 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 			
 			
 		}
-		
+		*/
 		$scope.getBoard = function(){
 			$http.get('/propnight/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -76,14 +76,11 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.status = response.data.status
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
-				if ($scope.status == '1'){
-					$scope.goto('propnightgame');
-				}
 			});
 		}
 		
 		$scope.getBoard();
-		
+		/*
 		ws.onMessage(function(e){
 			var message = e.data
 			heartCheck.reset();

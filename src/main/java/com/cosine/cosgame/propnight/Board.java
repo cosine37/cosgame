@@ -3,6 +3,7 @@ package com.cosine.cosgame.propnight;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -37,6 +38,28 @@ public class Board {
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
+	}
+	
+	public void startGame() {
+		status = Consts.ROLEASSIGNMENT;
+		Random rand = new Random();
+		int x = rand.nextInt(players.size());
+		setGhostPlayer(x);
+	}
+	
+	public void initialize() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).initialize();
+		}
+	}
+	
+	public void setGhostPlayer(int x) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setRole(Consts.HUMAN);
+		}
+		players.get(x).setRole(Consts.GHOST);
 	}
 	
 	public void endTurn() {
@@ -241,6 +264,11 @@ public class Board {
 		}
 	}
 	
+	public void updateBasicDB() {
+		updateDB("status", status);
+		updateDB("phase", phase);
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("id", id);
@@ -320,6 +348,8 @@ public class Board {
 		entity.setLord(lord);
 		entity.setGhostMark(ghostMark);
 		entity.setHumanMark(humanMark);
+		entity.setStatus(status);
+		entity.setPhase(phase);
 		int i;
 		List<PlayerEntity> lp = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

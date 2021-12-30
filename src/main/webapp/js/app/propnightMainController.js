@@ -64,7 +64,7 @@ app.controller("propnightMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.backToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/propnight/setboardid", method: "POST", params: data}).then(function(response){
-				$scope.goto('architectgame');
+				$scope.goto('propnightgame');
 			});
 		}
 		

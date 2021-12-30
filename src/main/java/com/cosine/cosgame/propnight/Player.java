@@ -14,10 +14,29 @@ public class Player {
 	int hp;
 	List<Integer> visitedPlaces;
 	List<Integer> availablePlaces;
-	List<Card> cards = new ArrayList<>();
+	List<Card> cards;
 	int placeThisTurn;
 	
 	Board board;
+	
+	public Player() {
+		visitedPlaces = new ArrayList<>();
+		availablePlaces = new ArrayList<>();
+		cards = new ArrayList<>();
+	}
+	
+	public void initialize() {
+		if (role == Consts.HUMAN) {
+			hp = Consts.MAXHP;
+			visitedPlaces = new ArrayList<>();
+			availablePlaces = new ArrayList<>();
+			for (int i=1;i<=5;i++) {
+				availablePlaces.add(i);
+			}
+		} else if (role == Consts.GHOST) {
+			
+		}
+	}
 	
 	public void endTurn() {
 		if (role == Consts.HUMAN) {

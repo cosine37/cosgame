@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("propnightCreateGameApp", ["ngWebSocket"]);
 app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		/*
+		
 		var ws = $websocket("ws://" + $window.location.host + "/propnight/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
@@ -34,7 +34,7 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		});
 		
 		$scope.settings = [0]
-		*/
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -50,12 +50,8 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		
 		$scope.startGame = function(){
-			$scope.goto('propnightgame');
-		}
-		/*
-		$scope.startGame = function(){
-			
 			var data = {
 				"settings" : $scope.settings	
 			}
@@ -67,7 +63,6 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			
 			
 		}
-		*/
 		$scope.getBoard = function(){
 			$http.get('/propnight/getboard').then(function(response){
 				if (response.data.id == "NE"){

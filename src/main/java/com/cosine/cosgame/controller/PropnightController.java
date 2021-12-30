@@ -50,7 +50,26 @@ public class PropnightController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/propnight/startgame", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				//board.setSettings(settings);
+				board.startGame();
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/propnight/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);

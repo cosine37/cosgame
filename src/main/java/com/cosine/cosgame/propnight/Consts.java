@@ -7,7 +7,7 @@ public class Consts {
 	
 	// statuses
 	public static final int PREGAME = 0;
-	public static final int SETUP = 1;
+	public static final int ROLEASSIGNMENT = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
 	
