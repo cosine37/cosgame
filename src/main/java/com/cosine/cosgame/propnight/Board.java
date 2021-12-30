@@ -1,6 +1,9 @@
 package com.cosine.cosgame.propnight;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Board {
 	String id;
@@ -104,6 +107,78 @@ public class Board {
 	}
 	public void setGhostDeck(List<Card> ghostDeck) {
 		this.ghostDeck = ghostDeck;
+	}
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("id", id);
+		doc.append("lord", lord);
+		doc.append("status", status);
+		doc.append("phase", phase);
+		doc.append("humanMark", humanMark);
+		doc.append("ghostMark", ghostMark);
+		doc.append("placeSupply", placeSupply);
+		int i;
+		List<Integer> placeLs = new ArrayList<>();
+		for (i=0;i<places.size();i++) {
+			placeLs.add(places.get(i).getId());
+		}
+		doc.append("places", placeLs);
+		List<Document> lohd = new ArrayList<>();
+		for (i=0;i<humanDeck.size();i++) {
+			lohd.add(humanDeck.get(i).toDocument());
+		}
+		doc.append("humanDeck", lohd);
+		List<Document> logd = new ArrayList<>();
+		for (i=0;i<ghostDeck.size();i++) {
+			logd.add(ghostDeck.get(i).toDocument());
+		}
+		doc.append("ghostDeck", logd);
+		List<String> playerNames = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			String name = players.get(i).getName();
+			playerNames.add(name);
+			doc.append("player-" + name, players.get(i).toDoucment());
+		}
+		doc.append("playerNames", playerNames);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		id = doc.getString("id");
+		lord = doc.getString("lord");
+		status = doc.getInteger("status", -1);
+		phase = doc.getInteger("phase", -1);
+		humanMark = doc.getInteger("humanMark", -1);
+		ghostMark = doc.getInteger("ghostMark", -1);
+		placeSupply = (List<Integer>) doc.get("placeSupply");
+		int i;
+		List<Integer> placeLs = (List<Integer>) doc.get("place");
+		places = new ArrayList<>();
+		for (i=0;i<placeLs.size();i++) {
+			places.add(PlaceFactory.makePlace(placeLs.get(i)));
+		}
+		List<Document> lohd = (List<Document>) doc.get("humanDeck");
+		humanDeck = new ArrayList<>();
+		for (i=0;i<lohd.size();i++) {
+			Card c = CardFactory.makeCard(lohd.get(i));
+			humanDeck.add(c);
+		}
+		List<Document> logd = (List<Document>) doc.get("ghostDeck");
+		ghostDeck = new ArrayList<>();
+		for (i=0;i<logd.size();i++) {
+			Card c = CardFactory.makeCard(logd.get(i));
+			ghostDeck.add(c);
+		}
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String name = playerNames.get(i);
+			Player p = new Player();
+			Document d = (Document) doc.get("player-" + name);
+			p.setBoard(this);
+			p.setFromDoc(d);
+		}
 	}
 
 }

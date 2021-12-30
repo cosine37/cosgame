@@ -1,6 +1,9 @@
 package com.cosine.cosgame.propnight;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Player {
 	String name;
@@ -9,6 +12,7 @@ public class Player {
 	int hp;
 	List<Integer> visitedPlaces;
 	List<Integer> availablePlaces;
+	List<Card> cards = new ArrayList<>();
 	int placeThisTurn;
 	
 	Board board;
@@ -150,5 +154,52 @@ public class Player {
 	}
 	public void setPlaceThisTurn(int placeThisTurn) {
 		this.placeThisTurn = placeThisTurn;
+	}
+	public List<Card> getCards() {
+		return cards;
+	}
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public Document toDoucment() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("role", role);
+		doc.append("index", index);
+		doc.append("hp", hp);
+		doc.append("placeThisTurn", placeThisTurn);
+		doc.append("visitedPlaces", visitedPlaces);
+		doc.append("availablePlaces", availablePlaces);
+		int i;
+		List<Document> loc = new ArrayList<>();
+		for (i=0;i<cards.size();i++) {
+			loc.add(cards.get(i).toDocument());
+		}
+		doc.append("cards", loc);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		role = doc.getInteger("rolw", -1);
+		index = doc.getInteger("index", -1);
+		hp = doc.getInteger("hp", 0);
+		placeThisTurn = doc.getInteger("placeThisTurn", 0);
+		visitedPlaces = (List<Integer>) doc.get("visitedPlaces");
+		availablePlaces = (List<Integer>) doc.get("availablePlaces");
+		int i;
+		List<Document> loc = (List<Document>) doc.get("cards");
+		cards = new ArrayList<>();
+		for (i=0;i<loc.size();i++) {
+			Card c = CardFactory.makeCard(loc.get(i));
+			cards.add(c);
+		}
 	}
 }
