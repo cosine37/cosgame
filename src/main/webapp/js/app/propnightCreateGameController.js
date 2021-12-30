@@ -67,7 +67,7 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			
 			
 		}
-		
+		*/
 		$scope.getBoard = function(){
 			$http.get('/propnight/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -86,7 +86,7 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		}
 		
 		$scope.getBoard();
-		
+		/*
 		ws.onMessage(function(e){
 			var message = e.data
 			heartCheck.reset();

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.propnight.entity.PlayerEntity;
+
 public class Player {
 	String name;
 	int role; // human or ghost
@@ -168,7 +170,7 @@ public class Player {
 		this.board = board;
 	}
 
-	public Document toDoucment() {
+	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("role", role);
@@ -201,5 +203,13 @@ public class Player {
 			Card c = CardFactory.makeCard(loc.get(i));
 			cards.add(c);
 		}
+	}
+	
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		entity.setHp(hp);
+		entity.setVisitedPlaces(visitedPlaces);		
+		return entity;
 	}
 }

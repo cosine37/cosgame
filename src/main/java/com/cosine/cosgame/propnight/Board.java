@@ -1,9 +1,14 @@
 package com.cosine.cosgame.propnight;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.propnight.entity.BoardEntity;
+import com.cosine.cosgame.propnight.entity.PlayerEntity;
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
 	String id;
@@ -19,8 +24,19 @@ public class Board {
 	List<Card> humanDeck;
 	List<Card> ghostDeck;
 	
+	MongoDBUtil dbutil = new MongoDBUtil();
+	
 	public Board() {
+		players = new ArrayList<>();
+		places = new ArrayList<>();
+		placeSupply = new ArrayList<>();
+		humanDeck = new ArrayList<>();
+		ghostDeck = new ArrayList<>();
 		
+		String dbname = "propnight";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public void endTurn() {
@@ -42,6 +58,17 @@ public class Board {
 		humanMark = humanMark + x;
 	}
 	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	public boolean isLord(String username) {
+		if (username.contentEquals(lord)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public String getId() {
 		return id;
 	}
@@ -109,6 +136,111 @@ public class Board {
 		this.ghostDeck = ghostDeck;
 	}
 	
+	public void addPlayer(String name) {
+		Player p = new Player();
+		p.setName(name);
+		players.add(p);
+	}
+	
+	public Player getPlayerByName(String name) {
+		Player p = null;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				p = players.get(i);
+				break;
+			}
+		}
+		return p;
+	}
+	
+	public Player getPlayerByIndex(int index) {
+		if (index<0 || index>=players.size()) {
+			return null;
+		}
+		return players.get(index);
+	}
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void addPlayerToDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			dbutil.push("id", id, "playerNames", name);
+			updatePlayer(name);
+		}
+	}
+	
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("id", id);
@@ -138,7 +270,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			String name = players.get(i).getName();
 			playerNames.add(name);
-			doc.append("player-" + name, players.get(i).toDoucment());
+			doc.append("player-" + name, players.get(i).toDocument());
 		}
 		doc.append("playerNames", playerNames);
 		return doc;
@@ -153,7 +285,7 @@ public class Board {
 		ghostMark = doc.getInteger("ghostMark", -1);
 		placeSupply = (List<Integer>) doc.get("placeSupply");
 		int i;
-		List<Integer> placeLs = (List<Integer>) doc.get("place");
+		List<Integer> placeLs = (List<Integer>) doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placeLs.size();i++) {
 			places.add(PlaceFactory.makePlace(placeLs.get(i)));
@@ -178,7 +310,23 @@ public class Board {
 			Document d = (Document) doc.get("player-" + name);
 			p.setBoard(this);
 			p.setFromDoc(d);
+			players.add(p);
 		}
 	}
 
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setGhostMark(ghostMark);
+		entity.setHumanMark(humanMark);
+		int i;
+		List<PlayerEntity> lp = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			lp.add(players.get(i).toPlayerEntity());
+		}
+		entity.setPlayers(lp);
+		return entity;
+	}
+	
 }

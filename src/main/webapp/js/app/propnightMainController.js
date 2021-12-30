@@ -56,7 +56,7 @@ app.controller("propnightMainCtrl", ['$scope', '$window', '$http', '$document', 
 				$http.post("/propnight/join").then(function(response){
 					//var json_data = '{"type":"notify","content":"refresh"}';
 			        boardws.send($scope.boards[index]);
-					$scope.goto('architectcreategame')
+					$scope.goto('propnightcreategame')
 				});
 			});
 		}
