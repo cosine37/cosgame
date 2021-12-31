@@ -32,6 +32,7 @@ public class AllRes {
 	
 	public void genBase() {
 		base = new ArrayList<>();
+		base.add(new ZuoCi());
 		base.add(new HuaTuo());
 		base.add(new YuJi());
 		base.add(new FaZheng());

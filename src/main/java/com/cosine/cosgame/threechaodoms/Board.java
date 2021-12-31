@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
-import com.cosine.cosgame.threechaodoms.base.LiuHong;
+import com.cosine.cosgame.threechaodoms.base.*;
 import com.cosine.cosgame.threechaodoms.entity.BoardEntity;
 import com.cosine.cosgame.threechaodoms.entity.CardEntity;
 import com.cosine.cosgame.threechaodoms.entity.PlayerEntity;
@@ -70,8 +70,10 @@ public class Board {
 			tavern.add(c);
 		}
 		tomb = new ArrayList<>();
+		
 		Card liuHong = new LiuHong();
 		tomb.add(liuHong);
+		
 		Random rand = new Random();
 		firstPlayer = rand.nextInt(players.size());
 		curPlayer = firstPlayer;
@@ -554,6 +556,7 @@ public class Board {
 		for (i=0;i<dod.size();i++) {
 			Card c = CardFactory.makeCard(dod.get(i));
 			c.setWhere(Consts.DECK);
+			c.setBoard(this);
 			deck.add(c);
 		}
 		List<Document> dot = (List<Document>) doc.get("tavern");
@@ -561,6 +564,7 @@ public class Board {
 		for (i=0;i<dot.size();i++) {
 			Card c = CardFactory.makeCard(dot.get(i));
 			c.setWhere(Consts.TAVERN);
+			c.setBoard(this);
 			tavern.add(c);
 		}
 		List<Document> doe = (List<Document>) doc.get("exile");
@@ -568,6 +572,7 @@ public class Board {
 		for (i=0;i<doe.size();i++) {
 			Card c = CardFactory.makeCard(doe.get(i));
 			c.setWhere(Consts.EXILE);
+			c.setBoard(this);
 			exile.add(c);
 		}
 		List<Document> doo = (List<Document>) doc.get("tomb");
@@ -575,6 +580,7 @@ public class Board {
 		for (i=0;i<doo.size();i++) {
 			Card c = CardFactory.makeCard(doo.get(i));
 			c.setWhere(Consts.TOMB);
+			c.setBoard(this);
 			tomb.add(c);
 		}
 	}

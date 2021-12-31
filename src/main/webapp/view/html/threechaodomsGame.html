@@ -98,14 +98,17 @@
 				</tr>
 				<tr ng-repeat="p in players track by $index" ng-init="i = $index" style="height: 135px">
 					<td style="height: 20px; width: 20px">
-						<div ng-show="gamedata.phase == PLAYCARD && (gamedata.myHand[selectedCard].playType == CHOOSEPLAYER || gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION)">
+						<div ng-show="canChoosePlayer(p.name)">
 							<div class="checked" ng-show="selectedPlayer == $index && username != p.name" ng-click="clickPlayer($index)"></div>
 							<div class="not-checked" ng-show="selectedPlayer != $index && username != p.name" ng-click="clickPlayer($index)"></div>
 						</div>
 					</td>
+					<td>{{p.name}}</td>
+					<!-- 
 					<td><button ng-disabled="username == p.name || gamedata.phase != PLAYCARD || 
 						(gamedata.myHand[selectedCard].playType != CHOOSEPLAYER && gamedata.myHand[selectedCard].playType != CHOOSEPLAYEROPTION)"
 							ng-click="clickPlayer($index)">{{p.name}}</button></td>
+					 -->
 					<td>
 						<div style="float: left; position:relative" ng-repeat="cardDisplay in p.playStyles track by $index" ng-init="j = $index"
 							ng-click="clickPlay(i,j)">
@@ -213,7 +216,16 @@
 							<div>墓地数量：{{gamedata.numTomb}}</div>
 							<div>胜利条件：{{winCondition}}</div>
 						</td>
-						<td></td>
+						<td>
+							<div id="emulated" ng-show="showEmulatedCard && gamedata.phase == PLAYCARD && selectedCard != -1 && emulatedCard.blankSpace == false">
+								<div style="position:relative" ng-repeat="cardDisplay in emulatedCardStyles track by $index" ng-show="tombIndex == $index">
+									<div ng-include="'/view/html/threechaodomsCard.html'" class="hand-size"></div>
+									<div style="position:absolute;top: 2px;width: 100px; left: 50%; margin-left: -50px;text-align: center;color:white;font-size: 16px;z-index: 500">
+										模仿对象
+									</div>
+								</div>
+							</div>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -242,61 +254,58 @@
 					<span>请将手牌驱逐至3张。</span>
 				</div>
 				<div id="card instructions" ng-show="gamedata.phase == PLAYCARD">
-					<div ng-show="gamedata.myHand[selectedCard].playType == 0">打出该牌执行其效果。</div>
-					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO || gamedata.myHand[selectedCard].playType == CHOOSETWOJAILOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYMEOTHEROPTION) 
-						&& gamedata.myHand[selectedCard].options.length==0">
+					<div ng-show="showDirectPlay()">打出该牌执行其效果。</div>
+					<div ng-show="showNoOption()">
 						无可用选项。
 					</div>
-					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSEONE || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYJAILOPTION || gamedata.myHand[selectedCard].playType == CHOOSETWO
-						|| gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO || gamedata.myHand[selectedCard].playType == CHOOSETWOJAILOPTION
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYMEOTHEROPTION || gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTIONTWO) 
-						&& gamedata.myHand[selectedCard].options.length>0">
+					<div ng-show="showOptions1()">
 						请选择一项：
-						<span ng-show="gamedata.myHand[selectedCard].options.length>0">
+						<span ng-show="showIndividualOption1(0)">
 							<input type="radio" ng-model="chosenOption" value="0">
-							<label>{{gamedata.myHand[selectedCard].options[0]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options[0]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options[0]}}</label>
 						</span>
-						<span ng-show="gamedata.myHand[selectedCard].options.length>1">
+						<span ng-show="showIndividualOption1(1)">
 							<input type="radio" ng-model="chosenOption" value="1">
-							<label>{{gamedata.myHand[selectedCard].options[1]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options[1]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options[1]}}</label>
 						</span>
-						<span ng-show="gamedata.myHand[selectedCard].options.length>2">
+						<span ng-show="showIndividualOption1(2)">
 							<input type="radio" ng-model="chosenOption" value="2">
-							<label>{{gamedata.myHand[selectedCard].options[2]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options[2]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options[2]}}</label>
 						</span>
-						<span ng-show="gamedata.myHand[selectedCard].options.length>3">
+						<span ng-show="showIndividualOption1(3)">
 							<input type="radio" ng-model="chosenOption" value="3">
-							<label>{{gamedata.myHand[selectedCard].options[3]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options[3]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options[2]}}</label>
 						</span>
 					</div>
-					<div ng-show="(gamedata.myHand[selectedCard].playType == CHOOSETWO || gamedata.myHand[selectedCard].playType == CHOOSEJAILOPTIONTWO
-						|| gamedata.myHand[selectedCard].playType == CHOOSEPLAYOPTIONTWO)
-						&& gamedata.myHand[selectedCard].options2.length>0">
+					<div ng-show="showOptions2()">
 						请选择一项：
 						<span ng-show="gamedata.myHand[selectedCard].options2.length>0">
 							<input type="radio" ng-model="chosenOption2" value="0">
-							<label>{{gamedata.myHand[selectedCard].options2[0]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options2[0]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options2[0]}}</label>
 						</span>
 						<span ng-show="gamedata.myHand[selectedCard].options2.length>1">
 							<input type="radio" ng-model="chosenOption2" value="1">
-							<label>{{gamedata.myHand[selectedCard].options2[1]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options2[1]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options2[2]}}</label>
 						</span>
 						<span ng-show="gamedata.myHand[selectedCard].options2.length>2">
 							<input type="radio" ng-model="chosenOption2" value="2">
-							<label>{{gamedata.myHand[selectedCard].options2[2]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options2[2]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options2[2]}}</label>
 						</span>
 						<span ng-show="gamedata.myHand[selectedCard].options2.length>3">
 							<input type="radio" ng-model="chosenOption2" value="3">
-							<label>{{gamedata.myHand[selectedCard].options2[3]}}</label>
+							<label ng-show="showEmulatedCard == false">{{gamedata.myHand[selectedCard].options2[3]}}</label>
+							<label ng-show="showEmulatedCard">{{emulatedCard.options2[3]}}</label>
 						</span>
 					</div>
-					<div ng-show="gamedata.myHand[selectedCard].playType>1">{{gamedata.myHand[selectedCard].instruction}}</div>
+					<div ng-show="gamedata.myHand[selectedCard].playType>1 && showEmulatedCard == false">{{gamedata.myHand[selectedCard].instruction}}</div>
+					<div ng-show="emulatedCard.playType>1 && showEmulatedCard">{{emulatedCard.instruction}}</div>
 				</div>
 			</div>
 			
@@ -319,12 +328,9 @@
 						<button ng-click="cancelCard();$event.stopPropagation();">取消</button>
 					</div>
 					
-					<div class="jail" ng-show="gamedata.phase == PLAYCARD && ((gamedata.myHand[selectedCard].playType == CHOOSEHAND && 
-						gamedata.myHand[selectedCard].playSubType == INJAIL) || (gamedata.myHand[selectedCard].playType == CHOOSEJAILHAND)) && 
-						chosenHand == $index"></div>
+					<div class="jail" ng-show="showJailForPlay($index)"></div>
 					
-					<div class="exchange" ng-show="gamedata.phase == PLAYCARD && gamedata.myHand[selectedCard].playType == CHOOSEPLAYHAND && 
-						chosenHand == $index"></div>
+					<div class="exchange" ng-show="showExchangeForPlay($index)"></div>
 				</div>
 			</div>
 			

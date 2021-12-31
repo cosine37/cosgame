@@ -71,4 +71,7 @@ public class Consts {
 	public static final int CHOOSEPLAYQUN = 203;
 	public static final int CHOOSEMYPLAYNOTHAN = 211;
 	
+	// Emulate Types
+	public static final int EMULATETOMB = 301;
+	
 }

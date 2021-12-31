@@ -19,6 +19,8 @@ public class Card {
 	protected List<Integer> extraBits;
 	protected int where;
 	protected int faction;
+	protected boolean emulator;
+	protected int emulateType;
 	protected Player player;
 	protected Board board;
 	
@@ -34,6 +36,7 @@ public class Card {
 		blankSpace = false;
 		playType = 0;
 		playSubType = 0;
+		emulator = false;
 		extraBits = new ArrayList<>();
 		options = new ArrayList<>();
 		options2 = new ArrayList<>();
@@ -219,6 +222,8 @@ public class Card {
 		entity.setBlankSpace(blankSpace);
 		entity.setPlayType(playType);
 		entity.setPlaySubType(playSubType);
+		entity.setEmulator(emulator);
+		entity.setEmulateType(emulateType);
 		if (where == Consts.HAND) {
 			entity.setDesc(getDescDisplay());
 			entity.setOptions(getOptionsDisplay());

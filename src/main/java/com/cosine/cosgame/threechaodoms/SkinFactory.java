@@ -200,6 +200,48 @@ public class SkinFactory {
 			s.setSkinName("于吉");
 			s.setTitle("猜猜看吶");
 			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 33) {
+			s.setOriginalImg("CaoCao");
+			s.setNewImg("CaoCao_02");
+			s.setSkinName("曹操");
+			s.setTitle("孟德斯鳩");
+			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
+		} else if (id == 34) {
+			s.setOriginalImg("CaoCao");
+			s.setNewImg("CaoCao_03");
+			s.setSkinName("曹操");
+			s.setTitle("孟德爾");
+			s.setPrice(new Transaction(Transaction.MONEY, -188, s));
+		} else if (id == 35) {
+			s.setOriginalImg("ZhuGeLiang");
+			s.setNewImg("ZhuGeLiang_04");
+			s.setSkinName("諸葛亮");
+			s.setTitle("毛頭星孔明");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 36) {
+			s.setOriginalImg("LvBu");
+			s.setNewImg("LvBu_03");
+			s.setSkinName("吕布");
+			s.setTitle("滅爸");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 37) {
+			s.setOriginalImg("LvBu");
+			s.setNewImg("LvBu_04");
+			s.setSkinName("吕布");
+			s.setTitle("吕子喬");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 38) {
+			s.setOriginalImg("YuJin");
+			s.setNewImg("YuJin_02");
+			s.setSkinName("于禁");
+			s.setTitle("仁王盾");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
+		} else if (id == 39) {
+			s.setOriginalImg("YanLiang");
+			s.setNewImg("YanLiang_02");
+			s.setSkinName("顏良");
+			s.setTitle("插標賣首爾");
+			s.setPrice(new Transaction(Transaction.MONEY, -88, s));
 		}
 	
 		

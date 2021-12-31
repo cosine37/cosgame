@@ -10,6 +10,8 @@ public class CardEntity {
 	String desc;
 	int faction;
 	boolean blankSpace;
+	boolean emulator;
+	int emulateType;
 	int playType;
 	int playSubType;
 	List<String> options;
@@ -87,5 +89,17 @@ public class CardEntity {
 	}
 	public void setOptions2(List<String> options2) {
 		this.options2 = options2;
+	}
+	public boolean isEmulator() {
+		return emulator;
+	}
+	public void setEmulator(boolean emulator) {
+		this.emulator = emulator;
+	}
+	public int getEmulateType() {
+		return emulateType;
+	}
+	public void setEmulateType(int emulateType) {
+		this.emulateType = emulateType;
 	}
 }
