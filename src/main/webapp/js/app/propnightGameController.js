@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("propnightGameApp", ["ngWebSocket"]);
 app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		/*
+		
 		var ws = $websocket("ws://" + $window.location.host + "/propnight/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
@@ -34,7 +34,7 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 		});
 		
 		$scope.settings = [0]
-		*/
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -47,6 +47,18 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
+			});
+		}
+		
+		$scope.changeGhost = function(){
+			$http.post("/propnight/changeghost").then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.confirmRoles = function(){
+			$http.post("/propnight/confirmroles").then(function(response){
+				$scope.allRefresh()
 			});
 		}
 		
@@ -76,11 +88,12 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.status = response.data.status
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
+				
 			});
 		}
 		
 		$scope.getBoard();
-		/*
+		
 		ws.onMessage(function(e){
 			var message = e.data
 			heartCheck.reset();
@@ -94,6 +107,5 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var msg = "refresh";
 	        ws.send(msg);
 		}
-		*/
 		
 }]);

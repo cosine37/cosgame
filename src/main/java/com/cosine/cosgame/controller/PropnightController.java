@@ -70,6 +70,50 @@ public class PropnightController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/propnight/changeghost", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeGhost(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			/*
+			if (board.isLord(username)) {
+				//board.setSettings(settings);
+				board.setGhostPlayer(username);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}*/
+			board.setGhostPlayer(username);
+			board.updateBasicDB();
+			board.updatePlayers();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/propnight/confirmroles", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmRoles(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				//board.setSettings(settings);
+				board.initialize();
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/propnight/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);

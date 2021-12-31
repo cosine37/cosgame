@@ -10,6 +10,9 @@ public class BoardEntity {
 	int status;
 	int phase;
 	
+	int myRole;
+	int myIndex;
+	
 	List<PlayerEntity> players;
 
 	public String getId() {
@@ -53,6 +56,18 @@ public class BoardEntity {
 	}
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	public int getMyRole() {
+		return myRole;
+	}
+	public void setMyRole(int myRole) {
+		this.myRole = myRole;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
 	}
 	
 }

@@ -209,7 +209,7 @@ public class Player {
 	
 	public void setFromDoc(Document doc) {
 		name = doc.getString("name");
-		role = doc.getInteger("rolw", -1);
+		role = doc.getInteger("role", -1);
 		index = doc.getInteger("index", -1);
 		hp = doc.getInteger("hp", 0);
 		placeThisTurn = doc.getInteger("placeThisTurn", 0);

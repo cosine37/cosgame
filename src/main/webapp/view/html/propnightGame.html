@@ -19,9 +19,12 @@
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
+	
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
+	<button ng-show="gamedata.myRole != 1 && status == 1" ng-click="changeGhost()">我要当鬼</button>
+	<button ng-show="lord == username && status == 1" ng-click="confirmRoles()">确认身份</button>
 	{{gamedata}}
 </body>
 </html>

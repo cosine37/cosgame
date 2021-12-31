@@ -48,6 +48,7 @@ public class Board {
 	}
 	
 	public void initialize() {
+		status = Consts.INGAME;
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).initialize();
@@ -60,6 +61,16 @@ public class Board {
 			players.get(i).setRole(Consts.HUMAN);
 		}
 		players.get(x).setRole(Consts.GHOST);
+	}
+	
+	public void setGhostPlayer(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setRole(Consts.HUMAN);
+			if (players.get(i).getName().contentEquals(name)) {
+				players.get(i).setRole(Consts.GHOST);
+			}
+		}
 	}
 	
 	public void endTurn() {
@@ -354,6 +365,10 @@ public class Board {
 		List<PlayerEntity> lp = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			lp.add(players.get(i).toPlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				entity.setMyIndex(i);
+				entity.setMyRole(players.get(i).getRole());
+			}
 		}
 		entity.setPlayers(lp);
 		return entity;

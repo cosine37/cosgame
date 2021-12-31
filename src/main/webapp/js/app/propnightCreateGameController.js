@@ -81,20 +81,15 @@ app.controller("propnightCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		}
 		
 		$scope.getBoard();
-		/*
+		
 		ws.onMessage(function(e){
-			var message = e.data
-			heartCheck.reset();
-			if (message == 'refresh' || message == 'start'){
-				$scope.getBoard();
-			}
-			
+			$scope.getBoard();
 		});
 		
 		$scope.allRefresh = function(){
 			var msg = "refresh";
 	        ws.send(msg);
 		}
-		*/
+		
 		
 }]);
