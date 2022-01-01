@@ -21,7 +21,7 @@ public class Shop {
 	public CardEntity dig(Account a) {
 		CardEntity entity = new CardEntity();
 		if (a.getMoney() < 88) return entity;
-		final int totalSkin = 32;
+		final int totalSkin = 39;
 		int i;
 		List<Integer> ls = new ArrayList<>();
 		for (i=1;i<=totalSkin;i++) {

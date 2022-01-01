@@ -53,6 +53,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).initialize();
 		}
+		phase = 1;
 	}
 	
 	public void setGhostPlayer(int x) {
@@ -81,6 +82,23 @@ public class Board {
 		}
 		for (i=0;i<players.size();i++) {
 			players.get(i).endTurn();
+		}
+	}
+	
+	public boolean allHumanChosePlace() {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getRole() == Consts.HUMAN) {
+				if (players.get(i).getPlaceThisTurn().size() == 0) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public void nextPhase() {
+		if (phase == 1){
+			phase = 2;
 		}
 	}
 	
@@ -368,6 +386,8 @@ public class Board {
 			if (players.get(i).getName().contentEquals(username)) {
 				entity.setMyIndex(i);
 				entity.setMyRole(players.get(i).getRole());
+				entity.setMyPlaceThisTurn(players.get(i).getPlaceThisTurn());
+				entity.setMyNumPlaceNextTurn(players.get(i).getNumPlaceNextTurn());
 			}
 		}
 		entity.setPlayers(lp);

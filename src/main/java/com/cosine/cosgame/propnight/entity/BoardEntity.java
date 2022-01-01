@@ -12,6 +12,8 @@ public class BoardEntity {
 	
 	int myRole;
 	int myIndex;
+	List<Integer> myPlaceThisTurn;
+	int myNumPlaceNextTurn;
 	
 	List<PlayerEntity> players;
 
@@ -68,6 +70,18 @@ public class BoardEntity {
 	}
 	public void setMyIndex(int myIndex) {
 		this.myIndex = myIndex;
+	}
+	public List<Integer> getMyPlaceThisTurn() {
+		return myPlaceThisTurn;
+	}
+	public void setMyPlaceThisTurn(List<Integer> myPlaceThisTurn) {
+		this.myPlaceThisTurn = myPlaceThisTurn;
+	}
+	public int getMyNumPlaceNextTurn() {
+		return myNumPlaceNextTurn;
+	}
+	public void setMyNumPlaceNextTurn(int myNumPlaceNextTurn) {
+		this.myNumPlaceNextTurn = myNumPlaceNextTurn;
 	}
 	
 }

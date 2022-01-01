@@ -23,8 +23,43 @@
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
-	<button ng-show="gamedata.myRole != 1 && status == 1" ng-click="changeGhost()">我要当鬼</button>
-	<button ng-show="lord == username && status == 1" ng-click="confirmRoles()">确认身份</button>
+	<div id="change role div" ng-show="status == 1">
+		<button ng-show="gamedata.myRole != 1" ng-click="changeGhost()">我要当鬼</button>
+		<button ng-show="lord == username" ng-click="confirmRoles()">确认身份</button>
+	</div>
+	<div ng-show="status == 2">
+		<table>
+			<tr>
+				<td ng-repeat="i in [1,2,3,4,5]">
+					<div>
+						{{i}}
+						<span ng-show="chosenPlace[i] == 0">未选择</span>
+						<button ng-show="chosenPlace[i] == 0" ng-click="clickPlace(i)">选择</button>
+						<span ng-show="chosenPlace[i] != 0">已选择</span>
+						<button ng-show="chosenPlace[i] != 0" ng-click="clickPlace(i)">取消</button>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="i in [6,7,8,9,10]">
+					<div>
+						{{i}}
+						<span ng-show="chosenPlace[i] == 0">未选择</span>
+						<button ng-show="chosenPlace[i] == 0" ng-click="clickPlace(i)">选择</button>
+						<span ng-show="chosenPlace[i] != 0">已选择</span>
+						<button ng-show="chosenPlace[i] != 0" ng-click="clickPlace(i)">取消</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<button ng-click="submitPlace()" ng-disabled="canSubmitPlace() == false">提交</button>
+	</div>
+	<!-- 
+	{{chosenPlace}}
+	{{gamedata.myNumPlaceNextTurn}}
+	 -->
 	{{gamedata}}
 </body>
 </html>

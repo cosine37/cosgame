@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.propnight.Meta;
+import com.cosine.cosgame.propnight.Player;
 import com.cosine.cosgame.propnight.Board;
 import com.cosine.cosgame.propnight.Consts;
 import com.cosine.cosgame.propnight.entity.BoardEntity;
@@ -79,16 +80,72 @@ public class PropnightController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			/*
-			if (board.isLord(username)) {
-				//board.setSettings(settings);
-				board.setGhostPlayer(username);
-				board.updateBasicDB();
-				board.updatePlayers();
-			}*/
 			board.setGhostPlayer(username);
 			board.updateBasicDB();
 			board.updatePlayers();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/propnight/rush", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> rush(HttpServletRequest request, @RequestParam List<Integer> targets){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.rush(targets);
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/propnight/rest", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> rest(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.rest();
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/propnight/chooseplace", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> choosePlace(HttpServletRequest request, @RequestParam List<Integer> targets){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.choosePlace(targets);
+				if (board.allHumanChosePlace()) {
+					board.nextPhase();
+				}
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
 		} else {
 			board.setId("NE");
 		}

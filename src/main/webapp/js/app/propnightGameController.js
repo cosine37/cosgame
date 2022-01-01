@@ -50,6 +50,7 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		// Choose Role Section
 		$scope.changeGhost = function(){
 			$http.post("/propnight/changeghost").then(function(response){
 				$scope.allRefresh()
@@ -61,7 +62,56 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.allRefresh()
 			});
 		}
+		// End Choose Role Section
 		
+		// Human Choose Place Section
+		$scope.chosenPlace = [0,0,0,0,0,0,0,0,0,0,0,0];
+		$scope.clickPlace = function(x){
+			if (x>0 && x<$scope.chosenPlace.length){
+				if ($scope.chosenPlace[x] == 1){
+					$scope.chosenPlace[x] = 0
+				} else if ($scope.chosenPlace[x] == 0){
+					var numChosen = 0;
+					for (i=0;i<$scope.chosenPlace.length;i++){
+						numChosen = numChosen+$scope.chosenPlace[i]
+					}
+					if (numChosen<$scope.gamedata.myNumPlaceNextTurn){
+						$scope.chosenPlace[x] = 1
+					} else if ($scope.gamedata.myNumPlaceNextTurn == 1){
+						for (i=0;i<$scope.chosenPlace.length;i++){
+							$scope.chosenPlace[i] = 0;
+						}
+						$scope.chosenPlace[x] = 1
+					}
+				}
+			}
+		}
+		
+		$scope.submitPlace = function(){
+			if ($scope.canSubmitPlace()){
+				var data = {
+					"targets" : $scope.chosenPlace
+				}
+				
+				$http({url: "/propnight/chooseplace", method: "POST", params:data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
+		$scope.canSubmitPlace = function(){
+			if ($scope.gamedata == null) return false
+			var numChosen = 0;
+			for (i=0;i<$scope.chosenPlace.length;i++){
+				numChosen = numChosen+$scope.chosenPlace[i]
+			}
+			if (numChosen == $scope.gamedata.myNumPlaceNextTurn){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		// End Human Choose Place Section
 		/*
 		$scope.startGame = function(){
 			

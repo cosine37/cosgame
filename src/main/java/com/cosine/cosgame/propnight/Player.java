@@ -12,10 +12,11 @@ public class Player {
 	int role; // human or ghost
 	int index;
 	int hp;
+	int numPlaceNextTurn;
 	List<Integer> visitedPlaces;
 	List<Integer> availablePlaces;
 	List<Card> cards;
-	int placeThisTurn;
+	List<Integer> placeThisTurn;
 	
 	Board board;
 	
@@ -23,6 +24,7 @@ public class Player {
 		visitedPlaces = new ArrayList<>();
 		availablePlaces = new ArrayList<>();
 		cards = new ArrayList<>();
+		placeThisTurn = new ArrayList<>();
 	}
 	
 	public void initialize() {
@@ -33,6 +35,7 @@ public class Player {
 			for (int i=1;i<=5;i++) {
 				availablePlaces.add(i);
 			}
+			numPlaceNextTurn = 1;
 		} else if (role == Consts.GHOST) {
 			
 		}
@@ -40,10 +43,10 @@ public class Player {
 	
 	public void endTurn() {
 		if (role == Consts.HUMAN) {
-			visitedPlaces.add(placeThisTurn);
-			placeThisTurn = -1;
+			visitedPlaces.addAll(placeThisTurn);
+			placeThisTurn = new ArrayList<>();
 		} else if (role == Consts.GHOST) {
-			placeThisTurn = -1;
+			placeThisTurn = new ArrayList<>();
 		}
 	}
 	
@@ -70,6 +73,15 @@ public class Player {
 		}
 	}
 	
+	public void rush(List<Integer> targets) {
+		if (targets.size() == 2) {
+			rush (targets.get(0), targets.get(1));
+		} else if (targets.size() == 4) {
+			rush (targets.get(0), targets.get(1));
+			rush (targets.get(2), targets.get(3));
+		}
+	}
+	
 	public void rest() {
 		hp = Consts.MAXHP;
 		while (visitedPlaces.size()>0) {
@@ -79,20 +91,31 @@ public class Player {
 		board.moveGhostMark(1);
 	}
 	
-	public void choosePlace(int x) {
-		if (isAvailable(x)) {
-			if (role == Consts.HUMAN) {
-				for (int i=0;i<availablePlaces.size();i++) {
-					if (x == availablePlaces.get(i)) {
-						availablePlaces.remove(i);
-						placeThisTurn = x;
-						break;
+	public void choosePlace(List<Integer> places) {
+		int j;
+		placeThisTurn = new ArrayList<>();
+		for (j=0;j<places.size();j++) {
+			int x;
+			if (places.get(j) == 1) {
+				x = j;
+			} else {
+				continue;
+			}
+			if (isAvailable(x)) {
+				if (role == Consts.HUMAN) {
+					for (int i=0;i<availablePlaces.size();i++) {
+						if (x == availablePlaces.get(i)) {
+							availablePlaces.remove(i);
+							placeThisTurn.add(x);
+							break;
+						}
 					}
+				} else if (role == Consts.GHOST) {
+					placeThisTurn.add(x);
 				}
-			} else if (role == Consts.GHOST) {
-				placeThisTurn = x;
 			}
 		}
+		
 	}
 	
 	public void sortAvailablePlaces() {
@@ -170,10 +193,10 @@ public class Player {
 	public void setAvailablePlaces(List<Integer> availablePlaces) {
 		this.availablePlaces = availablePlaces;
 	}
-	public int getPlaceThisTurn() {
+	public List<Integer> getPlaceThisTurn() {
 		return placeThisTurn;
 	}
-	public void setPlaceThisTurn(int placeThisTurn) {
+	public void setPlaceThisTurn(List<Integer> placeThisTurn) {
 		this.placeThisTurn = placeThisTurn;
 	}
 	public List<Card> getCards() {
@@ -188,6 +211,12 @@ public class Player {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public int getNumPlaceNextTurn() {
+		return numPlaceNextTurn;
+	}
+	public void setNumPlaceNextTurn(int numPlaceNextTurn) {
+		this.numPlaceNextTurn = numPlaceNextTurn;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -198,6 +227,7 @@ public class Player {
 		doc.append("placeThisTurn", placeThisTurn);
 		doc.append("visitedPlaces", visitedPlaces);
 		doc.append("availablePlaces", availablePlaces);
+		doc.append("numPlaceNextTurn", numPlaceNextTurn);
 		int i;
 		List<Document> loc = new ArrayList<>();
 		for (i=0;i<cards.size();i++) {
@@ -212,9 +242,10 @@ public class Player {
 		role = doc.getInteger("role", -1);
 		index = doc.getInteger("index", -1);
 		hp = doc.getInteger("hp", 0);
-		placeThisTurn = doc.getInteger("placeThisTurn", 0);
+		placeThisTurn = (List<Integer>) doc.get("placeThisTurn");
 		visitedPlaces = (List<Integer>) doc.get("visitedPlaces");
 		availablePlaces = (List<Integer>) doc.get("availablePlaces");
+		numPlaceNextTurn = doc.getInteger("numPlaceThisTurn", 1);
 		int i;
 		List<Document> loc = (List<Document>) doc.get("cards");
 		cards = new ArrayList<>();
