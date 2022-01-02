@@ -99,6 +99,8 @@ public class Board {
 	public void nextPhase() {
 		if (phase == 1){
 			phase = 2;
+		} else if (phase == 2){
+			phase = 3;
 		}
 	}
 	

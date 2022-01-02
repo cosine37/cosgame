@@ -106,9 +106,25 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				numChosen = numChosen+$scope.chosenPlace[i]
 			}
 			if (numChosen == $scope.gamedata.myNumPlaceNextTurn){
-				return true;
+				return $scope.showChoosePlace()
 			} else {
 				return false;
+			}
+		}
+		
+		$scope.showChoosePlace = function(){
+			if ($scope.gamedata.myRole == 0){
+				if ($scope.gamedata.phase == 1){
+					return true
+				} else {
+					return false
+				}
+			} else if ($scope.gamedata.myRole == 1){
+				if ($scope.gamedata.phase == 2){
+					return true
+				} else {
+					return false
+				}
 			}
 		}
 		// End Human Choose Place Section
