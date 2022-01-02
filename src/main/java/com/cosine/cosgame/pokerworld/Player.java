@@ -14,12 +14,15 @@ public class Player {
 	int phase;
 	int innerId;
 	boolean confirmedClaim;
+	boolean confirmedNextTurn;
 	Board board;
 	
 	List<Integer> playedIndex;
+	String playedCardsStr;
 	
 	public Player() {
 		playedIndex = new ArrayList<>();
+		playedCardsStr = "";
 	}
 	
 	public List<Card> getMyCards(){
@@ -55,11 +58,23 @@ public class Player {
 		int numPlayed = board.getNumPlayed();
 		if (numPlayed == -1) {
 			setPlayedIndex(playedIndex);
+			genPlayedCardsStr();
 			board.setNumPlayed(playedIndex.size());
 		} else if (numPlayed == playedIndex.size()){
 			setPlayedIndex(playedIndex);
+			genPlayedCardsStr();
 		}
 		board.nextPlayerPlay();
+	}
+	
+	public void genPlayedCardsStr() {
+		playedCardsStr = "";
+		String myRawCards = getMyRawCards();
+		int i;
+		for (i=0;i<playedIndex.size();i++) {
+			int x = playedIndex.get(i);
+			playedCardsStr = playedCardsStr + myRawCards.substring(x*2, x*2+2);
+		}
 	}
 	
 	public void emptyPlayedIndex() {
@@ -102,12 +117,26 @@ public class Player {
 	public void setConfirmedClaim(boolean confirmedClaim) {
 		this.confirmedClaim = confirmedClaim;
 	}
+	public String getPlayedCardsStr() {
+		return playedCardsStr;
+	}
+	public void setPlayedCardsStr(String playedCardsStr) {
+		this.playedCardsStr = playedCardsStr;
+	}
+	public boolean isConfirmedNextTurn() {
+		return confirmedNextTurn;
+	}
+	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
+		this.confirmedNextTurn = confirmedNextTurn;
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("innerId", innerId);
 		doc.append("playedIndex", playedIndex);
 		doc.append("confirmedClaim", confirmedClaim);
+		doc.append("confirmedNextTurn", confirmedNextTurn);
+		doc.append("playedCardsStr", playedCardsStr);
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -115,10 +144,13 @@ public class Player {
 		innerId = doc.getInteger("innerId", -1);
 		playedIndex = (List<Integer>) doc.get("playedIndex");
 		confirmedClaim = doc.getBoolean("confirmedClaim", false);
+		confirmedNextTurn = doc.getBoolean("confirmedNextTurn", false);
+		playedCardsStr = doc.getString("playedCardsStr");
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
+		/*
 		int i;
 		String playedCards = "";
 		String myRawCards = getMyRawCards();
@@ -127,6 +159,9 @@ public class Player {
 			playedCards = playedCards + myRawCards.substring(x*2, x*2+2);
 		}
 		entity.setPlayedCards(playedCards);
+		*/
+		entity.setConfirmedNextTurn(confirmedNextTurn);
+		entity.setPlayedCards(playedCardsStr);
 		return entity;
 	}
 	

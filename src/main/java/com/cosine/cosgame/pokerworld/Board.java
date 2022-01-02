@@ -134,6 +134,16 @@ public class Board {
 		List<Integer> roundResult = gameUtil.judgeRound(this);
 		winPlayer = roundResult.get(0);
 		firstPlayer = winPlayer;
+		curPlayer = -1;
+		
+	}
+	
+	public void newRound() {
+		curPlayer = firstPlayer;
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).emptyPlayedIndex();
+		}
 	}
 	
 	public String getId() {

@@ -1,10 +1,10 @@
 @charset "UTF-8";
 .tabs{
-	background: linear-gradient(black, darkslategray, darkslategray, darkslategray, black);
+	background: linear-gradient(black, goldenrod, goldenrod, goldenrod, black);
 }
 
 .nav-tabs .nav-link.active{
-	background: darkslategray;
+	background: goldenrod;
 	color: white;
 }
 
@@ -17,8 +17,8 @@
 	padding-bottom: 0px;
 	padding-left: 6px;
 	padding-right: 6px;
-	border: 2px solid darkslategray;
+	border: 2px solid goldenrod;
 	border-radius: 8px;
 	
-	background: darkslategray;
+	background: goldenrod;
 }

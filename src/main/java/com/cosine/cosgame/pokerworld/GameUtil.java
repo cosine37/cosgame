@@ -96,17 +96,19 @@ public class GameUtil {
 		List<List<Card>> cards = game.getPlayerCards();
 		List<List<Card>> hands = new ArrayList<>();
 		List<Player> players = board.getPlayers();
-		int i,j;
+		int i,j,k;
+		
 		for (i=0;i<players.size();i++) {
-			List<Integer> playedIndex = players.get(i).getPlayedIndex();
-			int x = players.get(i).getInnerId();
+			k = board.getFirstPlayer() + i;
+			List<Integer> playedIndex = players.get(k).getPlayedIndex();
+			int x = players.get(k).getInnerId();
 			List<Card> singleHand = new ArrayList<>();
 			for (j=0;j<playedIndex.size();j++) {
 				int y = playedIndex.get(j);
 				singleHand.add(cards.get(x).get(y));
 			}
 			hands.add(singleHand);
-			players.get(i).emptyPlayedIndex();
+			players.get(k).emptyPlayedIndex();
 		}
 		/*
 		for (i=0;i<hands.size();i++) {

@@ -5,6 +5,7 @@ import java.util.List;
 public class PlayerEntity {
 	String name;
 	String playedCards;
+	boolean confirmedNextTurn;
 
 	public String getName() {
 		return name;
@@ -17,5 +18,11 @@ public class PlayerEntity {
 	}
 	public void setPlayedCards(String playedCards) {
 		this.playedCards = playedCards;
+	}
+	public boolean isConfirmedNextTurn() {
+		return confirmedNextTurn;
+	}
+	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
+		this.confirmedNextTurn = confirmedNextTurn;
 	}
 }
