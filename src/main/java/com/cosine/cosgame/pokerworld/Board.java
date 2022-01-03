@@ -135,7 +135,29 @@ public class Board {
 		winPlayer = roundResult.get(0);
 		firstPlayer = winPlayer;
 		curPlayer = -1;
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmedNextTurn(false);
+		}
 		
+	}
+	
+	public void confirmNextTurn(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null) {
+			p.setConfirmedNextTurn(true);
+		}
+		int i;
+		boolean flag = true;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmedNextTurn() == false) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			newRound();
+		}
 	}
 	
 	public void newRound() {
@@ -456,6 +478,7 @@ public class Board {
 				entity.setMyIndex(p.getInnerId());
 				entity.setMyCards(p.getMyRawCardsAfterPlay());
 				entity.setConfirmed(p.isConfirmedClaim());
+				entity.setConfirmedNextTurn(p.isConfirmedNextTurn());
 				if (sequences == null || sequences.size()<=i) {
 					entity.setSequence(new ArrayList<>());
 				} else {

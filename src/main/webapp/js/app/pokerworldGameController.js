@@ -168,6 +168,12 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.confirmEndTurn = function(){
+			$http({url: "/pokerworld/confirmendturn", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
 		translateRawCard = function(raw){
 			var card = {}
 			var r = raw.substring(0,1);
@@ -285,7 +291,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.myIndex = response.data.myIndex;
 				$scope.numPlayed = response.data.numPlay;
 				$scope.curPlayer = response.data.curPlayer;
+				$scope.winPlayer = response.data.winPlayer;
 				$scope.confirmed = response.data.confirmed;
+				$scope.confirmedNextTurn = response.data.confirmedNextTurn;
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

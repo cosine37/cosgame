@@ -18,6 +18,7 @@ public class BoardEntity {
 	int winPlayer;
 
 	boolean confirmed;
+	boolean confirmedNextTurn;
 	
 	List<Integer> sequence;
 	List<PlayerEntity> players;
@@ -117,5 +118,11 @@ public class BoardEntity {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public boolean isConfirmedNextTurn() {
+		return confirmedNextTurn;
+	}
+	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
+		this.confirmedNextTurn = confirmedNextTurn;
 	}
 }

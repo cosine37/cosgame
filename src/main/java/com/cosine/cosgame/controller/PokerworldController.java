@@ -179,6 +179,34 @@ public class PokerworldController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/pokerworld/confirmendturn", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmEndTurn(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.confirmNextTurn(username);
+			board.updateBasicDB();
+			board.updatePlayers();
+			board.updateCardsDB();
+			/*
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				board.hide(p.getInnerId(),playedIndex);
+				board.updateBasicDB();
+				board.updatePlayers();
+				board.updateCardsDB();
+				board.updateDB("rawHidden", board.getRawHidden());
+			}
+			*/
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/pokerworld/confirmhide", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> confirmHide(HttpServletRequest request, @RequestParam List<Integer> playedIndex){
 		StringEntity entity = new StringEntity();

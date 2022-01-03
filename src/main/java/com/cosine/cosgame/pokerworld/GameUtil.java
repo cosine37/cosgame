@@ -100,6 +100,9 @@ public class GameUtil {
 		
 		for (i=0;i<players.size();i++) {
 			k = board.getFirstPlayer() + i;
+			if (k>=players.size()) {
+				k = k-players.size();
+			}
 			List<Integer> playedIndex = players.get(k).getPlayedIndex();
 			int x = players.get(k).getInnerId();
 			List<Card> singleHand = new ArrayList<>();
