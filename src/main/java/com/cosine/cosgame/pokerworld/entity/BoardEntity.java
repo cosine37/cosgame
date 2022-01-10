@@ -16,6 +16,7 @@ public class BoardEntity {
 	int firstPlayer;
 	int numPlay;
 	int winPlayer;
+	int attackerPointsGained;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -124,5 +125,11 @@ public class BoardEntity {
 	}
 	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
 		this.confirmedNextTurn = confirmedNextTurn;
+	}
+	public int getAttackerPointsGained() {
+		return attackerPointsGained;
+	}
+	public void setAttackerPointsGained(int attackerPointsGained) {
+		this.attackerPointsGained = attackerPointsGained;
 	}
 }

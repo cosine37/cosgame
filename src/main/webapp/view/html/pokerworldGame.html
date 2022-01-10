@@ -73,6 +73,9 @@
 	</div>
 	 -->
 	<div style="clear:both">
+		<span ng-show="status == '3'">进攻方得分：{{attackerPointsGained}}</span>
+	</div>
+	<div style="clear:both">
 		<span ng-show="status == '3' && curPlayer == myIndex">请出牌</span>
 		<button ng-click="resetChosen()" ng-show="status == '3' && curPlayer == myIndex">重选</button>
 		<button ng-click="play()" ng-show="status == '3' && curPlayer == myIndex" ng-disabled="disablePlay()">打出</button>

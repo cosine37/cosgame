@@ -26,6 +26,7 @@ public class Board {
 	int banker;
 	int numPlayed;
 	int winPlayer;
+	int attackerPointsGained;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -135,6 +136,7 @@ public class Board {
 		winPlayer = roundResult.get(0);
 		firstPlayer = winPlayer;
 		curPlayer = -1;
+		attackerPointsGained = gameUtil.getAttackerPointsGained();
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmedNextTurn(false);
@@ -279,6 +281,12 @@ public class Board {
 	public void setConfirmed(List<Boolean> confirmed) {
 		this.confirmed = confirmed;
 	}
+	public int getAttackerPointsGained() {
+		return attackerPointsGained;
+	}
+	public void setAttackerPointsGained(int attackerPointsGained) {
+		this.attackerPointsGained = attackerPointsGained;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -308,6 +316,7 @@ public class Board {
 		dbutil.update("id", id, "winPlayer", winPlayer);
 		dbutil.update("id", id, "firstPlayer", firstPlayer);
 		dbutil.update("id", id, "confirmed", confirmed);
+		dbutil.update("id", id, "attackerPointsGained", attackerPointsGained);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {
@@ -414,6 +423,7 @@ public class Board {
 		doc.append("numPlayed", numPlayed);
 		doc.append("winPlayer", winPlayer);
 		doc.append("confirmed", confirmed);
+		doc.append("attackerPointsGained", attackerPointsGained);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -443,6 +453,8 @@ public class Board {
 		rawHidden = doc.getString("rawHidden");
 		numPlayed = doc.getInteger("numPlayed", -1);
 		winPlayer = doc.getInteger("winPlayer", -1);
+		attackerPointsGained = doc.getInteger("attackerPointsGained", 0);
+		gameUtil.setAttackerPointsGained(attackerPointsGained);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -469,6 +481,7 @@ public class Board {
 		entity.setFirstPlayer(firstPlayer);
 		entity.setNumPlay(numPlayed);
 		entity.setWinPlayer(winPlayer);
+		entity.setAttackerPointsGained(attackerPointsGained);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

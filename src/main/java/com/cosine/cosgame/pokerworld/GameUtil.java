@@ -23,6 +23,14 @@ public class GameUtil {
 		game = new Game(null, 0);
 	}
 	
+	public void setAttackerPointsGained(int attackerPointsGained) {
+		game.setAttackerPointsGained(attackerPointsGained);
+	}
+	
+	public int getAttackerPointsGained() {
+		return game.getAttackerPointsGained();
+	}
+	
 	public void sortCards() {
 		List<List<Card>> playerCards = game.getPlayerCards();
 		List<String> rawCardsBefore = toRawCards();
@@ -122,6 +130,7 @@ public class GameUtil {
 		}
 		*/
 		Game.RoundResult roundResult = game.playRound(board.getFirstPlayer(), hands);
+		System.out.println(this.getAttackerPointsGained());
 		List<Integer> ans = new ArrayList<>();
 		ans.add(roundResult.getWinner());
 		ans.add(roundResult.getPointsGained());
