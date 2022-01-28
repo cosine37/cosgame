@@ -19,6 +19,13 @@ public class Board {
 	
 	MongoDBUtil dbutil;
 	
+	public Board() {
+		String dbname = "belltower";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
+	
 	public String getId() {
 		return id;
 	}
