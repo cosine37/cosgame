@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.belltower.entity.PlayerEntity;
+
 public class Player {
 	String name;
 	Role role;
@@ -12,6 +14,18 @@ public class Player {
 	List<String> logs;
 	boolean poisoned;
 	boolean alive;
+	boolean canVote;
+	
+	public Player() {
+		role = new Role();
+	}
+	
+	public void gameStart(Role r) {
+		alive = true;
+		poisoned = false;
+		canVote = true;
+		role = r;
+	}
 	
 	public String getName() {
 		return name;
@@ -55,6 +69,12 @@ public class Player {
 	public void setExtraBits(List<Integer> extraBits) {
 		this.extraBits = extraBits;
 	}
+	public boolean isCanVote() {
+		return canVote;
+	}
+	public void setCanVote(boolean canVote) {
+		this.canVote = canVote;
+	}
 	
 	public Document toDocument() {
 		Document doc = new Document();
@@ -64,6 +84,7 @@ public class Player {
 		doc.append("alive", alive);
 		doc.append("logs", logs);
 		doc.append("extraBits", extraBits);
+		doc.append("canVote", canVote);
 		return doc;
 	}
 	
@@ -75,5 +96,15 @@ public class Player {
 		extraBits = (List<Integer>) doc.get("extraBits");
 		int roleId = doc.getInteger("role", -1);
 		role = RoleFactory.makeRole(roleId);
+		canVote = doc.getBoolean("canVote", true);
+	}
+	
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setAlive(alive);
+		entity.setCanVote(canVote);
+		entity.setLogs(logs);
+		entity.setName(name);
+		return entity;
 	}
 }

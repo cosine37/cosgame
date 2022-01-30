@@ -1,10 +1,14 @@
 package com.cosine.cosgame.belltower;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.belltower.entity.BoardEntity;
+import com.cosine.cosgame.belltower.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -14,18 +18,50 @@ public class Board {
 	int phase;
 	int numDay;
 	
+	List<Integer> factionCounts;
 	List<Player> players;
 	Script script;
 	
 	MongoDBUtil dbutil;
 	
 	public Board() {
+		factionCounts = new ArrayList<>();
+		players = new ArrayList<>();
+		
+		script = new Script();
+		
 		String dbname = "belltower";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
 	
+	public void startGame() {
+		assignRoles();
+	}
+	
+	public void assignRoles() {
+		List<Role> roles = script.getRoles(factionCounts);
+		Random rand = new Random();
+		for (int i=0;i<players.size();i++) {
+			if (roles.size() == 0) break;
+			int x = rand.nextInt(roles.size());
+			Role r = roles.remove(x);
+			players.get(i).gameStart(r);
+		}
+	}
+	
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	public boolean isLord(String username) {
+		if (username.contentEquals(lord)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public String getId() {
 		return id;
 	}
@@ -68,7 +104,13 @@ public class Board {
 	public void setScript(Script script) {
 		this.script = script;
 	}
-	
+	public List<Integer> getFactionCounts() {
+		return factionCounts;
+	}
+	public void setFactionCounts(List<Integer> factionCounts) {
+		this.factionCounts = factionCounts;
+	}
+
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
@@ -188,6 +230,7 @@ public class Board {
 		doc.append("status", status);
 		doc.append("phase", phase);
 		doc.append("script", script.getId());
+		doc.append("factionCounts", factionCounts);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -208,6 +251,7 @@ public class Board {
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
+		factionCounts = (List<Integer>) doc.get("factionCounts");
 		int i;
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {
@@ -217,6 +261,23 @@ public class Board {
 			Player p = new Player();
 			p.setBoard(this);
 			p.setFromDoc(dop);
+			players.add(p);
 		}
+	}
+	
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setNumDay(numDay);
+		entity.setPhase(phase);
+		entity.setStatus(status);
+		List<PlayerEntity> playerEntities = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerEntities.add(players.get(i).toPlayerEntity());
+		}
+		entity.setPlayers(playerEntities);
+		return entity;
 	}
 }

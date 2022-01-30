@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Belltower</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/belltowerTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/belltowerOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/app/belltowerCreateGameController.js"></script>
+<body ng-app="belltowerCreateGameApp" ng-controller="belltowerCreateGameCtrl">
+	<button ng-click="goto('belltower')">back</button>
+	<button ng-click="startGame()">start game</button>
+	<!-- 
+	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+	 -->
+	<div>
+		<p ng-repeat="p in players">{{p.name}}</p>
+	</div>
+	{{gamedata}}
+</body>
+</html>

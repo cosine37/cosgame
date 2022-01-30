@@ -43,33 +43,33 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.newGame = function(){
-			$http({url: "/propnight/newboard", method: "POST"}).then(function(response){
+			$http({url: "/belltower/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
-				$scope.goto('propnightcreategame');
+				$scope.goto('belltowercreategame');
 			});
 		}
 		
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/propnight/setboardid", method: "POST", params: data}).then(function(response){
-				$http.post("/propnight/join").then(function(response){
+			$http({url: "/belltower/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/belltower/join").then(function(response){
 					//var json_data = '{"type":"notify","content":"refresh"}';
 			        boardws.send($scope.boards[index]);
-					$scope.goto('propnightcreategame')
+					$scope.goto('belltowercreategame')
 				});
 			});
 		}
 		
 		$scope.backToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/propnight/setboardid", method: "POST", params: data}).then(function(response){
-				$scope.goto('propnightgame');
+			$http({url: "/belltower/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('belltowergame');
 			});
 		}
 		
 		$scope.getAllBoards = function(){
-			$http.get('/propnight/allboards').then(function(response){
+			$http.get('/belltower/allboards').then(function(response){
 				var n = response.data.value.length / 4;
 				$scope.boards = []
 				$scope.statuses = []

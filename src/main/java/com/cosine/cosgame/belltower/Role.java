@@ -12,6 +12,10 @@ public class Role {
 	Player player;
 	Board board;
 	
+	public Role() {
+		
+	}
+	
 	public int getId() {
 		return id;
 	}

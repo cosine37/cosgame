@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cosine.cosgame.propnight.Meta;
-import com.cosine.cosgame.propnight.Player;
-import com.cosine.cosgame.propnight.Board;
-import com.cosine.cosgame.propnight.Consts;
-import com.cosine.cosgame.propnight.entity.BoardEntity;
+import com.cosine.cosgame.belltower.Meta;
+import com.cosine.cosgame.belltower.Player;
+import com.cosine.cosgame.belltower.Board;
+import com.cosine.cosgame.belltower.Consts;
+import com.cosine.cosgame.belltower.entity.BoardEntity;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
