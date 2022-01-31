@@ -18,14 +18,14 @@ public class Board {
 	int phase;
 	int numDay;
 	
-	List<Integer> factionCounts;
+	List<Integer> groupCounts;
 	List<Player> players;
 	Script script;
 	
 	MongoDBUtil dbutil;
 	
 	public Board() {
-		factionCounts = new ArrayList<>();
+		groupCounts = new ArrayList<>();
 		players = new ArrayList<>();
 		
 		script = new Script();
@@ -37,18 +37,52 @@ public class Board {
 	}
 	
 	public void startGame() {
+		status = Consts.ASSIGNROLE;
+		
+		// TODO: customize script choice here
+		script = ScriptFactory.makeScript(1);
+		
+		//System.out.println("in board:" + script.getTownsfolks().size());
+		
+	}
+	
+	public void startFirstNight() {
 		assignRoles();
+		numDay = 0;
+		status = Consts.INGAME;
+		startNight();
+	}
+	
+	public void startNight() {
+		phase = Consts.NIGHT;
+		numDay = numDay++;
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).startNight();
+		}
 	}
 	
 	public void assignRoles() {
-		List<Role> roles = script.getRoles(factionCounts);
+		List<Role> roles = script.getRoles(groupCounts);
 		Random rand = new Random();
 		for (int i=0;i<players.size();i++) {
 			if (roles.size() == 0) break;
 			int x = rand.nextInt(roles.size());
 			Role r = roles.remove(x);
 			players.get(i).gameStart(r);
+			//System.out.println(players.get(i).isAlive());
 		}
+	}
+	
+	public boolean allConfirmedNight() {
+		boolean ans = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmedNight() == false) {
+				ans = false;
+				break;
+			}
+		}
+		return ans;
 	}
 	
 	public void genBoardId() {
@@ -104,11 +138,11 @@ public class Board {
 	public void setScript(Script script) {
 		this.script = script;
 	}
-	public List<Integer> getFactionCounts() {
-		return factionCounts;
+	public List<Integer> getGroupCounts() {
+		return groupCounts;
 	}
-	public void setFactionCounts(List<Integer> factionCounts) {
-		this.factionCounts = factionCounts;
+	public void setGroupCounts(List<Integer> groupCounts) {
+		this.groupCounts = groupCounts;
 	}
 
 	public void addPlayer(String name) {
@@ -185,6 +219,7 @@ public class Board {
 		updateDB("phase", phase);
 		updateDB("status", status);
 		updateDB("numDay", numDay);
+		
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -230,7 +265,7 @@ public class Board {
 		doc.append("status", status);
 		doc.append("phase", phase);
 		doc.append("script", script.getId());
-		doc.append("factionCounts", factionCounts);
+		doc.append("groupCounts", groupCounts);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -251,7 +286,7 @@ public class Board {
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
-		factionCounts = (List<Integer>) doc.get("factionCounts");
+		groupCounts = (List<Integer>) doc.get("groupCounts");
 		int i;
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {
@@ -276,6 +311,10 @@ public class Board {
 		int i;
 		for (i=0;i<players.size();i++) {
 			playerEntities.add(players.get(i).toPlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				Player p = players.get(i);
+				entity.setMyRole(p.getRole().toRoleEntity());
+			}
 		}
 		entity.setPlayers(playerEntities);
 		return entity;

@@ -13,9 +13,17 @@ public class Consts {
 	
 	// status
 	public static final int PREGAME = 0;
-	public static final int INGAME = 1;
+	public static final int ASSIGNROLE = 1;
+	public static final int INGAME = 2;
 	
 	// phase
 	public static final int NIGHT = 0;
-	public static final int DAY = 1;
+	public static final int NIGHTHOST = 1;
+	public static final int DAY = 2;
+	
+	// skill types
+	public static final int NONIGHT = 0;
+	public static final int EVERYNIGHT = 1;
+	public static final int EVERYAFTERFIRST = 2;
+	public static final int FIRSTONLY = 3;
 }

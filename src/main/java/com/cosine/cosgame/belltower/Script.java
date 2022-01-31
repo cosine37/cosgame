@@ -11,6 +11,13 @@ public class Script {
 	List<Role> demons;
 	List<Role> minions;
 	
+	public Script() {
+		townsfolks = new ArrayList<>();
+		outsiders = new ArrayList<>();
+		demons = new ArrayList<>();
+		minions = new ArrayList<>();
+	}
+	
 	public List<Role> getRoles(List<Integer> factionCounts){
 		List<Role> roles = new ArrayList<>();
 		if (factionCounts.size()>3) {
@@ -59,6 +66,18 @@ public class Script {
 		return roles;
 	}
 	
+	public void addTownsfolk(Role r) {
+		townsfolks.add(r);
+	}
+	public void addOutsider(Role r) {
+		outsiders.add(r);
+	}
+	public void addDemon(Role r) {
+		demons.add(r);
+	}
+	public void addMinion(Role r) {
+		minions.add(r);
+	}
 	public int getId() {
 		return id;
 	}

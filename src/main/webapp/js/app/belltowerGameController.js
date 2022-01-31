@@ -50,6 +50,48 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.PREGAME = 1;
+		$scope.ASSIGNROLE = 1;
+		$scope.INGAME = 2;
+		
+		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
+		$scope.groupNumbers = [0,0,0,0];
+		
+		$scope.addGroupNumber = function(x){
+			$scope.groupNumbers[x] = $scope.groupNumbers[x]+1
+		}
+		
+		$scope.subtractGroupNumber = function(x){
+			$scope.groupNumbers[x] = $scope.groupNumbers[x]-1
+		}
+		
+		$scope.canSubmitGroupNumbers = function(){
+			if ($scope.groupNumbers == null) return false;
+			if ($scope.players == null) return false;
+			var i
+			var x=0;
+			for (i=0;i<$scope.groupNumbers.length;i++){
+				x = x+$scope.groupNumbers[i]
+			}
+			if (x == $scope.players.length){
+				return true
+			} else {
+				return false
+			}
+		}
+		
+		$scope.submitGroupNumbers = function(){
+			if ($scope.canSubmitGroupNumbers()){
+				var data = {
+					"groupNumbers" : $scope.groupNumbers
+				}
+				
+				$http({url: "/belltower/submitgroupnumbers", method: "POST", params:data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
 		// Choose Role Section
 		/*
 		$scope.changeGhost = function(){

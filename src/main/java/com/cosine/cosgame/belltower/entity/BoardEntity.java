@@ -9,6 +9,8 @@ public class BoardEntity {
 	int phase;
 	int numDay;
 	
+	RoleEntity myRole;
+	
 	List<PlayerEntity> players;
 
 	public String getId() {
@@ -46,6 +48,12 @@ public class BoardEntity {
 	}
 	public void setPlayers(List<PlayerEntity> players) {
 		this.players = players;
+	}
+	public RoleEntity getMyRole() {
+		return myRole;
+	}
+	public void setMyRole(RoleEntity myRole) {
+		this.myRole = myRole;
 	}
 	
 }

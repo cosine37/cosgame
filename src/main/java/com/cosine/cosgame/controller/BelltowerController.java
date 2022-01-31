@@ -63,6 +63,30 @@ public class BelltowerController {
 			if (board.isLord(username)) {
 				//board.setSettings(settings);
 				board.startGame();
+				board.updateDB("script", board.getScript().getId());
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/belltower/submitgroupnumbers", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> submitGroupNumbers(HttpServletRequest request, @RequestParam List<Integer> groupNumbers){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				//board.setSettings(settings);
+				//board.startGame();
+				board.setGroupCounts(groupNumbers);
+				board.startFirstNight();
+				board.updateDB("groupCounts",board.getGroupCounts());
 				board.updateBasicDB();
 				board.updatePlayers();
 			}

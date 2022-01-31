@@ -1,18 +1,26 @@
 package com.cosine.cosgame.belltower;
 
+import java.util.List;
+
+import com.cosine.cosgame.belltower.entity.RoleEntity;
+
 public class Role {
-	int id;
-	String name;
-	String img;
-	String desc;
-	int faction;
-	int group;
-	boolean drunk;
+	protected int id;
+	protected String name;
+	protected String img;
+	protected String desc;
+	protected int faction;
+	protected int group;
+	protected boolean drunk;
 	
-	Player player;
-	Board board;
+	protected Player player;
+	protected Board board;
 	
 	public Role() {
+		
+	}
+	
+	public void execSkill() {
 		
 	}
 	
@@ -69,5 +77,14 @@ public class Role {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	
+	public RoleEntity toRoleEntity() {
+		RoleEntity entity = new RoleEntity();
+		entity.setId(id);
+		entity.setName(name);
+		entity.setDesc(desc);
+		entity.setImg(img);
+		return entity;
 	}
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PlayerEntity {
 	String name;
-	int role;
 	List<Integer> extraBits;
 	List<String> logs;
 	boolean alive;
@@ -15,12 +14,6 @@ public class PlayerEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getRole() {
-		return role;
-	}
-	public void setRole(int role) {
-		this.role = role;
 	}
 	public List<Integer> getExtraBits() {
 		return extraBits;

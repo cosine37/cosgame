@@ -18,6 +18,25 @@
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
+	<div ng-show="status==ASSIGNROLE">
+		<div>
+			<table>
+				<tr>
+					<td ng-repeat="gn in groupNames track by $index">{{gn}}</td>
+				</tr>
+				<tr>
+					<td ng-repeat="g in groupNumbers track by $index">
+						<button ng-disabled="g == 0" ng-click="subtractGroupNumber($index)">-</button>
+						<span>{{g}}</span>
+						<button ng-disabled="canSubmitGroupNumbers()" ng-click="addGroupNumber($index)">+</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<button ng-click="submitGroupNumbers()" ng-disabled="canSubmitGroupNumbers() == false">进入第一夜</button>
+		</div>
+	</div>
 	
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>

@@ -11,7 +11,9 @@ public class Player {
 	Role role;
 	Board board;
 	List<Integer> extraBits;
+	List<Integer> targets;
 	List<String> logs;
+	boolean confirmedNight;
 	boolean poisoned;
 	boolean alive;
 	boolean canVote;
@@ -25,6 +27,10 @@ public class Player {
 		poisoned = false;
 		canVote = true;
 		role = r;
+	}
+	
+	public void startNight() {
+		confirmedNight = false;
 	}
 	
 	public String getName() {
@@ -75,7 +81,19 @@ public class Player {
 	public void setCanVote(boolean canVote) {
 		this.canVote = canVote;
 	}
-	
+	public List<Integer> getTargets() {
+		return targets;
+	}
+	public void setTargets(List<Integer> targets) {
+		this.targets = targets;
+	}
+	public boolean isConfirmedNight() {
+		return confirmedNight;
+	}
+	public void setConfirmedNight(boolean confirmedNight) {
+		this.confirmedNight = confirmedNight;
+	}
+
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);
@@ -85,6 +103,8 @@ public class Player {
 		doc.append("logs", logs);
 		doc.append("extraBits", extraBits);
 		doc.append("canVote", canVote);
+		doc.append("targets", targets);
+		doc.append("confirmedNight", confirmedNight);
 		return doc;
 	}
 	
@@ -97,6 +117,8 @@ public class Player {
 		int roleId = doc.getInteger("role", -1);
 		role = RoleFactory.makeRole(roleId);
 		canVote = doc.getBoolean("canVote", true);
+		targets = (List<Integer>) doc.get("targets");
+		confirmedNight = doc.getBoolean("confirmedNight", false);
 	}
 	
 	public PlayerEntity toPlayerEntity() {
