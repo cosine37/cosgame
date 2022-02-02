@@ -55,11 +55,15 @@ public class Board {
 	
 	public void startNight() {
 		phase = Consts.NIGHT;
-		numDay = numDay++;
+		numDay++;
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).startNight();
 		}
+	}
+	
+	public void endNight() {
+		phase = Consts.DAY;
 	}
 	
 	public void assignRoles() {
@@ -266,6 +270,7 @@ public class Board {
 		doc.append("phase", phase);
 		doc.append("script", script.getId());
 		doc.append("groupCounts", groupCounts);
+		doc.append("numDay", numDay);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -283,6 +288,7 @@ public class Board {
 		lord = doc.getString("lord");
 		status = doc.getInteger("status", -1);
 		phase = doc.getInteger("phase", -1);
+		numDay = doc.getInteger("numDay", 0);
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");

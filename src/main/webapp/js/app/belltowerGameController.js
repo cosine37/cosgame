@@ -54,6 +54,9 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.ASSIGNROLE = 1;
 		$scope.INGAME = 2;
 		
+		$scope.NIGHT = 0;
+		
+		
 		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
 		$scope.groupNumbers = [0,0,0,0];
 		
@@ -90,6 +93,12 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.allRefresh()
 				});
 			}
+		}
+		
+		$scope.confirmNight = function(){
+			$http.post("/belltower/confirmnight").then(function(response){
+				$scope.allRefresh()
+			});
 		}
 		
 		// Choose Role Section
@@ -183,6 +192,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
+				$scope.phase = response.data.phase
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
 				

@@ -5,6 +5,7 @@ public class RoleEntity {
 	String name;
 	String img;
 	String desc;
+	String instruction;
 	
 	public int getId() {
 		return id;
@@ -29,6 +30,12 @@ public class RoleEntity {
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	public String getInstruction() {
+		return instruction;
+	}
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
 	}
 	
 }

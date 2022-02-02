@@ -14,7 +14,7 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/belltowerGameController.js"></script>
 <body ng-app="belltowerGameApp" ng-controller="belltowerGameCtrl">
-	<button ng-click="goto('propnight')">back</button>
+	<button ng-click="goto('belltower')">back</button>
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
@@ -35,6 +35,12 @@
 		</div>
 		<div>
 			<button ng-click="submitGroupNumbers()" ng-disabled="canSubmitGroupNumbers() == false">进入第一夜</button>
+		</div>
+	</div>
+	
+	<div ng-show="status==INGAME">
+		<div ng-show="phase==NIGHT">
+			<button ng-click="confirmNight()">确认</button>
 		</div>
 	</div>
 	

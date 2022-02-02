@@ -1,6 +1,7 @@
 package com.cosine.cosgame.belltower;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.bson.Document;
 
@@ -31,6 +32,16 @@ public class Player {
 	
 	public void startNight() {
 		confirmedNight = false;
+	}
+	
+	public void confirmNight() {
+		targets = new ArrayList<>();
+		confirmedNight = true;
+	}
+	
+	public void confirmNight(List<Integer> targets) {
+		this.targets = targets;
+		confirmedNight = true;
 	}
 	
 	public String getName() {

@@ -10,5 +10,6 @@ public class Librarian extends Role {
 		img = "librarian";
 		faction = Consts.HUMAN;
 		group = Consts.TOWNSFOLK;
+		desc = "第一夜你会被告知一个外来者身份和两名玩家，其中一名玩家是该身份（若场上无外来者，你会被告知无外来者）。";
 	}
 }

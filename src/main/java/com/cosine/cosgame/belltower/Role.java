@@ -9,8 +9,10 @@ public class Role {
 	protected String name;
 	protected String img;
 	protected String desc;
+	protected String instruction;
 	protected int faction;
 	protected int group;
+	protected int sequence;
 	protected boolean drunk;
 	
 	protected Player player;
@@ -78,13 +80,26 @@ public class Role {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public String getInstruction() {
+		return instruction;
+	}
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
+
 	public RoleEntity toRoleEntity() {
 		RoleEntity entity = new RoleEntity();
 		entity.setId(id);
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setImg(img);
+		entity.setInstruction(instruction);
 		return entity;
 	}
 }

@@ -95,6 +95,31 @@ public class BelltowerController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/belltower/confirmnight", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> submitNight(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				Player p = board.getPlayerByName(username);
+				if (p != null) {
+					p.confirmNight();
+					if (board.allConfirmedNight()) {
+						board.endNight();
+					}
+					board.updateBasicDB();
+					board.updatePlayers();
+				}
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/belltower/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);
