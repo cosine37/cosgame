@@ -9,6 +9,8 @@ import com.cosine.cosgame.belltower.entity.PlayerEntity;
 
 public class Player {
 	String name;
+	String displayName;
+	protected String lastNightMsg;
 	Role role;
 	Board board;
 	List<Integer> extraBits;
@@ -21,6 +23,9 @@ public class Player {
 	
 	public Player() {
 		role = new Role();
+		extraBits = new ArrayList<>();
+		targets = new ArrayList<>();
+		logs = new ArrayList<>();
 	}
 	
 	public void gameStart(Role r) {
@@ -42,6 +47,10 @@ public class Player {
 	public void confirmNight(List<Integer> targets) {
 		this.targets = targets;
 		confirmedNight = true;
+	}
+	
+	public void addLog(String log) {
+		logs.add(log);
 	}
 	
 	public String getName() {
@@ -104,6 +113,18 @@ public class Player {
 	public void setConfirmedNight(boolean confirmedNight) {
 		this.confirmedNight = confirmedNight;
 	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getLastNightMsg() {
+		return lastNightMsg;
+	}
+	public void setLastNightMsg(String lastNightMsg) {
+		this.lastNightMsg = lastNightMsg;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -116,6 +137,8 @@ public class Player {
 		doc.append("canVote", canVote);
 		doc.append("targets", targets);
 		doc.append("confirmedNight", confirmedNight);
+		doc.append("displayName", displayName);
+		doc.append("lastNightMsg", lastNightMsg);
 		return doc;
 	}
 	
@@ -127,9 +150,13 @@ public class Player {
 		extraBits = (List<Integer>) doc.get("extraBits");
 		int roleId = doc.getInteger("role", -1);
 		role = RoleFactory.makeRole(roleId);
+		role.setPlayer(this);
+		role.setBoard(board);
 		canVote = doc.getBoolean("canVote", true);
 		targets = (List<Integer>) doc.get("targets");
 		confirmedNight = doc.getBoolean("confirmedNight", false);
+		displayName = doc.getString("displayName");
+		lastNightMsg = doc.getString("lastNightMsg");
 	}
 	
 	public PlayerEntity toPlayerEntity() {
@@ -138,6 +165,7 @@ public class Player {
 		entity.setCanVote(canVote);
 		entity.setLogs(logs);
 		entity.setName(name);
+		entity.setDisplayName(displayName);
 		return entity;
 	}
 }

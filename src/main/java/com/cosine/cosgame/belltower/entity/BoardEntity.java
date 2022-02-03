@@ -10,6 +10,8 @@ public class BoardEntity {
 	int numDay;
 	
 	RoleEntity myRole;
+	String myLastNightMsg;
+	List<String> myLogs;
 	
 	List<PlayerEntity> players;
 
@@ -54,6 +56,18 @@ public class BoardEntity {
 	}
 	public void setMyRole(RoleEntity myRole) {
 		this.myRole = myRole;
+	}
+	public String getMyLastNightMsg() {
+		return myLastNightMsg;
+	}
+	public void setMyLastNightMsg(String myLastNightMsg) {
+		this.myLastNightMsg = myLastNightMsg;
+	}
+	public List<String> getMyLogs() {
+		return myLogs;
+	}
+	public void setMyLogs(List<String> myLogs) {
+		this.myLogs = myLogs;
 	}
 	
 }

@@ -42,8 +42,6 @@ public class Board {
 		// TODO: customize script choice here
 		script = ScriptFactory.makeScript(1);
 		
-		//System.out.println("in board:" + script.getTownsfolks().size());
-		
 	}
 	
 	public void startFirstNight() {
@@ -63,6 +61,11 @@ public class Board {
 	}
 	
 	public void endNight() {
+		// TODO: Deal with sequences
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).getRole().execSkill();
+		}
 		phase = Consts.DAY;
 	}
 	
@@ -320,6 +323,8 @@ public class Board {
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
 				entity.setMyRole(p.getRole().toRoleEntity());
+				entity.setMyLogs(p.getLogs());
+				entity.setMyLastNightMsg(p.getLastNightMsg());
 			}
 		}
 		entity.setPlayers(playerEntities);
