@@ -20,6 +20,7 @@ public class Player {
 	boolean poisoned;
 	boolean alive;
 	boolean canVote;
+	boolean unaffectedByDemon;
 	
 	public Player() {
 		role = new Role();
@@ -37,6 +38,7 @@ public class Player {
 	
 	public void startNight() {
 		confirmedNight = false;
+		unaffectedByDemon = false;
 	}
 	
 	public void confirmNight() {
@@ -125,6 +127,12 @@ public class Player {
 	public void setLastNightMsg(String lastNightMsg) {
 		this.lastNightMsg = lastNightMsg;
 	}
+	public boolean isUnaffectedByDemon() {
+		return unaffectedByDemon;
+	}
+	public void setUnaffectedByDemon(boolean unaffectedByDemon) {
+		this.unaffectedByDemon = unaffectedByDemon;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -139,6 +147,7 @@ public class Player {
 		doc.append("confirmedNight", confirmedNight);
 		doc.append("displayName", displayName);
 		doc.append("lastNightMsg", lastNightMsg);
+		doc.append("unaffectedByDemon", unaffectedByDemon);
 		return doc;
 	}
 	
@@ -157,6 +166,7 @@ public class Player {
 		confirmedNight = doc.getBoolean("confirmedNight", false);
 		displayName = doc.getString("displayName");
 		lastNightMsg = doc.getString("lastNightMsg");
+		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
 	}
 	
 	public PlayerEntity toPlayerEntity() {

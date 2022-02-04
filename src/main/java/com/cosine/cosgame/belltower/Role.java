@@ -14,13 +14,35 @@ public class Role {
 	protected int faction;
 	protected int group;
 	protected int sequence;
+	protected int numPlayerChoose;
 	protected boolean drunk;
+	protected boolean hasFirstNight;
+	protected boolean hasRestNights;
 	
 	protected Player player;
 	protected Board board;
 	
 	public Role() {
-		
+		numPlayerChoose = 0;
+		hasFirstNight = false;
+		hasRestNights = false;
+	}
+	
+	public int getNumPlayerChoose() {
+		int numDay = board.getNumDay();
+		if (numDay == 1) {
+			if (hasFirstNight) {
+				return numPlayerChoose;
+			} else {
+				return 0;
+			}
+		} else {
+			if (hasRestNights) {
+				return numPlayerChoose;
+			} else {
+				return 0;
+			}
+		}
 	}
 	
 	public void execSkill() {

@@ -8,6 +8,10 @@ public class RoleFactory {
 		
 		if (roleId == 1) {
 			role = new Librarian();
+		} else if (roleId == 2) {
+			role = new Soldier();
+		} else if (roleId == 3) {
+			role = new Imp();
 		}
 		
 		return role;

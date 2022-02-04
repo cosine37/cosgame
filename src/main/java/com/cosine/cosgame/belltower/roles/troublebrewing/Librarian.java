@@ -13,6 +13,8 @@ public class Librarian extends Role {
 		img = "librarian";
 		faction = Consts.HUMAN;
 		group = Consts.TOWNSFOLK;
+		hasFirstNight = true;
+		hasRestNights = false;
 		desc = "第一夜你会被告知一个外来者身份和两名玩家，其中一名玩家是该身份（若场上无外来者，你会被告知无外来者）。";
 	}
 	
@@ -37,7 +39,7 @@ public class Librarian extends Role {
 			List<Player> twoPlayers = twoPlayersFromGroup(Consts.OUTSIDER);
 			String lastNightMsg;
 			if (twoPlayers.size() < 2) {
-				lastNightMsg = "啊这，本局游戏没有外来者,所以你没有获得任何信息。";
+				lastNightMsg = "啊这，本局游戏没有外来者，所以你似乎没有获得任何信息。";
 			} else {
 				lastNightMsg = getMessageForTwoPlayersFromGroup(twoPlayers);
 			}

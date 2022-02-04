@@ -20,6 +20,7 @@ public class Board {
 	
 	List<Integer> groupCounts;
 	List<Player> players;
+	List<Integer> killedIndexes;
 	Script script;
 	
 	MongoDBUtil dbutil;
@@ -58,6 +59,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).startNight();
 		}
+		killedIndexes = new ArrayList<>();
 	}
 	
 	public void endNight() {
@@ -102,6 +104,9 @@ public class Board {
 		} else {
 			return false;
 		}
+	}
+	public void addKilledIndex(int x) {
+		killedIndexes.add(x);
 	}
 	public String getId() {
 		return id;
@@ -150,6 +155,12 @@ public class Board {
 	}
 	public void setGroupCounts(List<Integer> groupCounts) {
 		this.groupCounts = groupCounts;
+	}
+	public List<Integer> getKilledIndexes() {
+		return killedIndexes;
+	}
+	public void setKilledIndexes(List<Integer> killedIndexes) {
+		this.killedIndexes = killedIndexes;
 	}
 
 	public void addPlayer(String name) {
@@ -226,7 +237,7 @@ public class Board {
 		updateDB("phase", phase);
 		updateDB("status", status);
 		updateDB("numDay", numDay);
-		
+		updateDB("killedIndexes", killedIndexes);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -274,6 +285,7 @@ public class Board {
 		doc.append("script", script.getId());
 		doc.append("groupCounts", groupCounts);
 		doc.append("numDay", numDay);
+		doc.append("killedIndexes", killedIndexes);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -296,6 +308,7 @@ public class Board {
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		groupCounts = (List<Integer>) doc.get("groupCounts");
+		killedIndexes = (List<Integer>) doc.get("killedIndexes");
 		int i;
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {
