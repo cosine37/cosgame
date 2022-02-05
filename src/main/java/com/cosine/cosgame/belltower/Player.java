@@ -17,6 +17,7 @@ public class Player {
 	List<Integer> targets;
 	List<String> logs;
 	boolean confirmedNight;
+	boolean confirmedDay;
 	boolean poisoned;
 	boolean alive;
 	boolean canVote;
@@ -49,6 +50,10 @@ public class Player {
 	public void confirmNight(List<Integer> targets) {
 		this.targets = targets;
 		confirmedNight = true;
+	}
+	
+	public void confirmDay() {
+		confirmedDay = true;
 	}
 	
 	public void addLog(String log) {
@@ -133,6 +138,12 @@ public class Player {
 	public void setUnaffectedByDemon(boolean unaffectedByDemon) {
 		this.unaffectedByDemon = unaffectedByDemon;
 	}
+	public boolean isConfirmedDay() {
+		return confirmedDay;
+	}
+	public void setConfirmedDay(boolean confirmedDay) {
+		this.confirmedDay = confirmedDay;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -145,6 +156,7 @@ public class Player {
 		doc.append("canVote", canVote);
 		doc.append("targets", targets);
 		doc.append("confirmedNight", confirmedNight);
+		doc.append("confirmedDay", confirmedDay);
 		doc.append("displayName", displayName);
 		doc.append("lastNightMsg", lastNightMsg);
 		doc.append("unaffectedByDemon", unaffectedByDemon);
@@ -164,6 +176,7 @@ public class Player {
 		canVote = doc.getBoolean("canVote", true);
 		targets = (List<Integer>) doc.get("targets");
 		confirmedNight = doc.getBoolean("confirmedNight", false);
+		confirmedDay = doc.getBoolean("confirmedDay", false);
 		displayName = doc.getString("displayName");
 		lastNightMsg = doc.getString("lastNightMsg");
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);

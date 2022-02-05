@@ -179,7 +179,7 @@ public class Role {
 		this.numPlayerChoose = numPlayerChoose;
 	}
 
-	public List<String> getInstruction() {
+	public List<String> getInstructions() {
 		String s =  "你的身份是 " + name;
 		List<String> instruction = new ArrayList<>();
 		instruction.add(s);
@@ -193,6 +193,7 @@ public class Role {
 		entity.setDesc(desc);
 		entity.setImg(img);
 		entity.setNumPlayerChoose(getNumPlayerChoose());
+		entity.setInstructions(getInstructions());
 		return entity;
 	}
 }

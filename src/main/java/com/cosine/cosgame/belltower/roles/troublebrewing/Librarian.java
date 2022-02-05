@@ -18,8 +18,8 @@ public class Librarian extends Role {
 		desc = "第一夜你会被告知一个外来者身份和两名玩家，其中一名玩家是该身份（若场上无外来者，你会被告知无外来者）。";
 	}
 	
-	public List<String> getInstruction() {
-		List<String> instruction = super.getInstruction();
+	public List<String> getInstructions() {
+		List<String> instruction = super.getInstructions();
 		int numDay = board.getNumDay();
 		int phase = board.getPhase();
 		if (phase == Consts.NIGHT) {

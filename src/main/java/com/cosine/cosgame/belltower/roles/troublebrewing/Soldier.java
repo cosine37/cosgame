@@ -18,8 +18,8 @@ public class Soldier extends Role {
 		desc = "你不受恶魔技能的影响。";
 	}
 	
-	public List<String> getInstruction() {
-		List<String> instruction = super.getInstruction();
+	public List<String> getInstructions() {
+		List<String> instruction = super.getInstructions();
 		instruction.add("你不受恶魔技能的影响。");
 		instruction.add("点击确认结束你的阶段。");
 		return instruction;

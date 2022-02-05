@@ -5,6 +5,7 @@ import java.util.List;
 public class BoardEntity {
 	String id;
 	String lord;
+	String morningMsg;
 	int status;
 	int phase;
 	int numDay;
@@ -68,6 +69,12 @@ public class BoardEntity {
 	}
 	public void setMyLogs(List<String> myLogs) {
 		this.myLogs = myLogs;
+	}
+	public String getMorningMsg() {
+		return morningMsg;
+	}
+	public void setMorningMsg(String morningMsg) {
+		this.morningMsg = morningMsg;
 	}
 	
 }

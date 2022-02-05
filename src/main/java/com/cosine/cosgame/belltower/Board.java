@@ -15,6 +15,7 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Board {
 	String id;
 	String lord;
+	String morningMsg;
 	int status;
 	int phase;
 	int numDay;
@@ -78,7 +79,47 @@ public class Board {
 				}
 			}
 		}
+		if (killedIndexes.size() == 0) {
+			morningMsg = "昨晚平安夜。";
+		} else {
+			morningMsg = "";
+			Random rand = new Random();
+			int temp = rand.nextInt(4);
+			if (temp == 0 && killedIndexes.size()==1) {
+				String name = players.get(killedIndexes.get(0)).getName();
+				for (i=0;i<name.length();i++) {
+					morningMsg = morningMsg + name.charAt(i) + "——";
+				}
+			} else {
+				List<String> names = new ArrayList<>();
+				for (i=0;i<killedIndexes.size();i++) {
+					String name = players.get(killedIndexes.get(i)).getName();
+					names.add(name);
+				}
+				morningMsg = "昨晚，";
+				while (names.size()>0) {
+					int x = rand.nextInt(names.size());
+					String name = names.remove(x);
+					if (names.size()==0) {
+						morningMsg = morningMsg + name;
+					} else if (names.size()==1) {
+						morningMsg = morningMsg + name + "和";
+					} else {
+						morningMsg = morningMsg + name + "、";
+					}
+				}
+				String[] killedMsg = {"跪了。", "圆寂了。", "浪费了。", "死了啦，都你害的啦，拜托。"};
+				int x = rand.nextInt(killedMsg.length);
+				morningMsg = morningMsg + killedMsg[x];
+			}
+		}
+		
 		phase = Consts.DAY;
+	}
+	
+	public void endDay() {
+		numDay = numDay+1;
+		phase = Consts.NIGHT;
 	}
 	
 	public void assignRoles() {
@@ -100,6 +141,17 @@ public class Board {
 		boolean ans = true;
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).isConfirmedNight() == false) {
+				ans = false;
+				break;
+			}
+		}
+		return ans;
+	}
+	
+	public boolean allConfirmedDay() {
+		boolean ans = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmedDay() == false) {
 				ans = false;
 				break;
 			}
@@ -174,6 +226,12 @@ public class Board {
 	}
 	public void setKilledIndexes(List<Integer> killedIndexes) {
 		this.killedIndexes = killedIndexes;
+	}
+	public String getMorningMsg() {
+		return morningMsg;
+	}
+	public void setMorningMsg(String morningMsg) {
+		this.morningMsg = morningMsg;
 	}
 
 	public void addPlayer(String name) {
@@ -251,6 +309,7 @@ public class Board {
 		updateDB("status", status);
 		updateDB("numDay", numDay);
 		updateDB("killedIndexes", killedIndexes);
+		updateDB("morningMsg", morningMsg);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -299,6 +358,7 @@ public class Board {
 		doc.append("groupCounts", groupCounts);
 		doc.append("numDay", numDay);
 		doc.append("killedIndexes", killedIndexes);
+		doc.append("morningMsg", morningMsg);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -317,6 +377,7 @@ public class Board {
 		status = doc.getInteger("status", -1);
 		phase = doc.getInteger("phase", -1);
 		numDay = doc.getInteger("numDay", 0);
+		morningMsg = doc.getString("morningMsg");
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -342,6 +403,7 @@ public class Board {
 		entity.setNumDay(numDay);
 		entity.setPhase(phase);
 		entity.setStatus(status);
+		entity.setMorningMsg(morningMsg);
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {

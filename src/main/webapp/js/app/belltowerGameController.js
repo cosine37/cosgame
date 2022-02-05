@@ -55,6 +55,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.INGAME = 2;
 		
 		$scope.NIGHT = 0;
+		$scope.DAY = 2;
 		
 		
 		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
@@ -142,6 +143,32 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.allRefresh()
 			});
 		}
+		
+		$scope.canConfirmNight = function(){
+			var npc = $scope.gamedata.myRole.numPlayerChoose;
+			if (npc == 0) {
+				return true;
+			} else if (npc == 1){
+				if ($scope.chosenPlayer != -1){
+					return true;
+				} else {
+					return false;
+				}
+			}
+			
+			else {
+				return false;
+			}
+		}
+		// ---- end night handles
+		
+		// day handles
+		$scope.confirmDay = function(){
+			$http({url: "/belltower/confirmday", method: "POST"}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		// ---- end day handles
 		
 		$scope.getBoard = function(){
 			$http.get('/belltower/getboard').then(function(response){

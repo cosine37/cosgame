@@ -20,8 +20,8 @@ public class Imp extends Role{
 		desc = "从第二夜起，夜晚阶段击杀一名玩家。";
 	}
 	
-	public List<String> getInstruction() {
-		List<String> instruction = super.getInstruction();
+	public List<String> getInstructions() {
+		List<String> instruction = super.getInstructions();
 		int numDay = board.getNumDay();
 		int phase = board.getPhase();
 		if (phase == Consts.NIGHT) {
@@ -37,7 +37,7 @@ public class Imp extends Role{
 	
 	public void execSkill() {
 		if (player.getTargets().size() > 0) {
-			int x = player.getTargets().get(0);
+			int x = player.getTargets().get(1);
 			Player p = board.getPlayers().get(x);
 			if (p.isUnaffectedByDemon() == false) {
 				p.setAlive(false);

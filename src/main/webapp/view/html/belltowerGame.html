@@ -39,6 +39,11 @@
 	</div>
 	<div ng-show="status==INGAME">
 		<div>
+			<span>第{{gamedata.numDay}}天</span>
+			<span ng-show="phase==NIGHT">夜晚</span>
+			<span ng-show="phase==DAY">白天</span>
+		</div>
+		<div>
 			<table>
 				<tr ng-repeat="p in players track by $index">
 					<td>
@@ -51,17 +56,19 @@
 				<tr>
 			</table>
 		</div>
-	</div>
-	
-	<div ng-show="status==INGAME">
 		<div ng-show="phase==NIGHT">
-			<button ng-click="confirmNight()">确认</button>
+			<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
+		</div>
+		<div ng-show="phase==DAY">
+			<button ng-click="confirmDay()">确认</button>
 		</div>
 	</div>
 	
+	<!-- 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
+	 -->
 	{{gamedata}}
 </body>
 </html>

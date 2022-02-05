@@ -1,11 +1,13 @@
 package com.cosine.cosgame.belltower.entity;
 
+import java.util.List;
+
 public class RoleEntity {
 	int id;
 	String name;
 	String img;
 	String desc;
-	String instruction;
+	List<String> instructions;
 	int numPlayerChoose;
 	
 	public int getId() {
@@ -32,11 +34,11 @@ public class RoleEntity {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getInstruction() {
-		return instruction;
+	public List<String> getInstructions() {
+		return instructions;
 	}
-	public void setInstruction(String instruction) {
-		this.instruction = instruction;
+	public void setInstructions(List<String> instructions) {
+		this.instructions = instructions;
 	}
 	public int getNumPlayerChoose() {
 		return numPlayerChoose;
