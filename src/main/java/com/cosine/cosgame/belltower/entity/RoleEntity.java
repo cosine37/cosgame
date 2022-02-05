@@ -6,6 +6,7 @@ public class RoleEntity {
 	String img;
 	String desc;
 	String instruction;
+	int numPlayerChoose;
 	
 	public int getId() {
 		return id;
@@ -36,6 +37,12 @@ public class RoleEntity {
 	}
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
+	}
+	public int getNumPlayerChoose() {
+		return numPlayerChoose;
+	}
+	public void setNumPlayerChoose(int numPlayerChoose) {
+		this.numPlayerChoose = numPlayerChoose;
 	}
 	
 }

@@ -83,6 +83,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		
 		$scope.submitGroupNumbers = function(){
 			if ($scope.canSubmitGroupNumbers()){
 				var data = {
@@ -94,95 +95,54 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				});
 			}
 		}
+		// night handles
+		/*
+		 * Indexes for targets
+		 * 0: option;
+		 * 1: first player;
+		 * 2: second player;
+		 * 
+		 */
+		$scope.targets = [-1,-1,-1,-1,-1]
+		$scope.chosenPlayer = -1;
+		$scope.chosenPlayer2 = -1;
+		
+		$scope.numChosenPlayer = function(){
+			if ($scope.chosenPlayer == -1){
+				return 0;
+			} else if ($scope.chosenPlayer2 == -1){
+				return 1;
+			} else {
+				return 2;
+			}
+		}
+		
+		$scope.choosePlayer = function(x){
+			if ($scope.gamedata.myRole.numPlayerChoose == 0){
+				
+			} else if ($scope.gamedata.myRole.numPlayerChoose == 1){
+				if ($scope.chosenPlayer == x){
+					$scope.chosenPlayer = -1
+				} else {
+					$scope.chosenPlayer = x
+				}
+			} else if ($scope.gamedata.myRole.numPlayerChoose == 2){
+				
+			}
+		}
 		
 		$scope.confirmNight = function(){
-			$http.post("/belltower/confirmnight").then(function(response){
+			$scope.targets[1] = $scope.chosenPlayer;
+			$scope.targets[2] = $scope.chosenPlayer2;
+			
+			var data = {
+				"targets" : $scope.targets
+			}
+			$http({url: "/belltower/confirmnight", method: "POST", params:data}).then(function(response){
 				$scope.allRefresh()
 			});
 		}
 		
-		// Choose Role Section
-		/*
-		$scope.changeGhost = function(){
-			$http.post("/belltower/changeghost").then(function(response){
-				$scope.allRefresh()
-			});
-		}
-		
-		$scope.confirmRoles = function(){
-			$http.post("/belltower/confirmroles").then(function(response){
-				$scope.allRefresh()
-			});
-		}
-		*/
-		// End Choose Role Section
-		
-		// Human Choose Place Section
-		/*
-		$scope.chosenPlace = [0,0,0,0,0,0,0,0,0,0,0,0];
-		$scope.clickPlace = function(x){
-			if (x>0 && x<$scope.chosenPlace.length){
-				if ($scope.chosenPlace[x] == 1){
-					$scope.chosenPlace[x] = 0
-				} else if ($scope.chosenPlace[x] == 0){
-					var numChosen = 0;
-					for (i=0;i<$scope.chosenPlace.length;i++){
-						numChosen = numChosen+$scope.chosenPlace[i]
-					}
-					if (numChosen<$scope.gamedata.myNumPlaceNextTurn){
-						$scope.chosenPlace[x] = 1
-					} else if ($scope.gamedata.myNumPlaceNextTurn == 1){
-						for (i=0;i<$scope.chosenPlace.length;i++){
-							$scope.chosenPlace[i] = 0;
-						}
-						$scope.chosenPlace[x] = 1
-					}
-				}
-			}
-		}
-		
-		$scope.submitPlace = function(){
-			if ($scope.canSubmitPlace()){
-				var data = {
-					"targets" : $scope.chosenPlace
-				}
-				
-				$http({url: "/propnight/chooseplace", method: "POST", params:data}).then(function(response){
-					$scope.allRefresh()
-				});
-			}
-		}
-		
-		$scope.canSubmitPlace = function(){
-			if ($scope.gamedata == null) return false
-			var numChosen = 0;
-			for (i=0;i<$scope.chosenPlace.length;i++){
-				numChosen = numChosen+$scope.chosenPlace[i]
-			}
-			if (numChosen == $scope.gamedata.myNumPlaceNextTurn){
-				return $scope.showChoosePlace()
-			} else {
-				return false;
-			}
-		}
-		
-		$scope.showChoosePlace = function(){
-			if ($scope.gamedata.myRole == 0){
-				if ($scope.gamedata.phase == 1){
-					return true
-				} else {
-					return false
-				}
-			} else if ($scope.gamedata.myRole == 1){
-				if ($scope.gamedata.phase == 2){
-					return true
-				} else {
-					return false
-				}
-			}
-		}
-		*/
-		// End Human Choose Place Section
 		$scope.getBoard = function(){
 			$http.get('/belltower/getboard').then(function(response){
 				if (response.data.id == "NE"){

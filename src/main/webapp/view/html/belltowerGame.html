@@ -37,6 +37,21 @@
 			<button ng-click="submitGroupNumbers()" ng-disabled="canSubmitGroupNumbers() == false">进入第一夜</button>
 		</div>
 	</div>
+	<div ng-show="status==INGAME">
+		<div>
+			<table>
+				<tr ng-repeat="p in players track by $index">
+					<td>
+						<button ng-click="choosePlayer($index)">{{p.name}}</button>
+					</td>
+					<td>
+						<span ng-show="chosenPlayer == $index">已选择</span>
+						<span ng-show="chosenPlayer != $index">未选择</span>
+					</td>
+				<tr>
+			</table>
+		</div>
+	</div>
 	
 	<div ng-show="status==INGAME">
 		<div ng-show="phase==NIGHT">

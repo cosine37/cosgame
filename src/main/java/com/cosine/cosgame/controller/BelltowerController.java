@@ -96,7 +96,7 @@ public class BelltowerController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/belltower/confirmnight", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> submitNight(HttpServletRequest request){
+	public ResponseEntity<StringEntity> submitNight(HttpServletRequest request, @RequestParam List<Integer> targets){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -107,7 +107,7 @@ public class BelltowerController {
 			if (board.isLord(username)) {
 				Player p = board.getPlayerByName(username);
 				if (p != null) {
-					p.confirmNight();
+					p.confirmNight(targets);
 					if (board.allConfirmedNight()) {
 						board.endNight();
 					}

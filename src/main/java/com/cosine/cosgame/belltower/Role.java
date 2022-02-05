@@ -163,6 +163,22 @@ public class Role {
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
+	public boolean isHasFirstNight() {
+		return hasFirstNight;
+	}
+	public void setHasFirstNight(boolean hasFirstNight) {
+		this.hasFirstNight = hasFirstNight;
+	}
+	public boolean isHasRestNights() {
+		return hasRestNights;
+	}
+	public void setHasRestNights(boolean hasRestNights) {
+		this.hasRestNights = hasRestNights;
+	}
+	public void setNumPlayerChoose(int numPlayerChoose) {
+		this.numPlayerChoose = numPlayerChoose;
+	}
+
 	public List<String> getInstruction() {
 		String s =  "你的身份是 " + name;
 		List<String> instruction = new ArrayList<>();
@@ -176,6 +192,7 @@ public class Role {
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setImg(img);
+		entity.setNumPlayerChoose(getNumPlayerChoose());
 		return entity;
 	}
 }

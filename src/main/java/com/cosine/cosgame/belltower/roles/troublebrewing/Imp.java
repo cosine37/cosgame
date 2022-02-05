@@ -16,6 +16,7 @@ public class Imp extends Role{
 		group = Consts.DEMON;
 		hasFirstNight = false;
 		hasRestNights = true;
+		numPlayerChoose = 1;
 		desc = "从第二夜起，夜晚阶段击杀一名玩家。";
 	}
 	

@@ -26,4 +26,9 @@ public class Consts {
 	public static final int EVERYNIGHT = 1;
 	public static final int EVERYAFTERFIRST = 2;
 	public static final int FIRSTONLY = 3;
+	
+	// option indexes
+	public static final int OPTION = 0;
+	public static final int FIRSTPLAYER = 1;
+	public static final int SECONDPLAYER = 2;
 }

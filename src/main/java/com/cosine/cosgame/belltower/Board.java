@@ -9,6 +9,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.BoardEntity;
 import com.cosine.cosgame.belltower.entity.PlayerEntity;
+import com.cosine.cosgame.belltower.roles.troublebrewing.*;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -66,7 +67,16 @@ public class Board {
 		// TODO: Deal with sequences
 		int i;
 		for (i=0;i<players.size();i++) {
-			players.get(i).getRole().execSkill();
+			Role r = players.get(i).getRole();
+			if (numDay == 1) {
+				if (r.isHasFirstNight()) {
+					r.execSkill();
+				}
+			} else {
+				if (r.isHasRestNights()) {
+					r.execSkill();
+				}
+			}
 		}
 		phase = Consts.DAY;
 	}
@@ -79,8 +89,11 @@ public class Board {
 			int x = rand.nextInt(roles.size());
 			Role r = roles.remove(x);
 			players.get(i).gameStart(r);
-			//System.out.println(players.get(i).isAlive());
 		}
+		
+		// TODO: Assign roles here
+		Role r1 = new Imp();
+		players.get(0).setRole(r1);
 	}
 	
 	public boolean allConfirmedNight() {
