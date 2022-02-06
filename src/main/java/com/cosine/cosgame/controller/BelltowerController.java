@@ -143,6 +143,55 @@ public class BelltowerController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/belltower/nominate", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> nominate(HttpServletRequest request, @RequestParam int target){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				Player p = board.getPlayerByName(username);
+				if (p != null) {
+					if (p.getIndex() == board.getCurNominator()) {
+						board.nominate(target);
+						board.updateBasicDB();
+						board.updatePlayers();
+					}
+					
+				}
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/belltower/vote", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> vote(HttpServletRequest request, @RequestParam boolean f){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				Player p = board.getPlayerByName(username);
+				if (p != null) {
+					if (p.getIndex() == board.getCurVoter()) {
+						board.vote(f);
+						board.updateBasicDB();
+						board.updatePlayers();
+					}
+				}
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/belltower/confirmday", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> submitDay(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

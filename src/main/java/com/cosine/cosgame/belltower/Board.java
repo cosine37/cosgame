@@ -27,6 +27,14 @@ public class Board {
 	
 	MongoDBUtil dbutil;
 	
+	int sequence; // clockwise or counterclockwise
+	int firstNominator;
+	int curNominator;
+	int curVoter;
+	int nominated;
+	int voteCount;
+	List<Integer> voteResults;
+	
 	public Board() {
 		groupCounts = new ArrayList<>();
 		players = new ArrayList<>();
@@ -45,6 +53,21 @@ public class Board {
 		// TODO: customize script choice here
 		script = ScriptFactory.makeScript(1);
 		
+	}
+	
+	public void assignRoles() {
+		List<Role> roles = script.getRoles(groupCounts);
+		Random rand = new Random();
+		for (int i=0;i<players.size();i++) {
+			if (roles.size() == 0) break;
+			int x = rand.nextInt(roles.size());
+			Role r = roles.remove(x);
+			players.get(i).gameStart(r);
+		}
+		
+		// TODO: Assign roles here
+		Role r1 = new Imp();
+		players.get(0).setRole(r1);
 	}
 	
 	public void startFirstNight() {
@@ -113,8 +136,20 @@ public class Board {
 				morningMsg = morningMsg + killedMsg[x];
 			}
 		}
-		
 		phase = Consts.DAY;
+	}
+	
+	public void startDay() {
+		Random rand = new Random();
+		firstNominator = rand.nextInt(players.size());
+		curNominator = firstNominator;
+		nominated = -1;
+		boolean f = rand.nextBoolean();
+		if (f) {
+			sequence = 1;
+		} else {
+			sequence = -1;
+		}
 	}
 	
 	public void endDay() {
@@ -122,19 +157,106 @@ public class Board {
 		phase = Consts.NIGHT;
 	}
 	
-	public void assignRoles() {
-		List<Role> roles = script.getRoles(groupCounts);
-		Random rand = new Random();
-		for (int i=0;i<players.size();i++) {
-			if (roles.size() == 0) break;
-			int x = rand.nextInt(roles.size());
-			Role r = roles.remove(x);
-			players.get(i).gameStart(r);
+	public void nominate(int x) {
+		if (x == -1) {
+			nextPlayerNominate();
+		} else if (players.get(x).isNominated() == false){
+			nominated = x;
+			voteCount = 0;
+			curVoter = curNominator;
+			players.get(x).receiveNomination();
+		}
+	}
+	public void vote(boolean f) {
+		if (curVoter<0 || curVoter>=players.size()) {
+			return;
+		}
+		Player p = players.get(curVoter);
+		if (p.isCanVote() == false) {
+			f = false;
+		}
+		if (f) {
+			voteCount++;
+			if (p.isAlive() == false) {
+				p.setCanVote(false);
+			}
 		}
 		
-		// TODO: Assign roles here
-		Role r1 = new Imp();
-		players.get(0).setRole(r1);
+		curVoter = curVoter + sequence;
+		if (curVoter >= players.size()) {
+			curVoter = curVoter - players.size();
+		}
+		if (curVoter < 0) {
+			curVoter = curVoter + players.size();
+		}
+		
+		if (curVoter == curNominator) {
+			if (voteCount*2 >= numAlivePlayers()) {
+				voteResults.add(nominated*100+voteCount);
+			}
+			nextPlayerNominate();
+		}
+	}
+	public void nextPlayerNominate() {
+		curNominator = curNominator + sequence;
+		if (curNominator >= players.size()) {
+			curNominator = curNominator - players.size();
+		}
+		if (curNominator < 0) {
+			curNominator = curNominator + players.size();
+		}
+		if (players.get(curNominator).isAlive() == false) {
+			nextPlayerNominate();
+		} else if (curNominator == firstNominator) {
+			executionCheck();
+		}
+	}
+	public void executionCheck() {
+		int i;
+		int maxVotes = 0;
+		int executedIndex = -1;
+		for (i=0;i<voteResults.size();i++) {
+			int numVotes = voteResults.get(i)%100;
+			int index = voteResults.get(i)/100;
+			if (numVotes > maxVotes) {
+				maxVotes = numVotes;
+				executedIndex = index;
+			}
+			if (numVotes == maxVotes) {
+				executedIndex = -1;
+			}
+		}
+		if (executedIndex != -1) {
+			execute(executedIndex);
+		}
+	}
+	public void execute(int executedIndex) {
+		if (executedIndex>=0 && executedIndex<players.size()) {
+			Player p = players.get(executedIndex);
+			p.executed();
+			String executionMsg = "";
+			Random rand = new Random();
+			int x = rand.nextInt(2);
+			if (x == 0) {
+				executionMsg = p.getDisplayName() + "被处决了。";
+				p.addLog("你被处决了。");
+			} else if (x == 1) {
+				executionMsg = p.getDisplayName() + "被选票淹死了。";
+				p.addLog("你被选票淹死了。");
+			}
+			broadcastExcept(executionMsg, executedIndex);
+		}
+	}
+	public void broadcastExcept(String log, int exception) {
+		if (log == null || log.contentEquals("")) return;
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (exception == i) continue;
+			players.get(i).addLog(log);
+		}
+	}
+	public void broadcast(String log) {
+		broadcastExcept(log, -1);
 	}
 	
 	public boolean allConfirmedNight() {
@@ -154,6 +276,16 @@ public class Board {
 			if (players.get(i).isConfirmedDay() == false) {
 				ans = false;
 				break;
+			}
+		}
+		return ans;
+	}
+	
+	public int numAlivePlayers() {
+		int ans = 0;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isAlive()) {
+				ans++;
 			}
 		}
 		return ans;
@@ -233,6 +365,50 @@ public class Board {
 	public void setMorningMsg(String morningMsg) {
 		this.morningMsg = morningMsg;
 	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public int getFirstNominator() {
+		return firstNominator;
+	}
+	public void setFirstNominator(int firstNominator) {
+		this.firstNominator = firstNominator;
+	}
+	public int getCurNominator() {
+		return curNominator;
+	}
+	public void setCurNominator(int curNominator) {
+		this.curNominator = curNominator;
+	}
+	public int getCurVoter() {
+		return curVoter;
+	}
+	public void setCurVoter(int curVoter) {
+		this.curVoter = curVoter;
+	}
+	public int getNominated() {
+		return nominated;
+	}
+	public void setNominated(int nominated) {
+		this.nominated = nominated;
+	}
+	public int getVoteCount() {
+		return voteCount;
+	}
+	public void setVoteCount(int voteCount) {
+		this.voteCount = voteCount;
+	}
+
+	public List<Integer> getVoteResults() {
+		return voteResults;
+	}
+
+	public void setVoteResults(List<Integer> voteResults) {
+		this.voteResults = voteResults;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -311,6 +487,13 @@ public class Board {
 		updateDB("numDay", numDay);
 		updateDB("killedIndexes", killedIndexes);
 		updateDB("morningMsg", morningMsg);
+		updateDB("sequence", sequence);
+		updateDB("curNominator", curNominator);
+		updateDB("curVoter", curVoter);
+		updateDB("firstNominator", firstNominator);
+		updateDB("nominated", nominated);
+		updateDB("voteCount", voteCount);
+		updateDB("voteResults", voteResults);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -360,6 +543,13 @@ public class Board {
 		doc.append("numDay", numDay);
 		doc.append("killedIndexes", killedIndexes);
 		doc.append("morningMsg", morningMsg);
+		doc.append("sequence", sequence);
+		doc.append("firstNominator", firstNominator);
+		doc.append("curNominator", curNominator);
+		doc.append("curVoter", curVoter);
+		doc.append("nominated", nominated);
+		doc.append("voteCount", voteCount);
+		doc.append("voteResults", voteResults);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -379,6 +569,13 @@ public class Board {
 		phase = doc.getInteger("phase", -1);
 		numDay = doc.getInteger("numDay", 0);
 		morningMsg = doc.getString("morningMsg");
+		sequence = doc.getInteger("sequence", 1);
+		firstNominator = doc.getInteger("firstNominator", -1);
+		curNominator = doc.getInteger("curNominator", -1);
+		curVoter = doc.getInteger("curVoter", -1);
+		nominated = doc.getInteger("nominated", -1);
+		voteCount = doc.getInteger("voteCount", 0);
+		voteResults = (List<Integer>) doc.get("voteResults");
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -392,6 +589,7 @@ public class Board {
 			Document dop = (Document) doc.get(name);
 			Player p = new Player();
 			p.setBoard(this);
+			p.setIndex(i);
 			p.setFromDoc(dop);
 			players.add(p);
 		}

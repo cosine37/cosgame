@@ -8,6 +8,7 @@ public class PlayerEntity {
 	List<String> logs;
 	boolean alive;
 	boolean canVote;
+	boolean nominated;
 	String displayName;
 	
 	public String getName() {
@@ -45,6 +46,12 @@ public class PlayerEntity {
 	}
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+	public boolean isNominated() {
+		return nominated;
+	}
+	public void setNominated(boolean nominated) {
+		this.nominated = nominated;
 	}
 	
 }

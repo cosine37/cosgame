@@ -16,12 +16,14 @@ public class Player {
 	List<Integer> extraBits;
 	List<Integer> targets;
 	List<String> logs;
+	int index;
 	boolean confirmedNight;
 	boolean confirmedDay;
 	boolean poisoned;
 	boolean alive;
 	boolean canVote;
 	boolean unaffectedByDemon;
+	boolean nominated;
 	
 	public Player() {
 		role = new Role();
@@ -56,10 +58,19 @@ public class Player {
 		confirmedDay = true;
 	}
 	
+	public void receiveNomination() {
+		nominated = true;
+		//TODO: role related
+	}
+	
+	public void executed() {
+		alive = false;
+		//TODO: role related
+	}
+	
 	public void addLog(String log) {
 		logs.add(log);
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -144,6 +155,18 @@ public class Player {
 	public void setConfirmedDay(boolean confirmedDay) {
 		this.confirmedDay = confirmedDay;
 	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public boolean isNominated() {
+		return nominated;
+	}
+	public void setNominated(boolean nominated) {
+		this.nominated = nominated;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -160,6 +183,7 @@ public class Player {
 		doc.append("displayName", displayName);
 		doc.append("lastNightMsg", lastNightMsg);
 		doc.append("unaffectedByDemon", unaffectedByDemon);
+		doc.append("nominated", nominated);
 		return doc;
 	}
 	
@@ -180,6 +204,7 @@ public class Player {
 		displayName = doc.getString("displayName");
 		lastNightMsg = doc.getString("lastNightMsg");
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
+		nominated = doc.getBoolean("nominated", false);
 	}
 	
 	public PlayerEntity toPlayerEntity() {
@@ -189,6 +214,7 @@ public class Player {
 		entity.setLogs(logs);
 		entity.setName(name);
 		entity.setDisplayName(displayName);
+		entity.setNominated(nominated);
 		return entity;
 	}
 }
