@@ -51,6 +51,29 @@ public class BelltowerController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/belltower/changedisplayname", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeDisplayName(HttpServletRequest request, @RequestParam String displayName){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isLord(username)) {
+				Player p = board.getPlayerByName(username);
+				if (p != null) {
+					p.setDisplayName(displayName);
+					//board.updateBasicDB();
+					//board.updatePlayers();
+					board.updatePlayer(p.getName());
+				}
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/belltower/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
 		StringEntity entity = new StringEntity();

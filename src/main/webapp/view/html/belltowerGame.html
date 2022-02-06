@@ -47,7 +47,7 @@
 			<table>
 				<tr ng-repeat="p in players track by $index">
 					<td>
-						<button ng-click="choosePlayer($index)">{{p.name}}</button>
+						<button ng-click="choosePlayer($index)">{{p.displayName}}</button>
 					</td>
 					<td>
 						<span ng-show="chosenPlayer == $index">已选择</span>

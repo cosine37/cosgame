@@ -50,6 +50,15 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		$scope.changeDisplayName = function(){
+			var data = {
+				"displayName" : $scope.displayName	
+			}
+				
+			$http({url: "/belltower/changedisplayname", method: "POST", params:data}).then(function(response){
+				$scope.allRefresh();
+			});
+		}
 		
 		$scope.startGame = function(){
 			var data = {
@@ -74,6 +83,7 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.status = response.data.status
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
+				$scope.displayName = response.data.myDisplayName;
 				if ($scope.status == '1'){
 					$scope.goto('belltowergame');
 				}

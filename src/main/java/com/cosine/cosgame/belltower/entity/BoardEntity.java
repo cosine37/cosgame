@@ -6,6 +6,7 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String morningMsg;
+	String myDisplayName;
 	int status;
 	int phase;
 	int numDay;
@@ -75,6 +76,12 @@ public class BoardEntity {
 	}
 	public void setMorningMsg(String morningMsg) {
 		this.morningMsg = morningMsg;
+	}
+	public String getMyDisplayName() {
+		return myDisplayName;
+	}
+	public void setMyDisplayName(String myDisplayName) {
+		this.myDisplayName = myDisplayName;
 	}
 	
 }

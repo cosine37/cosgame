@@ -20,7 +20,21 @@
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
 	<div>
-		<p ng-repeat="p in players">{{p.name}}</p>
+		<table>
+			<tr>
+				<td>用户名</td>
+				<td>游戏中显示</td>
+			</tr>
+			<tr ng-repeat="p in players track by $index">
+				<td>{{p.name}}</td>
+				<td>{{p.displayName}}</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<span>你可以修改你游戏中显示的姓名：</span>
+		<input type="text" ng-model="displayName">
+		<button ng-click="changeDisplayName()">提交</button>
 	</div>
 	{{gamedata}}
 </body>

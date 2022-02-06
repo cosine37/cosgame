@@ -86,14 +86,14 @@ public class Board {
 			Random rand = new Random();
 			int temp = rand.nextInt(4);
 			if (temp == 0 && killedIndexes.size()==1) {
-				String name = players.get(killedIndexes.get(0)).getName();
+				String name = players.get(killedIndexes.get(0)).getDisplayName();
 				for (i=0;i<name.length();i++) {
 					morningMsg = morningMsg + name.charAt(i) + "——";
 				}
 			} else {
 				List<String> names = new ArrayList<>();
 				for (i=0;i<killedIndexes.size();i++) {
-					String name = players.get(killedIndexes.get(i)).getName();
+					String name = players.get(killedIndexes.get(i)).getDisplayName();
 					names.add(name);
 				}
 				morningMsg = "昨晚，";
@@ -237,6 +237,7 @@ public class Board {
 	public void addPlayer(String name) {
 		Player p = new Player();
 		p.setName(name);
+		p.setDisplayName(name);
 		players.add(p);
 	}
 	
@@ -413,6 +414,7 @@ public class Board {
 				entity.setMyRole(p.getRole().toRoleEntity());
 				entity.setMyLogs(p.getLogs());
 				entity.setMyLastNightMsg(p.getLastNightMsg());
+				entity.setMyDisplayName(p.getDisplayName());
 			}
 		}
 		entity.setPlayers(playerEntities);
