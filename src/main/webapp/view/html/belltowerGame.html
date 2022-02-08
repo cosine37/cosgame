@@ -53,8 +53,20 @@
 						<span ng-show="chosenPlayer == $index">已选择</span>
 						<span ng-show="chosenPlayer != $index">未选择</span>
 					</td>
+					<td>
+						<button ng-show="showNoNominate" ng-click="nominate($index)">指控该玩家</button>
+					</td>
 				<tr>
 			</table>
+		</div>
+		<div ng-show="phase==DAY">
+			<div>{{nominateMessage}}</div>
+			<div>
+				<span>{{userNVMsg}}</span>
+				<button ng-show="showNoNominate" ng-click="nominate(-1)">不指控</button>
+				<button ng-show="showNoVote" ng-click="vote(true)">投票</button>
+				<button ng-show="showNoVote" ng-click="vote(false)">不投票</button>
+			</div>
 		</div>
 		<div ng-show="phase==NIGHT">
 			<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>

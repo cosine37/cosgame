@@ -145,6 +145,9 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.canConfirmNight = function(){
+			if ($scope.gamedata == null){
+				return false;
+			}
 			var npc = $scope.gamedata.myRole.numPlayerChoose;
 			if (npc == 0) {
 				return true;
@@ -163,12 +166,59 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		// ---- end night handles
 		
 		// day handles
+		$scope.vote = function(x){
+			var data = {
+				"f" : x
+			}
+			$http({url: "/belltower/vote", method: "POST", params:data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
+		$scope.nominate = function(x){
+			var data = {
+				"target" : x
+			}
+			$http({url: "/belltower/nominate", method: "POST", params:data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
 		$scope.confirmDay = function(){
 			$http({url: "/belltower/confirmday", method: "POST"}).then(function(response){
 				$scope.allRefresh()
 			});
 		}
 		// ---- end day handles
+		
+		var setNominateMessage = function(){
+			$scope.nominateMessage = "今早首位发言玩家是" + $scope.players[$scope.gamedata.firstNominator].displayName + "，发言顺序为";
+			
+			if ($scope.gamedata.sequence == 1){
+				$scope.nominateMessage = $scope.nominateMessage + "顺时针。"
+			} else if ($scope.gamedata.sequence = -1){
+				$scope.nominateMessage = $scope.nominateMessage + "逆时针。"
+			}
+			
+			$scope.userNVMsg = "";
+			$scope.showNoVote = false;
+			$scope.showNoNominate = false;
+			if ($scope.gamedata.curVoter == -1){
+				if ($scope.gamedata.curNominator == $scope.gamedata.myIndex){
+					$scope.userNVMsg = "请选择你想要指控的对象。";
+					$scope.showNoNominate = true;
+				} else {
+					$scope.userNVMsg = "正等待" + $scope.players[$scope.gamedata.curNominator].displayName + "决定指控对象。";
+				}
+			} else {
+				if ($scope.gamedata.curVoter == $scope.gamedata.myIndex){
+					$scope.userNVMsg = "你是否要投票给" + $scope.players[$scope.gamedata.nominated].displayName + "?";
+					$scope.showNoVote = true;
+				} else {
+					$scope.userNVMsg = "正等待" + $scope.players[$scope.gamedata.curVoter].displayName + "决定是否需要投票给" + $scope.players[$scope.gamedata.nominated].displayName + "?";
+				}
+			}
+		}
 		
 		$scope.getBoard = function(){
 			$http.get('/belltower/getboard').then(function(response){
@@ -182,7 +232,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.phase = response.data.phase
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
-				
+				setNominateMessage()
 			});
 		}
 		

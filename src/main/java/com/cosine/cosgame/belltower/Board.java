@@ -141,9 +141,20 @@ public class Board {
 	
 	public void startDay() {
 		Random rand = new Random();
-		firstNominator = rand.nextInt(players.size());
+		//firstNominator = rand.nextInt(players.size());
+		int i;
+		List<Integer> a = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isAlive()) {
+				a.add(i);
+			}
+		}
+		int x = rand.nextInt(a.size());
+		firstNominator = a.get(x);
 		curNominator = firstNominator;
+		curVoter = -1;
 		nominated = -1;
+		voteResults = new ArrayList<>();
 		boolean f = rand.nextBoolean();
 		if (f) {
 			sequence = 1;
@@ -198,6 +209,8 @@ public class Board {
 		}
 	}
 	public void nextPlayerNominate() {
+		curVoter = -1;
+		nominated = -1;
 		curNominator = curNominator + sequence;
 		if (curNominator >= players.size()) {
 			curNominator = curNominator - players.size();
@@ -603,6 +616,11 @@ public class Board {
 		entity.setPhase(phase);
 		entity.setStatus(status);
 		entity.setMorningMsg(morningMsg);
+		entity.setSequence(sequence);
+		entity.setFirstNominator(firstNominator);
+		entity.setCurNominator(curNominator);
+		entity.setCurVoter(curVoter);
+		entity.setNominated(nominated);
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {
@@ -613,6 +631,7 @@ public class Board {
 				entity.setMyLogs(p.getLogs());
 				entity.setMyLastNightMsg(p.getLastNightMsg());
 				entity.setMyDisplayName(p.getDisplayName());
+				entity.setMyIndex(i);
 			}
 		}
 		entity.setPlayers(playerEntities);

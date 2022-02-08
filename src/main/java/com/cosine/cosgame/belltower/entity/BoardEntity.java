@@ -10,7 +10,13 @@ public class BoardEntity {
 	int status;
 	int phase;
 	int numDay;
+	int sequence;
+	int firstNominator;
+	int curNominator;
+	int curVoter;
+	int nominated;
 	
+	int myIndex;
 	RoleEntity myRole;
 	String myLastNightMsg;
 	List<String> myLogs;
@@ -82,6 +88,42 @@ public class BoardEntity {
 	}
 	public void setMyDisplayName(String myDisplayName) {
 		this.myDisplayName = myDisplayName;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public int getFirstNominator() {
+		return firstNominator;
+	}
+	public void setFirstNominator(int firstNominator) {
+		this.firstNominator = firstNominator;
+	}
+	public int getCurNominator() {
+		return curNominator;
+	}
+	public void setCurNominator(int curNominator) {
+		this.curNominator = curNominator;
+	}
+	public int getCurVoter() {
+		return curVoter;
+	}
+	public void setCurVoter(int curVoter) {
+		this.curVoter = curVoter;
+	}
+	public int getNominated() {
+		return nominated;
+	}
+	public void setNominated(int nominated) {
+		this.nominated = nominated;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
 	}
 	
 }

@@ -133,6 +133,8 @@ public class BelltowerController {
 					p.confirmNight(targets);
 					if (board.allConfirmedNight()) {
 						board.endNight();
+						// TODO: May be removed later;
+						board.startDay();
 					}
 					board.updateBasicDB();
 					board.updatePlayers();
