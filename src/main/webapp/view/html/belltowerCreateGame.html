@@ -24,10 +24,12 @@
 			<tr>
 				<td>用户名</td>
 				<td>游戏中显示</td>
+				<td>头像</td>
 			</tr>
 			<tr ng-repeat="p in players track by $index">
 				<td>{{p.name}}</td>
 				<td>{{p.displayName}}</td>
+				<td>{{p.icon.character}}</td>
 			</tr>
 		</table>
 	</div>
@@ -35,6 +37,10 @@
 		<span>你可以修改你游戏中显示的姓名：</span>
 		<input type="text" ng-model="displayName">
 		<button ng-click="changeDisplayName()">提交</button>
+	</div>
+	<div>
+		<button ng-click="changeIcon(0)">更换头像0</button>
+		<button ng-click="changeIcon(1)">更换头像1</button>
 	</div>
 	{{gamedata}}
 </body>

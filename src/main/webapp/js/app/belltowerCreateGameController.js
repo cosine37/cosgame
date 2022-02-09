@@ -50,6 +50,20 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 			});
 		}
 		
+		$scope.chosenIcon = 0;
+		$scope.changeIcon = function(x){
+			var iconArr = [0,0]
+			iconArr[0] = x;
+			
+			var data = {
+				"icon" : iconArr
+			}
+	
+			$http({url: "/belltower/changeicon", method: "POST", params:data}).then(function(response){
+				$scope.allRefresh();
+			});
+		}
+		
 		$scope.changeDisplayName = function(){
 			var data = {
 				"displayName" : $scope.displayName	

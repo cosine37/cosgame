@@ -10,6 +10,7 @@ public class PlayerEntity {
 	boolean canVote;
 	boolean nominated;
 	String displayName;
+	IconEntity icon;
 	
 	public String getName() {
 		return name;
@@ -52,6 +53,12 @@ public class PlayerEntity {
 	}
 	public void setNominated(boolean nominated) {
 		this.nominated = nominated;
+	}
+	public IconEntity getIcon() {
+		return icon;
+	}
+	public void setIcon(IconEntity icon) {
+		this.icon = icon;
 	}
 	
 }

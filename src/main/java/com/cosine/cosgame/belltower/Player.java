@@ -11,6 +11,7 @@ public class Player {
 	String name;
 	String displayName;
 	protected String lastNightMsg;
+	Icon icon;
 	Role role;
 	Board board;
 	List<Integer> extraBits;
@@ -30,6 +31,7 @@ public class Player {
 		extraBits = new ArrayList<>();
 		targets = new ArrayList<>();
 		logs = new ArrayList<>();
+		icon = new Icon();
 	}
 	
 	public void gameStart(Role r) {
@@ -37,6 +39,10 @@ public class Player {
 		poisoned = false;
 		canVote = true;
 		role = r;
+	}
+	
+	public void assignIcon(List<Integer> iconArr) {
+		icon.assignIcon(iconArr);
 	}
 	
 	public void startNight() {
@@ -167,6 +173,12 @@ public class Player {
 	public void setNominated(boolean nominated) {
 		this.nominated = nominated;
 	}
+	public Icon getIcon() {
+		return icon;
+	}
+	public void setIcon(Icon icon) {
+		this.icon = icon;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -184,6 +196,7 @@ public class Player {
 		doc.append("lastNightMsg", lastNightMsg);
 		doc.append("unaffectedByDemon", unaffectedByDemon);
 		doc.append("nominated", nominated);
+		doc.append("icon", icon.toDocument());
 		return doc;
 	}
 	
@@ -197,6 +210,9 @@ public class Player {
 		role = RoleFactory.makeRole(roleId);
 		role.setPlayer(this);
 		role.setBoard(board);
+		Document doi = (Document) doc.get("icon");
+		icon = new Icon();
+		icon.setFromDoc(doi);
 		canVote = doc.getBoolean("canVote", true);
 		targets = (List<Integer>) doc.get("targets");
 		confirmedNight = doc.getBoolean("confirmedNight", false);
@@ -215,6 +231,7 @@ public class Player {
 		entity.setName(name);
 		entity.setDisplayName(displayName);
 		entity.setNominated(nominated);
+		entity.setIcon(icon.toIconEntity());
 		return entity;
 	}
 }
