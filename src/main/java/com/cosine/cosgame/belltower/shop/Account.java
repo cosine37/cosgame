@@ -116,6 +116,25 @@ public class Account {
 	public void setDbutil(MongoDBUtil dbutil) {
 		this.dbutil = dbutil;
 	}
+	public void getFromDB(String username) {
+		Document userDoc = dbutil.read("username", username);
+		if (userDoc.get("belltower") == null) {
+			name = username;
+			Document doc = toDocument();
+			dbutil.update("username", username, "belltower", doc);
+		} else {
+			Document doc = (Document) userDoc.get("belltower");
+			setFromDoc(doc);
+		}
+	}
+	public void updateAccountDB(String username) {
+		Document doc = toDocument();
+		dbutil.update("username", username, "threechaodoms", doc);
+	}
+	
+	public void updateAccountDB() {
+		updateAccountDB(name);
+	}
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("name", name);

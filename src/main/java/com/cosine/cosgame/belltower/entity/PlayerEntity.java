@@ -6,6 +6,7 @@ public class PlayerEntity {
 	String name;
 	List<Integer> extraBits;
 	List<String> logs;
+	
 	boolean alive;
 	boolean canVote;
 	boolean nominated;

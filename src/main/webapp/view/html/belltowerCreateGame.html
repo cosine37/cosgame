@@ -38,10 +38,18 @@
 		<input type="text" ng-model="displayName">
 		<button ng-click="changeDisplayName()">提交</button>
 	</div>
+	<!-- 
 	<div>
 		<button ng-click="changeIcon(0)">更换头像0</button>
 		<button ng-click="changeIcon(1)">更换头像1</button>
 	</div>
+	 -->
+	<div>
+		<div ng-repeat="x in gamedata.myAvailableCharacters track by $index">
+			<img ng-src="image/Belltower/Icons/{{x}}.png" class="icon" style="float: left" ng-click="changeIcon(x)"/>
+		</div>
+	</div>
+	<div style="clear:both"></div>
 	{{gamedata}}
 </body>
 </html>

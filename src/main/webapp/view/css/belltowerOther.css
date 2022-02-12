@@ -29,6 +29,11 @@ button:disabled{
 	background: white;
 }
 
+.icon{
+	height: 100px;
+	width: 100px;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

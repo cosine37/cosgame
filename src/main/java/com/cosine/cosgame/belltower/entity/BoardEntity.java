@@ -20,6 +20,7 @@ public class BoardEntity {
 	RoleEntity myRole;
 	String myLastNightMsg;
 	List<String> myLogs;
+	List<String> myAvailableCharacters;
 	
 	List<PlayerEntity> players;
 
@@ -124,6 +125,12 @@ public class BoardEntity {
 	}
 	public void setMyIndex(int myIndex) {
 		this.myIndex = myIndex;
+	}
+	public List<String> getMyAvailableCharacters() {
+		return myAvailableCharacters;
+	}
+	public void setMyAvailableCharacters(List<String> myAvailableCharacters) {
+		this.myAvailableCharacters = myAvailableCharacters;
 	}
 	
 }

@@ -31,4 +31,7 @@ public class Consts {
 	public static final int OPTION = 0;
 	public static final int FIRSTPLAYER = 1;
 	public static final int SECONDPLAYER = 2;
+	
+	// icon related
+	public static final int NUMDEFAULTCHARACTER = 12;
 }

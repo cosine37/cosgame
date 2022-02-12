@@ -632,6 +632,7 @@ public class Board {
 				entity.setMyLastNightMsg(p.getLastNightMsg());
 				entity.setMyDisplayName(p.getDisplayName());
 				entity.setMyIndex(i);
+				entity.setMyAvailableCharacters(p.getAvailableCharacters());
 			}
 		}
 		entity.setPlayers(playerEntities);

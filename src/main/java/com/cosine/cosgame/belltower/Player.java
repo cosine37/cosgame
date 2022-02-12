@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.PlayerEntity;
+import com.cosine.cosgame.belltower.shop.Account;
 
 public class Player {
 	String name;
@@ -17,6 +18,7 @@ public class Player {
 	List<Integer> extraBits;
 	List<Integer> targets;
 	List<String> logs;
+	List<String> availableCharacters;
 	int index;
 	boolean confirmedNight;
 	boolean confirmedDay;
@@ -25,6 +27,8 @@ public class Player {
 	boolean canVote;
 	boolean unaffectedByDemon;
 	boolean nominated;
+	
+	Account account;
 	
 	public Player() {
 		role = new Role();
@@ -73,6 +77,17 @@ public class Player {
 		alive = false;
 		//TODO: role related
 	}
+	/*
+	public List<String> getAvailableCharacters(){
+		List<String> ans = new ArrayList<>();
+		int i;
+		for (i=0;i<Consts.NUMDEFAULTCHARACTER; i++) {
+			ans.add(Integer.toString(i));
+		}
+		//TODO: apply accounts
+		return ans;
+	}
+	*/
 	
 	public void addLog(String log) {
 		logs.add(log);
@@ -179,6 +194,26 @@ public class Player {
 	public void setIcon(Icon icon) {
 		this.icon = icon;
 	}
+	public List<String> getAvailableCharacters() {
+		return availableCharacters;
+	}
+	public void setAvailableCharacters(List<String> availableCharacters) {
+		this.availableCharacters = availableCharacters;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public void setupFromAccount() {
+		int i;
+		availableCharacters = new ArrayList<>();
+		for (i=0;i<Consts.NUMDEFAULTCHARACTER;i++) {
+			availableCharacters.add(Integer.toString(i));
+		}
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -221,8 +256,9 @@ public class Player {
 		lastNightMsg = doc.getString("lastNightMsg");
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
 		nominated = doc.getBoolean("nominated", false);
+		setupFromAccount();
 	}
-	
+
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setAlive(alive);
