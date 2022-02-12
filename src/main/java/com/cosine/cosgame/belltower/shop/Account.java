@@ -43,7 +43,37 @@ public class Account {
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
-
+	
+	public void addNewTransaction(Transaction t) {
+		t.setAccount(this);
+		t.execOnAccount();
+		transactions.add(t);
+	}
+	
+	public void addNewTransactions(List<Transaction> ts) {
+		for (int i=0;i<ts.size();i++) {
+			addNewTransaction(ts.get(i));
+		}
+	}
+	
+	public void cleanAccount() {
+		money = 0;
+		diamond = 0;
+		key = 0;
+		lastLoginDate = "";
+		transactions = new ArrayList<>();
+		characters = new ArrayList<>();
+		frames = new ArrayList<>();
+	}
+	public void changeMoney(int x) {
+		money = money+x;
+	}
+	public void changeDiamond(int x) {
+		diamond = diamond+x;
+	}
+	public void changeKey(int x) {
+		key = key+x;
+	}
 	public String getName() {
 		return name;
 	}
@@ -129,7 +159,7 @@ public class Account {
 	}
 	public void updateAccountDB(String username) {
 		Document doc = toDocument();
-		dbutil.update("username", username, "threechaodoms", doc);
+		dbutil.update("username", username, "belltower", doc);
 	}
 	
 	public void updateAccountDB() {
@@ -180,6 +210,7 @@ public class Account {
 	
 	public AccountEntity toAccountEntity() {
 		AccountEntity entity = new AccountEntity();
+		entity.setName(name);
 		entity.setMoney(money);
 		entity.setDiamond(diamond);
 		entity.setKey(key);

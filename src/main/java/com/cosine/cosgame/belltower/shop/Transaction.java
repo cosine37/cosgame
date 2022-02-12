@@ -28,6 +28,16 @@ public class Transaction {
 		//this.info = "购买" + s.getSkinName() + "-" + s.getTitle();
 	}
 	
+	public void execOnAccount() {
+		if (type == MONEY) {
+			account.changeMoney(amount);
+		} else if (type == DIAMOND) {
+			account.changeDiamond(amount);
+		} else if (type == KEY) {
+			account.changeKey(amount);
+		}
+	}
+	
 	public int getType() {
 		return type;
 	}

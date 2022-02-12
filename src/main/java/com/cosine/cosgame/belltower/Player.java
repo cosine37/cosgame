@@ -268,6 +268,7 @@ public class Player {
 		entity.setDisplayName(displayName);
 		entity.setNominated(nominated);
 		entity.setIcon(icon.toIconEntity());
+		
 		return entity;
 	}
 }

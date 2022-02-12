@@ -68,6 +68,18 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.dailyReward = function(){
+			$http.post('/belltower/dailyreward').then(function(response){
+				$scope.getAccountInfo();
+			});
+		}
+		
+		$scope.cleanAccount = function(){
+			$http.post('/belltower/cleanaccount').then(function(response){
+				$scope.getAccountInfo();
+			});
+		}
+		
 		$scope.getAllBoards = function(){
 			$http.get('/belltower/allboards').then(function(response){
 				var n = response.data.value.length / 4;
@@ -95,7 +107,13 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.getAccountInfo = function(){
+			$http.get('/belltower/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
 		
+		$scope.getAccountInfo();
 		$scope.getAllBoards();
 		
 		ws.onMessage(function(){

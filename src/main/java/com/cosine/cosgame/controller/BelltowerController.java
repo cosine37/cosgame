@@ -17,7 +17,11 @@ import com.cosine.cosgame.belltower.Meta;
 import com.cosine.cosgame.belltower.Player;
 import com.cosine.cosgame.belltower.Board;
 import com.cosine.cosgame.belltower.Consts;
+import com.cosine.cosgame.belltower.entity.AccountEntity;
 import com.cosine.cosgame.belltower.entity.BoardEntity;
+import com.cosine.cosgame.belltower.shop.Account;
+import com.cosine.cosgame.belltower.shop.Shop;
+import com.cosine.cosgame.belltower.shop.Transaction;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -35,6 +39,41 @@ public class BelltowerController {
 	@RequestMapping(value="/belltowergame", method = RequestMethod.GET)
 	public String propnightGame() {
 		return "belltowerGame";
+	}
+	@RequestMapping(value="/belltower/accountinfo", method = RequestMethod.GET)
+	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		AccountEntity entity = account.toAccountEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/belltower/cleanaccount", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> cleanAccount(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.cleanAccount();
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/belltower/dailyreward", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dailyReward(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		List<Transaction> ts = shop.dailyReward();
+		account.addNewTransactions(ts);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/belltower/newboard", method = RequestMethod.POST)
