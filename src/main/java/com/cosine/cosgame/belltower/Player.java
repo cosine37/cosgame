@@ -64,6 +64,10 @@ public class Player {
 		confirmedNight = true;
 	}
 	
+	public void startDay() {
+		nominated = false;
+	}
+	
 	public void confirmDay() {
 		confirmedDay = true;
 	}
@@ -263,7 +267,6 @@ public class Player {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setAlive(alive);
 		entity.setCanVote(canVote);
-		entity.setLogs(logs);
 		entity.setName(name);
 		entity.setDisplayName(displayName);
 		entity.setNominated(nominated);

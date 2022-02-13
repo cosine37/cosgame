@@ -4,8 +4,6 @@ import java.util.List;
 
 public class PlayerEntity {
 	String name;
-	List<Integer> extraBits;
-	List<String> logs;
 	
 	boolean alive;
 	boolean canVote;
@@ -18,18 +16,6 @@ public class PlayerEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public List<Integer> getExtraBits() {
-		return extraBits;
-	}
-	public void setExtraBits(List<Integer> extraBits) {
-		this.extraBits = extraBits;
-	}
-	public List<String> getLogs() {
-		return logs;
-	}
-	public void setLogs(List<String> logs) {
-		this.logs = logs;
 	}
 	public boolean isAlive() {
 		return alive;

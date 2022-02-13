@@ -16,6 +16,7 @@ public class Board {
 	String id;
 	String lord;
 	String morningMsg;
+	String executionMsg;
 	int status;
 	int phase;
 	int numDay;
@@ -145,6 +146,7 @@ public class Board {
 		int i;
 		List<Integer> a = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
+			players.get(i).startDay();
 			if (players.get(i).isAlive()) {
 				a.add(i);
 			}
@@ -234,20 +236,24 @@ public class Board {
 			if (numVotes > maxVotes) {
 				maxVotes = numVotes;
 				executedIndex = index;
-			}
-			if (numVotes == maxVotes) {
+			} else if (numVotes == maxVotes) {
 				executedIndex = -1;
 			}
 		}
+		
+		phase = Consts.EXECUTION;
 		if (executedIndex != -1) {
 			execute(executedIndex);
+		} else {
+			executionMsg = "没有人被处决。";
+			broadcast(executionMsg);
 		}
 	}
 	public void execute(int executedIndex) {
 		if (executedIndex>=0 && executedIndex<players.size()) {
 			Player p = players.get(executedIndex);
 			p.executed();
-			String executionMsg = "";
+			
 			Random rand = new Random();
 			int x = rand.nextInt(2);
 			if (x == 0) {
@@ -507,6 +513,7 @@ public class Board {
 		updateDB("nominated", nominated);
 		updateDB("voteCount", voteCount);
 		updateDB("voteResults", voteResults);
+		updateDB("executionMsg", executionMsg);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -563,6 +570,7 @@ public class Board {
 		doc.append("nominated", nominated);
 		doc.append("voteCount", voteCount);
 		doc.append("voteResults", voteResults);
+		doc.append("executionMsg", executionMsg);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -589,6 +597,7 @@ public class Board {
 		nominated = doc.getInteger("nominated", -1);
 		voteCount = doc.getInteger("voteCount", 0);
 		voteResults = (List<Integer>) doc.get("voteResults");
+		executionMsg = doc.getString("executionMsg");
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -621,6 +630,8 @@ public class Board {
 		entity.setCurNominator(curNominator);
 		entity.setCurVoter(curVoter);
 		entity.setNominated(nominated);
+		entity.setExecutionMsg(executionMsg);
+		entity.setVoteResults(voteResults);
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {

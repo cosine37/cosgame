@@ -54,7 +54,7 @@
 						<span ng-show="chosenPlayer != $index">未选择</span>
 					</td>
 					<td>
-						<button ng-show="showNoNominate" ng-click="nominate($index)">指控该玩家</button>
+						<button ng-show="showNoNominate" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
 					</td>
 				<tr>
 			</table>
@@ -71,8 +71,11 @@
 		<div ng-show="phase==NIGHT">
 			<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
 		</div>
-		<div ng-show="phase==DAY">
-			<button ng-click="confirmDay()">确认</button>
+		<div ng-show="phase==EXECUTION">
+			<div>{{gamedata.executionMsg}}</div>
+			<div>
+				<button ng-click="confirmDay()">确认</button>
+			</div>
 		</div>
 	</div>
 	

@@ -56,7 +56,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		
 		$scope.NIGHT = 0;
 		$scope.DAY = 2;
-		
+		$scope.EXECUTION = 3;
 		
 		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
 		$scope.groupNumbers = [0,0,0,0];

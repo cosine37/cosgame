@@ -21,6 +21,8 @@ public class BoardEntity {
 	String myLastNightMsg;
 	List<String> myLogs;
 	List<String> myAvailableCharacters;
+	String executionMsg;
+	List<Integer> voteResults;
 	
 	List<PlayerEntity> players;
 
@@ -131,6 +133,18 @@ public class BoardEntity {
 	}
 	public void setMyAvailableCharacters(List<String> myAvailableCharacters) {
 		this.myAvailableCharacters = myAvailableCharacters;
+	}
+	public String getExecutionMsg() {
+		return executionMsg;
+	}
+	public void setExecutionMsg(String executionMsg) {
+		this.executionMsg = executionMsg;
+	}
+	public List<Integer> getVoteResults() {
+		return voteResults;
+	}
+	public void setVoteResults(List<Integer> voteResults) {
+		this.voteResults = voteResults;
 	}
 	
 }

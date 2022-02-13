@@ -20,6 +20,7 @@ public class Consts {
 	public static final int NIGHT = 0;
 	public static final int NIGHTHOST = 1;
 	public static final int DAY = 2;
+	public static final int EXECUTION = 3;
 	
 	// skill types
 	public static final int NONIGHT = 0;
