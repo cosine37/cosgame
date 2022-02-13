@@ -217,6 +217,10 @@ public class Player {
 		for (i=0;i<Consts.NUMDEFAULTCHARACTER;i++) {
 			availableCharacters.add(Integer.toString(i));
 		}
+		if (account == null) return;
+		for (i=0;i<account.getCharacters().size();i++) {
+			availableCharacters.add(Integer.toString(account.getCharacters().get(i)));
+		}
 	}
 
 	public Document toDocument() {
@@ -260,6 +264,8 @@ public class Player {
 		lastNightMsg = doc.getString("lastNightMsg");
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
 		nominated = doc.getBoolean("nominated", false);
+		account = new Account();
+		account.getFromDB(name);
 		setupFromAccount();
 	}
 
@@ -271,7 +277,6 @@ public class Player {
 		entity.setDisplayName(displayName);
 		entity.setNominated(nominated);
 		entity.setIcon(icon.toIconEntity());
-		
 		return entity;
 	}
 }

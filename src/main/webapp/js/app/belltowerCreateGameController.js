@@ -83,9 +83,53 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				ws.send("start");
 				$scope.goto('belltowergame');
 			});
-			
-			
 		}
+		
+		$scope.canFlipCharPage = function(x){
+			if (x == 1){
+				if ($scope.curPage < $scope.numPages){
+					return true;
+				} else {
+					return false;
+				}
+			} else if (x == -1){
+				if ($scope.curPage > 1){
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		
+		$scope.flipCharPage = function(x){
+			$scope.curPage = $scope.curPage+x;
+			setCurCharacterPage();
+		}
+		
+		var setCurCharacterPage = function(){
+			var cols = 4;
+			var rows = 5;
+			var pageSize = 20;
+			var i,j;
+			$scope.charsCurPage = [["x","x","x","x"],["x","x","x","x"],["x","x","x","x"],["x","x","x","x"],["x","x","x","x"]];
+			for (i=0;i<rows;i++){
+				for (j=0;j<cols;j++){
+					var x = ($scope.curPage - 1)*pageSize + i*cols + j;
+					if (x>=0 && x<$scope.gamedata.myAvailableCharacters.length){
+						$scope.charsCurPage[i][j] = $scope.gamedata.myAvailableCharacters[x];
+					}
+				}
+			}
+		}
+		
+		var setCharacterDisplay = function(){
+			var pageSize = 20;
+			$scope.numPages = Math.ceil($scope.gamedata.myAvailableCharacters.length / 20);
+			$scope.curPage = 1;
+			setCurCharacterPage();
+		}
+		
+		$scope.needSetCharacterDisplay = true;
 		$scope.getBoard = function(){
 			$http.get('/belltower/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -98,6 +142,12 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
 				$scope.displayName = response.data.myDisplayName;
+				
+				if ($scope.needSetCharacterDisplay){
+					setCharacterDisplay();
+					$scope.needSetCharacterDisplay = false;
+				}
+				
 				if ($scope.status == '1'){
 					$scope.goto('belltowergame');
 				}
@@ -105,6 +155,7 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		}
 		
 		$scope.getBoard();
+		
 		
 		ws.onMessage(function(e){
 			$scope.getBoard();
