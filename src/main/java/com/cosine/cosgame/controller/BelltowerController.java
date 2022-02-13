@@ -49,6 +49,20 @@ public class BelltowerController {
 		AccountEntity entity = account.toAccountEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/belltower/dig", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dig(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		String rewardMsg = shop.dig(account);
+		List<String> ls = new ArrayList<>();
+		ls.add(rewardMsg);
+		StringEntity entity = new StringEntity();
+		entity.setValue(ls);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/belltower/cleanaccount", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> cleanAccount(HttpServletRequest request) {

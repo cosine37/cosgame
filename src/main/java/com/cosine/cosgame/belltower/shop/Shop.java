@@ -10,6 +10,15 @@ public class Shop {
 	public static final int WINREWARD = 50;
 	public static final int DIGPRICE = 88;
 	
+	public static final String[] commonNames = {"村民","村长","法师","少爷","弓手","伐木工","法师","高级木工","高级法师","觉醒法师",
+			"觉醒矿工","觉醒木工","矿工","樵夫","金币商人","商人","商人","森林法师","流浪法师","千金",
+			"勾魂眼","大嘴娃","捣蛋小妖","马加木","明耀","小照","阿芒","大臣","门卫","民兵",
+			"民兵","放债人","见习骑士","农民","蜡烛商人","骗徒","海魔女","小贩","算命者","还价者",
+			"占卜者","猪先生","奶牛头","猫将军","狗头军师"};
+	public static final String[] rareNames = {"勇士","门徒","酒商","大领主","魔术师","教徒","驱魔人","幽灵","吸血鬼","恐惧",
+			"剑客","红衣主教","拉苯博士","星月","银仁","望罗","阿米","菊伊"};
+	public static final String[] epicNames = {"火夏","刚石","珠贝","斗士","贤者","蒙娜丽龙","珍珠耳环猫","教宗"};
+	
 	public Shop() {
 		
 	}
@@ -48,8 +57,104 @@ public class Shop {
 			entity.setTitle(s.getTitle());
 		}
 		*/
+		
 		String rewardMsg = "";
+		int randTop = 256;
+		int epicRate = 1;
+		int diamond10Rate = 2;
+		int diamond5Rate = 4;
+		int diamond2Rate = 8;
+		int keyRate = 16;
+		int diamond1Rate = 32;
+		int rareRate = 64;
+		Random rand = new Random();
+		int x = rand.nextInt(randTop);
+		Transaction t1 = new Transaction(Transaction.MONEY, -88, "挖掘");
+		a.addNewTransaction(t1);
+		if (x<epicRate) {
+			int y = receiveCharacter(3, a);
+			if (y == -1) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d10";
+			} else {
+				a.addCharacter(y);
+				rewardMsg = "i" + y + epicNames[y%100];
+			}
+		} else if (x<diamond10Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d10";
+		} else if (x<diamond5Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 5, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d5";
+		} else if (x<diamond2Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 2, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d2";
+		} else if (x<keyRate) {
+			Transaction t2 = new Transaction(Transaction.KEY, 1, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "k1";
+		} else if (x<diamond1Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d1";
+		} else if (x<rareRate) {
+			int y = receiveCharacter(2, a);
+			if (y == -1) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			} else {
+				a.addCharacter(y);
+				rewardMsg = "i" + y + rareNames[y%100];
+			}
+		} else {
+			int y = receiveCharacter(1, a);
+			if (y == -1) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			} else {
+				a.addCharacter(y);
+				rewardMsg = "i" + y + commonNames[y%100];
+			}
+		}
+		
+		a.updateAccountDB();
 		return rewardMsg;
+	}
+	
+	public int receiveCharacter(int level, Account a) {
+		int ans = -1;
+		int i;
+		List<Integer> chars = new ArrayList<>();
+		if (level == 1) {
+			for (i=0;i<commonNames.length;i++) {
+				chars.add(100+i);
+			}
+		} else if (level == 2) {
+			for (i=0;i<rareNames.length;i++) {
+				chars.add(200+i);
+			}
+		} else if (level == 3) {
+			for (i=0;i<epicNames.length;i++) {
+				chars.add(300+i);
+			}
+		}
+		while (chars.size()>0) {
+			int n = chars.size();
+			Random rand = new Random();
+			int x = rand.nextInt(n);
+			int y = chars.remove(x);
+			if (a.hasCharacter(y) == false) {
+				ans = y;
+				break;
+			}
+		}
+		return ans;
 	}
 	
 	public List<Transaction> winReward(Account a){

@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/belltowerTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/belltowerOther.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -92,6 +93,24 @@
 					<div>
 						<button ng-click="dailyReward()">奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
+					</div>
+					<div ng-show="showReward == false && loadingReward == false">
+						你可以花费88枚铜币挖掘：<button ng-click="dig()" ng-disabled='accountInfo.money<88'>挖掘</button>
+					</div>
+					<div ng-show="loadingReward">
+						<div>
+							<img src="/image/Belltower/dig.gif"/>
+						</div>
+						<div>
+							正在挖掘。。。
+						</div>
+					</div>
+					<div ng-show="showReward">
+						<div>
+							<img ng-src="{{rewardImg}}" class="icon"/>
+						</div>
+						<div>{{rewardMsg}}</div>
+						<button ng-click="showReward = false">谢谢</button>
 					</div>
 					{{accountInfo}}
 				</div>

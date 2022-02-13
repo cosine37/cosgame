@@ -49,13 +49,23 @@ public class Account {
 		t.execOnAccount();
 		transactions.add(t);
 	}
-	
 	public void addNewTransactions(List<Transaction> ts) {
 		for (int i=0;i<ts.size();i++) {
 			addNewTransaction(ts.get(i));
 		}
 	}
-	
+	public void addCharacter(int x) {
+		characters.add(x);
+	}
+	public boolean hasCharacter(int x) {
+		int i;
+		for (i=0;i<characters.size();i++) {
+			if (characters.get(i) == x) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public void cleanAccount() {
 		money = 0;
 		diamond = 0;

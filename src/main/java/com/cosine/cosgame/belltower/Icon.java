@@ -5,6 +5,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.IconEntity;
+import com.cosine.cosgame.belltower.shop.Shop;
 
 public class Icon {
 	int character;
@@ -88,5 +89,20 @@ public class Icon {
 		else {
 			characterImg = Integer.toString(character);
 		}
+	}
+	public String characterName() {
+		String name = "";
+		String[] commonNames = Shop.commonNames;
+		String[] rareNames = Shop.rareNames;
+		String[] epicNames = Shop.epicNames;
+		int x = character%100;
+		if (character>=100 && character<=199 && x<commonNames.length) {
+			name = commonNames[x];
+		} else if (character>=200 && character<=299 && x<rareNames.length) {
+			name = rareNames[x];
+		} else if (character>=300 && character<=399 && x<epicNames.length) {
+			name = epicNames[x];
+		}
+		return name;
 	}
 }

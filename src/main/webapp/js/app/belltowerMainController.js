@@ -80,6 +80,41 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.loadingReward = false;
+		$scope.showReward = false;
+		$scope.dig = function(){
+			$scope.loadingReward = true;
+			$http({url: "/belltower/dig", method: "POST"}).then(function(response){
+				var rewardMsgRaw = response.data.value[0];
+				$scope.rewardMsg = "";
+				if (rewardMsgRaw.charAt(0) == 'd'){
+					$scope.rewardImg = "/image/Belltower/diamond.png";
+					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "枚钻石。";
+				} else if (rewardMsgRaw.charAt(0) == 'i'){
+					$scope.rewardImg = "/image/Belltower/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
+					var level = rewardMsgRaw.charAt(1);
+					if (level == '1'){
+						$scope.rewardMsg = "获得头像："
+					} else if (level == '2'){
+						$scope.rewardMsg = "获得稀有头像："
+					} else if (level == '3'){
+						$scope.rewardMsg = "获得史诗头像："
+					} else {
+						$scope.rewardMsg = "获得头像："
+					}
+					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(4) + "。";
+				} else if (rewardMsgRaw.charAt(0) == 'k'){
+					$scope.rewardImg = "/image/Belltower/chest.png";
+					$scope.rewardMsg = "获得一个宝箱。";
+				}
+				$scope.getAccountInfo()
+				for (var i=0;i<2500000000;i++){}
+				//time.sleep(2)
+				$scope.loadingReward = false;
+				$scope.showReward = true;
+			});
+		}
+		
 		$scope.getAllBoards = function(){
 			$http.get('/belltower/allboards').then(function(response){
 				var n = response.data.value.length / 4;
