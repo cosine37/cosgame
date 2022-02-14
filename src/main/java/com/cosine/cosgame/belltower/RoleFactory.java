@@ -12,6 +12,8 @@ public class RoleFactory {
 			role = new Soldier();
 		} else if (roleId == 3) {
 			role = new Imp();
+		} else if (roleId == 4) {
+			role = new Monk();
 		}
 		
 		return role;

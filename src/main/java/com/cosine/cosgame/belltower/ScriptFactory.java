@@ -12,6 +12,8 @@ public class ScriptFactory {
 			Role r;
 			r = new Librarian();
 			script.addTownsfolk(r);
+			r = new Soldier();
+			script.addTownsfolk(r);
 		}
 		
 		return script;

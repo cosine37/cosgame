@@ -59,7 +59,7 @@ public class Board {
 	public void assignRoles() {
 		List<Role> roles = script.getRoles(groupCounts);
 		Random rand = new Random();
-		for (int i=0;i<players.size();i++) {
+		for (int i=0;i<players.size();i++) {			
 			if (roles.size() == 0) break;
 			int x = rand.nextInt(roles.size());
 			Role r = roles.remove(x);
@@ -214,6 +214,7 @@ public class Board {
 		curVoter = -1;
 		nominated = -1;
 		curNominator = curNominator + sequence;
+		System.out.println("CurNominator:" + curNominator);
 		if (curNominator >= players.size()) {
 			curNominator = curNominator - players.size();
 		}

@@ -113,14 +113,12 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					p.setDisplayName(displayName);
-					//board.updateBasicDB();
-					//board.updatePlayers();
-					board.updatePlayer(p.getName());
-				}
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.setDisplayName(displayName);
+				//board.updateBasicDB();
+				//board.updatePlayers();
+				board.updatePlayer(p.getName());
 			}
 		} else {
 			board.setId("NE");
@@ -136,14 +134,12 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					p.assignIcon(icon);
-					//board.updateBasicDB();
-					//board.updatePlayers();
-					board.updatePlayer(p.getName());
-				}
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.assignIcon(icon);
+				//board.updateBasicDB();
+				//board.updatePlayers();
+				board.updatePlayer(p.getName());
 			}
 		} else {
 			board.setId("NE");
@@ -203,18 +199,16 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					p.confirmNight(targets);
-					if (board.allConfirmedNight()) {
-						board.endNight();
-						// TODO: May be removed later;
-						board.startDay();
-					}
-					board.updateBasicDB();
-					board.updatePlayers();
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.confirmNight(targets);
+				if (board.allConfirmedNight()) {
+					board.endNight();
+					// TODO: May be removed later;
+					board.startDay();
 				}
+				board.updateBasicDB();
+				board.updatePlayers();
 			}
 		} else {
 			board.setId("NE");
@@ -230,16 +224,14 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					if (p.getIndex() == board.getCurNominator()) {
-						board.nominate(target);
-						board.updateBasicDB();
-						board.updatePlayers();
-					}
-					
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				if (p.getIndex() == board.getCurNominator()) {
+					board.nominate(target);
+					board.updateBasicDB();
+					board.updatePlayers();
 				}
+				
 			}
 		} else {
 			board.setId("NE");
@@ -255,14 +247,12 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					if (p.getIndex() == board.getCurVoter()) {
-						board.vote(f);
-						board.updateBasicDB();
-						board.updatePlayers();
-					}
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				if (p.getIndex() == board.getCurVoter()) {
+					board.vote(f);
+					board.updateBasicDB();
+					board.updatePlayers();
 				}
 			}
 		} else {
@@ -279,16 +269,14 @@ public class BelltowerController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			if (board.isLord(username)) {
-				Player p = board.getPlayerByName(username);
-				if (p != null) {
-					p.confirmDay();
-					if (board.allConfirmedDay()) {
-						board.endDay();
-					}
-					board.updateBasicDB();
-					board.updatePlayers();
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.confirmDay();
+				if (board.allConfirmedDay()) {
+					board.endDay();
 				}
+				board.updateBasicDB();
+				board.updatePlayers();
 			}
 		} else {
 			board.setId("NE");
