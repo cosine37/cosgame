@@ -6,30 +6,25 @@ import com.cosine.cosgame.belltower.Consts;
 import com.cosine.cosgame.belltower.Player;
 import com.cosine.cosgame.belltower.Role;
 
-public class Imp extends Role{
-	public Imp() {
-		id = 3;
-		sequence = 300;
-		name = "小恶魔";
-		img = "imp";
+public class Poisoner extends Role{
+	public Poisoner() {
+		id = 5;
+		sequence = 100;
+		name = "投毒者";
+		img = "poisoner";
 		faction = Consts.DEVIL;
-		group = Consts.DEMON;
-		hasFirstNight = false;
+		group = Consts.MINION;
+		hasFirstNight = true;
 		hasRestNights = true;
 		numPlayerChoose = 1;
-		desc = "从第二夜起，夜晚阶段击杀一名玩家。";
+		desc = "夜晚阶段指定一名玩家，该玩家在当晚和接下来的白天中毒。";
 	}
 	
 	public List<String> getInstructions() {
 		List<String> instruction = super.getInstructions();
-		int numDay = board.getNumDay();
 		int phase = board.getPhase();
 		if (phase == Consts.NIGHT) {
-			if (numDay == 1) {
-				
-			} else {
-				instruction.add("选择一名玩家，将其击杀。");
-			}
+			instruction.add("选择一名玩家，该玩家在今夜和接下来的白天中毒。");
 			instruction.add("点击确认结束你的阶段。");
 		}
 		return instruction;
@@ -39,10 +34,7 @@ public class Imp extends Role{
 		if (player.getTargets().size() > 0) {
 			int x = player.getTargets().get(1);
 			Player p = board.getPlayers().get(x);
-			if (p.isUnaffectedByDemon() == false) {
-				p.setAlive(false);
-				board.addKilledIndex(x);
-			}
+			p.poison();
 		}
 	}
 }

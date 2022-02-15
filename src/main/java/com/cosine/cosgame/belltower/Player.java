@@ -52,6 +52,7 @@ public class Player {
 	public void startNight() {
 		confirmedNight = false;
 		unaffectedByDemon = false;
+		poisoned = false;
 	}
 	
 	public void confirmNight() {
@@ -80,6 +81,10 @@ public class Player {
 	public void executed() {
 		alive = false;
 		//TODO: role related
+	}
+	
+	public void poison() {
+		poisoned = true;
 	}
 	/*
 	public List<String> getAvailableCharacters(){

@@ -69,7 +69,15 @@
 			</div>
 		</div>
 		<div ng-show="phase==NIGHT">
-			<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
+			<div>
+				<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
+			</div>
+			<div ng-show="gamedata.confirmedNight == false">
+				<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
+			</div>
+			<div ng-show="gamedata.confirmedNight">
+				你已确认，正等待其他玩家确认。
+			</div>
 		</div>
 		<div ng-show="phase==EXECUTION">
 			<div>{{gamedata.executionMsg}}</div>

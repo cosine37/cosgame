@@ -25,10 +25,8 @@ public class Soldier extends Role {
 		return instruction;
 	}
 	
-	public void execSkill() {
-		if (player.isPoisoned() == false) {
-			player.setUnaffectedByDemon(true);
-		}
+	public void execSkillNormal() {
+		player.setUnaffectedByDemon(true);
 	}
 	
 }

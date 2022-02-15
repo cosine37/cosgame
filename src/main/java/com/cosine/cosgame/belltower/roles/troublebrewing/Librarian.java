@@ -33,7 +33,7 @@ public class Librarian extends Role {
 		return instruction;
 	}
 	
-	public void execSkill() {
+	public void execSkillNormal() {
 		int numDay = board.getNumDay();
 		if (numDay == 1) {
 			List<Player> twoPlayers = twoPlayersFromGroup(Consts.OUTSIDER);

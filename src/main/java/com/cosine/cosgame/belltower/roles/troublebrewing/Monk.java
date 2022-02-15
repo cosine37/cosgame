@@ -28,14 +28,14 @@ public class Monk extends Role {
 			if (numDay == 1) {
 				
 			} else {
-				instruction.add("选择一名玩家，该玩家当天不受恶魔的技能影响。");
+				instruction.add("选择一名其他玩家，该玩家当天不受恶魔的技能影响。");
 			}
 			instruction.add("点击确认结束你的阶段。");
 		}
 		return instruction;
 	}
 	
-	public void execSkill() {
+	public void execSkillNormal() {
 		if (player.getTargets().size() > 0) {
 			int x = player.getTargets().get(1);
 			Player p = board.getPlayers().get(x);

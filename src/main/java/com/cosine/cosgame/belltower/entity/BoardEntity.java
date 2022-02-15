@@ -24,6 +24,9 @@ public class BoardEntity {
 	String executionMsg;
 	List<Integer> voteResults;
 	
+	boolean confirmedDay;
+	boolean confirmedNight;
+	
 	List<PlayerEntity> players;
 
 	public String getId() {
@@ -145,6 +148,18 @@ public class BoardEntity {
 	}
 	public void setVoteResults(List<Integer> voteResults) {
 		this.voteResults = voteResults;
+	}
+	public boolean isConfirmedDay() {
+		return confirmedDay;
+	}
+	public void setConfirmedDay(boolean confirmedDay) {
+		this.confirmedDay = confirmedDay;
+	}
+	public boolean isConfirmedNight() {
+		return confirmedNight;
+	}
+	public void setConfirmedNight(boolean confirmedNight) {
+		this.confirmedNight = confirmedNight;
 	}
 	
 }

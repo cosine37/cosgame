@@ -46,6 +46,18 @@ public class Role {
 	}
 	
 	public void execSkill() {
+		if (player.isPoisoned()) {
+			execSkillPoisoned();
+		} else {
+			execSkillNormal();
+		}
+	}
+	
+	public void execSkillNormal() {
+		
+	}
+	
+	public void execSkillPoisoned() {
 		
 	}
 	

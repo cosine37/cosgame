@@ -67,8 +67,12 @@ public class Board {
 		}
 		
 		// TODO: Assign roles here
+		/*
 		Role r1 = new Imp();
 		players.get(0).setRole(r1);
+		Role r2 = new Poisoner();
+		players.get(1).setRole(r2);
+		*/
 	}
 	
 	public void startFirstNight() {
@@ -88,11 +92,24 @@ public class Board {
 		killedIndexes = new ArrayList<>();
 	}
 	
-	public void endNight() {
-		// TODO: Deal with sequences
-		int i;
+	public void execSkills() {
+		int i,j;
+		List<Player> tplayers = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
-			Role r = players.get(i).getRole();
+			tplayers.add(players.get(i));
+		}
+		for (i=0;i<tplayers.size();i++) {
+			for (j=i+1;j<tplayers.size();j++) {
+				Player p1 = tplayers.get(i);
+				Player p2 = tplayers.get(j);
+				if (p1.getRole().getSequence() > p2.getRole().getSequence()) {
+					tplayers.set(i, p2);
+					tplayers.set(j, p1);
+				}
+			}
+		}
+		for (i=0;i<tplayers.size();i++) {
+			Role r = tplayers.get(i).getRole();
 			if (numDay == 1) {
 				if (r.isHasFirstNight()) {
 					r.execSkill();
@@ -103,6 +120,12 @@ public class Board {
 				}
 			}
 		}
+	}
+	
+	public void endNight() {
+		// TODO: Deal with sequences
+		int i;
+		execSkills();
 		if (killedIndexes.size() == 0) {
 			morningMsg = "昨晚平安夜。";
 		} else {
@@ -645,6 +668,8 @@ public class Board {
 				entity.setMyDisplayName(p.getDisplayName());
 				entity.setMyIndex(i);
 				entity.setMyAvailableCharacters(p.getAvailableCharacters());
+				entity.setConfirmedDay(p.isConfirmedDay());
+				entity.setConfirmedNight(p.isConfirmedNight());
 			}
 		}
 		entity.setPlayers(playerEntities);

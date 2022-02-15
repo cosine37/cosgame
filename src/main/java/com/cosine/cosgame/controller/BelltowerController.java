@@ -274,6 +274,7 @@ public class BelltowerController {
 				p.confirmDay();
 				if (board.allConfirmedDay()) {
 					board.endDay();
+					board.startNight();
 				}
 				board.updateBasicDB();
 				board.updatePlayers();

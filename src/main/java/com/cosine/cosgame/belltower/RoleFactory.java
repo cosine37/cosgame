@@ -14,6 +14,8 @@ public class RoleFactory {
 			role = new Imp();
 		} else if (roleId == 4) {
 			role = new Monk();
+		} else if (roleId == 5) {
+			role = new Poisoner();
 		}
 		
 		return role;
