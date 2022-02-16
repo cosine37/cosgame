@@ -6,17 +6,17 @@ import com.cosine.cosgame.belltower.Consts;
 import com.cosine.cosgame.belltower.Player;
 import com.cosine.cosgame.belltower.Role;
 
-public class Librarian extends Role {
-	public Librarian() {
-		id = 1;
-		sequence = 201;
-		name = "图书馆长";
-		img = "librarian";
+public class Investigator extends Role {
+	public Investigator() {
+		id = 7;
+		sequence = 202;
+		name = "调查员";
+		img = "investigator";
 		faction = Consts.HUMAN;
 		group = Consts.TOWNSFOLK;
 		hasFirstNight = true;
 		hasRestNights = false;
-		desc = "第一夜你会被告知一个外来者身份和两名玩家，其中一名玩家是该身份（若场上无外来者，你会被告知无外来者）。";
+		desc = "第一夜你会被告知一个村民身份和两名玩家，其中一名玩家是该身份。";
 	}
 	
 	public List<String> getInstructions() {
@@ -25,7 +25,7 @@ public class Librarian extends Role {
 		int phase = board.getPhase();
 		if (phase == Consts.NIGHT) {
 			if (numDay == 1) {
-				instruction.add("今天天亮时你会被告知一个外来者身份和两名玩家，其中一名玩家为该身份。");
+				instruction.add("今天天亮时你会被告知一个爪牙身份和两名玩家，其中一名玩家为该身份。");
 			} else {
 				
 			}
@@ -37,10 +37,10 @@ public class Librarian extends Role {
 	public void execSkillNormal() {
 		int numDay = board.getNumDay();
 		if (numDay == 1) {
-			List<Player> twoPlayers = twoPlayersFromGroup(Consts.OUTSIDER);
+			List<Player> twoPlayers = twoPlayersFromGroup(Consts.MINION);
 			String lastNightMsg;
 			if (twoPlayers.size() < 2) {
-				lastNightMsg = "啊这，本局游戏没有外来者，所以你似乎没有获得任何信息。";
+				lastNightMsg = "啊这，本局游戏没有爪牙，所以你似乎没有获得任何信息。";
 			} else {
 				lastNightMsg = getMessageForTwoPlayersFromGroup(twoPlayers);
 			}
@@ -52,10 +52,10 @@ public class Librarian extends Role {
 	public void execSkillPoisoned() {
 		int numDay = board.getNumDay();
 		if (numDay == 1) {
-			List<Player> twoPlayers = twoPlayersFromGroupFake(Consts.OUTSIDER);
+			List<Player> twoPlayers = twoPlayersFromGroupFake(Consts.MINION);
 			String lastNightMsg;
 			if (twoPlayers.size() < 3) {
-				lastNightMsg = "啊这，本局游戏没有外来者，所以你似乎没有获得任何信息。";
+				lastNightMsg = "啊这，本局游戏没有爪牙，所以你似乎没有获得任何信息。";
 			} else {
 				String roleName = twoPlayers.get(2).getRole().getName();
 				lastNightMsg = getMessageForTwoPlayersFromGroup(twoPlayers, roleName);

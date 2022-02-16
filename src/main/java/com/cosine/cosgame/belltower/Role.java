@@ -61,6 +61,48 @@ public class Role {
 		
 	}
 	
+	public List<Player> twoPlayersFromGroupFake(int group){
+		List<Player> ans = new ArrayList<>();
+		int i;
+		List<Player> tempPlayers = new ArrayList<>();
+		List<Player> eligiblePlayers = new ArrayList<>();
+		for (i=0;i<board.getPlayers().size();i++) {
+			Player p = board.getPlayers().get(i);
+			if (p.getName().contentEquals(player.getName())) {
+				continue;
+			}
+			tempPlayers.add(p);
+			if (p.getRole().getGroup() == group) {
+				eligiblePlayers.add(p);
+			}
+		}
+		if (eligiblePlayers.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(eligiblePlayers.size());
+			Player faker = eligiblePlayers.get(x);
+			Player p1 = null;
+			Player p2 = null;
+			if (tempPlayers.size() > 0) {
+				int y = rand.nextInt(tempPlayers.size());
+				p1 = tempPlayers.remove(y);
+			}
+			while (tempPlayers.size() > 0) {
+				int y = rand.nextInt(tempPlayers.size());
+				p2 = tempPlayers.remove(y);
+				if (p2.getName().contentEquals(p1.getName())) {
+					continue;
+				}
+				break;
+			}
+			if (p1 != null && p2 != null && faker != null) {
+				ans.add(p1);
+				ans.add(p2);
+				ans.add(faker);
+			}
+		}
+		return ans;
+	}
+	
 	public List<Player> twoPlayersFromGroup(int group){
 		List<Player> ans = new ArrayList<>();
 		int i;
@@ -79,7 +121,7 @@ public class Role {
 		if (eligiblePlayers.size()>0) {
 			Random rand = new Random();
 			int x = rand.nextInt(eligiblePlayers.size());
-			Player p1 = eligiblePlayers.get(x);
+			Player p1 = eligiblePlayers.remove(x);
 			Player p2 = null;
 			while (tempPlayers.size() > 0) {
 				int y = rand.nextInt(tempPlayers.size());
@@ -97,12 +139,11 @@ public class Role {
 		return ans;
 	}
 	
-	public String getMessageForTwoPlayersFromGroup(List<Player> players) {
+	public String getMessageForTwoPlayersFromGroup(List<Player> players, String roleName) {
 		String ans = "";
 		if (players.size() > 1) {
 			Player p1 = players.get(0);
 			Player p2 = players.get(1);
-			String roleName = p1.getRole().getName();
 			Random rand = new Random();
 			boolean swap = rand.nextBoolean();
 			if (swap) {
@@ -111,6 +152,15 @@ public class Role {
 				ans = p1.getDisplayName() + "和" + p2.getDisplayName();
 			}
 			ans = ans + "中有一名玩家的身份是 " + roleName + "。";
+		}
+		return ans;
+	}
+	
+	public String getMessageForTwoPlayersFromGroup(List<Player> players) {
+		String ans = "";
+		if (players.size() > 1) {
+			String roleName = players.get(0).getRole().getName();
+			ans = getMessageForTwoPlayersFromGroup(players, roleName);
 		}
 		return ans;
 	}

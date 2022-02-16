@@ -16,6 +16,10 @@ public class RoleFactory {
 			role = new Monk();
 		} else if (roleId == 5) {
 			role = new Poisoner();
+		} else if (roleId == 6) {
+			role = new Washerwoman();
+		} else if (roleId == 7) {
+			role = new Investigator();
 		}
 		
 		return role;
