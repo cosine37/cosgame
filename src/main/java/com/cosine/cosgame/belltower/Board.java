@@ -68,10 +68,14 @@ public class Board {
 		
 		// TODO: Assign roles here
 		/*
-		Role r1 = new Imp();
-		players.get(0).setRole(r1);
-		Role r2 = new Poisoner();
-		players.get(1).setRole(r2);
+		Role r0 = new Investigator();
+		players.get(0).setRole(r0);
+		Role r1 = new Poisoner();
+		players.get(1).setRole(r1);
+		Role r2 = new Librarian();
+		players.get(2).setRole(r2);
+		Role r3 = new Monk();
+		players.get(3).setRole(r3);
 		*/
 	}
 	
@@ -170,7 +174,7 @@ public class Board {
 		List<Integer> a = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			players.get(i).startDay();
-			if (players.get(i).isAlive()) {
+			if (players.get(i).isAlive() && players.get(i).isBot() == false) {
 				a.add(i);
 			}
 		}
@@ -218,12 +222,17 @@ public class Board {
 			}
 		}
 		
-		curVoter = curVoter + sequence;
-		if (curVoter >= players.size()) {
-			curVoter = curVoter - players.size();
-		}
-		if (curVoter < 0) {
-			curVoter = curVoter + players.size();
+		while (true) {
+			curVoter = curVoter + sequence;
+			if (curVoter >= players.size()) {
+				curVoter = curVoter - players.size();
+			}
+			if (curVoter < 0) {
+				curVoter = curVoter + players.size();
+			}
+			if (players.get(curVoter).isBot() == false) {
+				break;
+			}
 		}
 		
 		if (curVoter == curNominator) {
@@ -244,7 +253,7 @@ public class Board {
 		if (curNominator < 0) {
 			curNominator = curNominator + players.size();
 		}
-		if (players.get(curNominator).isAlive() == false) {
+		if (players.get(curNominator).isAlive() == false || players.get(curNominator).isBot()) {
 			nextPlayerNominate();
 		} else if (curNominator == firstNominator) {
 			executionCheck();
@@ -305,6 +314,7 @@ public class Board {
 	public boolean allConfirmedNight() {
 		boolean ans = true;
 		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isBot()) continue;
 			if (players.get(i).isConfirmedNight() == false) {
 				ans = false;
 				break;
@@ -316,6 +326,7 @@ public class Board {
 	public boolean allConfirmedDay() {
 		boolean ans = true;
 		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isBot()) continue;
 			if (players.get(i).isConfirmedDay() == false) {
 				ans = false;
 				break;
@@ -508,6 +519,22 @@ public class Board {
 			dbutil.push("id", id, "playerNames", name);
 			updatePlayer(name);
 		}
+	}
+	
+	public void addBot() {
+		Random rand = new Random();
+		int botId = rand.nextInt(90000) + 10000;
+		String botName = "bot#"+botId;
+		Player p = new Player();
+		p.setName(botName);
+		p.setDisplayName(botName);
+		Icon icon = new Icon();
+		icon.setCharacter(305);
+		icon.setCharacterImg("305");
+		p.setIcon(icon);
+		p.setBot(true);
+		players.add(p);
+		addPlayerToDB(botName);
 	}
 	
 	public void storeToDB() {

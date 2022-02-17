@@ -15,7 +15,8 @@
 <script src="/js/app/belltowerCreateGameController.js"></script>
 <body ng-app="belltowerCreateGameApp" ng-controller="belltowerCreateGameCtrl">
 	<button ng-click="goto('belltower')">back</button>
-	<button ng-click="startGame()">start game</button>
+	<button ng-show="username==lord" ng-click="startGame()">start game</button>
+	<button ng-show="username==lord" ng-click="addBot()">add bot</button>
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->

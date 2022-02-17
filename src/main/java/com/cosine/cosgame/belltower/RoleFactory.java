@@ -20,6 +20,8 @@ public class RoleFactory {
 			role = new Washerwoman();
 		} else if (roleId == 7) {
 			role = new Investigator();
+		} else if (roleId == 8) {
+			role = new Chef();
 		}
 		
 		return role;

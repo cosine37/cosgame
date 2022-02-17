@@ -27,6 +27,7 @@ public class Player {
 	boolean canVote;
 	boolean unaffectedByDemon;
 	boolean nominated;
+	boolean bot;
 	
 	Account account;
 	
@@ -36,6 +37,7 @@ public class Player {
 		targets = new ArrayList<>();
 		logs = new ArrayList<>();
 		icon = new Icon();
+		bot = false;
 	}
 	
 	public void gameStart(Role r) {
@@ -215,6 +217,12 @@ public class Player {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+	public boolean isBot() {
+		return bot;
+	}
+	public void setBot(boolean bot) {
+		this.bot = bot;
+	}
 
 	public void setupFromAccount() {
 		int i;
@@ -245,6 +253,7 @@ public class Player {
 		doc.append("unaffectedByDemon", unaffectedByDemon);
 		doc.append("nominated", nominated);
 		doc.append("icon", icon.toDocument());
+		doc.append("bot", bot);
 		return doc;
 	}
 	
@@ -269,9 +278,12 @@ public class Player {
 		lastNightMsg = doc.getString("lastNightMsg");
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
 		nominated = doc.getBoolean("nominated", false);
-		account = new Account();
-		account.getFromDB(name);
-		setupFromAccount();
+		bot = doc.getBoolean("bot", false);
+		if (bot == false) {
+			account = new Account();
+			account.getFromDB(name);
+			setupFromAccount();
+		}
 	}
 
 	public PlayerEntity toPlayerEntity() {

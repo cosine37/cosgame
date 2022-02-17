@@ -73,7 +73,11 @@ app.controller("belltowerCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 				$scope.allRefresh();
 			});
 		}
-		
+		$scope.addBot = function(){
+			$http({url: "/belltower/addbot", method: "POST"}).then(function(response){
+				$scope.allRefresh();
+			});
+		}
 		$scope.startGame = function(){
 			var data = {
 				"settings" : $scope.settings	
