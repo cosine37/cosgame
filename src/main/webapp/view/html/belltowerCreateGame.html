@@ -7,77 +7,105 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/belltowerTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/belltowerOther.css">
+<link rel="stylesheet" type="text/css" href="/view/css/belltowerCreate.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/belltowerCreateGameController.js"></script>
+<style>
+body {
+	background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('/image/Belltower/create_bg.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="belltowerCreateGameApp" ng-controller="belltowerCreateGameCtrl">
-	<button ng-click="goto('belltower')">back</button>
-	<button ng-show="username==lord" ng-click="startGame()">start game</button>
-	<button ng-show="username==lord" ng-click="addBot()">add bot</button>
-	<!-- 
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	 -->
-	<div>
-		<div style="float:left; width: 500px;">
+	<div class="biggest-container">
+		<div class="create-div noselect">
 			<table>
 				<tr>
-					<td>用户名</td>
-					<td>游戏中显示</td>
-					<td>头像</td>
+					<td colspan="3" style="text-align:center">
+						<div><h1 class="create-title">小恶魔杀</h1></div>
+					</td>
 				</tr>
-				<tr ng-repeat="p in players track by $index">
-					<td>{{p.name}}</td>
-					<td>{{p.displayName}}</td>
-					<td>
-						<img ng-src="image/Belltower/Icons/{{p.icon.character}}.png" class="icon"/>
+				<tr>
+					<td style="width: 520px; vertical-align:top">
+						<div style="height: 680px;overflow-y: scroll;overflow:auto;">
+							<table>
+								<tr>
+									<td style="width:200px;" class="user-table-head">用户名</td>
+									<td style="width:200px;" class="user-table-head">游戏中显示</td>
+									<td style="width:100px;" class="user-table-head">头像</td>
+								</tr>
+								<tr ng-repeat="p in players track by $index">
+									<td style="width:200px;text-align:center;word-wrap:break-word;">{{p.name}}</td>
+									<td style="width:200px;text-align:center;word-wrap:break-word;">{{p.displayName}}</td>
+									<td style="width:100px;text-align:center;word-wrap:break-word;">
+										<img ng-src="image/Belltower/Icons/{{p.icon.character}}.png" class="icon-small"/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+					<td style="width: 30px"></td>
+					<td style="width: 500px; vertical-align:top; margin-left: 30px">
+						<div>
+							<!-- 
+							<div ng-repeat="x in gamedata.myAvailableCharacters track by $index">
+								<img ng-src="image/Belltower/Icons/{{x}}.png" class="icon" style="float: left" ng-click="changeIcon(x)"/>
+							</div>
+							 -->
+							
+							<div>
+								<table>
+									<tr>
+										<td colspan="4" style="text-align:center"><h3>更换头像</h3></td>
+									</tr>
+									<tr ng-repeat="i in [0,1,2,3,4]">
+										<td ng-repeat="j in [0,1,2,3]" style="padding: 10px;">
+											<img class="icon" ng-show="charsCurPage[i][j] == 'x'" src="image/Belltower/empty.png" style="opacity: 0.5;"/>
+											<img class="icon icon-choose" ng-show="charsCurPage[i][j] != 'x'" ng-src="image/Belltower/Icons/{{charsCurPage[i][j]}}.png" 
+												ng-click="changeIcon(charsCurPage[i][j])" style="cursor:pointer"/>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4" style="text-align:center; padding-top: 10px">
+											<button ng-disabled="canFlipCharPage(-1) == false", ng-click="flipCharPage(-1)">&lt;</button>
+											<span>{{curPage}}/{{numPages}}</span>
+											<button ng-disabled="canFlipCharPage(1) == false", ng-click="flipCharPage(1)">&gt;</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:center; padding-top: 10px;">
+						<div>
+							<span>你可以修改你游戏中显示的姓名：</span>
+							<input type="text" ng-model="displayName">
+							<button ng-click="changeDisplayName()">提交</button>
+						</div>
+					</td>
+					<td></td>
+					<td style="text-align:center; padding-top: 10px;">
+						<div>
+							<button ng-show="username==lord" ng-click="startGame()">开始游戏</button>
+							<button ng-show="username==lord" ng-click="addBot()">添加bot</button>
+							<button ng-click="goto('belltower')">退出</button>
+						</div>
 					</td>
 				</tr>
 			</table>
-		</div>
-		<div style="float:left; width: 500px;">
-			<!-- 
-			<div ng-repeat="x in gamedata.myAvailableCharacters track by $index">
-				<img ng-src="image/Belltower/Icons/{{x}}.png" class="icon" style="float: left" ng-click="changeIcon(x)"/>
-			</div>
-			 -->
-			<div>
-				更换头像
-			</div>
-			<div>
-				<table>
-					<tr ng-repeat="i in [0,1,2,3,4]">
-						<td ng-repeat="j in [0,1,2,3]" style="padding: 10px;">
-							<img class="icon" ng-show="charsCurPage[i][j] == 'x'" src="image/Belltower/empty.png" style="opacity: 0.2;"/>
-							<img class="icon icon-choose" ng-show="charsCurPage[i][j] != 'x'" ng-src="image/Belltower/Icons/{{charsCurPage[i][j]}}.png" 
-								ng-click="changeIcon(charsCurPage[i][j])" style="cursor:pointer"/>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div>
-				<button ng-disabled="canFlipCharPage(-1) == false", ng-click="flipCharPage(-1)">&lt;</button>
-				<span>{{curPage}}/{{numPages}}</span>
-				<button ng-disabled="canFlipCharPage(1) == false", ng-click="flipCharPage(1)">&gt;</button>
-			</div>
+			
+			
 		</div>
 	</div>
-	<div style="clear:both"></div>
-	<div>
-		<span>你可以修改你游戏中显示的姓名：</span>
-		<input type="text" ng-model="displayName">
-		<button ng-click="changeDisplayName()">提交</button>
-	</div>
-	<!-- 
-	<div>
-		<button ng-click="changeIcon(0)">更换头像0</button>
-		<button ng-click="changeIcon(1)">更换头像1</button>
-	</div>
-	 -->
 	
-	
-	{{gamedata}}
 </body>
 </html>

@@ -1,0 +1,31 @@
+@charset "UTF-8";
+.create-div{
+	position: absolute; 
+	top: 20px;
+	background-color: rgba(255,255,255,0.7);
+	height: 820px;
+	width: 1050px;
+	margin-left: -525px;
+	left: 50%;
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+.biggest-container{
+	margin: auto;
+	width: 100%;
+	text-align: center;
+	overflow-x: scroll;
+	overflow:auto;
+}
+.user-table-head{
+	position: sticky;
+	text-align:center;
+	top: 0px;
+	background-color: darkslategrey;
+	color: white;
+}
