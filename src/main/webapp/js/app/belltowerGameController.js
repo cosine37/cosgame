@@ -53,10 +53,14 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.PREGAME = 1;
 		$scope.ASSIGNROLE = 1;
 		$scope.INGAME = 2;
+		$scope.ENDGAME = 3;
 		
 		$scope.NIGHT = 0;
 		$scope.DAY = 2;
 		$scope.EXECUTION = 3;
+		
+		$scope.HUMAN = 1;
+		$scope.DEVIL = 2;
 		
 		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
 		$scope.groupNumbers = [0,0,0,0];

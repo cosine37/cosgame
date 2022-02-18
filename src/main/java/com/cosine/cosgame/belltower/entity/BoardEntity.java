@@ -15,6 +15,7 @@ public class BoardEntity {
 	int curNominator;
 	int curVoter;
 	int nominated;
+	int winFaction;
 	
 	int myIndex;
 	RoleEntity myRole;
@@ -160,6 +161,12 @@ public class BoardEntity {
 	}
 	public void setConfirmedNight(boolean confirmedNight) {
 		this.confirmedNight = confirmedNight;
+	}
+	public int getWinFaction() {
+		return winFaction;
+	}
+	public void setWinFaction(int winFaction) {
+		this.winFaction = winFaction;
 	}
 	
 }

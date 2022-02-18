@@ -15,6 +15,7 @@ public class Consts {
 	public static final int PREGAME = 0;
 	public static final int ASSIGNROLE = 1;
 	public static final int INGAME = 2;
+	public static final int ENDGAME = 3;
 	
 	// phase
 	public static final int NIGHT = 0;

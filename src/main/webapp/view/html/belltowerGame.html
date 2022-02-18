@@ -86,7 +86,14 @@
 			</div>
 		</div>
 	</div>
-	
+	<div ng-show="status==ENDGAME">
+		<div>游戏结束</div>
+		<div>
+			胜利方：
+			<span ng-show="gamedata.winFaction==HUMAN">人类</span>
+			<span ng-show="gamedata.winFaction==DEVIL">恶魔</span>
+		</div>
+	</div>
 	<!-- 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>

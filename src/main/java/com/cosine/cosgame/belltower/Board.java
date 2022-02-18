@@ -67,11 +67,12 @@ public class Board {
 		}
 		
 		// TODO: Assign roles here
-		/*
+		
 		Role r0 = new Investigator();
 		players.get(0).setRole(r0);
-		Role r1 = new Poisoner();
+		Role r1 = new Imp();
 		players.get(1).setRole(r1);
+		/*
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
 		Role r3 = new Monk();
@@ -164,12 +165,18 @@ public class Board {
 				morningMsg = morningMsg + killedMsg[x];
 			}
 		}
-		phase = Consts.DAY;
 	}
 	
 	public void startDay() {
+		phase = Consts.DAY;
+		
+		int winFaction = getWinFaction();
+		if (winFaction != 0) {
+			endGame(winFaction);
+			return;
+		}
+		
 		Random rand = new Random();
-		//firstNominator = rand.nextInt(players.size());
 		int i;
 		List<Integer> a = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -298,6 +305,38 @@ public class Board {
 			}
 			broadcastExcept(executionMsg, executedIndex);
 		}
+		
+		int winFaction = getWinFaction();
+		if (winFaction != 0) {
+			endGame(winFaction);
+			return;
+		}
+	}
+	public void endGame(int winFaction) {
+		if (winFaction == 0) return;
+		status = Consts.ENDGAME;
+	}
+	public int getWinFaction() {
+		int ans = 0;
+		int i;
+		int livingHuman = 0;
+		boolean hasDemon = false;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isAlive()) {
+				if (players.get(i).getRole().getGroup() == Consts.DEMON) {
+					hasDemon = true;
+				}
+				if (players.get(i).getRole().getFaction() == Consts.HUMAN) {
+					livingHuman++;
+				}
+			}
+		}
+		if (hasDemon == false) {
+			ans = Consts.HUMAN;
+		} else if (livingHuman <= 1) {
+			ans = Consts.DEVIL;
+		}
+		return ans;
 	}
 	public void broadcastExcept(String log, int exception) {
 		if (log == null || log.contentEquals("")) return;
@@ -683,6 +722,7 @@ public class Board {
 		entity.setNominated(nominated);
 		entity.setExecutionMsg(executionMsg);
 		entity.setVoteResults(voteResults);
+		entity.setWinFaction(getWinFaction());
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		int i;
 		for (i=0;i<players.size();i++) {
