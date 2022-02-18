@@ -34,6 +34,7 @@ public class Board {
 	int curVoter;
 	int nominated;
 	int voteCount;
+	int executedIndex;
 	List<Integer> voteResults;
 	
 	public Board() {
@@ -67,12 +68,11 @@ public class Board {
 		}
 		
 		// TODO: Assign roles here
-		
+		/*
 		Role r0 = new Investigator();
 		players.get(0).setRole(r0);
 		Role r1 = new Imp();
 		players.get(1).setRole(r1);
-		/*
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
 		Role r3 = new Monk();
@@ -269,7 +269,7 @@ public class Board {
 	public void executionCheck() {
 		int i;
 		int maxVotes = 0;
-		int executedIndex = -1;
+		executedIndex = -1;
 		for (i=0;i<voteResults.size();i++) {
 			int numVotes = voteResults.get(i)%100;
 			int index = voteResults.get(i)/100;
@@ -494,13 +494,23 @@ public class Board {
 	public void setVoteCount(int voteCount) {
 		this.voteCount = voteCount;
 	}
-
 	public List<Integer> getVoteResults() {
 		return voteResults;
 	}
-
 	public void setVoteResults(List<Integer> voteResults) {
 		this.voteResults = voteResults;
+	}
+	public String getExecutionMsg() {
+		return executionMsg;
+	}
+	public void setExecutionMsg(String executionMsg) {
+		this.executionMsg = executionMsg;
+	}
+	public int getExecutedIndex() {
+		return executedIndex;
+	}
+	public void setExecutedIndex(int executedIndex) {
+		this.executedIndex = executedIndex;
 	}
 
 	public void addPlayer(String name) {
@@ -603,6 +613,7 @@ public class Board {
 		updateDB("nominated", nominated);
 		updateDB("voteCount", voteCount);
 		updateDB("voteResults", voteResults);
+		updateDB("executedIndex", executedIndex);
 		updateDB("executionMsg", executionMsg);
 	}
 	
@@ -660,6 +671,7 @@ public class Board {
 		doc.append("nominated", nominated);
 		doc.append("voteCount", voteCount);
 		doc.append("voteResults", voteResults);
+		doc.append("executedIndex", executedIndex);
 		doc.append("executionMsg", executionMsg);
 		int i;
 		List<String> playerNames = new ArrayList<>();
@@ -687,6 +699,7 @@ public class Board {
 		nominated = doc.getInteger("nominated", -1);
 		voteCount = doc.getInteger("voteCount", 0);
 		voteResults = (List<Integer>) doc.get("voteResults");
+		executedIndex = doc.getInteger("executedIndex", -1);
 		executionMsg = doc.getString("executionMsg");
 		int scriptId = doc.getInteger("script", -1);
 		script = ScriptFactory.makeScript(scriptId);

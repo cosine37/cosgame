@@ -22,6 +22,10 @@ public class RoleFactory {
 			role = new Investigator();
 		} else if (roleId == 8) {
 			role = new Chef();
+		} else if (roleId == 9) {
+			role = new Empath();
+		} else if (roleId == 10) {
+			role = new Undertaker();
 		}
 		
 		return role;
