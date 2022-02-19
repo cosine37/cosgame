@@ -80,6 +80,20 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		$scope.showPlaceButtons = true;
+		$scope.shownPlace = "";
+		$scope.openPlace = function(x){
+			$scope.shownPlace = x
+			$scope.placeStyle = {
+				"background-image" : "url('/image/Belltower/" + x + ".jpg')",
+				"background-size" : "cover"
+			}
+		}
+		$scope.closePlace = function(){
+			$scope.shownPlace = ""
+		}
+		
+		
 		$scope.loadingReward = false;
 		$scope.showReward = false;
 		$scope.dig = function(){
@@ -89,7 +103,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.rewardMsg = "";
 				if (rewardMsgRaw.charAt(0) == 'd'){
 					$scope.rewardImg = "/image/Belltower/diamond.png";
-					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "枚钻石。";
+					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "枚钻石";
 				} else if (rewardMsgRaw.charAt(0) == 'i'){
 					$scope.rewardImg = "/image/Belltower/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
 					var level = rewardMsgRaw.charAt(1);
@@ -102,10 +116,10 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					} else {
 						$scope.rewardMsg = "获得头像："
 					}
-					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(4) + "。";
+					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(4);
 				} else if (rewardMsgRaw.charAt(0) == 'k'){
 					$scope.rewardImg = "/image/Belltower/chest.png";
-					$scope.rewardMsg = "获得一个宝箱。";
+					$scope.rewardMsg = "获得一个宝箱";
 				}
 				$scope.getAccountInfo()
 				for (var i=0;i<2500000000;i++){}

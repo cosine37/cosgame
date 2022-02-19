@@ -53,7 +53,7 @@
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#shopstab" ng-click="hideTablesTab()">商城</a>
+				      <a class="nav-link" data-toggle="tab" href="#shopstab" ng-click="hideTablesTab()">小镇</a>
 				    </li>
 				</ul>
 			</div>
@@ -88,31 +88,114 @@
 					<h2><b>规则</b></h2>
 					
 				</div>
-				<div id="shopstab" class="content container tab-pane fade">
-					<h2><b>商城</b></h2>
+				<div id="shopstab" class="content container tab-pane fade noselect">
+					<div><h2><b>小镇</b></h2></div>
+					<div style="background-image:url('/image/Belltower/town.jpg'); background-size:cover; height: 600px; width: 960px; position: relative">
+						<div class="account-info">
+							<table>
+								<tr>
+									<td>
+										<div class="account-category">
+											<img src="/image/Belltower/coin.png">
+											<span>{{accountInfo.money}}</span>
+										</div>
+									</td>
+									<td>
+										<div class="account-category">
+											<img src="/image/Belltower/diamond.png">
+											<span>{{accountInfo.diamond}}</span>
+										</div>
+									</td>
+									<td>
+										<div class="account-category">
+											<img src="/image/Belltower/chest.png">
+											<span>{{accountInfo.key}}</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<div ng-click="openPlace('mine')" class="town-place" style="left: 20px; bottom: 20px;" ng-show="shownPlace == ''">
+							矿场
+						</div>
+						<div ng-click="openPlace('market')" class="town-place" style="left: 140px; bottom: 220px;" ng-show="shownPlace == ''">
+							市集
+						</div>
+						<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 160px;" ng-show="shownPlace == ''">
+							开锁店
+						</div>
+						<div ng-click="openPlace('home')" class="town-place" style="right: 150px; bottom: 100px;" ng-show="shownPlace == ''">
+							自宅
+						</div>
+						
+						<div class="place-div" ng-show="shownPlace != ''">
+							<img ng-src="/image/Belltower/{{shownPlace}}.jpg" class="place-img">
+							<div ng-show="shownPlace == 'mine'" class="place-content">
+								<h3>矿场</h3>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.money>=88" ng-click="dig()" 
+									class="dig-button">
+									<span>挖掘（花费88</span>
+									<img src="/image/Belltower/coin.png">
+									<span>)</span>
+								</div>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.money<88" 
+									style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+									<span>挖掘需要花费88</span>
+									<img src="/image/Belltower/coin.png" style="height: 40px; width:40px;">
+									<span>，你的钱不够。</span>
+								</div>
+								<div ng-show="loadingReward" class="digging">
+									<div>
+										<img src="/image/Belltower/mining.gif" style="height: 153px; width: 270px;"/>
+									</div>
+									<div>
+										正在挖掘。。。
+									</div>
+								</div>
+								<div ng-show="showReward" class="digging">
+									<div>
+										<img ng-src="{{rewardImg}}" class="icon"/>
+									</div>
+									<div>{{rewardMsg}}</div>
+									<button ng-click="showReward = false">谢谢</button>
+								</div>
+								
+							</div>
+							<div ng-show="shownPlace == 'home'" class="place-content">
+								<h3>自宅</h3>
+								<div
+									style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
+									<span>施工中，敬请期待</span>
+								</div>
+							</div>
+							<div ng-show="shownPlace == 'market'" class="place-content">
+								<h3>市集</h3>
+								<div
+									style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
+									<span>施工中，敬请期待</span>
+								</div>
+							</div>
+							<div ng-show="shownPlace == 'locksmith'" class="place-content">
+								<h3>开锁店</h3>
+								<div
+									style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
+									<span>施工中，敬请期待</span>
+								</div>
+							</div>
+							<div style="position: absolute; top: 30px; right: 30px">
+								<button ng-click="closePlace()">离开</button>
+							</div>
+						</div>
+					</div>
+					<!-- 
 					<div>
 						<button ng-click="dailyReward()">奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
 					</div>
-					<div ng-show="showReward == false && loadingReward == false">
-						你可以花费88枚铜币挖掘：<button ng-click="dig()" ng-disabled='accountInfo.money<88'>挖掘</button>
-					</div>
-					<div ng-show="loadingReward">
-						<div>
-							<img src="/image/Belltower/dig.gif"/>
-						</div>
-						<div>
-							正在挖掘。。。
-						</div>
-					</div>
-					<div ng-show="showReward">
-						<div>
-							<img ng-src="{{rewardImg}}" class="icon"/>
-						</div>
-						<div>{{rewardMsg}}</div>
-						<button ng-click="showReward = false">谢谢</button>
-					</div>
+					
 					{{accountInfo}}
+					 -->
 				</div>
 			</div>
 		</div>
