@@ -1,6 +1,8 @@
 package com.cosine.cosgame.belltower.roles.troublebrewing;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.belltower.Consts;
 import com.cosine.cosgame.belltower.Player;
@@ -40,8 +42,28 @@ public class Imp extends Role{
 			int x = player.getTargets().get(1);
 			Player p = board.getPlayers().get(x);
 			if (p.isUnaffectedByDemon() == false) {
+				p.getRole().onKilled();
 				p.setAlive(false);
 				board.addKilledIndex(x);
+			}
+		}
+	}
+	
+	public void onKilled() {
+		//TODO: add Scarlet Woman Handles
+		int i;
+		List<Integer> a = new ArrayList<>();
+		for (i=0;i<board.getPlayers().size();i++) {
+			a.add(i);
+		}
+		while (a.size()>0) {
+			int n = a.size();
+			Random rand = new Random();
+			int x = rand.nextInt(n);
+			int y = a.remove(x);
+			if (board.getPlayers().get(y).getRole().getGroup() == Consts.MINION) {
+				Role imp = new Imp();
+				board.getPlayers().get(y).setRole(imp);
 			}
 		}
 	}

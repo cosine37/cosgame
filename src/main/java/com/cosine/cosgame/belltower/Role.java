@@ -61,6 +61,10 @@ public class Role {
 		
 	}
 	
+	public void onKilled() {
+		
+	}
+	
 	public List<Player> twoPlayersFromGroupFake(int group){
 		List<Player> ans = new ArrayList<>();
 		int i;

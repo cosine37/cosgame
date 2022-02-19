@@ -54,7 +54,7 @@
 						<span ng-show="chosenPlayer != $index && chosenPlayer2 != $index">未选择</span>
 					</td>
 					<td>
-						<button ng-show="showNoNominate" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
+						<button ng-show="showNoNominate && phase==DAY" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
 					</td>
 				<tr>
 			</table>
@@ -81,8 +81,11 @@
 		</div>
 		<div ng-show="phase==EXECUTION">
 			<div>{{gamedata.executionMsg}}</div>
-			<div>
+			<div ng-show="gamedata.confirmedDay == false">
 				<button ng-click="confirmDay()">确认</button>
+			</div>
+			<div ng-show="gamedata.confirmedDay">
+				你已确认，正等待其他玩家确认。
 			</div>
 		</div>
 	</div>

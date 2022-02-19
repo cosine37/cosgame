@@ -69,13 +69,12 @@ public class Board {
 		
 		// TODO: Assign roles here
 		/*
-		Role r0 = new FortuneTeller();
+		Role r0 = new Poisoner();
 		players.get(0).setRole(r0);
 		Role r1 = new Imp();
 		players.get(1).setRole(r1);
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
-		
 		Role r3 = new Monk();
 		players.get(3).setRole(r3);
 		*/

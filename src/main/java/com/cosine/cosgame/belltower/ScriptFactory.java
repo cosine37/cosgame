@@ -14,6 +14,26 @@ public class ScriptFactory {
 			script.addTownsfolk(r);
 			r = new Soldier();
 			script.addTownsfolk(r);
+			r = new Monk();
+			script.addTownsfolk(r);
+			r = new Washerwoman();
+			script.addTownsfolk(r);
+			r = new Investigator();
+			script.addTownsfolk(r);
+			r = new Chef();
+			script.addTownsfolk(r);
+			r = new Empath();
+			script.addTownsfolk(r);
+			r = new Undertaker();
+			script.addTownsfolk(r);
+			r = new FortuneTeller();
+			script.addTownsfolk(r);
+			
+			r = new Imp();
+			script.addDemon(r);
+			
+			r = new Poisoner();
+			script.addMinion(r);
 		}
 		
 		return script;
