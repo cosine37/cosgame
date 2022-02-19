@@ -69,6 +69,7 @@ public class Player {
 	
 	public void startDay() {
 		nominated = false;
+		confirmedDay = false;
 	}
 	
 	public void confirmDay() {

@@ -1,0 +1,60 @@
+@charset "UTF-8";
+.player-info{
+	text-align: center;
+	height: 160px;
+}
+
+.player-info input{
+	width: 120px;
+}
+
+.icon-frame{
+	height: 100px;
+	width: 100px;
+	position: relative;
+}
+
+.icon-game{
+	height: 100px;
+	width: 100px;
+}
+
+.icon-game-choosable{
+	height: 100px;
+	width: 100px;
+}
+
+.icon-game-choosable:hover{
+	cursor: pointer;
+	filter:brightness(120%) drop-shadow(0px 0px 10px yellow);
+}
+
+.icon-game-not-alive {
+	filter: grayscale(100%);
+}
+
+.checked{
+	height: 40px;
+	width: 40px;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+
+.ghost{
+	height: 40px;
+	width: 40px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0.8;
+}
+
+.cannot-vote{
+	height: 40px;
+	width: 40px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0.6;
+}

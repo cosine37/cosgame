@@ -111,6 +111,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.targets = [-1,-1,-1,-1,-1]
 		$scope.chosenPlayer = -1;
 		$scope.chosenPlayer2 = -1;
+		$scope.nominatedPlayer = -1;
 		
 		$scope.numChosenPlayer = function(){
 			if ($scope.chosenPlayer == -1){
@@ -123,25 +124,32 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.choosePlayer = function(x){
-			if ($scope.gamedata.myRole.numPlayerChoose == 0){
-				
-			} else if ($scope.gamedata.myRole.numPlayerChoose == 1){
-				if ($scope.chosenPlayer == x){
-					$scope.chosenPlayer = -1
-				} else {
-					$scope.chosenPlayer = x
+			if ($scope.phase == $scope.NIGHT){
+				if ($scope.gamedata.myRole.numPlayerChoose == 0){
+					
+				} else if ($scope.gamedata.myRole.numPlayerChoose == 1){
+					if ($scope.chosenPlayer == x){
+						$scope.chosenPlayer = -1
+					} else {
+						$scope.chosenPlayer = x
+					}
+				} else if ($scope.gamedata.myRole.numPlayerChoose == 2){
+					if ($scope.chosenPlayer == x){
+						$scope.chosenPlayer = -1
+					} else if ($scope.chosenPlayer2 == x){
+						$scope.chosenPlayer2 = -1
+					} else if ($scope.chosenPlayer == -1){
+						$scope.chosenPlayer = x
+					} else if ($scope.chosenPlayer2 == -1){
+						$scope.chosenPlayer2 = x
+					}
 				}
-			} else if ($scope.gamedata.myRole.numPlayerChoose == 2){
-				if ($scope.chosenPlayer == x){
-					$scope.chosenPlayer = -1
-				} else if ($scope.chosenPlayer2 == x){
-					$scope.chosenPlayer2 = -1
-				} else if ($scope.chosenPlayer == -1){
-					$scope.chosenPlayer = x
-				} else if ($scope.chosenPlayer2 == -1){
-					$scope.chosenPlayer2 = x
+			} else if ($scope.phase == $scope.DAY){
+				if ($scope.gamedata.curNominator == $scope.gamedata.myIndex){
+					$scope.nominatedPlayer = x;
 				}
 			}
+			
 		}
 		
 		$scope.confirmNight = function(){
@@ -152,6 +160,8 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				"targets" : $scope.targets
 			}
 			$http({url: "/belltower/confirmnight", method: "POST", params:data}).then(function(response){
+				$scope.chosenPlayer = -1;
+				$scope.chosenPlayer2 = -1;
 				$scope.allRefresh()
 			});
 		}
@@ -199,6 +209,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 			$http({url: "/belltower/nominate", method: "POST", params:data}).then(function(response){
 				$scope.allRefresh()
+				$scope.nominatedPlayer = -1;
 			});
 		}
 		
@@ -208,6 +219,39 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		// ---- end day handles
+		
+		$scope.iconClass = function(x){
+			var ans = "icon-game";
+			if ($scope.phase == $scope.NIGHT){
+				if ($scope.gamedata.myRole.numPlayerChoose == 0){
+					
+				} else if ($scope.gamedata.myRole.numPlayerChoose == 1){
+					if ($scope.chosenPlayer == x){
+						ans = "icon-game-choosable";
+					} else {
+						ans = "icon-game-choosable";
+					}
+				} else if ($scope.gamedata.myRole.numPlayerChoose == 2){
+					if ($scope.chosenPlayer == x){
+						ans = "icon-game-choosable";
+					} else if ($scope.chosenPlayer2 == x){
+						ans = "icon-game-choosable";
+					} else if ($scope.chosenPlayer == -1){
+						ans = "icon-game-choosable";
+					} else if ($scope.chosenPlayer2 == -1){
+						ans = "icon-game-choosable";
+					}
+				}
+			} else if ($scope.phase == $scope.DAY){
+				if ($scope.gamedata.curNominator == $scope.gamedata.myIndex){
+					ans = "icon-game-choosable";
+				}
+			}
+			if ($scope.players[x].alive == false && $scope.status!=$scope.ASSIGNROLE){
+				ans = ans + " icon-game-not-alive"
+			}
+			return ans;
+		}
 		
 		var setNominateMessage = function(){
 			$scope.nominateMessage = "今早首位发言玩家是" + $scope.players[$scope.gamedata.firstNominator].displayName + "，发言顺序为";
@@ -233,7 +277,7 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.userNVMsg = "你是否要投票给" + $scope.players[$scope.gamedata.nominated].displayName + "?";
 					$scope.showNoVote = true;
 				} else {
-					$scope.userNVMsg = "正等待" + $scope.players[$scope.gamedata.curVoter].displayName + "决定是否需要投票给" + $scope.players[$scope.gamedata.nominated].displayName + "?";
+					$scope.userNVMsg = "正等待" + $scope.players[$scope.gamedata.curVoter].displayName + "决定是否需要投票给" + $scope.players[$scope.gamedata.nominated].displayName + "。";
 				}
 			}
 		}

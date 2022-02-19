@@ -68,11 +68,12 @@ public class Board {
 		}
 		
 		// TODO: Assign roles here
-		/*
-		Role r0 = new Poisoner();
+		
+		Role r0 = new Imp();
 		players.get(0).setRole(r0);
-		Role r1 = new Imp();
+		Role r1 = new Poisoner();
 		players.get(1).setRole(r1);
+		/*
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
 		Role r3 = new Monk();
@@ -237,7 +238,7 @@ public class Board {
 			if (curVoter < 0) {
 				curVoter = curVoter + players.size();
 			}
-			if (players.get(curVoter).isBot() == false) {
+			if (players.get(curVoter).isBot() == false && players.get(curVoter).isCanVote()) {
 				break;
 			}
 		}

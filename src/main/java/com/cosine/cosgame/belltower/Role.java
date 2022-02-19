@@ -251,6 +251,19 @@ public class Role {
 		instruction.add(s);
 		return instruction;
 	}
+	
+	public List<String> getDeadInstructions() {
+		String s =  "你的身份是 " + name;
+		List<String> instruction = new ArrayList<>();
+		instruction.add(s);
+		if (board.getPhase() == Consts.NIGHT) {
+			String s2 = "你已被杀，没有技能。";
+			String s3 = "点击确定结束夜晚阶段。";
+			instruction.add(s2);
+			instruction.add(s3);
+		}
+		return instruction;
+	}
 
 	public RoleEntity toRoleEntity() {
 		RoleEntity entity = new RoleEntity();
@@ -258,8 +271,14 @@ public class Role {
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setImg(img);
-		entity.setNumPlayerChoose(getNumPlayerChoose());
-		entity.setInstructions(getInstructions());
+		if (player.isAlive()) {
+			entity.setNumPlayerChoose(getNumPlayerChoose());
+			entity.setInstructions(getInstructions());
+		} else {
+			entity.setNumPlayerChoose(0);
+			entity.setInstructions(getDeadInstructions());
+		}
+		
 		return entity;
 	}
 }

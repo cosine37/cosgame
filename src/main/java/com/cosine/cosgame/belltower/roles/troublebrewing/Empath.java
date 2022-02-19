@@ -17,7 +17,6 @@ public class Empath extends Role {
 		group = Consts.TOWNSFOLK;
 		hasFirstNight = true;
 		hasRestNights = true;
-		numPlayerChoose = 1;
 		desc = "夜晚阶段你得知当时你邻座的存活玩家有几个是邪恶势力。";
 	}
 	

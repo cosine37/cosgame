@@ -62,8 +62,9 @@ public class Imp extends Role{
 			int x = rand.nextInt(n);
 			int y = a.remove(x);
 			if (board.getPlayers().get(y).getRole().getGroup() == Consts.MINION) {
-				Role imp = new Imp();
+				Imp imp = new Imp();
 				board.getPlayers().get(y).setRole(imp);
+				break;
 			}
 		}
 	}
