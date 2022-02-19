@@ -26,6 +26,8 @@ public class RoleFactory {
 			role = new Empath();
 		} else if (roleId == 10) {
 			role = new Undertaker();
+		} else if (roleId == 11) {
+			role = new FortuneTeller();
 		}
 		
 		return role;

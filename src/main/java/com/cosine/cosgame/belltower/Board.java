@@ -69,12 +69,13 @@ public class Board {
 		
 		// TODO: Assign roles here
 		/*
-		Role r0 = new Investigator();
+		Role r0 = new FortuneTeller();
 		players.get(0).setRole(r0);
 		Role r1 = new Imp();
 		players.get(1).setRole(r1);
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
+		
 		Role r3 = new Monk();
 		players.get(3).setRole(r3);
 		*/
@@ -116,11 +117,11 @@ public class Board {
 		for (i=0;i<tplayers.size();i++) {
 			Role r = tplayers.get(i).getRole();
 			if (numDay == 1) {
-				if (r.isHasFirstNight()) {
+				if (r.isHasFirstNight() && tplayers.get(i).isAlive()) {
 					r.execSkill();
 				}
 			} else {
-				if (r.isHasRestNights()) {
+				if (r.isHasRestNights() && tplayers.get(i).isAlive()) {
 					r.execSkill();
 				}
 			}

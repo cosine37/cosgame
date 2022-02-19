@@ -132,7 +132,15 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.chosenPlayer = x
 				}
 			} else if ($scope.gamedata.myRole.numPlayerChoose == 2){
-				
+				if ($scope.chosenPlayer == x){
+					$scope.chosenPlayer = -1
+				} else if ($scope.chosenPlayer2 == x){
+					$scope.chosenPlayer2 = -1
+				} else if ($scope.chosenPlayer == -1){
+					$scope.chosenPlayer = x
+				} else if ($scope.chosenPlayer2 == -1){
+					$scope.chosenPlayer2 = x
+				}
 			}
 		}
 		
@@ -157,6 +165,12 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				return true;
 			} else if (npc == 1){
 				if ($scope.chosenPlayer != -1){
+					return true;
+				} else {
+					return false;
+				}
+			} else if (npc == 2){
+				if ($scope.chosenPlayer != -1 && $scope.chosenPlayer2 != -1){
 					return true;
 				} else {
 					return false;

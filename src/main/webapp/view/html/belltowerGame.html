@@ -50,8 +50,8 @@
 						<button ng-click="choosePlayer($index)">{{p.displayName}}</button>
 					</td>
 					<td>
-						<span ng-show="chosenPlayer == $index">已选择</span>
-						<span ng-show="chosenPlayer != $index">未选择</span>
+						<span ng-show="chosenPlayer == $index || chosenPlayer2 == $index">已选择</span>
+						<span ng-show="chosenPlayer != $index && chosenPlayer2 != $index">未选择</span>
 					</td>
 					<td>
 						<button ng-show="showNoNominate" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
