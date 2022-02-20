@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.belltower.Consts;
 import com.cosine.cosgame.belltower.entity.AccountEntity;
 import com.cosine.cosgame.belltower.shop.Shop;
 import com.cosine.cosgame.belltower.shop.Transaction;
@@ -269,6 +270,17 @@ public class Account {
 		entity.setMoney(money);
 		entity.setDiamond(diamond);
 		entity.setKey(key);
+		List<String> availableCharacters = new ArrayList<>();
+		int i;
+		/*
+		for (i=0;i<Consts.NUMDEFAULTCHARACTER;i++) {
+			availableCharacters.add(Integer.toString(i));
+		}
+		*/
+		for (i=0;i<characters.size();i++) {
+			availableCharacters.add(Integer.toString(characters.get(i)));
+		}
+		entity.setAvailableCharacters(availableCharacters);
 		return entity;
 	}
 }

@@ -83,6 +83,9 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.showPlaceButtons = true;
 		$scope.shownPlace = "";
 		$scope.openPlace = function(x){
+			if (x == 'home'){
+				setIconInfo();
+			}
 			$scope.shownPlace = x
 			$scope.placeStyle = {
 				"background-image" : "url('/image/Belltower/" + x + ".jpg')",
@@ -132,30 +135,6 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.openChest = function(){
 			$scope.loadingReward = true;
 			$http({url: "/belltower/openchest", method: "POST"}).then(function(response){
-				/*
-				var rewardMsgRaw = response.data.value[0];
-				$scope.rewardMsg = "";
-				if (rewardMsgRaw.charAt(0) == 'd'){
-					$scope.rewardImg = "/image/Belltower/diamond.png";
-					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "枚钻石";
-				} else if (rewardMsgRaw.charAt(0) == 'i'){
-					$scope.rewardImg = "/image/Belltower/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
-					var level = rewardMsgRaw.charAt(1);
-					if (level == '1'){
-						$scope.rewardMsg = "获得头像："
-					} else if (level == '2'){
-						$scope.rewardMsg = "获得稀有头像："
-					} else if (level == '3'){
-						$scope.rewardMsg = "获得史诗头像："
-					} else {
-						$scope.rewardMsg = "获得头像："
-					}
-					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(4);
-				} else if (rewardMsgRaw.charAt(0) == 'k'){
-					$scope.rewardImg = "/image/Belltower/chest.png";
-					$scope.rewardMsg = "获得一个宝箱";
-				}
-				*/
 				var rewardMsgsRaw = response.data.value;
 				$scope.rewardMsgs = []
 				$scope.rewardImgs = []
@@ -190,6 +169,51 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.loadingReward = false;
 				$scope.showReward = true;
 			});
+		}
+		
+		var setCurCharacterPage = function(){
+			var cols = 5;
+			var rows = 2;
+			var pageSize = 10;
+			var i,j;
+			$scope.charsCurPage = [["x","x","x","x","x"],["x","x","x","x","x"]];
+			for (i=0;i<rows;i++){
+				for (j=0;j<cols;j++){
+					var x = ($scope.curPage - 1)*pageSize + i*cols + j;
+					if (x>=0 && x<$scope.accountInfo.availableCharacters.length){
+						$scope.charsCurPage[i][j] = $scope.accountInfo.availableCharacters[x];
+					}
+				}
+			}
+		}
+		
+		var setIconInfo = function(){
+			var pageSize = 10;
+			$scope.numPages = Math.ceil($scope.accountInfo.availableCharacters.length / pageSize);
+			if ($scope.numPages == 0) $scope.numPages = 1;
+			$scope.curPage = 1;
+			setCurCharacterPage();
+		}
+		
+		$scope.canFlipCharPage = function(x){
+			if (x == 1){
+				if ($scope.curPage < $scope.numPages){
+					return true;
+				} else {
+					return false;
+				}
+			} else if (x == -1){
+				if ($scope.curPage > 1){
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		
+		$scope.flipCharPage = function(x){
+			$scope.curPage = $scope.curPage+x;
+			setCurCharacterPage();
 		}
 		
 		$scope.getAllBoards = function(){

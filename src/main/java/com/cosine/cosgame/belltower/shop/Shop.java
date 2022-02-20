@@ -251,8 +251,8 @@ public class Shop {
 	
 	public List<Transaction> dailyReward() {
 		List<Transaction> ts = new ArrayList<>();
-		//Transaction t = new Transaction(Transaction.MONEY, DAILYREWARD, "每日奖励");
-		Transaction t = new Transaction(Transaction.KEY, 1, "每日奖励");
+		Transaction t = new Transaction(Transaction.MONEY, DAILYREWARD, "每日奖励");
+		//Transaction t = new Transaction(Transaction.KEY, 1, "每日奖励");
 		ts.add(t);
 		return ts;
 	}

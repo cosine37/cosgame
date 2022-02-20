@@ -1,10 +1,13 @@
 package com.cosine.cosgame.belltower.entity;
 
+import java.util.List;
+
 public class AccountEntity {
 	String name;
 	int money;
 	int diamond;
 	int key;
+	List<String> availableCharacters;
 	
 	public String getName() {
 		return name;
@@ -29,6 +32,12 @@ public class AccountEntity {
 	}
 	public void setKey(int key) {
 		this.key = key;
+	}
+	public List<String> getAvailableCharacters() {
+		return availableCharacters;
+	}
+	public void setAvailableCharacters(List<String> availableCharacters) {
+		this.availableCharacters = availableCharacters;
 	}
 	
 }

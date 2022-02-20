@@ -164,9 +164,30 @@
 							</div>
 							<div ng-show="shownPlace == 'home'" class="place-content">
 								<h3>自宅</h3>
+								<!-- 
 								<div style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
 									<span>施工中，敬请期待</span>
 								</div>
+								 -->
+								<table style="width: 540px; left: 30px; position: absolute">
+									<tr>
+										<td colspan="5" style="text-align:center"><h5>你的头像</h5></td>
+									</tr>
+									<tr ng-repeat="i in [0,1]">
+										<td ng-repeat="j in [0,1,2,3,4]" style="padding: 10px;">
+											<img class="icon" ng-show="charsCurPage[i][j] == 'x'" src="image/Belltower/empty.png" style="opacity: 0.5;"/>
+											<img class="icon icon-glow" ng-show="charsCurPage[i][j] != 'x'" ng-src="image/Belltower/Icons/{{charsCurPage[i][j]}}.png" 
+												ng-click="changeIcon(charsCurPage[i][j])" style="cursor:pointer"/>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="5" style="text-align:center; padding-top: 10px">
+											<button ng-disabled="canFlipCharPage(-1) == false", ng-click="flipCharPage(-1)">&lt;</button>
+											<span>{{curPage}}/{{numPages}}</span>
+											<button ng-disabled="canFlipCharPage(1) == false", ng-click="flipCharPage(1)">&gt;</button>
+										</td>
+									</tr>
+								</table>
 							</div>
 							<div ng-show="shownPlace == 'market'" class="place-content">
 								<h3>市集</h3>
@@ -188,7 +209,7 @@
 								</div>
 								<div ng-show="showReward == false && loadingReward == false && accountInfo.key>=1 && accountInfo.money<1" 
 									style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
-									<span>打开宝箱需要花费1</span>
+									<span>打开宝箱只需花费1</span>
 									<img src="/image/Belltower/coin.png" style="height: 40px; width:40px;">
 									<span>，你连这都出不起，真是滑天下之大稽。</span>
 								</div>
@@ -217,12 +238,11 @@
 							</div>
 						</div>
 					</div>
-					
+					<!-- 
 					<div>
 						<button ng-click="dailyReward()">奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
 					</div>
-					<!-- 
 					{{accountInfo}}
 					 -->
 				</div>
