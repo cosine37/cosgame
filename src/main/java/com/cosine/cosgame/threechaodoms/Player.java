@@ -33,6 +33,7 @@ public class Player {
 		jail = new ArrayList<>();
 		knownJails = new ArrayList<>();
 		receives = new ArrayList<>();
+		account = new Account();
 	}
 	
 	public void setupHand(int jailIndex, int exileIndex) {

@@ -9,7 +9,11 @@ public class PlayerEntity {
 	boolean canVote;
 	boolean nominated;
 	String displayName;
+	String roleText;
+	String initialRoleText;
 	IconEntity icon;
+	boolean win;
+	List<String> receives;
 	
 	public String getName() {
 		return name;
@@ -46,6 +50,30 @@ public class PlayerEntity {
 	}
 	public void setIcon(IconEntity icon) {
 		this.icon = icon;
+	}
+	public String getInitialRoleText() {
+		return initialRoleText;
+	}
+	public void setInitialRoleText(String initialRoleText) {
+		this.initialRoleText = initialRoleText;
+	}
+	public String getRoleText() {
+		return roleText;
+	}
+	public void setRoleText(String roleText) {
+		this.roleText = roleText;
+	}
+	public boolean isWin() {
+		return win;
+	}
+	public void setWin(boolean win) {
+		this.win = win;
+	}
+	public List<String> getReceives() {
+		return receives;
+	}
+	public void setReceives(List<String> receives) {
+		this.receives = receives;
 	}
 	
 }

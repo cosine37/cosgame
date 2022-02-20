@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 public class Shop {
 	public static final int FIRSTREWARD = 500;
 	public static final int DAILYREWARD = 100;
@@ -193,6 +194,22 @@ public class Shop {
 		List<Transaction> ts = new ArrayList<>();
 		Transaction t = new Transaction(Transaction.MONEY, DAILYREWARD, "每日奖励");
 		ts.add(t);
+		return ts;
+	}
+	
+	public List<Transaction> numGameReward(Account a){
+		List<Transaction> ts = new ArrayList<>();
+		int x = a.getNumGames();
+		if (x%10 == 0) {
+			Transaction t = new Transaction(Transaction.MONEY, 300, x + "场游戏");
+			ts.add(t);
+		} else if (x%5 == 0) {
+			Transaction t = new Transaction(Transaction.MONEY, 100, x + "场游戏");
+			ts.add(t);
+		} else if (x == 37) {
+			Transaction t = new Transaction(Transaction.MONEY, 1000, x + "场游戏");
+			ts.add(t);
+		}
 		return ts;
 	}
 }

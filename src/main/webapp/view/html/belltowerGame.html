@@ -31,6 +31,7 @@
 									<img class="checked" ng-show="chosenPlayer == k || chosenPlayer2 == k || nominatedPlayer == k" src="image/Belltower/checked.png"/>
 									<img class="ghost" ng-show="players[k].alive == false && players[k].canVote && status!=ASSIGNROLE" src="image/Belltower/ghost.png"/>
 									<img class="cannot-vote" ng-show="players[k].alive == false && players[k].canVote == false && status!=ASSIGNROLE" src="image/Belltower/cannot-vote.png"/>
+									<div ng-class="roleFrameClass(k)" ng-show="status==ENDGAME">{{players[k].roleText}}</div>
 								</div>
 							</td></tr>
 							<tr><td>{{players[k].displayName}}</td></tr>

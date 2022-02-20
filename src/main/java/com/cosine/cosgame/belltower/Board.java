@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.cosine.cosgame.belltower.entity.BoardEntity;
 import com.cosine.cosgame.belltower.entity.PlayerEntity;
 import com.cosine.cosgame.belltower.roles.troublebrewing.*;
+import com.cosine.cosgame.belltower.shop.Transaction;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -40,7 +41,6 @@ public class Board {
 	public Board() {
 		groupCounts = new ArrayList<>();
 		players = new ArrayList<>();
-		
 		script = new Script();
 		
 		String dbname = "belltower";
@@ -315,6 +315,17 @@ public class Board {
 	}
 	public void endGame(int winFaction) {
 		if (winFaction == 0) return;
+		int i;
+		List<Transaction> ts;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isBot()) continue;
+			if (players.get(i).getRole().getFaction() == winFaction) {
+				ts = players.get(i).getAccount().receiveWinReward(players.get(i).getName());
+			} else {
+				ts = players.get(i).getAccount().receiveLoseReward(players.get(i).getName());
+			}
+			players.get(i).setReceivesFromTransaction(ts);
+		}
 		status = Consts.ENDGAME;
 	}
 	public int getWinFaction() {

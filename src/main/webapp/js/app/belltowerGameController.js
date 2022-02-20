@@ -220,9 +220,19 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		// ---- end day handles
 		
+		$scope.roleFrameClass = function(x){
+			var ans = "role-frame"
+			if ($scope.players[x].win){
+				ans = ans + " player-win"
+			}
+			return ans;
+		}
+		
 		$scope.iconClass = function(x){
 			var ans = "icon-game";
-			if ($scope.phase == $scope.NIGHT){
+			if ($scope.status == $scope.ENDGAME){
+				
+			} else if ($scope.phase == $scope.NIGHT){
 				if ($scope.gamedata.myRole.numPlayerChoose == 0){
 					
 				} else if ($scope.gamedata.myRole.numPlayerChoose == 1){

@@ -7,6 +7,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.PlayerEntity;
 import com.cosine.cosgame.belltower.shop.Account;
+import com.cosine.cosgame.belltower.shop.Transaction;
 
 public class Player {
 	String name;
@@ -14,11 +15,13 @@ public class Player {
 	protected String lastNightMsg;
 	Icon icon;
 	Role role;
+	Role initialRole;
 	Board board;
 	List<Integer> extraBits;
 	List<Integer> targets;
 	List<String> logs;
 	List<String> availableCharacters;
+	List<String> receives;
 	int index;
 	boolean confirmedNight;
 	boolean confirmedDay;
@@ -33,9 +36,11 @@ public class Player {
 	
 	public Player() {
 		role = new Role();
+		initialRole = new Role();
 		extraBits = new ArrayList<>();
 		targets = new ArrayList<>();
 		logs = new ArrayList<>();
+		receives = new ArrayList<>();
 		icon = new Icon();
 		bot = false;
 	}
@@ -45,6 +50,7 @@ public class Player {
 		poisoned = false;
 		canVote = true;
 		role = r;
+		initialRole = r;
 	}
 	
 	public void assignIcon(List<Integer> iconArr) {
@@ -100,6 +106,24 @@ public class Player {
 		return ans;
 	}
 	*/
+	
+	public void setReceivesFromTransaction(List<Transaction> ts) {
+		receives = new ArrayList<>();
+		for (int i=0;i<ts.size();i++) {
+			String s = ts.get(i).getInfo() + "：" + ts.get(i).getAmount();
+			if (ts.get(i).getType() == Transaction.MONEY) {
+				//s = "m" + s;
+				s = s+"枚钱币";
+			} else if (ts.get(i).getType() == Transaction.DIAMOND) {
+				//s = "d" + s;
+				s = s+"颗钻石";
+			} else if (ts.get(i).getType() == Transaction.KEY) {
+				//s = "k" + s;
+				s = s+"个宝箱";
+			}
+			receives.add(s);
+		}
+	}
 	
 	public void addLog(String log) {
 		logs.add(log);
@@ -224,6 +248,18 @@ public class Player {
 	public void setBot(boolean bot) {
 		this.bot = bot;
 	}
+	public Role getInitialRole() {
+		return initialRole;
+	}
+	public void setInitialRole(Role initialRole) {
+		this.initialRole = initialRole;
+	}
+	public List<String> getReceives() {
+		return receives;
+	}
+	public void setReceives(List<String> receives) {
+		this.receives = receives;
+	}
 
 	public void setupFromAccount() {
 		int i;
@@ -241,6 +277,7 @@ public class Player {
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("role", role.getId());
+		doc.append("initialRole", initialRole.getId());
 		doc.append("poisoned", poisoned);
 		doc.append("alive", alive);
 		doc.append("logs", logs);
@@ -255,6 +292,7 @@ public class Player {
 		doc.append("nominated", nominated);
 		doc.append("icon", icon.toDocument());
 		doc.append("bot", bot);
+		doc.append("receives", receives);
 		return doc;
 	}
 	
@@ -266,6 +304,8 @@ public class Player {
 		extraBits = (List<Integer>) doc.get("extraBits");
 		int roleId = doc.getInteger("role", -1);
 		role = RoleFactory.makeRole(roleId);
+		int initialRoleId = doc.getInteger("initialRole", -1);
+		initialRole = RoleFactory.makeRole(initialRoleId);
 		role.setPlayer(this);
 		role.setBoard(board);
 		Document doi = (Document) doc.get("icon");
@@ -280,6 +320,7 @@ public class Player {
 		unaffectedByDemon = doc.getBoolean("unaffectedByDemon", false);
 		nominated = doc.getBoolean("nominated", false);
 		bot = doc.getBoolean("bot", false);
+		receives = (List<String>) doc.get("receives");
 		if (bot == false) {
 			account = new Account();
 			account.getFromDB(name);
@@ -295,6 +336,21 @@ public class Player {
 		entity.setDisplayName(displayName);
 		entity.setNominated(nominated);
 		entity.setIcon(icon.toIconEntity());
+		entity.setReceives(receives);
+		if (board.getStatus() == Consts.ENDGAME) {
+			entity.setInitialRoleText(initialRole.getName());
+			entity.setRoleText(role.getName());
+			int winFaction = board.getWinFaction();
+			if (role.getFaction() == winFaction) {
+				entity.setWin(true);
+			} else {
+				entity.setWin(false);
+			}
+		} else {
+			entity.setInitialRoleText("");
+			entity.setRoleText("");
+			entity.setWin(false);
+		}
 		return entity;
 	}
 }

@@ -1,11 +1,14 @@
 package com.cosine.cosgame.belltower.shop;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.AccountEntity;
+import com.cosine.cosgame.belltower.shop.Shop;
+import com.cosine.cosgame.belltower.shop.Transaction;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Account {
@@ -42,6 +45,48 @@ public class Account {
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
+	}
+	
+	public List<Transaction> receiveWinReward(String name) {
+		Shop shop = new Shop();
+		numGames++;
+		List<Transaction> ts = getGeneralReward();
+		winStrike++;
+		ts.addAll(shop.winReward(this));
+		addNewTransactions(ts);
+		updateAccountDB(name);
+		return ts;
+	}
+	
+	public List<Transaction> receiveLoseReward(String name) {
+		Shop shop = new Shop();
+		numGames++;
+		List<Transaction> ts = getGeneralReward();
+		winStrike=0;
+		ts.addAll(shop.loseReward(this));
+		addNewTransactions(ts);
+		updateAccountDB(name);
+		return ts;
+	}
+	
+	List<Transaction> getGeneralReward() {
+		Shop shop = new Shop();
+		List<Transaction> ts = new ArrayList<>();
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		int date = Calendar.getInstance().get(Calendar.DATE);
+		String today = "" + year + month + date;
+		if (lastLoginDate.contentEquals("")) {
+			ts.addAll(shop.entryReward());
+		}
+		if (today.contentEquals(lastLoginDate)) {
+			
+		} else {
+			ts.addAll(shop.dailyReward());
+			lastLoginDate = today;
+		}
+		ts.addAll(shop.numGameReward(this));
+		return ts;
 	}
 	
 	public void addNewTransaction(Transaction t) {
