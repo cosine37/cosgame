@@ -10,6 +10,7 @@ public class Shop {
 	public static final int DAILYREWARD = 100;
 	public static final int WINREWARD = 50;
 	public static final int DIGPRICE = 88;
+	public static final int OPENCHESTPRICE = 1;
 	
 	public static final String[] commonNames = {"村民","村长","法师","少爷","弓手","伐木工","法师","高级木工","高级法师","觉醒法师",
 			"觉醒矿工","觉醒木工","矿工","樵夫","金币商人","商人","商人","森林法师","流浪法师","千金",
@@ -24,41 +25,99 @@ public class Shop {
 		
 	}
 	
-	public String dig(Account a) {
-		if (a.getMoney() < DIGPRICE) return "";
-		/*
-		final int totalSkin = 39;
-		int i;
-		List<Integer> ls = new ArrayList<>();
-		for (i=1;i<=totalSkin;i++) {
-			ls.add(i);
+	public List<String> openChest(Account a) {
+		List<String> ls = new ArrayList<>();
+		if (a.getMoney() < OPENCHESTPRICE) return ls;
+		if (a.getKey() < 1) return ls;
+		Transaction t1 = new Transaction(Transaction.MONEY, -1, "打开宝箱");
+		a.addNewTransaction(t1);
+		t1 = new Transaction(Transaction.KEY, -1, "打开宝箱");
+		a.addNewTransaction(t1);
+		int randTop = 8;
+		int epicRate = 1;
+		Random rand = new Random();
+		int x = rand.nextInt(randTop);
+		boolean receivedEpic = false;
+		String rewardMsg;
+		if (x<epicRate) {
+			receivedEpic = true;
+			int y = receiveCharacter(3, a);
+			if (y == -1) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d10";
+			} else {
+				a.addCharacter(y);
+				rewardMsg = "i" + y + epicNames[y%100];
+			}
+		} else {
+			int y = receiveCharacter(2, a);
+			if (y == -1) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			} else {
+				a.addCharacter(y);
+				rewardMsg = "i" + y + rareNames[y%100];
+			}
 		}
-		boolean flag = false;
-		Skin s = new Skin();
-		while (ls.size() > 0) {
-			Random rand = new Random();
-			int k = rand.nextInt(ls.size());
-			int x = ls.remove(k);
-			if (a.getSkinIndexById(x) == -1) {
-				flag = true;
-				s = SkinFactory.makeSkin(x);
-				break;
+		ls.add(rewardMsg);
+		int moreDiamondsRate = 2;
+		boolean receivedMoreDiamonds = false;
+		x = rand.nextInt(randTop);
+		if (x<moreDiamondsRate) {
+			receivedMoreDiamonds = true;
+		}
+		if (receivedEpic) {
+			if (receivedMoreDiamonds) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 2, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d2";
+			} else {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			}
+		} else {
+			if (receivedMoreDiamonds) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 5, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d2";
+			} else {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			}
+		}
+		ls.add(rewardMsg);
+		int receivedCoins = rand.nextInt(50);
+		if (receivedEpic) {
+			if (receivedMoreDiamonds) {
+				
+			} else {
+				Transaction t2 = new Transaction(Transaction.MONEY, receivedCoins, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "m"+receivedCoins;
+				ls.add(rewardMsg);
+			}
+		} else {
+			if (receivedMoreDiamonds) {
+				
+			} else {
+				receivedCoins = receivedCoins + 100;
+				Transaction t2 = new Transaction(Transaction.MONEY, receivedCoins, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "m"+receivedCoins;
+				ls.add(rewardMsg);
 			}
 		}
 		
-		if (flag) {
-			Transaction t = new Transaction(Transaction.MONEY, -88, "挖掘");
-			a.addSkin(s);
-			a.addNewTransaction(t);
-			a.updateAccountDB();
-			String img = s.getOriginalImg();
-			Card c = CardFactory.makeCard(img);
-			entity = c.toCardEntity();
-			entity.setImg(s.getNewImg());
-			entity.setTitle(s.getTitle());
-		}
-		*/
-		
+		a.updateAccountDB();
+		return ls;
+	}
+	
+	public String dig(Account a) {
+		if (a.getMoney() < DIGPRICE) return "";
 		String rewardMsg = "";
 		int randTop = 256;
 		int epicRate = 1;
@@ -192,7 +251,8 @@ public class Shop {
 	
 	public List<Transaction> dailyReward() {
 		List<Transaction> ts = new ArrayList<>();
-		Transaction t = new Transaction(Transaction.MONEY, DAILYREWARD, "每日奖励");
+		//Transaction t = new Transaction(Transaction.MONEY, DAILYREWARD, "每日奖励");
+		Transaction t = new Transaction(Transaction.KEY, 1, "每日奖励");
 		ts.add(t);
 		return ts;
 	}
