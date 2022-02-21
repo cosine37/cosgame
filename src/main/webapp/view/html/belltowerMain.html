@@ -128,6 +128,9 @@
 						<div ng-click="openPlace('home')" class="town-place" style="right: 150px; bottom: 100px;" ng-show="shownPlace == ''">
 							自宅
 						</div>
+						<div ng-click="openPlace('belltower')" class="town-place" style="left: 220px; top: 90px;" ng-show="shownPlace == ''">
+							钟楼
+						</div>
 						
 						<div class="place-div" ng-show="shownPlace != ''">
 							<img ng-src="/image/Belltower/{{shownPlace}}.jpg" class="place-img">
@@ -233,18 +236,35 @@
 									<button ng-click="showReward = false">谢谢</button>
 								</div>
 							</div>
+							<div ng-show="shownPlace == 'belltower'" class="place-content">
+								<h3>钟楼</h3>
+								<div class="opening" ng-show="belltowerEvent>0">
+									<div>
+										<img ng-src="/image/Belltower/belltowerEvents/{{belltowerImg}}" style="height: 153px;"/>
+									</div>
+								</div>
+								<div style="width:400px; left: 130px; bottom: 0px;position: absolute;text-align:center;font-size: 21px;">
+									<div>{{belltowerEventMsg}}</div>
+									<div>
+										<button ng-click="triggerBelltowerEvent(0)" ng-show="numButtonShown>0" ng-disabled="disableFirstButton">{{belltowerButton}}</button>
+										<button ng-click="triggerBelltowerEvent(1)" ng-show="numButtonShown>1">{{belltowerButton2}}</button>
+										<button ng-click="triggerBelltowerEvent(2)" ng-show="numButtonShown>2">{{belltowerButton3}}</button>
+										<button ng-click="resolveBelltowerEvent()" ng-show="numButtonShown==0 && belltowerEvent>-1">继续</button>
+									</div>
+								</div>
+							</div>
 							<div style="position: absolute; top: 30px; right: 30px">
 								<button ng-click="closePlace()">离开</button>
 							</div>
 						</div>
 					</div>
-					<!-- 
+					
 					<div>
 						<button ng-click="dailyReward()">奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
 					</div>
 					{{accountInfo}}
-					 -->
+					
 				</div>
 			</div>
 		</div>

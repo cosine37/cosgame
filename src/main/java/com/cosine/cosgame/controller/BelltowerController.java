@@ -100,7 +100,30 @@ public class BelltowerController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/belltower/belltowerevent", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> belltowerEvent(HttpServletRequest request, @RequestParam int amount, @RequestParam String msg) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		List<Transaction> ts = shop.belltowerEvent(amount, msg);
+		account.addNewTransactions(ts);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/belltower/addcharacter", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> addCharacter(HttpServletRequest request, @RequestParam int charId) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.addCharacter(charId);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/belltower/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();

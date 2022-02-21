@@ -257,6 +257,13 @@ public class Shop {
 		return ts;
 	}
 	
+	public List<Transaction> belltowerEvent(int amount, String msg){
+		List<Transaction> ts = new ArrayList<>();
+		Transaction t = new Transaction(Transaction.MONEY, amount, msg);
+		ts.add(t);
+		return ts;
+	}
+	
 	public List<Transaction> numGameReward(Account a){
 		List<Transaction> ts = new ArrayList<>();
 		int x = a.getNumGames();

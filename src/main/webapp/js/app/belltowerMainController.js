@@ -86,6 +86,9 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			if (x == 'home'){
 				setIconInfo();
 			}
+			if (x == 'belltower'){
+				setBelltowerEvent();
+			}
 			$scope.shownPlace = x
 			$scope.placeStyle = {
 				"background-image" : "url('/image/Belltower/" + x + ".jpg')",
@@ -214,6 +217,130 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.flipCharPage = function(x){
 			$scope.curPage = $scope.curPage+x;
 			setCurCharacterPage();
+		}
+		
+		$scope.belltowerEvent = 0;
+		var setBelltowerEvent = function(){
+			$scope.belltowerEvent = 0;
+			$scope.numButtonShown = 1;
+			$scope.disableFirstButton = false;
+			var x = Math.floor(Math.random() * 10);
+			if (x<3){
+				$scope.belltowerEvent = Math.floor(Math.random()*4)+1;
+			}
+			//$scope.belltowerEvent = 4;
+			var msgs = ["楼顶有一只钟。","你在钟楼里遇到了一只羊。","你在钟楼里遇到了一位长相可怕的独眼乞丐。他说：“行行好。”",
+				"你在钟楼里发现了金、银、铅匣子，一旁的贵族说道：“我家小姐的头像就在其中一个匣子里，你只能打开一个，祝你好运。”",
+				"你在钟楼里遇到了一个彷徨的贵族模样的人。"];
+			
+			var btns = ["敲钟","对话","给1个钱币","打开金匣子","对话"];
+			var imgs = ["", "goat.png","beggar.jpg","caskets.jpg","hamlet.jpg"];
+			
+			$scope.belltowerEventMsg = msgs[$scope.belltowerEvent];
+			$scope.belltowerButton = btns[$scope.belltowerEvent];
+			$scope.belltowerImg = imgs[$scope.belltowerEvent]
+			
+			if ($scope.belltowerEvent == 2){
+				if ($scope.accountInfo.money == 0){
+					$scope.disableFirstButton = true;
+				}
+				$scope.numButtonShown = 2;
+				$scope.belltowerButton2 = "朝他扔石头";
+			} else if ($scope.belltowerEvent == 3){
+				var i
+				var alreadyHasIcon = false
+				for (i=0;i<$scope.accountInfo.availableCharacters.length;i++){
+					var a = $scope.accountInfo.availableCharacters[i]
+					if (a == "900"){
+						alreadyHasIcon = true;
+						break;
+					}
+				}
+				if (alreadyHasIcon){
+					$scope.belltowerEvent = 0;
+					$scope.belltowerEventMsg = msgs[$scope.belltowerEvent];
+					$scope.belltowerButton = btns[$scope.belltowerEvent];
+					$scope.belltowerImg = imgs[$scope.belltowerEvent]
+				} else {
+					$scope.numButtonShown = 3;
+					$scope.belltowerButton2 = "打开银匣子";
+					$scope.belltowerButton3 = "打开铅匣子";
+				}
+			}
+		}
+		
+		$scope.triggerBelltowerEvent = function(x){
+			$scope.numButtonShown = 0;
+			if ($scope.belltowerEvent == 0){
+				$scope.belltowerEvent = -1;
+				var t = Math.floor(Math.random() * 10);
+				if (t < 2){
+					var k = Math.floor(Math.random() * 5)+1;
+					$scope.belltowerEventMsg = "从敲动的钟内掉落了"+k+"枚钱币，你收集了掉落的钱币。";
+					var data = {"amount":k, "msg":"敲钟获得"}
+					$http({url: "/belltower/belltowerevent", method: "POST", params: data}).then(function(response){
+						$scope.getAccountInfo();
+					});
+				} else {
+					$scope.belltowerEventMsg = "钟声响彻四周。";
+				}
+				
+			} else if ($scope.belltowerEvent == 1){
+				var date = new Date();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				var hour = date.getHours();
+				var minute = date.getMinutes();
+				var time = month+"月"+day+"日"+hour+"时"+minute+"分";
+				
+				$scope.belltowerEventMsg = "那只羊说道：“现在时间是" + time + "。”，真是一只神奇的羊。"
+			} else if ($scope.belltowerEvent == 2){
+				if (x==0){
+					$scope.belltowerEventMsg = "乞丐笑了，但他的笑容逐渐消失：“当我高兴时，我笑。当我笑时，我丑。”"
+					var data = {"amount":-1, "msg":"施舍乞丐"}
+					$http({url: "/belltower/belltowerevent", method: "POST", params: data}).then(function(response){
+						$scope.getAccountInfo();
+					});
+				} else if (x==1){
+					$scope.belltowerEventMsg = "乞丐说道：“我知道我长得丑，被扔石头无所谓，但让你害怕让我觉得很难过。”"
+				}
+			} else if ($scope.belltowerEvent == 3){
+				var t = Math.floor(Math.random() * 3);
+				if (t == 0){
+					$scope.belltowerImg = "portia.png"
+					$scope.belltowerEventMsg = "恭喜你，获得传说头像：波西亚！";
+					if (x == 0){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“是金子总会发光。”";
+					} else if (x == 1){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“以银为结，以银为彩，以银为荣，以银为贵。”";
+					} else if (x == 2){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“你选择不凭着外表，果然给你直中鹄心。”";
+					}
+					var data = {"charId":900}
+					$http({url: "/belltower/addcharacter", method: "POST", params: data}).then(function(response){
+						$scope.getAccountInfo();
+					});
+				} else {
+					$scope.belltowerEventMsg = "小姐的头像不在匣子里。";
+					if (x == 0){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“发光的不一定是金子。”";
+					} else if (x == 1){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“世上尽有些呆鸟，空有着镀银的外表。”";
+					} else if (x == 2){
+						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“不宜妄自菲薄，引喻失义。”";
+					}
+				}
+			} else if ($scope.belltowerEvent == 4){
+				$scope.belltowerEventMsg = "那贵族说着“生存还是毁灭，这是个问题。”这样令人半懂不懂的话。"
+			}
+		}
+		
+		$scope.resolveBelltowerEvent = function(){
+			$scope.belltowerEvent = 0;
+			$scope.numButtonShown = 1;
+			$scope.belltowerEventMsg = "楼顶有一只钟。";
+			$scope.belltowerButton = "敲钟";
+			$scope.disableFirstButton = false;
 		}
 		
 		$scope.getAllBoards = function(){
