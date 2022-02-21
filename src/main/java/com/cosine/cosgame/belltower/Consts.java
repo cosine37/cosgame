@@ -36,4 +36,7 @@ public class Consts {
 	
 	// icon related
 	public static final int NUMDEFAULTCHARACTER = 12;
+	
+	// board extra bits indexes;
+	public static final int RECLUSEINDEX = 0;
 }

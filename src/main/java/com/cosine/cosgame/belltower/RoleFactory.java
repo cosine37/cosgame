@@ -28,6 +28,8 @@ public class RoleFactory {
 			role = new Undertaker();
 		} else if (roleId == 11) {
 			role = new FortuneTeller();
+		} else if (roleId == 12) {
+			role = new Recluse();
 		}
 		
 		return role;

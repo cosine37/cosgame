@@ -160,15 +160,26 @@ public class Role {
 		return ans;
 	}
 	
-	public String getMessageForTwoPlayersFromGroup(List<Player> players) {
+	public String getMessageForTwoPlayersFromGroup(List<Player> players, boolean useFakeName) {
 		String ans = "";
 		if (players.size() > 1) {
 			String roleName = players.get(0).getRole().getName();
+			if (useFakeName) {
+				roleName = players.get(0).getRole().getFakeName();
+			}
 			ans = getMessageForTwoPlayersFromGroup(players, roleName);
 		}
 		return ans;
 	}
-	
+	public String getMessageForTwoPlayersFromGroup(List<Player> players) {
+		return getMessageForTwoPlayersFromGroup(players, false);
+	}
+	public String getFakeName() {
+		return getName();
+	}
+	public String getRealName() {
+		return getName();
+	}
 	public int getId() {
 		return id;
 	}

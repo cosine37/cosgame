@@ -10,12 +10,14 @@ public class Script {
 	List<Role> outsiders;
 	List<Role> demons;
 	List<Role> minions;
+	List<Role> rolesThisGame;
 	
 	public Script() {
 		townsfolks = new ArrayList<>();
 		outsiders = new ArrayList<>();
 		demons = new ArrayList<>();
 		minions = new ArrayList<>();
+		rolesThisGame = new ArrayList<>();
 	}
 	
 	public List<Role> getRoles(List<Integer> factionCounts){
@@ -23,6 +25,9 @@ public class Script {
 		if (factionCounts.size()>3) {
 			roles = getRoles(factionCounts.get(0), factionCounts.get(1), factionCounts.get(2), factionCounts.get(3));
 		}
+		
+		rolesThisGame = roles;
+		//System.out.println("Roles this game size: " + rolesThisGame.size());
 		return roles;
 	}
 	
@@ -66,6 +71,28 @@ public class Script {
 		return roles;
 	}
 	
+	public int getADevil() {
+		List<Integer> roleNums = new ArrayList<>();
+		int i;
+		//System.out.println("in getadevil");
+		//System.out.println(rolesThisGame.size());
+		for (i=0;i<rolesThisGame.size();i++) {
+			Role r = rolesThisGame.get(i);
+			//System.out.println(r.getName());
+			if (r.getFaction() == Consts.DEVIL) {
+				roleNums.add(r.getId());
+			}
+		}
+		//System.out.println("after getadevil");
+		if (roleNums.size() == 0) {
+			return -1;
+		} else {
+			Random rand = new Random();
+			int x = rand.nextInt(roleNums.size());
+			return roleNums.get(x);
+		}
+	}
+	
 	public void addTownsfolk(Role r) {
 		townsfolks.add(r);
 	}
@@ -107,6 +134,12 @@ public class Script {
 	}
 	public void setMinions(List<Role> minions) {
 		this.minions = minions;
+	}
+	public List<Role> getRolesThisGame() {
+		return rolesThisGame;
+	}
+	public void setRolesThisGame(List<Role> rolesThisGame) {
+		this.rolesThisGame = rolesThisGame;
 	}
 	
 }

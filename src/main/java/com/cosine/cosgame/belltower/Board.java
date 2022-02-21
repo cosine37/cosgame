@@ -26,6 +26,7 @@ public class Board {
 	List<Player> players;
 	List<Integer> killedIndexes;
 	Script script;
+	List<Integer> extraBits;
 	
 	MongoDBUtil dbutil;
 	
@@ -42,6 +43,7 @@ public class Board {
 		groupCounts = new ArrayList<>();
 		players = new ArrayList<>();
 		script = new Script();
+		extraBits = new ArrayList<>();
 		
 		String dbname = "belltower";
 		String col = "board";
@@ -59,6 +61,7 @@ public class Board {
 	
 	public void assignRoles() {
 		List<Role> roles = script.getRoles(groupCounts);
+		int devilRoleId = script.getADevil();
 		Random rand = new Random();
 		for (int i=0;i<players.size();i++) {			
 			if (roles.size() == 0) break;
@@ -67,15 +70,17 @@ public class Board {
 			players.get(i).gameStart(r);
 		}
 		
+		extraBits = new ArrayList<>();
+		extraBits.add(devilRoleId);
 		// TODO: Assign roles here
 		
-		Role r0 = new Imp();
+		Role r0 = new Investigator();
 		players.get(0).setRole(r0);
-		Role r1 = new Poisoner();
+		Role r1 = new Recluse();
 		players.get(1).setRole(r1);
-		/*
 		Role r2 = new Librarian();
 		players.get(2).setRole(r2);
+		/*
 		Role r3 = new Monk();
 		players.get(3).setRole(r3);
 		*/
@@ -524,6 +529,12 @@ public class Board {
 	public void setExecutedIndex(int executedIndex) {
 		this.executedIndex = executedIndex;
 	}
+	public List<Integer> getExtraBits() {
+		return extraBits;
+	}
+	public void setExtraBits(List<Integer> extraBits) {
+		this.extraBits = extraBits;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -627,6 +638,7 @@ public class Board {
 		updateDB("voteResults", voteResults);
 		updateDB("executedIndex", executedIndex);
 		updateDB("executionMsg", executionMsg);
+		updateDB("extraBits", extraBits);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -685,6 +697,7 @@ public class Board {
 		doc.append("voteResults", voteResults);
 		doc.append("executedIndex", executedIndex);
 		doc.append("executionMsg", executionMsg);
+		doc.append("extraBits", extraBits);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -718,6 +731,7 @@ public class Board {
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		groupCounts = (List<Integer>) doc.get("groupCounts");
 		killedIndexes = (List<Integer>) doc.get("killedIndexes");
+		extraBits = (List<Integer>) doc.get("extraBits");
 		int i;
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++) {

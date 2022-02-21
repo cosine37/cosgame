@@ -16,7 +16,7 @@ public class Investigator extends Role {
 		group = Consts.TOWNSFOLK;
 		hasFirstNight = true;
 		hasRestNights = false;
-		desc = "第一夜你会被告知一个村民身份和两名玩家，其中一名玩家是该身份。";
+		desc = "第一夜你会被告知一个爪牙身份和两名玩家，其中一名玩家是该身份。";
 	}
 	
 	public List<String> getInstructions() {
@@ -42,7 +42,7 @@ public class Investigator extends Role {
 			if (twoPlayers.size() < 2) {
 				lastNightMsg = "啊这，本局游戏没有爪牙，所以你似乎没有获得任何信息。";
 			} else {
-				lastNightMsg = getMessageForTwoPlayersFromGroup(twoPlayers);
+				lastNightMsg = getMessageForTwoPlayersFromGroup(twoPlayers, true);
 			}
 			player.setLastNightMsg(lastNightMsg);
 			//player.addLog(lastNightMsg);
