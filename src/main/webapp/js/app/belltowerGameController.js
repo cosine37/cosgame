@@ -292,19 +292,54 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		
+		$scope.showIntoNight = false;
+		//$scope.firstRefresh = true;
 		$scope.getBoard = function(){
 			$http.get('/belltower/getboard').then(function(response){
+				
 				if (response.data.id == "NE"){
 					alert("该游戏已解散");
 					$scope.goto('belltower');
 					return;
 				}
+				var oldPhase = $scope.phase
+				var oldStatus = $scope.status
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
 				$scope.phase = response.data.phase
+				//$scope.firstRefresh == false && 
+				/*
+				if (((oldPhase != $scope.NIGHT && $scope.phase == $scope.NIGHT) || (oldStatus != $scope.INGAME && $scope.status == $scope.INGAME))){
+					var nightMessageDiv = document.getElementById("nightMessage")
+					//alert(nightMessageDiv.style.display)
+					nightMessageDiv.style.display = "block";
+				}
+				*/
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
+				
+				if ($scope.players.length<11){
+					$scope.playerRows = [0];
+					$scope.playerCols = [];
+					var i;
+					var row = []
+					for (i=0;i<$scope.players.length;i++){
+						row.push(i);
+					}
+					$scope.playerCols.push(row);
+				} else {
+					$scope.playerRows = [0,1];
+					$scope.playerCols = [[0,1,2,3,4,5,6,7,8,9]];
+					var i;
+					var row = []
+					for (i=10;i<$scope.players.length;i++){
+						row.push(i-10);
+					}
+					$scope.playerCols.push(row);
+				}
+				
 				setNominateMessage()
+				//$scope.firstRefresh = false;
 			});
 		}
 		

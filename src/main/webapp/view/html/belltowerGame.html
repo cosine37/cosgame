@@ -15,14 +15,21 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/belltowerGameController.js"></script>
 <body ng-app="belltowerGameApp" ng-controller="belltowerGameCtrl">
-	<button ng-click="goto('belltower')">back</button>
+	
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
+	<div class="time-box">
+		<div>
+			<span>第{{gamedata.numDay}}天</span>
+			<span ng-show="phase==NIGHT">夜晚</span>
+			<span ng-show="phase==DAY">白天</span>
+		</div>
+	</div>
 	<div style="height: 350px">
 		<table>
-			<tr ng-repeat="i in [0,1]">
-				<td ng-repeat="j in [0,1,2,3,4,5,6,7,8,9]">
+			<tr ng-repeat="i in playerRows">
+				<td ng-repeat="j in playerCols[i]">
 					<div class="player-info" ng-show="i*10+j<players.length">
 						<table>
 							<tr><td>
@@ -64,12 +71,8 @@
 	<div ng-show="status==ASSIGNROLE && lord != username">
 		正等待房主选择配置
 	</div>
-	<div ng-show="status==INGAME">
-		<div>
-			<span>第{{gamedata.numDay}}天</span>
-			<span ng-show="phase==NIGHT">夜晚</span>
-			<span ng-show="phase==DAY">白天</span>
-		</div>
+	<div ng-show="status==INGAME" class="message-box">
+		<!-- 
 		<div>
 			<table>
 				<tr ng-repeat="p in players track by $index">
@@ -86,6 +89,7 @@
 				<tr>
 			</table>
 		</div>
+		 -->
 		<div ng-show="phase==DAY">
 			<div>
 				<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
@@ -128,11 +132,18 @@
 			<span ng-show="gamedata.winFaction==DEVIL">恶魔</span>
 		</div>
 	</div>
+	<button ng-click="goto('belltower')">back</button>
 	<!-- 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
 	 -->
 	{{gamedata}}
+	<!-- 
+	<div id="nightMessage" class="big-message night-message" style="display:none">
+		<h1>天黑了</h1>
+		<button ng-click="showIntoNight = false">确认</button>
+	</div>
+	 -->
 </body>
 </html>

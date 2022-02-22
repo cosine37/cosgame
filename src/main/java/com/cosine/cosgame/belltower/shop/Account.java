@@ -116,6 +116,7 @@ public class Account {
 		money = 0;
 		diamond = 0;
 		key = 0;
+		winStrike = 0;
 		lastLoginDate = "";
 		transactions = new ArrayList<>();
 		characters = new ArrayList<>();
