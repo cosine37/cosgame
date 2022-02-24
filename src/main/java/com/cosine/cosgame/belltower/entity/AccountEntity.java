@@ -8,6 +8,7 @@ public class AccountEntity {
 	int diamond;
 	int key;
 	List<String> availableCharacters;
+	boolean visitedBelltower;
 	
 	public String getName() {
 		return name;
@@ -38,6 +39,12 @@ public class AccountEntity {
 	}
 	public void setAvailableCharacters(List<String> availableCharacters) {
 		this.availableCharacters = availableCharacters;
+	}
+	public boolean isVisitedBelltower() {
+		return visitedBelltower;
+	}
+	public void setVisitedBelltower(boolean visitedBelltower) {
+		this.visitedBelltower = visitedBelltower;
 	}
 	
 }

@@ -21,6 +21,7 @@ public class Account {
 	int numGames;
 	int winStrike;
 	String lastLoginDate;
+	boolean visitedBelltower;
 	
 	List<Integer> characters;
 	List<Integer> frames;
@@ -121,6 +122,7 @@ public class Account {
 		transactions = new ArrayList<>();
 		characters = new ArrayList<>();
 		frames = new ArrayList<>();
+		visitedBelltower = false;
 	}
 	public void changeMoney(int x) {
 		money = money+x;
@@ -203,6 +205,12 @@ public class Account {
 	public void setDbutil(MongoDBUtil dbutil) {
 		this.dbutil = dbutil;
 	}
+	public boolean isVisitedBelltower() {
+		return visitedBelltower;
+	}
+	public void setVisitedBelltower(boolean visitedBelltower) {
+		this.visitedBelltower = visitedBelltower;
+	}
 	public void getFromDB(String username) {
 		Document userDoc = dbutil.read("username", username);
 		if (userDoc.get("belltower") == null) {
@@ -234,6 +242,7 @@ public class Account {
 		doc.append("winStrike", winStrike);
 		doc.append("characters", characters);
 		doc.append("frames", frames);
+		doc.append("visitedBelltower", visitedBelltower);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -254,6 +263,7 @@ public class Account {
 		winStrike = doc.getInteger("winStrike", 0);
 		characters = (List<Integer>) doc.get("characters");
 		frames = (List<Integer>) doc.get("frames");
+		visitedBelltower = doc.getBoolean("visitedBelltower", false);
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -271,6 +281,7 @@ public class Account {
 		entity.setMoney(money);
 		entity.setDiamond(diamond);
 		entity.setKey(key);
+		entity.setVisitedBelltower(visitedBelltower);
 		List<String> availableCharacters = new ArrayList<>();
 		int i;
 		/*
