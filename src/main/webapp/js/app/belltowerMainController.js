@@ -235,15 +235,16 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			
 			var x = Math.floor(Math.random() * 10);
 			if (x<4){
-				$scope.belltowerEvent = Math.floor(Math.random()*7)+1;
+				$scope.belltowerEvent = Math.floor(Math.random()*8)+1;
 			}
-			//$scope.belltowerEvent = 7;
+			//$scope.belltowerEvent = 9;
 			var msgs = ["楼顶有一只钟。","你在钟楼里遇到了一只羊。","你在钟楼里遇到了一位长相可怕的独眼乞丐。他说：“行行好。”",
 				"你在钟楼里发现了金、银、铅匣子，一旁的贵族说道：“我家小姐的头像就在其中一个匣子里，你只能打开一个，祝你好运。”",
-				"你在钟楼里遇到了一位彷徨的贵族模样的人。","你在钟楼里遇到了一位看起来十分睿智的老者。","你在钟楼里遇到了一位中年船长。","你在钟楼里遇到了一位小男孩。"];
+				"你在钟楼里遇到了一位彷徨的贵族模样的人。","你在钟楼里遇到了一位看起来十分睿智的老者。","你在钟楼里遇到了一位中年船长。","你在钟楼里遇到了一位小男孩。",
+				"你在钟楼里遇到了一位看起来十分有才的艺术家。","你在钟楼里遇到了一位探险家。"];
 			
-			var btns = ["敲钟","对话","给1个钱币","打开金匣子","对话","对话","对话","对话"];
-			var imgs = ["", "goat.png","beggar.jpg","caskets.jpg","hamlet.jpg","davinci.jpg","magellan.jpg","boy.jpg"];
+			var btns = ["敲钟","对话","给1个钱币","打开金匣子","对话","对话","对话","对话","对话","对话"];
+			var imgs = ["", "goat.png","beggar.jpg","caskets.jpg","hamlet.jpg","davinci.jpg","magellan.jpg","boy.jpg","michelangelo.jpg", "colombo.jpg"];
 			
 			$scope.belltowerEventMsg = msgs[$scope.belltowerEvent];
 			$scope.belltowerButton = btns[$scope.belltowerEvent];
@@ -446,9 +447,50 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 			} else if ($scope.belltowerEvent == 7){
 				var quotes = ["小男孩不耐烦地说道：“就超扯的，为什么老有人叫我盒蛋，烦内。”","小男孩说道：“我听大人们缩，在矿场，除了头像，还能挖到钻石 汗 宝箱耶。真的假的~”",
-					"小男孩惊喜说道：“哇哦，我跟你讲吼，刚我撞钟，居然有硬币掉出来了耶，有够赞！”"]
+					"小男孩惊喜说道：“哇哦，我跟你讲吼，刚我撞钟，居然有硬币掉出来了耶，有够赞！”","小男孩笑着说道：“你造嘛，这个小镇是一个叫孔性的程式工程师设计的耶，真的好棒棒喔！”"]
 				var y = Math.floor(Math.random() * quotes.length);
 				$scope.belltowerEventMsg = quotes[y];
+			} else if ($scope.belltowerEvent == 8){ 
+				var has905 = false;
+				for (i=0;i<$scope.accountInfo.availableCharacters.length;i++){
+					var a = $scope.accountInfo.availableCharacters[i]
+					if (a == "905"){
+						has905 = true;
+						break;
+					}
+				}
+				var t = Math.floor(Math.random() * 10);
+				if (has905){
+					t = 9;
+				}
+				if (t == 0){
+					$scope.belltowerImg = "905.png";
+					$scope.belltowerEventMsg = "那艺术家说道：“我曾是个画家，但我现在更爱雕刻。我这画作草稿就送你了。” 恭喜你，获得传说头像：先知！";
+					var data = {"charId":"905"}
+					$http({url: "/belltower/addcharacter", method: "POST", params: data}).then(function(response){
+						$scope.getAccountInfo();
+					});
+				} else {
+					var quotes = ["那艺术家唱道：“爱要精心来雕刻，我是米开朗基罗。”","那艺术家说道：“忧郁症是我的欢乐。”","那艺术家说道：“完美不是一个小细节，但注重细节可以成就完美。”"]
+					var y = Math.floor(Math.random() * quotes.length);
+					$scope.belltowerEventMsg = quotes[y];
+				}
+			} else if ($scope.belltowerEvent == 9){
+				var t = Math.floor(Math.random() * 8);
+				if ($scope.accountInfo.canBuyEpic){
+					t = 7;
+				}
+				if (t == 0){
+					$scope.belltowerEventMsg = "那探险家说道：“我累了，不想出去航海了，就在这儿卖一卖东印度土著送给我的画作吧。” 集市里多了一位商人。";
+					$http({url: "/belltower/unlockepic", method: "POST"}).then(function(response){
+						$scope.getAccountInfo();
+					});
+				} else {
+					var quotes = ["那探险家说道：“言语无法做到的事情，金子可以做。”","那探险家得意地说道：“你知道吗，我去过日本，还把那边改名为西班牙，嘿嘿嘿嘿嘿嘿嘿。”","那探险家雄心勃勃地说道：“除非你有勇气到达看不到岸边的地方，否则你永远不可能跨越大洋。”",
+						"那探险家坚定地说道：“我曾经去过的一定是马可波罗所去过的亚洲，但质疑我的人越来越多。”","那探险家说道：“我有次去东印度时遇到了月全食，我告诉当地土著因为他们怠慢我们月亮发怒了，吓得他们赶紧给我们食物。”"]
+					var y = Math.floor(Math.random() * quotes.length);
+					$scope.belltowerEventMsg = quotes[y];
+				}
 			}
 		}
 		

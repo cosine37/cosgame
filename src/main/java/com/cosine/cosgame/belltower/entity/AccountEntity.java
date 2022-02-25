@@ -9,6 +9,7 @@ public class AccountEntity {
 	int key;
 	List<String> availableCharacters;
 	boolean visitedBelltower;
+	boolean canBuyEpic;
 	
 	public String getName() {
 		return name;
@@ -45,6 +46,12 @@ public class AccountEntity {
 	}
 	public void setVisitedBelltower(boolean visitedBelltower) {
 		this.visitedBelltower = visitedBelltower;
+	}
+	public boolean isCanBuyEpic() {
+		return canBuyEpic;
+	}
+	public void setCanBuyEpic(boolean canBuyEpic) {
+		this.canBuyEpic = canBuyEpic;
 	}
 	
 }

@@ -22,6 +22,7 @@ public class Account {
 	int winStrike;
 	String lastLoginDate;
 	boolean visitedBelltower;
+	boolean canBuyEpic;
 	
 	List<Integer> characters;
 	List<Integer> frames;
@@ -123,6 +124,7 @@ public class Account {
 		characters = new ArrayList<>();
 		frames = new ArrayList<>();
 		visitedBelltower = false;
+		canBuyEpic = false;
 	}
 	public void changeMoney(int x) {
 		money = money+x;
@@ -211,6 +213,13 @@ public class Account {
 	public void setVisitedBelltower(boolean visitedBelltower) {
 		this.visitedBelltower = visitedBelltower;
 	}
+	public boolean isCanBuyEpic() {
+		return canBuyEpic;
+	}
+	public void setCanBuyEpic(boolean canBuyEpic) {
+		this.canBuyEpic = canBuyEpic;
+	}
+
 	public void getFromDB(String username) {
 		Document userDoc = dbutil.read("username", username);
 		if (userDoc.get("belltower") == null) {
@@ -243,6 +252,7 @@ public class Account {
 		doc.append("characters", characters);
 		doc.append("frames", frames);
 		doc.append("visitedBelltower", visitedBelltower);
+		doc.append("canBuyEpic", canBuyEpic);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -264,6 +274,7 @@ public class Account {
 		characters = (List<Integer>) doc.get("characters");
 		frames = (List<Integer>) doc.get("frames");
 		visitedBelltower = doc.getBoolean("visitedBelltower", false);
+		canBuyEpic = doc.getBoolean("canBuyEpic", false);
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -282,6 +293,7 @@ public class Account {
 		entity.setDiamond(diamond);
 		entity.setKey(key);
 		entity.setVisitedBelltower(visitedBelltower);
+		entity.setCanBuyEpic(canBuyEpic);
 		List<String> availableCharacters = new ArrayList<>();
 		int i;
 		/*
