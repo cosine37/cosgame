@@ -307,6 +307,12 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
 				$scope.phase = response.data.phase
+				
+				if ($scope.phase == $scope.NIGHT){
+					$scope.bodyClass = "night"
+				} else {
+					$scope.bodyClass = "day"
+				}
 				//$scope.firstRefresh == false && 
 				/*
 				if (((oldPhase != $scope.NIGHT && $scope.phase == $scope.NIGHT) || (oldStatus != $scope.INGAME && $scope.status == $scope.INGAME))){
@@ -339,6 +345,22 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				
 				setNominateMessage()
+				if (oldStatus != $scope.ENDGAME && $scope.status == $scope.ENDGAME){
+					$scope.showReceives = 0;
+					var n = $scope.players[$scope.gamedata.myIndex].receives.length;
+					//alert(n)
+					var displayReceives = function(){
+						$timeout(function(){
+							$scope.showReceives = $scope.showReceives+1;
+							if ($scope.showReceives <= n){
+								displayReceives()
+							}
+							//alert($scope.showReceives)
+						},1000);
+					}
+					displayReceives();
+					
+				}
 				//$scope.firstRefresh = false;
 			});
 		}

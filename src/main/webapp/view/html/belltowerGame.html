@@ -14,131 +14,150 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/belltowerGameController.js"></script>
-<body ng-app="belltowerGameApp" ng-controller="belltowerGameCtrl">
+<body ng-app="belltowerGameApp" ng-controller="belltowerGameCtrl" ng-class="bodyClass">
 	
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
-	<div class="time-box">
-		<div>
-			<span>第{{gamedata.numDay}}天</span>
-			<span ng-show="phase==NIGHT">夜晚</span>
-			<span ng-show="phase==DAY">白天</span>
+	<div class="game-area">
+		<div class="time-box">
+			<div ng-show="status==ASSIGNROLE">
+				<span>游戏即将开始</span>
+			</div>
+			<div ng-show="status == INGAME">
+				<span>第{{gamedata.numDay}}天</span>
+				<span ng-show="phase==NIGHT">夜晚</span>
+				<span ng-show="phase==DAY">白天</span>
+			</div>
+			<div ng-show="status==ENDGAME">
+				<span>游戏结束</span>
+			</div>
 		</div>
-	</div>
-	<div style="height: 350px">
-		<table>
-			<tr ng-repeat="i in playerRows">
-				<td ng-repeat="j in playerCols[i]">
-					<div class="player-info" ng-show="i*10+j<players.length">
-						<table>
-							<tr><td>
-								<div class="icon-frame" style="margin-left: 10px" ng-init="k=i*10+j">
-									<img ng-click="choosePlayer(k)" ng-class="iconClass(k)" ng-src="image/Belltower/Icons/{{players[k].icon.character}}.png"/>
-									<img class="checked" ng-show="chosenPlayer == k || chosenPlayer2 == k || nominatedPlayer == k" src="image/Belltower/checked.png"/>
-									<img class="ghost" ng-show="players[k].alive == false && players[k].canVote && status!=ASSIGNROLE" src="image/Belltower/ghost.png"/>
-									<img class="cannot-vote" ng-show="players[k].alive == false && players[k].canVote == false && status!=ASSIGNROLE" src="image/Belltower/cannot-vote.png"/>
-									<div ng-class="roleFrameClass(k)" ng-show="status==ENDGAME">{{players[k].roleText}}</div>
-								</div>
-							</td></tr>
-							<tr><td>{{players[k].displayName}}</td></tr>
-							<tr><td><input type="text"/></td></tr>
-						</table>
-					</div>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div ng-show="status==ASSIGNROLE && lord == username">
-		<div>
+		<div style="height: 350px">
 			<table>
-				<tr>
-					<td ng-repeat="gn in groupNames track by $index">{{gn}}</td>
-				</tr>
-				<tr>
-					<td ng-repeat="g in groupNumbers track by $index">
-						<button ng-disabled="g == 0" ng-click="subtractGroupNumber($index)">-</button>
-						<span>{{g}}</span>
-						<button ng-disabled="canSubmitGroupNumbers()" ng-click="addGroupNumber($index)">+</button>
+				<tr ng-repeat="i in playerRows">
+					<td ng-repeat="j in playerCols[i]">
+						<div class="player-info" ng-show="i*10+j<players.length">
+							<table>
+								<tr><td>
+									<div class="icon-frame" style="margin-left: 10px" ng-init="k=i*10+j">
+										<img ng-click="choosePlayer(k)" ng-class="iconClass(k)" ng-src="image/Belltower/Icons/{{players[k].icon.character}}.png"/>
+										<img class="checked" ng-show="chosenPlayer == k || chosenPlayer2 == k || nominatedPlayer == k" src="image/Belltower/checked.png"/>
+										<img class="ghost" ng-show="players[k].alive == false && players[k].canVote && status!=ASSIGNROLE" src="image/Belltower/ghost.png"/>
+										<img class="cannot-vote" ng-show="players[k].alive == false && players[k].canVote == false && status!=ASSIGNROLE" src="image/Belltower/cannot-vote.png"/>
+										<div ng-class="roleFrameClass(k)" ng-show="status==ENDGAME">{{players[k].roleText}}</div>
+									</div>
+								</td></tr>
+								<tr><td>{{players[k].displayName}}</td></tr>
+								<tr><td><input type="text"/></td></tr>
+							</table>
+						</div>
 					</td>
 				</tr>
 			</table>
 		</div>
-		<div>
-			<button ng-click="submitGroupNumbers()" ng-disabled="canSubmitGroupNumbers() == false">进入第一夜</button>
-		</div>
-	</div>
-	<div ng-show="status==ASSIGNROLE && lord != username">
-		正等待房主选择配置
-	</div>
-	<div ng-show="status==INGAME" class="message-box">
-		<!-- 
-		<div>
-			<table>
-				<tr ng-repeat="p in players track by $index">
-					<td>
-						<button ng-click="choosePlayer($index)">{{p.displayName}}</button>
-					</td>
-					<td>
-						<span ng-show="chosenPlayer == $index || chosenPlayer2 == $index">已选择</span>
-						<span ng-show="chosenPlayer != $index && chosenPlayer2 != $index">未选择</span>
-					</td>
-					<td>
-						<button ng-show="showNoNominate && phase==DAY" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
-					</td>
-				<tr>
-			</table>
-		</div>
-		 -->
-		<div ng-show="phase==DAY">
+		<div ng-show="status==ASSIGNROLE && lord == username">
 			<div>
-				<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
+				<table style="text-align:center">
+					<tr>
+						<td ng-repeat="gn in groupNames track by $index" style="border: 1px solid black;padding: 3px;">{{gn}}</td>
+					</tr>
+					<tr>
+						<td ng-repeat="g in groupNumbers track by $index" style="border: 1px solid black;padding: 3px;">
+							<button ng-disabled="g == 0" ng-click="subtractGroupNumber($index)">-</button>
+							<span>{{g}}</span>
+							<button ng-disabled="canSubmitGroupNumbers()" ng-click="addGroupNumber($index)">+</button>
+						</td>
+					</tr>
+				</table>
 			</div>
-			<div>{{nominateMessage}}</div>
 			<div>
-				<span>{{userNVMsg}}</span>
-				<button ng-show="showNoNominate" ng-click="nominate(nominatedPlayer)" ng-disabled="nominatedPlayer == -1">指控</button>
-				<button ng-show="showNoNominate" ng-click="nominate(-1)">不指控</button>
-				<button ng-show="showNoVote" ng-click="vote(true)">投票</button>
-				<button ng-show="showNoVote" ng-click="vote(false)">不投票</button>
+				<button ng-click="submitGroupNumbers()" ng-disabled="canSubmitGroupNumbers() == false">进入第一夜</button>
 			</div>
 		</div>
-		<div ng-show="phase==NIGHT">
+		<div ng-show="status==ASSIGNROLE && lord != username">
+			正等待房主选择配置
+		</div>
+		<div ng-show="status==INGAME" class="message-box">
+			<!-- 
 			<div>
-				<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
+				<table>
+					<tr ng-repeat="p in players track by $index">
+						<td>
+							<button ng-click="choosePlayer($index)">{{p.displayName}}</button>
+						</td>
+						<td>
+							<span ng-show="chosenPlayer == $index || chosenPlayer2 == $index">已选择</span>
+							<span ng-show="chosenPlayer != $index && chosenPlayer2 != $index">未选择</span>
+						</td>
+						<td>
+							<button ng-show="showNoNominate && phase==DAY" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
+						</td>
+					<tr>
+				</table>
 			</div>
-			<div ng-show="gamedata.confirmedNight == false">
-				<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
+			 -->
+			<div ng-show="phase==DAY">
+				<div>
+					<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
+				</div>
+				<div>{{nominateMessage}}</div>
+				<div>
+					<span>{{userNVMsg}}</span>
+					<button ng-show="showNoNominate" ng-click="nominate(nominatedPlayer)" ng-disabled="nominatedPlayer == -1">指控</button>
+					<button ng-show="showNoNominate" ng-click="nominate(-1)">不指控</button>
+					<button ng-show="showNoVote" ng-click="vote(true)">投票</button>
+					<button ng-show="showNoVote" ng-click="vote(false)">不投票</button>
+				</div>
 			</div>
-			<div ng-show="gamedata.confirmedNight">
-				你已确认，正等待其他玩家确认。
+			<div ng-show="phase==NIGHT">
+				<div>
+					<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
+				</div>
+				<div ng-show="gamedata.confirmedNight == false">
+					<button ng-click="confirmNight()" ng-disabled="canConfirmNight() == false">确认</button>
+				</div>
+				<div ng-show="gamedata.confirmedNight">
+					你已确认，正等待其他玩家确认。
+				</div>
+			</div>
+			<div ng-show="phase==EXECUTION">
+				<div>{{gamedata.executionMsg}}</div>
+				<div ng-show="gamedata.confirmedDay == false">
+					<button ng-click="confirmDay()">确认</button>
+				</div>
+				<div ng-show="gamedata.confirmedDay">
+					你已确认，正等待其他玩家确认。
+				</div>
 			</div>
 		</div>
-		<div ng-show="phase==EXECUTION">
-			<div>{{gamedata.executionMsg}}</div>
-			<div ng-show="gamedata.confirmedDay == false">
-				<button ng-click="confirmDay()">确认</button>
+		<div ng-show="status==ENDGAME" class="message-box">
+			<div>
+				<span ng-show="players[gamedata.myIndex].win">你赢了</span>
+				<span ng-show="players[gamedata.myIndex].win == false">你输了</span>
+				<span>，胜利方：</span>
+				<span ng-show="gamedata.winFaction==HUMAN">人类</span>
+				<span ng-show="gamedata.winFaction==DEVIL">恶魔</span>
 			</div>
-			<div ng-show="gamedata.confirmedDay">
-				你已确认，正等待其他玩家确认。
+			<div>
+				<span>获得奖励</span>
+			</div>
+			<div>
+				<div ng-repeat="r in players[gamedata.myIndex].receives track by $index" ng-show="showReceives > $index">
+					&nbsp;&nbsp;&nbsp;{{r}}
+				</div>
 			</div>
 		</div>
+		<button ng-click="goto('belltower')">退出</button>
 	</div>
-	<div ng-show="status==ENDGAME">
-		<div>游戏结束</div>
-		<div>
-			胜利方：
-			<span ng-show="gamedata.winFaction==HUMAN">人类</span>
-			<span ng-show="gamedata.winFaction==DEVIL">恶魔</span>
-		</div>
-	</div>
-	<button ng-click="goto('belltower')">back</button>
+	
 	<!-- 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
-	 -->
+	
 	{{gamedata}}
+	 -->
 	<!-- 
 	<div id="nightMessage" class="big-message night-message" style="display:none">
 		<h1>天黑了</h1>

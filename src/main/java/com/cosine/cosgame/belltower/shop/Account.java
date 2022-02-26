@@ -119,6 +119,7 @@ public class Account {
 		diamond = 0;
 		key = 0;
 		winStrike = 0;
+		numGames = 0;
 		lastLoginDate = "";
 		transactions = new ArrayList<>();
 		characters = new ArrayList<>();
