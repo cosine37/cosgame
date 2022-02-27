@@ -33,7 +33,7 @@
 				<span>游戏结束</span>
 			</div>
 		</div>
-		<div style="height: 350px">
+		<div style="height: 350px;float:left">
 			<table>
 				<tr ng-repeat="i in playerRows">
 					<td ng-repeat="j in playerCols[i]">
@@ -56,7 +56,27 @@
 				</tr>
 			</table>
 		</div>
-		<div ng-show="status==ASSIGNROLE && lord == username">
+		<div style="float:left; margin-left: 10px;word-wrap: break-word;">
+			<table>
+				<tr>
+					<td style="text-align:center" colspan="2"><h4>行动顺序</h4></td>
+				</tr>
+				<tr>
+					<td style="width: 100px; text-align:center"><h5>第一夜</h5></td>
+					<td style="width: 100px; text-align:center"><h5>第二夜</h5></td>
+				</tr>
+				<tr>
+					<td style="text-align:center;vertical-align: top;">投毒者<br>洗衣妇<br>图书馆长<br>调查员<br>厨师<br>共情者<br>预言家</td>
+					<td style="text-align:center;vertical-align: top;">投毒者<br>小恶魔<br>共情者<br>预言家<br>掘墓人</td>
+				</tr>
+			</table>
+			<!--
+			<div>第一夜行动顺序：投毒者，洗衣妇，图书馆长，调查员，厨师，共情者，预言家。
+			</div>
+			<div>第二夜行动顺序：投毒者，小恶魔，共情者，预言家，掘墓人</div>
+			  -->
+		</div>
+		<div ng-show="status==ASSIGNROLE && lord == username" style="clear:both">
 			<div>
 				<table style="text-align:center">
 					<tr>
@@ -78,6 +98,13 @@
 		<div ng-show="status==ASSIGNROLE && lord != username">
 			正等待房主选择配置
 		</div>
+		<!-- 
+		<div>
+			<button>默认排序</button>
+			<button>按第一夜行动顺序</button>
+			<button>按第二夜行动顺序</button>
+		</div>
+		 -->
 		<div>
 			<table>
 				<tr>
@@ -155,7 +182,7 @@
 				<span ng-show="gamedata.winFaction==DEVIL">恶魔</span>
 			</div>
 			<div>
-				<span>获得奖励</span>
+				<span>获得奖励：</span>
 			</div>
 			<div>
 				<div ng-repeat="r in players[gamedata.myIndex].receives track by $index" ng-show="showReceives > $index">
@@ -166,11 +193,11 @@
 		<div style="position:absolute; top: 20px;right:30px;">
 			<button ng-click="goto('belltower')">退出</button>
 		</div>
-		
+		<!-- 
 		<div style="clear:both">
 			{{gamedata}}
 		</div>
-		
+		 -->
 	</div>
 	
 	<!-- 
