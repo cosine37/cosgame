@@ -70,6 +70,14 @@ body, html{
 	position: absolute;
 	bottom: 0px;
 }
+.role-info-box{
+	width: 250px;
+	height: 300px;
+	border: 2px solid black;
+	border-radius: 15px;
+	padding: 5px;
+	background-color: rgba(200,200,200,0.8);
+}
 .message-box{
 	width: 800px;
 	height: 300px;

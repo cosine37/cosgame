@@ -27,7 +27,6 @@ public class Script {
 		}
 		
 		rolesThisGame = roles;
-		//System.out.println("Roles this game size: " + rolesThisGame.size());
 		return roles;
 	}
 	
@@ -140,6 +139,14 @@ public class Script {
 	}
 	public void setRolesThisGame(List<Role> rolesThisGame) {
 		this.rolesThisGame = rolesThisGame;
+	}
+	public List<Role> allRoles(){
+		List<Role> ans = new ArrayList<>();
+		ans.addAll(townsfolks);
+		ans.addAll(outsiders);
+		ans.addAll(demons);
+		ans.addAll(minions);
+		return ans;
 	}
 	
 }

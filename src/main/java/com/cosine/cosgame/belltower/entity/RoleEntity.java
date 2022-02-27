@@ -9,6 +9,11 @@ public class RoleEntity {
 	String desc;
 	List<String> instructions;
 	int numPlayerChoose;
+	boolean hasFirstNight;
+	boolean hasRestNights;
+	int sequence;
+	int faction;
+	int group;
 	
 	public int getId() {
 		return id;
@@ -45,6 +50,36 @@ public class RoleEntity {
 	}
 	public void setNumPlayerChoose(int numPlayerChoose) {
 		this.numPlayerChoose = numPlayerChoose;
+	}
+	public boolean isHasFirstNight() {
+		return hasFirstNight;
+	}
+	public void setHasFirstNight(boolean hasFirstNight) {
+		this.hasFirstNight = hasFirstNight;
+	}
+	public boolean isHasRestNights() {
+		return hasRestNights;
+	}
+	public void setHasRestNights(boolean hasRestNights) {
+		this.hasRestNights = hasRestNights;
+	}
+	public int getSequence() {
+		return sequence;
+	}
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+	public int getFaction() {
+		return faction;
+	}
+	public void setFaction(int faction) {
+		this.faction = faction;
+	}
+	public int getGroup() {
+		return group;
+	}
+	public void setGroup(int group) {
+		this.group = group;
 	}
 	
 }

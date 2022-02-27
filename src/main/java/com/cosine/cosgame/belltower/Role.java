@@ -282,7 +282,15 @@ public class Role {
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setImg(img);
-		if (player.isAlive()) {
+		entity.setSequence(sequence);
+		entity.setHasFirstNight(hasFirstNight);
+		entity.setHasRestNights(hasRestNights);
+		entity.setFaction(faction);
+		entity.setGroup(group);
+		if (player == null) {
+			entity.setNumPlayerChoose(0);
+			entity.setInstructions(new ArrayList<>());
+		} else if (player.isAlive()) {
 			entity.setNumPlayerChoose(getNumPlayerChoose());
 			entity.setInstructions(getInstructions());
 		} else {

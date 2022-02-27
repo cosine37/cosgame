@@ -9,6 +9,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.belltower.entity.BoardEntity;
 import com.cosine.cosgame.belltower.entity.PlayerEntity;
+import com.cosine.cosgame.belltower.entity.RoleEntity;
 import com.cosine.cosgame.belltower.roles.troublebrewing.*;
 import com.cosine.cosgame.belltower.shop.Transaction;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -778,7 +779,13 @@ public class Board {
 				entity.setConfirmedNight(p.isConfirmedNight());
 			}
 		}
+		List<RoleEntity> allRoles = new ArrayList<>();
+		for (i=0;i<script.allRoles().size();i++) {
+			Role r = script.allRoles().get(i);
+			allRoles.add(r.toRoleEntity());
+		}
 		entity.setPlayers(playerEntities);
+		entity.setAllRoles(allRoles);
 		return entity;
 	}
 }

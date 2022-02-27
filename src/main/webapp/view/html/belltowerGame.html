@@ -19,7 +19,7 @@
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
-	<div class="game-area">
+	<div class="game-area noselect">
 		<div class="time-box">
 			<div ng-show="status==ASSIGNROLE">
 				<span>游戏即将开始</span>
@@ -78,26 +78,35 @@
 		<div ng-show="status==ASSIGNROLE && lord != username">
 			正等待房主选择配置
 		</div>
-		<div ng-show="status==INGAME" class="message-box">
-			<!-- 
+		<div>
+			<table>
+				<tr>
+					<td ng-repeat="r in gamedata.allRoles track by $index">
+						<button ng-click="getRoleInfo($index)">{{r.name}}</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="role-info-box" style="float:left">
+			<h4>{{chosenRole.name}}</h4>
 			<div>
-				<table>
-					<tr ng-repeat="p in players track by $index">
-						<td>
-							<button ng-click="choosePlayer($index)">{{p.displayName}}</button>
-						</td>
-						<td>
-							<span ng-show="chosenPlayer == $index || chosenPlayer2 == $index">已选择</span>
-							<span ng-show="chosenPlayer != $index && chosenPlayer2 != $index">未选择</span>
-						</td>
-						<td>
-							<button ng-show="showNoNominate && phase==DAY" ng-click="nominate($index)" ng-disabled="p.nominated == true">指控该玩家</button>
-						</td>
-					<tr>
-				</table>
+				<img style="width: 100px; height: 100px;" ng-src="/image/Belltower/Roles/{{chosenRole.img}}.png"/>
 			</div>
-			 -->
+			<div>
+				<span ng-show="chosenRole.faction == HUMAN">阵营：人类</span>
+				<span ng-show="chosenRole.faction == DEVIL">阵营：邪恶</span>
+				<span ng-show="chosenRole.group == TOWNSFOLK">/ 村民</span>
+				<span ng-show="chosenRole.group == OUTSIDER">/ 外来者</span>
+				<span ng-show="chosenRole.group == DEMON">/ 恶魔</span>
+				<span ng-show="chosenRole.group == MINION">/ 爪牙</span>
+			</div>
+			<div><span>{{chosenRole.desc}}</span></div>
+		</div>
+		<div ng-show="status==INGAME" class="message-box"  style="float:left; margin-left: 10px">
 			<div ng-show="phase==DAY">
+				<div>
+					<img style="width: 100px; height: 100px;" ng-src="/image/Belltower/Roles/{{gamedata.myRole.img}}.png"/>
+				</div>
 				<div>
 					<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
 				</div>
@@ -111,6 +120,9 @@
 				</div>
 			</div>
 			<div ng-show="phase==NIGHT">
+				<div>
+					<img style="width: 100px; height: 100px;" ng-src="/image/Belltower/Roles/{{gamedata.myRole.img}}.png"/>
+				</div>
 				<div>
 					<div ng-repeat="ins in gamedata.myRole.instructions track by $index">{{ins}}</div>
 				</div>
@@ -131,7 +143,10 @@
 				</div>
 			</div>
 		</div>
-		<div ng-show="status==ENDGAME" class="message-box">
+		<div ng-show="status==ENDGAME" class="message-box"  style="float:left; margin-left: 10px">
+			<div>
+				<img style="width: 100px; height: 100px;" ng-src="/image/Belltower/Roles/{{gamedata.myRole.img}}.png"/>
+			</div>
 			<div>
 				<span ng-show="players[gamedata.myIndex].win">你赢了</span>
 				<span ng-show="players[gamedata.myIndex].win == false">你输了</span>
@@ -148,16 +163,23 @@
 				</div>
 			</div>
 		</div>
-		<button ng-click="goto('belltower')">退出</button>
+		<div style="position:absolute; top: 20px;right:30px;">
+			<button ng-click="goto('belltower')">退出</button>
+		</div>
+		
+		<div style="clear:both">
+			{{gamedata}}
+		</div>
+		
 	</div>
 	
 	<!-- 
 	<div>
 		<p ng-repeat="p in players">{{p.name}}</p>
 	</div>
-	
-	{{gamedata}}
 	 -->
+	
+	
 	<!-- 
 	<div id="nightMessage" class="big-message night-message" style="display:none">
 		<h1>天黑了</h1>

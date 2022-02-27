@@ -62,6 +62,11 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.HUMAN = 1;
 		$scope.DEVIL = 2;
 		
+		$scope.TOWNSFOLK = 10;
+		$scope.OUTSIDER = 11;
+		$scope.DEMON = 20;
+		$scope.MINION = 21;
+		
 		$scope.groupNames = ["村民","外来者","恶魔","爪牙"];
 		$scope.groupNumbers = [0,0,0,0];
 		
@@ -219,6 +224,10 @@ app.controller("belltowerGameCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		// ---- end day handles
+		
+		$scope.getRoleInfo = function(x){
+			$scope.chosenRole = $scope.gamedata.allRoles[x]
+		}
 		
 		$scope.roleFrameClass = function(x){
 			var ans = "role-frame"

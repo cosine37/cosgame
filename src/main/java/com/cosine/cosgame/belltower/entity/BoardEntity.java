@@ -24,6 +24,7 @@ public class BoardEntity {
 	List<String> myAvailableCharacters;
 	String executionMsg;
 	List<Integer> voteResults;
+	List<RoleEntity> allRoles;
 	
 	boolean confirmedDay;
 	boolean confirmedNight;
@@ -167,6 +168,12 @@ public class BoardEntity {
 	}
 	public void setWinFaction(int winFaction) {
 		this.winFaction = winFaction;
+	}
+	public List<RoleEntity> getAllRoles() {
+		return allRoles;
+	}
+	public void setAllRoles(List<RoleEntity> allRoles) {
+		this.allRoles = allRoles;
 	}
 	
 }
