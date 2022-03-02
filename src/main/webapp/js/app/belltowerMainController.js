@@ -42,6 +42,36 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			});
 		}
 		
+		playGotoSE = function(){
+			var audio = new Audio("/sound/Belltower/goto.wav")
+			audio.play();
+		}
+		
+		playLeaveSE = function(){
+			var audio = new Audio("/sound/Belltower/leave.wav")
+			audio.play();
+		}
+		
+		playChatSE = function(){
+			var audio = new Audio("/sound/Belltower/" + $scope.chatSound)
+			audio.play();
+		}
+		
+		playFlipSE = function(){
+			var audio = new Audio("/sound/Belltower/flip.wav")
+			audio.play();
+		}
+		
+		playMiningSE = function(){
+			var audio = new Audio("/sound/Belltower/mining.wav")
+			audio.play();
+		}
+		
+		playOpeningSE = function(){
+			var audio = new Audio("/sound/Belltower/opening.wav")
+			audio.play();
+		}
+		
 		$scope.newGame = function(){
 			$http({url: "/belltower/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
@@ -83,12 +113,15 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.showPlaceButtons = true;
 		$scope.shownPlace = "";
 		$scope.openPlace = function(x){
+			playGotoSE()
 			if (x == 'home'){
 				setIconInfo();
 			}
 			if (x == 'belltower'){
 				setBelltowerEvent();
 			}
+			$scope.loadingReward = false;
+			$scope.showReward = false;
 			$scope.shownPlace = x
 			$scope.placeStyle = {
 				"background-image" : "url('/image/Belltower/" + x + ".jpg')",
@@ -96,6 +129,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 			}
 		}
 		$scope.closePlace = function(){
+			playLeaveSE()
 			$scope.shownPlace = ""
 		}
 		
@@ -103,12 +137,21 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.loadingReward = false;
 		$scope.showReward = false;
 		$scope.dig = function(){
+			playMiningSE()
 			$scope.loadingReward = true;
+			$scope.chatSound = "gain.wav"
 			$http({url: "/belltower/dig", method: "POST"}).then(function(response){
 				var rewardMsgRaw = response.data.value[0];
 				$scope.rewardMsg = "";
 				if (rewardMsgRaw.charAt(0) == 'd'){
 					$scope.rewardImg = "/image/Belltower/diamond.png";
+					if (rewardMsgRaw.substring(1) == "1"){
+						
+					} else if (rewardMsgRaw.substring(1) == "2"){
+						$scope.chatSound = "success.wav"
+					} else {
+						$scope.chatSound = "cheer.wav"
+					}
 					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "颗钻石";
 				} else if (rewardMsgRaw.charAt(0) == 'i'){
 					$scope.rewardImg = "/image/Belltower/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
@@ -116,14 +159,17 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					if (level == '1'){
 						$scope.rewardMsg = "获得头像："
 					} else if (level == '2'){
+						$scope.chatSound = "success.wav"
 						$scope.rewardMsg = "获得稀有头像："
 					} else if (level == '3'){
+						$scope.chatSound = "cheer.wav"
 						$scope.rewardMsg = "获得史诗头像："
 					} else {
 						$scope.rewardMsg = "获得头像："
 					}
 					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(4);
 				} else if (rewardMsgRaw.charAt(0) == 'k'){
+					$scope.chatSound = "cheer.wav"
 					$scope.rewardImg = "/image/Belltower/chest.png";
 					$scope.rewardMsg = "获得一个宝箱";
 				}
@@ -132,12 +178,15 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				//time.sleep(2)
 				$scope.loadingReward = false;
 				$scope.showReward = true;
+				playChatSE()
 			});
 		}
 		
 		$scope.openChest = function(){
 			$scope.loadingReward = true;
+			playOpeningSE()
 			$http({url: "/belltower/openchest", method: "POST"}).then(function(response){
+				$scope.chatSound = "success.wav"
 				var rewardMsgsRaw = response.data.value;
 				$scope.rewardMsgs = []
 				$scope.rewardImgs = []
@@ -171,6 +220,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				//time.sleep(2)
 				$scope.loadingReward = false;
 				$scope.showReward = true;
+				playChatSE()
 			});
 		}
 		
@@ -215,6 +265,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.flipCharPage = function(x){
+			playFlipSE()
 			$scope.curPage = $scope.curPage+x;
 			setCurCharacterPage();
 		}
@@ -310,6 +361,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 		}
 		
 		$scope.triggerBelltowerEvent = function(x){
+			$scope.chatSound = "chat.wav"
 			$scope.numButtonShown = 0;
 			if ($scope.belltowerEvent == -2){
 				$scope.belltowerEventMsg = "小男孩说道：“我听大人们缩，有些头像只能在这座钟楼里获得耶。不造他们缩的是什么意思呢。”";
@@ -317,6 +369,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.getAccountInfo();
 				});
 			} if ($scope.belltowerEvent == 0){
+				$scope.chatSound = "bell.wav"
 				$scope.belltowerEvent = -1;
 				var t = Math.floor(Math.random() * 10);
 				if (t < 3){
@@ -347,11 +400,13 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 						$scope.getAccountInfo();
 					});
 				} else if (x==1){
+					$scope.chatSound = "stone.wav"
 					$scope.belltowerEventMsg = "乞丐说道：“我知道我长得丑，被扔石头无所谓，但让你害怕让我觉得很难过。”"
 				}
 			} else if ($scope.belltowerEvent == 3){
 				var t = Math.floor(Math.random() * 3);
 				if (t == 0){
+					$scope.chatSound = "success.wav"
 					$scope.belltowerImg = "portia.png"
 					$scope.belltowerEventMsg = "恭喜你，获得传说头像：波西亚！";
 					if (x == 0){
@@ -366,6 +421,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 						$scope.getAccountInfo();
 					});
 				} else {
+					$scope.chatSound = "fail.wav"
 					$scope.belltowerEventMsg = "小姐的头像不在匣子里。";
 					if (x == 0){
 						$scope.belltowerEventMsg = $scope.belltowerEventMsg + "匣子里还写了一句话：“发光的不一定是金子。”";
@@ -393,6 +449,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					t = 9;
 				}
 				if (t == 0){
+					$scope.chatSound = "success.wav"
 					var y = Math.floor(Math.random() * 2);
 					if (y == 0){
 						if (has901) y=1;
@@ -425,6 +482,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				var t = Math.floor(Math.random() * 3);
 				if (has903){
+					$scope.chatSound = "success.wav"
 					$scope.belltowerImg = "904.png";
 					$scope.belltowerEventMsg = "恭喜你，获得宝箱和传说头像：安东尼奥！“可惜船长被香料岛的土著杀了，我一定要写书纪念这次航行。”，水手说。";
 					var data = {"charId":"904"}
@@ -434,6 +492,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 						});
 					});
 				} else if (t == 0){
+					$scope.chatSound = "success.wav"
 					$scope.belltowerImg = "903.png";
 					$scope.belltowerEventMsg = "船长亢奋地说道：“明天我就要启程开辟新航道了！请收下我名片，史书终将留下我姓名！” 恭喜你，获得传说头像：费尔南多！";
 					var data = {"charId":"903"}
@@ -464,6 +523,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					t = 9;
 				}
 				if (t == 0){
+					$scope.chatSound = "success.wav"
 					$scope.belltowerImg = "905.png";
 					$scope.belltowerEventMsg = "那艺术家说道：“我曾是个画家，但我现在更爱雕刻。我这画作草稿就送你了。” 恭喜你，获得传说头像：先知！";
 					var data = {"charId":"905"}
@@ -481,6 +541,7 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					t = 7;
 				}
 				if (t == 0){
+					$scope.chatSound = "success.wav"
 					$scope.belltowerEventMsg = "那探险家说道：“我累了，不想出去航海了，就在这儿卖一卖东印度土著送给我的画作吧。” 集市里多了一位商人。";
 					$http({url: "/belltower/unlockepic", method: "POST"}).then(function(response){
 						$scope.getAccountInfo();
@@ -492,9 +553,12 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 					$scope.belltowerEventMsg = quotes[y];
 				}
 			}
+			playChatSE()
 		}
 		
 		$scope.resolveBelltowerEvent = function(){
+			$scope.chatSound = "chat.wav"
+			playChatSE()
 			$scope.belltowerEvent = 0;
 			$scope.numButtonShown = 1;
 			$scope.belltowerEventMsg = "楼顶有一只钟。";
