@@ -298,6 +298,53 @@ public class AllRes {
 		p = new Pm("131", "三位一体酋雷姆", XL);
 		allPm.add(p);
 		
+		p = new Pm("132", "海星星", S);
+		allPm.add(p);
+		p = new Pm("133", "化石翼龙", XL);
+		allPm.add(p);
+		p = new Pm("134", "卡蒂狗", M);
+		allPm.add(p);
+		p = new Pm("135", "乌波", S);
+		allPm.add(p);
+		p = new Pm("136", "壶壶", M);
+		allPm.add(p);
+		p = new Pm("137", "幕下力士", S);
+		allPm.add(p);
+		p = new Pm("138", "彷徨夜灵", M);
+		allPm.add(p);
+		p = new Pm("139", "席多蓝恩", XL);
+		allPm.add(p);
+		p = new Pm("140", "铁蚁", M);
+		allPm.add(p);
+		p = new Pm("141", "烈箭鹰", L);
+		allPm.add(p);
+		p = new Pm("142", "黏美龙", XL);
+		allPm.add(p);
+		p = new Pm("143", "铁火辉夜", XL);
+		allPm.add(p);
+		p = new Pm("144", "爆肌蚊", XL);
+		allPm.add(p);
+		p = new Pm("145", "钢铠鸦", L);
+		allPm.add(p);
+		p = new Pm("146", "颤弦蝾螈", L);
+		allPm.add(p);
+		p = new Pm("147", "长毛巨魔", L);
+		allPm.add(p);
+		p = new Pm("148", "布拨", S);
+		allPm.add(p);
+		p = new Pm("149", "红莲铠骑", L);
+		allPm.add(p);
+		p = new Pm("150", "苍炎刃鬼", L);
+		allPm.add(p);
+		p = new Pm("151", "电肚蛙", M);
+		allPm.add(p);
+		p = new Pm("152", "浩大鲸", XL);
+		allPm.add(p);
+		p = new Pm("153", "故勒顿", XL);
+		allPm.add(p);
+		p = new Pm("154", "密勒顿", XL);
+		allPm.add(p);
+		
 		p = new Pm("901", "巴达兽", S);
 		allPm.add(p);
 		p = new Pm("902", "亚古兽", M);
@@ -346,7 +393,7 @@ public class AllRes {
 			String s = "a00" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
-		for (i=10;i<=30;i++) {
+		for (i=10;i<=37;i++) {
 			String s = "a0" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
@@ -368,14 +415,14 @@ public class AllRes {
 		for (i=0;i<5;i++) {
 			ans.add(allAvatar.get(i));
 		}
-		for (i=5;i<30;i++) {
+		for (i=5;i<37;i++) {
 			st1.add(allAvatar.get(i));
 		}
-		for (i=30;i<45;i++) {
+		for (i=37;i<52;i++) {
 			st2.add(allAvatar.get(i));
 		}
 		Random rand = new Random();
-		for (i=0;i<10;i++) {
+		for (i=0;i<13;i++) {
 			int n = st1.size();
 			ans.add(st1.remove(rand.nextInt(n)));
 		}

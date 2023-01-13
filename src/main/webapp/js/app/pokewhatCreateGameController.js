@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("pokewhatCreateGameApp", []);
 app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		$scope.avatarTableCols = [0,1,2,3,4,5]
+		$scope.avatarTableCols = [0,1,2,3,4,5,6]
 		$scope.avatarTableRows = [0,1,2]
 		$scope.avatarStyles = [];
 		$scope.playerAvatarStyles = [];

@@ -269,8 +269,8 @@ public class AllRes {
 		String[] c2 = {"hesheng01"};
 		String[] r2 = {"hesheng02"};
 		card.setQuotes(c2, r2);
-		card.addNeedRes(Consts.GOLD, 3);
-		card.addProvideRes(Consts.GOLD, 4);
+		card.addNeedRes(Consts.GOLD, 2);
+		card.addProvideRes(Consts.GOLD, 3);
 		kx1Cards.add(card);
 		
 		card = new Card();
@@ -401,11 +401,11 @@ public class AllRes {
 		cardDeck.add(card);
 		
 		card = new Card();
-		card.setName("麻辣鸡");
-		card.setImg("Minaj");
+		card.setName("老冯");
+		card.setImg("Feng");
 		card.setTypeWithQuote(Consts.TRADERALT01);
-		String[] c33 = {"minaj01"};
-		String[] r33 = {"minaj02"};
+		String[] c33 = {"feng01", "feng02", "feng03", "feng04", "feng05"};
+		String[] r33 = {"feng06", "feng07", "feng08", "feng09", "feng10"};
 		card.setQuotes(c33, r33);
 		card.addNeedRes(Consts.IRON, 1);
 		card.addProvideRes(Consts.STONE, 2);

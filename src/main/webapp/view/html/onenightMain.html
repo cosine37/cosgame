@@ -255,6 +255,11 @@
 						
 						<tr>
 							<td colspan="2">
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2">
 								以下身份黄昏阶段有行动，按行动顺序排列
 							</td>
 						</tr>
@@ -297,6 +302,7 @@
 						<tr>
 							<td>
 								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
+								<button ng-click="showedCard='r78'" ng-disabled="showedCard == 'r78'">服务员</button>
 								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
 								<button ng-click="showedCard='r72'" ng-disabled="showedCard == 'r72'">吉普赛娘</button>
 								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
@@ -305,15 +311,16 @@
 								<button ng-click="showedCard='r75'" ng-disabled="showedCard == 'r75'">警探</button>
 								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
 								<button ng-click="showedCard='r62'" ng-disabled="showedCard == 'r62'">退伍军医</button>
+								<button ng-click="showedCard='r77'" ng-disabled="showedCard == 'r77'">弄臣</button>
 								<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
 								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
-								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
-								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 							</td>
 							
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
+								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
 								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">调换儿</button>
 								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">演员</button>
@@ -325,6 +332,7 @@
 								<button ng-click="showedCard='r64'" ng-disabled="showedCard == 'r64'">小魔怪</button>
 								<button ng-click="showedCard='r65'" ng-disabled="showedCard == 'r65'">忏悔狼</button>
 								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
+								<button ng-click="showedCard='r76'" ng-disabled="showedCard == 'r76'">神父</button>
 							</td>
 						</tr>
 						<tr>
@@ -706,6 +714,17 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r78'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 服务员</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你被告知初始身份为“狼”阵营（包括变色狼）的玩家的数量。因为其他身份的原因，你看到的数量在天亮后可能会有变化。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r27'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -812,6 +831,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份与另一名其他玩家的状态。你可以只查看身份或状态，也可以都查看。你不能查看同一名玩家的身份和状态。
 								你也可以不发动此技能。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r77'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 弄臣</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段查看一名其他玩家的身份并指定一个中央身份的位置。黎明阶段开始前交换你查看的玩家的身份和你指定位置的中央身份。该技能必须发动。</br>
 							</td>
 						</tr>
 					</table>
@@ -983,6 +1013,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。你不能查看你获得的新身份。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r76'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 神父</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名其他玩家，将其身份变为村民。</br>
 							</td>
 						</tr>
 					</table>

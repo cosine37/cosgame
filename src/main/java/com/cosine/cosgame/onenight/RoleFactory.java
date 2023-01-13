@@ -182,6 +182,10 @@ public class RoleFactory {
 			role = new BladeWolf();
 		} else if (img.contentEquals("r75")) {
 			role = new PoliceDetect();
+		} else if (img.contentEquals("r76")) {
+			role = new Abba();
+		} else if (img.contentEquals("r77")) {
+			role = new Jester();
 		}
 		
 		else {
@@ -362,6 +366,10 @@ public class RoleFactory {
 			role = new BladeWolf();
 		} else if (num == 75) {
 			role = new PoliceDetect();
+		} else if (num == 76) {
+			role = new Abba();
+		} else if (num == 77) {
+			role = new Jester();
 		}
 		
 		else {

@@ -222,7 +222,7 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Gypsy();
+		r = new Jester();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
