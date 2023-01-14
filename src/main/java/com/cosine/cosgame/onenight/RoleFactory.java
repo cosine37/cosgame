@@ -186,9 +186,11 @@ public class RoleFactory {
 			role = new Abba();
 		} else if (img.contentEquals("r77")) {
 			role = new Jester();
-		}
-		
-		else if (img.contentEquals("r80")) {
+		} else if (img.contentEquals("r78")) {
+			role = new Waiter();
+		} else if (img.contentEquals("r79")) {
+			role = new Washerwoman();
+		} else if (img.contentEquals("r80")) {
 			role = new WolfCook();
 		} else if (img.contentEquals("r81")) {
 			role = new MushroomFarmer();
@@ -378,9 +380,9 @@ public class RoleFactory {
 			role = new Abba();
 		} else if (num == 77) {
 			role = new Jester();
-		}
-		
-		else if (num == 80) {
+		} else if (num == 79) {
+			role = new Washerwoman();
+		} else if (num == 80) {
 			role = new WolfCook();
 		} else if (num == 81) {
 			role = new MushroomFarmer();

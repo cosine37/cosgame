@@ -321,8 +321,9 @@
 						</tr>
 						<tr>
 							<td>
-								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
+								<button ng-click="showedCard='r79'" ng-disabled="showedCard == 'r79'">洗衣妇</button>
 								<button ng-click="showedCard='r78'" ng-disabled="showedCard == 'r78'">服务员</button>
+								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
 								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
 								<button ng-click="showedCard='r72'" ng-disabled="showedCard == 'r72'">吉普赛娘</button>
 								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
@@ -333,12 +334,12 @@
 								<button ng-click="showedCard='r62'" ng-disabled="showedCard == 'r62'">退伍军医</button>
 								<button ng-click="showedCard='r77'" ng-disabled="showedCard == 'r77'">弄臣</button>
 								<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
-								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 							</td>
 							
 						</tr>
 						<tr>
 							<td>
+								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
@@ -768,6 +769,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以看到初始阵营为“狼”的玩家看到的中央身份。换言之，若场上为独狼，则小红帽可以看到该独狼看到的中央身份。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>设置：</b>使用<span class="onenighttext">小红帽</span>的游戏请打开独狼变体。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r79'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 洗衣妇</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你被告知一个“人”阵营身份和两名其他玩家，其中一名玩家为该“人”阵营身份。</br>
 							</td>
 						</tr>
 					</table>

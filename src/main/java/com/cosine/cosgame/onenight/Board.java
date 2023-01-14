@@ -221,12 +221,12 @@ public class Board {
 		genQuestions();
 		// TODO: test roles here
 		Role r;
-		/*
-		r = new Pharmacist();
+		
+		r = new Waiter();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		
+		/*
 		r = new MushroomFarmer();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);

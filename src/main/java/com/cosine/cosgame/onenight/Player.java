@@ -29,6 +29,7 @@ public class Player {
 	boolean confirmed;
 	boolean stoned;
 	boolean poisoned;
+	String msg; // the message used for certain roles
 	
 	List<Integer> questionChoices;
 	List<Integer> playerMarks;
@@ -358,6 +359,18 @@ public class Player {
 	public void setStoned(boolean stoned) {
 		this.stoned = stoned;
 	}
+	public boolean isPoisoned() {
+		return poisoned;
+	}
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 	public int getQuestionChoosed() {
 		return questionChoosed;
 	}
@@ -395,6 +408,7 @@ public class Player {
 		doc.append("beggarIndex", beggarIndex);
 		doc.append("stoned", stoned);
 		doc.append("poisoned", poisoned);
+		doc.append("msg", msg);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -438,6 +452,7 @@ public class Player {
 		beggarIndex = doc.getInteger("beggarIndex", -1);
 		stoned = doc.getBoolean("stoned", false);
 		poisoned = doc.getBoolean("poisoned", false);
+		msg = doc.getString("msg");
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();
