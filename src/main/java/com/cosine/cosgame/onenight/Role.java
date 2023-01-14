@@ -25,6 +25,7 @@ public class Role {
 	protected boolean mandatory;
 	protected boolean hasDusk;
 	protected boolean useStatus;
+	protected boolean canBePoisoned;
 	
 	protected Player player;
 	protected Board board;
@@ -39,6 +40,7 @@ public class Role {
 		hasDusk = false;
 		useStatus = false;
 		mandatory = false;
+		canBePoisoned = true;
 		name = "";
 		img = "";
 		duskMsg = new ArrayList<>();
@@ -276,6 +278,14 @@ public class Role {
 	public void setCanChooseSelfStatus(boolean canChooseSelfStatus) {
 		this.canChooseSelfStatus = canChooseSelfStatus;
 	}
+	public boolean isCanBePoisoned() {
+		return canBePoisoned;
+	}
+
+	public void setCanBePoisoned(boolean canBePoisoned) {
+		this.canBePoisoned = canBePoisoned;
+	}
+
 	public List<String> getDuskMsg() {
 		if (duskMsg.size() == 0) {
 			duskMsg.add("你的身份是 " + name + "。");

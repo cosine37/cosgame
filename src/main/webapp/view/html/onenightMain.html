@@ -220,7 +220,7 @@
 						<tr>
 							<td colspan="2">
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 黎明阶段在夜晚阶段结束后开始。一般情况下，黎明阶段的行动等同于夜晚阶段。
-								在黎明阶段开始前会有一些身份技能的结算，结算顺序按夜晚行动顺序，这些技能结算完毕后立即开始黎明每段的结算。</br>
+								在黎明阶段开始前会有一些身份技能的结算，结算顺序按夜晚行动顺序，这些技能结算完毕后立即开始黎明阶段的结算。</br>
 								</p>
 							</td>
 						</tr>
@@ -230,7 +230,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份的技能效果在黄昏阶段发动。黄昏阶段在夜晚阶段之前。几乎所有的黄昏阶段的技能效果是施加状态。</br>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份的技能效果在黄昏阶段发动。黄昏阶段在夜晚阶段之前。几乎所有的黄昏阶段的技能效果是施加状态或与中毒相关。</br>
 								</p>
 							</td>
 						</tr>
@@ -243,6 +243,23 @@
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份能够给玩家施加、改变或清除状态。一些状态可能会限制玩家的行动甚至改变胜利条件。
 								游戏开始时所有玩家都没有状态，黄昏阶段结束时所有玩家观看其当前状态，夜晚时玩家的状态可能会有所改变，天亮时玩家无法再次观看自身状态。状态独立于身份，交换身份时不会和状态一起交换。
 								投票结束时若与状态相关的获胜条件和身份有冲突，以状态所指示的获胜条件为准。</br>
+								</p>
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>中毒</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一些身份的技能效果能够令一些玩家中毒。中毒仅会影响“人”阵营身份。除非有特殊的技能效果或是一些暗示，否则玩家不知道自己是否中毒。中毒的玩家在黄昏、夜晚与黎明阶段使用主动技能会失败，具体的情况如下：</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 身份的交换与改变会失败，如<span class="onenighttext">熊孩子</span>指定的两名玩家身份不会互换，<span class="onenighttext">神父</span>指定的玩家身份不会变为<span class="onenighttext">村民</span>。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 状态与标记的施加会失败，如<span class="onenighttext">煽动者</span>指定的玩家不会获得【煽动】状态。<span class="onenighttext">魔法警卫</span>指定的玩家不会获得“魔法守护”标记。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查看的身份会随机且合理地显示，如<span class="onenighttext">预言家</span>查看的两张中央身份会随机显示的本局游戏使用的不为<span class="onenighttext">预言家</span>的身份。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 获得的信息也为纯随机，如<span class="onenighttext">驯熊师</span>的熊是否咆哮完全随机，与相邻玩家的身份无关。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 若黎明阶段前有技能后续效果，则后续效果也不发动，如<span class="onenighttext">花蝴蝶</span>的两次交换都会失败。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 中毒在天亮时解除，如最终身份为<span class="onenighttext">警长</span>的玩家即使天亮前中毒，投的玩家依然获得2票。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 中毒不影响与身份牌相关的效果，如<span class="onenighttext">僧侣</span>即使中毒，交换其身份牌依然会无效。</br>
 								</p>
 							</td>
 						</tr>
@@ -266,6 +283,9 @@
 						
 						<tr>
 							<td colspan="2">
+								<button ng-click="showedCard='r81'" ng-disabled="showedCard == 'r81'">菇农</button>
+								<button ng-click="showedCard='r80'" ng-disabled="showedCard == 'r80'">炊事狼</button>
+								<button ng-click="showedCard='r82'" ng-disabled="showedCard == 'r82'">药剂师</button>
 								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
 								<button ng-click="showedCard='r58'" ng-disabled="showedCard == 'r58'">鬃岩狼人</button>
 								<button ng-click="showedCard='r60'" ng-disabled="showedCard == 'r60'">传染病人</button>
@@ -385,6 +405,43 @@
 							<td colspan="2">
 								<button ng-click="showedCard='r68'" ng-disabled="showedCard == 'r68'">猎狼人</button>
 								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r81'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 菇农</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段与你相邻的初始身份为“人”阵营的玩家中毒。中毒的玩家天亮前的操作会失效且得知的信息为随机生成。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r80'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 炊事狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								指定一名玩家，若该玩家的初始身份为“人”阵营，该玩家中毒。中毒的玩家天亮前的操作会失效且得知的信息为随机生成。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br></br></br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r82'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 药剂师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>你免疫中毒。黄昏阶段指定两名其他玩家，若你指定的玩家中毒，解除其中毒效果。
 							</td>
 						</tr>
 					</table>

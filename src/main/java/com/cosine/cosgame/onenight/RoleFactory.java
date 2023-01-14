@@ -188,6 +188,14 @@ public class RoleFactory {
 			role = new Jester();
 		}
 		
+		else if (img.contentEquals("r80")) {
+			role = new WolfCook();
+		} else if (img.contentEquals("r81")) {
+			role = new MushroomFarmer();
+		} else if (img.contentEquals("r82")) {
+			role = new Pharmacist();
+		}
+		
 		else {
 			role = new Role();
 			role.setImg(img);
@@ -370,6 +378,14 @@ public class RoleFactory {
 			role = new Abba();
 		} else if (num == 77) {
 			role = new Jester();
+		}
+		
+		else if (num == 80) {
+			role = new WolfCook();
+		} else if (num == 81) {
+			role = new MushroomFarmer();
+		} else if (num == 82) {
+			role = new Pharmacist();
 		}
 		
 		else {

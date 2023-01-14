@@ -88,6 +88,7 @@ public class Consts {
 	public static final int EXCHANGE = -2;
 	public static final int TARGET = -3;
 	public static final int WOLFMARK = -4;
+	public static final int POISONED = -5;
 	
 	// spliter
 	public static final int DAWNSPLITER = 850;

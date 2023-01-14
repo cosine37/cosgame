@@ -83,6 +83,17 @@ button:disabled{
 	background-size:cover;
 }
 
+.poisoned{
+	position: absolute;
+	user-select:none;
+	right: 10px;
+	bottom: 10px;
+	height: 40px;
+	width: 40px;
+	background:url("/image/Onenight/poisoned.png");
+	background-size:cover;
+}
+
 .detective{
 	position: absolute;
 	user-select:none;

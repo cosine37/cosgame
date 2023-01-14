@@ -222,12 +222,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Jester();
+		r = new Pharmacist();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new Werewolf();
+		r = new MushroomFarmer();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);

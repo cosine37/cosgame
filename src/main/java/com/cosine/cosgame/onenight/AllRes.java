@@ -39,6 +39,12 @@ public class AllRes {
 		Role r;
 		int i;
 		
+		r = new MushroomFarmer();
+		allRoles.add(r);
+		r = new WolfCook();
+		allRoles.add(r);
+		r = new Pharmacist();
+		allRoles.add(r);
 		r = new AlphaWolf();
 		allRoles.add(r);
 		r = new Lycanroc();

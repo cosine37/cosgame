@@ -28,6 +28,7 @@ public class Player {
 	boolean showUpdatedRole;
 	boolean confirmed;
 	boolean stoned;
+	boolean poisoned;
 	
 	List<Integer> questionChoices;
 	List<Integer> playerMarks;
@@ -55,6 +56,7 @@ public class Player {
 		beggarIndex = -1;
 		questionChoosed = -1;
 		stoned = false;
+		poisoned = false;
 	}
 	
 	public Player prevPlayer() {
@@ -194,6 +196,18 @@ public class Player {
 	
 	public void receiveVote() {
 		numVotes++;
+	}
+	
+	public void poison() {
+		if (getCurrentRole().getSide() == Consts.HUMAN){
+			if (getCurrentRole().isCanBePoisoned()) {
+				poisoned = true;
+			}
+		}	
+	}
+	
+	public void detoxify() {
+		poisoned = false;
 	}
 	
 	public boolean hasSentinel() {
@@ -380,6 +394,7 @@ public class Player {
 		doc.append("votedOut", votedOut);
 		doc.append("beggarIndex", beggarIndex);
 		doc.append("stoned", stoned);
+		doc.append("poisoned", poisoned);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -422,6 +437,7 @@ public class Player {
 		votedOut = doc.getBoolean("votedOut", false);
 		beggarIndex = doc.getInteger("beggarIndex", -1);
 		stoned = doc.getBoolean("stoned", false);
+		poisoned = doc.getBoolean("poisoned", false);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

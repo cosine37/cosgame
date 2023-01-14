@@ -379,7 +379,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			for (i=0;i<$scope.playerMarks.length;i++){
 				$scope.playerSelect.push("n");
 				imgUrl = "url('/image/Onenight/qs.png')"
-				if ($scope.playerMarks[i] == "-1" || $scope.playerMarks[i] == "-2" || $scope.playerMarks[i] == "-3"){
+				if ($scope.playerMarks[i] == "-1" || $scope.playerMarks[i] == "-2" || $scope.playerMarks[i] == "-3" || $scope.playerMarks[i] == "-5"){
 					
 				} else if ($scope.playerMarks[i] == "-4"){
 					imgUrl = "url('/image/Onenight/wolfcard.png')"
