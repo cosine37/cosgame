@@ -1,5 +1,8 @@
 package com.cosine.cosgame.onenight.roles;
 
+import java.util.List;
+import java.util.Random;
+
 import com.cosine.cosgame.onenight.Consts;
 import com.cosine.cosgame.onenight.Manipulations;
 import com.cosine.cosgame.onenight.Player;
@@ -30,5 +33,72 @@ public class Watcher extends Role{
 	public void executeSkill() {
 		Manipulations.viewFinalRole(player, board, Consts.SEER);
 		Manipulations.viewFinalRole(player, board, Consts.APPRENTICESEER);
+	}
+	
+	public void executeSkillPoisoned() {
+		int i,x,y,n,z;
+		int seerRole = -99999;
+		int apprenticeSeerRole = -1;
+		boolean hasSeer = false;
+		boolean hasApprenticeSeer = false;
+		List<Role> allRoles = board.getRolesThisGame();
+		for (i=0;i<allRoles.size();i++) {
+			if (allRoles.get(i).getRoleNum() == Consts.SEER) {
+				hasSeer = true;
+			}
+			if (allRoles.get(i).getRoleNum() == Consts.APPRENTICESEER) {
+				hasApprenticeSeer = true;
+			}
+		}
+		Random rand = new Random();
+		n = board.getPlayers().size();
+		if (hasSeer) {
+			x = rand.nextInt(n+2);
+			if (x<3) {
+				hasSeer = false;
+			}
+		}
+		if (hasApprenticeSeer) {
+			x = rand.nextInt(n+2);
+			if (x<3) {
+				hasApprenticeSeer = false;
+			}
+		}
+		if (hasSeer) {
+			x = rand.nextInt(10000);
+			y = rand.nextInt(n-1);
+			if (y>=player.getIndex()) {
+				y = y+1;
+			}
+			if (x%3 < 2) {
+				player.getPlayerMarks().set(y, Consts.SEER);
+				seerRole = Consts.SEER;
+			} else {
+				z = rand.nextInt(allRoles.size());
+				seerRole = allRoles.get(z).getRoleNum();
+				player.getPlayerMarks().set(y, seerRole);
+			}
+		}
+		if (hasApprenticeSeer) {
+			x = rand.nextInt(10000);
+			y = rand.nextInt(n-1);
+			if (y>=player.getIndex()) {
+				y = y+1;
+			}
+			if (x%3 < 2 && seerRole != Consts.APPRENTICESEER) {
+				player.getPlayerMarks().set(y, Consts.APPRENTICESEER);
+			} else {
+				while (allRoles.size()>0) {
+					z = rand.nextInt(allRoles.size());
+					Role r = allRoles.remove(z);
+					if (r.getRoleNum() == seerRole) {
+						continue;
+					}
+					apprenticeSeerRole = r.getRoleNum();
+					break;
+				}
+				player.getPlayerMarks().set(y, apprenticeSeerRole);
+			}
+		}
 	}
 }

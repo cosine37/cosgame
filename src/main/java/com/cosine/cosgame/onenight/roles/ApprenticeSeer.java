@@ -29,8 +29,18 @@ public class ApprenticeSeer extends Role{
 	}
 	
 	public void useSkill(int t1) {
+		if (player.isPoisoned()) {
+			useSkillPoisoned(t1);
+			return;
+		} 
 		if (t1 >= 100 && t1 <= 102) {
 			Manipulations.viewCenterRole(player, board, t1);
+		}
+	}
+	
+	public void useSkillPoisoned(int t1) {
+		if (t1 >= 100 && t1 <= 102) {
+			Manipulations.viewCenterRolePoisoned(player, board, t1);
 		}
 	}
 }

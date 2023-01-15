@@ -91,6 +91,10 @@ public class Idiot extends Role{
 		}
 	}
 	
+	public void executeSkillPoisoned() {
+		
+	}
+	
 	public List<String> getConfirmedMsg() {
 		int x = player.getIndex();
 		int y = player.getPlayerMarks().get(x);

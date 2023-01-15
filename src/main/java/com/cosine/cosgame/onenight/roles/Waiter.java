@@ -2,6 +2,7 @@ package com.cosine.cosgame.onenight.roles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.onenight.Consts;
 import com.cosine.cosgame.onenight.Player;
@@ -32,6 +33,26 @@ public class Waiter extends Role{
 	
 	public void vision() {
 		int numWolf = getNumWolf();
+		String msg = "";
+		if (numWolf == 0) {
+			msg="本局游戏没有玩家的初始阵营为“狼”。";
+		} else {
+			msg="本局游戏有" + numWolf + "名玩家的初始阵营为“狼”。";
+		}
+		player.setMsg(msg);
+	}
+	
+	public void visionPoisoned() {
+		int i,n;
+		n=0;
+		List<Role> allRoles = board.getRolesThisGame();
+		for (i=0;i<allRoles.size();i++) {
+			if (allRoles.get(i).getSide() == Consts.WOLF) {
+				n++;
+			}
+		}
+		Random rand = new Random();
+		int numWolf = rand.nextInt(n+1);
 		String msg = "";
 		if (numWolf == 0) {
 			msg="本局游戏没有玩家的初始阵营为“狼”。";

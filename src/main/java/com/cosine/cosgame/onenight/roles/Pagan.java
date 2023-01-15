@@ -27,9 +27,17 @@ public class Pagan extends Role{
 		votedMsg.add("你已投票，正等待其他玩家投票。");
 	}
 	
-	public void onView(Player viewer) {
+	public void afterView(Player viewer) {
 		Role r1 = new QuoteWerewolf();
 		Manipulations.convertRole(viewer, r1);
+		viewer.setShowUpdatedRole(true);
+	}
+	
+	public void afterViewPoisoned(Player viewer) {
+		Role r1 = new QuoteWerewolf();
+		if (viewer.getCurrentRole().exchangable() && (!viewer.hasSentinel())) {
+			viewer.setUpdatedRole(r1);
+		}
 		viewer.setShowUpdatedRole(true);
 	}
 }

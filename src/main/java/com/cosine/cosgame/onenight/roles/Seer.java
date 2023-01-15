@@ -30,13 +30,32 @@ public class Seer extends Role{
 	}
 	
 	public void useSkill(int t1) {
+		if (player.isPoisoned()) {
+			useSkillPoisoned(t1);
+			return;
+		}
 		if (t1 < board.getPlayers().size()) {
 			Player p = board.getPlayers().get(t1);
 			Manipulations.viewPlayerRole(player, p);
 		}
 	}
 	
+	public void useSkillPoisoned(int t1) {
+		if (t1 < board.getPlayers().size()) {
+			Player p = board.getPlayers().get(t1);
+			Manipulations.viewPlayerRolePoisoned(player, p);
+		}
+	}
+	
 	public void useSkill(int t1, int t2) {
+		if (player.isPoisoned()) {
+			useSkillPoisoned(t1, t2);
+			return;
+		}
 		Manipulations.viewCenterRoles(player, board, t1, t2);
+	}
+	
+	public void useSkillPoisoned(int t1, int t2) {
+		Manipulations.viewCenterRolesPoisoned(player, board, t1, t2);
 	}
 }

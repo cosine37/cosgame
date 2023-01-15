@@ -1,6 +1,8 @@
 package com.cosine.cosgame.onenight.roles;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.onenight.Consts;
 import com.cosine.cosgame.onenight.Manipulations;
@@ -33,6 +35,30 @@ public class OldMan extends Role{
 				} else {
 					player.getPlayerMarks().set(p.getIndex(), p.getCurrentRole().getRoleNumToShow());
 				}
+			}
+		}
+	}
+	
+	public void executeSkillPoisoned() {
+		Random rand = new Random();
+		int x = rand.nextInt(10000);
+		if (x%3 < 2) {
+			player.setShowUpdatedRole(true);
+			player.setUpdatedRole(player.getInitialRole());
+		} else {
+			int i;
+			List<Integer> ls = new ArrayList<>();
+			for (i=0;i<board.getPlayers().size();i++) {
+				ls.add(i);
+			}
+			while (ls.size()>0) {
+				x = rand.nextInt(ls.size());
+				int y = ls.remove(x);
+				if (y == player.getIndex()) {
+					continue;
+				}
+				player.getPlayerMarks().set(y, Consts.OLDMAN);
+				break;
 			}
 		}
 	}

@@ -46,4 +46,8 @@ public class Drunk extends Role{
 			}
 		}
 	}
+	
+	public void executeSkillPoisoned() {
+		
+	}
 }

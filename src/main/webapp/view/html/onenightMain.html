@@ -343,8 +343,8 @@
 								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
 								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
-								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">调换儿</button>
-								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">演员</button>
+								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">演员</button>
+								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">调换儿</button>
 								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
 								<button ng-click="showedCard='r63'" ng-disabled="showedCard == 'r63'">术士</button>
 								<button ng-click="showedCard='r37'" ng-disabled="showedCard == 'r37'">小女孩</button>
@@ -976,7 +976,7 @@
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 调换儿</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 演员</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。交换完后你查看你获得的新身份。
@@ -988,7 +988,7 @@
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
-								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 演员</h4>
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 调换儿</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份牌和你指定的一张中央身份交换，该技能必须发动。交换完后你查看你获得的新身份。</br>
@@ -1344,7 +1344,7 @@
 								该技能与该身份牌相关而不是玩家，所以即使该身份牌为中央身份，与该身份牌相关的交换依然会失效。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>以下为该身份技能触发的所有情况：</i></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>魔术师、小魔女、熊孩子、白痴、酒鬼：</b>技能发动失效，所有被选中的玩家都不交换身份（只要场上有玩家是僧侣，白痴的交换就会失效），但技能发动目标依然会显示。</br></i>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、演员：</b>交换失效，查看自身身份牌时会显示盗贼或演员（即之前的身份）。</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、调换儿：</b>交换失效，查看自身身份牌时会显示盗贼或调换儿（即之前的身份）。</i></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>女巫：</b>你查看的中央身份为该身份后依然要选择交换的目标，但交换会失效。你选择的交换目标若为其他玩家，其身份牌的显示会仍为未知（而不为僧侣）。</i></br>
 							</td>
 						</tr>
@@ -1362,7 +1362,7 @@
 								触发该身份效果之后变成的“狼人”身份之后依然可以被交换。“狼人”身份不完全等同于狼人，其身份描述上会说明该“狼人”身份是因为邪灵法师而触发。</br></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>以下为该身份技能触发的所有情况：</i></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>预言家、见习预言家、调查员、失眠者、观者、主教、侦探助理：</b>只要看到该身份牌，无论该身份牌为某名玩家的身份或中央身份，使用技能的玩家的身份将会变为“狼人”。</br></i>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、女巫、演员：</b>该变化发生在其技能效果之后，而不是看到该身份牌时，所以盗贼获得邪灵法师、女巫和演员交给自己邪灵法师的效果在邪灵法师的效果之前，即
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>盗贼、女巫、调换儿：</b>该变化发生在其技能效果之后，而不是看到该身份牌时，所以盗贼获得邪灵法师、女巫和演员交给自己邪灵法师的效果在邪灵法师的效果之前，即
 								其身份在获得邪灵法师之后将会变为“狼人”。</i></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><b>侦探：</b>看到该身份牌后，自身身份会变为“狼人”。该身份依然会被展示。白天看到因此展示的邪灵法师的玩家不会触发该身份的效果。</br></i>
 							</td>

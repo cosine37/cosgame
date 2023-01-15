@@ -48,5 +48,15 @@ public class Thief extends Role{
 		}
 	}
 	
+	public void executeSkillPoisoned() {
+		int i;
+		for (i=0;i<player.getPlayerMarks().size();i++) {
+			if (player.getPlayerMarks().get(i) == Consts.EXCHANGE) {
+				Manipulations.viewCurrentRolePoisoned(player);
+				break;
+			}
+		}
+	}
+	
 	
 }

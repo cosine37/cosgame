@@ -110,4 +110,8 @@ public class Consts {
 	public static final int HASWOLFCENTER = 5;
 	public static final int LEFTPLAERROLE = 6;
 	public static final int RIGHTPLAYERROLE = 7;
+	
+	// options for poisoned
+	public static final int NOTHING = 0;
+	public static final int EXCLUDESELF = 1;
 }

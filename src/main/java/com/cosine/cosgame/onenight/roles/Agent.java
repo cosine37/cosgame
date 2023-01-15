@@ -45,5 +45,16 @@ public class Agent extends Role{
 		}
 	}
 	
+	public void executeSkillPoisoned() {
+		int i;
+		for (i=0;i<player.getPlayerMarks().size();i++) {
+			if (player.getPlayerMarks().get(i) == Consts.TARGET) {
+				Player p = board.getPlayers().get(i);
+				Manipulations.viewPlayerRolePoisoned(player, p);
+				break;
+			}
+		}
+	}
+	
 	
 }

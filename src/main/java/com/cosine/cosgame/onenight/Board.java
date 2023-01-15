@@ -164,6 +164,8 @@ public class Board {
 			players.get(i).clearStatus();
 			players.get(i).setVotedOut(false);
 			players.get(i).setNumVotes(0);
+			players.get(i).setStoned(false);
+			players.get(i).setPoisoned(false);
 		}
 		detectiveIndex = -1;
 		detectiveRoleImg = "";
@@ -222,7 +224,7 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		
-		r = new Waiter();
+		r = new Watcher();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
@@ -303,7 +305,11 @@ public class Board {
 			players.get(i).setUpdatedStatus(new Unknown());
 			if (players.get(i).getInitialRole().isHasDusk()) {
 				confirmed.add("n");
-				players.get(i).getInitialRole().vision();
+				if (players.get(i).isPoisoned()) {
+					players.get(i).getInitialRole().visionPoisoned();
+				} else {
+					players.get(i).getInitialRole().vision();
+				}
 			} else {
 				confirmed.add("y");
 			}
@@ -318,7 +324,11 @@ public class Board {
 			players.get(i).setUpdatedStatus(players.get(i).getCurrentStatus());
 			players.get(i).getCurrentStatus().vision();
 			if (players.get(i).isStoned() == false && players.get(i).getInitialRole().isHasNight()) {
-				players.get(i).getInitialRole().vision();
+				if (players.get(i).isPoisoned()) {
+					players.get(i).getInitialRole().visionPoisoned();
+				} else {
+					players.get(i).getInitialRole().vision();
+				}
 			}
 		}
 		confirmed = new ArrayList<>();
@@ -371,7 +381,11 @@ public class Board {
 			for (i=0;i<tps.size();i++) {
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x < 0) {
-					tps.get(i).getInitialRole().executeDuskSkill();
+					if (tps.get(i).isPoisoned()) {
+						tps.get(i).getInitialRole().executeDuskSkillPoisoned();
+					} else {
+						tps.get(i).getInitialRole().executeDuskSkill();
+					}
 				}
 			}
 		}
@@ -382,20 +396,32 @@ public class Board {
 				if (tps.get(i).isStoned()) continue;
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x > 0 && x < Consts.DAWNSPLITER) {
-					tps.get(i).getInitialRole().executeSkill();
+					if (tps.get(i).isPoisoned()) {
+						tps.get(i).getInitialRole().executeSkillPoisoned();
+					} else {
+						tps.get(i).getInitialRole().executeSkill();
+					}
 				}
 			}
 			// on dawn skills
 			for (i=0;i<tps.size();i++) {
 				if (tps.get(i).isStoned()) continue;
-				tps.get(i).getInitialRole().onDawnSkill();
+				if (tps.get(i).isPoisoned()) {
+					tps.get(i).getInitialRole().onDawnSkillPoisoned();
+				} else {
+					tps.get(i).getInitialRole().onDawnSkill();
+				}
 			}
 			// dawn skills
 			for (i=0;i<tps.size();i++) {
 				if (tps.get(i).isStoned()) continue;
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x > Consts.DAWNSPLITER) {
-					tps.get(i).getInitialRole().executeSkill();
+					if (tps.get(i).isPoisoned()) {
+						tps.get(i).getInitialRole().executeSkillPoisoned();
+					} else {
+						tps.get(i).getInitialRole().executeSkill();
+					}
 				}
 			}
 		}
@@ -696,7 +722,11 @@ public class Board {
 		this.players = players;
 	}
 	public List<Role> getRolesThisGame() {
-		return rolesThisGame;
+		List<Role> roles = new ArrayList<>();
+		for (int i=0;i<rolesThisGame.size();i++) {
+			roles.add(rolesThisGame.get(i));
+		}
+		return roles;
 	}
 	public void setRolesThisGame(List<Role> rolesThisGame) {
 		this.rolesThisGame = rolesThisGame;

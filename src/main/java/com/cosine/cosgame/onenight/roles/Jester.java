@@ -33,12 +33,38 @@ public class Jester extends Role{
 	}
 	
 	public void useSkill(int t1, int t2) {
+		if (player.isPoisoned()) {
+			useSkillPoisoned(t1, t2);
+			return;
+		}
+		if (t1>100) {
+			int temp;
+			temp = t1;
+			t1 = t2;
+			t2 = temp;
+		}
 		if (t1 < board.getPlayers().size()) {
 			Player p = board.getPlayers().get(t1);
 			int x = t2-100;
 			player.getPlayerMarks().set(t1, Consts.EXCHANGE);
 			player.getCenterMarks().set(x, Consts.EXCHANGE);
 			Manipulations.viewPlayerRole(player, p);
+		}
+	}
+	
+	public void useSkillPoisoned(int t1, int t2) {
+		if (t1>100) {
+			int temp;
+			temp = t1;
+			t1 = t2;
+			t2 = temp;
+		}
+		if (t1 < board.getPlayers().size()) {
+			Player p = board.getPlayers().get(t1);
+			int x = t2-100;
+			player.getPlayerMarks().set(t1, Consts.EXCHANGE);
+			player.getCenterMarks().set(x, Consts.EXCHANGE);
+			Manipulations.viewPlayerRolePoisoned(player, p, false);
 		}
 	}
 	
@@ -61,8 +87,32 @@ public class Jester extends Role{
 		if (t1 != -1 && t2 != -1) {
 			Player p1 = board.getPlayers().get(t1);
 			Manipulations.swapCenterRole(p1, board, t2);
-			int x1 = player.getPlayerMarks().get(i);
-			int x2 = player.getCenterMarks().get(i);
+			int x1 = player.getPlayerMarks().get(t1);
+			int x2 = player.getCenterMarks().get(t2);
+			player.getPlayerMarks().set(t1, x2);
+			player.getCenterMarks().set(t2, x1);
+		}
+	}
+	
+	public void onDawnSkillPoisoned() {
+		int t1 = -1;
+		int t2 = -1;
+		int i;
+		for (i=0;i<player.getPlayerMarks().size();i++) {
+			if (player.getPlayerMarks().get(i) != Consts.UNKNOWN) {
+				t1 = i;
+				break;
+			}
+		}
+		for (i=0;i<player.getCenterMarks().size();i++) {
+			if (player.getCenterMarks().get(i) == Consts.EXCHANGE) {
+				t2 = i;
+				break;
+			}
+		}
+		if (t1 != -1 && t2 != -1) {
+			int x1 = player.getPlayerMarks().get(t1);
+			int x2 = player.getCenterMarks().get(t2);
 			player.getPlayerMarks().set(t1, x2);
 			player.getCenterMarks().set(t2, x1);
 		}

@@ -55,7 +55,15 @@ public class Role {
 		
 	}
 	
+	public void visionPoisoned() {
+		
+	}
+	
 	public void executeDuskSkill() {
+		
+	}
+	
+	public void executeDuskSkillPoisoned() {
 		
 	}
 	
@@ -79,7 +87,15 @@ public class Role {
 		
 	}
 	
+	public void executeSkillPoisoned() {
+		
+	}
+	
 	public void onDawnSkill() {
+		
+	}
+	
+	public void onDawnSkillPoisoned() {
 		
 	}
 	
@@ -134,6 +150,18 @@ public class Role {
 	}
 	
 	public void onView(Player viewer) {
+		
+	}
+	
+	public void onViewPoisoned(Player viewer) {
+		
+	}
+	
+	public void afterView(Player viewer) {
+		
+	}
+	
+	public void afterViewPoisoned(Player viewer) {
 		
 	}
 	

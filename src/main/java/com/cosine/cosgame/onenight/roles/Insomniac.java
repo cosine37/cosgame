@@ -29,5 +29,9 @@ public class Insomniac extends Role{
 		Manipulations.viewCurrentRole(player);
 	}
 	
+	public void executeSkillPoisoned() {
+		Manipulations.viewCurrentRolePoisoned(player, true);
+	}
+	
 	
 }

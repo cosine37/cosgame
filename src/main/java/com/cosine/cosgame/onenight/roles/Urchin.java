@@ -58,4 +58,8 @@ public class Urchin extends Role{
 		}
 	}
 	
+	public void executeSkillPoisoned() {
+
+	}
+	
 }

@@ -71,6 +71,37 @@ public class Washerwoman extends Role{
 		player.setMsg(msg);
 	}
 	
+	public void visionPoisoned() {
+		List<Role> allRoles = board.getRolesThisGame();
+		List<Player> lp = new ArrayList<>();
+		Random rand = new Random();
+		int i;
+		for (i=0;i<board.getPlayers().size();i++) {
+			if (board.getPlayers().get(i).getName().contentEquals(player.getName())) {
+				continue;
+			}
+			lp.add(board.getPlayers().get(i));
+		}
+		int x;
+		x = rand.nextInt(lp.size());
+		Player p1 = lp.remove(x);
+		x = rand.nextInt(lp.size());
+		Player p2 = lp.remove(x);
+		String msg = "出于某些原因，你无法获得任何信息。";
+		while (allRoles.size()>0) {
+			x = rand.nextInt(allRoles.size());
+			Role r = allRoles.remove(x);
+			if (r.getSide() == Consts.HUMAN) {
+				if (r.getRoleNum() == 79) {
+					continue;
+				}
+				msg = p1.getName() + "和" + p2.getName() + "中有一名玩家的初始身份是" + r.getName() + "。";
+				break;
+			}
+		}
+		player.setMsg(msg);
+	}
+	
 	public List<String> getNightMsg() {
 		nightMsg.add("你的初始身份是 洗衣妇。");
 		nightMsg.add(player.getMsg());
