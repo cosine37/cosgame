@@ -196,6 +196,14 @@ public class RoleFactory {
 			role = new MushroomFarmer();
 		} else if (img.contentEquals("r82")) {
 			role = new Pharmacist();
+		} else if (img.contentEquals("r83")) {
+			role = new Shaman();
+		} else if (img.contentEquals("r84")) {
+			role = new LangLang();
+		} else if (img.contentEquals("r85")) {
+			role = new Delusional();
+		} else if (img.contentEquals("r86")) {
+			role = new PlagueDoctor();
 		}
 		
 		else {
@@ -380,6 +388,8 @@ public class RoleFactory {
 			role = new Abba();
 		} else if (num == 77) {
 			role = new Jester();
+		} else if (num == 78) {
+			role = new Waiter();
 		} else if (num == 79) {
 			role = new Washerwoman();
 		} else if (num == 80) {
@@ -388,6 +398,14 @@ public class RoleFactory {
 			role = new MushroomFarmer();
 		} else if (num == 82) {
 			role = new Pharmacist();
+		} else if (num == 83) {
+			role = new Shaman();
+		} else if (num == 84) {
+			role = new LangLang();
+		} else if (num == 85) {
+			role = new Delusional();
+		} else if (num == 86) {
+			role = new PlagueDoctor();
 		}
 		
 		else {

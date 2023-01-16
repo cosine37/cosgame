@@ -40,11 +40,12 @@ public class OldMan extends Role{
 	}
 	
 	public void executeSkillPoisoned() {
+		System.out.println("here");
 		Random rand = new Random();
 		int x = rand.nextInt(10000);
 		if (x%3 < 2) {
 			player.setShowUpdatedRole(true);
-			player.setUpdatedRole(player.getInitialRole());
+			player.setUpdatedRole(new OldMan());
 		} else {
 			int i;
 			List<Integer> ls = new ArrayList<>();

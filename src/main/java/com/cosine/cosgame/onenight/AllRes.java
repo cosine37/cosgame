@@ -82,9 +82,13 @@ public class AllRes {
 		allRoles.add(r);
 		r = new BladeWolf();
 		allRoles.add(r);
+		r = new LangLang();
+		allRoles.add(r);
 		r = new Sadako();
 		allRoles.add(r);
 		r = new Minion();
+		allRoles.add(r);
+		r = new PlagueDoctor();
 		allRoles.add(r);
 		r = new Pope();
 		allRoles.add(r);
@@ -94,6 +98,10 @@ public class AllRes {
 			r = new Mason();
 			allRoles.add(r);
 		}
+		r = new Washerwoman();
+		allRoles.add(r);
+		r = new Waiter();
+		allRoles.add(r);
 		r = new BearTrainer();
 		allRoles.add(r);
 		r = new Beggar();
@@ -106,6 +114,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new ApprenticeSeer();
 		allRoles.add(r);
+		r = new Shaman();
+		allRoles.add(r);
 		r = new Sorcerer();
 		allRoles.add(r);
 		r = new PoliceDetect();
@@ -113,6 +123,8 @@ public class AllRes {
 		r = new Investigator();
 		allRoles.add(r);
 		r = new CombatMedic();
+		allRoles.add(r);
+		r = new Jester();
 		allRoles.add(r);
 		r = new Butterfly();
 		allRoles.add(r);
@@ -143,6 +155,8 @@ public class AllRes {
 		r = new RepentWolf();
 		allRoles.add(r);
 		r = new Drunk();
+		allRoles.add(r);
+		r = new Abba();
 		allRoles.add(r);
 		
 		r = new Nun();
@@ -204,10 +218,13 @@ public class AllRes {
 		allRoles.add(r);
 		r = new WolfHunter();
 		allRoles.add(r);
+		
 		for (i=0;i<3;i++) {
 			r = new Villager();
 			allRoles.add(r);
 		}
+		r = new Delusional();
+		allRoles.add(r);
 		
 	}
 

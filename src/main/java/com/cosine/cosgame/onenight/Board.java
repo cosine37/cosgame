@@ -30,10 +30,12 @@ public class Board {
 	int detectiveIndex;
 	int weremeleonIndex;
 	int wolfHunterIndex;
+	int delusionalIndex;
 	int sentinelIndex;
 	String detectiveRoleImg;
 	boolean soleWolf;
 	int restrictedIndex;
+	boolean skipOnDawn;
 	
 	List<String> confirmed;
 	
@@ -85,6 +87,26 @@ public class Board {
 				if (r.getRoleNum() != Consts.PAGAN && r.getRoleNum() != Consts.BAKER && r.getRoleNum() != Consts.MONK
 						&& r.getRoleNum() != Consts.WOLFHUNTER && r.getRoleNum() != Consts.MADDOG) {
 					weremeleonIndex = y;
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setDelusionalIndex() {
+		List<Integer> ris = new ArrayList<>();
+		for (int i=0;i<rolesThisGame.size();i++) {
+			ris.add(i);
+		}
+		while (ris.size() > 0) {
+			Random rand = new Random();
+			int x = rand.nextInt(ris.size());
+			int y = ris.remove(x);
+			Role r = rolesThisGame.get(y);
+			if (r.getSide() == Consts.HUMAN) {
+				if (r.getRoleNum() != Consts.PAGAN && r.getRoleNum() != Consts.BAKER && r.getRoleNum() != Consts.MONK
+						&& r.getRoleNum() != Consts.WOLFHUNTER && r.getRoleNum() != Consts.MADDOG) {
+					delusionalIndex = y;
 					break;
 				}
 			}
@@ -201,6 +223,7 @@ public class Board {
 	public void distributeRoles() {
 		setWeremeleonIndex();
 		setWolfHunterIndex();
+		setDelusionalIndex();
 		List<Role> tls = new ArrayList<>();
 		int i;
 		for (i=0;i<rolesThisGame.size();i++) {
@@ -223,12 +246,12 @@ public class Board {
 		genQuestions();
 		// TODO: test roles here
 		Role r;
-		
-		r = new Watcher();
+		/*
+		r = new PlagueDoctor();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
-		/*
+		
 		r = new MushroomFarmer();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
@@ -404,12 +427,16 @@ public class Board {
 				}
 			}
 			// on dawn skills
+			skipOnDawn = false;
 			for (i=0;i<tps.size();i++) {
 				if (tps.get(i).isStoned()) continue;
 				if (tps.get(i).isPoisoned()) {
 					tps.get(i).getInitialRole().onDawnSkillPoisoned();
 				} else {
 					tps.get(i).getInitialRole().onDawnSkill();
+				}
+				if (skipOnDawn) {
+					break;
 				}
 			}
 			// dawn skills
@@ -833,6 +860,12 @@ public class Board {
 	public void setWolfHunterIndex(int wolfHunterIndex) {
 		this.wolfHunterIndex = wolfHunterIndex;
 	}
+	public int getDelusionalIndex() {
+		return delusionalIndex;
+	}
+	public void setDelusionalIndex(int delusionalIndex) {
+		this.delusionalIndex = delusionalIndex;
+	}
 	public boolean isTannerWin() {
 		return tannerWin;
 	}
@@ -844,6 +877,12 @@ public class Board {
 	}
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+	public boolean isSkipOnDawn() {
+		return skipOnDawn;
+	}
+	public void setSkipOnDawn(boolean skipOnDawn) {
+		this.skipOnDawn = skipOnDawn;
 	}
 
 	public String getWeremeleonImg() {
@@ -873,6 +912,22 @@ public class Board {
 	public Role getWolfHunterRole() {
 		if (wolfHunterIndex != -1) {
 			Role r = rolesThisGame.get(wolfHunterIndex);
+			return r;
+		} else {
+			return null;
+		}
+	}
+	public String getDelusionalImg() {
+		if (delusionalIndex != -1) {
+			Role r = rolesThisGame.get(delusionalIndex);
+			return r.getImg();
+		} else {
+			return "";
+		}
+	}
+	public Role getDelusionalRole() {
+		if (delusionalIndex != -1) {
+			Role r = rolesThisGame.get(delusionalIndex);
 			return r;
 		} else {
 			return null;
@@ -1199,6 +1254,7 @@ public class Board {
 		doc.append("restrictedIndex", restrictedIndex);
 		doc.append("weremeleonIndex", weremeleonIndex);
 		doc.append("wolfHunterIndex", wolfHunterIndex);
+		doc.append("delusionalIndex", delusionalIndex);
 		int i,j;
 		List<Document> loq = new ArrayList<>();
 		for (i=0;i<questions.size();i++) {
@@ -1246,6 +1302,7 @@ public class Board {
 		restrictedIndex = doc.getInteger("restrictedIndex", -1);
 		weremeleonIndex = doc.getInteger("weremeleonIndex", -1);
 		wolfHunterIndex = doc.getInteger("wolfHunterIndex", -1);
+		delusionalIndex = doc.getInteger("delusionalIndex", -1);
 		int i,j;
 		List<Document> loq = (List<Document>) doc.get("questions");
 		questions = new ArrayList<>();

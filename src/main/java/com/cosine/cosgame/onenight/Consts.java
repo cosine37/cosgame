@@ -83,6 +83,8 @@ public class Consts {
 	public static final int PARENT = 73;
 	public static final int BLADEWOLF = 74;
 	
+	public static final int DELUSIONAL = 85;
+	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;

@@ -116,6 +116,7 @@ public class OnenightController {
 			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
 			board.updateDB("weremeleonIndex", board.getWeremeleonIndex());
 			board.updateDB("wolfHunterIndex", board.getWolfHunterIndex());
+			board.updateDB("delusionalIndex", board.getDelusionalIndex());
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
 		}
@@ -141,6 +142,7 @@ public class OnenightController {
 			board.updateDB("firstPlayerIndex", board.getFirstPlayerIndex());
 			board.updateDB("weremeleonIndex", board.getWeremeleonIndex());
 			board.updateDB("wolfHunterIndex", board.getWolfHunterIndex());
+			board.updateDB("delusionalIndex", board.getDelusionalIndex());
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
 		}
@@ -180,6 +182,7 @@ public class OnenightController {
 			board.updateCenterRoles();
 			board.updateDB("weremeleonIndex", board.getWeremeleonIndex());
 			board.updateDB("wolfHunterIndex", board.getWolfHunterIndex());
+			board.updateDB("delusionalIndex", board.getDelusionalIndex());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
