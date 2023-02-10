@@ -1,4 +1,4 @@
-package com.cosine.cosgame.propnight;
+package com.cosine.cosgame.propnightold;
 
 public class Consts {
 	// roles
