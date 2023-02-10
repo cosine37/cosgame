@@ -1341,10 +1341,6 @@ public class Board {
 		}
 	}
 	
-	public void dismiss() {
-		dbutil.delete("id", id);
-	}
-	
 	public void storeToDB() {
 		Document doc = toDocument();
 		dbutil.insert(doc);
@@ -1436,6 +1432,33 @@ public class Board {
 		bot.setBot(true);
 		players.add(bot);
 		addPlayerToDB(botName);
+	}
+	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
+	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
 	}
 	
 	public boolean exists(String id) {

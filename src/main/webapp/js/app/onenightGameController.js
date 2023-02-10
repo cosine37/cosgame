@@ -77,6 +77,13 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
+		$scope.dismiss = function(){
+			$http.post("/onenight/dismiss").then(function(response){
+				//ws.send("dismiss");
+				$scope.getBoard();
+			});
+		}
+		
 		updateShowConfirmed = function(){
 			if ($scope.mandatory != 'y') return
 			var tp = 0;
@@ -510,6 +517,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.getBoard = function(){
 			$http.get('/onenightgame/getboard').then(function(response){
+				if (response.data.id == "NE"){
+					alert("该游戏已解散");
+					$scope.goto('onenight');
+					return;
+				}
 				$scope.gamedata = response.data
 				$scope.playerNames = response.data.playerNames;
 				$scope.playerDisplayNames = response.data.playerDisplayNames;
