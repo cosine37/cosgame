@@ -44,6 +44,19 @@
 	color: rgb(126,33,18);
 }
 
+.roles-table{
+	width: 1200px;
+}
+
+.roles-table button{
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+.roles-table td{
+	border: 1px solid;
+}
+
 .newsImg{
 	height: 320px;
 	width: 210px

@@ -199,11 +199,11 @@ button:disabled{
 	position: absolute; 
 	top: 50%;
 	left: 50%;
-	background-color: rgba(255,255,255,0.5);
-	height: 400px;
-	width: 400px;
-	margin-top: -200px;
-	margin-left: -200px;
+	background-color: rgba(255,255,255,0.3);
+	height: 512px;
+	width: 600px;
+	margin-top: -256px;
+	margin-left: -300px;
 	padding-top: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -215,18 +215,11 @@ button:disabled{
 .create-div table{
 	width:100%;
 	text-align:center;
+	color: white;
 }
 
 .create-title{
-	color: white;
 	font-weight: bold;
-	position: absolute; 
-	text-align:center;
-	width: 400px;
-	margin-left: -200px;
-	margin-top: 200px;
-	left: 50%;
-	
 }
 
 .night{
@@ -255,13 +248,19 @@ button:disabled{
 
 .game-div{
 	position: absolute; 
+	/*
 	top: 50%;
 	left: 50%;
+	*/
 	background-color: rgba(255,255,255,0.5);
 	height: 860px;
 	width: 1500px;
+	/*
 	margin-top: -430px;
 	margin-left: -540px;
+	*/
+	margin-top: 40px;
+	margin-left: 100px;
 	padding-top: 20px;
 	padding-left: 45px;
 	padding-right: 45px;

@@ -22,11 +22,53 @@ body {
 }
 </style>
 <body ng-app="onenightCreateGameApp" ng-controller="onenightCreateGameCtrl">
-	<h1 class="create-title">狼人不杀</h1>
 	<div class="create-div">
 		<table>
 			<tr>
-				<td colspan=2>
+				<td colspan="2">
+					<h1 class="create-title">狼人不杀</h1>
+				</td>
+			</tr>
+			<tr style="height: 380px; color: white">
+				<td style="vertical-align: top">
+					<table>
+						<tr>
+							<td colspan="2"><h4>玩家列表</h4></td>
+						</tr>
+						<tr ng-repeat="pn in playerNames track by $index">
+							<td>{{pn}}</td>
+							<td>
+								<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
+								<span ng-show="$index == 0">(房主)</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="vertical-align: top">
+					<table>
+						<tr>
+							<td><h4>游戏设置</h4></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" ng-disabled="lord != username" ng-model="soleWolfOption">
+								<label>独狼变体</label>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button ng-click="goto('onenight')">退出</button>
+					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
+					<button ng-click="start()" ng-show="username == lord">开始</button>
+				</td>
+			</tr>
+			<!-- 
+			<tr>
+				<td colspan="2">
 					<button ng-click="goto('onenight')">退出</button>
 					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
@@ -51,7 +93,7 @@ body {
 					<span ng-show="$index == 0">(房主)</span>
 				</td>
 			</tr>
-			
+			 -->
 		</table>
 		
 	</div>
