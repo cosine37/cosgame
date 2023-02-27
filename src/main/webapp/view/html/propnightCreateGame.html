@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cosgame Three Chaodoms</title>
+<title>Cosgame Propnight</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/propnightTheme.css">
@@ -15,7 +15,7 @@
 <script src="/js/app/propnightCreateGameController.js"></script>
 <body ng-app="propnightCreateGameApp" ng-controller="propnightCreateGameCtrl">
 	<button ng-click="goto('propnight')">back</button>
-	<button ng-click="startGame()">start game</button>
+	<button ng-click="startGame()" ng-show="lord == username">start game</button>
 	<!-- 
 	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
