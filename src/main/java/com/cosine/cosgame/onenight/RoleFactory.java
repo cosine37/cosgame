@@ -204,6 +204,10 @@ public class RoleFactory {
 			role = new Delusional();
 		} else if (img.contentEquals("r86")) {
 			role = new PlagueDoctor();
+		} else if (img.contentEquals("r87")) {
+			role = new Bellman();
+		} else if (img.contentEquals("r88")) {
+			role = new BacktrackWolf();
 		}
 		
 		else {
@@ -406,6 +410,10 @@ public class RoleFactory {
 			role = new Delusional();
 		} else if (num == 86) {
 			role = new PlagueDoctor();
+		} else if (num == 87) {
+			role = new Bellman();
+		} else if (num == 88) {
+			role = new BacktrackWolf();
 		}
 		
 		else {

@@ -30,6 +30,7 @@ public class Player {
 	boolean stoned;
 	boolean poisoned;
 	String msg; // the message used for certain roles
+	int currentClockIndex; // the clock index when the player starts
 	
 	List<Integer> questionChoices;
 	List<Integer> playerMarks;
@@ -383,6 +384,12 @@ public class Player {
 	public void setQuestionChoices(List<Integer> questionChoices) {
 		this.questionChoices = questionChoices;
 	}
+	public int getCurrentClockIndex() {
+		return currentClockIndex;
+	}
+	public void setCurrentClockIndex(int currentClockIndex) {
+		this.currentClockIndex = currentClockIndex;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -409,6 +416,7 @@ public class Player {
 		doc.append("stoned", stoned);
 		doc.append("poisoned", poisoned);
 		doc.append("msg", msg);
+		doc.append("currentClockIndex", currentClockIndex);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -453,6 +461,7 @@ public class Player {
 		stoned = doc.getBoolean("stoned", false);
 		poisoned = doc.getBoolean("poisoned", false);
 		msg = doc.getString("msg");
+		currentClockIndex = doc.getInteger("currentClockIndex", 0);
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

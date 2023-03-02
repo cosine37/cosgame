@@ -283,6 +283,7 @@
 									<tr>
 										<td style="width: 40px">黄昏阶段</td>
 										<td>
+											<button ng-click="showedCard='r88'" ng-disabled="showedCard == 'r88'">时刻狼</button>
 											<button ng-click="showedCard='r81'" ng-disabled="showedCard == 'r81'">菇农</button>
 											<button ng-click="showedCard='r80'" ng-disabled="showedCard == 'r80'">炊事狼</button>
 											<button ng-click="showedCard='r82'" ng-disabled="showedCard == 'r82'">药剂师</button>
@@ -328,6 +329,7 @@
 											<button ng-click="showedCard='r75'" ng-disabled="showedCard == 'r75'">警探</button>
 											<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
 											<button ng-click="showedCard='r62'" ng-disabled="showedCard == 'r62'">退伍军医</button>
+											<button ng-click="showedCard='r87'" ng-disabled="showedCard == 'r87'">敲钟人</button>
 											<button ng-click="showedCard='r77'" ng-disabled="showedCard == 'r77'">弄臣</button>
 											<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
 											<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
@@ -391,145 +393,21 @@
 								</table>
 							</td>
 						</tr>
-						<!-- 
-						<tr>
-							<td colspan="2">
-								<button ng-click="showedCard='r81'" ng-disabled="showedCard == 'r81'">菇农</button>
-								<button ng-click="showedCard='r80'" ng-disabled="showedCard == 'r80'">炊事狼</button>
-								<button ng-click="showedCard='r82'" ng-disabled="showedCard == 'r82'">药剂师</button>
-								<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
-								<button ng-click="showedCard='r58'" ng-disabled="showedCard == 'r58'">鬃岩狼人</button>
-								<button ng-click="showedCard='r60'" ng-disabled="showedCard == 'r60'">传染病人</button>
-								<button ng-click="showedCard='r56'" ng-disabled="showedCard == 'r56'">丘比特</button>
-								<button ng-click="showedCard='r59'" ng-disabled="showedCard == 'r59'">煽动者</button>
-								<button ng-click="showedCard='r57'" ng-disabled="showedCard == 'r57'">牧师</button>
-								<button ng-click="showedCard='r61'" ng-disabled="showedCard == 'r61'">刺客</button>
-								<button ng-click="showedCard='r55'" ng-disabled="showedCard == 'r55'">魔法警卫</button>
+					</table>
+					<table ng-show="showedCard == 'r88'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 时刻狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								你的行动结束后，本局游戏命运时针的转动方向改为向左（逆时针）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br></br></br>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="2">
-								以下身份夜晚阶段有行动，按行动顺序排列
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<button ng-click="showedCard='r01'" ng-disabled="showedCard == 'r01'">狼人</button>
-								<button ng-click="showedCard='r15'" ng-disabled="showedCard == 'r15'">狼先知</button>
-								<button ng-click="showedCard='r26'" ng-disabled="showedCard == 'r26'">森林狼</button>
-								<button ng-click="showedCard='r39'" ng-disabled="showedCard == 'r39'">变色狼</button>
-								<button ng-click="showedCard='r45'" ng-disabled="showedCard == 'r45'">大灰狼</button>
-								<button ng-click="showedCard='r50'" ng-disabled="showedCard == 'r50'">狼教父</button>
-								<button ng-click="showedCard='r70'" ng-disabled="showedCard == 'r70'">灰太狼</button>
-								<button ng-click="showedCard='r71'" ng-disabled="showedCard == 'r71'">红太狼</button>
-								<button ng-click="showedCard='r74'" ng-disabled="showedCard == 'r74'">刀狼</button>
-								<button ng-click="showedCard='r84'" ng-disabled="showedCard == 'r84'">狼朗</button>
-								<button ng-click="showedCard='r69'" ng-disabled="showedCard == 'r69'">山村贞子</button>
-								<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
-								<button ng-click="showedCard='r86'" ng-disabled="showedCard == 'r86'">鸟嘴医生</button>
-								<button ng-click="showedCard='r30'" ng-disabled="showedCard == 'r30'">教宗</button>
-								
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<button ng-click="showedCard='r53'" ng-disabled="showedCard == 'r53'">小红帽</button>
-								<button ng-click="showedCard='r08'" ng-disabled="showedCard == 'r08'">砖瓦工</button>
-								<button ng-click="showedCard='r79'" ng-disabled="showedCard == 'r79'">洗衣妇</button>
-								<button ng-click="showedCard='r78'" ng-disabled="showedCard == 'r78'">服务员</button>
-								<button ng-click="showedCard='r27'" ng-disabled="showedCard == 'r27'">驯熊师</button>
-								<button ng-click="showedCard='r28'" ng-disabled="showedCard == 'r28'">乞丐</button>
-								<button ng-click="showedCard='r72'" ng-disabled="showedCard == 'r72'">吉普赛娘</button>
-								<button ng-click="showedCard='r02'" ng-disabled="showedCard == 'r02'">预言家</button>
-								<button ng-click="showedCard='r12'" ng-disabled="showedCard == 'r12'">见习预言家</button>
-								<button ng-click="showedCard='r83'" ng-disabled="showedCard == 'r83'">萨满</button>
-								<button ng-click="showedCard='r42'" ng-disabled="showedCard == 'r42'">灵媒</button>
-								<button ng-click="showedCard='r75'" ng-disabled="showedCard == 'r75'">警探</button>
-								<button ng-click="showedCard='r25'" ng-disabled="showedCard == 'r25'">调查员</button>
-							</td>
-							
-						</tr>
-						<tr>
-							<td>
-								<button ng-click="showedCard='r62'" ng-disabled="showedCard == 'r62'">退伍军医</button>
-								<button ng-click="showedCard='r77'" ng-disabled="showedCard == 'r77'">弄臣</button>
-								<button ng-click="showedCard='r46'" ng-disabled="showedCard == 'r46'">花蝴蝶</button>
-								<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
-								<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
-								<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
-								<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
-								<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">演员</button>
-								<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">调换儿</button>
-								<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
-								<button ng-click="showedCard='r63'" ng-disabled="showedCard == 'r63'">术士</button>
-								<button ng-click="showedCard='r37'" ng-disabled="showedCard == 'r37'">小女孩</button>
-								<button ng-click="showedCard='r04'" ng-disabled="showedCard == 'r04'">熊孩子</button>
-								<button ng-click="showedCard='r17'" ng-disabled="showedCard == 'r17'">白痴</button>
-								
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<button ng-click="showedCard='r64'" ng-disabled="showedCard == 'r64'">小魔怪</button>
-								<button ng-click="showedCard='r65'" ng-disabled="showedCard == 'r65'">忏悔狼</button>
-								<button ng-click="showedCard='r07'" ng-disabled="showedCard == 'r07'">酒鬼</button>
-								<button ng-click="showedCard='r76'" ng-disabled="showedCard == 'r76'">神父</button>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" style="padding-top: 5px">
-								以下身份黎明阶段有行动，按行动顺序排列
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<button ng-click="showedCard='r51'" ng-disabled="showedCard == 'r51'">尼姑</button>
-								<button ng-click="showedCard='r06'" ng-disabled="showedCard == 'r06'">失眠者</button>
-								<button ng-click="showedCard='r49'" ng-disabled="showedCard == 'r49'">苦涩老头</button>
-								<button ng-click="showedCard='r47'" ng-disabled="showedCard == 'r47'">守墓者</button>
-								<button ng-click="showedCard='r43'" ng-disabled="showedCard == 'r43'">替罪羊</button>
-								<button ng-click="showedCard='r18'" ng-disabled="showedCard == 'r18'">观者</button>
-								<button ng-click="showedCard='r31'" ng-disabled="showedCard == 'r31'">主教</button>
-								<button ng-click="showedCard='r73'" ng-disabled="showedCard == 'r73'">操心的家长</button>
-								<button ng-click="showedCard='r29'" ng-disabled="showedCard == 'r29'">村长</button>
-								<button ng-click="showedCard='r35'" ng-disabled="showedCard == 'r35'">牧羊人</button>
-								<button ng-click="showedCard='r38'" ng-disabled="showedCard == 'r38'">狐仙</button>
-								<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
-								<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" style="padding-top: 5px">
-								以下身份天亮之前无行动
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<button ng-click="showedCard='r11'" ng-disabled="showedCard == 'r11'">奥伯狼</button>
-								<button ng-click="showedCard='r44'" ng-disabled="showedCard == 'r44'">狼狗</button>
-								<button ng-click="showedCard='r10'" ng-disabled="showedCard == 'r10'">皮匠</button>
-								<button ng-click="showedCard='r09'" ng-disabled="showedCard == 'r09'">猎人</button>
-								<button ng-click="showedCard='r16'" ng-disabled="showedCard == 'r16'">守卫</button>
-								<button ng-click="showedCard='r19'" ng-disabled="showedCard == 'r19'">王子</button>
-								<button ng-click="showedCard='r20'" ng-disabled="showedCard == 'r20'">警长</button>
-								<button ng-click="showedCard='r24'" ng-disabled="showedCard == 'r24'">狼孩</button>
-								<button ng-click="showedCard='r32'" ng-disabled="showedCard == 'r32'">僧侣</button>
-								<button ng-click="showedCard='r34'" ng-disabled="showedCard == 'r34'">邪灵法师</button>
-								<button ng-click="showedCard='r40'" ng-disabled="showedCard == 'r40'">面包师</button>
-								<button ng-click="showedCard='r52'" ng-disabled="showedCard == 'r52'">塞尔达</button>
-								<button ng-click="showedCard='r54'" ng-disabled="showedCard == 'r54'">口吃法官</button>
-								<button ng-click="showedCard='r66'" ng-disabled="showedCard == 'r66'">锈剑骑士</button>
-								<button ng-click="showedCard='r67'" ng-disabled="showedCard == 'r67'">疯狗</button>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<button ng-click="showedCard='r68'" ng-disabled="showedCard == 'r68'">猎狼人</button>
-								<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
-								<button ng-click="showedCard='r85'" ng-disabled="showedCard == 'r85'">妄想者*</button>
-							</td>
-						</tr>
-						 -->
 					</table>
 					<table ng-show="showedCard == 'r81'">
 						<tr style="width: 1000px">
@@ -1060,6 +938,17 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一名其他玩家的身份与另一名其他玩家的状态。你可以只查看身份或状态，也可以都查看。你不能查看同一名玩家的身份和状态。
 								你也可以不发动此技能。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r87'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 敲钟人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你被告知你行动时命运时针所指向的玩家。</br>
 							</td>
 						</tr>
 					</table>

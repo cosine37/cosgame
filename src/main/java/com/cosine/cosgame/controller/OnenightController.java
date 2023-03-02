@@ -143,6 +143,8 @@ public class OnenightController {
 			board.updateDB("delusionalIndex", board.getDelusionalIndex());
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
+			board.updateDB("clockIndex", board.getClockIndex());
+			board.updateDB("clockwise", board.isClockwise());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -169,6 +171,8 @@ public class OnenightController {
 			board.updateDB("delusionalIndex", board.getDelusionalIndex());
 			board.updateDB("restrictedIndex", board.getRestrictedIndex());
 			board.updateDB("sentinelIndex", board.getSentinelIndex());
+			board.updateDB("clockIndex", board.getClockIndex());
+			board.updateDB("clockwise", board.isClockwise());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
@@ -207,6 +211,8 @@ public class OnenightController {
 			board.updateDB("weremeleonIndex", board.getWeremeleonIndex());
 			board.updateDB("wolfHunterIndex", board.getWolfHunterIndex());
 			board.updateDB("delusionalIndex", board.getDelusionalIndex());
+			board.updateDB("clockIndex", board.getClockIndex());
+			board.updateDB("clockwise", board.isClockwise());
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);

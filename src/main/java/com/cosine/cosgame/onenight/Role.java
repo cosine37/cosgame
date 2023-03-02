@@ -99,6 +99,10 @@ public class Role {
 		
 	}
 	
+	public void alterClockIndex() {
+		
+	}
+	
 	public void receiveVote(int x) {
 		player.receiveVote(x);
 	}

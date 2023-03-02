@@ -32,6 +32,8 @@ public class Board {
 	int wolfHunterIndex;
 	int delusionalIndex;
 	int sentinelIndex;
+	int clockIndex;
+	boolean clockwise;
 	String detectiveRoleImg;
 	boolean soleWolf;
 	int restrictedIndex;
@@ -133,6 +135,77 @@ public class Board {
 		}
 	}
 	
+	public void setClockIndex() {
+		// set initial position
+		int i,j;
+		clockwise = true;
+		Random rand = new Random();
+		List<Integer> wolfIndexes = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			Role r = players.get(i).getInitialRole();
+			if (r.getSide() == Consts.WOLF) {
+				wolfIndexes.add(i);
+			}
+		}
+		if (wolfIndexes.size() == 0) {
+			clockIndex = rand.nextInt(players.size());
+		} else {
+			int x = rand.nextInt(wolfIndexes.size());
+			clockIndex = wolfIndexes.get(x);
+		}
+		int tci = clockIndex;
+		
+		// sort each players
+		List<Player> tps = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tps.add(players.get(i));
+		}
+		for (i=0;i<tps.size();i++) {
+			for (j=i+1;j<tps.size();j++) {
+				boolean needChange = false;
+				if (tps.get(i).getInitialRole().isHasDusk() || tps.get(i).getInitialRole().isHasNight()) {
+					if (tps.get(j).getInitialRole().isHasDusk() || tps.get(j).getInitialRole().isHasNight()) {
+						if (tps.get(i).getInitialRole().getSequence() > tps.get(j).getInitialRole().getSequence()) {
+							needChange = true;
+						}
+					}
+				} else {
+					if (tps.get(j).getInitialRole().isHasDusk() || tps.get(j).getInitialRole().isHasNight()) {
+						needChange = true;
+					}
+				}
+				if (needChange) {
+					Player tp = tps.get(i);
+					tps.set(i, tps.get(j));
+					tps.set(j, tp);
+				}
+			}
+		}
+		
+		// set clockIndex for each player
+		for (i=0;i<tps.size();i++) {
+			tps.get(i).setCurrentClockIndex(clockIndex);
+			tps.get(i).getInitialRole().alterClockIndex();
+			moveClockIndex();
+		}
+		
+		clockIndex = tci;
+	}
+	
+	public void moveClockIndex() {
+		if (clockwise) {
+			clockIndex++;
+			if (clockIndex == players.size()) {
+				clockIndex = 0;
+			}
+		} else {
+			clockIndex--;
+			if (clockIndex == -1) {
+				clockIndex = players.size()-1;
+			}
+		}
+	}
+	
 	public void genQuestions() {
 		int i;
 		boolean hasGypsy = false;
@@ -199,6 +272,7 @@ public class Board {
 		firstPlayerIndex = -1;
 		weremeleonIndex = -1;
 		wolfHunterIndex = -1;
+		clockIndex = -1;
 	}
 	
 	public void restart() {
@@ -243,16 +317,16 @@ public class Board {
 			singleRole.add(tls.remove(0));
 			centerRoles.add(singleRole);
 		}
-		genQuestions();
+		
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new PlagueDoctor();
+		r = new Bellman();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new MushroomFarmer();
+		r = new BacktrackWolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
@@ -288,6 +362,8 @@ public class Board {
 		r.setBoard(this);
 		players.get(3).getRoles().set(0, r);
 		*/
+		setClockIndex();
+		genQuestions();
 		int qindex = 0;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getCurrentRole().getRoleNum() == Consts.GYPSY) {
@@ -362,7 +438,7 @@ public class Board {
 				confirmed.add("y");
 			}
 		}
-		status = Consts.NIGHT;	
+		status = Consts.NIGHT;
 	}
 	
 	public Role getCurCenterRole(int x) {
@@ -884,6 +960,18 @@ public class Board {
 	public void setSkipOnDawn(boolean skipOnDawn) {
 		this.skipOnDawn = skipOnDawn;
 	}
+	public int getClockIndex() {
+		return clockIndex;
+	}
+	public void setClockIndex(int clockIndex) {
+		this.clockIndex = clockIndex;
+	}
+	public boolean isClockwise() {
+		return clockwise;
+	}
+	public void setClockwise(boolean clockwise) {
+		this.clockwise = clockwise;
+	}
 
 	public String getWeremeleonImg() {
 		if (weremeleonIndex != -1) {
@@ -1255,6 +1343,8 @@ public class Board {
 		doc.append("weremeleonIndex", weremeleonIndex);
 		doc.append("wolfHunterIndex", wolfHunterIndex);
 		doc.append("delusionalIndex", delusionalIndex);
+		doc.append("clockIndex", clockIndex);
+		doc.append("clockwise", clockwise);
 		int i,j;
 		List<Document> loq = new ArrayList<>();
 		for (i=0;i<questions.size();i++) {
@@ -1303,6 +1393,8 @@ public class Board {
 		weremeleonIndex = doc.getInteger("weremeleonIndex", -1);
 		wolfHunterIndex = doc.getInteger("wolfHunterIndex", -1);
 		delusionalIndex = doc.getInteger("delusionalIndex", -1);
+		clockIndex = doc.getInteger("clockIndex", 0);
+		clockwise = doc.getBoolean("clockwise", true);
 		int i,j;
 		List<Document> loq = (List<Document>) doc.get("questions");
 		questions = new ArrayList<>();
