@@ -315,6 +315,8 @@ public class Manipulations {
 				Player p = board.getPlayers().get(i);
 				if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
 					t++;
+				} else if (p.getInitialRole().getRoleNum() == Consts.SHEEPWOLF) {
+					t++;
 				}
 			}
 			if (t == 0) {
@@ -322,6 +324,21 @@ public class Manipulations {
 			}
 		}
 		return false;
+	}
+	
+	public static void wolfVision(Player player, Board board) {
+		int i;
+		for (i=0;i<board.getPlayers().size();i++) {
+			if (player.getIndex() == i) {
+				continue;
+			}
+			Player p = board.getPlayers().get(i);
+			if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
+				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNumToShow());
+			} else if (p.getInitialRole().getRoleNum() == Consts.SHEEPWOLF) {
+				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNumToShow());
+			}
+		}
 	}
 	
 	public static void soleWolfHandle(Player player, Board board) {

@@ -321,17 +321,17 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Bellman();
+		r = new Bartender();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new BacktrackWolf();
+		r = new SheepWolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);
 		
-		r = new Pope();
+		r = new BearTrainer();
 		r.setPlayer(players.get(2));
 		r.setBoard(this);
 		players.get(2).getRoles().set(0, r);
@@ -398,6 +398,8 @@ public class Board {
 	}
 	
 	public void earlyDuskHandle() {
+		status = Consts.DUSK;
+		
 		int i;
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -413,10 +415,12 @@ public class Board {
 				confirmed.add("y");
 			}
 		}
-		status = Consts.DUSK;	
+			
 	}
 	
 	public void earlyNightHandle() {
+		status = Consts.NIGHT;
+		
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).getCurrentStatus().earlyNightOperation();
@@ -438,7 +442,6 @@ public class Board {
 				confirmed.add("y");
 			}
 		}
-		status = Consts.NIGHT;
 	}
 	
 	public Role getCurCenterRole(int x) {
@@ -477,6 +480,7 @@ public class Board {
 			}
 		}
 		if (status == Consts.DUSK) {
+			// dusk skills
 			for (i=0;i<tps.size();i++) {
 				int x = tps.get(i).getInitialRole().getSequence();
 				if (x < 0) {
@@ -484,6 +488,18 @@ public class Board {
 						tps.get(i).getInitialRole().executeDuskSkillPoisoned();
 					} else {
 						tps.get(i).getInitialRole().executeDuskSkill();
+					}
+				}
+			}
+			
+			// before night skills
+			for (i=0;i<tps.size();i++) {
+				int x = tps.get(i).getInitialRole().getSequence();
+				if (x < 0) {
+					if (tps.get(i).isPoisoned()) {
+						tps.get(i).getInitialRole().onNightSkillPoisoned();
+					} else {
+						tps.get(i).getInitialRole().onNightSkill();
 					}
 				}
 			}
@@ -693,6 +709,11 @@ public class Board {
 		boolean killedPope = true;
 		boolean hasWerewolf = false;
 		boolean bladeWolfKilledPope = false;
+		boolean whitewolfKilledPope = true;
+		boolean popeVotedWhitewolf = false;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setVotedOut(false);
+		}
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getSide() == Consts.WOLF) {
 				hasWerewolf = true;
@@ -702,13 +723,29 @@ public class Board {
 						players.get(x).getCurrentRole().setSide(Consts.WOLF);
 					}
 					if (players.get(x).getCurrentRole().getRoleNum() != Consts.POPE) {
-						killedPope = false;
+						if (players.get(i).getCurrentRole().getRoleNum() == Consts.WHITEWOLF) {
+							whitewolfKilledPope = false;
+						} else {
+							killedPope = false;
+						}
 					} else if (players.get(i).getCurrentRole().getRoleNum() == Consts.BLADEWOLF){
 						bladeWolfKilledPope = true;
 					}
 				} else {
 					killedPope = false;
 				}
+			} else if (players.get(i).getCurrentRole().getRoleNum() == Consts.POPE) {
+				int x = players.get(i).getVoteIndex();
+				if (x>=0 && x<players.size()) {
+					if (players.get(x).getCurrentRole().getRoleNum() == Consts.WHITEWOLF) {
+						popeVotedWhitewolf = true;
+					}
+				}
+			}
+		}
+		if (whitewolfKilledPope == false) {
+			if (popeVotedWhitewolf == false) {
+				killedPope = false;
 			}
 		}
 		if (hasWerewolf == false) {

@@ -208,6 +208,18 @@ public class RoleFactory {
 			role = new Bellman();
 		} else if (img.contentEquals("r88")) {
 			role = new BacktrackWolf();
+		} else if (img.contentEquals("r89")) {
+			role = new WildChild();
+		} else if (img.contentEquals("r90")) {
+			role = new SnakeCharmer();
+		} else if (img.contentEquals("r91")) {
+			role = new Knight();
+		} else if (img.contentEquals("r92")) {
+			role = new Whitewolf();
+		} else if (img.contentEquals("r93")) {
+			role = new SheepWolf();
+		} else if (img.contentEquals("r94")) {
+			role = new Bartender();
 		}
 		
 		else {
@@ -414,6 +426,18 @@ public class RoleFactory {
 			role = new Bellman();
 		} else if (num == 88) {
 			role = new BacktrackWolf();
+		} else if (num == 89) {
+			role = new WildChild();
+		} else if (num == 90) {
+			role = new SnakeCharmer();
+		} else if (num == 91) {
+			role = new Knight();
+		} else if (num == 92) {
+			role = new Whitewolf();
+		} else if (num == 93) {
+			role = new SheepWolf();
+		} else if (num == 94) {
+			role = new Bartender();
 		}
 		
 		else {

@@ -37,16 +37,7 @@ public class Weremeleon extends Role{
 	}
 	
 	public void vision() {
-		int i;
-		for (i=0;i<board.getPlayers().size();i++) {
-			if (player.getIndex() == i) {
-				continue;
-			}
-			Player p = board.getPlayers().get(i);
-			if (p.getInitialRole().getSide() == Consts.WOLF && p.getInitialRole().getRoleNum() != Consts.MINION) {
-				player.getPlayerMarks().set(i, p.getInitialRole().getRoleNumToShow());
-			}
-		}
+		Manipulations.wolfVision(player, board);
 		int x = board.getWeremeleonIndex();
 		player.setShowUpdatedRole(true);
 		if (x == -1) {

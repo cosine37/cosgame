@@ -85,6 +85,10 @@ public class Consts {
 	
 	public static final int DELUSIONAL = 85;
 	
+	public static final int WHITEWOLF = 92;
+	public static final int SHEEPWOLF = 93;
+	public static final int BARTENDER = 94;
+	
 	// marks
 	public static final int UNKNOWN = -1;
 	public static final int EXCHANGE = -2;

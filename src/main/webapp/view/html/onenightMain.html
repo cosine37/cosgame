@@ -286,6 +286,8 @@
 											<button ng-click="showedCard='r88'" ng-disabled="showedCard == 'r88'">时刻狼</button>
 											<button ng-click="showedCard='r81'" ng-disabled="showedCard == 'r81'">菇农</button>
 											<button ng-click="showedCard='r80'" ng-disabled="showedCard == 'r80'">炊事狼</button>
+											<button ng-click="showedCard='r90'" ng-disabled="showedCard == 'r90'">耍蛇人</button>
+											<button ng-click="showedCard='r89'" ng-disabled="showedCard == 'r89'">野孩子</button>
 											<button ng-click="showedCard='r82'" ng-disabled="showedCard == 'r82'">药剂师</button>
 											<button ng-click="showedCard='r36'" ng-disabled="showedCard == 'r36'">狼卓</button>
 											<button ng-click="showedCard='r58'" ng-disabled="showedCard == 'r58'">鬃岩狼人</button>
@@ -311,6 +313,8 @@
 											<button ng-click="showedCard='r71'" ng-disabled="showedCard == 'r71'">红太狼</button>
 											<button ng-click="showedCard='r74'" ng-disabled="showedCard == 'r74'">刀狼</button>
 											<button ng-click="showedCard='r84'" ng-disabled="showedCard == 'r84'">狼朗</button>
+											<button ng-click="showedCard='r92'" ng-disabled="showedCard == 'r92'">白狼王</button>
+											<button ng-click="showedCard='r93'" ng-disabled="showedCard == 'r93'">披着羊皮的狼</button>
 											<button ng-click="showedCard='r69'" ng-disabled="showedCard == 'r69'">山村贞子</button>
 											<button ng-click="showedCard='r05'" ng-disabled="showedCard == 'r05'">帮凶</button>
 											<button ng-click="showedCard='r86'" ng-disabled="showedCard == 'r86'">鸟嘴医生</button>
@@ -365,6 +369,7 @@
 											<button ng-click="showedCard='r38'" ng-disabled="showedCard == 'r38'">狐仙</button>
 											<button ng-click="showedCard='r22'" ng-disabled="showedCard == 'r22'">侦探助理</button>
 											<button ng-click="showedCard='r13'" ng-disabled="showedCard == 'r13'">侦探</button>
+											<button ng-click="showedCard='r94'" ng-disabled="showedCard == 'r94'">酒保</button>
 										</td>
 									</tr>
 									<tr>
@@ -386,6 +391,7 @@
 											<button ng-click="showedCard='r66'" ng-disabled="showedCard == 'r66'">锈剑骑士</button>
 											<button ng-click="showedCard='r67'" ng-disabled="showedCard == 'r67'">疯狗</button>
 											<button ng-click="showedCard='r68'" ng-disabled="showedCard == 'r68'">猎狼人</button>
+											<button ng-click="showedCard='r91'" ng-disabled="showedCard == 'r91'">骑士</button>
 											<button ng-click="showedCard='r00'" ng-disabled="showedCard == 'r00'">村民</button>
 											<button ng-click="showedCard='r85'" ng-disabled="showedCard == 'r85'">妄想者*</button>
 										</td>
@@ -432,6 +438,29 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
 								一张中央身份将会显示。</br></br></br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r90'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 耍蛇人</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段指定一名玩家，你与该玩家中随机有一名玩家会中毒，若该玩家没有中毒或无法中毒，则你必定中毒。你不知道哪位玩家中毒。夜晚阶段开始前你会被告知该玩家的身份。
+								因为此时你有可能已中毒，所以此时你看到的该玩家身份可能不为真。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r89'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 野孩子</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段指定两名玩家，这两名玩家若可以中毒，分别都有50%的几率中毒。黎明阶段开始前这两名玩家的身份牌会被交换。
 							</td>
 						</tr>
 					</table>
@@ -714,6 +743,39 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
 								一张中央身份将会显示。
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r92'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 白狼王</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。投票阶段投最终身份为白狼王的玩家的玩家额外获得1票且视为最终身份为白狼王的玩家投了该玩家。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>FAQ：</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>若教宗投白狼王，则视为白狼王也投了教宗，无论白狼王是否投给了教宗。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r93'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 披着羊皮的狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼*</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。行动结束后至天亮前，你的阵营暂时为“人”。天亮后，你的阵营恢复为“狼”</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>FAQ：</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>教宗、驯熊师等的技能会将你视为“人”阵营。</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>当你的身份牌被查看时，依然会被显示为披着羊皮的狼，而不是随机的其他“人”阵营身份。</i></br>
 							</td>
 						</tr>
 					</table>
@@ -1283,6 +1345,18 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r94'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 酒保</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黎明阶段你得知一个在夜晚和黎明阶段成功使用过技能的不为酒保的“人”阵营身份。成功使用过技能指初始身份为该身份的玩家没有中毒或石化。
+								若除你之外没有玩家在夜晚和黎明阶段成功使用过技能，则你也会被告知相应的信息。你不会被告知黄昏阶段成功使用过技能的“人”阵营身份。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r11'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -1503,6 +1577,20 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>调查员查看该身份后，自身阵营会变为“狼”。侦探查看该身份后不会翻开。</i></br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>由于天亮后该身份的最终阵营为“人”，该身份的胜利条件始终和“人”阵营完全相同。</i>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>若初始阵营为“狼”的玩家只有一位，因为其在夜晚阶段可以看到你，所以在独狼变体规则下该玩家无法查看中央身份。</i>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r91'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 骑士</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>投票阶段若你投的玩家在投票阶段结束后是“人”阵营，你出局，否则你投的玩家将额外获得2票。</br></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>FAQ：</i></br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>该技能结算时机为投票阶段结束后，所以在投票阶段时改变阵营的身份将按改变后的身份结算。</i>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>若有“狼”阵营玩家投给狼孩，则骑士投狼孩，狼孩额外获得2票且骑士不会出局。</i>
 							</td>
 						</tr>
 					</table>

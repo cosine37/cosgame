@@ -99,6 +99,14 @@ public class Role {
 		
 	}
 	
+	public void onNightSkill() {
+		
+	}
+	
+	public void onNightSkillPoisoned() {
+		
+	}
+	
 	public void alterClockIndex() {
 		
 	}
