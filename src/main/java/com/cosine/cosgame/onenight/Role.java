@@ -75,11 +75,17 @@ public class Role {
 		
 	}
 	
+	public void useSkill(int t1, int t2, int t3) {
+		
+	}
+	
 	public void useSkill(List<Integer> targets) {
 		if (targets.size() == 1) {
 			useSkill(targets.get(0));
 		} else if (targets.size() == 2) {
 			useSkill(targets.get(0), targets.get(1));
+		} else if (targets.size() == 3) {
+			useSkill(targets.get(0), targets.get(1), targets.get(2));
 		}
 	}
 	

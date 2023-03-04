@@ -263,7 +263,16 @@
 								</p>
 							</td>
 						</tr>
-						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4><b>命运时针</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在游戏开始时命运时针将会指向一名初始身份为“狼”阵营的玩家（若无初始身份为“狼”阵营的玩家，则命运时针会指向一名随机玩家）。
+									每一名玩家行动过后命运时针会向右（顺时针）移动并指向下一名相应的玩家。命运时针为隐藏信息，除非身份技能，否则无法得知命运时针指向哪位玩家。</br>
+								</p>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<div id="rolestab" class="content container tab-pane fade">
@@ -286,6 +295,7 @@
 											<button ng-click="showedCard='r88'" ng-disabled="showedCard == 'r88'">时刻狼</button>
 											<button ng-click="showedCard='r81'" ng-disabled="showedCard == 'r81'">菇农</button>
 											<button ng-click="showedCard='r80'" ng-disabled="showedCard == 'r80'">炊事狼</button>
+											<button ng-click="showedCard='r96'" ng-disabled="showedCard == 'r96'">淬毒狼</button>
 											<button ng-click="showedCard='r90'" ng-disabled="showedCard == 'r90'">耍蛇人</button>
 											<button ng-click="showedCard='r89'" ng-disabled="showedCard == 'r89'">野孩子</button>
 											<button ng-click="showedCard='r82'" ng-disabled="showedCard == 'r82'">药剂师</button>
@@ -339,7 +349,9 @@
 											<button ng-click="showedCard='r41'" ng-disabled="showedCard == 'r41'">假面舞者</button>
 											<button ng-click="showedCard='r03'" ng-disabled="showedCard == 'r03'">盗贼</button>
 											<button ng-click="showedCard='r23'" ng-disabled="showedCard == 'r23'">魔术师</button>
+											<button ng-click="showedCard='r95'" ng-disabled="showedCard == 'r95'">移星师</button>
 											<button ng-click="showedCard='r14'" ng-disabled="showedCard == 'r14'">女巫</button>
+											<button ng-click="showedCard='r97'" ng-disabled="showedCard == 'r97'">万事通</button>
 											<button ng-click="showedCard='r48'" ng-disabled="showedCard == 'r48'">演员</button>
 											<button ng-click="showedCard='r33'" ng-disabled="showedCard == 'r33'">调换儿</button>
 											<button ng-click="showedCard='r21'" ng-disabled="showedCard == 'r21'">小魔女</button>
@@ -435,6 +447,21 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
 								指定一名玩家，若该玩家的初始身份为“人”阵营，该玩家中毒。中毒的玩家天亮前的操作会失效且得知的信息为随机生成。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
+								一张中央身份将会显示。</br></br></br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r96'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 淬毒狼</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>狼</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>黄昏阶段看到除<span class="onenighttext">帮凶</span>以外的所有同阵营队友。
+								将命运时针向后拨两位，在拨动期间被指向的玩家将中毒。你开始行动时命运时针指向的玩家以及你的行动结束后命运时针指向的玩家不会中毒。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>胜利条件：</b>你和除<span class="onenighttext">帮凶</span>以外的所有同阵营队友都没有被<span class="onenighttext">投票出局</span>即获得胜利。</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>独狼变体：</b>若一局游戏使用<span class="onenighttext">独狼变体</span>规则，且你晚上没有看到同阵营队友，
 								一张中央身份将会显示。</br></br></br>
@@ -1071,6 +1098,17 @@
 							</td>
 						</tr>
 					</table>
+					<table ng-show="showedCard == 'r95'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 移星师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段将你的身份与命运时针指向的玩家的身份交换并查看你新获得的身份。你不知道当时命运时针指向哪名玩家。</br>
+							</td>
+						</tr>
+					</table>
 					<table ng-show="showedCard == 'r14'">
 						<tr style="width: 1000px">
 							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
@@ -1080,6 +1118,18 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段你可以查看一张中央身份并将其与任何一名玩家（可以是自己）的身份交换。
 								你也可以不发动此技能，但若你查看中央身份则必定要和一名玩家交换。</br>
+							</td>
+						</tr>
+					</table>
+					<table ng-show="showedCard == 'r97'">
+						<tr style="width: 1000px">
+							<td><img ng-src="/image/Onenight/Roles/{{showedCard}}.png" class="newsImg"></td>
+							<td style="width: 790px; vertical-align:top">
+								<h4 class="onenighttext">&nbsp;&nbsp;&nbsp;&nbsp; 万事通</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>张数：</b>1</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>阵营：</b>人</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>技能：</b>夜晚阶段指定一名玩家和两张中央身份。指定的两张中央身份会被交换，你会得知你指定的玩家是否已经中毒以及你是否在行动前与行动时的某一时刻被命运时针指向过。你必须发动此技能。
+								投票阶段若你还是万事通，你投的玩家将获得0票，其相邻的玩家将获得1票。</br>
 							</td>
 						</tr>
 					</table>

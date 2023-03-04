@@ -39,6 +39,8 @@ public class Board {
 	int restrictedIndex;
 	boolean skipOnDawn;
 	
+	List<Integer> clockIndexes;
+	
 	List<String> confirmed;
 	
 	MongoDBUtil dbutil;
@@ -183,9 +185,16 @@ public class Board {
 		}
 		
 		// set clockIndex for each player
+		clockIndexes = new ArrayList<>();
+		clockIndexes.add(clockIndex);
 		for (i=0;i<tps.size();i++) {
 			tps.get(i).setCurrentClockIndex(clockIndex);
 			tps.get(i).getInitialRole().alterClockIndex();
+			List<Integer> ta = new ArrayList<>();
+			for (j=0;j<clockIndexes.size();j++) {
+				ta.add(clockIndexes.get(j));
+			}
+			tps.get(i).setClockIndexes(ta);
 			moveClockIndex();
 		}
 		
@@ -204,6 +213,7 @@ public class Board {
 				clockIndex = players.size()-1;
 			}
 		}
+		clockIndexes.add(clockIndex);
 	}
 	
 	public void genQuestions() {
@@ -321,12 +331,12 @@ public class Board {
 		// TODO: test roles here
 		Role r;
 		/*
-		r = new Bartender();
+		r = new JackOfAllTrades();
 		r.setPlayer(players.get(0));
 		r.setBoard(this);
 		players.get(0).getRoles().set(0, r);
 		
-		r = new SheepWolf();
+		r = new PoisonWolf();
 		r.setPlayer(players.get(1));
 		r.setBoard(this);
 		players.get(1).getRoles().set(0, r);

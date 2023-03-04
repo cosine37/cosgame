@@ -220,6 +220,12 @@ public class RoleFactory {
 			role = new SheepWolf();
 		} else if (img.contentEquals("r94")) {
 			role = new Bartender();
+		} else if (img.contentEquals("r95")) {
+			role = new StarMover();
+		} else if (img.contentEquals("r96")) {
+			role = new PoisonWolf();
+		} else if (img.contentEquals("r97")) {
+			role = new JackOfAllTrades();
 		}
 		
 		else {
@@ -438,6 +444,12 @@ public class RoleFactory {
 			role = new SheepWolf();
 		} else if (num == 94) {
 			role = new Bartender();
+		} else if (num == 95) {
+			role = new StarMover();
+		} else if (num == 96) {
+			role = new PoisonWolf();
+		} else if (num == 97) {
+			role = new JackOfAllTrades();
 		}
 		
 		else {

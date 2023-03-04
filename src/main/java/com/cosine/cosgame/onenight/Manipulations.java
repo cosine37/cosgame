@@ -27,6 +27,17 @@ public class Manipulations {
 		}
 	}
 	
+	public static void swapCenterRoles(Board board, int t1, int t2) {
+		Role r1 = board.getCurCenterRole(t1);
+		Role r2 = board.getCurCenterRole(t2);
+		if (r1.exchangable() && r2.exchangable()) {
+			r1.onExchange();
+			r2.onExchange();
+			board.addCenterRole(t1, r2);
+			board.addCenterRole(t2, r1);
+		}
+	}
+	
 	public static void viewPlayerRole(Player viewer, Player p) {
 		if (!p.hasSentinel()) {
 			Role r = p.getCurrentRole();

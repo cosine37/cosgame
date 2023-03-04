@@ -36,6 +36,7 @@ public class Player {
 	List<Integer> playerMarks;
 	List<Integer> centerMarks;
 	List<Integer> statusMarks;
+	List<Integer> clockIndexes;
 	
 	Board board;
 	
@@ -390,6 +391,12 @@ public class Player {
 	public void setCurrentClockIndex(int currentClockIndex) {
 		this.currentClockIndex = currentClockIndex;
 	}
+	public List<Integer> getClockIndexes() {
+		return clockIndexes;
+	}
+	public void setClockIndexes(List<Integer> clockIndexes) {
+		this.clockIndexes = clockIndexes;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -417,6 +424,7 @@ public class Player {
 		doc.append("poisoned", poisoned);
 		doc.append("msg", msg);
 		doc.append("currentClockIndex", currentClockIndex);
+		doc.append("clockIndexes", clockIndexes);
 		int i;
 		List<String> lor = new ArrayList<>();
 		for (i=0;i<roles.size();i++) {
@@ -462,6 +470,7 @@ public class Player {
 		poisoned = doc.getBoolean("poisoned", false);
 		msg = doc.getString("msg");
 		currentClockIndex = doc.getInteger("currentClockIndex", 0);
+		clockIndexes = (List<Integer>) doc.get("clockIndexes");
 		List<String> lor = (List<String>) doc.get("roles");
 		int i;
 		roles = new ArrayList<>();

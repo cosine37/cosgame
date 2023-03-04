@@ -14,6 +14,10 @@ public class BacktrackWolf extends Role{
 		sequence = -1000;
 		name = "时刻狼";
 		hasDusk = true;
+		duskMsg.add("你的身份是 时刻狼。");
+		duskMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
+		duskMsg.add("本局游戏命运时针向左（逆时针）移动。");
+		duskMsg.add("点击确认结束你的黄昏阶段。");
 		nightMsg.add("你的初始身份是 时刻狼。");
 		nightMsg.add("场上显示身份牌的玩家初始身份和你同一阵营。");
 		nightMsg.add("本局游戏命运时针向左（逆时针）移动。");

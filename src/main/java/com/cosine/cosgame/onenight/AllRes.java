@@ -39,9 +39,17 @@ public class AllRes {
 		Role r;
 		int i;
 		
+		r = new BacktrackWolf();
+		allRoles.add(r);
 		r = new MushroomFarmer();
 		allRoles.add(r);
 		r = new WolfCook();
+		allRoles.add(r);
+		r = new PoisonWolf();
+		allRoles.add(r);
+		r = new SnakeCharmer();
+		allRoles.add(r);
+		r = new WildChild();
 		allRoles.add(r);
 		r = new Pharmacist();
 		allRoles.add(r);
@@ -84,6 +92,10 @@ public class AllRes {
 		allRoles.add(r);
 		r = new LangLang();
 		allRoles.add(r);
+		r = new Whitewolf();
+		allRoles.add(r);
+		r = new SheepWolf();
+		allRoles.add(r);
 		r = new Sadako();
 		allRoles.add(r);
 		r = new Minion();
@@ -124,6 +136,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new CombatMedic();
 		allRoles.add(r);
+		r = new Bellman();
+		allRoles.add(r);
 		r = new Jester();
 		allRoles.add(r);
 		r = new Butterfly();
@@ -134,7 +148,11 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Magician();
 		allRoles.add(r);
+		r = new StarMover();
+		allRoles.add(r);
 		r = new Witch();
+		allRoles.add(r);
+		r = new JackOfAllTrades();
 		allRoles.add(r);
 		r = new Changeling();
 		allRoles.add(r);
@@ -185,6 +203,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new Detective();
 		allRoles.add(r);
+		r = new Bartender();
+		allRoles.add(r);
 		
 		r = new SleepingWolf();
 		allRoles.add(r);
@@ -218,7 +238,8 @@ public class AllRes {
 		allRoles.add(r);
 		r = new WolfHunter();
 		allRoles.add(r);
-		
+		r = new Knight();
+		allRoles.add(r);
 		for (i=0;i<3;i++) {
 			r = new Villager();
 			allRoles.add(r);
