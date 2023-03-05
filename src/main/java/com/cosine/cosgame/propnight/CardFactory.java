@@ -1,4 +1,4 @@
-package com.cosine.cosgame.propnightold;
+package com.cosine.cosgame.propnight;
 
 import java.util.List;
 

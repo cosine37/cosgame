@@ -1,4 +1,4 @@
-package com.cosine.cosgame.propnightold;
+package com.cosine.cosgame.propnight;
 
 public class PlaceFactory {
 	public static Place makePlace(int id) {

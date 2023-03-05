@@ -1,4 +1,4 @@
-package com.cosine.cosgame.propnightold;
+package com.cosine.cosgame.propnighttry;
 
 public class Consts {
 	// roles
@@ -10,6 +10,8 @@ public class Consts {
 	public static final int ROLEASSIGNMENT = 1;
 	public static final int INGAME = 2;
 	public static final int ENDGAME = 3;
+	
+	// phases
 	
 	// rule related
 	public static final int MAXHP = 3;
