@@ -151,6 +151,29 @@ public class PropnightController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/propnight/confirreckoning", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmReckoning(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.setConfirmed(true);
+				if (board.allConfirmed()) {
+					board.nextPhase();
+				}
+				board.updateBasicDB();
+				board.updatePlayers();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/propnight/confirmroles", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> confirmRoles(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

@@ -17,6 +17,7 @@ public class Player {
 	List<Integer> availablePlaces;
 	List<Card> cards;
 	List<Integer> placeThisTurn;
+	boolean confirmed;
 	
 	Board board;
 	
@@ -82,12 +83,21 @@ public class Player {
 		}
 	}
 	
+	public void loseHp(int x) {
+		hp = hp-x;
+	}
+	
+	public void loseHp() {
+		loseHp(1);
+	}
+	
 	public void rest() {
 		hp = Consts.MAXHP;
 		while (visitedPlaces.size()>0) {
 			int x = visitedPlaces.remove(0);
 			availablePlaces.add(x);
 		}
+		sortAvailablePlaces();
 		board.moveGhostMark(1);
 	}
 	
@@ -157,6 +167,18 @@ public class Player {
 		return false;
 	}
 	
+	public void addVisitedPlaces() {
+		int i;
+		for (i=0;i<placeThisTurn.size();i++) {
+			int x = placeThisTurn.get(i);
+			if (visited(x)) {
+				
+			} else {
+				visitedPlaces.add(x);
+			}
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -217,6 +239,12 @@ public class Player {
 	public void setNumPlaceNextTurn(int numPlaceNextTurn) {
 		this.numPlaceNextTurn = numPlaceNextTurn;
 	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -228,6 +256,7 @@ public class Player {
 		doc.append("visitedPlaces", visitedPlaces);
 		doc.append("availablePlaces", availablePlaces);
 		doc.append("numPlaceNextTurn", numPlaceNextTurn);
+		doc.append("confirmed", confirmed);
 		int i;
 		List<Document> loc = new ArrayList<>();
 		for (i=0;i<cards.size();i++) {
@@ -246,6 +275,7 @@ public class Player {
 		visitedPlaces = (List<Integer>) doc.get("visitedPlaces");
 		availablePlaces = (List<Integer>) doc.get("availablePlaces");
 		numPlaceNextTurn = doc.getInteger("numPlaceThisTurn", 1);
+		confirmed = doc.getBoolean("confirmed", false);
 		int i;
 		List<Document> loc = (List<Document>) doc.get("cards");
 		cards = new ArrayList<>();
@@ -260,7 +290,13 @@ public class Player {
 		entity.setRole(role);
 		entity.setName(name);
 		entity.setHp(hp);
-		entity.setVisitedPlaces(visitedPlaces);		
+		if (placeThisTurn.size() == 0) {
+			entity.setPlaceThisTurn(-1);
+		} else {
+			entity.setPlaceThisTurn(placeThisTurn.get(0));
+		}
+		entity.setVisitedPlaces(visitedPlaces);
+		entity.setAvailablePlaces(availablePlaces);
 		return entity;
 	}
 }

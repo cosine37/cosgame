@@ -111,7 +111,7 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				return false;
 			}
 		}
-		
+		/*
 		$scope.showChoosePlace = function(){
 			if ($scope.gamedata.myRole == 0){
 				if ($scope.gamedata.phase == 1){
@@ -127,22 +127,19 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 			}
 		}
-		// End Human Choose Place Section
-		/*
-		$scope.startGame = function(){
-			
-			var data = {
-				"settings" : $scope.settings	
-			}
-			
-			$http({url: "/propnight/startgame", method: "POST", params:data}).then(function(response){
-				ws.send("start");
-				$scope.goto('propnightgame');
-			});
-			
-			
-		}
 		*/
+		// End Human Choose Place Section
+		
+		// Confirm Reckoning Section
+		$scope.confirmReckoning = function(){
+			var data = {
+				
+			}
+			$http({url: "/propnight/confirreckoning", method: "POST", params:data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		// End Confirm Reckoning Section
 		$scope.getBoard = function(){
 			$http.get('/propnight/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -152,9 +149,11 @@ app.controller("propnightGameCtrl", ['$scope', '$window', '$http', '$document', 
 				}
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
+				$scope.phase = response.data.phase
 				$scope.lord = response.data.lord
 				$scope.players = response.data.players
-				
+				$scope.confirmed = response.data.confirmed
+				$scope.myRole = response.data.myRole;
 			});
 		}
 		

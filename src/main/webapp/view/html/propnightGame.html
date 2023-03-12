@@ -33,7 +33,7 @@
 				<td ng-repeat="i in [1,2,3,4,5]">
 					<div>
 						{{i}}
-						<div ng-show="showChoosePlace()">
+						<div ng-show="(myRole == 0 && phase == 1) || (myRole == 1 && phase == 2)">
 							<span ng-show="chosenPlace[i] == 0">未选择</span>
 							<button ng-show="chosenPlace[i] == 0" ng-click="clickPlace(i)">选择</button>
 							<span ng-show="chosenPlace[i] != 0">已选择</span>
@@ -46,7 +46,7 @@
 				<td ng-repeat="i in [6,7,8,9,10]">
 					<div>
 						{{i}}
-						<div ng-show="showChoosePlace()">
+						<div ng-show="(myRole == 0 && phase == 1) || (myRole == 1 && phase == 2)">
 							<span ng-show="chosenPlace[i] == 0">未选择</span>
 							<button ng-show="chosenPlace[i] == 0" ng-click="clickPlace(i)">选择</button>
 							<span ng-show="chosenPlace[i] != 0">已选择</span>
@@ -58,10 +58,15 @@
 			</tr>
 		</table>
 	</div>
-	<div>
-		<span ng-show="showChoosePlace()">请选择{{gamedata.myNumPlaceNextTurn}}个地点</span>
-		<span ng-show="showChoosePlace() == false">现在不是你的回合</span>
+	<div ng-show="phase == 1 || phase == 2">
+		<span ng-show="(myRole == 0 && phase == 1) || (myRole == 1 && phase == 2)">请选择{{gamedata.myNumPlaceNextTurn}}个地点</span>
+		<span ng-show="(myRole == 0 && phase == 2) || (myRole == 1 && phase == 1)">现在不是你的回合</span>
 		<button ng-show="showChoosePlace()" ng-click="submitPlace()" ng-disabled="canSubmitPlace() == false">提交</button>
+	</div>
+	<div ng-show="phase == 3">
+		<span ng-show="confirmed">你已确认，正等待其他玩家确认</span>
+		<span ng-show="confirmed == false">回合结束，点击确定结束你的回合</span>
+		<button ng-show="confirmed == false" ng-click="confirmReckoning()">确定</button>
 	</div>
 	<!-- 
 	{{chosenPlace}}

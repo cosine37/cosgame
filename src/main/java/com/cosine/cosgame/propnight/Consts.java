@@ -13,4 +13,8 @@ public class Consts {
 	
 	// rule related
 	public static final int MAXHP = 3;
+	
+	// ghost related
+	public static final int GHOSTSELFINDEX = 0;
+	
 }

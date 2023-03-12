@@ -14,6 +14,7 @@ public class BoardEntity {
 	int myIndex;
 	List<Integer> myPlaceThisTurn;
 	int myNumPlaceNextTurn;
+	boolean confirmed;
 	
 	List<PlayerEntity> players;
 
@@ -82,6 +83,12 @@ public class BoardEntity {
 	}
 	public void setMyNumPlaceNextTurn(int myNumPlaceNextTurn) {
 		this.myNumPlaceNextTurn = myNumPlaceNextTurn;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
 }

@@ -101,7 +101,50 @@ public class Board {
 			phase = 2;
 		} else if (phase == 2){
 			phase = 3;
+			reckoning();
+		} else if (phase == 3) {
+			phase = 1;
 		}
+	}
+	
+	public void reckoning() {
+		int i,j;
+		int ghostPlace = -1;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmed(true);
+			if (players.get(i).getRole() == Consts.HUMAN) {
+				players.get(i).addVisitedPlaces();
+			} else if (players.get(i).getRole() == Consts.GHOST) {
+				ghostPlace = players.get(i).getPlaceThisTurn().get(Consts.GHOSTSELFINDEX);
+			}
+		}
+		
+		
+		// caught
+		boolean moveGhostMark = false;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getRole() == Consts.HUMAN) {
+				int x = players.get(i).getPlaceThisTurn().get(0);
+				if (x == ghostPlace) {
+					moveGhostMark = true;
+					players.get(i).loseHp();
+				}
+			}
+		}
+		if (moveGhostMark) {
+			moveGhostMark(1);
+		}
+	}
+	
+	public boolean allConfirmed() {
+		boolean ans = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmed() == false) {
+				ans = false;
+				break;
+			}
+		}
+		return ans;
 	}
 	
 	public void moveGhostMark(int x) {
@@ -390,6 +433,7 @@ public class Board {
 				entity.setMyRole(players.get(i).getRole());
 				entity.setMyPlaceThisTurn(players.get(i).getPlaceThisTurn());
 				entity.setMyNumPlaceNextTurn(players.get(i).getNumPlaceNextTurn());
+				entity.setConfirmed(players.get(i).isConfirmed());
 			}
 		}
 		entity.setPlayers(lp);
