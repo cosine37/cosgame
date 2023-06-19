@@ -7,7 +7,25 @@ var setUrl = function(d){
 var app = angular.module("citadelsMainApp", []);
 app.controller("citadelsMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
-	
+		const thisTab = "citadels";
+		$http.get('/alltabs').then(function(response){
+			var tempTabs = response.data;
+			for (i=0;i<tempTabs.length;i++){
+				if (tempTabs[i].path == thisTab){
+					tempTabs[i].style = {
+						"padding-top": "0px",
+						"font-size": "24px",
+						"color": tempTabs[i].color,
+						"background-color": tempTabs[i].backgroundColor
+					}
+				} else {
+					tempTabs[i].style = {}
+				}
+			}
+			
+			$scope.allTabs = tempTabs;
+		});
+		
 		$scope.boards = []
 		$scope.lords = []
 		$scope.statuses = []

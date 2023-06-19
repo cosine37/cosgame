@@ -7,7 +7,24 @@ var setUrl = function(d){
 var app = angular.module("marshbrosMainApp", ["ngWebSocket"]);
 app.controller("marshbrosMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
-		
+		const thisTab = "marshbros";
+		$http.get('/alltabs').then(function(response){
+			var tempTabs = response.data;
+			for (i=0;i<tempTabs.length;i++){
+				if (tempTabs[i].path == thisTab){
+					tempTabs[i].style = {
+						"padding-top": "0px",
+						"font-size": "24px",
+						"color": tempTabs[i].color,
+						"background-color": tempTabs[i].backgroundColor
+					}
+				} else {
+					tempTabs[i].style = {}
+				}
+			}
+			
+			$scope.allTabs = tempTabs;
+		});
 		var ws = $websocket("ws://" + $window.location.host + "/marshbros/allboardsrefresh");
 		ws.onError(function(event) {
 		});

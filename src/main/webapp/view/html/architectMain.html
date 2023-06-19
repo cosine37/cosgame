@@ -26,15 +26,7 @@
 	</div>
 	
 	<div id="tabs" class="tabs">
-		<button ng-click="goto('index')">主页</button>
-		<button ng-click="goto('citadels')">富饶龙城</button>
-		<button ng-click="goto('nothanks')">不了谢谢</button>
-		<button ng-click="goto('pokewhat')">宝可纳尼</button>
-		<button ng-click="goto('gravepsycho')">盗墓惊魂</button>
-		<button ng-click="goto('onenight')">狼人不杀</button>
-		<button style="padding-top: 0px; color: rgb(160,32,240); font-size: 24px; background-color:white">雕梁画栋</button>
-		<button ng-click="goto('threechaodoms')">混沌三国</button>
-		<button ng-click="goto('belltower')">小恶魔杀</button>
+		<button ng-repeat="tab in allTabs" ng-click="goto(tab.path)" ng-style="tab.style">{{tab.name}}</button>
 	</div>
 	
 	<div id="tabcontent" class="tabcontent">

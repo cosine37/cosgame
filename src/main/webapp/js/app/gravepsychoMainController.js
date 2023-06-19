@@ -7,6 +7,25 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoMainApp", []);
 app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
 	function($scope, $window, $http, $document, $timeout){
+		const thisTab = "gravepsycho";
+		$http.get('/alltabs').then(function(response){
+			var tempTabs = response.data;
+			for (i=0;i<tempTabs.length;i++){
+				if (tempTabs[i].path == thisTab){
+					tempTabs[i].style = {
+						"padding-top": "0px",
+						"font-size": "24px",
+						"color": tempTabs[i].color,
+						"background-color": tempTabs[i].backgroundColor
+					}
+				} else {
+					tempTabs[i].style = {}
+				}
+			}
+			
+			$scope.allTabs = tempTabs;
+		});
+		
 		$scope.onTablesTab = true;
 	
 		$scope.goto = function(d){
