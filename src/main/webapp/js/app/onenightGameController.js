@@ -4,9 +4,36 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("onenightGameApp", []);
-app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("onenightGameApp", ["ngWebSocket"]);
+app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/onenight/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
+	
+		ws.onError(function(event) {
+			//alert("error!")
+		});
+	
+		ws.onClose(function(event) {
+			//alert("closed!")
+		});
+	
+		ws.onOpen(function() {
+			heartCheck.start();
+		});
 		$scope.rolesSelect = [];
 		$scope.indexes = [];
 		$scope.playerRoleStyles = [];
@@ -67,20 +94,19 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.submitRolesSelect = function(){
 			var data = {"roles" : $scope.rolesSelect}
 			$http({url: "/onenightgame/setroles", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.night = function(){
 			$http.post('/onenightgame/night').then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.dismiss = function(){
 			$http.post("/onenight/dismiss").then(function(response){
-				//ws.send("dismiss");
-				$scope.getBoard();
+				ws.send("dismiss");
 			});
 		}
 		
@@ -253,11 +279,11 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			var data = {"targets" : targets}
 			if ($scope.hasSkill == "y" && targets.length > 0){
 				$http({url: "/onenightgame/useskill", method: "POST", params: data}).then(function(response){
-					$scope.getBoard()
+					$scope.allRefresh()
 				});
 			} else {
 				$http({url: "/onenightgame/confirmnight", method: "POST"}).then(function(response){
-					$scope.getBoard()
+					$scope.allRefresh()
 				});
 			}
 		}
@@ -265,7 +291,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.idiotNight = function(x){
 			var data = {"option" : x}
 			$http({url: "/onenightgame/useskillidiot", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
@@ -277,7 +303,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			if ($scope.voteIndex != -1){
 				var data = {"index" : $scope.voteIndex}
 				$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
-					$scope.getBoard()
+					$scope.allRefresh()
 				});
 			} else {
 				alert("请选择你的投票对象")
@@ -288,14 +314,14 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 			if (confirm("你确定要弃权吗？")){
 				var data = {"index" : -1}
 				$http({url: "/onenightgame/vote", method: "POST", params: data}).then(function(response){
-					$scope.getBoard()
+					$scope.allRefresh()
 				});
 			}
 		}
 		
 		$scope.restart = function(){
 			$http.post('/onenightgame/restart').then(function(response){
-				$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
@@ -622,23 +648,19 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 				setStatusStyles();
 			});
 		}
-		
-		$scope.offturnHandle = function(){
-			if ($scope.status == "0"){
-				$scope.getBoard();
-			} else if ($scope.status == "1" && $scope.lord != $scope.username){
-				$scope.getBoard();
-			} else if (($scope.status == "2" || $scope.status == "7") && $scope.confirmed == "y"){
-				$scope.getBoard();
-			} else if (($scope.status == "3" || $scope.status == "6") && $scope.voted == "y"){
-				$scope.getBoard();
-			} else if ($scope.status == "4"){
+		$scope.getBoard();
+		ws.onMessage(function(e){
+			//alert(JSON.stringify(e.data));
+			var message = e.data
+			heartCheck.reset();
+			if (message == 'refresh'){
 				$scope.getBoard();
 			}
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},1500);
-		}
+			
+		});
 		
-		$scope.offturnHandle()
+		$scope.allRefresh = function(){
+			var msg = "refresh";
+	        ws.send(msg);
+		}
 }]);

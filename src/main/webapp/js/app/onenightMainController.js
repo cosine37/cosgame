@@ -4,9 +4,9 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("onenightMainApp", []);
-app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("onenightMainApp", ["ngWebSocket"]);
+app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
 		const thisTab = "onenight";
 		$http.get('/alltabs').then(function(response){
 			var tempTabs = response.data;
@@ -24,6 +24,26 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 			}
 			
 			$scope.allTabs = tempTabs;
+		});
+		
+		var ws = $websocket("ws://" + $window.location.host + "/onenight/allboardsrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+		
+		var boardws = $websocket("ws://" + $window.location.host + "/onenight/boardrefresh");
+		boardws.onError(function(event) {
+		});
+	
+		boardws.onClose(function(event) {
+		});
+	
+		boardws.onOpen(function() {
 		});
 		
 		$scope.onTablesTab = true;
@@ -80,6 +100,8 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.newGame = function(){
 			$http.post('/onenight/newboard').then(function(response){
+				var json_data = '{"type":"notify","content":"refresh"}';
+		        ws.send(json_data);
 				$scope.goto('onenightcreategame');
 			});
 		}
@@ -88,6 +110,7 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/onenight/setboardid", method: "POST", params: data}).then(function(response){
 				$http.post("/onenight/join").then(function(response){
+					boardws.send($scope.boards[index]);
 					$scope.goto('onenightcreategame')
 				});
 			});
@@ -100,17 +123,9 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			if ($scope.onTablesTab){
-				$scope.getAllBoards();
-			}
-			
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},4000);
-			
-		}
+		$scope.getAllBoards();
 		
-		$scope.offturnHandle();
-		
+		ws.onMessage(function(){
+			$scope.getAllBoards();
+		});
 }]);

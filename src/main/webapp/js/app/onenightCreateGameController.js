@@ -4,9 +4,19 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("onenightCreateGameApp", []);
-app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("onenightCreateGameApp", ["ngWebSocket"]);
+app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/onenight/boardrefresh");
+		ws.onError(function(event) {
+		});
+		
+		ws.onClose(function(event) {
+		});
+		
+		ws.onOpen(function() {
+		});
+	
 		$scope.settings = [0];
 		$scope.soleWolfOption = false;
 	
@@ -28,15 +38,13 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.kick = function(x){
 			var data = {"index" : x}
 			$http({url: "/onenight/kick", method: "POST", params: data}).then(function(response){
-				//ws.send("kick");
-				$scope.getBoard();
+				ws.send("kick");
 			});
 		}
 		
 		$scope.dismiss = function(){
 			$http.post("/onenight/dismiss").then(function(response){
-				//ws.send("dismiss");
-				$scope.getBoard();
+				ws.send("dismiss");
 			});
 		}
 		
@@ -46,6 +54,7 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			}
 			var data = {"settings" : $scope.settings}
 			$http({url: "/onenightgame/startgame", method: "POST", params: data}).then(function(response){
+				ws.send("start");
 				$scope.goto('onenightgame');
 			});
 			
@@ -53,7 +62,7 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.addBot = function(){
 			$http.post('/onenightgame/addbot').then(function(response){
-				$scope.getBoard();
+				ws.send("add");
 			});
 		}
 		
@@ -76,7 +85,7 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				}
 				if (kicked){
 					alert("你已被" + $scope.lord + "踢出");
-					$scope.goto('architect');
+					$scope.goto('onenight');
 					return;
 				}
 				if ($scope.status != "0"){
@@ -85,12 +94,9 @@ app.controller("onenightCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			$scope.getBoard();
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},2500);
-		}
+		$scope.getBoard();
 		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
 }]);
