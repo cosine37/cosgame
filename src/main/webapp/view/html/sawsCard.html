@@ -1,0 +1,43 @@
+<div class="card-size noselect" ng-style="cardDisplay.base" id="card">
+	<div class="card-img" ng-style="cardDisplay.img">
+		
+	</div>
+	<div class="card-name" ng-style="cardDisplay.name">
+		<div class="card-name-text">
+			{{cardDisplay.card.name}}
+		</div>
+	</div>
+	<div class="card-desc" ng-style="cardDisplay.desc">
+		<div class="card-vanilla" ng-style="cardDisplay.vanilla">
+			<span class="card-sun" ng-show="cardDisplay.showSun" ng-style="cardDisplay.sun">
+				{{cardDisplay.card.sun}}
+			</span>
+			<span>&nbsp</span>
+			<span class="card-pea" ng-show="cardDisplay.showPea" ng-style="cardDisplay.pea">
+				{{cardDisplay.card.pea}}
+			</span>
+		</div>
+		<div class="card-desc-text" ng-show="cardDisplay.showDescText" ng-style="cardDisplay.descText" 
+			ng-bind-html="cardDisplay.card.desc">
+			
+		</div>
+	</div>
+	<div class="card-clan" ng-style="cardDisplay.clan">
+		<div class="card-clan-text" ng-style="cardDisplay.clanText">
+			{{cardDisplay.card.clan}}
+		</div>
+	</div>
+	<div class="card-cost">
+		<div class="card-cost-text">
+			{{cardDisplay.card.cost}}
+		</div>
+	</div>
+	<div class="card-shield" ng-show="cardDisplay.showShield">
+		<div class="card-shield-text" ng-show="cardDisplay.card.inEquipArea == false">
+			{{cardDisplay.card.shield}}
+		</div>
+		<div class="card-shield-text" ng-show="cardDisplay.card.inEquipArea">
+			{{cardDisplay.card.hp}}
+		</div>
+	</div>
+</div>

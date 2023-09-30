@@ -6,14 +6,14 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarTheme.css">
-<link rel="stylesheet" type="text/css" href="/view/css/gardenwarCard.css">
+<link rel="stylesheet" type="text/css" href="/view/css/sawsCard.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/lib/angular-sanitize.js"></script>
-<script src="/js/lib/gardenwarCardMaker.js"></script>
+<script src="/js/lib/sawsCardMaker.js"></script>
 <script src="/js/app/gardenwarMainController.js"></script>
 <body ng-app="gardenwarMainApp" ng-controller="gardenwarMainCtrl">
 	<div id="header" class="header">
@@ -29,15 +29,7 @@
 	</div>
 	
 	<div id="tabs" class="tabs">
-		<button ng-click="goto('index')">主页</button>
-		<button ng-click="goto('citadels')">富饶龙城</button>
-		<button ng-click="goto('nothanks')">不了谢谢</button>
-		<button ng-click="goto('pokewhat')">宝可纳尼</button>
-		<button ng-click="goto('gravepsycho')">盗墓惊魂</button>
-		<button ng-click="goto('onenight')">狼人不杀</button>
-		<button ng-click="goto('architect')">雕梁画栋</button>
-		<button ng-click="goto('pokerworld')">棋牌世界</button>
-		<button style="padding-top: 0px; color: darkgreen; font-size: 24px; background-color:white">花园战争</button>
+		<button ng-repeat="tab in allTabs" ng-click="goto(tab.path)" ng-style="tab.style">{{tab.name}}</button>
 	</div>
 	<div id="tabcontent" class="tabcontent">
 		<div class="container">
@@ -87,9 +79,7 @@
 				</div>
 				<div id="cardstab" class="content container tab-pane fade">
 					<h2><b>卡牌</b></h2>
-					<!-- 
-					
-					 -->
+					<div ng-include="'/view/html/sawsCard.html'"></div>
 				</div>
 			</div>
 		</div>

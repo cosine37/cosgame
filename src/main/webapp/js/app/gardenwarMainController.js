@@ -7,6 +7,25 @@ var setUrl = function(d){
 var app = angular.module("gardenwarMainApp", ["ngWebSocket", "ngSanitize"]);
 app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
+	const thisTab = "gardenwar";
+		$http.get('/alltabs').then(function(response){
+			var tempTabs = response.data;
+			for (i=0;i<tempTabs.length;i++){
+				if (tempTabs[i].path == thisTab){
+					tempTabs[i].style = {
+						"padding-top": "0px",
+						"font-size": "24px",
+						"color": tempTabs[i].color,
+						"background-color": tempTabs[i].backgroundColor
+					}
+				} else {
+					tempTabs[i].style = {}
+				}
+			}
+			
+			$scope.allTabs = tempTabs;
+		});
+	
 		$scope.card = {}
 		var ws = $websocket("ws://" + $window.location.host + "/gardenwar/allboardsrefresh");
 		ws.onError(function(event) {
@@ -102,5 +121,18 @@ app.controller("gardenwarMainCtrl", ['$scope', '$window', '$http', '$document', 
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
+		
+		var card = [];
+		card.img = "guanzhong";
+		card.name = "管仲";
+		//card.desc = "哈哈哈哈哈哈我有c我也有a，我一共有c9，a9，啊哈哈哈哈哈哈哈哈哈哈哈！";
+		card.cost = 8;
+		card.sun = 2;
+		card.pea = 2;
+		card.type = "名流";
+		card.clan = "名流";
+		card.shield = 8;
+		
+		$scope.cardDisplay = buildCard(card);
 		
 }]);

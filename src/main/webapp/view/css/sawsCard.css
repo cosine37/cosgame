@@ -1,0 +1,247 @@
+@charset "UTF-8";
+
+@font-face{
+     font-family: 'name'; 
+     src:url('/font/FZLSJW.woff') format('woff')
+}
+
+.card-size{
+	height: 350px;
+	width: 210px;
+	position: relative;
+	
+	border: 5px solid black;
+	border-radius: 10px;
+}
+
+.card-img{
+	position: absolute;
+	height: 140px;
+	width: 140px;
+	left: 30px;
+	top: 25px;
+	padding-top: 15px;
+	background-size: cover;
+	text-align: center;
+	
+	border: 2px solid black;
+}
+
+.card-name{
+	position: absolute;
+	height: 30px;
+	width: 200px;
+	left: 0px;
+	top: 5px;
+	
+	text-align: center;
+	font-size: 30px;
+	font-weight: 600;
+	font-family: "name";
+	line-height: 33px;
+		
+	box-shadow: 0px 0px 15px black;
+}
+
+
+.card-type{
+	position: absolute;
+	height: 24px;
+	width: 50px;
+	
+	top: 117px;
+	left: 70px;
+	
+	background: lightgrey;
+	border: 2px solid black;
+	border-radius: 3px;
+}
+
+.card-type-text{
+	position: absolute;
+	height: 24px;
+	width: 46px;
+	bottom: -2px;
+	text-align: center;
+	font-size: 16px;
+}
+
+.card-clan{
+	position: absolute;
+	height: 24px;
+	width: 200px;
+	left: 0px;
+	bottom: 5px;
+	
+	box-shadow: 0px 0px 15px black;
+}
+
+.card-clan-text{
+	position: absolute;
+	height: 24px;
+	width: 160px;
+	right: 0px;
+	text-align: center;
+	font-size: 15px;
+}
+
+.card-cost{
+	height: 40px;
+	width: 40px;
+	background-image: url('/image/Gardenwar/coin.png');
+	background-size: cover;
+	position: absolute;
+	bottom: -2px;
+	left: -3px;
+}
+
+.card-cost-text{
+	position: absolute;
+	top: 0px;
+	width: 40px;
+	text-align: center;
+	font-size: 28px;
+	font-weight: 620;
+}
+
+.card-shield{
+	height: 40px;
+	width: 40px;
+	background-image: url('/image/Gardenwar/shield.png');
+	background-size: cover;
+	position: absolute;
+	bottom: -2px;
+	right: -3px;
+}
+
+.card-shield-text{
+	position: absolute;
+	top: -2px;
+	width: 40px;
+	text-align: center;
+	font-size: 28px;
+	font-weight: 620;
+	color: white;
+}
+
+.card-desc{
+	position: absolute;
+	height: 170px;
+	width: 180px;
+	left: 10px;
+	bottom: 3px;
+}
+
+.card-desc-text{
+	position: absolute;
+	width: 180px;
+	text-align: center;
+	font-size: 16px;
+}
+
+.card-vanilla{
+	position: absolute;
+	width: 180px;
+	text-align: center;
+	font-size: 16px;
+	top: 2px;
+}
+
+.card-sun{
+	height: 36px;
+	width: 36px;
+	background: url('/image/Gardenwar/coin.png');
+	background-size: 100% 100%;
+	display: inline-block;
+	text-align: center;
+	font-size: 23px;
+	font-weight: 620;
+}
+
+.card-pea{
+	height: 36px;
+	width: 36px;
+	background: url('/image/Gardenwar/atk.png');
+	background-size: 100% 100%;
+	display: inline-block;
+	text-align: center;
+	font-size: 23px;
+	font-weight: 620;
+	color: white;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.sun-in-text{
+	background: url('/image/Gardenwar/coin.png');
+	height: 26px;
+	width: 26px;
+	background-size: 100% 100%;
+	text-align: center;
+	font-weight: 620;
+	color: black;
+	display: inline-block;
+}
+
+.pea-in-text{
+	background: url('/image/Gardenwar/atk.png');
+	height: 25px;
+	width: 25px;
+	background-size: 100% 100%;
+	text-align: center;
+	font-weight: 620;
+	color: white;
+	display: inline-block;
+}
+
+.hand-size{
+	zoom: 0.85;
+}
+
+.play-size{
+	zoom: 0.5;
+}
+
+.equip-size{
+	zoom: 0.5;
+}
+
+.supply-size{
+	zoom: 0.85;
+}
+
+.orange{
+	color: orange;
+}
+.dark-orange{
+	color: darkorange;
+}
+.yellow{
+	color: yellow;
+}
+.taunt{
+	color: yellow;
+}
+.activate{
+	color: violet;
+}
+.light-sea-green{
+	color: lightseagreen;
+}
+.blue{
+	color: blue;
+}
+.dark-blue{
+	color: darkblue;
+}
+.red{
+	color: red;
+}

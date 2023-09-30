@@ -261,14 +261,16 @@ public class Card {
 				}
 			}
 		}
+		String typeDisplay = getTypeDisplay();
+		if (ans.length() == 0) ans = typeDisplay; else ans = typeDisplay + "，" + ans;
 		return ans;
 	}
 	public String getTypeDisplay() {
 		String ans = "";
 		if (type == Consts.CARD) {
-			ans = "基本";
+			ans = "事件";
 		} else if (type == Consts.EQUIP) {
-			ans = "放置";
+			ans = "名流";
 		}
 		return ans;
 	}

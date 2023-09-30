@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/onenightTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/onenightTown.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -44,6 +45,9 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rolestab" ng-click="hideTablesTab()">身份介绍</a>
 				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#townstab" ng-click="hideTablesTab()">小镇</a>
+				    </li>
 				  </ul>
 			</div>
 			
@@ -77,6 +81,7 @@
 						</table>
 					</div>
 				</div>
+				<div id="townstab" class="content container tab-pane fade noselect" ng-include="'/view/html/onenightTown.html'">
 				<div id="rulestab" class="content container tab-pane fade">
 					<h2><b>规则</b></h2>
 					<table>

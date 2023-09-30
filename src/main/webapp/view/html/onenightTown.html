@@ -1,0 +1,157 @@
+<meta charset="UTF-8">
+<div><h2><b>小镇</b></h2></div>
+<div style="background-image:url('/image/Onenight/Town/town.jpg'); background-size:cover; height: 600px; width: 960px; position: relative">
+<div class="account-info">
+	<table>
+		<tr>
+			<td>
+				<div class="account-category">
+					<img src="/image/Onenight/Town/coin.png">
+					<span>{{accountInfo.money}}</span>
+				</div>
+			</td>
+			<td>
+				<div class="account-category">
+					<img src="/image/Onenight/Town/diamond.png">
+					<span>{{accountInfo.diamond}}</span>
+				</div>
+			</td>
+			<td>
+				<div class="account-category">
+					<img src="/image/Onenight/Town/chest.png">
+					<span>{{accountInfo.key}}</span>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<div ng-click="openPlace('mine')" class="town-place" style="left: 20px; bottom: 20px;" ng-show="shownPlace == ''">矿场</div>
+<div ng-click="openPlace('market')" class="town-place" style="left: 140px; bottom: 220px;" ng-show="shownPlace == ''">市集</div>
+<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 160px;" ng-show="shownPlace == ''">开锁店</div>
+<div ng-click="openPlace('home')" class="town-place" style="right: 150px; bottom: 100px;" ng-show="shownPlace == ''">自宅</div>
+<div ng-click="openPlace('belltower')" class="town-place" style="left: 220px; top: 90px;" ng-show="shownPlace == ''">钟楼</div>
+<div class="place-div" ng-show="shownPlace != ''">
+	<img ng-src="/image/Belltower/{{shownPlace}}.jpg" class="place-img">
+	<div ng-show="shownPlace == 'mine'" class="place-content">
+		<h3>矿场</h3>
+		<div ng-show="showReward == false && loadingReward == false && accountInfo.money>=88" ng-click="dig()" 
+			class="dig-button">
+			<span>挖掘（花费88</span>
+			<img src="/image/Onenight/Town/coin.png">
+			<span>)</span>
+		</div>
+		<div ng-show="showReward == false && loadingReward == false && accountInfo.money<88" 
+			style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+			<span>挖掘需要花费88</span>
+			<img src="/image/Onenight/Town/coin.png" style="height: 40px; width:40px;">
+			<span>，你的钱不够。</span>
+		</div>
+		<div ng-show="loadingReward" class="digging">
+			<div>
+				<img src="/image/Onenight/Town/mining.gif" style="height: 153px; width: 270px;"/>
+			</div>
+			<div>
+				正在挖掘。。。
+			</div>
+		</div>
+		<div ng-show="showReward" class="digging">
+			<div>
+				<img ng-src="{{rewardImg}}" class="icon"/>
+			</div>
+			<div>{{rewardMsg}}</div>
+			<button ng-click="showReward = false">谢谢</button>
+		</div>
+		
+	</div>
+	<div ng-show="shownPlace == 'home'" class="place-content">
+		<h3>自宅</h3>
+		<!-- 
+		<div style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
+			<span>施工中，敬请期待</span>
+		</div>
+		 -->
+		<table style="width: 540px; left: 30px; position: absolute">
+			<tr>
+				<td colspan="5" style="text-align:center"><h5>你的头像</h5></td>
+			</tr>
+			<tr ng-repeat="i in [0,1]">
+				<td ng-repeat="j in [0,1,2,3,4]" style="padding: 10px;">
+					<img class="icon" ng-show="charsCurPage[i][j] == 'x'" src="image/Belltower/empty.png" style="opacity: 0.5;"/>
+					<img class="icon icon-glow" ng-show="charsCurPage[i][j] != 'x'" ng-src="image/Belltower/Icons/{{charsCurPage[i][j]}}.png" 
+						ng-click="changeIcon(charsCurPage[i][j])" style="cursor:pointer"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" style="text-align:center; padding-top: 10px">
+					<button ng-disabled="canFlipCharPage(-1) == false", ng-click="flipCharPage(-1)">&lt;</button>
+					<span>{{curPage}}/{{numPages}}</span>
+					<button ng-disabled="canFlipCharPage(1) == false", ng-click="flipCharPage(1)">&gt;</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div ng-show="shownPlace == 'market'" class="place-content">
+		<h3>市集</h3>
+		<div style="width:360px; left: 150px; bottom: 20px;position: absolute;text-align:center;font-size: 21px;">
+			<span>施工中，敬请期待</span>
+		</div>
+	</div>
+	<div ng-show="shownPlace == 'locksmith'" class="place-content">
+		<h3>开锁店</h3>
+		<div ng-show="showReward == false && loadingReward == false && accountInfo.money>=1 && accountInfo.key>=1" ng-click="openChest()" 
+			class="open-chest-button">
+			<span>打开一个宝箱（花费1</span>
+			<img src="/image/Onenight/Town/coin.png">
+			<span>)</span>
+		</div>
+		<div ng-show="showReward == false && loadingReward == false && accountInfo.key<1" 
+			style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+			<span>你没有宝箱，巧妇难为无米之炊。</span>
+		</div>
+		<div ng-show="showReward == false && loadingReward == false && accountInfo.key>=1 && accountInfo.money<1" 
+			style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+			<span>打开宝箱只需花费1</span>
+			<img src="/image/Onenight/Town/coin.png" style="height: 40px; width:40px;">
+			<span>，你连这都出不起，真是滑天下之大稽。</span>
+		</div>
+		<div ng-show="loadingReward" class="opening">
+			<div>
+				<img src="/image/Onenight/Town/chest.gif" style="height: 153px; width: 270px;"/>
+			</div>
+		</div>
+		<div ng-show="showReward" class="in-chest">
+			<h4>你获得了</h4>
+			<table>
+				<tr>
+					<td ng-repeat="rewardImg in rewardImgs track by $index">
+						<div>
+							<img ng-src="{{rewardImg}}" class="icon"/>
+						</div>
+						<div>{{rewardMsgs[$index]}}</div>
+					</td>
+				</tr>
+			</table>
+			<button ng-click="showReward = false">谢谢</button>
+		</div>
+	</div>
+	<div ng-show="shownPlace == 'belltower'" class="place-content">
+		<h3>钟楼</h3>
+		<div class="opening" ng-show="belltowerEvent!=0 && belltowerEvent!=-1">
+			<div>
+				<img ng-src="/image/Onenight/Town/belltowerEvents/{{belltowerImg}}" style="height: 153px;"/>
+			</div>
+		</div>
+		<div style="width:400px; left: 130px; bottom: 0px;position: absolute;text-align:center;font-size: 21px;">
+			<div>{{belltowerEventMsg}}</div>
+			<div>
+				<button ng-click="triggerBelltowerEvent(0)" ng-show="numButtonShown>0" ng-disabled="disableFirstButton">{{belltowerButton}}</button>
+				<button ng-click="triggerBelltowerEvent(1)" ng-show="numButtonShown>1">{{belltowerButton2}}</button>
+				<button ng-click="triggerBelltowerEvent(2)" ng-show="numButtonShown>2">{{belltowerButton3}}</button>
+				<button ng-click="resolveBelltowerEvent()" ng-show="numButtonShown==0 && belltowerEvent!=-1">继续</button>
+			</div>
+		</div>
+	</div>
+	<div style="position: absolute; top: 30px; right: 30px">
+		<button ng-click="closePlace()">离开</button>
+	</div>
+</div>
