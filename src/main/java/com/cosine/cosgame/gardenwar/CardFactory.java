@@ -4,12 +4,32 @@ import java.util.List;
 
 import org.bson.Document;
 
-import com.cosine.cosgame.gardenwar.base.*;
+import com.cosine.cosgame.gardenwar.baseold.*;
+import com.cosine.cosgame.gardenwar.basic.*;
+import com.cosine.cosgame.gardenwar.generic.*;
 
 public class CardFactory {
 	public static Card makeCard(String img) {
 		Card card = new Card();
 		//TODO: build cards here
+		if (img.contentEquals("bronzeSword")) {
+			card = new BronzeSword();
+		} else if (img.contentEquals("coin1")) {
+			card = new Coin1();
+		} else if (img.contentEquals("rod")) {
+			card = new Rod();
+		} else if (img.contentEquals("wineCup")) {
+			card = new WineCup();
+		}
+		
+		else if (img.contentEquals("chime")) {
+			card = new Chime();
+		} else if (img.contentEquals("daggerAxe")) {
+			card = new DaggerAxe();
+		} else if (img.contentEquals("sacrifice")) {
+			card = new Sacrifice();
+		}
+		/*
 		if (img.contentEquals("puffShroom")) {
 			card = new PuffShroom();
 		} else if (img.contentEquals("sunShroom") || img.contentEquals("sunShroom2") || img.contentEquals("sunShroom3")) {
@@ -59,6 +79,7 @@ public class CardFactory {
 		} else if (img.contentEquals("coffeeBean")) {
 			card = new CoffeeBean();
 		}
+		*/
 		return card;
 	}
 	

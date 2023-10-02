@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.cosine.cosgame.gardenwar.base.*;
+import com.cosine.cosgame.gardenwar.baseold.*;
+import com.cosine.cosgame.gardenwar.basic.*;
+import com.cosine.cosgame.gardenwar.generic.*;
 
 public class AllRes {
 	public List<Card> baseCards;
+	public List<Card> cardsPre650;
 	
 	public AllRes() {
-		buildBaseCards();
+		//buildBaseCards();
+		build650Cards();
 	}
+	
 	public static Card getBasic(int x) {
 		Card c = null;
 		if (x == 2) {
@@ -25,6 +30,21 @@ public class AllRes {
 		}
 		return c;
 	}
+	
+	public void build650Cards() {
+		int i;
+		cardsPre650 = new ArrayList<>();
+		for (i=0;i<3;i++) {
+			cardsPre650.add(new Chime());
+		}
+		for (i=0;i<3;i++) {
+			cardsPre650.add(new DaggerAxe());
+		}
+		for (i=0;i<3;i++) {
+			cardsPre650.add(new Sacrifice());
+		}
+	}
+	
 	public void buildBaseCards() {
 		int i;
 		baseCards = new ArrayList<>();
@@ -89,13 +109,14 @@ public class AllRes {
 			baseCards.add(new CoffeeBean());
 		}
 	}
+	
 	public List<Card> getSupplyDeck() {
 		int i;
 		List<Card> supplyDeck = new ArrayList<>();
 		List<Card> tempCards = new ArrayList<>();
 		
-		for (i=0;i<baseCards.size();i++) {
-			tempCards.add(baseCards.get(i));
+		for (i=0;i<cardsPre650.size();i++) {
+			tempCards.add(cardsPre650.get(i));
 		}
 		
 		while(tempCards.size() > 0) {

@@ -6,9 +6,9 @@ import java.util.Random;
 
 import org.bson.Document;
 
-import com.cosine.cosgame.gardenwar.base.PuffShroom;
-import com.cosine.cosgame.gardenwar.base.SunShroom;
+import com.cosine.cosgame.gardenwar.basic.*;
 import com.cosine.cosgame.gardenwar.entity.PlayerEntity;
+import com.cosine.cosgame.gardenwar.generic.DaggerAxe;
 
 public class Player {
 	String name;
@@ -49,6 +49,7 @@ public class Player {
 	
 	public void initialize() {
 		int i;
+		/*
 		for (i=0;i<2;i++) {
 			Card puffShroom = new PuffShroom();
 			discard.add(puffShroom);
@@ -57,6 +58,17 @@ public class Player {
 			Card sunShroom = new SunShroom();
 			discard.add(sunShroom);
 		}
+		*/
+		for (i=0;i<7;i++) {
+			Card coin1 = new Coin1();
+			discard.add(coin1);
+		}
+		Card wineCup = new WineCup();
+		discard.add(wineCup);
+		Card daggerAxe = new DaggerAxe();
+		discard.add(daggerAxe);
+		Card bronzeSword = new BronzeSword();
+		discard.add(bronzeSword);
 		draw(5);
 	}
 	

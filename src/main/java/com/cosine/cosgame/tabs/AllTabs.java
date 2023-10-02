@@ -13,7 +13,7 @@ public class AllTabs {
 		allTabs.add(new Tab("盗墓惊魂", "gravepsycho", "rgb(23,44,60)", "rgb(230,179,61)"));
 		allTabs.add(new Tab("狼人不杀", "onenight", "rgb(126,33,18)"));
 		allTabs.add(new Tab("雕梁画栋", "architect", "rgb(160,32,240)"));
-		allTabs.add(new Tab("水泊传说", "marshbros", "rgb(218,165,32)"));
+		//allTabs.add(new Tab("水泊传说", "marshbros", "rgb(218,165,32)"));
 		allTabs.add(new Tab("花园战争", "gardenwar", "darkgreen"));
 		return allTabs;
 	}

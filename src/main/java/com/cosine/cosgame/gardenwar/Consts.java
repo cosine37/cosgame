@@ -17,6 +17,8 @@ public class Consts {
 	public static final int DIRT = 6;
 	public static final int SEED = 7;
 	
+	public static final int ITEM = 0;
+	
 	//board statuses
 	public static final int PREGAME = 0;
 	public static final int INGAME = 1;

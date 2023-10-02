@@ -249,7 +249,8 @@ public class Card {
 		boolean flag = true;
 		String ans = "";
 		int i;
-		final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手","土间","种子"};
+		//final String[] clanNames = {"蘑菇", "豌豆", "花朵", "树叶","果实","投手","土间","种子"};
+		final String[] clanNames = {"物品", "豌豆", "花朵", "树叶","果实","投手","土间","种子"};
 		for (i=0;i<clan.size();i++) {
 			if (clan.get(i) == 1 && i<clanNames.length) {
 				String s = clanNames[i];
@@ -268,7 +269,7 @@ public class Card {
 	public String getTypeDisplay() {
 		String ans = "";
 		if (type == Consts.CARD) {
-			ans = "事件";
+			ans = "行动";
 		} else if (type == Consts.EQUIP) {
 			ans = "名流";
 		}

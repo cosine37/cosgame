@@ -7,31 +7,31 @@
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/gardenwarOther.css">
-<link rel="stylesheet" type="text/css" href="/view/css/gardenwarCard.css">
+<link rel="stylesheet" type="text/css" href="/view/css/sawsCard.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/lib/angular-sanitize.js"></script>
-<script src="/js/lib/gardenwarCardMaker.js"></script>
+<script src="/js/lib/sawsCardMaker.js"></script>
 <script src="/js/app/gardenwarGameController.js"></script>
 <body ng-app="gardenwarGameApp" ng-controller="gardenwarGameCtrl">
 	<button ng-click="goto('gardenwar')">back</button>
 	<div>
 		<div id="supply-area" style="position: relative; height: 350px">
 			<div id="base-supply-area" style="position:absolute; width: 210px">
-				<div ng-repeat="cardDisplay in baseCardDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+				<div ng-repeat="cardDisplay in baseCardDisplay track by $index" ng-include="'/view/html/sawsCard.html'"
 					style="float:left" ng-style="cardDisplay.affordStyle" class="play-size" ng-click="buyBasic($index)"></div>
 			</div>
 			<div id="supply-area"  style="position:absolute; left: 220px">
-				<div ng-repeat="cardDisplay in supplyCardDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+				<div ng-repeat="cardDisplay in supplyCardDisplay track by $index" ng-include="'/view/html/sawsCard.html'"
 					style="float:left" ng-style="cardDisplay.affordStyle" class="hand-size" ng-click="buy($index)"></div>
 			</div>
 		</div>
 		<div style="clear:both"></div>
 		<div id="player-area" style="position: relative">
-			<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/gardenwarCard.html'"
+			<div ng-repeat="cardDisplay in playDisplay track by $index" ng-include="'/view/html/sawsCard.html'"
 				style="float:left" class="play-size">
 			</div>
 			<div style="clear: both"> sun: {{gamedata.curPlayerSun}} pea: {{gamedata.curPlayerPea}}</div>
@@ -49,14 +49,14 @@
 			</div>
 			<div>
 				<div ng-repeat="cardDisplay in handDisplay track by $index" style="float:left; position: relative" class="hand-size" ng-click="clickHand($index)">
-					<div ng-include="'/view/html/gardenwarCard.html'"></div>
+					<div ng-include="'/view/html/sawsCard.html'"></div>
 					<div class="choosehand" ng-show="target == $index">
 				</div>
 			</div>
 			<div style="clear: both"></div>
 			<div>
 				<div ng-repeat="cardDisplay in equipDisplay track by $index" style="float:left; position: relative" class="equip-size" ng-click="clickEquip($index)">
-					<div ng-include="'/view/html/gardenwarCard.html'"></div>
+					<div ng-include="'/view/html/sawsCard.html'"></div>
 				</div>
 			</div>
 			

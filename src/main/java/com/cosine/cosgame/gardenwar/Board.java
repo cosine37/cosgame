@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
-import com.cosine.cosgame.gardenwar.base.*;
+import com.cosine.cosgame.gardenwar.baseold.*;
 import com.cosine.cosgame.gardenwar.entity.BoardEntity;
 import com.cosine.cosgame.gardenwar.entity.CardEntity;
 import com.cosine.cosgame.gardenwar.entity.PlayerEntity;
