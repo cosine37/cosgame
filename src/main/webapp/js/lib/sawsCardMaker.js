@@ -168,11 +168,13 @@ function renderKeywords(cardDisplay){
 	if (cardDisplay.showShield){
 		desc = smartReplace(desc, "消耗", "<b class='orange'>消耗</b>")
 		desc = smartReplace(desc, "放置", "<b class='blue'>放置</b>")
+		desc = smartReplace(desc, "抽牌", "<b class='blue'>抽牌</b>")
 		desc = smartReplace(desc, "爆破", "<b class='red'>爆破</b>")
 		desc = smartReplace(desc, "触发", "<b class='activate'>触发</b>")
 	} else {
 		desc = smartReplace(desc, "消耗", "<b class='dark-orange'>消耗</b>")
 		desc = smartReplace(desc, "放置", "<b class='dark-blue'>放置</b>")
+		desc = smartReplace(desc, "抽牌", "<b class='blue'>抽牌</b>")
 		desc = smartReplace(desc, "爆破", "<b class='red'>爆破</b>")
 	}
 	//alert(desc)

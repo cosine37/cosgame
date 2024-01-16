@@ -6,14 +6,14 @@ import java.util.Random;
 import com.cosine.cosgame.gardenwar.Card;
 import com.cosine.cosgame.gardenwar.Consts;
 
-public class Sacrifice extends Card{
-	public Sacrifice() {
-		name = "祭祀";
-		img = "sacrifice";
-		cost = 2;
+public class JusticeOverFamily extends Card{
+	public JusticeOverFamily() {
+		name = "大义灭亲";
+		img = "justiceOverFamily";
+		cost = 4;
 		type = Consts.CARD;
 		addClan(Consts.ITEM);
-		desc = "你可以消耗一张手牌，若如此做，随机获得c1~c3。";
+		desc = "消耗一张手牌，若如此做，获得a4。";
 	}
 	
 	public void play() {
@@ -42,10 +42,7 @@ public class Sacrifice extends Card{
 			int x = targets.get(0);
 			if (x!=-1 && player.getHand().get(x).isTrashable() && player.getHand().get(x).getType() != Consts.ZOMBIE) {
 				player.trash(x);
-				int[] sunValues = {1,2,2,2,3,3};
-				Random rand = new Random();
-				int n = rand.nextInt(sunValues.length);
-				player.addSun(sunValues[n]);
+				player.addAtk(4);
 			}
 		} else {
 			

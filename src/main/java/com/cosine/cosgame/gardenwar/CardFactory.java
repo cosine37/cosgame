@@ -28,6 +28,12 @@ public class CardFactory {
 			card = new DaggerAxe();
 		} else if (img.contentEquals("sacrifice")) {
 			card = new Sacrifice();
+		} else if (img.contentEquals("flyingPhoenix")) {
+			card = new FlyingPhoenix();
+		} else if (img.contentEquals("justiceOverFamily")) {
+			card = new JusticeOverFamily();
+		} else if (img.contentEquals("harvest")) {
+			card = new Harvest();
 		}
 		/*
 		if (img.contentEquals("puffShroom")) {

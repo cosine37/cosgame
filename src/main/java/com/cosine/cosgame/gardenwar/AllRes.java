@@ -43,6 +43,15 @@ public class AllRes {
 		for (i=0;i<3;i++) {
 			cardsPre650.add(new Sacrifice());
 		}
+		for (i=0;i<3;i++) {
+			cardsPre650.add(new JusticeOverFamily());
+		}
+		for (i=0;i<2;i++) {
+			cardsPre650.add(new Harvest());
+		}
+		for (i=0;i<2;i++) {
+			cardsPre650.add(new FlyingPhoenix());
+		}
 	}
 	
 	public void buildBaseCards() {

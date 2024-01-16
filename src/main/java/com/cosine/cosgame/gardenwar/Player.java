@@ -65,8 +65,8 @@ public class Player {
 		}
 		Card wineCup = new WineCup();
 		discard.add(wineCup);
-		Card daggerAxe = new DaggerAxe();
-		discard.add(daggerAxe);
+		Card rod = new Rod();
+		discard.add(rod);
 		Card bronzeSword = new BronzeSword();
 		discard.add(bronzeSword);
 		draw(5);
