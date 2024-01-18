@@ -14,13 +14,49 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/pokerworldCreateGameController.js"></script>
 <body ng-app="pokerworldCreateGameApp" ng-controller="pokerworldCreateGameCtrl">
-	<button ng-click="goto('pokerworld')">back</button>
-	<button ng-click="startGame()" ng-show="lord == username">start game</button>
-	<!-- 
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	 -->
 	<div>
-		<p ng-repeat="p in players">{{p.name}}</p>
+		<button ng-click="goto('pokerworld')">back</button>
+		<button ng-click="startGame()" ng-show="lord == username">start game</button>
+		<!-- 
+		<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
+		 -->
+		<div>
+			
+			<table>
+				<tr ng-repeat="p in players track by $index">
+					<td>{{p.name}}</td>
+					<td>
+						<div ng-show="$index == firstPlayer">初始玩家</div>
+						<button ng-show="$index != firstPlayer" ng-click="setFirstPlayer($index)" ng-show="lord == username">设为初始</button>
+					</td>
+				</tr>
+			</table>
+			<button ng-click="randomFirstPlayer()" ng-show="lord == username">随机初始玩家</button>
+		</div>
 	</div>
+	<div ng-show="lord == username">
+		<table>
+			<tr>
+				<td>
+					<p>选择游戏</p>
+					<button disabled>四副升级</button>
+					<button ng-click="chooseGame(1)" ng-disabled = "chosenGame == 1">巫师牌</button>
+				</td>
+				<td>
+					<div ng-show="chosenGame == 1">
+						<p>巫师牌选项</p>
+						最大点数
+						<button ng-disabled="biggestRank == 13" ng-click="setBiggestRank(13)">K</button>
+						<button ng-disabled="biggestRank == 1" ng-click="setBiggestRank(1)">A</button>
+						<button ng-disabled="biggestRank == 2" ng-click="setBiggestRank(2)">2</button>
+					</div>
+					
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+	
 </body>
 </html>

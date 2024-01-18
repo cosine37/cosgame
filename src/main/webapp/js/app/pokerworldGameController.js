@@ -54,6 +54,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.disablePlayButton = true;
 		$scope.indexSequence = [0,1,2,3];
 		
+		$scope.SFSJ = 0;
+		$scope.WIZARD = 1;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -278,6 +281,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.gamedata = response.data
 				$scope.id = response.data.id
 				$scope.status = response.data.status
+				$scope.gameMode = response.data.gameMode
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
 				$scope.myCards = response.data.myCards

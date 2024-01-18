@@ -27,6 +27,10 @@ public class Board {
 	int numPlayed;
 	int winPlayer;
 	int attackerPointsGained;
+	int round;
+	int phase;
+	int biggestRank;
+	int gameMode;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -54,6 +58,15 @@ public class Board {
 	}
 	
 	public void startGame() {
+		gameMode = settings.get(Consts.GAMEMODEINDEX);
+		if (gameMode == Consts.SFSJ) {
+			startGameSFSJ();
+		} else if (gameMode == Consts.WIZARD) {
+			startGameWizard();
+		}
+	}
+	
+	public void startGameSFSJ() {
 		int i;
 		confirmed = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -69,6 +82,14 @@ public class Board {
 		curClaimedPlayer = -1;
 		numPlayed = -1;
 		rawHidden = gameUtil.toRawHidden();
+		status = Consts.DISTRIBUTECARDS;
+	}
+	
+	public void startGameWizard() {
+		biggestRank = settings.get(Consts.BIGGESTRANKINDEX);
+		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
+		confirmed = new ArrayList<>();
+		round = 1;
 		status = Consts.DISTRIBUTECARDS;
 	}
 	
@@ -287,6 +308,30 @@ public class Board {
 	public void setAttackerPointsGained(int attackerPointsGained) {
 		this.attackerPointsGained = attackerPointsGained;
 	}
+	public int getRound() {
+		return round;
+	}
+	public void setRound(int round) {
+		this.round = round;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	public int getBiggestRank() {
+		return biggestRank;
+	}
+	public void setBiggestRank(int biggestRank) {
+		this.biggestRank = biggestRank;
+	}
+	public int getGameMode() {
+		return gameMode;
+	}
+	public void setGameMode(int gameMode) {
+		this.gameMode = gameMode;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player();
@@ -311,6 +356,8 @@ public class Board {
 	public void updateBasicDB() {
 		//TODO: Add more items for general updates
 		dbutil.update("id", id, "status", status);
+		dbutil.update("id", id, "round", round);
+		dbutil.update("id", id, "phase", phase);
 		dbutil.update("id", id, "curPlayer", curPlayer);
 		dbutil.update("id", id, "numPlayed", numPlayed);
 		dbutil.update("id", id, "winPlayer", winPlayer);
@@ -410,6 +457,8 @@ public class Board {
 		doc.append("id", id);
 		doc.append("lord", lord);
 		doc.append("status", status);
+		doc.append("round", round);
+		doc.append("phase", phase);
 		doc.append("firstPlayer", firstPlayer);
 		doc.append("curPlayer", curPlayer);
 		doc.append("settings", settings);
@@ -424,6 +473,8 @@ public class Board {
 		doc.append("winPlayer", winPlayer);
 		doc.append("confirmed", confirmed);
 		doc.append("attackerPointsGained", attackerPointsGained);
+		doc.append("biggestRank", biggestRank);
+		doc.append("gameMode", gameMode);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -439,6 +490,8 @@ public class Board {
 		id = doc.getString("id");
 		lord = doc.getString("lord");
 		status = doc.getInteger("status", -1);
+		round = doc.getInteger("round", -1);
+		phase = doc.getInteger("phase", -1);
 		firstPlayer = doc.getInteger("firstPlayer", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
 		settings = (List<Integer>) doc.get("settings");
@@ -454,6 +507,8 @@ public class Board {
 		numPlayed = doc.getInteger("numPlayed", -1);
 		winPlayer = doc.getInteger("winPlayer", -1);
 		attackerPointsGained = doc.getInteger("attackerPointsGained", 0);
+		biggestRank = doc.getInteger("biggestRank", 13);
+		gameMode = doc.getInteger("gameMode", 0);
 		gameUtil.setAttackerPointsGained(attackerPointsGained);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -472,7 +527,9 @@ public class Board {
 		BoardEntity entity = new BoardEntity();
 		entity.setId(id);
 		entity.setLord(lord);
-		entity.setStatus(Integer.toString(status));
+		entity.setStatus(status);
+		entity.setRound(round);
+		entity.setPhase(phase);
 		entity.setDominantRank(dominantRank);
 		entity.setDominantSuit(dominantSuit);
 		entity.setNumDominant(numDominant);
@@ -482,6 +539,8 @@ public class Board {
 		entity.setNumPlay(numPlayed);
 		entity.setWinPlayer(winPlayer);
 		entity.setAttackerPointsGained(attackerPointsGained);
+		entity.setGameMode(gameMode);
+		entity.setBiggestRank(biggestRank);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

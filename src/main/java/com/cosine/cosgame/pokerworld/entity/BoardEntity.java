@@ -5,7 +5,6 @@ import java.util.List;
 public class BoardEntity {
 	String id;
 	String lord;
-	String status;
 	String myCards;
 	String dominantRank;
 	String dominantSuit;
@@ -17,6 +16,11 @@ public class BoardEntity {
 	int numPlay;
 	int winPlayer;
 	int attackerPointsGained;
+	int status;
+	int round;
+	int phase;
+	int biggestRank;
+	int gameMode;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -36,11 +40,23 @@ public class BoardEntity {
 	public void setLord(String lord) {
 		this.lord = lord;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
+	}
+	public int getRound() {
+		return round;
+	}
+	public void setRound(int round) {
+		this.round = round;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
 	}
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -131,5 +147,17 @@ public class BoardEntity {
 	}
 	public void setAttackerPointsGained(int attackerPointsGained) {
 		this.attackerPointsGained = attackerPointsGained;
+	}
+	public int getBiggestRank() {
+		return biggestRank;
+	}
+	public void setBiggestRank(int biggestRank) {
+		this.biggestRank = biggestRank;
+	}
+	public int getGameMode() {
+		return gameMode;
+	}
+	public void setGameMode(int gameMode) {
+		this.gameMode = gameMode;
 	}
 }

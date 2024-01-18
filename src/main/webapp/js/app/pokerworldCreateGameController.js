@@ -32,7 +32,10 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			heartCheck.start();
 		});
 		
-		$scope.settings = [0]
+		$scope.showWizardSettings = false;
+		$scope.chosenGame = -1;
+		$scope.biggestRank = 13;
+		$scope.firstPlayer = 0;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -49,9 +52,34 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			});
 		}
 		
+		$scope.chooseGame = function(x){
+			$scope.chosenGame = x;
+		}
+		
+		$scope.setFirstPlayer = function(x){
+			$scope.firstPlayer = x;
+		}
+		
+		$scope.setBiggestRank = function(x){
+			$scope.biggestRank = x;
+		}
+		
+		$scope.randomFirstPlayer = function(){
+			var x = Math.floor(Math.random() * $scope.players.length);
+			$scope.firstPlayer = x;
+		}
+		
 		$scope.startGame = function(){
+			if ($scope.chosenGame == -1){
+				alert("请选择游戏！");
+				return;
+			}
+			settings = [-1,0,0]
+			settings[0] = $scope.chosenGame;
+			settings[1] = $scope.biggestRank;
+			settings[2] = $scope.firstPlayer;
 			var data = {
-				"settings" : $scope.settings	
+				"settings" : settings
 			}
 			$http({url: "/pokerworld/startgame", method: "POST", params:data}).then(function(response){
 				ws.send("start");
