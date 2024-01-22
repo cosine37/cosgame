@@ -93,6 +93,18 @@ public class Board {
 		status = Consts.DISTRIBUTECARDS;
 	}
 	
+	public void dealWizard() {
+		int i,j;
+		List<PokerCard> deck = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			players.get(i).emptyHand();
+			for (j=0;j<round;j++) {
+				PokerCard c = deck.remove(0);
+				players.get(i).getHand().add(c);
+			}
+		}
+	}
+	
 	public void drawHidden() {
 		if (curClaimedPlayer != -1) {
 			firstPlayer = curClaimedPlayer;

@@ -20,9 +20,21 @@ public class Player {
 	List<Integer> playedIndex;
 	String playedCardsStr;
 	
+	List<PokerCard> hand;
+	List<Integer> scores;
+	List<Integer> bids;
+	List<Integer> actuals;
+	List<PokerCard> played;
+	
 	public Player() {
 		playedIndex = new ArrayList<>();
 		playedCardsStr = "";
+		
+		hand = new ArrayList<>();
+		scores = new ArrayList<>();
+		bids = new ArrayList<>();
+		actuals = new ArrayList<>();
+		played = new ArrayList<>();
 	}
 	
 	public List<Card> getMyCards(){
@@ -81,6 +93,10 @@ public class Player {
 		playedIndex = new ArrayList<>();
 	}
 	
+	public void emptyHand() {
+		hand = new ArrayList<>();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -129,14 +145,53 @@ public class Player {
 	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
 		this.confirmedNextTurn = confirmedNextTurn;
 	}
+	public List<PokerCard> getHand() {
+		return hand;
+	}
+	public void setHand(List<PokerCard> hand) {
+		this.hand = hand;
+	}
+	public List<Integer> getScores() {
+		return scores;
+	}
+	public void setScores(List<Integer> scores) {
+		this.scores = scores;
+	}
+	public List<Integer> getBids() {
+		return bids;
+	}
+	public void setBids(List<Integer> bids) {
+		this.bids = bids;
+	}
+	public List<Integer> getActuals() {
+		return actuals;
+	}
+	public void setActuals(List<Integer> actuals) {
+		this.actuals = actuals;
+	}
+	public List<PokerCard> getPlayed() {
+		return played;
+	}
+	public void setPlayed(List<PokerCard> played) {
+		this.played = played;
+	}
 	public Document toDocument() {
+		int i;
 		Document doc = new Document();
 		doc.append("name", name);
 		doc.append("innerId", innerId);
 		doc.append("playedIndex", playedIndex);
 		doc.append("confirmedClaim", confirmedClaim);
 		doc.append("confirmedNextTurn", confirmedNextTurn);
-		doc.append("playedCardsStr", playedCardsStr);
+		doc.append("hand", PokerUtil.cardListToString(hand));
+		doc.append("scores", scores);
+		doc.append("bids", bids);
+		doc.append("actuals", actuals);
+		if (board.getGameMode() == Consts.SFSJ) {
+			doc.append("playedCardsStr", playedCardsStr);
+		} else {
+			doc.append("playesCardsStr", PokerUtil.cardListToString(played));
+		}
 		return doc;
 	}
 	public void setFromDoc(Document doc) {
@@ -146,22 +201,29 @@ public class Player {
 		confirmedClaim = doc.getBoolean("confirmedClaim", false);
 		confirmedNextTurn = doc.getBoolean("confirmedNextTurn", false);
 		playedCardsStr = doc.getString("playedCardsStr");
+		scores = (List<Integer>) doc.get("scores");
+		bids = (List<Integer>) doc.get("bids");
+		actuals = (List<Integer>) doc.get("actuals");
+		if (board.getGameMode() == Consts.SFSJ) {
+			playedCardsStr = doc.getString("playedCardsStr");
+		} else {
+			playedCardsStr = doc.getString("playedCardsStr");
+			played = PokerUtil.stringToCardList(playedCardsStr);
+		}
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();
 		entity.setName(name);
-		/*
-		int i;
-		String playedCards = "";
-		String myRawCards = getMyRawCards();
-		for (i=0;i<playedIndex.size();i++) {
-			int x = playedIndex.get(i);
-			playedCards = playedCards + myRawCards.substring(x*2, x*2+2);
-		}
-		entity.setPlayedCards(playedCards);
-		*/
 		entity.setConfirmedNextTurn(confirmedNextTurn);
+		if (board.getGameMode() == Consts.SFSJ) {
+			entity.setPlayedCards(playedCardsStr);
+		} else {
+			entity.setPlayedCards(PokerUtil.cardListToString(played));
+		}
 		entity.setPlayedCards(playedCardsStr);
+		entity.setScores(scores);
+		entity.setBids(bids);
+		entity.setActuals(actuals);
 		return entity;
 	}
 	

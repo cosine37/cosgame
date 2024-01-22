@@ -6,6 +6,9 @@ public class PlayerEntity {
 	String name;
 	String playedCards;
 	boolean confirmedNextTurn;
+	List<Integer> scores;
+	List<Integer> bids;
+	List<Integer> actuals;
 
 	public String getName() {
 		return name;
@@ -24,5 +27,23 @@ public class PlayerEntity {
 	}
 	public void setConfirmedNextTurn(boolean confirmedNextTurn) {
 		this.confirmedNextTurn = confirmedNextTurn;
+	}
+	public List<Integer> getScores() {
+		return scores;
+	}
+	public void setScores(List<Integer> scores) {
+		this.scores = scores;
+	}
+	public List<Integer> getBids() {
+		return bids;
+	}
+	public void setBids(List<Integer> bids) {
+		this.bids = bids;
+	}
+	public List<Integer> getActuals() {
+		return actuals;
+	}
+	public void setActuals(List<Integer> actuals) {
+		this.actuals = actuals;
 	}
 }
