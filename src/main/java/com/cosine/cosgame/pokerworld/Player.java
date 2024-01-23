@@ -37,9 +37,18 @@ public class Player {
 		played = new ArrayList<>();
 	}
 	
+	public Player(Board board) {
+		this();
+		this.board = board;
+	}
+	
 	public List<Card> getMyCards(){
 		List<Card> cards = board.getGame().getPlayerCards().get(innerId);
 		return cards;
+	}
+	
+	public String getHandAsStr() {
+		return PokerUtil.cardListToString(hand);
 	}
 	
 	public String getMyRawCards() {
@@ -190,7 +199,7 @@ public class Player {
 		if (board.getGameMode() == Consts.SFSJ) {
 			doc.append("playedCardsStr", playedCardsStr);
 		} else {
-			doc.append("playesCardsStr", PokerUtil.cardListToString(played));
+			doc.append("playedCardsStr", PokerUtil.cardListToString(played));
 		}
 		return doc;
 	}
@@ -204,11 +213,14 @@ public class Player {
 		scores = (List<Integer>) doc.get("scores");
 		bids = (List<Integer>) doc.get("bids");
 		actuals = (List<Integer>) doc.get("actuals");
+		
 		if (board.getGameMode() == Consts.SFSJ) {
 			playedCardsStr = doc.getString("playedCardsStr");
 		} else {
 			playedCardsStr = doc.getString("playedCardsStr");
 			played = PokerUtil.stringToCardList(playedCardsStr);
+			String handStr = doc.getString("hand");
+			hand = PokerUtil.stringToCardList(handStr);
 		}
 	}
 	public PlayerEntity toPlayerEntity() {

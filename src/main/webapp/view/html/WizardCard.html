@@ -1,0 +1,24 @@
+<div class="rank-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester' && c.rank != '10'">
+	{{c.rank}}
+</div>
+<div class="rank-10-hand" ng-show="c.rank == '10'">
+	{{c.rank}}
+</div>
+<div class="joker-hand" ng-show="c.rank == 'wizard'">
+	<div class="wizard-hand-letter">W</div>
+	<div class="wizard-hand-letter">Z</div>
+</div>
+<div class="joker-hand" ng-show="c.rank == 'jester'">
+	<div class="joker-hand-letter">J</div>
+	<div class="joker-hand-letter">E</div>
+</div>
+<div class="suit-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester'">
+	{{c.suit}}
+</div>
+<div class="suit-big-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester'">
+	{{c.suit}}
+</div>
+<div class="wizard-big-hand" ng-show="c.rank == 'wizard'">
+</div>
+<div class="jester-big-hand" ng-show="c.rank == 'jester'">
+</div>

@@ -85,8 +85,6 @@ button:disabled{
 	float: left;
 	border: 1px solid black;
 	border-radius: 10px;
-	margin-left: -60px;
-	margin-top: -80px;
 	background-color: white;
 	cursor: pointer;
 }
@@ -161,6 +159,14 @@ button:disabled{
 	margin-top: -8px;
 }
 
+.wizard-hand-letter{
+	font-weight: bold;
+	font-size: 17px;
+	text-align: center;
+	margin-top: -8px;
+	margin-left: 3px;
+}
+
 .joker-play{
 	position: absolute;
 	left: 0px;
@@ -196,6 +202,38 @@ button:disabled{
 .joker-big-hand{
 	position: absolute;
 	background-image: url('/image/Pokerworld/lcds.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.wizard-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/wizard.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.jester-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/jester.png');
 	height: 140px;
 	width: 93px;
 	right: 0px;
@@ -248,6 +286,17 @@ button:disabled{
 .black{
 	color: black;
 }
+
+.blue{
+	color: navy;
+	background-color: deepskyblue;
+}
+
+.green{
+	color: darkgreen;
+	background-color: lightgreen;
+}
+
 
 .gold {
 	color: red;

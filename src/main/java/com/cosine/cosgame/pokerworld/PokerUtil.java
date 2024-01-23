@@ -2,6 +2,7 @@ package com.cosine.cosgame.pokerworld;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PokerUtil {
 	public static List<PokerCard> stringToCardList(String s){
@@ -56,5 +57,14 @@ public class PokerUtil {
 			cards.add(card);
 		}
 		return cards;
+	}
+	public static List<PokerCard> shuffle(List<PokerCard> cards){
+		List<PokerCard> newCards = new ArrayList<>();
+		Random rand = new Random();
+		while (cards.size()>0) {
+			int x = rand.nextInt(cards.size());
+			newCards.add(cards.remove(x));
+		}
+		return newCards;
 	}
 }

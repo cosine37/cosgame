@@ -47,7 +47,7 @@ public class PokerCard {
 	}
 	
 	public String toString() {
-		return suit + getRankStr();
+		return getRankStr() + suit;
 	}
 	
 	public void setFromStr(String s) {

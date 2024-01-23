@@ -210,6 +210,19 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				s = "\u2663";
 				c = "black";
 			}
+			
+			if (raw == "WZ" || raw == "Wz" || raw == "wZ" || raw == "wz"){
+				r = "wizard"
+				s = raw;
+				c = "blue";
+			}
+			
+			if (raw == "JE" || raw == "Je" || raw == "jE" || raw == "je"){
+				r = "jester"
+				s = raw;
+				c = "green";
+			}
+			
 			card["rank"] = r
 			card["suit"] = s
 			card["color"] = c
@@ -326,13 +339,14 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					return;
 				}
 				setCardStyles()
+				/*
 				if ($scope.status == "1" && $scope.distributing == false){
 					$scope.distributing = true;
 					distributeCards();
 				} else {
 					
 				}
-				
+				*/
 
 			});
 		}

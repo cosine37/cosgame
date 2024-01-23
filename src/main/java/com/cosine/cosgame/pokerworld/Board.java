@@ -55,6 +55,7 @@ public class Board {
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 		rawHidden = "";
+		gameMode = -1;
 	}
 	
 	public void startGame() {
@@ -90,12 +91,15 @@ public class Board {
 		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
 		confirmed = new ArrayList<>();
 		round = 1;
-		status = Consts.DISTRIBUTECARDS;
+		dealWizard();
+		status = Consts.BIDTRICKS;
 	}
 	
 	public void dealWizard() {
 		int i,j;
-		List<PokerCard> deck = new ArrayList<>();
+		List<PokerCard> deck = PokerUtil.getWizardDeck();
+		deck = PokerUtil.shuffle(deck);
+		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			for (j=0;j<round;j++) {
@@ -346,7 +350,7 @@ public class Board {
 	}
 
 	public void addPlayer(String name) {
-		Player p = new Player();
+		Player p = new Player(this);
 		p.setName(name);
 		players.add(p);
 	}
@@ -529,8 +533,7 @@ public class Board {
 			String n = playerNames.get(i);
 			n = "player-" + n;
 			Document dop = (Document) doc.get(n);
-			Player p = new Player();
-			p.setBoard(this);
+			Player p = new Player(this);
 			p.setFromDoc(dop);
 			players.add(p);
 		}
@@ -560,7 +563,12 @@ public class Board {
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
 				entity.setMyIndex(p.getInnerId());
-				entity.setMyCards(p.getMyRawCardsAfterPlay());
+				if (gameMode == Consts.SFSJ) {
+					entity.setMyCards(p.getMyRawCardsAfterPlay());
+				} else {
+					entity.setMyCards(p.getHandAsStr());
+				}
+				
 				entity.setConfirmed(p.isConfirmedClaim());
 				entity.setConfirmedNextTurn(p.isConfirmedNextTurn());
 				if (sequences == null || sequences.size()<=i) {

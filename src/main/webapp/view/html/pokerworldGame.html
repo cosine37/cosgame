@@ -15,6 +15,10 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
+	<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-click="clickCard($index)"></div>
+	{{gamedata}}
+	{{hand}}
+	<!-- 
 	<div class="table-div">
 		<div class="player-div" ng-repeat="i in indexSequence">
 			<div class="played-card-div">
@@ -44,34 +48,6 @@
 			<div class="player-name">{{players[i].name}}</div>
 		</div>
 	</div>
-	<!-- 
-	<div style="height: 135px" >
-		<div ng-repeat="p in players">
-			<div class="card-play card-size noselect" ng-repeat="c in p.played track by $index" ng-class="c.color" ng-click="clickCard($index)">
-				<div class="rank-hand" ng-show="c.rank != 'joker' && c.rank != '10'">
-					{{c.rank}}
-				</div>
-				<div class="rank-10-hand" ng-show="c.rank == '10'">
-					{{c.rank}}
-				</div>
-				<div class="joker-hand" ng-show="c.rank == 'joker'">
-					<div class="joker-hand-letter">L</div>
-					<div class="joker-hand-letter">C</div>
-					<div class="joker-hand-letter">D</div>
-					<div class="joker-hand-letter">S</div>
-				</div>
-				<div class="suit-hand" ng-show="c.rank != 'joker'">
-					{{c.suit}}
-				</div>
-				<div class="suit-big-hand" ng-show="c.rank != 'joker'">
-					{{c.suit}}
-				</div>
-				<div class="joker-big-hand" ng-show="c.rank == 'joker'">
-				</div>
-			</div>
-		</div>
-	</div>
-	 -->
 	<div style="clear:both">
 		<span ng-show="status == '3'">进攻方得分：{{attackerPointsGained}}</span>
 	</div>
@@ -138,17 +114,9 @@
 		</div>
 		{{dominantRankSuits}}
 	</div>
-	
-	
-	
-	{{gamedata}}
-	
-	<!-- 
-	<button ng-click="addbot()">add bot</button>
-	<button ng-click="startGame()">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	 -->
-	<div>
-	</div>
+	
+	
+	
 </body>
 </html>
