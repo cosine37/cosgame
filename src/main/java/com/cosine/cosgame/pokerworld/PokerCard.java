@@ -24,6 +24,28 @@ public class PokerCard {
 		this(suit, rank);
 	}
 	
+	public int getRealRank(int biggestRank) {
+		int ans = rank;
+		if (rank<=biggestRank) {
+			ans = rank+13;
+		}
+		return ans;
+	}
+	
+	public int getSuitValue() {
+		if (suit.contentEquals("s")) {
+			return 4;
+		} else if (suit.contentEquals("h")) {
+			return 3;
+		} else if (suit.contentEquals("c")) {
+			return 2;
+		} else if (suit.contentEquals("d")) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
 	public String getSuit() {
 		return suit;
 	}
@@ -51,6 +73,11 @@ public class PokerCard {
 	}
 	
 	public void setFromStr(String s) {
+		if (s.length() == 0) {
+			suit = "";
+			rank = 0;
+			return;
+		}
 		char ch = s.charAt(0);
 		if (ch == 's' || ch == 'h' || ch =='c' || ch == 'd') {
 			suit = "" + ch;

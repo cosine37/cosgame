@@ -16,6 +16,7 @@ public class Board {
 	String lord;
 	String dominantRank;
 	String dominantSuit;
+	String currentSuit;
 	String rawHidden;
 	
 	int numDominant;
@@ -31,10 +32,14 @@ public class Board {
 	int phase;
 	int biggestRank;
 	int gameMode;
+	int numWzRevealed;
+	int numJeRevealed;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
 	List<Boolean> confirmed;
+	
+	PokerCard dominantCard;
 	
 	GameUtil gameUtil;
 	
@@ -45,6 +50,7 @@ public class Board {
 		players = new ArrayList<>();
 		sequences = new ArrayList<>();
 		confirmed = new ArrayList<>();
+		dominantCard = new PokerCard();
 		
 		lord = "";
 		gameUtil = new GameUtil();
@@ -105,10 +111,38 @@ public class Board {
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
+			
 			for (j=0;j<round;j++) {
 				PokerCard c = deck.remove(0);
 				players.get(i).getHand().add(c);
 			}
+			
+		}
+		
+		dominantCard = new PokerCard();
+		
+		if (deck.size() > 0) {
+			numWzRevealed = 0;
+			numJeRevealed = 0;
+			dominantSuit = "";
+			while (deck.size()>0) {
+				dominantCard = deck.remove(0);
+				if (dominantCard.getSuit().contentEquals("WZ")) {
+					numWzRevealed++;
+				} else if (dominantCard.getSuit().contentEquals("JE")) {
+					numJeRevealed++;
+				} else {
+					dominantSuit = dominantCard.getSuit();
+					break;
+				}
+			}
+			
+		} else {
+			dominantSuit = "";
+		}
+		
+		for (i=0;i<players.size();i++) {
+			players.get(i).sortHand();
 		}
 	}
 	
@@ -361,6 +395,18 @@ public class Board {
 	public void setGameMode(int gameMode) {
 		this.gameMode = gameMode;
 	}
+	public String getCurrentSuit() {
+		return currentSuit;
+	}
+	public void setCurrentSuit(String currentSuit) {
+		this.currentSuit = currentSuit;
+	}
+	public PokerCard getDominantCard() {
+		return dominantCard;
+	}
+	public void setDominantCard(PokerCard dominantCard) {
+		this.dominantCard = dominantCard;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player(this);
@@ -404,6 +450,9 @@ public class Board {
 		dbutil.update("id", id, "dominantSuit", dominantSuit);
 		dbutil.update("id", id, "numDominant", numDominant);
 		dbutil.update("id", id, "curClaimedPlayer", curClaimedPlayer);
+		dbutil.update("id", id, "dominantCard", dominantCard.toString());
+		dbutil.update("id", id, "numWzRevealed", numWzRevealed);
+		dbutil.update("id", id, "numJeRevealed", numJeRevealed);
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -495,6 +544,7 @@ public class Board {
 		doc.append("sequences", sequences);
 		doc.append("dominantRank", dominantRank);
 		doc.append("dominantSuit", dominantSuit);
+		doc.append("currentSuit", currentSuit);
 		doc.append("numDominant", numDominant);
 		doc.append("curClaimedPlayer", curClaimedPlayer);
 		doc.append("rawHidden", rawHidden);
@@ -504,6 +554,9 @@ public class Board {
 		doc.append("attackerPointsGained", attackerPointsGained);
 		doc.append("biggestRank", biggestRank);
 		doc.append("gameMode", gameMode);
+		doc.append("dominantCard", dominantCard.toString());
+		doc.append("numWzRevealed", numWzRevealed);
+		doc.append("numJeRevealed", numJeRevealed);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -527,6 +580,7 @@ public class Board {
 		sequences = (List<List<Integer>>) doc.get("sequences");
 		dominantRank = doc.getString("dominantRank");
 		dominantSuit = doc.getString("dominantSuit");
+		currentSuit = doc.getString("currentSuit");
 		numDominant = doc.getInteger("numDominant", 0);
 		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
 		confirmed = (List<Boolean>) doc.get("confirmed");
@@ -539,6 +593,10 @@ public class Board {
 		biggestRank = doc.getInteger("biggestRank", 13);
 		gameMode = doc.getInteger("gameMode", 0);
 		gameUtil.setAttackerPointsGained(attackerPointsGained);
+		String dominantCardStr = doc.getString("dominantCard");
+		dominantCard = new PokerCard(dominantCardStr);
+		numWzRevealed = doc.getInteger("numWzRevealed", 0);
+		numJeRevealed = doc.getInteger("numJeRevealed", 0);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -569,6 +627,9 @@ public class Board {
 		entity.setAttackerPointsGained(attackerPointsGained);
 		entity.setGameMode(gameMode);
 		entity.setBiggestRank(biggestRank);
+		entity.setDominantCard(dominantCard.toString());
+		entity.setNumWzRevealed(numWzRevealed);
+		entity.setNumJeRevealed(numJeRevealed);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

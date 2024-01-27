@@ -67,4 +67,68 @@ public class PokerUtil {
 		}
 		return newCards;
 	}
+	
+	public static boolean bigger(PokerCard c1, PokerCard c2, String dominantSuit, String currentSuit, int biggestRank, boolean sortHand) {
+		if (dominantSuit == null) dominantSuit = "";
+		if (currentSuit == null) currentSuit = "";
+		if (c1.getSuit().contentEquals("WZ")) {
+			return true;
+		} else if (c2.getSuit().contentEquals("WZ")) {
+			return false;
+		} else if (c2.getSuit().contentEquals("JE")) {
+			return true;
+		} else if (c1.getSuit().contentEquals("JE")) {
+			return false;
+		} else if (c1.getSuit().contentEquals(dominantSuit)) {
+			if (c2.getSuit().contentEquals(dominantSuit)) {
+				if (c2.getRealRank(biggestRank) > c1.getRealRank(biggestRank)) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else if (c2.getSuit().contentEquals(dominantSuit)){
+			return false;
+		} else if (c1.getSuit().contentEquals(currentSuit)) {
+			if (c2.getSuit().contentEquals(currentSuit)) {
+				if (c2.getRealRank(biggestRank) > c1.getRealRank(biggestRank)) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} else if (c2.getSuit().contentEquals(currentSuit)) {
+			return false;
+		} else if (sortHand){
+			if (c1.getSuitValue() > c2.getSuitValue()) {
+				return true;
+			} else if (c1.getSuitValue() < c2.getSuitValue()) {
+				return false;
+			} else {
+				if (c2.getRealRank(biggestRank) > c1.getRealRank(biggestRank)) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean bigger(PokerCard c1, PokerCard c2, String dominantSuit, String currentSuit, int biggestRank) {
+		return bigger(c1, c2, dominantSuit, currentSuit, biggestRank, false);
+	}
+	public static boolean bigger(PokerCard c1, PokerCard c2, Board board, boolean sortHand) {
+		return bigger(c1, c2, board.getDominantSuit(), board.getCurrentSuit(), board.getBiggestRank(), sortHand);
+	}
+	public static boolean bigger(PokerCard c1, PokerCard c2, Board board) {
+		boolean sortHand = false;
+		if (board.getStatus() == Consts.DISTRIBUTECARDS) sortHand = true;
+		return bigger(c1, c2, board.getDominantSuit(), board.getCurrentSuit(), board.getBiggestRank(), sortHand);
+	}
 }

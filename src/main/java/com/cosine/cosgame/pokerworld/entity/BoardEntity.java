@@ -8,6 +8,7 @@ public class BoardEntity {
 	String myCards;
 	String dominantRank;
 	String dominantSuit;
+	String dominantCard;
 	int myIndex;
 	int numDominant;
 	int curClaimedPlayer;
@@ -21,6 +22,8 @@ public class BoardEntity {
 	int phase;
 	int biggestRank;
 	int gameMode;
+	int numWzRevealed;
+	int numJeRevealed;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -159,5 +162,23 @@ public class BoardEntity {
 	}
 	public void setGameMode(int gameMode) {
 		this.gameMode = gameMode;
+	}
+	public String getDominantCard() {
+		return dominantCard;
+	}
+	public void setDominantCard(String dominantCard) {
+		this.dominantCard = dominantCard;
+	}
+	public int getNumWzRevealed() {
+		return numWzRevealed;
+	}
+	public void setNumWzRevealed(int numWzRevealed) {
+		this.numWzRevealed = numWzRevealed;
+	}
+	public int getNumJeRevealed() {
+		return numJeRevealed;
+	}
+	public void setNumJeRevealed(int numJeRevealed) {
+		this.numJeRevealed = numJeRevealed;
 	}
 }

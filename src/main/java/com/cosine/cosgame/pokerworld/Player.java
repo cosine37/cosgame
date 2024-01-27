@@ -92,6 +92,20 @@ public class Player {
 		board.nextPlayerPlay();
 	}
 	
+	public void sortHand() {
+		int i,j;
+		for (i=0;i<hand.size();i++) {
+			for (j=i+1;j<hand.size();j++) {
+				PokerCard c1 = hand.get(i);
+				PokerCard c2 = hand.get(j);
+				if (PokerUtil.bigger(c2, c1, board, true)) {
+					hand.set(i, c2);
+					hand.set(j, c1);
+				}
+			}
+		}
+	}
+	
 	public void genPlayedCardsStr() {
 		playedCardsStr = "";
 		String myRawCards = getMyRawCards();
