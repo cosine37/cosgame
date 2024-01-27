@@ -57,6 +57,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.SFSJ = 0;
 		$scope.WIZARD = 1;
 		
+		$scope.BIDTRICKS = 1;
+		$scope.PLAYCARDS = 3;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -71,6 +74,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.changeBid = function(x){
+			$scope.numTrick = $scope.numTrick+x
+			if ($scope.numTrick<0) $scope.numTrick = 0
+			if ($scope.numTrick>$scope.round) $scope.numTrick = $scope.round
+		}
+		
+		$scope.bidWizard = function(){
+			var data = {"bid": $scope.numTrick}
+			$http({url: "/pokerworld/wizard/bid", method: "PUT", params: data}).then(function(response){
+				$scope.allRefresh()
+			});
+		}
+		
 		
 		$scope.clickCard = function(x){
 			if ($scope.status == '3' && $scope.myIndex == $scope.curPlayer){
@@ -298,6 +315,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
 				$scope.myCards = response.data.myCards
+				$scope.round = response.data.round
+				$scope.numTrick = 0
 				$scope.distributeSequence = response.data.sequence;
 				$scope.dominantRank = response.data.dominantRank;
 				$scope.dominantSuit = response.data.dominantSuit;

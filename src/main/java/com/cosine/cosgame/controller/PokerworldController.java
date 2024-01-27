@@ -231,6 +231,35 @@ public class PokerworldController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/pokerworld/wizard/bid", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> bidWizard(HttpServletRequest request, @RequestParam int bid){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			Player p = board.getPlayerByName(username);
+			if (p != null) {
+				p.addBid(bid);
+				if (board.allBid()) {
+					board.setStatus(Consts.PLAYCARDS);
+				}
+				board.updateBasicDB();
+				board.updatePlayers();
+				//board.updateCardsDB();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/pokerworld/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();

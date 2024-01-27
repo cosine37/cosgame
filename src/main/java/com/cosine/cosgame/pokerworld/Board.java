@@ -90,6 +90,9 @@ public class Board {
 		biggestRank = settings.get(Consts.BIGGESTRANKINDEX);
 		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
 		confirmed = new ArrayList<>();
+		for (int i=0;i<players.size();i++) {
+			players.get(i).clearAll();
+		}
 		round = 1;
 		dealWizard();
 		status = Consts.BIDTRICKS;
@@ -107,6 +110,16 @@ public class Board {
 				players.get(i).getHand().add(c);
 			}
 		}
+	}
+	
+	public boolean allBid() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getBidThisRound() == -1) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void drawHidden() {

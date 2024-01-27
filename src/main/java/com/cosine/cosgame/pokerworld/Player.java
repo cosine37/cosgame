@@ -27,6 +27,10 @@ public class Player {
 	List<PokerCard> played;
 	
 	public Player() {
+		clearAll();
+	}
+	
+	public void clearAll() {
 		playedIndex = new ArrayList<>();
 		playedCardsStr = "";
 		
@@ -96,6 +100,20 @@ public class Player {
 			int x = playedIndex.get(i);
 			playedCardsStr = playedCardsStr + myRawCards.substring(x*2, x*2+2);
 		}
+	}
+	
+	public void addBid(int x) {
+		if (bids.size() == board.getRound()-1) {
+			bids.add(x);
+		}
+	}
+	
+	public int getBidThisRound() {
+		int ans = -1;
+		if (bids.size() == board.getRound()) {
+			ans = bids.get(bids.size()-1);
+		}
+		return ans;
 	}
 	
 	public void emptyPlayedIndex() {
