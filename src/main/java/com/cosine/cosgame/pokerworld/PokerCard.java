@@ -101,4 +101,5 @@ public class PokerCard {
 			rank = 0;
 		}
 	}
+	
 }

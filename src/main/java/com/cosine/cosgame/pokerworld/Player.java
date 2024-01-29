@@ -13,6 +13,7 @@ public class Player {
 	String name;
 	int phase;
 	int innerId;
+	int index;
 	boolean confirmedClaim;
 	boolean confirmedNextTurn;
 	Board board;
@@ -130,6 +131,48 @@ public class Player {
 		return ans;
 	}
 	
+	public List<Integer> getPlayable(){
+		List<Integer> ans = new ArrayList<>();
+		boolean flag = true;
+		int i;
+		if (board.getCurPlayer() != index) {
+			for (i=0;i<hand.size();i++) {
+				ans.add(Consts.UNPLAYABLE);
+			}
+		}
+		
+		for (i=0;i<hand.size();i++) {
+			if (board.getCurrentSuit().contentEquals("WZ")) {
+				break;
+			}
+			
+			if (board.getCurrentSuit().contentEquals(hand.get(i).getSuit())) {
+				flag = false;
+				break;
+			}
+		}
+		
+		if (flag) {
+			for (i=0;i<hand.size();i++) {
+				ans.add(Consts.PLAYABLE);
+			}
+		} else {
+			for (i=0;i<hand.size();i++) {
+				if (hand.get(i).getSuit().toUpperCase().contentEquals("WZ")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("JE")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().contentEquals(board.getCurrentSuit())) {
+					ans.add(Consts.PLAYABLE);
+				} else {
+					ans.add(Consts.UNPLAYABLE);
+				}
+			}
+		}
+		
+		return ans;
+	}
+	
 	public void emptyPlayedIndex() {
 		playedIndex = new ArrayList<>();
 	}
@@ -216,6 +259,12 @@ public class Player {
 	public void setPlayed(List<PokerCard> played) {
 		this.played = played;
 	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
 	public Document toDocument() {
 		int i;
 		Document doc = new Document();
@@ -268,6 +317,7 @@ public class Player {
 		entity.setScores(scores);
 		entity.setBids(bids);
 		entity.setActuals(actuals);
+		entity.setPlayable(getPlayable());
 		return entity;
 	}
 	

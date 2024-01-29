@@ -19,4 +19,8 @@ public class Consts {
 	
 	public static final int BIDTRICKS = 1;
 	
+	// card playability
+	public static final int PLAYABLE = 1;
+	public static final int UNPLAYABLE = 0;
+	
 }

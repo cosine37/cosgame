@@ -40,6 +40,7 @@ public class Board {
 	List<Boolean> confirmed;
 	
 	PokerCard dominantCard;
+	PokerCard firstCard;
 	
 	GameUtil gameUtil;
 	
@@ -51,8 +52,10 @@ public class Board {
 		sequences = new ArrayList<>();
 		confirmed = new ArrayList<>();
 		dominantCard = new PokerCard();
+		firstCard = new PokerCard();
 		
 		lord = "";
+		currentSuit = "";
 		gameUtil = new GameUtil();
 		gameUtil.setBoard(this);
 		
@@ -154,6 +157,10 @@ public class Board {
 			}
 		}
 		return true;
+	}
+	
+	public void startRoundWizard() {
+		firstCard = new PokerCard();
 	}
 	
 	public void drawHidden() {
@@ -411,6 +418,7 @@ public class Board {
 	public void addPlayer(String name) {
 		Player p = new Player(this);
 		p.setName(name);
+		p.setIndex(players.size());
 		players.add(p);
 	}
 	public void genBoardId() {
@@ -605,6 +613,7 @@ public class Board {
 			n = "player-" + n;
 			Document dop = (Document) doc.get(n);
 			Player p = new Player(this);
+			p.setIndex(i);
 			p.setFromDoc(dop);
 			players.add(p);
 		}
