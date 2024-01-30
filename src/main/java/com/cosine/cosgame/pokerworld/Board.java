@@ -115,7 +115,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			
-			for (j=0;j<round;j++) {
+			for (j=0;j<20;j++) {
 				PokerCard c = deck.remove(0);
 				players.get(i).getHand().add(c);
 			}
@@ -414,6 +414,9 @@ public class Board {
 	public void setDominantCard(PokerCard dominantCard) {
 		this.dominantCard = dominantCard;
 	}
+	public boolean gameModeIs(int x) {
+		return gameMode == x;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player(this);
@@ -645,10 +648,11 @@ public class Board {
 			playerEntities.add(players.get(i).toPlayerEntity());
 			if (players.get(i).getName().contentEquals(username)) {
 				Player p = players.get(i);
-				entity.setMyIndex(p.getInnerId());
 				if (gameMode == Consts.SFSJ) {
+					entity.setMyIndex(p.getInnerId());
 					entity.setMyCards(p.getMyRawCardsAfterPlay());
 				} else {
+					entity.setMyIndex(p.getIndex());
 					entity.setMyCards(p.getHandAsStr());
 				}
 				

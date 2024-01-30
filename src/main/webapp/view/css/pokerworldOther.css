@@ -74,6 +74,12 @@ button:disabled{
 	border-radius: 8px;
 }
 
+.hand-size{
+	height: 133px;
+	padding-top: 30px;
+	width: 100%;
+}
+
 .card-size{
 	height: 133px;
 	width: 95px;

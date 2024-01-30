@@ -81,16 +81,25 @@ public class Player {
 	}
 	
 	public void play(List<Integer> playedIndex) {
-		int numPlayed = board.getNumPlayed();
-		if (numPlayed == -1) {
-			setPlayedIndex(playedIndex);
-			genPlayedCardsStr();
-			board.setNumPlayed(playedIndex.size());
-		} else if (numPlayed == playedIndex.size()){
-			setPlayedIndex(playedIndex);
-			genPlayedCardsStr();
+		if (board.gameModeIs(Consts.SFSJ)) {
+			int numPlayed = board.getNumPlayed();
+			if (numPlayed == -1) {
+				setPlayedIndex(playedIndex);
+				genPlayedCardsStr();
+				board.setNumPlayed(playedIndex.size());
+			} else if (numPlayed == playedIndex.size()){
+				setPlayedIndex(playedIndex);
+				genPlayedCardsStr();
+			}
+			board.nextPlayerPlay();
+		} else if (board.gameModeIs(Consts.WIZARD)) {
+			if (playedIndex.size() == 1) {
+				int x = playedIndex.get(0);
+				PokerCard c = hand.remove(x);
+				played.add(c);
+			}
 		}
-		board.nextPlayerPlay();
+		
 	}
 	
 	public void sortHand() {

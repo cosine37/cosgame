@@ -15,7 +15,8 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
-	<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-click="clickCard($index)"></div>
+	
+	
 	<div ng-show="status == BIDTRICKS">
 		<div>请下注你本轮的墩数(0~{{round}})：</div>
 		<div>
@@ -27,8 +28,20 @@
 			<button ng-click="bidWizard()">提交</button>
 		</div>
 	</div>
-	{{gamedata}}
-	{{hand}}
+	<div style="height: 50px;">
+		<p ng-show="curPlayer != myIndex">现在不是你的回合</p>
+		<p ng-show="curPlayer == myIndex && chosenCard == -1">请选择你要出的牌</p>
+		<button ng-show="curPlayer == myIndex && chosenCard != -1" ng-click="play()">打出</button>
+	</div>
+	<div class="hand-size">
+		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+	</div>
+	<div style="clear:both"></div>
+	<div>
+		{{gamedata}}
+		{{hand}}
+	</div>
+	
 	<!-- 
 	<div class="table-div">
 		<div class="player-div" ng-repeat="i in indexSequence">

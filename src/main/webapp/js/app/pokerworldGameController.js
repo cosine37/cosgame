@@ -90,35 +90,46 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		
 		$scope.clickCard = function(x){
-			if ($scope.status == '3' && $scope.myIndex == $scope.curPlayer){
-				//$scope.disablePlayButton = true;
-				if (x>=0 && x<$scope.hand.length){
-					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+			if ($scope.gameMode == $scope.SFSJ){
+				if ($scope.status == 3 && $scope.myIndex == $scope.curPlayer){
+					//$scope.disablePlayButton = true;
+					if (x>=0 && x<$scope.hand.length){
+						$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+					}
+				} else if ($scope.status == 2 && $scope.curClaimedPlayer == $scope.myIndex){
+					if (x>=0 && x<$scope.hand.length){
+						$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+					}
+					var i
+					var t = 0
+					for (i=0;i<$scope.hand.length;i++){
+						t = t+$scope.hand[i].chosen
+					}
+					if (t == 12){
+						$scope.disableHide = false;
+					} else {
+						$scope.disableHide = true;
+					}
 				}
-				/*
-				var t = 0
-				for (i=0;i<$scope.hand.length;i++){
-					t = t+$scope.hand[i].chosen
-				}
-				if (t == $scope.numPlayed){
-					$scope.disablePlayButton = false;
-				}
-				*/
-			} else if ($scope.status == '2' && $scope.curClaimedPlayer == $scope.myIndex){
-				if (x>=0 && x<$scope.hand.length){
-					$scope.hand[x].chosen = 1-$scope.hand[x].chosen
-				}
-				var i
-				var t = 0
-				for (i=0;i<$scope.hand.length;i++){
-					t = t+$scope.hand[i].chosen
-				}
-				if (t == 12){
-					$scope.disableHide = false;
-				} else {
-					$scope.disableHide = true;
+			} else if ($scope.gameMode == $scope.WIZARD && $scope.myIndex == $scope.curPlayer){
+				if ($scope.status == $scope.PLAYCARDS){
+					if (x>=0 && x<$scope.hand.length){
+						if ($scope.chosenCard == x){
+							$scope.hand[$scope.chosenCard].cstyle = {}
+							$scope.chosenCard = -1;
+						} else {
+							if ($scope.chosenCard != -1){
+								$scope.hand[$scope.chosenCard].cstyle = {}
+							}
+							$scope.chosenCard = x;
+						}
+					}
+					if ($scope.chosenCard != -1){
+						$scope.hand[$scope.chosenCard].cstyle = {"margin-top": "-30px"}
+					}
 				}
 			}
+			
 		}
 		
 		$scope.disablePlay = function(){
@@ -164,11 +175,16 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.play = function(){
 			var playedIndex = []
-			for (i=0;i<$scope.hand.length;i++){
-				if ($scope.hand[i].chosen == 1){
-					playedIndex.push(i);
+			if ($scope.gameMode == $scope.SFSJ){
+				for (i=0;i<$scope.hand.length;i++){
+					if ($scope.hand[i].chosen == 1){
+						playedIndex.push(i);
+					}
 				}
+			} else if ($scope.gameMode == $scope.WIZARD){
+				playedIndex.push($scope.chosenCard);
 			}
+			
 			var data = {"playedIndex": playedIndex}
 			$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
 				$scope.allRefresh()
@@ -244,6 +260,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			card["suit"] = s
 			card["color"] = c
 			card["chosen"] = 0;
+			card["cstyle"] = {}
 			return card
 		}
 		
@@ -331,6 +348,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.confirmed = response.data.confirmed;
 				$scope.confirmedNextTurn = response.data.confirmedNextTurn;
 				$scope.attackerPointsGained = response.data.attackerPointsGained;
+				$scope.chosenCard = -1;
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";
