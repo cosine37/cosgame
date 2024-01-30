@@ -30,6 +30,7 @@ public class BoardEntity {
 	
 	List<Integer> sequence;
 	List<PlayerEntity> players;
+	List<Integer> playable;
 
 	public String getId() {
 		return id;
@@ -168,6 +169,12 @@ public class BoardEntity {
 	}
 	public void setDominantCard(String dominantCard) {
 		this.dominantCard = dominantCard;
+	}
+	public List<Integer> getPlayable() {
+		return playable;
+	}
+	public void setPlayable(List<Integer> playable) {
+		this.playable = playable;
 	}
 	public int getNumWzRevealed() {
 		return numWzRevealed;

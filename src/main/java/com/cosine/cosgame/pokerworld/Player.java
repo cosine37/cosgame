@@ -97,7 +97,9 @@ public class Player {
 				int x = playedIndex.get(0);
 				PokerCard c = hand.remove(x);
 				played.add(c);
+				board.currentSuitHandle(this);
 			}
+			board.nextPlayerPlay();
 		}
 		
 	}
@@ -144,17 +146,28 @@ public class Player {
 		List<Integer> ans = new ArrayList<>();
 		boolean flag = true;
 		int i;
+		if (board.getStatus() != Consts.PLAYCARDS) {
+			for (i=0;i<hand.size();i++) {
+				ans.add(Consts.PLAYABLE);
+			}
+			return ans;
+		}
+		
+		
 		if (board.getCurPlayer() != index) {
 			for (i=0;i<hand.size();i++) {
 				ans.add(Consts.UNPLAYABLE);
 			}
+			return ans;
 		}
 		
 		for (i=0;i<hand.size();i++) {
-			if (board.getCurrentSuit().contentEquals("WZ")) {
+			if (board.getCurrentSuit().toUpperCase().contentEquals("WZ")) {
 				break;
 			}
-			
+			if (board.getCurrentSuit().toUpperCase().contentEquals("JE")) {
+				break;
+			}
 			if (board.getCurrentSuit().contentEquals(hand.get(i).getSuit())) {
 				flag = false;
 				break;
@@ -326,7 +339,6 @@ public class Player {
 		entity.setScores(scores);
 		entity.setBids(bids);
 		entity.setActuals(actuals);
-		entity.setPlayable(getPlayable());
 		return entity;
 	}
 	

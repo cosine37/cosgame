@@ -9,7 +9,7 @@ public class PlayerEntity {
 	List<Integer> scores;
 	List<Integer> bids;
 	List<Integer> actuals;
-	List<Integer> playable;
+	
 
 	public String getName() {
 		return name;
@@ -46,11 +46,5 @@ public class PlayerEntity {
 	}
 	public void setActuals(List<Integer> actuals) {
 		this.actuals = actuals;
-	}
-	public List<Integer> getPlayable() {
-		return playable;
-	}
-	public void setPlayable(List<Integer> playable) {
-		this.playable = playable;
 	}
 }

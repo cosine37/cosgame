@@ -163,6 +163,14 @@ public class Board {
 		firstCard = new PokerCard();
 	}
 	
+	public void currentSuitHandle(Player p) {
+		if (curPlayer == p.getIndex()) {
+			currentSuit = p.getPlayed().get(0).getSuit();
+		} else if (currentSuit.toUpperCase().contentEquals("JE")){
+			currentSuit = p.getPlayed().get(0).getSuit();
+		}
+	}
+	
 	public void drawHidden() {
 		if (curClaimedPlayer != -1) {
 			firstPlayer = curClaimedPlayer;
@@ -212,27 +220,27 @@ public class Board {
 	public void nextPlayerPlay() {
 		curPlayer++;
 		curPlayer = curPlayer % players.size();
-		/*
-		Player p = players.get(curPlayer);
-		if (p.getPlayedIndex() != null && p.getPlayedIndex().size() != 0) {
-			endRound();
-		}*/
 		if (curPlayer == firstPlayer) {
 			endRound();
 		}
 	}
 	
 	public void endRound() {
-		List<Integer> roundResult = gameUtil.judgeRound(this);
-		winPlayer = roundResult.get(0);
-		firstPlayer = winPlayer;
-		curPlayer = -1;
-		attackerPointsGained = gameUtil.getAttackerPointsGained();
+		if (gameModeIs(Consts.SFSJ)){
+			List<Integer> roundResult = gameUtil.judgeRound(this);
+			winPlayer = roundResult.get(0);
+			firstPlayer = winPlayer;
+			curPlayer = -1;
+			attackerPointsGained = gameUtil.getAttackerPointsGained();
+		} else if (gameModeIs(Consts.WIZARD)) {
+			status = Consts.SCORING;
+		}
+		
+		
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmedNextTurn(false);
 		}
-		
 	}
 	
 	public void confirmNextTurn(String username) {
@@ -450,6 +458,7 @@ public class Board {
 		dbutil.update("id", id, "firstPlayer", firstPlayer);
 		dbutil.update("id", id, "confirmed", confirmed);
 		dbutil.update("id", id, "attackerPointsGained", attackerPointsGained);
+		dbutil.update("id", id, "currentSuit", currentSuit);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {
@@ -651,9 +660,11 @@ public class Board {
 				if (gameMode == Consts.SFSJ) {
 					entity.setMyIndex(p.getInnerId());
 					entity.setMyCards(p.getMyRawCardsAfterPlay());
+					entity.setPlayable(new ArrayList<>());
 				} else {
 					entity.setMyIndex(p.getIndex());
 					entity.setMyCards(p.getHandAsStr());
+					entity.setPlayable(p.getPlayable());
 				}
 				
 				entity.setConfirmed(p.isConfirmedClaim());

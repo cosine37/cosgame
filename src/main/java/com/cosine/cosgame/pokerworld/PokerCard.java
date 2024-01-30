@@ -78,10 +78,10 @@ public class PokerCard {
 			rank = 0;
 			return;
 		}
-		char ch = s.charAt(0);
+		char ch = s.charAt(1);
 		if (ch == 's' || ch == 'h' || ch =='c' || ch == 'd') {
 			suit = "" + ch;
-			ch = s.charAt(1);
+			ch = s.charAt(0);
 			rank = 0;
 			if (ch > '1' && ch <= '9') {
 				rank = Character.getNumericValue(ch);
