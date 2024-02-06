@@ -131,6 +131,7 @@ public class Player {
 	public void addBid(int x) {
 		if (bids.size() == board.getRound()-1) {
 			bids.add(x);
+			actuals.add(0);
 		}
 	}
 	
@@ -140,6 +141,12 @@ public class Player {
 			ans = bids.get(bids.size()-1);
 		}
 		return ans;
+	}
+	
+	public void winTrick() {
+		int i = board.getRound() - 1;
+		int x = actuals.get(i)+1;
+		actuals.set(i, x);
 	}
 	
 	public List<Integer> getPlayable(){
@@ -201,6 +208,10 @@ public class Player {
 	
 	public void emptyHand() {
 		hand = new ArrayList<>();
+	}
+	
+	public void emptyPlayed() {
+		played = new ArrayList<>();
 	}
 	
 	public String getName() {

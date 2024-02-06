@@ -16,6 +16,17 @@
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
 	
+	<div>
+		<table>
+			<tr>
+				<td ng-repeat="p in players track by $index">
+					{{p.name}}
+					<p ng-show="curPlayer == $index">等待出牌</p>
+					<div class="card-hand card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+				</td>
+			</tr>
+		</table>
+	</div>
 	
 	<div ng-show="status == BIDTRICKS">
 		<div>请下注你本轮的墩数(0~{{round}})：</div>

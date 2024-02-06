@@ -161,6 +161,9 @@ public class Board {
 	
 	public void startRoundWizard() {
 		firstCard = new PokerCard();
+		for (int i=0;i<players.size();i++) {
+			players.get(i).emptyPlayed();
+		}
 	}
 	
 	public void currentSuitHandle(Player p) {
@@ -233,14 +236,36 @@ public class Board {
 			curPlayer = -1;
 			attackerPointsGained = gameUtil.getAttackerPointsGained();
 		} else if (gameModeIs(Consts.WIZARD)) {
-			status = Consts.SCORING;
+			judgeRoundWizard();
 		}
-		
 		
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmedNextTurn(false);
 		}
+	}
+	
+	public void judgeRoundWizard() {
+		int x = firstPlayer;
+		winPlayer = firstPlayer;
+		PokerCard firstCard = players.get(firstPlayer).getPlayed().get(0);
+		PokerCard winCard = firstCard;
+		while (true) {
+			x++;
+			if (x == players.size()) x = 0;
+			if (x == firstPlayer) break;
+			PokerCard c = players.get(x).getPlayed().get(0);
+			if (PokerUtil.bigger(c, winCard, this)) {
+				winPlayer = x;
+				winCard = c;
+			}
+		}
+		
+		players.get(winPlayer).winTrick();
+		firstPlayer = winPlayer;
+		curPlayer = winPlayer;
+		currentSuit = "";
+		
 	}
 	
 	public void confirmNextTurn(String username) {
