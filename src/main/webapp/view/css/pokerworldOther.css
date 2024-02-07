@@ -300,6 +300,10 @@ button:disabled{
 	color: black;
 }
 
+.darkgreen{
+	color: darkgreen;
+}
+
 .blue{
 	color: navy;
 	background-color: deepskyblue;

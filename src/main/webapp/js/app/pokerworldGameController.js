@@ -59,6 +59,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.BIDTRICKS = 1;
 		$scope.PLAYCARDS = 3;
+		$scope.SCORING = 4;
 		$scope.CONFIRMROUNDTURN = 5;
 		
 		$scope.goto = function(d){
@@ -298,6 +299,59 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setPlayerInfoDisplay = function(){
+			var i=0;
+			for (i=0;i<$scope.players.length;i++){
+				var display = "";
+				var displayClass = "black";
+				var n = $scope.players[i].scores.length
+				if (n == 0){
+					display = "0";
+					displayClass = "black";
+				} else if (n == 1){
+					display = "" + $scope.players[i].scores[0];
+					if ($scope.players[i].scores[n-1] >= 0){
+						display = display + "(+" + $scope.players[i].scores[n-1] + ")";
+						displayClass = "darkgreen";
+					} else {
+						display = display + "(" + $scope.players[i].scores[n-1] + ")";
+						displayClass = "red";
+					}
+				} else {
+					display = "" + $scope.players[i].scores[n-1];
+					var t = $scope.players[i].scores[n-1] - $scope.players[i].scores[n-2]
+					if (t >= 0){
+						display = display + "(+" + t + ")";
+						displayClass = "darkgreen";
+					} else {
+						display = display + "(" + t + ")";
+						displayClass = "red";
+					}
+				}
+				$scope.players[i].scoreDisplay = display;
+				$scope.players[i].scoreDisplayClass = displayClass;
+				
+				if ($scope.status == $scope.SCORING){
+					$scope.players[i].bidDisplay = "" + $scope.players[i].bids[$scope.players[i].bids.length-1]
+					$scope.players[i].actualDisplay = "" + $scope.players[i].actuals[$scope.players[i].actuals.length-1]
+				} else if ($scope.players[i].bids.length == $scope.round){
+					$scope.players[i].bidDisplay = "" + $scope.players[i].bids[$scope.players[i].bids.length-1]
+					$scope.players[i].actualDisplay = "" + $scope.players[i].actuals[$scope.players[i].actuals.length-1]
+				} else {
+					$scope.players[i].bidDisplay = "-"
+					$scope.players[i].actualDisplay = "0"
+				}
+			}
+		}
+		
+		setRoundDisplay = function(){
+			$scope.roundDisplay = "轮次 " + $scope.round;
+			if ($scope.status == $scope.SCORING){
+				t = $scope.round-1
+				$scope.roundDisplay = "轮次 " + t + " 结束";
+			}
+		}
+		
 		setIndexes = function(){
 			$scope.indexSequence = [0,1,2,3];
 			var i;
@@ -357,6 +411,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.dominantSuitDisplayClass = "";
 				$scope.myIndex = response.data.myIndex;
 				$scope.numPlayed = response.data.numPlay;
+				$scope.firstPlayer = response.data.firstPlayer;
 				$scope.curPlayer = response.data.curPlayer;
 				$scope.winPlayer = response.data.winPlayer;
 				$scope.confirmed = response.data.confirmed;
@@ -391,6 +446,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					return;
 				}
 				setCardStyles()
+				setPlayerInfoDisplay()
+				setRoundDisplay()
 				/*
 				if ($scope.status == "1" && $scope.distributing == false){
 					$scope.distributing = true;

@@ -115,7 +115,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			
-			for (j=0;j<20;j++) {
+			for (j=0;j<round;j++) {
 				PokerCard c = deck.remove(0);
 				players.get(i).getHand().add(c);
 			}
@@ -183,6 +183,15 @@ public class Board {
 		}
 	}
 	
+	public void potentialNewSetHandle() {
+		if (status == Consts.SCORING) {
+			status = Consts.BIDTRICKS;
+			for (int i=0;i<players.size();i++) {
+				players.get(i).emptyPlayed();
+			}
+		}
+	}
+	
 	public void drawHidden() {
 		if (curClaimedPlayer != -1) {
 			firstPlayer = curClaimedPlayer;
@@ -229,6 +238,22 @@ public class Board {
 		}
 	}
 	
+	public void endSet() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).updateScore();
+		}
+		//status = Consts.SCORING;
+		round++;
+		dealWizard();
+		status = Consts.SCORING;
+	}
+	
+	public void nextPlayerBid() {
+		curPlayer++;
+		curPlayer = curPlayer % players.size();
+	}
+	
 	public void nextPlayerPlay() {
 		curPlayer++;
 		curPlayer = curPlayer % players.size();
@@ -247,6 +272,9 @@ public class Board {
 		} else if (gameModeIs(Consts.WIZARD)) {
 			judgeRoundWizard();
 			status = Consts.CONFIRMROUNDTURN;
+			if (players.get(firstPlayer).getHand().size() == 0) {
+				endSet();
+			}
 		}
 		
 		int i;

@@ -15,22 +15,24 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
-	
+	<div>{{roundDisplay}}</div>
 	<div>
 		<table>
 			<tr>
 				<td ng-repeat="p in players track by $index" style="vertical-align:top">
 					<div>{{p.name}}</div>
-					<div>下注墩数:{{p.bids[p.bids.length-1]}}</div>
-					<div>实际墩数：{{p.actuals[p.actuals.length-1]}}</div>
+					<div>下注墩数：{{p.bidDisplay}}</div>
+					<div>实际墩数：{{p.actualDisplay}}</div>
+					<div>当前分数：<span ng-class="p.scoreDisplayClass" style="font-weight: bold">{{p.scoreDisplay}}</span></div>
 					<div class="card-play-wizard card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
-					<p ng-show="curPlayer == $index">等待出牌</p>
+					<p ng-show="curPlayer == $index">当前玩家</p>
+					<p ng-show="firstPlayer == $index">初始玩家</p>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
-	<div ng-show="status == BIDTRICKS">
+	<div ng-show="(status == BIDTRICKS || status == SCORING) && round == players[myIndex].bids.length+1 && myIndex == curPlayer">
 		<div>请下注你本轮的墩数(0~{{round}})：</div>
 		<div>
 			<button ng-click="changeBid(-100)">Min</button>
@@ -41,12 +43,13 @@
 			<button ng-click="bidWizard()">提交</button>
 		</div>
 	</div>
+	<div ng-show="(status == BIDTRICKS || status == SCORING) && myIndex != curPlayer">正等待其他玩家下注。</div>
 	
 	<div ng-show="status == CONFIRMROUNDTURN">
 		回合结束，{{players[winPlayer]["name"]}}吃了一墩，下回合第一个出牌。
 	</div>
 	
-	<div style="height: 50px;">
+	<div style="height: 50px;" ng-show="status == CONFIRMROUNDTURN || status == PLAYCARDS">
 		<p ng-show="curPlayer != myIndex">现在不是你的回合</p>
 		<p ng-show="curPlayer == myIndex && chosenCard == -1">请选择你要出的牌</p>
 		<button ng-show="curPlayer == myIndex && chosenCard != -1" ng-click="play()">打出</button>

@@ -97,6 +97,7 @@ public class Player {
 			if (playedIndex.size() == 1) {
 				int x = playedIndex.get(0);
 				PokerCard c = hand.remove(x);
+				played = new ArrayList<>();
 				played.add(c);
 				board.currentSuitHandle(this);
 			}
@@ -130,9 +131,11 @@ public class Player {
 	}
 	
 	public void addBid(int x) {
-		if (bids.size() == board.getRound()-1) {
+		if (bids.size() == board.getRound()-1 && (board.getStatus() == Consts.SCORING || board.getStatus() == Consts.BIDTRICKS)) {
+			board.potentialNewSetHandle();
 			bids.add(x);
 			actuals.add(0);
+			board.nextPlayerBid();
 		}
 	}
 	
@@ -144,10 +147,36 @@ public class Player {
 		return ans;
 	}
 	
+	public int getActualThisRound() {
+		int ans = -1;
+		if (actuals.size() == board.getRound()) {
+			ans = actuals.get(actuals.size()-1);
+		}
+		return ans;
+	}
+	
 	public void winTrick() {
 		int i = board.getRound() - 1;
 		int x = actuals.get(i)+1;
 		actuals.set(i, x);
+	}
+	
+	public void updateScore() {
+		int x = 0;
+		if (scores.size()>0) {
+			x = scores.get(scores.size()-1);
+		}
+		int b = getBidThisRound();
+		int a = getActualThisRound();
+		if (b == a) {
+			x = x+a*10+20;
+		} else {
+			int t = a-b;
+			if (t<0) t = 0-t;
+			x = x-t*10;
+		}
+		
+		scores.add(x);
 	}
 	
 	public void confirmNextTurn() {
