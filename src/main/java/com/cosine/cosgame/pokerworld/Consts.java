@@ -18,6 +18,7 @@ public class Consts {
 	public static final int SCORING = 4;
 	
 	public static final int BIDTRICKS = 1;
+	public static final int CONFIRMROUNDTURN = 5;
 	
 	// card playability
 	public static final int PLAYABLE = 1;

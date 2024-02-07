@@ -19,10 +19,12 @@
 	<div>
 		<table>
 			<tr>
-				<td ng-repeat="p in players track by $index">
-					{{p.name}}
+				<td ng-repeat="p in players track by $index" style="vertical-align:top">
+					<div>{{p.name}}</div>
+					<div>下注墩数:{{p.bids[p.bids.length-1]}}</div>
+					<div>实际墩数：{{p.actuals[p.actuals.length-1]}}</div>
+					<div class="card-play-wizard card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
 					<p ng-show="curPlayer == $index">等待出牌</p>
-					<div class="card-hand card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 				</td>
 			</tr>
 		</table>
@@ -39,6 +41,11 @@
 			<button ng-click="bidWizard()">提交</button>
 		</div>
 	</div>
+	
+	<div ng-show="status == CONFIRMROUNDTURN">
+		回合结束，{{players[winPlayer]["name"]}}吃了一墩，下回合第一个出牌。
+	</div>
+	
 	<div style="height: 50px;">
 		<p ng-show="curPlayer != myIndex">现在不是你的回合</p>
 		<p ng-show="curPlayer == myIndex && chosenCard == -1">请选择你要出的牌</p>

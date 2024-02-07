@@ -59,6 +59,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.BIDTRICKS = 1;
 		$scope.PLAYCARDS = 3;
+		$scope.CONFIRMROUNDTURN = 5;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -112,7 +113,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			} else if ($scope.gameMode == $scope.WIZARD && $scope.myIndex == $scope.curPlayer && $scope.playable[x] == 1){
-				if ($scope.status == $scope.PLAYCARDS){
+				if ($scope.status == $scope.PLAYCARDS || $scope.status == $scope.CONFIRMROUNDTURN){
 					if (x>=0 && x<$scope.hand.length){
 						if ($scope.chosenCard == x){
 							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"

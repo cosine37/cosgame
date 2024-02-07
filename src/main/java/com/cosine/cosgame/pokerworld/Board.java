@@ -174,6 +174,15 @@ public class Board {
 		}
 	}
 	
+	public void potentialNewTurnHandle() {
+		if (status == Consts.CONFIRMROUNDTURN) {
+			status = Consts.PLAYCARDS;
+			for (int i=0;i<players.size();i++) {
+				players.get(i).emptyPlayed();
+			}
+		}
+	}
+	
 	public void drawHidden() {
 		if (curClaimedPlayer != -1) {
 			firstPlayer = curClaimedPlayer;
@@ -237,6 +246,7 @@ public class Board {
 			attackerPointsGained = gameUtil.getAttackerPointsGained();
 		} else if (gameModeIs(Consts.WIZARD)) {
 			judgeRoundWizard();
+			status = Consts.CONFIRMROUNDTURN;
 		}
 		
 		int i;
@@ -265,6 +275,7 @@ public class Board {
 		firstPlayer = winPlayer;
 		curPlayer = winPlayer;
 		currentSuit = "";
+		
 		
 	}
 	

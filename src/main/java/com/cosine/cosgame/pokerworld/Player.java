@@ -93,6 +93,7 @@ public class Player {
 			}
 			board.nextPlayerPlay();
 		} else if (board.gameModeIs(Consts.WIZARD)) {
+			board.potentialNewTurnHandle();
 			if (playedIndex.size() == 1) {
 				int x = playedIndex.get(0);
 				PokerCard c = hand.remove(x);
@@ -147,6 +148,10 @@ public class Player {
 		int i = board.getRound() - 1;
 		int x = actuals.get(i)+1;
 		actuals.set(i, x);
+	}
+	
+	public void confirmNextTurn() {
+		this.confirmedNextTurn = true;
 	}
 	
 	public List<Integer> getPlayable(){
