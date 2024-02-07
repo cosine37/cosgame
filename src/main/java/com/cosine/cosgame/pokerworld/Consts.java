@@ -17,6 +17,8 @@ public class Consts {
 	public static final int PLAYCARDS = 3;
 	public static final int SCORING = 4;
 	
+	public static final int ENDGAME = 10;
+	
 	public static final int BIDTRICKS = 1;
 	public static final int CONFIRMROUNDTURN = 5;
 	

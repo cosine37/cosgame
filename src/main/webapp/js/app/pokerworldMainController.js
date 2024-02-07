@@ -45,6 +45,23 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 	
 		boardws.onOpen(function() {
 		});
+		
+		$scope.wizard = {
+			"rank": "wizard",
+			"suit": "WZ",
+			"color": "blue"
+		}
+		
+		$scope.jester = {
+			"rank": "jester",
+			"suit": "JE",
+			"color": "green"
+		}
+		
+		$scope.jesters = []
+		$scope.jesters.push($scope.jester)
+		$scope.wizards = []
+		$scope.wizards.push($scope.wizard)
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -90,26 +107,37 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.getAllBoards = function(){
 			$http.get('/pokerworld/allboards').then(function(response){
-				var n = response.data.value.length / 4;
+				var n = response.data.value.length / 5;
 				$scope.boards = []
 				$scope.statuses = []
 				$scope.lords = []
+				$scope.gameModes = []
 				$scope.canBack = []
 				for (var i=0;i<n;i++){
-					$scope.boards.push(response.data.value[i*4])
-					var l = response.data.value[i*4+1]
+					$scope.boards.push(response.data.value[i*5])
+					var l = response.data.value[i*5+1]
 					$scope.lords.push(l)
-					var x = response.data.value[i*4+2]
+					var x = response.data.value[i*5+2]
 					var t = ''
 					if (x == '0'){
 						t = '准备中'
-					} else if (x == '5'){
+					} else if (x == '10'){
 						t = '游戏结束'
 					} else {
 						t = '游戏中'
 					}
 					$scope.statuses.push(t)
-					var y = response.data.value[i*4+3]
+					var z = response.data.value[i*5+3]
+					t = ''
+					if (x == '0'){
+						t = '-'
+					} else if (z == '0'){
+						t = '四副升级'
+					} else if (z == '1'){
+						t = '巫师牌'
+					}
+					$scope.gameModes.push(t);
+					var y = response.data.value[i*5+4]
 					$scope.canBack.push(y)
 				}
 			});

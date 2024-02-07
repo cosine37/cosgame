@@ -22,3 +22,13 @@
 	
 	background: goldenrod;
 }
+
+.pokerworldtext{
+	font-weight: bold;
+	color: goldenrod;
+}
+
+.newsImg{
+	height: 320px;
+	width: 210px
+}

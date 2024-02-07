@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/pokerworldTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/pokerworldOther.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -36,7 +37,7 @@
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
+				      <a class="nav-link" data-toggle="tab" href="#wizardrulestab" ng-click="hideTablesTab()">巫师牌规则</a>
 				    </li>
 				  </ul>
 			</div>
@@ -52,13 +53,17 @@
 						<tr>
 							<td>房间号</td>
 							<td>房主</td>
+							<td>模式</td>
 							<td>状态</td>
+							
 							<td></td>
 						</tr>
 						<tr ng-repeat ="x in boards track by $index">
 							<td>{{x}}</td>
 							<td>{{lords[$index]}}</td>
+							<td>{{gameModes[$index]}}</td>
 							<td>{{statuses[$index]}}</td>
+							
 							<td>
 								<button ng-show="statuses[$index] == '准备中'" ng-click="goToBoard($index)">加入</button>
 								<button ng-show="statuses[$index] == '游戏中' && canBack[$index] == 'y'" ng-click="backToBoard($index)">回桌</button>
@@ -67,9 +72,115 @@
 					</table>
 				</div>
 				
-				<div id="rulestab" class="content container tab-pane fade">
-					<h2><b>规则</b></h2>
-					
+				<div id="wizardrulestab" class="content container tab-pane fade">
+					<h2><b>巫师牌规则</b></h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一个有<span class="pokerworldtext">吃墩</span>机制的扑克游戏能有什么背景。。。</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持3~6人，4、5人游戏体验最佳。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏一共包含60张牌，其中4种花色的牌各13张（与扑克牌相同），以及<span class="pokerworldtext">巫师</span>和<span class="pokerworldtext">小丑</span>牌各4张。</br>
+								</p>
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏流程</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一局游戏由若干<span class="pokerworldtext">轮次</span>组成。轮次的数量等于60除以玩家的数量。
+								每一<span class="pokerworldtext">轮次</span>开始时进行相应的设置，之后进行若干<span class="pokerworldtext">回合</span>，每一<span class="pokerworldtext">回合</span>每名玩家按顺序出一张牌。游戏开始时选择一名初始玩家。
+								游戏结束时<b>得分最多</b>的玩家获得胜利。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>轮次开始设置</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;给每名玩家发X张牌，X为当前的轮数。若牌库还有牌剩余，翻开牌堆顶的牌直到翻开的牌不是<span class="pokerworldtext">巫师</span>或<span class="pokerworldtext">小丑</span>。
+								该牌的花色称之为<span class="pokerworldtext">主花色</span>。
+								所有玩家查看手牌后按出牌顺序从初始下注当前<span class="pokerworldtext">轮次</span>能够<span class="pokerworldtext">吃墩</span>的次数。
+								所有玩家下注结束后开始当前<span class="pokerworldtext">轮次</span>的第一<span class="pokerworldtext">回合</span>。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>回合流程</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每名玩家按行动顺序依次打出一张牌。初始玩家可以打出任意牌，之后其他玩家若有和初始玩家相同花色的牌则必须打出一张相同花色的牌或<span class="pokerworldtext">巫师</span>与<span class="pokerworldtext">小丑</span>。
+								若无相同花色的牌则可以打出任意的牌。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比较大小时，<span class="pokerworldtext">巫师</span> <b>></b> <span class="pokerworldtext">主花色</span>的牌 <b>></b> 初始玩家打出的花色（若不为主花色）<b>></b> 其余花色 <b>></b> <span class="pokerworldtext">小丑</span>。花色相同则点数更大的牌更大。
+								牌最大的玩家在当回合<span class="pokerworldtext">吃墩</span>。当回合<span class="pokerworldtext">吃墩</span>的玩家为下一<span class="pokerworldtext">回合</span>的初始玩家。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-repeat="c in wizards"  ng-class="c.color" ng-style="c.cstyle"></div>
+							</td>
+							<td style="width: 857px; vertical-align:top">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 巫师</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pokerworldtext">巫师</span>是最大的牌。任何时候都可以打出<span class="pokerworldtext">巫师</span>，即使你有与初始玩家打出的牌花色相同的牌。
+								若有两张及以上<span class="pokerworldtext">巫师</span>，则最先打出<span class="pokerworldtext">巫师</span>的玩家<span class="pokerworldtext">吃墩</span>。
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-repeat="c in jesters"  ng-class="c.color" ng-style="c.cstyle"></div>
+							</td>
+							<td style="width: 857px; vertical-align:top">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 小丑</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pokerworldtext">小丑</span>是最小的牌。任何时候都可以打出<span class="pokerworldtext">小丑</span>，即使你有与初始玩家打出的牌花色相同的牌。
+								打出<span class="pokerworldtext">小丑</span>的玩家几乎不会<span class="pokerworldtext">吃墩</span>，除非所有玩家都打出<span class="pokerworldtext">小丑</span>，在这种情况下，第一个打出小丑的玩家不幸<span class="pokerworldtext">吃墩</span>。
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>轮次结束</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有玩家打完当前<span class="pokerworldtext">轮次</span>所有的手牌。当前<span class="pokerworldtext">轮次</span>结束。
+								当前<span class="pokerworldtext">轮次</span>开始时下注<span class="pokerworldtext">吃墩</span>次数与当前<span class="pokerworldtext">轮次吃墩</span>次数相等的玩家获得20加上10乘以当前<span class="pokerworldtext">轮次吃墩</span>次数的分数。
+								当前<span class="pokerworldtext">轮次</span>开始时下注<span class="pokerworldtext">吃墩</span>次数与当前<span class="pokerworldtext">轮次吃墩</span>次数不相等的玩家减去10乘以当前<span class="pokerworldtext">轮次吃墩</span>次数与当前<span class="pokerworldtext">轮次</span>开始时下注<span class="pokerworldtext">吃墩</span>次数的差的绝对值。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计算完分数后进行新的一个<span class="pokerworldtext">轮次</span>。初始下注和出牌玩家为上一<span class="pokerworldtext">轮次</span>最后一<span class="pokerworldtext">回合吃墩</span>的玩家。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏结束</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后一个<span class="pokerworldtext">轮次</span>（即发完所有牌的<span class="pokerworldtext">轮次</span>）结束后，游戏结束。<b>得分最多</b>的玩家获得胜利。
+								游戏结束时<b>得分最多</b>的玩家获得胜利。
+								</p>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>

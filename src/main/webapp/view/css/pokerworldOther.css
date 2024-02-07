@@ -80,6 +80,10 @@ button:disabled{
 	width: 100%;
 }
 
+.card-size-news{
+	zoom: 1.5
+}
+
 .card-size{
 	height: 133px;
 	width: 95px;
