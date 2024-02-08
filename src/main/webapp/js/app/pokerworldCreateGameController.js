@@ -36,6 +36,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		$scope.chosenGame = -1;
 		$scope.biggestRank = 13;
 		$scope.firstPlayer = 0;
+		$scope.totalRounds = 0;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -52,6 +53,12 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			});
 		}
 		
+		$scope.dismiss = function(){
+			$http.post("/pokerworld/dismiss").then(function(response){
+				ws.send("dismiss");
+			});
+		}
+		
 		$scope.chooseGame = function(x){
 			$scope.chosenGame = x;
 		}
@@ -64,6 +71,10 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			$scope.biggestRank = x;
 		}
 		
+		$scope.setTotalRounds = function(x){
+			$scope.totalRounds = x;
+		}
+		
 		$scope.randomFirstPlayer = function(){
 			var x = Math.floor(Math.random() * $scope.players.length);
 			$scope.firstPlayer = x;
@@ -74,10 +85,11 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 				alert("请选择游戏！");
 				return;
 			}
-			settings = [-1,0,0]
+			settings = [-1,0,0,0]
 			settings[0] = $scope.chosenGame;
 			settings[1] = $scope.biggestRank;
 			settings[2] = $scope.firstPlayer;
+			settings[3] = $scope.totalRounds;
 			var data = {
 				"settings" : settings
 			}
@@ -124,7 +136,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		ws.onMessage(function(e){
 			var message = e.data
 			heartCheck.reset();
-			if (message == 'refresh' || message == 'start'){
+			if (message == 'refresh' || message == 'start' || message == 'dismiss'){
 				$scope.getBoard();
 			}
 			

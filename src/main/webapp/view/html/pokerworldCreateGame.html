@@ -17,9 +17,7 @@
 	<div>
 		<button ng-click="goto('pokerworld')">back</button>
 		<button ng-click="startGame()" ng-show="lord == username">start game</button>
-		<!-- 
 		<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-		 -->
 		<div>
 			
 			<table>
@@ -45,10 +43,19 @@
 				<td>
 					<div ng-show="chosenGame == 1">
 						<p>巫师牌选项</p>
-						最大点数
-						<button ng-disabled="biggestRank == 13" ng-click="setBiggestRank(13)">K</button>
-						<button ng-disabled="biggestRank == 1" ng-click="setBiggestRank(1)">A</button>
-						<button ng-disabled="biggestRank == 2" ng-click="setBiggestRank(2)">2</button>
+						<div>
+							最大点数
+							<button ng-disabled="biggestRank == 13" ng-click="setBiggestRank(13)">K</button>
+							<button ng-disabled="biggestRank == 1" ng-click="setBiggestRank(1)">A</button>
+							<button ng-disabled="biggestRank == 2" ng-click="setBiggestRank(2)">2</button>
+						</div>
+						<div>
+							总轮次
+							<button ng-disabled="totalRounds == 0" ng-click="setTotalRounds(0)">完整轮次</button>
+							<button ng-disabled="totalRounds == 5" ng-click="setTotalRounds(5)">5轮</button>
+							<button ng-disabled="totalRounds == 7" ng-click="setTotalRounds(7)">7轮</button>
+						</div>
+						
 					</div>
 					
 					

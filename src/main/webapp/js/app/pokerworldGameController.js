@@ -62,6 +62,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.SCORING = 4;
 		$scope.CONFIRMROUNDTURN = 5;
 		
+		$scope.PREENDGAME = 9;
+		$scope.ENDGAME = 10;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -74,6 +77,12 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
+			});
+		}
+		
+		$scope.dismiss = function(){
+			$http.post("/pokerworld/dismiss").then(function(response){
+				ws.send("dismiss");
 			});
 		}
 		
@@ -219,6 +228,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			var c = "black";
 			if (r == "T") r = "10";
 			card["suitRaw"] = s;
+			var ts = s
 			if (raw == "JO"){
 				r = "joker"
 				s = "\u265b";
@@ -265,6 +275,10 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			card["cstyle"] = {
 				"margin-top": "0px"
 			}
+
+			if (ts == $scope.dominantSuit){
+				card["cstyle"]["background-color"] = "palegoldenrod"
+			}
 			
 			if (p == 1){
 				card["cstyle"]["opacity"] = "1";
@@ -296,6 +310,11 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					j = j+2;
 				}
 				$scope.players[i]["played"] = played
+			}
+			$scope.trump = []
+			if ($scope.dominantCard.length == 2){
+				var trumpCard =translateRawCard($scope.dominantCard,1)
+				$scope.trump.push(trumpCard)
 			}
 		}
 		
@@ -345,11 +364,16 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		setRoundDisplay = function(){
-			$scope.roundDisplay = "轮次 " + $scope.round;
-			if ($scope.status == $scope.SCORING){
-				t = $scope.round-1
-				$scope.roundDisplay = "轮次 " + t + " 结束";
-			}
+			if ($scope.status == $scope.PREENDGAME){
+				$scope.roundDisplay = "游戏结束"
+			} else {
+				$scope.roundDisplay = "轮次 " + $scope.round;
+				if ($scope.status == $scope.SCORING){
+					t = $scope.round-1
+					$scope.roundDisplay = "轮次 " + t + " 结束";
+				}
+				$scope.roundDisplay = $scope.roundDisplay + "（共" + $scope.totalRounds + "轮）"
+			}	
 		}
 		
 		setIndexes = function(){
@@ -401,10 +425,12 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.lord = response.data.lord
 				$scope.myCards = response.data.myCards
 				$scope.round = response.data.round
+				$scope.totalRounds = response.data.totalRounds;
 				$scope.numTrick = 0
 				$scope.distributeSequence = response.data.sequence;
 				$scope.dominantRank = response.data.dominantRank;
 				$scope.dominantSuit = response.data.dominantSuit;
+				$scope.dominantCard = response.data.dominantCard;
 				$scope.numDominant = response.data.numDominant;
 				$scope.curClaimedPlayer = response.data.curClaimedPlayer;
 				$scope.dominantSuitDisplay = "";
@@ -465,7 +491,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		ws.onMessage(function(e){
 			var message = e.data
 			heartCheck.reset();
-			if (message == 'refresh' || message == 'start'){
+			if (message == 'refresh' || message == 'start' || message == 'dismiss'){
 				$scope.getBoard();
 			}
 			

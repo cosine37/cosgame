@@ -19,6 +19,7 @@ public class BoardEntity {
 	int attackerPointsGained;
 	int status;
 	int round;
+	int totalRounds;
 	int phase;
 	int biggestRank;
 	int gameMode;
@@ -187,5 +188,11 @@ public class BoardEntity {
 	}
 	public void setNumJeRevealed(int numJeRevealed) {
 		this.numJeRevealed = numJeRevealed;
+	}
+	public int getTotalRounds() {
+		return totalRounds;
+	}
+	public void setTotalRounds(int totalRounds) {
+		this.totalRounds = totalRounds;
 	}
 }

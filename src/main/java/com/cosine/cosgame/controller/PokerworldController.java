@@ -90,6 +90,19 @@ public class PokerworldController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/pokerworld/dismiss", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.dismiss();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	@RequestMapping(value="/pokerworld/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
 		StringEntity entity = new StringEntity();
@@ -109,6 +122,7 @@ public class PokerworldController {
 				board.updateDB("rawHidden", board.getRawHidden());
 				board.updateDB("gameMode", board.getGameMode());
 				board.updateDB("biggestRank", board.getBiggestRank());
+				board.updateDB("totalRounds", board.getTotalRounds());
 				board.updateDominantDB();
 			}
 		} else {
@@ -175,12 +189,33 @@ public class PokerworldController {
 				board.updateBasicDB();
 				board.updatePlayers();
 				board.updateCardsDB();
+				board.updateDominantDB();
 			}
 		} else {
 			board.setId("NE");
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/pokerworld/confirmendgame", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmEndGame(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.getLord().contentEquals(username)) {
+				board.confirmEndGame();
+				board.updateBasicDB();
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokerworld/confirmendturn", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> confirmEndTurn(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

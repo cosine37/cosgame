@@ -5,6 +5,7 @@ public class Consts {
 	public static final int GAMEMODEINDEX = 0;
 	public static final int BIGGESTRANKINDEX = 1;
 	public static final int FIRSTPLAYERINDEX = 2;
+	public static final int TOTALROUNDSINDEX = 3;
 	
 	// game modes
 	public static final int SFSJ = 0;
@@ -17,6 +18,7 @@ public class Consts {
 	public static final int PLAYCARDS = 3;
 	public static final int SCORING = 4;
 	
+	public static final int PREENDGAME = 9;
 	public static final int ENDGAME = 10;
 	
 	public static final int BIDTRICKS = 1;

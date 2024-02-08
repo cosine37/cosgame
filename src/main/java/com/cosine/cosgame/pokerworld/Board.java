@@ -29,6 +29,7 @@ public class Board {
 	int winPlayer;
 	int attackerPointsGained;
 	int round;
+	int totalRounds;
 	int phase;
 	int biggestRank;
 	int gameMode;
@@ -98,6 +99,12 @@ public class Board {
 	public void startGameWizard() {
 		biggestRank = settings.get(Consts.BIGGESTRANKINDEX);
 		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
+		totalRounds = settings.get(Consts.TOTALROUNDSINDEX);
+		
+		if (totalRounds == 0) {
+			totalRounds = 60/players.size();
+		}
+		
 		confirmed = new ArrayList<>();
 		for (int i=0;i<players.size();i++) {
 			players.get(i).clearAll();
@@ -243,10 +250,23 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).updateScore();
 		}
-		//status = Consts.SCORING;
 		round++;
-		dealWizard();
-		status = Consts.SCORING;
+		if (round>totalRounds) {
+			gameEnd();
+		} else {
+			dealWizard();
+			status = Consts.SCORING;
+		}
+	}
+	
+	public void gameEnd() {
+		status = Consts.PREENDGAME;
+	}
+	
+	public void confirmEndGame() {
+		if (status == Consts.PREENDGAME) {
+			status = Consts.ENDGAME;
+		}
 	}
 	
 	public void nextPlayerBid() {
@@ -489,6 +509,31 @@ public class Board {
 	public boolean gameModeIs(int x) {
 		return gameMode == x;
 	}
+	public int getTotalRounds() {
+		return totalRounds;
+	}
+	public void setTotalRounds(int totalRounds) {
+		this.totalRounds = totalRounds;
+	}
+	public int getNumWzRevealed() {
+		return numWzRevealed;
+	}
+	public void setNumWzRevealed(int numWzRevealed) {
+		this.numWzRevealed = numWzRevealed;
+	}
+	public int getNumJeRevealed() {
+		return numJeRevealed;
+	}
+	public void setNumJeRevealed(int numJeRevealed) {
+		this.numJeRevealed = numJeRevealed;
+	}
+
+	public PokerCard getFirstCard() {
+		return firstCard;
+	}
+	public void setFirstCard(PokerCard firstCard) {
+		this.firstCard = firstCard;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player(this);
@@ -620,6 +665,7 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("status", status);
 		doc.append("round", round);
+		doc.append("totalRounds", totalRounds);
 		doc.append("phase", phase);
 		doc.append("firstPlayer", firstPlayer);
 		doc.append("curPlayer", curPlayer);
@@ -657,6 +703,7 @@ public class Board {
 		lord = doc.getString("lord");
 		status = doc.getInteger("status", -1);
 		round = doc.getInteger("round", -1);
+		totalRounds = doc.getInteger("totalRounds", -1);
 		phase = doc.getInteger("phase", -1);
 		firstPlayer = doc.getInteger("firstPlayer", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
@@ -700,6 +747,7 @@ public class Board {
 		entity.setLord(lord);
 		entity.setStatus(status);
 		entity.setRound(round);
+		entity.setTotalRounds(totalRounds);
 		entity.setPhase(phase);
 		entity.setDominantRank(dominantRank);
 		entity.setDominantSuit(dominantSuit);
