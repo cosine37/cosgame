@@ -71,13 +71,13 @@ public class PokerUtil {
 	public static boolean bigger(PokerCard c1, PokerCard c2, String dominantSuit, String currentSuit, int biggestRank, boolean sortHand) {
 		if (dominantSuit == null) dominantSuit = "";
 		if (currentSuit == null) currentSuit = "";
-		if (c1.getSuit().contentEquals("WZ")) {
+		if (c1.getSuit().toUpperCase().contentEquals("WZ")) {
 			return true;
-		} else if (c2.getSuit().contentEquals("WZ")) {
+		} else if (c2.getSuit().toUpperCase().contentEquals("WZ")) {
 			return false;
-		} else if (c2.getSuit().contentEquals("JE")) {
+		} else if (c2.getSuit().toUpperCase().contentEquals("JE")) {
 			return true;
-		} else if (c1.getSuit().contentEquals("JE")) {
+		} else if (c1.getSuit().toUpperCase().contentEquals("JE")) {
 			return false;
 		} else if (c1.getSuit().contentEquals(dominantSuit)) {
 			if (c2.getSuit().contentEquals(dominantSuit)) {

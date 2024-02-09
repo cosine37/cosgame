@@ -130,13 +130,11 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 							$scope.chosenCard = -1;
 						} else {
 							if ($scope.chosenCard != -1){
-								$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-30px"
+								$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
 							}
 							$scope.chosenCard = x;
+							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-30px"
 						}
-					}
-					if ($scope.chosenCard != -1){
-						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-30px"
 					}
 				}
 			}
@@ -221,7 +219,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		translateRawCard = function(raw, p){
+		translateRawCard = function(raw, p, f){
 			var card = {}
 			var r = raw.substring(0,1);
 			var s = raw.substring(1,2);
@@ -280,6 +278,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				card["cstyle"]["background-color"] = "palegoldenrod"
 			}
 			
+			if ($scope.status == $scope.SCORING && f){
+				if (ts == $scope.dominantSuitLastRound){
+					card["cstyle"]["background-color"] = "olive"
+				} else if (raw == "WZ" || raw == "Wz" || raw == "wZ" || raw == "wz"){
+					card["cstyle"]["background-color"] = "cadetblue"
+				} else if (raw == "JE" || raw == "Je" || raw == "jE" || raw == "je"){
+					card["cstyle"]["background-color"] = "mediumturquoise"
+				}
+				
+				else {
+					card["cstyle"]["background-color"] = "grey"
+				}
+			}
+			
 			if (p == 1){
 				card["cstyle"]["opacity"] = "1";
 				if ($scope.status == $scope.BIDTRICKS){
@@ -298,7 +310,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			var i = 0;
 			while (i<$scope.myCards.length){
 				var rawCard = $scope.myCards.substring(i,i+2);
-				$scope.hand.push(translateRawCard(rawCard, $scope.playable[i/2]));
+				$scope.hand.push(translateRawCard(rawCard, $scope.playable[i/2], false));
 				i=i+2;
 			}
 			for (i=0;i<$scope.players.length;i++){
@@ -306,14 +318,14 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				var played = [];
 				while (j<$scope.players[i].playedCards.length){
 					var rawCard = $scope.players[i].playedCards.substring(j,j+2);
-					played.push(translateRawCard(rawCard, 1));
+					played.push(translateRawCard(rawCard, 1, true));
 					j = j+2;
 				}
 				$scope.players[i]["played"] = played
 			}
 			$scope.trump = []
 			if ($scope.dominantCard.length == 2){
-				var trumpCard =translateRawCard($scope.dominantCard,1)
+				var trumpCard =translateRawCard($scope.dominantCard,1, false)
 				$scope.trump.push(trumpCard)
 			}
 		}
@@ -374,6 +386,14 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				$scope.roundDisplay = $scope.roundDisplay + "（共" + $scope.totalRounds + "轮）"
 			}	
+			if ($scope.biggestRank == 1){
+				$scope.biggestRankDisplay = "A"
+			} else if ($scope.biggestRank == 2){
+				$scope.biggestRankDisplay = "2"
+			} if ($scope.biggestRank == 13){
+				$scope.biggestRankDisplay = "K"
+			}
+			
 		}
 		
 		setIndexes = function(){
@@ -445,6 +465,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.attackerPointsGained = response.data.attackerPointsGained;
 				$scope.chosenCard = -1;
 				$scope.playable = response.data.playable
+				$scope.biggestRank = response.data.biggestRank
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

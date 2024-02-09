@@ -18,6 +18,7 @@ public class Board {
 	String dominantSuit;
 	String currentSuit;
 	String rawHidden;
+	String dominantSuitLastRound;
 	
 	int numDominant;
 	int curClaimedPlayer;
@@ -89,6 +90,7 @@ public class Board {
 		sequences = gameUtil.getSequences();
 		dominantRank = "2";
 		dominantSuit = "x";
+		dominantSuitLastRound = "x";
 		numDominant = 0;
 		curClaimedPlayer = -1;
 		numPlayed = -1;
@@ -130,7 +132,7 @@ public class Board {
 		}
 		
 		dominantCard = new PokerCard();
-		
+		dominantSuitLastRound = dominantSuit;
 		if (deck.size() > 0) {
 			numWzRevealed = 0;
 			numJeRevealed = 0;
@@ -174,7 +176,7 @@ public class Board {
 	}
 	
 	public void currentSuitHandle(Player p) {
-		if (curPlayer == p.getIndex()) {
+		if (firstPlayer == p.getIndex()) {
 			currentSuit = p.getPlayed().get(0).getSuit();
 		} else if (currentSuit.toUpperCase().contentEquals("JE")){
 			currentSuit = p.getPlayed().get(0).getSuit();
@@ -313,7 +315,7 @@ public class Board {
 			if (x == players.size()) x = 0;
 			if (x == firstPlayer) break;
 			PokerCard c = players.get(x).getPlayed().get(0);
-			if (PokerUtil.bigger(c, winCard, this)) {
+			if (!PokerUtil.bigger(winCard, c, this)) {
 				winPlayer = x;
 				winCard = c;
 			}
@@ -323,8 +325,6 @@ public class Board {
 		firstPlayer = winPlayer;
 		curPlayer = winPlayer;
 		currentSuit = "";
-		
-		
 	}
 	
 	public void confirmNextTurn(String username) {
@@ -534,6 +534,12 @@ public class Board {
 	public void setFirstCard(PokerCard firstCard) {
 		this.firstCard = firstCard;
 	}
+	public String getDominantSuitLastRound() {
+		return dominantSuitLastRound;
+	}
+	public void setDominantSuitLastRound(String dominantSuitLastRound) {
+		this.dominantSuitLastRound = dominantSuitLastRound;
+	}
 
 	public void addPlayer(String name) {
 		Player p = new Player(this);
@@ -577,6 +583,7 @@ public class Board {
 		//TODO: Add more items for general updates
 		dbutil.update("id", id, "dominantRank", dominantRank);
 		dbutil.update("id", id, "dominantSuit", dominantSuit);
+		dbutil.update("id", id, "dominantSuitLastRound", dominantSuitLastRound);
 		dbutil.update("id", id, "numDominant", numDominant);
 		dbutil.update("id", id, "curClaimedPlayer", curClaimedPlayer);
 		dbutil.update("id", id, "dominantCard", dominantCard.toString());
@@ -674,6 +681,7 @@ public class Board {
 		doc.append("sequences", sequences);
 		doc.append("dominantRank", dominantRank);
 		doc.append("dominantSuit", dominantSuit);
+		doc.append("dominantSuitLastRound", dominantSuitLastRound);
 		doc.append("currentSuit", currentSuit);
 		doc.append("numDominant", numDominant);
 		doc.append("curClaimedPlayer", curClaimedPlayer);
@@ -711,6 +719,7 @@ public class Board {
 		sequences = (List<List<Integer>>) doc.get("sequences");
 		dominantRank = doc.getString("dominantRank");
 		dominantSuit = doc.getString("dominantSuit");
+		dominantSuitLastRound = doc.getString("dominantSuitLastRound");
 		currentSuit = doc.getString("currentSuit");
 		numDominant = doc.getInteger("numDominant", 0);
 		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
@@ -751,6 +760,7 @@ public class Board {
 		entity.setPhase(phase);
 		entity.setDominantRank(dominantRank);
 		entity.setDominantSuit(dominantSuit);
+		entity.setDominantSuitLastRound(username);
 		entity.setNumDominant(numDominant);
 		entity.setCurClaimedPlayer(curClaimedPlayer);
 		entity.setCurPlayer(curPlayer);

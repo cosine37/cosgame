@@ -15,12 +15,15 @@
 <script src="/js/app/pokerworldGameController.js"></script>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
-	<div>{{roundDisplay}}<button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散</button></div>
+	<div>
+		{{roundDisplay}} 最大点数: {{biggestRankDisplay}}
+		<button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散</button>
+	</div>
 	<div style="height: 500px">
 		<table>
 			<tr>
 				<td>
-					<div ng-show="trump.length == 1">花色</div>
+					<div ng-show="trump.length == 1">主花色</div>
 					<div ng-show="trump.length == 0">没有主花色</div>
 					<div class="card-play-wizard card-size noselect" ng-repeat="c in trump track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
 				</td>
@@ -68,6 +71,7 @@
 		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 	</div>
 	<div style="clear:both"></div>
+	<!-- 
 	<div>
 		{{gamedata}}
 		
@@ -75,7 +79,7 @@
 	<div>
 		{{hand}}
 	</div>
-	
+	 -->
 	<!-- 
 	<div class="table-div">
 		<div class="player-div" ng-repeat="i in indexSequence">

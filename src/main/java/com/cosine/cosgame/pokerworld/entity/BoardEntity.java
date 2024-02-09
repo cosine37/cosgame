@@ -8,6 +8,7 @@ public class BoardEntity {
 	String myCards;
 	String dominantRank;
 	String dominantSuit;
+	String dominantSuitLastRound;
 	String dominantCard;
 	int myIndex;
 	int numDominant;
@@ -194,5 +195,11 @@ public class BoardEntity {
 	}
 	public void setTotalRounds(int totalRounds) {
 		this.totalRounds = totalRounds;
+	}
+	public String getDominantSuitLastRound() {
+		return dominantSuitLastRound;
+	}
+	public void setDominantSuitLastRound(String dominantSuitLastRound) {
+		this.dominantSuitLastRound = dominantSuitLastRound;
 	}
 }

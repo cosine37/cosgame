@@ -15,7 +15,7 @@ public class AllTabs {
 		allTabs.add(new Tab("雕梁画栋", "architect", "rgb(160,32,240)"));
 		//allTabs.add(new Tab("水泊传说", "marshbros", "rgb(218,165,32)"));
 		allTabs.add(new Tab("扑克世界", "pokerworld", "goldenrod"));
-		allTabs.add(new Tab("花园战争", "gardenwar", "darkgreen"));
+		//allTabs.add(new Tab("花园战争", "gardenwar", "darkgreen"));
 		
 		return allTabs;
 	}
