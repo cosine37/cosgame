@@ -59,25 +59,52 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			});
 		}
 		
+		playClickSE = function(){
+			var audio = new Audio("/sound/Pokerworld/click.wav")
+			audio.play();
+		}
+		
+		playRandomizeSE = function(){
+			var audio = new Audio("/sound/Pokerworld/randomize.wav")
+			audio.play();
+		}
+		
 		$scope.chooseGame = function(x){
+			playClickSE()
 			$scope.chosenGame = x;
+			
 		}
 		
 		$scope.setFirstPlayer = function(x){
+			playClickSE()
 			$scope.firstPlayer = x;
+			
 		}
 		
 		$scope.setBiggestRank = function(x){
+			playClickSE()
 			$scope.biggestRank = x;
 		}
 		
 		$scope.setTotalRounds = function(x){
+			playClickSE()
 			$scope.totalRounds = x;
 		}
 		
 		$scope.randomFirstPlayer = function(){
+			playRandomizeSE()
 			var x = Math.floor(Math.random() * $scope.players.length);
 			$scope.firstPlayer = x;
+		}
+		
+		$scope.highlightStyle = function(f){
+			if (f){
+				return {
+					"background-color": "goldenrod"
+				}
+			} else{
+				return {}
+			}
 		}
 		
 		$scope.startGame = function(){
@@ -85,6 +112,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 				alert("请选择游戏！");
 				return;
 			}
+			playClickSE();
 			settings = [-1,0,0,0]
 			settings[0] = $scope.chosenGame;
 			settings[1] = $scope.biggestRank;
@@ -93,6 +121,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			var data = {
 				"settings" : settings
 			}
+			
 			$http({url: "/pokerworld/startgame", method: "POST", params:data}).then(function(response){
 				ws.send("start");
 				$scope.goto('pokerworldgame');

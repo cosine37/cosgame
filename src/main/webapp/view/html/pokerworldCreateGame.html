@@ -13,57 +13,189 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/pokerworldCreateGameController.js"></script>
+<style>
+body {
+	background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Pokerworld/create_bg.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="pokerworldCreateGameApp" ng-controller="pokerworldCreateGameCtrl">
-	<div>
-		<button ng-click="goto('pokerworld')">back</button>
-		<button ng-click="startGame()" ng-show="lord == username">start game</button>
-		<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-		<div>
-			
+	<audio id="bgm" autoplay loop>
+		<source src="/sound/Pokerworld/welcome.mp3" type="audio/mpeg"></src>
+	</audio>
+	<div style="height: 30px"></div>
+	<div style="margin-left: 50px; width: 1100px; height: 1000px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
+		<div style="width: 100%; padding-top: 30px; text-align: center">
+			<h1>扑克世界</h1>
+		</div>
+		<div style="margin-left:50px; margin-top: 20px">
 			<table>
-				<tr ng-repeat="p in players track by $index">
-					<td>{{p.name}}</td>
-					<td>
-						<div ng-show="$index == firstPlayer">初始玩家</div>
-						<button ng-show="$index != firstPlayer" ng-click="setFirstPlayer($index)" ng-show="lord == username">设为初始</button>
+				<tr>
+					<td style="vertical-align: top; width: 400px">
+						<div style="height: 300px;">
+							<h4>玩家列表</h4>
+							<table>
+								<tr>
+									<th>玩家姓名</th>
+									<th>
+										<div ng-show="lord == username">初始玩家</div>
+										<div ng-show="lord != username">房主</div>
+									</th>
+								</tr>
+								<tr ng-repeat="p in players track by $index">
+									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;" ng-style="highlightStyle($index == firstPlayer)">
+										{{p.name}}
+									</td>
+									<td style="width: 90px; border: 0px; padding: 0px" ng-style="highlightStyle($index == firstPlayer)">
+										<div ng-show="$index == firstPlayer">&#129092;</div>
+										<button ng-click="setFirstPlayer($index)" ng-show="$index != firstPlayer && lord == username">设为初始</button>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><button ng-click="randomFirstPlayer()" ng-show="lord == username">随机初始</button></td>
+								</tr>
+							</table>
+							
+						</div>
+						<div>
+							<h4>游戏列表</h4>
+							<table>
+								<tr>
+									<th>游戏名</th>
+									<th>查看游戏</th>
+								</tr>
+								<tr>
+									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;">
+										四副升级（施工中）
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;" ng-style="highlightStyle(chosenGame == 1)">
+										神机妙算
+									</td>
+									<td style="width: 90px; border: 0px; padding: 0px" ng-style="highlightStyle(chosenGame == 1)">
+										<div ng-show="chosenGame == 1" style="background-color: goldenrod; width: 100%">&#129092;</div>
+										<button ng-click="chooseGame(1)" ng-show = "chosenGame != 1">查看</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+					<td style="width: 600px; vertical-align: top;">
+						<div ng-show="chosenGame == 1">
+							<h3>神机妙算</h3>
+							<table>
+								<tr>
+									<th style="width: 80px">最大点数</th>
+									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 60px">选择</th>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(biggestRank == 13)">
+										K
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 13)">
+										K最大，接下来是Q。A最小，第二小的牌是2，以此类推。该配置为神机妙算的默认配置。
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 13)">
+										<div ng-show="biggestRank == 13">&#129092;</div>
+										<button ng-click="setBiggestRank(13)" ng-show = "biggestRank != 13 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(biggestRank == 1)">
+										A
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 1)">
+										A最大，接下来是K。2最小，第二小的牌是3，以此类推。
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 1)">
+										<div ng-show="biggestRank == 1">&#129092;</div>
+										<button ng-click="setBiggestRank(1)" ng-show = "biggestRank != 1 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(biggestRank == 2)">
+										2
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 2)">
+										2最大，接下来是A，然后是K。3最小，第二小的牌是4，以此类推。
+									</td>
+									<td ng-style="highlightStyle(biggestRank == 2)">
+										<div ng-show="biggestRank == 2">&#129092;</div>
+										<button ng-click="setBiggestRank(2)" ng-show = "biggestRank != 2 && lord == username">选择</button>
+									</td>
+								</tr>
+							</table>
+							<div style="height: 30px;"></div>
+							<table>
+								<tr>
+									<th style="width: 80px">轮次数</th>
+									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 60px">选择</th>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(totalRounds == 0)">
+										完整轮次
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 0)">
+										总轮次数等于60除以玩家人数。该配置为神机妙算的默认配置。
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 0)">
+										<div ng-show="totalRounds == 0">&#129092;</div>
+										<button ng-click="setTotalRounds(0)" ng-show = "totalRounds != 0 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr style="height: 35px">
+									<td ng-style="highlightStyle(totalRounds == 5)">
+										5轮
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 5)">
+										只进行前5轮。
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 5)">
+										<div ng-show="totalRounds == 5">&#129092;</div>
+										<button ng-click="setTotalRounds(5)" ng-show = "totalRounds != 5 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr style="height: 35px">
+									<td ng-style="highlightStyle(totalRounds == 7)">
+										7轮
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 7)">
+										只进行前7轮。
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 7)">
+										<div ng-show="totalRounds == 7">&#129092;</div>
+										<button ng-click="setTotalRounds(7)" ng-show = "totalRounds != 7 && lord == username">选择</button>
+									</td>
+								</tr>
+							</table>
+							<div style = "height: 50px;">
+							</div>
+							<div style="width: 500px;text-align:center">
+								<button ng-click="chooseGame(-1)">返回</button>
+								<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</table>
-			<button ng-click="randomFirstPlayer()" ng-show="lord == username">随机初始玩家</button>
+		</div>
+		
+		
+		
+		<div style="width: 1100px; text-align:center; bottom: 30px; position: absolute">
+			<button ng-click="goto('pokerworld')">退出</button>
+			<button ng-click="dismiss()" ng-show="lord == username">解散</button>
 		</div>
 	</div>
-	<div ng-show="lord == username">
-		<table>
-			<tr>
-				<td>
-					<p>选择游戏</p>
-					<button disabled>四副升级</button>
-					<button ng-click="chooseGame(1)" ng-disabled = "chosenGame == 1">巫师牌</button>
-				</td>
-				<td>
-					<div ng-show="chosenGame == 1">
-						<p>巫师牌选项</p>
-						<div>
-							最大点数
-							<button ng-disabled="biggestRank == 13" ng-click="setBiggestRank(13)">K</button>
-							<button ng-disabled="biggestRank == 1" ng-click="setBiggestRank(1)">A</button>
-							<button ng-disabled="biggestRank == 2" ng-click="setBiggestRank(2)">2</button>
-						</div>
-						<div>
-							总轮次
-							<button ng-disabled="totalRounds == 0" ng-click="setTotalRounds(0)">完整轮次</button>
-							<button ng-disabled="totalRounds == 5" ng-click="setTotalRounds(5)">5轮</button>
-							<button ng-disabled="totalRounds == 7" ng-click="setTotalRounds(7)">7轮</button>
-						</div>
-						
-					</div>
-					
-					
-				</td>
-			</tr>
-		</table>
-		
-	</div>
+	
 	
 </body>
 </html>
