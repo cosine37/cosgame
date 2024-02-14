@@ -16,7 +16,7 @@
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
 	<button ng-click="goto('pokerworld')">back</button>
 	<div>
-		{{roundDisplay}} 最大点数: {{biggestRankDisplay}}
+		{{roundDisplay}} 最大点数: {{biggestRankDisplay}} 当前花色：{{currentSuit}}
 		<button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散</button>
 	</div>
 	<div style="height: 500px">

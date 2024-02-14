@@ -451,6 +451,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.dominantRank = response.data.dominantRank;
 				$scope.dominantSuit = response.data.dominantSuit;
 				$scope.dominantCard = response.data.dominantCard;
+				$scope.currentSuit = response.data.currentSuit;
 				$scope.numDominant = response.data.numDominant;
 				$scope.curClaimedPlayer = response.data.curClaimedPlayer;
 				$scope.dominantSuitDisplay = "";

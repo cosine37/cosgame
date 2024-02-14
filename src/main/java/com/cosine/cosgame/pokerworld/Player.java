@@ -93,15 +93,17 @@ public class Player {
 			}
 			board.nextPlayerPlay();
 		} else if (board.gameModeIs(Consts.WIZARD)) {
-			board.potentialNewTurnHandle();
-			if (playedIndex.size() == 1) {
-				int x = playedIndex.get(0);
-				PokerCard c = hand.remove(x);
-				played = new ArrayList<>();
-				played.add(c);
-				board.currentSuitHandle(this);
+			if (board.getStatus() == Consts.PLAYCARDS || board.getStatus() == Consts.CONFIRMROUNDTURN) {
+				board.potentialNewTurnHandle();
+				if (playedIndex.size() == 1) {
+					int x = playedIndex.get(0);
+					PokerCard c = hand.remove(x);
+					played = new ArrayList<>();
+					played.add(c);
+					board.currentSuitHandle(this);
+				}
+				board.nextPlayerPlay();
 			}
-			board.nextPlayerPlay();
 		}
 		
 	}

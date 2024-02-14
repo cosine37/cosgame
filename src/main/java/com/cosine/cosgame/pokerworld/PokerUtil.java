@@ -71,6 +71,9 @@ public class PokerUtil {
 	public static boolean bigger(PokerCard c1, PokerCard c2, String dominantSuit, String currentSuit, int biggestRank, boolean sortHand) {
 		if (dominantSuit == null) dominantSuit = "";
 		if (currentSuit == null) currentSuit = "";
+		System.out.println("dominantSuit = " + dominantSuit);
+		System.out.println("currentSuit = " + currentSuit);
+		System.out.println(c1.toString() + " " + c2.toString());
 		if (c1.getSuit().toUpperCase().contentEquals("WZ")) {
 			return true;
 		} else if (c2.getSuit().toUpperCase().contentEquals("WZ")) {
@@ -99,7 +102,7 @@ public class PokerUtil {
 					return true;
 				}
 			} else {
-				return false;
+				return true;
 			}
 		} else if (c2.getSuit().contentEquals(currentSuit)) {
 			return false;

@@ -318,6 +318,7 @@ public class Board {
 			if (!PokerUtil.bigger(winCard, c, this)) {
 				winPlayer = x;
 				winCard = c;
+				System.out.println(winCard.toString());
 			}
 		}
 		
@@ -773,6 +774,7 @@ public class Board {
 		entity.setDominantCard(dominantCard.toString());
 		entity.setNumWzRevealed(numWzRevealed);
 		entity.setNumJeRevealed(numJeRevealed);
+		entity.setCurrentSuit(currentSuit);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
