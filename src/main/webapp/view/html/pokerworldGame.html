@@ -13,64 +13,164 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/pokerworldGameController.js"></script>
+<style>
+body {
+	background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Pokerworld/game_bg.png');
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+</style>
 <body ng-app="pokerworldGameApp" ng-controller="pokerworldGameCtrl">
-	<button ng-click="goto('pokerworld')">back</button>
-	<div>
-		{{roundDisplay}} 最大点数: {{biggestRankDisplay}} 当前花色：{{currentSuit}}
-		<button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散</button>
-	</div>
-	<div style="height: 500px">
-		<table>
-			<tr>
-				<td>
-					<div ng-show="trump.length == 1">主花色</div>
-					<div ng-show="trump.length == 0">没有主花色</div>
-					<div class="card-play-wizard card-size noselect" ng-repeat="c in trump track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
-				</td>
-				<td ng-repeat="p in players track by $index" style="vertical-align:top">
-					<div>{{p.name}}</div>
-					<div>下注墩数：{{p.bidDisplay}}</div>
-					<div>实际墩数：{{p.actualDisplay}}</div>
-					<div>当前分数：<span ng-class="p.scoreDisplayClass" style="font-weight: bold">{{p.scoreDisplay}}</span></div>
-					<div class="card-play-wizard card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
-					<p ng-show="curPlayer == $index">当前玩家</p>
-					<p ng-show="firstPlayer == $index">初始玩家</p>
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<div ng-show="(status == BIDTRICKS || status == SCORING) && round == players[myIndex].bids.length+1 && myIndex == curPlayer">
-		<div>请下注你本轮的墩数(0~{{round}})：</div>
-		<div>
-			<button ng-click="changeBid(-100)">Min</button>
-			<button ng-disabled="numTrick == 0" ng-click="changeBid(-1)">-</button>
-			{{numTrick}}
-			<button ng-disabled="numTrick == round" ng-click="changeBid(1)">+</button>
-			<button ng-click="changeBid(100)">Max</button>
-			<button ng-click="bidWizard()">提交</button>
+	<div style="height: 30px"></div>
+	<div id="wizard" ng-click="playBGM()"
+		style="margin-left: 50px; width: 1440px; height: 800px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative" ng-show="gameMode == WIZARD">
+		<div id="players-area">
+			<table>
+				<tr>
+					<td ng-repeat="p in players track by $index">
+						<div ng-style="highlightStyle(curPlayer == $index)" style="border-radius:10px; padding-top:5px; padding-left: 10px">
+							<table>
+								<tr>
+									<td style="width: 85px; padding-left: 10px"><img src="/image/Pokerworld/start.png" style="height:30px" ng-show="firstPlayer == $index"></td>
+									<td style="width: 115px; padding-right: 10px"><span style="font-weight: bold; font-size: 18px">{{p.name}}</span></td>
+								</tr>
+								<tr>
+									<td>下注墩数：</td>
+									<td>{{p.bidDisplay}}</td>
+								</tr>
+								<tr>
+									<td>实际墩数：</td>
+									<td>{{p.actualDisplay}}</td>
+								</tr>
+								<tr>
+									<td>当前分数：</td>
+									<td><span ng-class="p.scoreDisplayClass" style="font-weight: bold">{{p.scoreDisplay}}</span></td>
+								</tr>
+								<tr>
+									<td colspan="2"; style="text-align:center">
+										<div style="padding-left: 53px; height: 135px">
+											<div class="card-play-wizard card-size noselect" ng-repeat="c in p.played track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2"; style="height: 35px;text-align:center">
+										<span ng-show="curPlayer == $index" style="font-size: 24px">&#11165;</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="public-area" style="padding-left: 10px;">
+			<table>
+				<tr>
+					<td style="vertical-align: top; width: 300px">
+						<div>
+							<table>
+								<tr>
+									<td colspan="2" style="font-size: 24px; font-weight:bold">{{roundDisplay}}</td>
+								</tr>
+								<tr>
+									<td style="width: 90px">最大点数:</td>
+									<td style="text-align: left">{{biggestRankDisplay}}</td>
+								</tr>
+								<!-- 
+								<tr>
+									<td>当前花色:</td>
+									<td>{{currentSuit}}</td>
+								</tr>
+								 -->
+							</table>
+						</div>
+					</td>
+					<td style="text-align:center;">
+						<div style="height: 30px">
+							<div ng-show="trump.length == 1">本轮主花色</div>
+							<div ng-show="trump.length == 0">本轮没有主花色</div>
+						</div>
+						<div style="height: 150px">
+							<div class="card-play-wizard card-size noselect" ng-repeat="c in trump track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
+						</div>
+					</td>
+					<td style="vertical-align: top;padding-left: 10px; width: 600px">
+						<div>
+							<span><img src="/image/Pokerworld/wizard.png" style="height:60px"></span>
+							<span>决定主花色时被翻出的巫师数量：</span>
+							<span style="font-weight:bold">{{gamedata.numWzRevealed}}</span>
+							
+						</div>
+						<div>
+							<span><img src="/image/Pokerworld/jester.png" style="height:60px"></span>
+							<span>决定主花色时被翻出的小丑数量：</span>
+							<span style="font-weight:bold">{{gamedata.numJeRevealed}}</span>
+						</div>
+						<div>
+							注：面杀决定主花色时，会翻出牌堆顶的牌直至翻出非巫师或非小丑牌。由于翻出巫师或小丑为重要信息，所以需要显示因此被翻出的巫师和小丑张数。
+						</div>
+					</td>
+					<td style="text-align:right">
+						<div style="margin: 5px"><button ng-click="mute()">{{muteButton}}</button></div>
+						<div style="margin: 5px"><button ng-click="muteSE()">{{muteSEButton}}</button></div>
+						<div style="margin: 5px"><button ng-click="goto('pokerworld')">退出游戏</button></div>
+						<div style="margin: 5px"><button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散游戏</button></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="personal-area" style="padding-left: 10px;">
+			<div id="personal-info" style="height: 70px; width: 800px">
+				<div id="bid-info" ng-show="(status == BIDTRICKS || status == SCORING)">
+					<div ng-show="(status == BIDTRICKS || status == SCORING) && round == players[myIndex].bids.length+1 && myIndex == curPlayer">
+						<div>请下注你本轮的墩数(0~{{round}})：</div>
+						<div>
+							<button ng-click="changeBid(-100)">0墩</button>
+							<button ng-disabled="numTrick == 0" ng-click="changeBid(-1)">-</button>
+							{{numTrick}}
+							<button ng-disabled="numTrick == round" ng-click="changeBid(1)">+</button>
+							<button ng-click="changeBid(100)">最大</button>
+							<button ng-click="bidWizard()">提交</button>
+						</div>
+					</div>
+					<div ng-show="(status == BIDTRICKS || status == SCORING) && myIndex != curPlayer">正等待其他玩家下注。</div>
+				</div>
+				<div style="height: 30px">
+					<div ng-show="status == CONFIRMROUNDTURN">
+						回合结束，{{players[winPlayer]["name"]}}吃了一墩，下回合第一个出牌。
+					</div>
+				</div>
+				
+				<div id="play-card-info" ng-show="status == CONFIRMROUNDTURN || status == PLAYCARDS">
+					<span ng-show="curPlayer != myIndex">现在不是你的回合</span>
+					<span ng-show="curPlayer == myIndex">请选择你要出的牌</span>
+					<button ng-show="curPlayer == myIndex && chosenCard != -1" ng-click="play()">打出</button>
+				</div>
+			</div>
+			<div id="hand" class="hand-size">
+				<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+			</div>
+			<div style="clear:both"></div>
 		</div>
 	</div>
-	<div ng-show="(status == BIDTRICKS || status == SCORING) && myIndex != curPlayer">正等待其他玩家下注。</div>
+	<!-- 
+	{{gamedata}}
+	 -->
 	
-	<div ng-show="status == CONFIRMROUNDTURN">
-		回合结束，{{players[winPlayer]["name"]}}吃了一墩，下回合第一个出牌。
-	</div>
+	
+	
 	<!-- 
 	<div ng-show="status == PREENDGAME">
 		游戏结束
 		<button ng-click="confirmEndGame()" ng-show="username == lord">解散</button>
 	</div>
 	 -->
-	<div style="height: 50px;" ng-show="status == CONFIRMROUNDTURN || status == PLAYCARDS">
-		<p ng-show="curPlayer != myIndex">现在不是你的回合</p>
-		<p ng-show="curPlayer == myIndex && chosenCard == -1">请选择你要出的牌</p>
-		<button ng-show="curPlayer == myIndex && chosenCard != -1" ng-click="play()">打出</button>
-	</div>
-	<div class="hand-size">
-		<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
-	</div>
-	<div style="clear:both"></div>
+	
+	
 	<!-- 
 	<div>
 		{{gamedata}}

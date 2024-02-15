@@ -86,13 +86,108 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		playClickSE = function(){
+			if ($scope.playSE){
+				var audio = new Audio("/sound/Pokerworld/click.wav")
+				audio.play();
+			}
+		}
+		
+		playPlaySE = function(){
+			if ($scope.playSE){
+				var audio = new Audio("/sound/Pokerworld/play.wav")
+				audio.play();
+			}
+		}
+		
+		playBidSE = function(){
+			if ($scope.playSE){
+				var audio = new Audio("/sound/Pokerworld/bid.wav")
+				audio.play();
+			}
+		}
+		
+		$scope.playedBGM = false
+		$scope.playBGM = true;
+		$scope.playSE = true;
+		$scope.muteSEButton = "关闭音效"
+		$scope.bgm = new Audio();
+		$scope.muteButton = "关闭BGM"
+		randomizeBGM = function(){
+			if ($scope.round == $scope.totalRounds && $scope.gameMode == $scope.WIZARD){
+				v = Math.floor(Math.random() * 5)+1;
+				bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
+			} else {
+				v = Math.floor(Math.random() * 3)+1;
+				bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+			}
+			$scope.bgm.src = bgmSrc
+		}
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		$scope.playBGM = function(){
+			if ($scope.playedBGM == false){
+				$scope.playedBGM = true;
+				randomizeBGM()
+		        $scope.bgm.play();
+		        $scope.muteButton = "关闭BGM"
+			}
+		}
+		$scope.mute = function(){
+			if ($scope.playedBGM == true){
+				if ($scope.playBGM == false){
+					$scope.bgm.play();
+					$scope.playBGM = true;
+					$scope.muteButton = "关闭BGM"
+				} else {
+					$scope.bgm.pause();
+					$scope.playBGM = false;
+					$scope.muteButton = "播放BGM"
+				}
+			}
+		}
+		$scope.muteSE = function(){
+			if ($scope.playSE){
+				$scope.playSE = false;
+				$scope.muteSEButton = "播放音效"
+			} else {
+				$scope.playSE = true;
+				$scope.muteSEButton = "关闭音效"
+			}
+		}
+		$scope.playWinLoseBGM = function(f){
+			if ($scope.playBGM){
+				if (f){
+					$scope.bgm.src = '/sound/Pokerworld/game_win.mp3'
+					$scope.bgm.play();
+				} else {
+					$scope.bgm.src = '/sound/Pokerworld/game_lose.mp3'
+					$scope.bgm.play();
+				}
+			} 
+		}
+		
+		$scope.highlightStyle = function(f){
+			if (f){
+				return {
+					"background-color": "goldenrod"
+				}
+			} else{
+				return {}
+			}
+		}
+		
 		$scope.changeBid = function(x){
+			playClickSE()
 			$scope.numTrick = $scope.numTrick+x
 			if ($scope.numTrick<0) $scope.numTrick = 0
 			if ($scope.numTrick>$scope.round) $scope.numTrick = $scope.round
 		}
 		
 		$scope.bidWizard = function(){
+			playBidSE()
 			var data = {"bid": $scope.numTrick}
 			$http({url: "/pokerworld/wizard/bid", method: "PUT", params: data}).then(function(response){
 				$scope.allRefresh()
@@ -124,6 +219,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			} else if ($scope.gameMode == $scope.WIZARD && $scope.myIndex == $scope.curPlayer && $scope.playable[x] == 1){
 				if ($scope.status == $scope.PLAYCARDS || $scope.status == $scope.CONFIRMROUNDTURN){
+					playClickSE()
 					if (x>=0 && x<$scope.hand.length){
 						if ($scope.chosenCard == x){
 							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
@@ -183,6 +279,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.play = function(){
+			playPlaySE()
 			var playedIndex = []
 			if ($scope.gameMode == $scope.SFSJ){
 				for (i=0;i<$scope.hand.length;i++){
@@ -437,6 +534,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('pokerworld');
 					return;
 				}
+				prevStatus = $scope.status;
+				
 				$scope.gamedata = response.data
 				$scope.id = response.data.id
 				$scope.status = response.data.status
@@ -493,9 +592,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('pokerworld');
 					return;
 				}
+				
+				
+				
 				setCardStyles()
 				setPlayerInfoDisplay()
 				setRoundDisplay()
+				if ($scope.gameMode == $scope.WIZARD){
+					if (prevStatus != null && prevStatus != $scope.status && $scope.status == $scope.SCORING){
+						myBidThisTurn = $scope.players[$scope.myIndex].bidDisplay
+						myActualThisTurn = $scope.players[$scope.myIndex].actualDisplay
+						$scope.playWinLoseBGM(myBidThisTurn == myActualThisTurn)
+					}
+				}
+				
 				/*
 				if ($scope.status == "1" && $scope.distributing == false){
 					$scope.distributing = true;
