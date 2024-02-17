@@ -114,14 +114,28 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.bgm = new Audio();
 		$scope.muteButton = "关闭BGM"
 		randomizeBGM = function(){
-			if ($scope.round == $scope.totalRounds && $scope.gameMode == $scope.WIZARD){
-				v = Math.floor(Math.random() * 5)+1;
-				bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
-			} else {
-				v = Math.floor(Math.random() * 3)+1;
-				bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+			if ($scope.gameMode == $scope.WIZARD){
+				if ($scope.round == $scope.totalRounds){
+					v = Math.floor(Math.random() * 5)+1;
+					bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
+				} else if ($scope.round == 4 || $scope.round == 9 || $scope.round == 15){
+					v = Math.floor(Math.random() * 3)+1;
+					bgmSrc = '/sound/Pokerworld/game_r8' + v + '.mp3'
+				} else if ($scope.round == 7 || $scope.round == 13 || $scope.round == 17){
+					v = Math.floor(Math.random() * 4)+1;
+					bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
+				} else if ($scope.round == 11 || ($scope.round == 14 && $scope.totalRound == 15) || $scope.round == 19){
+					v = Math.floor(Math.random() * 2)+1;
+					bgmSrc = '/sound/Pokerworld/game_r11' + v + '.mp3'
+				}
+				
+				else {
+					v = Math.floor(Math.random() * 3)+1;
+					bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+				}
+				$scope.bgm.src = bgmSrc
 			}
-			$scope.bgm.src = bgmSrc
+			
 		}
 		$scope.bgm.addEventListener("ended", function() {
 			randomizeBGM()

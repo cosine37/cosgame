@@ -128,7 +128,7 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
-		
+		/*
 		playGotoSE = function(){
 			var audio = new Audio("/sound/Belltower/goto.wav")
 			audio.play();
@@ -632,5 +632,5 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.accountInfo = response.data;
 			});
 		}
-		
+		*/
 }]);
