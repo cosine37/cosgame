@@ -183,6 +183,13 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			} 
 		}
 		
+		$scope.showScoreTable = false;
+		$scope.tableText = ["轮次","下注","实际","分数"]
+		$scope.scoreTableSwitch = function(f){
+			playClickSE()
+			$scope.showScoreTable = f;
+		}
+		
 		$scope.highlightStyle = function(f){
 			if (f){
 				return {

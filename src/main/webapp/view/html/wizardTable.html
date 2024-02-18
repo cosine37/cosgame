@@ -1,17 +1,33 @@
-<table>
+<table style="text-align: center;font-family: qishu;background-color: white">
 	<tr>
-		<td rowspan="2">#</td>
-		<td ng-repeat="p in players track by $index">{{p.name}}</td>
+		<td rowspan="2" style="border-bottom: 2px solid black">{{tableText[0]}}</td>
+		<td colspan="3" ng-repeat="p in players track by $index" style="border-left:2px solid black;">{{p.name}}</td>
 	</tr>
 	<tr>
-		<td ng-repeat-start="p in players track by $index">bids</td>
-		<td>actuals</td>
-		<td ng-repeat-end>scores</td>
+		<td style="border-bottom: 2px solid black; border-left:2px solid black;" ng-repeat-start="p in players track by $index">{{tableText[1]}}</td>
+		<td style="border-bottom: 2px solid black;">{{tableText[2]}}</td>
+		<td style="border-bottom: 2px solid black;" ng-repeat-end>{{tableText[3]}}</td>
 	</tr>
 	<tr ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]" ng-show="i<totalRounds">
 		<td>{{i+1}}</td>
-		<td ng-repeat-start="p in players track by $index">{{p.bids[i]}}</td>
-		<td>{{p.actuals[i]}}</td>
-		<td ng-repeat-end>{{p.scores[i]}}</td>
+		<td ng-repeat-start="p in players track by $index" style="border-left: 2px solid black;">
+			<span ng-show="i+1<round && p.bids[i] == p.actuals[i]" style="color:green">{{p.bids[i]}}</span>
+			<span ng-show="i+1<round && p.bids[i] != p.actuals[i]" style="color:red">{{p.bids[i]}}</span>
+			<span ng-show="i+1 == round && p.actuals.length == round">{{p.bids[i]}}</span>
+			<span ng-show="i+1 == round && p.actuals.length < round">-</span>
+			<span ng-show="i+1>round">-</span>
+		</td>
+		<td>
+			<span ng-show="i+1<round && p.bids[i] == p.actuals[i]" style="color:green">{{p.actuals[i]}}</span>
+			<span ng-show="i+1<round && p.bids[i] != p.actuals[i]" style="color:red">{{p.actuals[i]}}</span>
+			<span ng-show="i+1 == round">-</span>
+			<span ng-show="i+1>round">-</span>
+		</td>
+		<td ng-repeat-end>
+			<span ng-show="i+1<round && p.bids[i] == p.actuals[i]" style="color:green">{{p.scores[i]}}</span>
+			<span ng-show="i+1<round && p.bids[i] != p.actuals[i]" style="color:red">{{p.scores[i]}}</span>
+			<span ng-show="i+1 == round">-</span>
+			<span ng-show="i+1>round">-</span>
+		</td>
 	</tr>
 </table>

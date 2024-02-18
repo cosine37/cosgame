@@ -1,4 +1,10 @@
 @charset "UTF-8";
+
+@font-face{
+     font-family: 'qishu'; 
+     src:url('/font/AaQiShu-2.woff') format('woff')
+}
+
 button{
 	outline: none;
 	color: white;
