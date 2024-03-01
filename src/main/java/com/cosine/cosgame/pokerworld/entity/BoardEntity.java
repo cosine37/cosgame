@@ -24,9 +24,13 @@ public class BoardEntity {
 	int totalRounds;
 	int phase;
 	int biggestRank;
+	int extraCards;
 	int gameMode;
 	int numWzRevealed;
 	int numJeRevealed;
+	int numBmRevealed;
+	int numDrRevealed;
+	int numFrRevealed;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -208,5 +212,29 @@ public class BoardEntity {
 	}
 	public void setCurrentSuit(String currentSuit) {
 		this.currentSuit = currentSuit;
+	}
+	public int getExtraCards() {
+		return extraCards;
+	}
+	public void setExtraCards(int extraCards) {
+		this.extraCards = extraCards;
+	}
+	public int getNumBmRevealed() {
+		return numBmRevealed;
+	}
+	public void setNumBmRevealed(int numBmRevealed) {
+		this.numBmRevealed = numBmRevealed;
+	}
+	public int getNumDrRevealed() {
+		return numDrRevealed;
+	}
+	public void setNumDrRevealed(int numDrRevealed) {
+		this.numDrRevealed = numDrRevealed;
+	}
+	public int getNumFrRevealed() {
+		return numFrRevealed;
+	}
+	public void setNumFrRevealed(int numFrRevealed) {
+		this.numFrRevealed = numFrRevealed;
 	}
 }

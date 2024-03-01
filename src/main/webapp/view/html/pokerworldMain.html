@@ -176,11 +176,45 @@
 						<tr>
 							<td colspan="2">
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后一个<span class="pokerworldtext">轮次</span>（即发完所有牌的<span class="pokerworldtext">轮次</span>）结束后，游戏结束。<b>得分最多</b>的玩家获得胜利。
-								游戏结束时<b>得分最多</b>的玩家获得胜利。
 								</p>
 							</td>
 						</tr>
-					</table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>进阶规则</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>额外卡牌</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">
+								<button ng-click="shownCardIndex = 0" ng-disabled="shownCardIndex == 0">炸弹</button>
+								<button ng-click="shownCardIndex = 1" ng-disabled="shownCardIndex == 1">巨龙</button>
+								<button ng-click="shownCardIndex = 2" ng-disabled="shownCardIndex == 2">妖精</button>
+							</td>
+						</tr>
+						<tr ng-show="shownCardIndex == -1">
+							<td colspan="2" style="width: 1000px; height: 200px"></td>
+						</tr>
+						<tr ng-repeat="c in specials track by $index" ng-show="shownCardIndex == $index">
+							<td>
+								<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-class="c.color" ng-style="c.cstyle"></div>
+							</td>
+							<td style="width: 857px; vertical-align:top" ng-show="shownCardIndex == 0">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 炸弹（2024年2月29日上线）</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">炸弹</span>，即使你有与初始玩家打出的牌花色相同的牌。<span class="pokerworldtext">炸弹</span>可以视为当前回合最小的牌。打出<span class="pokerworldtext">炸弹</span>的轮次没有玩家会<span class="pokerworldtext">吃墩</span>
+								（即当前回合实际<span class="pokerworldtext">吃墩</span>的次数不会增加）。即便如此，本应<span class="pokerworldtext">吃墩</span>（当前回合牌最大）的玩家下回合第一个出牌。
+							</td>
+							<td style="width: 857px; vertical-align:top" ng-show="shownCardIndex == 1">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 巨龙（2024年2月29日上线）</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">巨龙</span>，即使你有与初始玩家打出的牌花色相同的牌。<span class="pokerworldtext">巨龙</span>在一般情况下是最大的牌，甚至比<span class="pokerworldtext">巫师</span>还要大。但若在打出<span class="pokerworldtext">巨龙</span>的同一回合有玩家打出<span class="pokerworldtext">妖精</span>，则当回合结束结算时视<span class="pokerworldtext">妖精</span>为最大的牌。
+								使用<span class="pokerworldtext">巨龙</span>的游戏也会使用<span class="pokerworldtext">妖精</span>。
+							</td>
+							<td style="width: 857px; vertical-align:top" ng-show="shownCardIndex == 2">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 妖精（2024年2月29日上线）</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">妖精</span>，即使你有与初始玩家打出的牌花色相同的牌。<span class="pokerworldtext">妖精</span>在一般情况下是最小的牌，甚至比<span class="pokerworldtext">小丑</span>还要小（但是大于<span class="pokerworldtext">炸弹</span>）。但若在打出<span class="pokerworldtext">妖精</span>的同一回合有玩家打出<span class="pokerworldtext">巨龙</span>，则当回合结束结算时视<span class="pokerworldtext">妖精</span>为最大的牌。
+								使用<span class="pokerworldtext">妖精</span>的游戏也会使用<span class="pokerworldtext">巨龙</span>。
+							</td>
+						</tr>
 				</div>
 			</div>
 		</div>

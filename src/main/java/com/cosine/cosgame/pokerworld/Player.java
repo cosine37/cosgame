@@ -211,6 +211,15 @@ public class Player {
 			if (board.getCurrentSuit().toUpperCase().contentEquals("JE")) {
 				break;
 			}
+			if (board.getCurrentSuit().toUpperCase().contentEquals("BM")) {
+				break;
+			}
+			if (board.getCurrentSuit().toUpperCase().contentEquals("DR")) {
+				break;
+			}
+			if (board.getCurrentSuit().toUpperCase().contentEquals("FR")) {
+				break;
+			}
 			if (board.getCurrentSuit().contentEquals(hand.get(i).getSuit())) {
 				flag = false;
 				break;
@@ -227,7 +236,15 @@ public class Player {
 					ans.add(Consts.PLAYABLE);
 				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("JE")) {
 					ans.add(Consts.PLAYABLE);
-				} else if (hand.get(i).getSuit().contentEquals(board.getCurrentSuit())) {
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("DR")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("FR")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("BM")) {
+					ans.add(Consts.PLAYABLE);
+				}
+				
+				else if (hand.get(i).getSuit().contentEquals(board.getCurrentSuit())) {
 					ans.add(Consts.PLAYABLE);
 				} else {
 					ans.add(Consts.UNPLAYABLE);

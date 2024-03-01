@@ -384,6 +384,24 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				c = "green";
 			}
 			
+			if (raw == "BM" || raw == "Bm" || raw == "bM" || raw == "bm"){
+				r = "bomb"
+				s = raw;
+				c = "darkred";
+			}
+			
+			if (raw == "DR" || raw == "Dr" || raw == "dR" || raw == "dr"){
+				r = "dragon"
+				s = raw;
+				c = "purple";
+			}
+			
+			if (raw == "FR" || raw == "Fr" || raw == "fR" || raw == "fr"){
+				r = "fairy"
+				s = raw;
+				c = "pink";
+			}
+			
 			card["rank"] = r
 			card["suit"] = s
 			card["color"] = c

@@ -58,6 +58,24 @@ public class PokerUtil {
 		}
 		return cards;
 	}
+	public static List<PokerCard> getWizardDeck(int extraCards){
+		List<PokerCard> cards = getWizardDeck();
+		
+		int x = extraCards;
+		int bomb = x%10;
+		x = x/10;
+		int df = x%10;
+		
+		if (bomb == 1) {
+			cards.add(new PokerCard("BM", 0));
+		}
+		if (df == 1) {
+			cards.add(new PokerCard("DR", 0));
+			cards.add(new PokerCard("FR", 0));
+		}
+		
+		return cards;
+	}
 	public static List<PokerCard> shuffle(List<PokerCard> cards){
 		List<PokerCard> newCards = new ArrayList<>();
 		Random rand = new Random();
@@ -74,6 +92,23 @@ public class PokerUtil {
 		System.out.println("dominantSuit = " + dominantSuit);
 		System.out.println("currentSuit = " + currentSuit);
 		System.out.println(c1.toString() + " " + c2.toString());
+		
+		// Bomb, Dragon and Fairy handles
+		if (c2.getSuit().toUpperCase().contentEquals("BM")) {
+			return true;
+		} else if (c1.getSuit().toUpperCase().contentEquals("BM")) {
+			return false;
+		} else if (c1.getSuit().toUpperCase().contentEquals("DR")) {
+			return true;
+		} else if (c2.getSuit().toUpperCase().contentEquals("DR")) {
+			return false;
+		} else if (c2.getSuit().toUpperCase().contentEquals("FR")) {
+			return true;
+		} else if (c1.getSuit().toUpperCase().contentEquals("FR")) {
+			return false;
+		} else
+		// end of Bomb, Dragon and Fairy handles
+			
 		if (c1.getSuit().toUpperCase().contentEquals("WZ")) {
 			return true;
 		} else if (c2.getSuit().toUpperCase().contentEquals("WZ")) {

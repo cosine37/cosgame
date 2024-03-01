@@ -62,6 +62,27 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.jesters.push($scope.jester)
 		$scope.wizards = []
 		$scope.wizards.push($scope.wizard)
+		
+		bomb = {
+			"rank": "bomb",
+			"suit": "BM",
+			"color": "darkred"
+		}
+		dragon = {
+			"rank": "dragon",
+			"suit": "DR",
+			"color": "purple"
+		}
+		fairy = {
+			"rank": "fairy",
+			"suit": "FR",
+			"color": "pink"
+		}
+		$scope.specials = []
+		$scope.specials.push(bomb);
+		$scope.specials.push(dragon);
+		$scope.specials.push(fairy);
+		$scope.shownCardIndex = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;

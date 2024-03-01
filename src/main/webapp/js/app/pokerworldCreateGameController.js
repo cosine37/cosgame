@@ -37,6 +37,8 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		$scope.biggestRank = 13;
 		$scope.firstPlayer = 0;
 		$scope.totalRounds = 0;
+		$scope.useDf = 0;
+		$scope.useBomb = 0;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -91,6 +93,16 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			$scope.totalRounds = x;
 		}
 		
+		$scope.setUseDf = function(x){
+			playClickSE()
+			$scope.useDf = x;
+		}
+		
+		$scope.setUseBomb = function(x){
+			playClickSE()
+			$scope.useBomb = x;
+		}
+		
 		$scope.randomFirstPlayer = function(){
 			playRandomizeSE()
 			var x = Math.floor(Math.random() * $scope.players.length);
@@ -113,11 +125,24 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 				return;
 			}
 			playClickSE();
-			settings = [-1,0,0,0]
+			
+			x = 0;
+			if ($scope.useDf){
+				x = 1;
+			}
+			x = x*10;
+			if ($scope.useBomb){
+				x = x+1;
+			}
+			
+			
+			settings = [-1,0,0,0,0]
 			settings[0] = $scope.chosenGame;
 			settings[1] = $scope.biggestRank;
 			settings[2] = $scope.firstPlayer;
 			settings[3] = $scope.totalRounds;
+			settings[4] = x;
+			
 			var data = {
 				"settings" : settings
 			}

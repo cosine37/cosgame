@@ -122,6 +122,7 @@ public class PokerworldController {
 				board.updateDB("rawHidden", board.getRawHidden());
 				board.updateDB("gameMode", board.getGameMode());
 				board.updateDB("biggestRank", board.getBiggestRank());
+				board.updateDB("extraCards", board.getExtraCards());
 				board.updateDB("totalRounds", board.getTotalRounds());
 				board.updateDominantDB();
 			}

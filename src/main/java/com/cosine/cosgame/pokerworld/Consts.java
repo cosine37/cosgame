@@ -6,6 +6,7 @@ public class Consts {
 	public static final int BIGGESTRANKINDEX = 1;
 	public static final int FIRSTPLAYERINDEX = 2;
 	public static final int TOTALROUNDSINDEX = 3;
+	public static final int EXTRACARDSINDEX = 4;
 	
 	// game modes
 	public static final int SFSJ = 0;
@@ -27,5 +28,8 @@ public class Consts {
 	// card playability
 	public static final int PLAYABLE = 1;
 	public static final int UNPLAYABLE = 0;
+	
+	// general rules
+	public static final int MAXROUNDS = 20;
 	
 }

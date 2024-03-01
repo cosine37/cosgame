@@ -31,11 +31,15 @@ public class Board {
 	int attackerPointsGained;
 	int round;
 	int totalRounds;
+	int extraCards;
 	int phase;
 	int biggestRank;
 	int gameMode;
 	int numWzRevealed;
 	int numJeRevealed;
+	int numBmRevealed;
+	int numDrRevealed;
+	int numFrRevealed;
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -102,9 +106,13 @@ public class Board {
 		biggestRank = settings.get(Consts.BIGGESTRANKINDEX);
 		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
 		totalRounds = settings.get(Consts.TOTALROUNDSINDEX);
+		extraCards = settings.get(Consts.EXTRACARDSINDEX);
 		
 		if (totalRounds == 0) {
 			totalRounds = 60/players.size();
+		}
+		if (totalRounds > Consts.MAXROUNDS) {
+			totalRounds = Consts.MAXROUNDS;
 		}
 		
 		confirmed = new ArrayList<>();
@@ -118,13 +126,13 @@ public class Board {
 	
 	public void dealWizard() {
 		int i,j;
-		List<PokerCard> deck = PokerUtil.getWizardDeck();
+		List<PokerCard> deck = PokerUtil.getWizardDeck(extraCards);
 		deck = PokerUtil.shuffle(deck);
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			
-			for (j=0;j<round;j++) {
+			for (j=0;j<20;j++) {
 				PokerCard c = deck.remove(0);
 				players.get(i).getHand().add(c);
 			}
@@ -133,17 +141,29 @@ public class Board {
 		
 		dominantCard = new PokerCard();
 		dominantSuitLastRound = dominantSuit;
+		numWzRevealed = 0;
+		numJeRevealed = 0;
+		numBmRevealed = 0;
+		numDrRevealed = 0;
+		numFrRevealed = 0;
 		if (deck.size() > 0) {
-			numWzRevealed = 0;
-			numJeRevealed = 0;
 			dominantSuit = "";
 			while (deck.size()>0) {
 				dominantCard = deck.remove(0);
-				if (dominantCard.getSuit().contentEquals("WZ")) {
+				if (dominantCard.getSuit().toUpperCase().contentEquals("WZ")) {
 					numWzRevealed++;
-				} else if (dominantCard.getSuit().contentEquals("JE")) {
+				} else if (dominantCard.getSuit().toUpperCase().contentEquals("JE")) {
 					numJeRevealed++;
-				} else {
+				} else if (dominantCard.getSuit().toUpperCase().contentEquals("BM")) {
+					numBmRevealed++;
+				} else if (dominantCard.getSuit().toUpperCase().contentEquals("DR")) {
+					numDrRevealed++;
+				} else if (dominantCard.getSuit().toUpperCase().contentEquals("FR")) {
+					numFrRevealed++;
+				}
+				
+				
+				else {
 					dominantSuit = dominantCard.getSuit();
 					break;
 				}
@@ -179,6 +199,10 @@ public class Board {
 		if (firstPlayer == p.getIndex()) {
 			currentSuit = p.getPlayed().get(0).getSuit();
 		} else if (currentSuit.toUpperCase().contentEquals("JE")){
+			currentSuit = p.getPlayed().get(0).getSuit();
+		} else if (currentSuit.toUpperCase().contentEquals("BM")){
+			currentSuit = p.getPlayed().get(0).getSuit();
+		} else if (currentSuit.toUpperCase().contentEquals("FR")){
 			currentSuit = p.getPlayed().get(0).getSuit();
 		}
 	}
@@ -310,19 +334,49 @@ public class Board {
 		winPlayer = firstPlayer;
 		PokerCard firstCard = players.get(firstPlayer).getPlayed().get(0);
 		PokerCard winCard = firstCard;
+		
+		// Bomb, Dragon and Fairy handles
+		boolean hasBomb = false;
+		int dragonIndex = -1;
+		int fairyIndex = -1;
+		if (firstCard.getSuit().toUpperCase().contentEquals("DR")) {
+			dragonIndex = firstPlayer;
+		}
+		if (firstCard.getSuit().toUpperCase().contentEquals("FR")) {
+			fairyIndex = firstPlayer;
+		}
+		if (firstCard.getSuit().toUpperCase().contentEquals("BM")) {
+			hasBomb = true;
+		}
+		// end of Bomb, Dragon and Fairy handles
+		
 		while (true) {
 			x++;
 			if (x == players.size()) x = 0;
 			if (x == firstPlayer) break;
 			PokerCard c = players.get(x).getPlayed().get(0);
+			if (c.getSuit().toUpperCase().contentEquals("DR")) {
+				dragonIndex = x;
+			}
+			if (c.getSuit().toUpperCase().contentEquals("FR")) {
+				fairyIndex = x;
+			}
+			if (c.getSuit().toUpperCase().contentEquals("BM")) {
+				hasBomb = true;
+			}
 			if (!PokerUtil.bigger(winCard, c, this)) {
 				winPlayer = x;
 				winCard = c;
-				System.out.println(winCard.toString());
+				//System.out.println(winCard.toString());
 			}
 		}
+		if (fairyIndex != -1 && dragonIndex != -1) {
+			winPlayer = fairyIndex;
+		}
+		if (hasBomb == false) {
+			players.get(winPlayer).winTrick();
+		}
 		
-		players.get(winPlayer).winTrick();
 		firstPlayer = winPlayer;
 		curPlayer = winPlayer;
 		currentSuit = "";
@@ -489,6 +543,12 @@ public class Board {
 	public void setBiggestRank(int biggestRank) {
 		this.biggestRank = biggestRank;
 	}
+	public int getExtraCards() {
+		return extraCards;
+	}
+	public void setExtraCards(int extraCards) {
+		this.extraCards = extraCards;
+	}
 	public int getGameMode() {
 		return gameMode;
 	}
@@ -590,6 +650,9 @@ public class Board {
 		dbutil.update("id", id, "dominantCard", dominantCard.toString());
 		dbutil.update("id", id, "numWzRevealed", numWzRevealed);
 		dbutil.update("id", id, "numJeRevealed", numJeRevealed);
+		dbutil.update("id", id, "numBmRevealed", numBmRevealed);
+		dbutil.update("id", id, "numDrRevealed", numDrRevealed);
+		dbutil.update("id", id, "numFrRevealed", numFrRevealed);
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -692,10 +755,14 @@ public class Board {
 		doc.append("confirmed", confirmed);
 		doc.append("attackerPointsGained", attackerPointsGained);
 		doc.append("biggestRank", biggestRank);
+		doc.append("extraCards", extraCards);
 		doc.append("gameMode", gameMode);
 		doc.append("dominantCard", dominantCard.toString());
 		doc.append("numWzRevealed", numWzRevealed);
 		doc.append("numJeRevealed", numJeRevealed);
+		doc.append("numBmRevealed", numBmRevealed);
+		doc.append("numDrRevealed", numDrRevealed);
+		doc.append("numFrRevealed", numFrRevealed);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -732,12 +799,16 @@ public class Board {
 		winPlayer = doc.getInteger("winPlayer", -1);
 		attackerPointsGained = doc.getInteger("attackerPointsGained", 0);
 		biggestRank = doc.getInteger("biggestRank", 13);
+		extraCards = doc.getInteger("extraCards", 0);
 		gameMode = doc.getInteger("gameMode", 0);
 		gameUtil.setAttackerPointsGained(attackerPointsGained);
 		String dominantCardStr = doc.getString("dominantCard");
 		dominantCard = new PokerCard(dominantCardStr);
 		numWzRevealed = doc.getInteger("numWzRevealed", 0);
 		numJeRevealed = doc.getInteger("numJeRevealed", 0);
+		numBmRevealed = doc.getInteger("numBmRevealed", 0);
+		numDrRevealed = doc.getInteger("numDrRevealed", 0);
+		numFrRevealed = doc.getInteger("numFrRevealed", 0);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -771,9 +842,13 @@ public class Board {
 		entity.setAttackerPointsGained(attackerPointsGained);
 		entity.setGameMode(gameMode);
 		entity.setBiggestRank(biggestRank);
+		entity.setExtraCards(extraCards);
 		entity.setDominantCard(dominantCard.toString());
 		entity.setNumWzRevealed(numWzRevealed);
 		entity.setNumJeRevealed(numJeRevealed);
+		entity.setNumBmRevealed(numBmRevealed);
+		entity.setNumDrRevealed(numDrRevealed);
+		entity.setNumFrRevealed(numFrRevealed);
 		entity.setCurrentSuit(currentSuit);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();

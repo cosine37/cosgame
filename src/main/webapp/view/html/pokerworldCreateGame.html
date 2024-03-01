@@ -176,6 +176,38 @@ body {
 									</td>
 								</tr>
 							</table>
+							<div style="height: 30px;"></div>
+							<table>
+								<tr>
+									<th style="width: 80px">额外卡牌</th>
+									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 60px">选择</th>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(useBomb)">
+										炸弹
+									</td>
+									<td ng-style="highlightStyle(useBomb)">
+										打出炸弹的当回合必定不吃墩，但是当前回合本应吃墩的玩家也不吃墩（但下回合依然第一个出牌）。
+									</td>
+									<td ng-style="highlightStyle(useBomb)">
+										<button ng-click="setUseBomb(true)" ng-show = "useBomb == false && lord == username">选择</button>
+										<button ng-click="setUseBomb(false)" ng-show = "useBomb == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
+									</td>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(useDf)">
+										巨龙与妖精
+									</td>
+									<td ng-style="highlightStyle(useDf)">
+										巨龙是最大的牌，甚至大于巫师。妖精是最小的牌，甚至小于小丑。但是如果在同一轮同时有巨龙和妖精打出，则打出妖精的玩家吃墩。
+									</td>
+									<td ng-style="highlightStyle(useDf)">
+										<button ng-click="setUseDf(true)" ng-show = "useDf == false && lord == username">选择</button>
+										<button ng-click="setUseDf(false)" ng-show = "useDf == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
+									</td>
+								</tr>
+							</table>
 							<div style = "height: 50px;">
 							</div>
 							<div style="width: 500px;text-align:center">

@@ -270,6 +270,54 @@ button:disabled{
 	background-size: cover;
 }
 
+.bomb-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/bomb.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.dragon-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/dragon.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.fairy-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/fairy.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
 .suit-hand{
 	position: absolute;
 	left: 6px;
@@ -322,6 +370,21 @@ button:disabled{
 .green{
 	color: darkgreen;
 	background-color: lightgreen;
+}
+
+.purple{
+	color: goldenrod;
+	background-color: purple;
+}
+
+.pink{
+	color: deeppink;
+	background-color: pink;
+}
+
+.darkred{
+	color: white;
+	background-color: darkred;
 }
 
 

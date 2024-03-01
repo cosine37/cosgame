@@ -100,6 +100,37 @@ body {
 					</td>
 					<td style="vertical-align: top;padding-left: 10px; width: 600px">
 						<div>
+							<span>决定主花色时被翻出的非花色牌数量：</span>
+						</div>
+						<div>
+							<table>
+								<tr>
+									<td style="height:65px" ng-show="gamedata.numWzRevealed == 0 && gamedata.numJeRevealed == 0 && gamedata.numBmRevealed == 0 && gamedata.numDrRevealed == 0 && gamedata.numFrRevealed == 0">没有</td>
+									<td style="height: 65px;vertical-align: bottom" ng-show="gamedata.numWzRevealed > 0">
+										<span><img src="/image/Pokerworld/wizard.png" style="height:60px"></span>
+										<span style="font-weight:bold;">×{{gamedata.numWzRevealed}}</span>
+									</td>
+									<td style="height: 65px;vertical-align: bottom" ng-show="gamedata.numJeRevealed > 0">
+										<span><img src="/image/Pokerworld/jester.png" style="height:60px"></span>
+										<span style="font-weight:bold;">×{{gamedata.numJeRevealed}}</span>
+									</td>
+									<td style="height: 65px;vertical-align: bottom" ng-show="gamedata.numBmRevealed > 0">
+										<span><img src="/image/Pokerworld/bomb.png" style="height:60px"></span>
+										<span style="font-weight:bold;">×{{gamedata.numBmRevealed}}</span>
+									</td>
+									<td style="height: 65px;vertical-align: bottom" ng-show="gamedata.numDrRevealed > 0">
+										<span><img src="/image/Pokerworld/dragon.png" style="height:60px"></span>
+										<span style="font-weight:bold;">×{{gamedata.numDrRevealed}}</span>
+									</td>
+									<td style="height: 65px;vertical-align: bottom" ng-show="gamedata.numFrRevealed > 0">
+										<span><img src="/image/Pokerworld/fairy.png" style="height:60px"></span>
+										<span style="font-weight:bold;">×{{gamedata.numFrRevealed}}</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!-- 
+						<div>
 							<span><img src="/image/Pokerworld/wizard.png" style="height:60px"></span>
 							<span>决定主花色时被翻出的巫师数量：</span>
 							<span style="font-weight:bold">{{gamedata.numWzRevealed}}</span>
@@ -110,8 +141,9 @@ body {
 							<span>决定主花色时被翻出的小丑数量：</span>
 							<span style="font-weight:bold">{{gamedata.numJeRevealed}}</span>
 						</div>
+						 -->
 						<div>
-							注：面杀决定主花色时，会翻出牌堆顶的牌直至翻出非巫师或非小丑牌。由于翻出巫师或小丑为重要信息，所以需要显示因此被翻出的巫师和小丑张数。
+							注：面杀决定主花色时，会翻出牌堆顶的牌直至翻出一张花色牌。由于翻出非花色牌（如巫师或小丑）为重要信息，所以需要显示因此被翻出的非花色牌的张数。
 						</div>
 					</td>
 					<td style="text-align:right">
