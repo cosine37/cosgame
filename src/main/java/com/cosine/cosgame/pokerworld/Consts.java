@@ -32,4 +32,16 @@ public class Consts {
 	// general rules
 	public static final int MAXROUNDS = 20;
 	
+	// skin types
+	//public static final int WIZARD = 1;
+	public static final int JESTER = 2;
+	public static final int BOMB = 3;
+	public static final int DRAGON = 4;
+	public static final int FAIRY = 5;
+	
+	// skin levels
+	public static final int COMMON = 0;
+	public static final int REAR = 1;
+	public static final int EPIC = 2;
+	
 }

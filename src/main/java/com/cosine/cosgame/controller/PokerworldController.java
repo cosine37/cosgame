@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.pokerworld.account.Account;
+import com.cosine.cosgame.pokerworld.account.Shop;
+import com.cosine.cosgame.pokerworld.account.Transaction;
 import com.cosine.cosgame.pokerworld.Board;
 import com.cosine.cosgame.pokerworld.Player;
 import com.cosine.cosgame.pokerworld.entity.BoardEntity;
+import com.cosine.cosgame.pokerworld.entity.AccountEntity;
 import com.cosine.cosgame.pokerworld.Consts;
 import com.cosine.cosgame.pokerworld.Meta;
 import com.cosine.cosgame.util.StringEntity;
@@ -293,9 +297,6 @@ public class PokerworldController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	
-	
-	
 	@RequestMapping(value="/pokerworld/getboard", method = RequestMethod.GET)
 	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
 		Board board = new Board();
@@ -308,6 +309,42 @@ public class PokerworldController {
 			board.setId("NE");
 		}
 		BoardEntity entity = board.toBoardEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// account handles
+	@RequestMapping(value="/pokerworld/dailyreward", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dailyReward(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		List<Transaction> ts = shop.dailyReward();
+		account.addNewTransactions(ts);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/pokerworld/accountinfo", method = RequestMethod.GET)
+	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		AccountEntity entity = account.toAccountEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	

@@ -81,6 +81,9 @@ public class Player {
 	}
 	
 	public void play(List<Integer> playedIndex) {
+		if (board.getCurPlayer() != index) {
+			return;
+		}
 		if (board.gameModeIs(Consts.SFSJ)) {
 			int numPlayed = board.getNumPlayed();
 			if (numPlayed == -1) {

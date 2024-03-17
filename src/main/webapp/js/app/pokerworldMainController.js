@@ -169,4 +169,34 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
+		
+		
+		
+		
+		$scope.shownPlace = ""
+		$scope.openPlace = function(x){
+			$scope.shownPlace = x
+		}
+		$scope.closePlace = function(){
+			$scope.shownPlace = ""
+		}
+		$scope.showReward = false;
+		$scope.loadingReward = false;
+		$scope.dig = function(){
+			$scope.loadingReward = false;
+		}
+		$scope.dailyReward = function(){
+			$http.post('/pokerworld/dailyreward').then(function(response){
+				$scope.getAccountInfo();
+			});
+		}
+		
+		$scope.getAccountInfo = function(){
+			$http.get('/pokerworld/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
+		$scope.getAccountInfo()
+		
+	
 }]);

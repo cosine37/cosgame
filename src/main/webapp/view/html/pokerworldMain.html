@@ -36,6 +36,11 @@
 				    <li class="nav-item">
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="showTablesTab()">商城</a>
+				    </li>
+
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#wizardrulestab" ng-click="hideTablesTab()">神机妙算规则</a>
 				    </li>
@@ -71,6 +76,98 @@
 						</tr>
 					</table>
 				</div>
+			
+			
+				
+				<div id="accounttab" class="content container tab-pane">
+					<h1>商城</h1>
+					<div style="background-image:url('/image/Pokerworld/town.png'); background-size:cover; height: 600px; width: 960px; position: relative" class="noselect">
+						<div class="account-info">
+							<table>
+								<tr>
+									<td>
+										<div class="account-category">
+											<img src="/image/Pokerworld/coin.png">
+											<span>{{accountInfo.money}}</span>
+										</div>
+									</td>
+									<td>
+										<div class="account-category">
+											<img src="/image/Pokerworld/diamond.png">
+											<span>{{accountInfo.diamond}}</span>
+										</div>
+									</td>
+									<td>
+										<div class="account-category">
+											<img src="/image/Pokerworld/chest.png">
+											<span>{{accountInfo.key}}</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<div ng-click="openPlace('mine')" class="town-place" style="left: 420px; bottom: 100px;" ng-show="shownPlace == ''">
+							矿场
+						</div>
+						<div ng-click="openPlace('home')" class="town-place" style="left: 120px; bottom: 120px;" ng-show="shownPlace == ''">
+							自宅
+						</div>
+						<!-- 
+						<div ng-click="openPlace('market')" class="town-place" style="left: 140px; bottom: 220px;" ng-show="shownPlace == ''">
+							市集
+						</div>
+						<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 160px;" ng-show="shownPlace == ''">
+							开锁店
+						</div>
+						<div ng-click="openPlace('belltower')" class="town-place" style="left: 220px; top: 90px;" ng-show="shownPlace == ''">
+							钟楼
+						</div>
+						 -->
+						<div class="place-div" ng-show="shownPlace != ''">
+							<img ng-src="/image/Pokerworld/{{shownPlace}}.jpg" class="place-img">
+							<div ng-show="shownPlace == 'mine'" class="place-content">
+								<h3>矿场</h3>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.money>=88" ng-click="dig()" 
+									class="dig-button">
+									<span>挖掘（花费88</span>
+									<img src="/image/Pokerworld/coin.png">
+									<span>)</span>
+								</div>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.money<88" 
+									style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+									<span>挖掘需要花费88</span>
+									<img src="/image/Belltower/coin.png" style="height: 40px; width:40px;">
+									<span>，你的钱不够。</span>
+								</div>
+								<div ng-show="loadingReward" class="digging">
+									<div>
+										<img src="/image/Belltower/mining.gif" style="height: 153px; width: 270px;"/>
+									</div>
+									<div>
+										正在挖掘。。。
+									</div>
+								</div>
+								<div ng-show="showReward" class="digging">
+									<div>
+										<img ng-src="{{rewardImg}}" class="icon"/>
+									</div>
+									<div>{{rewardMsg}}</div>
+									<button ng-click="showReward = false">谢谢</button>
+								</div>
+								
+							</div>
+							<div style="position: absolute; top: 30px; right: 30px">
+								<button ng-click="closePlace()">离开</button>
+							</div>
+						</div>
+					</div>
+					{{accountInfo}}
+					<button ng-click="dailyReward()">每日奖励</button>
+				</div>
+				
+				
+			
 				
 				<div id="wizardrulestab" class="content container tab-pane fade">
 					<h2><b>神机妙算规则</b></h2>

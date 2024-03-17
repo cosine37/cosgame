@@ -129,10 +129,12 @@ public class Board {
 		List<PokerCard> deck = PokerUtil.getWizardDeck(extraCards);
 		deck = PokerUtil.shuffle(deck);
 		
+		int cardsOnRound = round;
+		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			
-			for (j=0;j<20;j++) {
+			for (j=0;j<cardsOnRound;j++) {
 				PokerCard c = deck.remove(0);
 				players.get(i).getHand().add(c);
 			}
