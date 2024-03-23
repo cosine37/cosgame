@@ -2,6 +2,7 @@ package com.cosine.cosgame.pokewhat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -106,15 +107,146 @@ public class Player {
 		if (hp>PokewhatConsts.MAXHP) {
 			hp=PokewhatConsts.MAXHP;
 		}
+		changePmImgOnRecover();
 	}
 	
 	public void changePmImgOnHurt() {
+		final int XS = 50;
+		final int S = 80;
+		final int M = 120;
+		final int L = 180;
+		final int XL = 250;
 		if (this.getPm().getImg().contentEquals("071")) {
 			this.getPm().setImg("071_1");
 			return;
 		}
 		if (this.getPm().getImg().contentEquals("099")) {
 			this.getPm().setImg("099_1");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("185")) {
+			if (this.getHp() < 2) {
+				this.getPm().setImg("185_1");
+				this.getPm().setSize(S);
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("187")) {
+			if (this.getHp() <= 3) {
+				this.getPm().setImg("187_1");
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("188_1") 
+				|| this.getPm().getImg().contentEquals("188_2")) {
+			this.getPm().setImg("188");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("921")) {
+			if (this.getHp() == 0) {
+				this.getPm().setImg("921_1");
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("922")) {
+			if (this.getHp() == 0) {
+				this.getPm().setImg("922_1");
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("923")) {
+			if (this.getHp() == 0) {
+				this.getPm().setImg("923_1");
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("924")) {
+			if (this.getHp() == 0) {
+				this.getPm().setImg("924_1");
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("925")) {
+			if (this.getHp() == 0) {
+				this.getPm().setImg("925_1");
+			}
+			return;
+		}
+	}
+	
+	public void resetImgOnNewRound() {
+		final int XS = 50;
+		final int S = 80;
+		final int M = 120;
+		final int L = 180;
+		final int XL = 250;
+		if (this.getPm().getName().contentEquals("百变怪")) {
+			this.getPm().setImg("083");
+			this.getPm().setSize(S);
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("071_1")) {
+			this.getPm().setImg("071");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("099_1")) {
+			this.getPm().setImg("099");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("185_1")) {
+			this.getPm().setImg("185");
+			this.getPm().setSize(XL);
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("187_1")) {
+			this.getPm().setImg("187");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("188_1") 
+				|| this.getPm().getImg().contentEquals("188_2")) {
+			this.getPm().setImg("188");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("921_1")) {
+			this.getPm().setImg("921");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("922_1")) {
+			this.getPm().setImg("922");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("923_1")) {
+			this.getPm().setImg("923");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("924_1")) {
+			this.getPm().setImg("924");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("925_1")) {
+			this.getPm().setImg("925");
+			return;
+		}
+		
+	}
+	
+	public void changePmImgOnRecover() {
+		final int XS = 50;
+		final int S = 80;
+		final int M = 120;
+		final int L = 180;
+		final int XL = 250;
+		if (this.getPm().getImg().contentEquals("185_1")) {
+			if (this.getHp() > 1) {
+				this.getPm().setImg("185");
+				this.getPm().setSize(XL);
+			}
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("187_1")) {
+			if (this.getHp() > 3) {
+				this.getPm().setImg("187");
+			}
 			return;
 		}
 	}
@@ -126,6 +258,22 @@ public class Player {
 		}
 		if (this.getPm().getImg().contentEquals("125_1")) {
 			this.getPm().setImg("125");
+			return;
+		}
+		if (this.getPm().getImg().contentEquals("188")) {
+			if (this.getHp() > 3) {
+				this.getPm().setImg("188_1");
+			} else {
+				this.getPm().setImg("188_2");
+			}
+			return;
+		}
+		if (this.getPm().getName().contentEquals("百变怪")) {
+			Random rand = new Random();
+			int x = rand.nextInt(board.getPlayers().size()-1);
+			if (x>=index) x = x+1;
+			this.pm.setImg(board.getPlayers().get(x).getPm().getImg());
+			this.pm.setSize(board.getPlayers().get(x).getPm().getSize());
 			return;
 		}
 	}

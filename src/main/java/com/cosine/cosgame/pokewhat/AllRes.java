@@ -345,6 +345,89 @@ public class AllRes {
 		p = new Pm("154", "密勒顿", XL);
 		allPm.add(p);
 		
+		p = new Pm("155", "尼多后", L);
+		allPm.add(p);
+		p = new Pm("156", "尼多王", L);
+		allPm.add(p);
+		p = new Pm("157", "BASH", L);
+		allPm.add(p);
+		p = new Pm("158", "催眠貘", M);
+		allPm.add(p);
+		p = new Pm("159", "钻角犀兽", XL);
+		allPm.add(p);
+		p = new Pm("160", "蔓藤怪", M);
+		allPm.add(p);
+		p = new Pm("161", "大尾立", M);
+		allPm.add(p);
+		p = new Pm("162", "托尔斯泰", M);
+		allPm.add(p);
+		p = new Pm("163", "熔岩虫", S);
+		allPm.add(p);
+		p = new Pm("164", "战舞郎", M);
+		allPm.add(p);
+		p = new Pm("165", "水君", L);
+		allPm.add(p);
+		p = new Pm("166", "勾魂眼", S);
+		allPm.add(p);
+		p = new Pm("167", "大嘴娃", S);
+		allPm.add(p);
+		p = new Pm("168", "巨牙鲨", L);
+		allPm.add(p);
+		p = new Pm("169", "喷火驼", L);
+		allPm.add(p);
+		p = new Pm("170", "基拉祈", S);
+		allPm.add(p);
+		p = new Pm("171", "音箱蟀侠", XL);
+		allPm.add(p);
+		p = new Pm("172", "飘飘球", L);
+		allPm.add(p);
+		p = new Pm("173", "龙蝎王", L);
+		allPm.add(p);
+		p = new Pm("174", "雷吉奇卡斯", XL);
+		allPm.add(p);
+		p = new Pm("175", "达克莱伊", L);
+		allPm.add(p);
+		p = new Pm("176", "差不多娃娃", M);
+		allPm.add(p);
+		p = new Pm("177", "裙儿小姐", M);
+		allPm.add(p);
+		p = new Pm("178", "象征鸟", L);
+		allPm.add(p);
+		p = new Pm("179", "败露球菇", M);
+		allPm.add(p);
+		p = new Pm("180", "勇士雄鹰", L);
+		allPm.add(p);
+		p = new Pm("181", "好啦鱿", S);
+		allPm.add(p);
+		p = new Pm("182", "伞电蜥", S);
+		allPm.add(p);
+		p = new Pm("183", "音波龙", L);
+		allPm.add(p);
+		p = new Pm("184", "伊裴尔塔尔", XL);
+		allPm.add(p);
+		p = new Pm("185", "弱丁鱼", XL);
+		allPm.add(p);
+		p = new Pm("186", "拳海参", S);
+		allPm.add(p);
+		p = new Pm("187", "小陨星", M);
+		allPm.add(p);
+		p = new Pm("188", "古月鸟", M);
+		allPm.add(p);
+		p = new Pm("189", "列阵兵", L);
+		allPm.add(p);
+		p = new Pm("190", "苍响", L);
+		allPm.add(p);
+		p = new Pm("191", "赫月月月熊", L);
+		allPm.add(p);
+		p = new Pm("192", "吃吼霸", XL);
+		allPm.add(p);
+		p = new Pm("193", "米立龙", S);
+		allPm.add(p);
+		p = new Pm("194", "厄诡椪", M);
+		allPm.add(p);
+		p = new Pm("195", "太乐巴戈斯", L);
+		allPm.add(p);
+		
 		p = new Pm("901", "巴达兽", S);
 		allPm.add(p);
 		p = new Pm("902", "亚古兽", M);
@@ -385,6 +468,36 @@ public class AllRes {
 		allPm.add(p);
 		p = new Pm("920", "V仔兽", M);
 		allPm.add(p);
+		p = new Pm("921", "棉悠悠", M);
+		allPm.add(p);
+		p = new Pm("922", "捣蛋猫", M);
+		allPm.add(p);
+		p = new Pm("923", "皮皮鸡", S);
+		allPm.add(p);
+		p = new Pm("924", "佩克龙", XL);
+		allPm.add(p);
+		p = new Pm("925", "盗猎集团 新手", L);
+		allPm.add(p);
+		p = new Pm("926", "梦奇", M);
+		allPm.add(p);
+		p = new Pm("927", "蛇精", L);
+		allPm.add(p);
+		p = new Pm("928", "蝎子精", L);
+		allPm.add(p);
+		p = new Pm("929", "辛巴", M);
+		allPm.add(p);
+		p = new Pm("930", "Doge", XL);
+		allPm.add(p);
+		p = new Pm("931", "高达", XL);
+		allPm.add(p);
+		p = new Pm("932", "海绵宝宝", M);
+		allPm.add(p);
+		p = new Pm("933", "窝瓜", M);
+		allPm.add(p);
+		p = new Pm("934", "小黄人", S);
+		allPm.add(p);
+		p = new Pm("935", "波克布林", L);
+		allPm.add(p);
 	}
 	
 	public void genAllAvatar() {
@@ -393,7 +506,7 @@ public class AllRes {
 			String s = "a00" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
-		for (i=10;i<=37;i++) {
+		for (i=10;i<=40;i++) {
 			String s = "a0" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
@@ -401,7 +514,7 @@ public class AllRes {
 			String s = "a90" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
-		for (i=10;i<=15;i++) {
+		for (i=10;i<=18;i++) {
 			String s = "a9" + Integer.toString(i); 
 			allAvatar.add(s);
 		}
@@ -415,10 +528,10 @@ public class AllRes {
 		for (i=0;i<5;i++) {
 			ans.add(allAvatar.get(i));
 		}
-		for (i=5;i<37;i++) {
+		for (i=5;i<40;i++) {
 			st1.add(allAvatar.get(i));
 		}
-		for (i=37;i<52;i++) {
+		for (i=40;i<58;i++) {
 			st2.add(allAvatar.get(i));
 		}
 		Random rand = new Random();

@@ -274,6 +274,11 @@ public class Logger {
 		s = p.getName() + "派出了" + p.getPm().getName() + "。";
 		log(s);
 		
+		if (p.getPm().getImg().contentEquals("174")){
+			s = p.getName() + "的雷吉奇卡斯无法拿出平时的水平！";
+			log(s);
+		}
+		
 		x = rand.nextInt(6);
 		if (x<1) {
 			s = p.getName() + ":“这把要是能输，我当场给你把这个屏幕吃掉。”";

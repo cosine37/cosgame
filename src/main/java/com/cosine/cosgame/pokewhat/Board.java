@@ -320,6 +320,7 @@ public class Board {
 			players.get(i).setLastMove(-1);
 			players.get(i).setMissCount(0);
 			players.get(i).setPhase(PokewhatConsts.OFFTURN);
+			players.get(i).resetImgOnNewRound();
 		}
 		deck = new ArrayList<>();
 		ancient = new ArrayList<>();
