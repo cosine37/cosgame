@@ -142,14 +142,17 @@
 								</div>
 								<div ng-show="loadingReward" class="digging">
 									<div>
-										<img src="/image/Belltower/mining.gif" style="height: 153px; width: 270px;"/>
+										<img src="/image/Pokerworld/mining.gif" style="height: 153px; width: 270px;"/>
 									</div>
 									<div>
 										正在挖掘。。。
 									</div>
 								</div>
 								<div ng-show="showReward" class="digging">
-									<div>
+									<div ng-repeat = "c in digCards" ng-show="rewardType == 's'" style="padding-left: 40px;">
+										<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-class="c.color" ng-style="c.cstyle"></div>
+									</div>
+									<div ng-show="rewardType != 's'">
 										<img ng-src="{{rewardImg}}" class="icon"/>
 									</div>
 									<div>{{rewardMsg}}</div>
@@ -162,8 +165,14 @@
 							</div>
 						</div>
 					</div>
-					{{accountInfo}}
-					<button ng-click="dailyReward()">每日奖励</button>
+					<div>
+						<button ng-click="dailyReward()">每日奖励</button>
+						<button ng-click="cleanAccount()">清空</button>
+					</div>
+					<div>
+						{{accountInfo}}
+					</div>
+					
 				</div>
 				
 				

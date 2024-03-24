@@ -173,6 +173,7 @@ button:disabled{
 	width: 20px;
 	margin: 0px;
 	margin-top: 8px;
+	z-index: 100;
 }
 
 .joker-hand-letter{
@@ -316,6 +317,30 @@ button:disabled{
 	-moz-background-size:  cover;
 	-o-background-size: cover;
 	background-size: cover;
+}
+
+.custom-big-hand{
+	position: absolute;
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.custom-skin{
+	position: absolute;
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 1000;
 }
 
 .suit-hand{
@@ -534,4 +559,9 @@ button:disabled{
 	top: 60px;
 	left: 220px;
 	position: absolute;
+}
+
+.icon{
+	height: 100px;
+	width: 100px;
 }

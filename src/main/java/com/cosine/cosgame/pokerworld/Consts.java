@@ -41,7 +41,10 @@ public class Consts {
 	
 	// skin levels
 	public static final int COMMON = 0;
-	public static final int REAR = 1;
+	public static final int RARE = 1;
 	public static final int EPIC = 2;
+	
+	// skin totals
+	public static final int[] SKINTOTALS = {0, 20, 20, 4, 4, 4};
 	
 }

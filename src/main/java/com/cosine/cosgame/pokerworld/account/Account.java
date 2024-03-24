@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.pokerworld.Consts;
 import com.cosine.cosgame.pokerworld.entity.AccountEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -20,6 +21,9 @@ public class Account {
 	boolean visitedPokerworld;
 	
 	List<Transaction> transactions;
+	List<Integer> skins;
+	
+	Shop shop;
 	
 	MongoDBUtil dbutil;
 	
@@ -28,6 +32,9 @@ public class Account {
 		
 		String dbname = "admin";
 		String col = "users";
+		
+		transactions = new ArrayList<>();
+		skins = new ArrayList<>();
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
@@ -43,6 +50,32 @@ public class Account {
 			addNewTransaction(ts.get(i));
 		}
 	}
+	public boolean hasSkin(int x) {
+		for (int i=0;i<skins.size();i++) {
+			if (skins.get(i) == x) return true;
+		}
+		return false;
+	}
+	public void addSkin(int x) {
+		skins.add(x);
+	}
+	public List<List<String>> allSkinImgs(){
+		List<List<String>> ans = new ArrayList<>();
+		int i,j;
+		for (i=1;i<=5;i++) {
+			List<String> ls = new ArrayList<>();
+			for (j=1;j<=Consts.SKINTOTALS[i];j++) {
+				int x = i*1000+j;
+				if (hasSkin(x)) {
+					ls.add(Integer.toString(x));
+				} else {
+					ls.add("qs");
+				}
+			}
+			ans.add(ls);
+		}
+		return ans;
+	}
 	public void cleanAccount() {
 		money = 0;
 		diamond = 0;
@@ -52,6 +85,7 @@ public class Account {
 		numGames = 0;
 		lastLoginDate = "";
 		transactions = new ArrayList<>();
+		skins = new ArrayList<>();
 		visitedPokerworld = false;
 	}
 	public void changeMoney(int x) {
@@ -121,7 +155,25 @@ public class Account {
 		Document doc = toDocument();
 		dbutil.update("username", username, "pokerworld", doc);
 	}
-	
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+	public List<Integer> getSkins() {
+		return skins;
+	}
+	public void setSkins(List<Integer> skins) {
+		this.skins = skins;
+	}
+	public Shop getShop() {
+		return shop;
+	}
+	public void setShop(Shop shop) {
+		this.shop = shop;
+	}
+
 	public void getFromDB(String username) {
 		Document userDoc = dbutil.read("username", username);
 		if (userDoc.get("pokerworld") == null) {
@@ -147,6 +199,7 @@ public class Account {
 		doc.append("numGames", numGames);
 		doc.append("winStrike", winStrike);
 		doc.append("visitedPokerworld", visitedPokerworld);
+		doc.append("skins", skins);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -166,6 +219,8 @@ public class Account {
 		numGames = doc.getInteger("numGames", 0);
 		winStrike = doc.getInteger("winStrike", 0);
 		visitedPokerworld = doc.getBoolean("visitedPokerworld", false);
+		skins = (List<Integer>) doc.get("skins");
+		if (skins == null) skins = new ArrayList<>();
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -182,9 +237,9 @@ public class Account {
 		entity.setName(name);
 		entity.setMoney(money);
 		entity.setDiamond(diamond);
-		entity.setKey(goldenKey);
+		entity.setKey(key);
 		entity.setGoldenKey(goldenKey);
-		
+		entity.setAllSkinImgs(allSkinImgs());
 		return entity;
 	}
 	

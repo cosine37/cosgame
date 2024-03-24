@@ -173,6 +173,119 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		playChatSE = function(){
+			var audio = new Audio("/sound/Pokerworld/" + $scope.chatSound)
+			audio.play();
+		}
+		playMiningSE = function(){
+			var audio = new Audio("/sound/Pokerworld/mining.wav")
+			audio.play();
+		}
+		
+		$scope.showReward = false;
+		$scope.loadingReward = false;
+		$scope.dig = function(){
+			playMiningSE()
+			$scope.loadingReward = true;
+			$scope.chatSound = "gain.wav"
+			$http({url: "/pokerworld/dig", method: "POST"}).then(function(response){
+				var rewardMsgRaw = response.data.value[0];
+				$scope.rewardMsg = "";
+				$scope.rewardType = rewardMsgRaw.substring(0,1)
+				if (rewardMsgRaw.charAt(0) == 'd'){
+					$scope.rewardImg = "/image/Pokerworld/diamond.png";
+					if (rewardMsgRaw.substring(1) == "1"){
+						
+					} else if (rewardMsgRaw.substring(1) == "2"){
+						$scope.chatSound = "success.wav"
+					} else {
+						$scope.chatSound = "cheer.wav"
+					}
+					$scope.rewardMsg = "获得" + rewardMsgRaw.substring(1) + "颗钻石";
+				} else if (rewardMsgRaw.charAt(0) == 's'){
+					$scope.rewardImg = "/image/Pokerworld/Skins/" + rewardMsgRaw.substring(2,6) + ".png";
+					var level = rewardMsgRaw.charAt(1);
+					if (level == '1'){
+						$scope.rewardMsg = "获得皮肤："
+					} else if (level == '2'){
+						$scope.chatSound = "success.wav"
+						$scope.rewardMsg = "获得稀有皮肤："
+					} else if (level == '3'){
+						$scope.chatSound = "cheer.wav"
+						$scope.rewardMsg = "获得史诗皮肤："
+					} else {
+						$scope.rewardMsg = "获得皮肤："
+					}
+					$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(6);
+				} else if (rewardMsgRaw.charAt(0) == 'k'){
+					$scope.chatSound = "cheer.wav"
+					$scope.rewardImg = "/image/Pokerworld/chest.png";
+					$scope.rewardMsg = "获得一个宝箱";
+				}
+				
+				$scope.digCards = []
+				skinType = rewardMsgRaw.substring(2,3)
+				tc = {
+					"rank": "wizard",
+					"suit": "WZ",
+					"color": "blue"
+				}
+				if (skinType == '1'){
+					tc = {
+						"rank": "wizard",
+						"suit": "WZ",
+						"color": "blue"
+					}
+				} else if (skinType == '2'){
+					tc = {
+						"rank": "jester",
+						"suit": "JE",
+						"color": "green"
+					}
+				} else if (skinType == '3'){
+					tc = {
+						"rank": "bomb",
+						"suit": "BM",
+						"color": "darkred"
+					}
+				} else if (skinType == '4'){
+					tc = {
+						"rank": "dragon",
+						"suit": "DR",
+						"color": "purple"
+					}
+				} else if (skinType == '5'){
+					tc = {
+						"rank": "fairy",
+						"suit": "FR",
+						"color": "pink"
+					}
+				}
+				
+				tc["custom"] = {
+					'background-image': 'url(' + $scope.rewardImg + ')'
+				}
+				
+				//tc["custom"] = $scope.rewardImg
+				//alert(JSON.stringify(tc))
+				$scope.digCards.push(tc)
+				
+				$scope.getAccountInfo()
+				for (var i=0;i<2500000000;i++){}
+				//time.sleep(2)
+				$scope.loadingReward = false;
+				$scope.showReward = true;
+				playChatSE()
+			});
+		}
+		
 		$scope.shownPlace = ""
 		$scope.openPlace = function(x){
 			$scope.shownPlace = x
@@ -180,17 +293,18 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.closePlace = function(){
 			$scope.shownPlace = ""
 		}
-		$scope.showReward = false;
-		$scope.loadingReward = false;
-		$scope.dig = function(){
-			$scope.loadingReward = false;
-		}
+		
 		$scope.dailyReward = function(){
 			$http.post('/pokerworld/dailyreward').then(function(response){
 				$scope.getAccountInfo();
 			});
 		}
 		
+		$scope.cleanAccount = function(){
+			$http.post('/pokerworld/cleanaccount').then(function(response){
+				$scope.getAccountInfo();
+			});
+		}
 		$scope.getAccountInfo = function(){
 			$http.get('/pokerworld/accountinfo').then(function(response){
 				$scope.accountInfo = response.data;
