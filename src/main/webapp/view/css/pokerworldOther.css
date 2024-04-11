@@ -418,6 +418,12 @@ button:disabled{
 	background-color: gold;
 }
 
+.grey{
+	color: darkgrey;
+	background-color: lightgrey;
+	filter: grayscale(100%);
+}
+
 .claim-button{
 	font-size: 36px;
 	border: 1px solid black;

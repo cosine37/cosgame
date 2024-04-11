@@ -178,6 +178,69 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		
 		
 		
+		$scope.skins = []
+		$scope.skinCategories = ["巫师","小丑","炸弹","巨龙","妖精"]
+		skinChosen = function(raw){
+			for (x=0;x<$scope.accountInfo.chosenSkins.length;x++){
+				if ($scope.accountInfo.chosenSkins[x] == raw) return true;
+			}
+			return false;
+		}
+		setSkinsDisplay = function(){
+			ranks = ["wizard", "jester", "bomb", "dragon", "fairy"]
+			suits = ["WZ", "JE", "BM", "DR", "FR"]
+			colors = ["blue", "green", "darkred", "purple", "pink"]
+			$scope.skins = []
+			for (i=0;i<$scope.accountInfo.allSkinImgs.length;i++){
+				singleTypeSkins = []
+				for (j=0;j<$scope.accountInfo.allSkinImgs[i].length;j++){
+					tc = {
+						"rank": ranks[i],
+						"suit": suits[i],
+						"color": colors[i],
+						"raw": $scope.accountInfo.allSkinImgs[i][j],
+						"custom": {
+							'background-image': 'url(/image/Pokerworld/Skins/' + $scope.accountInfo.allSkinImgs[i][j] + '.png)'
+						}
+					}
+					/*
+					tc["custom"] = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + $scope.accountInfo.allSkinImgs[i][j] + '.png)'
+					}
+					*/
+					//tc.name = "aaaa"
+					tc.chosen = skinChosen($scope.accountInfo.allSkinImgs[i][j]);
+					tc.name = $scope.accountInfo.allSkinNames[i][j];
+					if ($scope.accountInfo.allSkinImgs[i][j] == "qs"){
+						tc["color"] = "grey";
+					} else {
+						
+					}
+					
+					singleTypeSkins.push(tc);
+				}
+				$scope.skins.push(singleTypeSkins)
+			}
+		}
+		
+		$scope.shownSkins = -1;
+		$scope.showSkins = function(x){
+			$scope.shownSkins = x;
+		}
+		
+		$scope.clickSkinCard = function(c){
+			var data = {"skinId" : parseInt(c.raw)}
+			if (c.chosen){
+				$http({url: "/pokerworld/cancelchooseskin", method: "POST", params: data}).then(function(response){
+					$scope.getAccountInfo();
+				})
+			} else {
+				$http({url: "/pokerworld/chooseskin", method: "POST", params: data}).then(function(response){
+					$scope.getAccountInfo();
+				})
+			}
+		}
+		
 		
 		
 		playChatSE = function(){
@@ -308,6 +371,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.getAccountInfo = function(){
 			$http.get('/pokerworld/accountinfo').then(function(response){
 				$scope.accountInfo = response.data;
+				setSkinsDisplay()
 			});
 		}
 		$scope.getAccountInfo()

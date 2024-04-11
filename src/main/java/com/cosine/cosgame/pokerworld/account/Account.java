@@ -22,6 +22,7 @@ public class Account {
 	
 	List<Transaction> transactions;
 	List<Integer> skins;
+	List<Integer> chosenSkins;
 	
 	Shop shop;
 	
@@ -35,6 +36,10 @@ public class Account {
 		
 		transactions = new ArrayList<>();
 		skins = new ArrayList<>();
+		chosenSkins = new ArrayList<>();
+		for (int j=0;j<Consts.MAXCHOSENSKINS;j++) {
+			chosenSkins.add(Consts.NOTCHOSEN);
+		}
 		
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
@@ -59,6 +64,50 @@ public class Account {
 	public void addSkin(int x) {
 		skins.add(x);
 	}
+	
+	public void chooseSkin(int skinId) {
+		System.out.println(chosenSkins);
+		int skinType = skinId/1000;
+		int i;
+		if (skinType == Consts.WIZARD) {
+			for (i=0;i<4;i++) {
+				if (chosenSkins.get(i) == Consts.NOTCHOSEN) {
+					chosenSkins.set(i, skinId);
+					break;
+				}
+			}
+		} else if (skinType == Consts.JESTER) {
+			for (i=4;i<8;i++) {
+				if (chosenSkins.get(i) == Consts.NOTCHOSEN) {
+					chosenSkins.set(i, skinId);
+					break;
+				}
+			}
+		} else if (skinType == Consts.BOMB) {
+			if (chosenSkins.get(8) == Consts.NOTCHOSEN) {
+				chosenSkins.set(8, skinId);
+			}
+		} else if (skinType == Consts.DRAGON) {
+			if (chosenSkins.get(9) == Consts.NOTCHOSEN) {
+				chosenSkins.set(9, skinId);
+			}
+		} else if (skinType == Consts.FAIRY) {
+			if (chosenSkins.get(10) == Consts.NOTCHOSEN) {
+				chosenSkins.set(10, skinId);
+			}
+		}
+	}
+	
+	public void cancelChooseSkin(int skinId) {
+		int i;
+		for (i=0;i<Consts.MAXCHOSENSKINS;i++) {
+			if (chosenSkins.get(i) == skinId) {
+				chosenSkins.set(i, Consts.NOTCHOSEN);
+			}
+		}
+	}
+	
+	
 	public List<List<String>> allSkinImgs(){
 		List<List<String>> ans = new ArrayList<>();
 		int i,j;
@@ -76,6 +125,39 @@ public class Account {
 		}
 		return ans;
 	}
+	
+	public List<List<String>> allSkinNames(){
+		shop = new Shop();
+		List<List<String>> ans = new ArrayList<>();
+		int i,j;
+		for (i=1;i<=5;i++) {
+			List<String> ls = new ArrayList<>();
+			for (j=1;j<=Consts.SKINTOTALS[i];j++) {
+				int x = i*1000+j;
+				if (hasSkin(x)) {
+					ls.add(shop.getSkinName(x));
+				} else {
+					ls.add("");
+				}
+			}
+			ans.add(ls);
+		}
+		return ans;
+	}
+	
+	public List<String> allChosenSkins(){
+		List<String> ans = new ArrayList<>();
+		int i;
+		for (i=0;i<chosenSkins.size();i++) {
+			if (chosenSkins.get(i) == Consts.NOTCHOSEN) {
+				ans.add("");
+			} else {
+				ans.add(Integer.toString(chosenSkins.get(i)));
+			}
+		}
+		return ans;
+	}
+	
 	public void cleanAccount() {
 		money = 0;
 		diamond = 0;
@@ -167,6 +249,12 @@ public class Account {
 	public void setSkins(List<Integer> skins) {
 		this.skins = skins;
 	}
+	public List<Integer> getChosenSkins() {
+		return chosenSkins;
+	}
+	public void setChosenSkins(List<Integer> chosenSkins) {
+		this.chosenSkins = chosenSkins;
+	}
 	public Shop getShop() {
 		return shop;
 	}
@@ -200,6 +288,7 @@ public class Account {
 		doc.append("winStrike", winStrike);
 		doc.append("visitedPokerworld", visitedPokerworld);
 		doc.append("skins", skins);
+		doc.append("chosenSkins", chosenSkins);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -221,6 +310,13 @@ public class Account {
 		visitedPokerworld = doc.getBoolean("visitedPokerworld", false);
 		skins = (List<Integer>) doc.get("skins");
 		if (skins == null) skins = new ArrayList<>();
+		chosenSkins = (List<Integer>) doc.get("chosenSkins");
+		if (chosenSkins == null) {
+			chosenSkins = new ArrayList<>();
+			for (int j=0;j<Consts.MAXCHOSENSKINS;j++) {
+				chosenSkins.add(Consts.NOTCHOSEN);
+			}
+		}
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -240,6 +336,8 @@ public class Account {
 		entity.setKey(key);
 		entity.setGoldenKey(goldenKey);
 		entity.setAllSkinImgs(allSkinImgs());
+		entity.setAllSkinNames(allSkinNames());
+		entity.setChosenSkins(allChosenSkins());
 		return entity;
 	}
 	

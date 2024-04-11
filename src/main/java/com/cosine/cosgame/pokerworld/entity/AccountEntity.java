@@ -9,6 +9,8 @@ public class AccountEntity {
 	int key;
 	int goldenKey;
 	List<List<String>> allSkinImgs;
+	List<List<String>> allSkinNames;
+	List<String> chosenSkins;
 	
 	public String getName() {
 		return name;
@@ -45,6 +47,18 @@ public class AccountEntity {
 	}
 	public void setAllSkinImgs(List<List<String>> allSkinImgs) {
 		this.allSkinImgs = allSkinImgs;
+	}
+	public List<List<String>> getAllSkinNames() {
+		return allSkinNames;
+	}
+	public void setAllSkinNames(List<List<String>> allSkinNames) {
+		this.allSkinNames = allSkinNames;
+	}
+	public List<String> getChosenSkins() {
+		return chosenSkins;
+	}
+	public void setChosenSkins(List<String> chosenSkins) {
+		this.chosenSkins = chosenSkins;
 	}
 	
 }

@@ -375,4 +375,27 @@ public class PokerworldController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokerworld/chooseskin", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseSkin(HttpServletRequest request, @RequestParam int skinId) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.chooseSkin(skinId);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/pokerworld/cancelchooseskin", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> cancelChooseSkin(HttpServletRequest request, @RequestParam int skinId) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.cancelChooseSkin(skinId);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 }

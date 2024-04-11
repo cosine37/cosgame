@@ -47,4 +47,8 @@ public class Consts {
 	// skin totals
 	public static final int[] SKINTOTALS = {0, 20, 20, 4, 4, 4};
 	
+	// other skin related
+	public static final int NOTCHOSEN = -1;
+	public static final int MAXCHOSENSKINS = 11;
+	
 }

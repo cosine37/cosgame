@@ -185,7 +185,13 @@ public class Shop {
 	}
 	
 	
-	
+	public String getSkinName(int skinId) {
+		String ans = "";
+		if (skinDict.containsKey(skinId)) {
+			ans = skinDict.get(skinId).getName();
+		}
+		return ans;
+	}
 	
 	
 	public void allSkins() {
