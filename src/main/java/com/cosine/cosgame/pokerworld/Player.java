@@ -7,7 +7,9 @@ import org.bson.Document;
 
 import com.cosgame.sfsj.common.Card;
 import com.cosgame.sfsj.play.Hand;
+import com.cosine.cosgame.pokerworld.account.Account;
 import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
+import com.mongodb.util.JSON;
 
 public class Player {
 	String name;
@@ -406,6 +408,12 @@ public class Player {
 		entity.setScores(scores);
 		entity.setBids(bids);
 		entity.setActuals(actuals);
+		
+		Account account = new Account();
+		account.getFromDB(name);
+		System.out.println(account.getName());
+		entity.setChosenSkins(account.getChosenSkins());
+		
 		return entity;
 	}
 	

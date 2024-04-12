@@ -337,7 +337,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		translateRawCard = function(raw, p, f){
+		translateRawCard = function(raw, p, f, skins){
 			var card = {}
 			var r = raw.substring(0,1);
 			var s = raw.substring(1,2);
@@ -371,35 +371,95 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				s = "\u2663";
 				c = "black";
 			}
-			
+			customSkin = null;
 			if (raw == "WZ" || raw == "Wz" || raw == "wZ" || raw == "wz"){
 				r = "wizard"
 				s = raw;
 				c = "blue";
+				
+				if (raw == "WZ" && skins[0] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[0].toString() + '.png)'
+					}
+				}
+				if (raw == "Wz" && skins[1] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[1].toString() + '.png)'
+					}
+				}
+				if (raw == "wZ" && skins[2] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[2].toString() + '.png)'
+					}
+				}
+				if (raw == "wz" && skins[3] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[3].toString() + '.png)'
+					}
+				}
 			}
 			
 			if (raw == "JE" || raw == "Je" || raw == "jE" || raw == "je"){
 				r = "jester"
 				s = raw;
 				c = "green";
+				
+				if (raw == "JE" && skins[4] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[4].toString() + '.png)'
+					}
+				}
+				if (raw == "Je" && skins[5] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[5].toString() + '.png)'
+					}
+				}
+				if (raw == "jE" && skins[6] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[6].toString() + '.png)'
+					}
+				}
+				if (raw == "je" && skins[7] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[7].toString() + '.png)'
+					}
+				}
 			}
 			
 			if (raw == "BM" || raw == "Bm" || raw == "bM" || raw == "bm"){
 				r = "bomb"
 				s = raw;
 				c = "darkred";
+				
+				if (skins[8] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[8].toString() + '.png)'
+					}
+				}
 			}
 			
 			if (raw == "DR" || raw == "Dr" || raw == "dR" || raw == "dr"){
 				r = "dragon"
 				s = raw;
 				c = "purple";
+				
+				if (skins[9] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[9].toString() + '.png)'
+					}
+				}
 			}
 			
 			if (raw == "FR" || raw == "Fr" || raw == "fR" || raw == "fr"){
 				r = "fairy"
 				s = raw;
 				c = "pink";
+				
+				if (skins[10] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[10].toString() + '.png)'
+					}
+				}
 			}
 			
 			card["rank"] = r
@@ -409,6 +469,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			card["cstyle"] = {
 				"margin-top": "0px"
 			}
+			card["custom"] = customSkin
 
 			if (ts == $scope.dominantSuit){
 				card["cstyle"]["background-color"] = "palegoldenrod"
@@ -446,7 +507,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			var i = 0;
 			while (i<$scope.myCards.length){
 				var rawCard = $scope.myCards.substring(i,i+2);
-				$scope.hand.push(translateRawCard(rawCard, $scope.playable[i/2], false));
+				$scope.hand.push(translateRawCard(rawCard, $scope.playable[i/2], false, $scope.gamedata.myChosenSkins));
 				i=i+2;
 			}
 			for (i=0;i<$scope.players.length;i++){
@@ -454,14 +515,14 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				var played = [];
 				while (j<$scope.players[i].playedCards.length){
 					var rawCard = $scope.players[i].playedCards.substring(j,j+2);
-					played.push(translateRawCard(rawCard, 1, true));
+					played.push(translateRawCard(rawCard, 1, true, $scope.players[i].chosenSkins));
 					j = j+2;
 				}
 				$scope.players[i]["played"] = played
 			}
 			$scope.trump = []
 			if ($scope.dominantCard.length == 2){
-				var trumpCard =translateRawCard($scope.dominantCard,1, false)
+				var trumpCard =translateRawCard($scope.dominantCard,1, false, $scope.gamedata.myChosenSkins)
 				$scope.trump.push(trumpCard)
 			}
 		}

@@ -66,7 +66,6 @@ public class Account {
 	}
 	
 	public void chooseSkin(int skinId) {
-		System.out.println(chosenSkins);
 		int skinType = skinId/1000;
 		int i;
 		if (skinType == Consts.WIZARD) {

@@ -38,6 +38,7 @@ public class BoardEntity {
 	List<Integer> sequence;
 	List<PlayerEntity> players;
 	List<Integer> playable;
+	List<Integer> myChosenSkins;
 
 	public String getId() {
 		return id;
@@ -236,5 +237,11 @@ public class BoardEntity {
 	}
 	public void setNumFrRevealed(int numFrRevealed) {
 		this.numFrRevealed = numFrRevealed;
+	}
+	public List<Integer> getMyChosenSkins() {
+		return myChosenSkins;
+	}
+	public void setMyChosenSkins(List<Integer> myChosenSkins) {
+		this.myChosenSkins = myChosenSkins;
 	}
 }

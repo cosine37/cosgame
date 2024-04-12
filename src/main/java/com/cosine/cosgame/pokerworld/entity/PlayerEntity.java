@@ -9,6 +9,7 @@ public class PlayerEntity {
 	List<Integer> scores;
 	List<Integer> bids;
 	List<Integer> actuals;
+	List<Integer> chosenSkins;
 	
 
 	public String getName() {
@@ -47,4 +48,11 @@ public class PlayerEntity {
 	public void setActuals(List<Integer> actuals) {
 		this.actuals = actuals;
 	}
+	public List<Integer> getChosenSkins() {
+		return chosenSkins;
+	}
+	public void setChosenSkins(List<Integer> chosenSkins) {
+		this.chosenSkins = chosenSkins;
+	}
+	
 }

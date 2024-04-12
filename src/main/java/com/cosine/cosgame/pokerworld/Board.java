@@ -7,6 +7,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosgame.sfsj.play.Game;
+import com.cosine.cosgame.pokerworld.account.Account;
 import com.cosine.cosgame.pokerworld.entity.BoardEntity;
 import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -130,6 +131,8 @@ public class Board {
 		deck = PokerUtil.shuffle(deck);
 		
 		int cardsOnRound = round;
+		
+		cardsOnRound = 20;
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
@@ -875,6 +878,10 @@ public class Board {
 				} else {
 					entity.setSequence(sequences.get(i));
 				}
+				
+				Account account = new Account();
+				account.getFromDB(username);
+				entity.setMyChosenSkins(account.getChosenSkins());
 				
 			}
 		}

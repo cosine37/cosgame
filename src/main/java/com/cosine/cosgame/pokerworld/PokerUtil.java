@@ -50,12 +50,30 @@ public class PokerUtil {
 	public static List<PokerCard> getWizardDeck(){
 		List<PokerCard> cards = getStandardDeck();
 		int i;
+		/*
 		for (i=0;i<4;i++) {
 			PokerCard card = new PokerCard("WZ",0);
 			cards.add(card);
 			card = new PokerCard("JE",0);
 			cards.add(card);
 		}
+		*/
+		PokerCard card = new PokerCard("WZ",0);
+		cards.add(card);
+		card = new PokerCard("Wz",0);
+		cards.add(card);
+		card = new PokerCard("wZ",0);
+		cards.add(card);
+		card = new PokerCard("wz",0);
+		cards.add(card);
+		card = new PokerCard("JE",0);
+		cards.add(card);
+		card = new PokerCard("Je",0);
+		cards.add(card);
+		card = new PokerCard("jE",0);
+		cards.add(card);
+		card = new PokerCard("je",0);
+		cards.add(card);
 		return cards;
 	}
 	public static List<PokerCard> getWizardDeck(int extraCards){
