@@ -1,6 +1,7 @@
 package com.cosine.cosgame.pokerworld.account;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bson.Document;
@@ -34,15 +35,62 @@ public class Account {
 		String dbname = "admin";
 		String col = "users";
 		
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
+	}
+	
+	public void cleanAccount() {
+		money = 0;
+		diamond = 0;
+		key = 0;
+		goldenKey = 0;
+		winStrike = 0;
+		numGames = 0;
+		lastLoginDate = "";
+		
 		transactions = new ArrayList<>();
 		skins = new ArrayList<>();
 		chosenSkins = new ArrayList<>();
 		for (int j=0;j<Consts.MAXCHOSENSKINS;j++) {
 			chosenSkins.add(Consts.NOTCHOSEN);
 		}
+		visitedPokerworld = false;
+	}
+	
+	public List<Transaction> endGameReward(int placement) {
+		List<Transaction> transactions = new ArrayList<>();
+		transactions.addAll(getGeneralReward());
+		shop = new Shop();
+		System.out.println("名次：" + placement);
+		if (placement == 0) {
+			transactions.addAll(shop.winReward(this));
+		} else if (placement == 1) {
+			transactions.addAll(shop.secondReward(this));
+		} else {
+			transactions.addAll(shop.loseReward(this));
+		}
 		
-		dbutil = new MongoDBUtil(dbname);
-		dbutil.setCol(col);
+		return transactions;
+	}
+	
+	List<Transaction> getGeneralReward() {
+		Shop shop = new Shop();
+		List<Transaction> ts = new ArrayList<>();
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		int date = Calendar.getInstance().get(Calendar.DATE);
+		String today = "" + year + month + date;
+		if (lastLoginDate.contentEquals("")) {
+			ts.addAll(shop.entryReward());
+		}
+		if (today.contentEquals(lastLoginDate)) {
+			
+		} else {
+			ts.addAll(shop.dailyReward());
+			lastLoginDate = today;
+		}
+		ts.addAll(shop.numGameReward(this));
+		return ts;
 	}
 	
 	public void addNewTransaction(Transaction t) {
@@ -157,18 +205,7 @@ public class Account {
 		return ans;
 	}
 	
-	public void cleanAccount() {
-		money = 0;
-		diamond = 0;
-		key = 0;
-		goldenKey = 0;
-		winStrike = 0;
-		numGames = 0;
-		lastLoginDate = "";
-		transactions = new ArrayList<>();
-		skins = new ArrayList<>();
-		visitedPokerworld = false;
-	}
+	
 	public void changeMoney(int x) {
 		money = money+x;
 	}

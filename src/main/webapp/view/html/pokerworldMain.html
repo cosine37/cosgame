@@ -37,7 +37,7 @@
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="showTablesTab()">商城</a>
+				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="showTablesTab()">小镇</a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#wizardrulestab" ng-click="hideTablesTab()">神机妙算规则</a>
@@ -78,12 +78,14 @@
 			
 				
 				<div id="accounttab" class="content container tab-pane">
-					<h1>商城</h1>
+					<h1>小镇</h1>
 					<div style="background-image:url('/image/Pokerworld/town.png'); background-size:cover; height: 600px; width: 960px; position: relative" class="noselect">
+						<!-- 
 						<div style="position:absolute; left: 10px; top: 10px">
 							<button>+</button>
 							<button>-</button>
 						</div>
+						 -->
 						<div class="account-info">
 							<table>
 								<tr>
@@ -203,10 +205,11 @@
 						<button ng-click="dailyReward()">每日奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
 					</div>
+					<!-- 
 					<div>
 						{{accountInfo}}
 					</div>
-					
+					-->
 				</div>
 				
 				

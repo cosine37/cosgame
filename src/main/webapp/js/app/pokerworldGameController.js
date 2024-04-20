@@ -666,6 +666,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.chosenCard = -1;
 				$scope.playable = response.data.playable
 				$scope.biggestRank = response.data.biggestRank
+				$scope.myEndGameRewards = response.data.myEndGameRewards
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";
@@ -704,6 +705,10 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 						myActualThisTurn = $scope.players[$scope.myIndex].actualDisplay
 						$scope.playWinLoseBGM(myBidThisTurn == myActualThisTurn)
 					}
+				}
+				
+				if ($scope.status == $scope.PREENDGAME){
+					setEndGameInfo()
 				}
 				
 				/*

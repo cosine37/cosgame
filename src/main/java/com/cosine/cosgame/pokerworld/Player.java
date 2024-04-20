@@ -28,6 +28,7 @@ public class Player {
 	List<Integer> bids;
 	List<Integer> actuals;
 	List<PokerCard> played;
+	List<String> endGameRewards;
 	
 	public Player() {
 		clearAll();
@@ -42,6 +43,7 @@ public class Player {
 		bids = new ArrayList<>();
 		actuals = new ArrayList<>();
 		played = new ArrayList<>();
+		endGameRewards = new ArrayList<>();
 	}
 	
 	public Player(Board board) {
@@ -160,6 +162,11 @@ public class Player {
 			ans = actuals.get(actuals.size()-1);
 		}
 		return ans;
+	}
+	
+	public int getLatestScore() {
+		int x = scores.size()-1;
+		return scores.get(x);
 	}
 	
 	public void winTrick() {
@@ -356,6 +363,13 @@ public class Player {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
+	}
+
 	public Document toDocument() {
 		int i;
 		Document doc = new Document();
@@ -368,6 +382,7 @@ public class Player {
 		doc.append("scores", scores);
 		doc.append("bids", bids);
 		doc.append("actuals", actuals);
+		doc.append("endGameRewards", endGameRewards);
 		if (board.getGameMode() == Consts.SFSJ) {
 			doc.append("playedCardsStr", playedCardsStr);
 		} else {
@@ -385,7 +400,7 @@ public class Player {
 		scores = (List<Integer>) doc.get("scores");
 		bids = (List<Integer>) doc.get("bids");
 		actuals = (List<Integer>) doc.get("actuals");
-		
+		endGameRewards = (List<String>) doc.get("endGameRewards");
 		if (board.getGameMode() == Consts.SFSJ) {
 			playedCardsStr = doc.getString("playedCardsStr");
 		} else {
@@ -408,7 +423,7 @@ public class Player {
 		entity.setScores(scores);
 		entity.setBids(bids);
 		entity.setActuals(actuals);
-		
+		//entity.setRewards(endGameRewards);
 		Account account = new Account();
 		account.getFromDB(name);
 		System.out.println(account.getName());

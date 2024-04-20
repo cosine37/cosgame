@@ -89,7 +89,12 @@ body {
 							</table>
 						</div>
 					</td>
-					<td style="text-align:center;">
+					<td style="text-align:center; width: 700px" ng-show = "status == PREENDGAME">
+						<div ng-repeat="r in myEndGameRewards track by $index">
+							{{r}}
+						</div>
+					</td>
+					<td style="text-align:center; width: 100px" ng-show = "status != PREENDGAME">
 						<div style="height: 30px">
 							<div ng-show="trump.length == 1">本轮主花色</div>
 							<div ng-show="trump.length == 0">本轮没有主花色</div>
@@ -98,7 +103,7 @@ body {
 							<div class="card-play-wizard card-size noselect" ng-repeat="c in trump track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle"></div>
 						</div>
 					</td>
-					<td style="vertical-align: top;padding-left: 10px; width: 600px">
+					<td style="vertical-align: top;padding-left: 10px; width: 600px" ng-show = "status != PREENDGAME">
 						<div>
 							<span>决定主花色时被翻出的非花色牌数量：</span>
 						</div>

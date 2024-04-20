@@ -17,6 +17,7 @@ public class Transaction {
 	}
 	
 	public Transaction(int type, int amount, String info) {
+		this.account = account;
 		this.type = type;
 		this.amount = amount;
 		this.info = info;
@@ -35,6 +36,20 @@ public class Transaction {
 		} else if (type == KEY) {
 			account.changeKey(amount);
 		}
+	}
+	
+	public String toString() {
+		String s = "";
+		s = this.info + ": ";
+		if (type == MONEY) {
+			s = s + "$" + Integer.toString(amount);
+		} else if (type == DIAMOND) {
+			s = s + Integer.toString(amount) + "颗钻石";
+		} else if (type == KEY) {
+			s = s + Integer.toString(amount) + "个宝箱";
+		}
+		
+		return s;
 	}
 	
 	public int getType() {

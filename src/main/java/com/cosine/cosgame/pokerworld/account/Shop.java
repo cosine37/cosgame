@@ -11,7 +11,8 @@ import com.cosine.cosgame.pokerworld.Consts;
 public class Shop {
 	public static final int FIRSTREWARD = 500;
 	public static final int DAILYREWARD = 100;
-	public static final int WINREWARD = 50;
+	public static final int WINREWARD = 66;
+	public static final int SECONDREWARD = 36;
 	public static final int DIGPRICE = 88;
 	public static final int OPENCHESTPRICE = 1;
 	
@@ -34,6 +35,8 @@ public class Shop {
 	
 	public List<Transaction> winReward(Account a){
 		List<Transaction> ts = new ArrayList<>();
+		int ttt = a.getWinStrike()+1;
+		a.setWinStrike(ttt);
 		if (a.getWinStrike() == 0) {
 			
 		} else if (a.getWinStrike() == 1) {
@@ -42,15 +45,25 @@ public class Shop {
 		} else {
 			int x = WINREWARD;
 			for (int i=0;i<a.getWinStrike();i++) {
-				x = x + i*10;
+				x = x + i*30;
 			}
 			Transaction t = new Transaction(Transaction.MONEY, x, a.getWinStrike() + "连胜");
 			ts.add(t);
 		}
+		
+		return ts;
+	}
+	
+	public List<Transaction> secondReward(Account a){
+		a.setWinStrike(0);
+		List<Transaction> ts = new ArrayList<>();
+		Transaction t = new Transaction(Transaction.MONEY, SECONDREWARD, "第二名奖励");
+		ts.add(t);
 		return ts;
 	}
 	
 	public List<Transaction> loseReward(Account a){
+		a.setWinStrike(0);
 		List<Transaction> ts = new ArrayList<>();
 		Transaction t = new Transaction(Transaction.MONEY, 10, "参与奖励");
 		ts.add(t);
@@ -75,7 +88,8 @@ public class Shop {
 	
 	public List<Transaction> numGameReward(Account a){
 		List<Transaction> ts = new ArrayList<>();
-		int x = a.getNumGames();
+		int x = a.getNumGames()+1;
+		a.setNumGames(x);
 		if (x%10 == 0) {
 			Transaction t = new Transaction(Transaction.MONEY, 300, x + "场游戏");
 			ts.add(t);

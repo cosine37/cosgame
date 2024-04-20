@@ -10,7 +10,7 @@ public class PlayerEntity {
 	List<Integer> bids;
 	List<Integer> actuals;
 	List<Integer> chosenSkins;
-	
+	List<String> rewards;
 
 	public String getName() {
 		return name;
@@ -53,6 +53,12 @@ public class PlayerEntity {
 	}
 	public void setChosenSkins(List<Integer> chosenSkins) {
 		this.chosenSkins = chosenSkins;
+	}
+	public List<String> getRewards() {
+		return rewards;
+	}
+	public void setRewards(List<String> rewards) {
+		this.rewards = rewards;
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.bson.Document;
 
 import com.cosgame.sfsj.play.Game;
 import com.cosine.cosgame.pokerworld.account.Account;
+import com.cosine.cosgame.pokerworld.account.Transaction;
 import com.cosine.cosgame.pokerworld.entity.BoardEntity;
 import com.cosine.cosgame.pokerworld.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -132,7 +133,7 @@ public class Board {
 		
 		int cardsOnRound = round;
 		
-		cardsOnRound = 20;
+		//cardsOnRound = 20;
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
@@ -292,6 +293,35 @@ public class Board {
 	
 	public void gameEnd() {
 		status = Consts.PREENDGAME;
+		int i,j;
+		List<Player> tl = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tl.add(players.get(i));
+		}
+		for (i=0;i<tl.size();i++) {
+			for (j=i+1;j<tl.size();j++) {
+				if (tl.get(i).getLatestScore() < tl.get(j).getLatestScore()) {
+					Player p = tl.get(i);
+					tl.set(i, tl.get(j));
+					tl.set(j, p);
+				}
+			}
+		}
+		
+		for (i=0;i<tl.size();i++) {
+			Account a = new Account();
+			Player p = tl.get(i);
+			a.getFromDB(p.getName());
+			List<Transaction> rewards = a.endGameReward(i);
+			List<String> endGameRewards = new ArrayList<>();
+			for (j=0;j<rewards.size();j++) {
+				rewards.get(j).setAccount(a);
+				rewards.get(j).execOnAccount();
+				endGameRewards.add(rewards.get(j).toString());
+			}
+			p.setEndGameRewards(endGameRewards);
+			a.updateAccountDB();
+		}
 	}
 	
 	public void confirmEndGame() {
@@ -883,6 +913,7 @@ public class Board {
 				account.getFromDB(username);
 				entity.setMyChosenSkins(account.getChosenSkins());
 				
+				entity.setMyEndGameRewards(p.getEndGameRewards());
 			}
 		}
 		entity.setPlayers(playerEntities);

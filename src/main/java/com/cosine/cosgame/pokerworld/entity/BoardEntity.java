@@ -39,6 +39,7 @@ public class BoardEntity {
 	List<PlayerEntity> players;
 	List<Integer> playable;
 	List<Integer> myChosenSkins;
+	List<String> myEndGameRewards;
 
 	public String getId() {
 		return id;
@@ -243,5 +244,11 @@ public class BoardEntity {
 	}
 	public void setMyChosenSkins(List<Integer> myChosenSkins) {
 		this.myChosenSkins = myChosenSkins;
+	}
+	public List<String> getMyEndGameRewards() {
+		return myEndGameRewards;
+	}
+	public void setMyEndGameRewards(List<String> myEndGameRewards) {
+		this.myEndGameRewards = myEndGameRewards;
 	}
 }
