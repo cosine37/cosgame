@@ -44,6 +44,10 @@ body {
 									<td>实际墩数：</td>
 									<td>{{p.actualDisplay}}</td>
 								</tr>
+								<tr ng-show="useFiveTenBonus">
+									<td>5/10加分：</td>
+									<td>{{p.fiveTenDisplay}}</td>
+								</tr>
 								<tr>
 									<td>当前分数：</td>
 									<td><span ng-class="p.scoreDisplayClass" style="font-weight: bold">{{p.scoreDisplay}}</span></td>
@@ -208,10 +212,10 @@ body {
 		
 		
 	</div>
-	
+	<!-- 
 	{{gamedata}}
 	
-	
+	 -->
 	
 	
 	<!-- 

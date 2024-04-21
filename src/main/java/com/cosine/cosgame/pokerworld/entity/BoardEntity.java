@@ -34,6 +34,7 @@ public class BoardEntity {
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
+	boolean fiveTenBonus;
 	
 	List<Integer> sequence;
 	List<PlayerEntity> players;
@@ -250,5 +251,11 @@ public class BoardEntity {
 	}
 	public void setMyEndGameRewards(List<String> myEndGameRewards) {
 		this.myEndGameRewards = myEndGameRewards;
+	}
+	public boolean isFiveTenBonus() {
+		return fiveTenBonus;
+	}
+	public void setFiveTenBonus(boolean fiveTenBonus) {
+		this.fiveTenBonus = fiveTenBonus;
 	}
 }

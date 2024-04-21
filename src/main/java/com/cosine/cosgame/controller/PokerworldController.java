@@ -128,6 +128,7 @@ public class PokerworldController {
 				board.updateDB("biggestRank", board.getBiggestRank());
 				board.updateDB("extraCards", board.getExtraCards());
 				board.updateDB("totalRounds", board.getTotalRounds());
+				board.updateDB("fiveTenBonus", board.isFiveTenBonus());
 				board.updateDominantDB();
 			}
 		} else {

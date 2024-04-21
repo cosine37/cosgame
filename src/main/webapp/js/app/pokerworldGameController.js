@@ -184,7 +184,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.showScoreTable = false;
-		$scope.tableText = ["轮次","下注","实际","分数"]
+		$scope.tableText = ["轮次","下注","实际","加分","分数"]
 		$scope.scoreTableSwitch = function(f){
 			playClickSE()
 			$scope.showScoreTable = f;
@@ -559,15 +559,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.players[i].scoreDisplay = display;
 				$scope.players[i].scoreDisplayClass = displayClass;
 				
+				
+				
 				if ($scope.status == $scope.SCORING){
 					$scope.players[i].bidDisplay = "" + $scope.players[i].bids[$scope.players[i].bids.length-1]
 					$scope.players[i].actualDisplay = "" + $scope.players[i].actuals[$scope.players[i].actuals.length-1]
+					$scope.players[i].fiveTenDisplay = "" + $scope.players[i].bonuses[$scope.players[i].bonuses.length-1]
 				} else if ($scope.players[i].bids.length == $scope.round){
 					$scope.players[i].bidDisplay = "" + $scope.players[i].bids[$scope.players[i].bids.length-1]
 					$scope.players[i].actualDisplay = "" + $scope.players[i].actuals[$scope.players[i].actuals.length-1]
+					$scope.players[i].fiveTenDisplay = "" + $scope.players[i].bonuses[$scope.players[i].bonuses.length-1]
 				} else {
 					$scope.players[i].bidDisplay = "-"
 					$scope.players[i].actualDisplay = "0"
+					$scope.players[i].fiveTenDisplay = "0"
 				}
 			}
 		}
@@ -667,6 +672,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.playable = response.data.playable
 				$scope.biggestRank = response.data.biggestRank
 				$scope.myEndGameRewards = response.data.myEndGameRewards
+				$scope.useFiveTenBonus = response.data.fiveTenBonus
 				if ($scope.dominantSuit == "s"){
 					$scope.dominantSuitDisplay = "\u2660";
 					$scope.dominantSuitDisplayClass = "black";

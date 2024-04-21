@@ -42,6 +42,9 @@ public class Board {
 	int numBmRevealed;
 	int numDrRevealed;
 	int numFrRevealed;
+	
+	boolean fiveTenBonus;
+	
 	List<Integer> settings;
 	List<Player> players;
 	List<List<Integer>> sequences;
@@ -61,6 +64,8 @@ public class Board {
 		confirmed = new ArrayList<>();
 		dominantCard = new PokerCard();
 		firstCard = new PokerCard();
+		
+		fiveTenBonus = false;
 		
 		lord = "";
 		currentSuit = "";
@@ -109,6 +114,11 @@ public class Board {
 		firstPlayer = settings.get(Consts.FIRSTPLAYERINDEX);
 		totalRounds = settings.get(Consts.TOTALROUNDSINDEX);
 		extraCards = settings.get(Consts.EXTRACARDSINDEX);
+		if (settings.get(Consts.FIVETENBONUSINDEX) == 1) {
+			fiveTenBonus = true;
+		} else {
+			fiveTenBonus = false;
+		}
 		
 		if (totalRounds == 0) {
 			totalRounds = 60/players.size();
@@ -385,11 +395,24 @@ public class Board {
 		}
 		// end of Bomb, Dragon and Fairy handles
 		
+		
+		int bonusPoints = 0; // calc bonus points
+		if (firstCard.getRank() == 5 || firstCard.getRank() == 10) { // bonus points handles
+			bonusPoints = bonusPoints + firstCard.getRank();
+		}
+
 		while (true) {
 			x++;
 			if (x == players.size()) x = 0;
 			if (x == firstPlayer) break;
+			
 			PokerCard c = players.get(x).getPlayed().get(0);
+			System.out.println("点数" + c.getRank());
+			
+			if (c.getRank() == 5 || c.getRank() == 10) { // bonus points handles
+				bonusPoints = bonusPoints + c.getRank();
+			}
+			
 			if (c.getSuit().toUpperCase().contentEquals("DR")) {
 				dragonIndex = x;
 			}
@@ -410,6 +433,10 @@ public class Board {
 		}
 		if (hasBomb == false) {
 			players.get(winPlayer).winTrick();
+			if (fiveTenBonus) { // bonus points handles
+				System.out.println("加分：" + bonusPoints);
+				players.get(winPlayer).receiveBonus(bonusPoints);
+			}
 		}
 		
 		firstPlayer = winPlayer;
@@ -637,6 +664,14 @@ public class Board {
 		this.dominantSuitLastRound = dominantSuitLastRound;
 	}
 
+	public boolean isFiveTenBonus() {
+		return fiveTenBonus;
+	}
+
+	public void setFiveTenBonus(boolean fiveTenBonus) {
+		this.fiveTenBonus = fiveTenBonus;
+	}
+
 	public void addPlayer(String name) {
 		Player p = new Player(this);
 		p.setName(name);
@@ -798,6 +833,7 @@ public class Board {
 		doc.append("numBmRevealed", numBmRevealed);
 		doc.append("numDrRevealed", numDrRevealed);
 		doc.append("numFrRevealed", numFrRevealed);
+		doc.append("fiveTenBonus", fiveTenBonus);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -844,6 +880,7 @@ public class Board {
 		numBmRevealed = doc.getInteger("numBmRevealed", 0);
 		numDrRevealed = doc.getInteger("numDrRevealed", 0);
 		numFrRevealed = doc.getInteger("numFrRevealed", 0);
+		fiveTenBonus = doc.getBoolean("fiveTenBonus", false);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -885,6 +922,7 @@ public class Board {
 		entity.setNumDrRevealed(numDrRevealed);
 		entity.setNumFrRevealed(numFrRevealed);
 		entity.setCurrentSuit(currentSuit);
+		entity.setFiveTenBonus(fiveTenBonus);
 		int i;
 		List<PlayerEntity> playerEntities = new ArrayList<>();
 		for (i=0;i<players.size();i++) {

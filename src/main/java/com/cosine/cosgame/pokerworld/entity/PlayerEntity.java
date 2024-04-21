@@ -10,6 +10,7 @@ public class PlayerEntity {
 	List<Integer> bids;
 	List<Integer> actuals;
 	List<Integer> chosenSkins;
+	List<Integer> bonuses;
 	List<String> rewards;
 
 	public String getName() {
@@ -59,6 +60,12 @@ public class PlayerEntity {
 	}
 	public void setRewards(List<String> rewards) {
 		this.rewards = rewards;
+	}
+	public List<Integer> getBonuses() {
+		return bonuses;
+	}
+	public void setBonuses(List<Integer> bonuses) {
+		this.bonuses = bonuses;
 	}
 	
 }

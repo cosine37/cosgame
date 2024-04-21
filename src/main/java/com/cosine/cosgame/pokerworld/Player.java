@@ -26,6 +26,7 @@ public class Player {
 	List<PokerCard> hand;
 	List<Integer> scores;
 	List<Integer> bids;
+	List<Integer> bonuses;
 	List<Integer> actuals;
 	List<PokerCard> played;
 	List<String> endGameRewards;
@@ -42,6 +43,7 @@ public class Player {
 		scores = new ArrayList<>();
 		bids = new ArrayList<>();
 		actuals = new ArrayList<>();
+		bonuses = new ArrayList<>();
 		played = new ArrayList<>();
 		endGameRewards = new ArrayList<>();
 	}
@@ -144,6 +146,7 @@ public class Player {
 			board.potentialNewSetHandle();
 			bids.add(x);
 			actuals.add(0);
+			bonuses.add(0); // 5-10 bonus handles
 			board.nextPlayerBid();
 		}
 	}
@@ -164,6 +167,17 @@ public class Player {
 		return ans;
 	}
 	
+	public int getBonusThisRound() {
+		int ans = 0;
+		if (bonuses.size() == board.getRound()) {
+			ans = bonuses.get(bonuses.size()-1);
+		}
+		System.out.println(board.getRound());
+		System.out.println(bonuses);
+		System.out.println(ans);
+		return ans;
+	}
+	
 	public int getLatestScore() {
 		int x = scores.size()-1;
 		return scores.get(x);
@@ -175,6 +189,12 @@ public class Player {
 		actuals.set(i, x);
 	}
 	
+	public void receiveBonus(int x) {
+		int i = board.getRound() - 1;
+		int y = bonuses.get(i) + x;
+		bonuses.set(i, y);
+	}
+	
 	public void updateScore() {
 		int x = 0;
 		if (scores.size()>0) {
@@ -182,8 +202,11 @@ public class Player {
 		}
 		int b = getBidThisRound();
 		int a = getActualThisRound();
-		if (b == a) {
+		if (b == a) { // guessed right
 			x = x+a*10+20;
+			if (board.isFiveTenBonus()) {
+				x = x + getBonusThisRound();
+			}
 		} else {
 			int t = a-b;
 			if (t<0) t = 0-t;
@@ -369,6 +392,12 @@ public class Player {
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
 	}
+	public List<Integer> getBonuses() {
+		return bonuses;
+	}
+	public void setBonuses(List<Integer> bonuses) {
+		this.bonuses = bonuses;
+	}
 
 	public Document toDocument() {
 		int i;
@@ -383,6 +412,7 @@ public class Player {
 		doc.append("bids", bids);
 		doc.append("actuals", actuals);
 		doc.append("endGameRewards", endGameRewards);
+		doc.append("bonuses", bonuses);
 		if (board.getGameMode() == Consts.SFSJ) {
 			doc.append("playedCardsStr", playedCardsStr);
 		} else {
@@ -401,6 +431,7 @@ public class Player {
 		bids = (List<Integer>) doc.get("bids");
 		actuals = (List<Integer>) doc.get("actuals");
 		endGameRewards = (List<String>) doc.get("endGameRewards");
+		bonuses = (List<Integer>) doc.get("bonuses");
 		if (board.getGameMode() == Consts.SFSJ) {
 			playedCardsStr = doc.getString("playedCardsStr");
 		} else {
@@ -423,10 +454,11 @@ public class Player {
 		entity.setScores(scores);
 		entity.setBids(bids);
 		entity.setActuals(actuals);
+		entity.setBonuses(bonuses);
 		//entity.setRewards(endGameRewards);
 		Account account = new Account();
 		account.getFromDB(name);
-		System.out.println(account.getName());
+		//System.out.println(account.getName());
 		entity.setChosenSkins(account.getChosenSkins());
 		
 		return entity;
