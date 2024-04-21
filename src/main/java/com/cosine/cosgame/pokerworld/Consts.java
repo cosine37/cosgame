@@ -12,6 +12,7 @@ public class Consts {
 	// game modes
 	public static final int SFSJ = 0;
 	public static final int WIZARD = 1;
+	public static final int CAMELUP = 2;
 	
 	// game statuses
 	public static final int PREGAME = 0;
@@ -52,4 +53,5 @@ public class Consts {
 	public static final int NOTCHOSEN = -1;
 	public static final int MAXCHOSENSKINS = 11;
 	
+
 }
