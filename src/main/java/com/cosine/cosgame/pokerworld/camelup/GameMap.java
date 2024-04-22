@@ -92,7 +92,6 @@ public class GameMap {
 	public void moveToTop(Camel c, int newPos) {
 		if (grids.get(newPos) instanceof Empty) {
 			grids.set(newPos, c);
-			c.updatePos(newPos);
 		} else if (grids.get(newPos) instanceof Camel) {
 			Camel tc = c.getTopCamel();
 			Camel bc = (Camel) grids.get(newPos);
@@ -109,11 +108,71 @@ public class GameMap {
 	
 	// c: che camel(s); pos: new position
 	public void moveToBottom(Camel c, int newPos) {
+		if (grids.get(newPos) instanceof Empty) {
+			grids.set(newPos, c);
+		} else if (grids.get(newPos) instanceof Camel) {
+			
+			Camel bc = (Camel) grids.get(newPos);
+			Camel tc = bc.getTopCamel();
+			
+			c.getTopCamel().setCamelOn(bc);
+			bc.setCamelUnder(c.getTopCamel());
+			
+			c.updateTopCamel(tc);
+			c.updateBottomCamel(c);
+			grids.set(newPos, c);
+		}
+		c.updatePos(newPos);
+	}
+	
+	public boolean canPlaceSpectator(int pos) {
+		boolean f = false;
+		if (grids.get(pos) instanceof Empty) {
+			f = true;
+			int left = pos-1;
+			int right = pos+1;
+			if (left == Consts.WINNINGREVERSE) {
+				left = Consts.WINNING-1;
+			}
+			if (right == Consts.WINNING) {
+				right = Consts.WINNINGREVERSE+1;
+			}
+			if (grids.get(left) instanceof Spectator) {
+				f = false;
+			} if (grids.get(right) instanceof Spectator) {
+				f = false;
+			}
+			
+		} else {
+			f = false;
+		}
+		return f;
+	}
+	
+	public boolean placeSpectator(Gambler g, int dir, int pos) {
+		for (int i=Consts.WINNINGREVERSE+1;i<Consts.WINNING;i++) {
+			if (grids.get(i) instanceof Spectator) {
+				Spectator s = (Spectator) grids.get(i);
+				if (s.getGambler().getIndex() == g.getIndex()) {
+					grids.set(i, new Empty());
+				}
+			}
+		}
 		
+		boolean f = canPlaceSpectator(pos);
+		if (f) {
+			Spectator s = new Spectator(g, dir);
+			s.setPos(pos);
+			grids.set(pos, s);
+		}
+		return f;
 	}
 	
 	public static void main(String args[]) {
 		GameMap gm = new GameMap();
+		Gambler g1 = new Gambler("g1", 1);
+		Gambler g2 = new Gambler("g2", 2);
+		
 		gm.initialize();
 		gm.initializeCamel(Consts.RED, 2);
 		gm.initializeCamel(Consts.GREEN, 2);
@@ -130,5 +189,31 @@ public class GameMap {
 		System.out.println(gm.toList());
 		gm.printCamelsInfo();
 		
+		gm.placeSpectator(g1, Consts.BOO, 5);
+		System.out.println(gm.toList());
+		
+		gm.moveCamel(Consts.GREEN, 3);
+		System.out.println(gm.toList());
+		
+		gm.moveCamel(Consts.GREEN, 1);
+		System.out.println(gm.toList());
+		
+		gm.moveCamel(Consts.GREEN, 2);
+		System.out.println(gm.toList());
+		
+		gm.moveCamel(Consts.YELLOW, 2);
+		System.out.println(gm.toList());
+		
+		gm.placeSpectator(g1, Consts.CHEER, 7);
+		System.out.println(gm.toList());
+		
+		gm.moveCamel(Consts.GREEN, 1);
+		System.out.println(gm.toList());
+		
+		gm.placeSpectator(g2, Consts.CHEER, 6);
+		System.out.println(gm.toList());
+		
+		gm.placeSpectator(g1, Consts.CHEER, 6);
+		System.out.println(gm.toList());
 	}
 }
