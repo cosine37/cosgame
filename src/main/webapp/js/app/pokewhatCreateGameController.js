@@ -4,9 +4,19 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("pokewhatCreateGameApp", []);
-app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout, $websocket){
+var app = angular.module("pokewhatCreateGameApp", ["ngWebSocket"]);
+app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+		function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/pokewhat/boardrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+	
 		$scope.avatarTableCols = [0,1,2,3,4,5,6]
 		$scope.avatarTableRows = [0,1,2]
 		$scope.avatarStyles = [];
@@ -29,7 +39,7 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		
 		$scope.addBot = function(){
 			$http.post('/pokewhatgame/addbot').then(function(response){
-				$scope.getBoard();
+				ws.send("addbot");
 			});
 		}
 		
@@ -38,6 +48,7 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 				alert("人数必须为2~5人！")
 			} else {
 				$http.post('/pokewhatgame/startgame').then(function(response){
+					ws.send("start");
 					$scope.goto('pokewhatgame');
 				});
 			}
@@ -46,34 +57,34 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.kick = function(x){
 			var data = {"index" : x}
 			$http({url: "/pokewhatgame/kick", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("kick");
 			});
 		}
 		
 		$scope.dismiss = function(){
 			$http.post('/pokewhatgame/dismiss').then(function(response){
-				$scope.goto('pokewhatgame');
+				ws.send("dismiss");
 			});
 		}
 		
 		$scope.changeFirstPlayer = function(x){
 			var data = {"index" : x}
 			$http({url: "/pokewhatgame/changefirstplayer", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("changeFirstPlayer");
 			});
 		}
 		
 		$scope.changeAvatar = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/changeavatar", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("changeAvatar");
 			});
 		}
 		
 		$scope.setGameEndScore = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/changegameendscore", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("changeGameEndScore");
 			});
 		}
 		
@@ -144,13 +155,10 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			$scope.getBoard();
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},2500);
-		}
+		$scope.getBoard();
 		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
 		
 }]);

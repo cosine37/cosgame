@@ -227,6 +227,10 @@ public class Player {
 			this.getPm().setImg("925");
 			return;
 		}
+		if (this.getPm().getImg().contentEquals("283") && board.getRound() > 1) {
+			this.getPm().setImg("283_1");
+			return;
+		}
 		
 	}
 	

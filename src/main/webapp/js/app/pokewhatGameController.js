@@ -4,9 +4,37 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("pokewhatGameApp", []);
-app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("pokewhatGameApp", ["ngWebSocket"]);
+app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/pokewhat/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
+	
+		ws.onError(function(event) {
+			//alert("error!")
+		});
+	
+		ws.onClose(function(event) {
+			//alert("closed!")
+		});
+	
+		ws.onOpen(function() {
+			heartCheck.start();
+		});
+	
 		$scope.moves = [];
 		$scope.allCards = [];
 		$scope.allCardsStyles = [];
@@ -53,27 +81,31 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.choosePm = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/choosepm", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.choosePmFromPool = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/choosepmfrompool", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.botChoosePm = function(){
 			$http({url: "/pokewhatgame/botchoosepm", method: "POST"}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.useMove = function(x){
 			var data = {"x" : x}
 			$http({url: "/pokewhatgame/usemove", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
@@ -82,20 +114,23 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 				$scope.useMove(0);
 			} else {
 				$http({url: "/pokewhatgame/endturn", method: "POST"}).then(function(response){
-					$scope.getBoard()
+					//$scope.getBoard()
+					$scope.allRefresh()
 				});
 			}
 		}
 		
 		$scope.confirmRoundEnd = function(){
 			$http({url: "/pokewhatgame/confirmendround", method: "POST"}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
 		$scope.botNextMove = function(){
 			$http({url: "/pokewhatgame/botnextmove", method: "POST"}).then(function(response){
-				$scope.getBoard()
+				//$scope.getBoard()
+				$scope.allRefresh()
 			});
 		}
 		
@@ -479,17 +514,21 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			if ($scope.phase != "1" && $scope.status !='2'){
-				$scope.getBoard();
-			} else if ($scope.status =='4'){
+		$scope.getBoard();
+		
+		ws.onMessage(function(e){
+			//alert(JSON.stringify(e.data));
+			var message = e.data
+			heartCheck.reset();
+			if (message == 'refresh'){
 				$scope.getBoard();
 			}
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},1500);
-		}
+			
+		});
 		
-		$scope.offturnHandle();
+		$scope.allRefresh = function(){
+			var msg = "refresh";
+	        ws.send(msg);
+		}
 		
 }]);

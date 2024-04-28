@@ -4,9 +4,9 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("pokewhatMainApp", []);
-app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("pokewhatMainApp", ["ngWebSocket"]);
+app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
 		const thisTab = "pokewhat";
 		$http.get('/alltabs').then(function(response){
 			var tempTabs = response.data;
@@ -24,6 +24,26 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '
 			}
 			
 			$scope.allTabs = tempTabs;
+		});
+		
+		var ws = $websocket("ws://" + $window.location.host + "/pokewhat/allboardsrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+		
+		var boardws = $websocket("ws://" + $window.location.host + "/pokewhat/boardrefresh");
+		boardws.onError(function(event) {
+		});
+	
+		boardws.onClose(function(event) {
+		});
+	
+		boardws.onOpen(function() {
 		});
 		
 		$scope.boards = []
@@ -87,6 +107,7 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/pokewhatgame/setboardid", method: "POST", params: data}).then(function(response){
 				$http.post("/pokewhatgame/join").then(function(response){
+					boardws.send($scope.boards[index]);
 					$scope.goto('pokewhatcreategame')
 				});
 			});
@@ -101,21 +122,15 @@ app.controller("pokewhatMainCtrl", ['$scope', '$window', '$http', '$document', '
 		
 		$scope.newGame = function(){
 			$http({url: "/pokewhatgame/newboard", method: "POST"}).then(function(response){
+				var json_data = '{"type":"notify","content":"refresh"}';
+		        ws.send(json_data);
 				$scope.goto('pokewhatcreategame');
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			if ($scope.onTablesTab){
-				$scope.getAllBoards();
-			}
-			
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},4000);
-			
-		}
+		$scope.getAllBoards();
 		
-		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getAllBoards();
+		});
 }]);
