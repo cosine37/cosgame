@@ -251,6 +251,10 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			var audio = new Audio("/sound/Pokerworld/mining.wav")
 			audio.play();
 		}
+		playOpeningSE = function(){
+			var audio = new Audio("/sound/Pokerworld/opening.wav")
+			audio.play();
+		}
 		
 		$scope.showReward = false;
 		$scope.loadingReward = false;
@@ -335,10 +339,106 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 				tc["custom"] = {
 					'background-image': 'url(' + $scope.rewardImg + ')'
 				}
-				
-				//tc["custom"] = $scope.rewardImg
-				//alert(JSON.stringify(tc))
 				$scope.digCards.push(tc)
+				
+				$scope.getAccountInfo()
+				for (var i=0;i<2500000000;i++){}
+				//time.sleep(2)
+				$scope.loadingReward = false;
+				$scope.showReward = true;
+				playChatSE()
+			});
+		}
+		
+		
+		$scope.openChest = function(){
+			$scope.loadingReward = true;
+			playOpeningSE()
+			$http({url: "/pokerworld/openchest", method: "POST"}).then(function(response){
+				$scope.chatSound = "success.wav"
+				var rewardMsgsRaw = response.data.value;
+				$scope.rewardMsgs = []
+				$scope.rewardImgs = []
+				$scope.rewardMsgSkin = "";
+				$scope.rewardImgSkin = "";
+				$scope.rewardMsgSkinRaw = "";
+				for (var i=0;i<rewardMsgsRaw.length;i++){
+					var rewardMsgRaw = rewardMsgsRaw[i];
+					if (rewardMsgRaw.charAt(0) == 'd'){
+						$scope.rewardImg = "/image/Pokerworld/diamond.png";
+						$scope.rewardMsg = rewardMsgRaw.substring(1) + "颗钻石";
+						
+						$scope.rewardImgs.push($scope.rewardImg);
+						$scope.rewardMsgs.push($scope.rewardMsg);
+					} else if (rewardMsgRaw.charAt(0) == 's'){
+						$scope.rewardMsgSkinRaw = rewardMsgRaw;
+						$scope.rewardImgSkin = "/image/Pokerworld/Skins/" + rewardMsgRaw.substring(2,6) + ".png";
+						var level = rewardMsgRaw.charAt(1);
+						if (level == '1'){
+							$scope.rewardMsg = "皮肤："
+						} else if (level == '2'){
+							$scope.rewardMsg = "稀有皮肤："
+						} else if (level == '3'){
+							$scope.rewardMsg = "史诗皮肤："
+						} else {
+							$scope.rewardMsg = "皮肤："
+						}
+						//$scope.rewardMsg = $scope.rewardMsg + rewardMsgRaw.substring(6);
+						$scope.rewardMsgSkin = $scope.rewardMsg + rewardMsgRaw.substring(6);
+					} else if (rewardMsgRaw.charAt(0) == 'm'){
+						$scope.rewardImg = "/image/Pokerworld/coin.png";
+						$scope.rewardMsg = rewardMsgRaw.substring(1) + "枚钱币";
+						
+						$scope.rewardImgs.push($scope.rewardImg);
+						$scope.rewardMsgs.push($scope.rewardMsg);
+					}
+					
+				}
+				
+				$scope.chestCards = []
+				skinType = $scope.rewardMsgSkinRaw.substring(2,3)
+				tc = {
+					"rank": "wizard",
+					"suit": "WZ",
+					"color": "blue"
+				}
+				if (skinType == '1'){
+					tc = {
+						"rank": "wizard",
+						"suit": "WZ",
+						"color": "blue"
+					}
+				} else if (skinType == '2'){
+					tc = {
+						"rank": "jester",
+						"suit": "JE",
+						"color": "green"
+					}
+				} else if (skinType == '3'){
+					tc = {
+						"rank": "bomb",
+						"suit": "BM",
+						"color": "darkred"
+					}
+				} else if (skinType == '4'){
+					tc = {
+						"rank": "dragon",
+						"suit": "DR",
+						"color": "purple"
+					}
+				} else if (skinType == '5'){
+					tc = {
+						"rank": "fairy",
+						"suit": "FR",
+						"color": "pink"
+					}
+				}
+				
+				tc["custom"] = {
+					'background-image': 'url(' + $scope.rewardImgSkin + ')'
+				}
+				$scope.chestCards.push(tc)
+				
 				
 				$scope.getAccountInfo()
 				for (var i=0;i<2500000000;i++){}

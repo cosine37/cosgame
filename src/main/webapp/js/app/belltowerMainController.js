@@ -193,10 +193,10 @@ app.controller("belltowerMainCtrl", ['$scope', '$window', '$http', '$document', 
 				for (var i=0;i<rewardMsgsRaw.length;i++){
 					var rewardMsgRaw = rewardMsgsRaw[i];
 					if (rewardMsgRaw.charAt(0) == 'd'){
-						$scope.rewardImg = "/image/Belltower/diamond.png";
+						$scope.rewardImg = "/image/Pokerworld/diamond.png";
 						$scope.rewardMsg = rewardMsgRaw.substring(1) + "颗钻石";
 					} else if (rewardMsgRaw.charAt(0) == 'i'){
-						$scope.rewardImg = "/image/Belltower/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
+						$scope.rewardImg = "/image/Pokerworld/Icons/" + rewardMsgRaw.substring(1,4) + ".png";
 						var level = rewardMsgRaw.charAt(1);
 						if (level == '1'){
 							$scope.rewardMsg = "头像："

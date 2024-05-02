@@ -47,11 +47,19 @@ public class Consts {
 	public static final int EPIC = 2;
 	
 	// skin totals
-	public static final int[] SKINTOTALS = {0, 20, 20, 4, 4, 4};
+	public static final int[] SKINTOTALS = {0, 23, 23, 8, 8, 8};
 	
 	// other skin related
 	public static final int NOTCHOSEN = -1;
 	public static final int MAXCHOSENSKINS = 11;
+	
+	// buy options
+	public static final int BUY1HCOINS = 8001;
+	public static final int BUY5HCOINS = 8005;
+	public static final int BUY1KCOINS = 8010;
+	public static final int BUYCHEST = 8100;
+	public static final int BUYSKIN1 = 8201;
+	public static final int BUYSKIN2 = 8202;
 	
 
 }

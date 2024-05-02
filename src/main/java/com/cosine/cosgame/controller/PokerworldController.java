@@ -376,6 +376,19 @@ public class PokerworldController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokerworld/openchest", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> openChest(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		Shop shop = new Shop();
+		List<String> ls = shop.openChest(account);
+		StringEntity entity = new StringEntity();
+		entity.setValue(ls);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokerworld/chooseskin", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> chooseSkin(HttpServletRequest request, @RequestParam int skinId) {
 		HttpSession session = request.getSession(true);

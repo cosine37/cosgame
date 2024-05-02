@@ -85,7 +85,6 @@ public class Shop {
 		return ts;
 	}
 	
-	
 	public List<Transaction> numGameReward(Account a){
 		List<Transaction> ts = new ArrayList<>();
 		int x = a.getNumGames()+1;
@@ -101,6 +100,98 @@ public class Shop {
 			ts.add(t);
 		}
 		return ts;
+	}
+	
+	public List<String> openChest(Account a) {
+		List<String> ls = new ArrayList<>();
+		if (a.getMoney() < OPENCHESTPRICE) return ls;
+		if (a.getKey() < 1) return ls;
+		Transaction t1 = new Transaction(Transaction.MONEY, 0-OPENCHESTPRICE, "打开宝箱");
+		a.addNewTransaction(t1);
+		t1 = new Transaction(Transaction.KEY, -1, "打开宝箱");
+		a.addNewTransaction(t1);
+		int randTop = 8;
+		int epicRate = 1;
+		Random rand = new Random();
+		int x = rand.nextInt(randTop);
+		boolean receivedEpic = false;
+		String rewardMsg;
+		if (x<epicRate) {
+			receivedEpic = true;
+			Skin s = receiveSkin(Consts.EPIC, a);
+			if (s == null) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d10";
+			} else {
+				a.addSkin(s.getId());
+				rewardMsg = "s3" + Integer.toString(s.getId()) + s.getName();
+			}
+		} else {
+			Skin s = receiveSkin(Consts.RARE, a);
+			if (s == null) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d3";
+			} else {
+				a.addSkin(s.getId());
+				rewardMsg = "s2" + Integer.toString(s.getId()) + s.getName();
+			}
+		}
+		ls.add(rewardMsg);
+		int moreDiamondsRate = 2;
+		boolean receivedMoreDiamonds = false;
+		x = rand.nextInt(randTop);
+		if (x<moreDiamondsRate) {
+			receivedMoreDiamonds = true;
+		}
+		if (receivedEpic) {
+			if (receivedMoreDiamonds) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 2, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d2";
+			} else {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			}
+		} else {
+			if (receivedMoreDiamonds) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 5, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d2";
+			} else {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "宝箱获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			}
+		}
+		ls.add(rewardMsg);
+		int receivedCoins = rand.nextInt(50) + 1;
+		if (receivedEpic) {
+			if (receivedMoreDiamonds) {
+				receivedCoins = rand.nextInt(5) + 1;
+			} else {
+				
+			}
+			Transaction t2 = new Transaction(Transaction.MONEY, receivedCoins, "宝箱获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "m"+receivedCoins;
+			ls.add(rewardMsg);
+		} else {
+			if (receivedMoreDiamonds) {
+				
+			} else {
+				receivedCoins = receivedCoins + 100;
+			}
+			Transaction t2 = new Transaction(Transaction.MONEY, receivedCoins, "宝箱获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "m"+receivedCoins;
+			ls.add(rewardMsg);
+		}
+		
+		a.updateAccountDB();
+		return ls;
 	}
 	
 	public String dig(Account a) {
@@ -198,6 +289,11 @@ public class Shop {
 		return s;
 	}
 	
+	public String buy(int option) {
+		String buyMsg = "";
+		
+		return buyMsg;
+	}
 	
 	public String getSkinName(int skinId) {
 		String ans = "";
@@ -221,6 +317,9 @@ public class Shop {
 		commonSkins.add(new Skin(1010,Consts.WIZARD, Consts.COMMON,"甜筒"));
 		commonSkins.add(new Skin(1011,Consts.WIZARD, Consts.COMMON,"鹿巫"));
 		commonSkins.add(new Skin(1012,Consts.WIZARD, Consts.COMMON,"茶壶"));
+		commonSkins.add(new Skin(1021,Consts.WIZARD, Consts.COMMON,"巫鸦"));
+		commonSkins.add(new Skin(1022,Consts.WIZARD, Consts.COMMON,"巫柿"));
+		commonSkins.add(new Skin(1023,Consts.WIZARD, Consts.COMMON,"海星"));
 		
 		commonSkins.add(new Skin(2001,Consts.JESTER, Consts.COMMON,"男孩"));
 		commonSkins.add(new Skin(2002,Consts.JESTER, Consts.COMMON,"微笑"));
@@ -234,32 +333,44 @@ public class Shop {
 		commonSkins.add(new Skin(2010,Consts.JESTER, Consts.COMMON,"青蛙"));
 		commonSkins.add(new Skin(2011,Consts.JESTER, Consts.COMMON,"蜥蜴"));
 		commonSkins.add(new Skin(2012,Consts.JESTER, Consts.COMMON,"傻驴"));
+		commonSkins.add(new Skin(2021,Consts.JESTER, Consts.COMMON,"PC"));
+		commonSkins.add(new Skin(2022,Consts.JESTER, Consts.COMMON,"相机"));
+		commonSkins.add(new Skin(2023,Consts.JESTER, Consts.COMMON,"小丑鱼"));
 		
 		rareSkins.add(new Skin(1013,Consts.WIZARD, Consts.RARE,"狐狸"));
 		rareSkins.add(new Skin(1014,Consts.WIZARD, Consts.RARE,"鲨鱼"));
 		rareSkins.add(new Skin(1015,Consts.WIZARD, Consts.RARE,"熊猫"));
-		rareSkins.add(new Skin(1016,Consts.WIZARD, Consts.RARE,"雄狮"));
-		rareSkins.add(new Skin(1017,Consts.WIZARD, Consts.RARE,"乌龟"));
+		rareSkins.add(new Skin(1016,Consts.WIZARD, Consts.RARE,"巫狮"));
+		rareSkins.add(new Skin(1017,Consts.WIZARD, Consts.RARE,"巫龟"));
 		rareSkins.add(new Skin(1018,Consts.WIZARD, Consts.RARE,"火龙果"));
 		
 		rareSkins.add(new Skin(2013,Consts.JESTER, Consts.RARE,"河马"));
-		rareSkins.add(new Skin(2014,Consts.JESTER, Consts.RARE,"呆鸭"));
+		rareSkins.add(new Skin(2014,Consts.JESTER, Consts.RARE,"小丑鸭"));
 		rareSkins.add(new Skin(2015,Consts.JESTER, Consts.RARE,"二哈"));
-		rareSkins.add(new Skin(2016,Consts.JESTER, Consts.RARE,"蠢猪"));
+		rareSkins.add(new Skin(2016,Consts.JESTER, Consts.RARE,"猪猪"));
 		rareSkins.add(new Skin(2017,Consts.JESTER, Consts.RARE,"菠萝"));
 		rareSkins.add(new Skin(2018,Consts.JESTER, Consts.RARE,"壶铃"));
 		
 		rareSkins.add(new Skin(3001,Consts.BOMB, Consts.RARE,"气球"));
 		rareSkins.add(new Skin(3002,Consts.BOMB, Consts.RARE,"刺豚"));
 		rareSkins.add(new Skin(3003,Consts.BOMB, Consts.RARE,"樱桃炸弹"));
+		rareSkins.add(new Skin(3005,Consts.BOMB, Consts.RARE,"南瓜头"));
+		rareSkins.add(new Skin(3006,Consts.BOMB, Consts.RARE,"托尔斯泰"));
+		rareSkins.add(new Skin(3007,Consts.BOMB, Consts.RARE,"蛋弹"));
 		
 		rareSkins.add(new Skin(4001,Consts.DRAGON, Consts.RARE,"龙龙岩"));
 		rareSkins.add(new Skin(4002,Consts.DRAGON, Consts.RARE,"椰树龙"));
 		rareSkins.add(new Skin(4003,Consts.DRAGON, Consts.RARE,"苹果龙"));
+		rareSkins.add(new Skin(4005,Consts.DRAGON, Consts.RARE,"蜗龙"));
+		rareSkins.add(new Skin(4006,Consts.DRAGON, Consts.RARE,"摩龙大楼"));
+		rareSkins.add(new Skin(4007,Consts.DRAGON, Consts.RARE,"龙头鼠"));
 		
 		rareSkins.add(new Skin(5001,Consts.FAIRY, Consts.RARE,"洋葱仙"));
 		rareSkins.add(new Skin(5002,Consts.FAIRY, Consts.RARE,"腊肠狗"));
 		rareSkins.add(new Skin(5003,Consts.FAIRY, Consts.RARE,"小魔怪"));
+		rareSkins.add(new Skin(5005,Consts.FAIRY, Consts.RARE,"妖匙圈"));
+		rareSkins.add(new Skin(5006,Consts.FAIRY, Consts.RARE,"矿工"));
+		rareSkins.add(new Skin(5007,Consts.FAIRY, Consts.RARE,"妖蘑"));
 		
 		epicSkins.add(new Skin(1019,Consts.WIZARD, Consts.EPIC,"独角兽"));
 		epicSkins.add(new Skin(1020,Consts.WIZARD, Consts.EPIC,"纸杯蛋糕"));
@@ -270,6 +381,9 @@ public class Shop {
 		epicSkins.add(new Skin(3004,Consts.BOMB, Consts.EPIC,"拳石"));
 		epicSkins.add(new Skin(4004,Consts.DRAGON, Consts.EPIC,"绿毛龙"));
 		epicSkins.add(new Skin(5004,Consts.FAIRY, Consts.EPIC,"仙奶"));
+		epicSkins.add(new Skin(3008,Consts.BOMB, Consts.EPIC,"磁怪"));
+		epicSkins.add(new Skin(4008,Consts.DRAGON, Consts.EPIC,"吃面龙"));
+		epicSkins.add(new Skin(5008,Consts.FAIRY, Consts.EPIC,"面包狗"));
 		
 		allSkins.addAll(commonSkins);
 		allSkins.addAll(rareSkins);

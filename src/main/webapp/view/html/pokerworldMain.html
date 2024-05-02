@@ -117,13 +117,14 @@
 						<div ng-click="openPlace('home')" class="town-place" style="left: 120px; bottom: 120px;" ng-show="shownPlace == ''">
 							自宅
 						</div>
+						<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 110px;" ng-show="shownPlace == ''">
+							开锁店
+						</div>
 						<!-- 
 						<div ng-click="openPlace('market')" class="town-place" style="left: 140px; bottom: 220px;" ng-show="shownPlace == ''">
 							市集
 						</div>
-						<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 160px;" ng-show="shownPlace == ''">
-							开锁店
-						</div>
+						
 						<div ng-click="openPlace('belltower')" class="town-place" style="left: 220px; top: 90px;" ng-show="shownPlace == ''">
 							钟楼
 						</div>
@@ -194,14 +195,59 @@
 									<div>{{rewardMsg}}</div>
 									<button ng-click="showReward = false">谢谢</button>
 								</div>
-								
 							</div>
+							
+							<div ng-show="shownPlace == 'locksmith'" class="place-content">
+								<h3>开锁店</h3>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.money>=1 && accountInfo.key>=1" ng-click="openChest()" 
+									class="open-chest-button">
+									<span>打开一个宝箱（花费1</span>
+									<img src="/image/Pokerworld/coin.png">
+									<span>)</span>
+								</div>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.key<1" 
+									style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+									<span>你没有宝箱，巧妇难为无米之炊。</span>
+								</div>
+								<div ng-show="showReward == false && loadingReward == false && accountInfo.key>=1 && accountInfo.money<1" 
+									style="width:360px; left: 150px; bottom: 50px;position: absolute;text-align:center;font-size: 21px;">
+									<span>打开宝箱只需花费1</span>
+									<img src="/image/Belltower/coin.png" style="height: 40px; width:40px;">
+									<span>，你连这都出不起，真是滑天下之大稽。</span>
+								</div>
+								<div ng-show="loadingReward" class="opening">
+									<div>
+										<img src="/image/Belltower/chest.gif" style="height: 153px; width: 270px;"/>
+									</div>
+								</div>
+								<div ng-show="showReward" class="in-chest">
+									<h4>你获得了</h4>
+									<table>
+										<tr>
+											<td ng-show = "rewardMsgSkin != ''" style="align-items:center;align-content: center;">
+												<div ng-repeat = "c in chestCards" style="padding-left: 15px;">
+													<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-class="c.color" ng-style="c.cstyle" style="zoom: 95%;"></div>
+												</div>
+												<div>{{rewardMsgSkin}}</div>
+											</td>
+											<td ng-repeat="rewardImg in rewardImgs track by $index">
+												<div>
+													<img ng-src="{{rewardImg}}" class="icon"/>
+												</div>
+												<div>{{rewardMsgs[$index]}}</div>
+											</td>
+										</tr>
+									</table>
+									<button ng-click="showReward = false">谢谢</button>
+								</div>
+							</div>
+							
 							<div style="position: absolute; top: 30px; right: 30px">
 								<button ng-click="closePlace()">离开</button>
 							</div>
 						</div>
 					</div>
-					<!-- 
+					
 					<div>
 						<button ng-click="dailyReward()">每日奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
@@ -210,7 +256,7 @@
 					<div>
 						{{accountInfo}}
 					</div>
-					-->
+					
 				</div>
 				
 				

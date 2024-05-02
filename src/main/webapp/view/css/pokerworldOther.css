@@ -581,6 +581,46 @@ button:disabled{
 	position: absolute;
 }
 
+.open-chest-button{
+	font-size: 21px;
+	padding: 5px;
+	width: 300px;
+	background-color: yellow;
+	border: 2px solid black;
+	border-radius: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: 180px;
+	padding-left: 15px;
+}
+
+.open-chest-button:hover{
+	cursor: pointer;
+	border: 2px solid gold;
+}
+
+.open-chest-button img{
+	width: 40px;
+	height: 40px;
+	padding-botton: 5px;
+}
+
+.opening {
+	width: 220px;
+	text-align: center;
+	top: 60px;
+	left: 220px;
+	position: absolute;
+}
+
+.in-chest {
+	width: 360px;
+	text-align: center;
+	top: 60px;
+	left: 150px;
+	position: absolute;
+}
+
 .icon{
 	height: 100px;
 	width: 100px;
