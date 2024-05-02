@@ -27,6 +27,13 @@ public class GameMap {
 		moveCamel(c, pos);
 	}
 	
+	public void initializeCrazyCamel(int color, int pos) {
+		Camel c = new Camel(color);
+		c.setCrazy(true);
+		camels.put(c.getColor(),c);
+		moveCamel(c, pos);
+	}
+	
 	public void printCamelsInfo() {
 		for (int i : camels.keySet()) {
 			camels.get(i).printInfo();
@@ -42,6 +49,10 @@ public class GameMap {
 		return ans;
 	}
 	
+	public void rollDice() {
+		
+	}
+	
 	// c: the camel(s), x: how many steps
 	public void moveCamel(Camel c, int x) {
 		if (c.getCamelUnder() != null) {
@@ -54,7 +65,6 @@ public class GameMap {
 		
 		boolean toBottom = false;
 		int newPos = c.getPos()+x;
-		
 		
 		if (grids.get(newPos) instanceof Spectator) {
 			Spectator s = (Spectator) grids.get(newPos);
@@ -88,7 +98,7 @@ public class GameMap {
 		}
 	}
 	
-	// c: che camel(s); pos: new position
+	// c: the camel(s); pos: new position
 	public void moveToTop(Camel c, int newPos) {
 		if (grids.get(newPos) instanceof Empty) {
 			grids.set(newPos, c);
@@ -106,7 +116,7 @@ public class GameMap {
 		c.updatePos(newPos);
 	}
 	
-	// c: che camel(s); pos: new position
+	// c: the camel(s); pos: new position
 	public void moveToBottom(Camel c, int newPos) {
 		if (grids.get(newPos) instanceof Empty) {
 			grids.set(newPos, c);

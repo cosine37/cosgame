@@ -6,6 +6,8 @@ import java.util.List;
 public class Camel extends Grid {
 	int color;
 	
+	boolean crazy;
+	
 	Camel camelOn;
 	Camel camelUnder;
 	Camel topCamel;
@@ -15,10 +17,17 @@ public class Camel extends Grid {
 		super();
 		this.color = color;
 		
+		crazy = false;
+		
 		camelOn = null;
 		camelUnder = null;
 		topCamel = this;
 		bottomCamel = this;
+	}
+	
+	public Camel(int color, boolean crazy) {
+		this(color);
+		this.crazy = crazy;
 	}
 	
 	public void updatePos(int newPos) {
@@ -75,7 +84,13 @@ public class Camel extends Grid {
 	public void setBottomCamel(Camel bottomCamel) {
 		this.bottomCamel = bottomCamel;
 	}
-	
+	public boolean isCrazy() {
+		return crazy;
+	}
+	public void setCrazy(boolean crazy) {
+		this.crazy = crazy;
+	}
+
 	public List<Integer> toList(){
 		List<Integer> ans = new ArrayList<>();
 		ans.add(color);
