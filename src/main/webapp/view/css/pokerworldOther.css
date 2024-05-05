@@ -621,6 +621,31 @@ button:disabled{
 	position: absolute;
 }
 
+.shop-button{
+	font-size: 16px;
+	padding: 5px;
+	width: 120px;
+	background-color: yellow;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+.shop-button:hover{
+	cursor: pointer;
+	border: 2px solid gold;
+}
+.shop-button img{
+	width: 25px;
+	height: 25px;
+}
+
+.shop-coin {
+	height: 40px;
+}
+
+.shop-chest {
+	height: 40px;
+}
+
 .icon{
 	height: 100px;
 	width: 100px;

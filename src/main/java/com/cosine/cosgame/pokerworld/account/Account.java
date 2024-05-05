@@ -1,8 +1,10 @@
 package com.cosine.cosgame.pokerworld.account;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.bson.Document;
 
@@ -19,11 +21,13 @@ public class Account {
 	int numGames;
 	int winStrike;
 	String lastLoginDate;
+	String shopTimestamp;
 	boolean visitedPokerworld;
 	
 	List<Transaction> transactions;
 	List<Integer> skins;
 	List<Integer> chosenSkins;
+	List<Integer> shopSkins;
 	
 	Shop shop;
 	
@@ -47,10 +51,12 @@ public class Account {
 		winStrike = 0;
 		numGames = 0;
 		lastLoginDate = "";
+		shopTimestamp = "";
 		
 		transactions = new ArrayList<>();
 		skins = new ArrayList<>();
 		chosenSkins = new ArrayList<>();
+		shopSkins = new ArrayList<>();
 		for (int j=0;j<Consts.MAXCHOSENSKINS;j++) {
 			chosenSkins.add(Consts.NOTCHOSEN);
 		}
@@ -106,6 +112,12 @@ public class Account {
 	public boolean hasSkin(int x) {
 		for (int i=0;i<skins.size();i++) {
 			if (skins.get(i) == x) return true;
+		}
+		return false;
+	}
+	public boolean hasShopSkin(int x) {
+		for (int i=0;i<shopSkins.size();i++) {
+			if (shopSkins.get(i) == x) return true;
 		}
 		return false;
 	}
@@ -192,6 +204,28 @@ public class Account {
 		return ans;
 	}
 	
+	public List<String> allShopSkinImgs(){
+		List<String> ans = new ArrayList<>();
+		for (int i=0;i<shopSkins.size();i++) {
+			ans.add(Integer.toString(shopSkins.get(i)));
+		}
+		return ans;
+	}
+	
+	public List<String> allShopSkinNames(){
+		shop = new Shop();
+		List<String> ans = new ArrayList<>();
+		for (int i=0;i<shopSkins.size();i++) {
+			if (hasSkin(shopSkins.get(i))) {
+				ans.add("empty");
+			} else {
+				ans.add(shop.getSkinName(shopSkins.get(i)));
+			}
+			
+		}
+		return ans;
+	}
+	
 	public List<String> allChosenSkins(){
 		List<String> ans = new ArrayList<>();
 		int i;
@@ -203,6 +237,35 @@ public class Account {
 			}
 		}
 		return ans;
+	}
+	
+	public String getTimestampPST() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		formatter.setTimeZone(TimeZone.getTimeZone("PST"));
+		
+		Calendar cal = Calendar.getInstance();
+		String timestamp = formatter.format(cal.getTime());
+		return timestamp;
+	}
+	
+	public void generateShopSkins(){
+		String timestamp = getTimestampPST();
+		
+		String[] arrOfTS = timestamp.split("-");
+		int y = Integer.parseInt(arrOfTS[0]);
+		int m = Integer.parseInt(arrOfTS[1]);
+		int d = Integer.parseInt(arrOfTS[2]);
+		
+		int seed = y*3137+m*4657+d*7919;
+		for (int i=0;i<name.length();i++) {
+			int x = Math.abs(name.charAt(i));
+			seed = seed + x*7717;
+		}
+		
+		Shop shop = new Shop();
+		shop.generateShopSkins(this, seed);
+		shopTimestamp = timestamp;
+		updateAccountDB();
 	}
 	
 	
@@ -297,6 +360,18 @@ public class Account {
 	public void setShop(Shop shop) {
 		this.shop = shop;
 	}
+	public String getShopTimestamp() {
+		return shopTimestamp;
+	}
+	public void setShopTimestamp(String shopTimestamp) {
+		this.shopTimestamp = shopTimestamp;
+	}
+	public List<Integer> getShopSkins() {
+		return shopSkins;
+	}
+	public void setShopSkins(List<Integer> shopSkins) {
+		this.shopSkins = shopSkins;
+	}
 
 	public void getFromDB(String username) {
 		Document userDoc = dbutil.read("username", username);
@@ -325,6 +400,8 @@ public class Account {
 		doc.append("visitedPokerworld", visitedPokerworld);
 		doc.append("skins", skins);
 		doc.append("chosenSkins", chosenSkins);
+		doc.append("shopTimestamp", shopTimestamp);
+		doc.append("shopSkins", shopSkins);
 		int i;
 		List<Document> dot = new ArrayList<>();
 		for (i=0;i<transactions.size();i++) {
@@ -353,6 +430,16 @@ public class Account {
 				chosenSkins.add(Consts.NOTCHOSEN);
 			}
 		}
+		
+		shopTimestamp = doc.getString("shopTimestamp");
+		String tsToday = getTimestampPST();
+		
+		if (shopTimestamp == null || !(shopTimestamp.contentEquals(tsToday))) {
+			generateShopSkins();
+		} else {
+			shopSkins = (List<Integer>) doc.get("shopSkins");
+		}
+		
 		int i;
 		List<Document> dot = (List<Document>) doc.get("transactions");
 		transactions = new ArrayList<>();
@@ -374,6 +461,8 @@ public class Account {
 		entity.setAllSkinImgs(allSkinImgs());
 		entity.setAllSkinNames(allSkinNames());
 		entity.setChosenSkins(allChosenSkins());
+		entity.setShopSkinImgs(allShopSkinImgs());
+		entity.setShopSkinNames(allShopSkinNames());
 		return entity;
 	}
 	

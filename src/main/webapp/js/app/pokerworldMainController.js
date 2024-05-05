@@ -223,6 +223,35 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
+		setShopDisplay = function(){
+			ranks = ["wizard", "jester", "bomb", "dragon", "fairy"]
+			suits = ["WZ", "JE", "BM", "DR", "FR"]
+			colors = ["blue", "green", "darkred", "purple", "pink"]
+			$scope.shopSkins = []
+			$scope.emptySkins = []
+			for (i=0;i<$scope.accountInfo.shopSkinImgs.length;i++){
+				x = parseInt($scope.accountInfo.shopSkinImgs[i]);
+				x = Math.floor(x/1000)-1;
+				//alert(x);
+				tc = {
+					"rank": ranks[x],
+					"suit": suits[x],
+					"color": colors[x],
+					"raw": $scope.accountInfo.shopSkinImgs[i],
+					"custom": {
+						'background-image': 'url(/image/Pokerworld/Skins/' + $scope.accountInfo.shopSkinImgs[i] + '.png)'
+					}
+				}
+				tc.name = $scope.accountInfo.shopSkinNames[i];
+				$scope.shopSkins.push(tc);
+				if (tc.name == 'empty'){
+					$scope.emptySkins.push(true);
+				} else {
+					$scope.emptySkins.push(false);
+				}
+			}
+		}
+		
 		$scope.shownSkins = -1;
 		$scope.showSkins = function(x){
 			$scope.shownSkins = x;
@@ -253,6 +282,10 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		playOpeningSE = function(){
 			var audio = new Audio("/sound/Pokerworld/opening.wav")
+			audio.play();
+		}
+		playBuySE = function(){
+			var audio = new Audio("/sound/Pokerworld/buy.wav")
 			audio.play();
 		}
 		
@@ -449,6 +482,14 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.buy = function(x){
+			var data = {"option" : x}
+			$http({url: "/pokerworld/buy", method: "POST", params: data}).then(function(response){
+				playBuySE()
+				$scope.getAccountInfo();
+			});
+		}
+		
 		$scope.shownPlace = ""
 		$scope.openPlace = function(x){
 			$scope.shownPlace = x
@@ -472,6 +513,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			$http.get('/pokerworld/accountinfo').then(function(response){
 				$scope.accountInfo = response.data;
 				setSkinsDisplay()
+				setShopDisplay()
 			});
 		}
 		$scope.getAccountInfo()

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import com.cosine.cosgame.pokerworld.Consts;
 
@@ -280,7 +283,7 @@ public class Shop {
 		while (skins.size()>0) {
 			int x = rand.nextInt(skins.size());
 			s = skins.remove(x);
-			if (a.hasSkin(s.getId())){
+			if (a.hasSkin(s.getId()) || a.hasShopSkin(x)){
 				s = null;
 			} else {
 				break;
@@ -289,10 +292,71 @@ public class Shop {
 		return s;
 	}
 	
-	public String buy(int option) {
+	public String buy(Account a, int option) {
 		String buyMsg = "";
-		
+		if (option == Consts.BUY1HCOINS) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -1, "购买金币支付");
+			Transaction t2 = new Transaction(Transaction.MONEY, 100, "购买金币");
+			a.addNewTransaction(t1);
+			a.addNewTransaction(t2);
+		} else if (option == Consts.BUY5HCOINS) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -5, "购买金币支付");
+			Transaction t2 = new Transaction(Transaction.MONEY, 550, "购买金币");
+			a.addNewTransaction(t1);
+			a.addNewTransaction(t2);
+		} else if (option == Consts.BUY1KCOINS) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -10, "购买金币支付");
+			Transaction t2 = new Transaction(Transaction.MONEY, 1200, "购买金币");
+			a.addNewTransaction(t1);
+			a.addNewTransaction(t2);
+		} else if (option == Consts.BUYCHEST) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -10, "购买宝箱支付");
+			Transaction t2 = new Transaction(Transaction.KEY, 1, "购买宝箱");
+			a.addNewTransaction(t1);
+			a.addNewTransaction(t2);
+		} else if (option == Consts.BUYSKIN1) {
+			Transaction t1 = new Transaction(Transaction.MONEY, -233, "购买皮肤支付");
+			a.addNewTransaction(t1);
+			a.addSkin(a.getShopSkins().get(0));
+		} else if (option == Consts.BUYSKIN2) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -3, "购买皮肤支付");
+			a.addNewTransaction(t1);
+			a.addSkin(a.getShopSkins().get(1));
+		} else if (option == Consts.BUYSKIN3) {
+			Transaction t1 = new Transaction(Transaction.DIAMOND, -17, "购买皮肤支付");
+			a.addNewTransaction(t1);
+			a.addSkin(a.getShopSkins().get(2));
+		}
+		a.updateAccountDB();
 		return buyMsg;
+	}
+	
+	public void generateShopSkins(Account a, int seed){
+		int i;
+		List<Integer> ans = new ArrayList<>();
+		List<Integer> ts = new ArrayList<>();
+		for (i=0;i<rareSkins.size();i++) {
+			if (a.hasSkin(rareSkins.get(i).getId())) {
+				
+			} else {
+				ts.add(rareSkins.get(i).getId());
+			}
+		}
+		int x = seed % ts.size();
+		ans.add(ts.remove(x));
+		x = seed % ts.size();
+		ans.add(ts.remove(x));
+		ts = new ArrayList<>();
+		for (i=0;i<epicSkins.size();i++) {
+			if (a.hasSkin(epicSkins.get(i).getId())) {
+				
+			} else {
+				ts.add(epicSkins.get(i).getId());
+			}
+		}
+		x = seed % ts.size();
+		ans.add(ts.remove(x));
+		a.setShopSkins(ans);
 	}
 	
 	public String getSkinName(int skinId) {
@@ -302,7 +366,6 @@ public class Shop {
 		}
 		return ans;
 	}
-	
 	
 	public void allSkins() {
 		commonSkins.add(new Skin(1001,Consts.WIZARD, Consts.COMMON,"黄金巫师"));

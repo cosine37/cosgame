@@ -120,11 +120,11 @@
 						<div ng-click="openPlace('locksmith')" class="town-place" style="right: 270px; bottom: 110px;" ng-show="shownPlace == ''">
 							开锁店
 						</div>
-						<!-- 
-						<div ng-click="openPlace('market')" class="town-place" style="left: 140px; bottom: 220px;" ng-show="shownPlace == ''">
+						
+						<div ng-click="openPlace('market')" class="town-place" style="right: 140px; bottom: 110px;" ng-show="shownPlace == ''">
 							市集
 						</div>
-						
+						<!-- 
 						<div ng-click="openPlace('belltower')" class="town-place" style="left: 220px; top: 90px;" ng-show="shownPlace == ''">
 							钟楼
 						</div>
@@ -242,12 +242,128 @@
 								</div>
 							</div>
 							
+							<div ng-show="shownPlace == 'market'" class="place-content">
+								<h3>市集</h3>
+								<div></div>
+								<div>
+									<table>
+										<tr style="height: 20px"><td></td></tr>
+										<tr>
+											<td rowspan="3" ng-repeat="c in shopSkins track by $index" style="vertical-align: top;">
+												<div ng-show="emptySkins[$index] == false">
+													<div class="card-play-wizard card-size card-size-news noselect" ng-include="'/view/html/WizardCard.html'" ng-class="c.color" ng-style="c.cstyle" style="zoom: 110%;margin-left: 5px">
+														
+													</div>
+													<div style="position: absolute; top: 70px; color: white; font-weight:bold; -webkit-text-stroke: 1px black; font-size: 24px; width:116px; text-align:center; z-index:200">
+														{{c.name}}
+													</div>
+												</div>
+												
+												<div ng-show="emptySkins[$index]" style="padding-top:75px; padding-bottom: 20px">
+													<img src="/image/Pokerworld/soldout.png" style="width: 120px">
+												</div>
+												
+												<div style="padding-left:30px;" ng-show="emptySkins[$index]"	>
+													已售罄
+												</div>
+												
+												<div ng-show="accountInfo.money>=233 && $index == 0 && emptySkins[$index] == false" ng-click="buy(8201)" class="shop-button" style="padding-left:5px; width: 130px">
+													<span>购买（233</span>
+													<img src="/image/Pokerworld/coin.png" style="height: 25px;">
+													<span>)</span>
+												</div>
+												<div ng-show="accountInfo.money<233 && $index == 0 && emptySkins[$index] == false" style="padding-left:20px">
+													<span>需要233</span>
+													<img src="/image/Pokerworld/coin.png" style="height: 25px;">
+												</div>
+												<div ng-show="accountInfo.diamond>=3 && $index == 1	&& emptySkins[$index] == false" ng-click="buy(8202)" class="shop-button">
+													<span>购买（3</span>
+													<img src="/image/Pokerworld/diamond.png" style="height: 25px;">
+													<span>)</span>
+												</div>
+												<div ng-show="accountInfo.diamond<3 && $index == 1 && 												emptySkins[$index] == false" style="padding-left:20px">
+													<span>需要3</span>
+													<img src="/image/Pokerworld/diamond.png" style="height: 25px;">
+												</div>
+												<div ng-show="accountInfo.diamond>=17 && $index == 2 && 												emptySkins[$index] == false" ng-click="buy(8203)" class="shop-button">
+													<span>购买（17</span>
+													<img src="/image/Pokerworld/diamond.png" style="height: 25px;">
+													<span>)</span>
+												</div>
+												<div ng-show="accountInfo.diamond<17 && $index == 2	&& 												emptySkins[$index] == false" style="padding-left:20px">
+													<span>需要17</span>
+													<img src="/image/Pokerworld/diamond.png" style="height: 25px;">
+												</div>
+											</td>
+											<td>
+												<div style="padding-left: 20px; float:left">
+													<img src="/image/Pokerworld/coin.png" class="shop-coin">
+													<span>×100</span>
+												</div>
+												<div style="float:left; margin-left: 10px">
+													<div ng-show="accountInfo.diamond>=1" ng-click="buy(8001)" class="shop-button" style="padding-left:10px">
+														<span>购买（1</span>
+														<img src="/image/Pokerworld/diamond.png">
+														<span>)</span>
+													</div>
+													<div ng-show="accountInfo.diamond<1" style="padding-left:20px">
+														<span>需要1</span>
+														<img src="/image/Belltower/diamond.png" style="height: 25px;">
+													</div>
+												</div>
+											</td>
+											
+										</tr>
+										<tr>
+											<td>
+												<div style="padding-left: 20px; float:left">
+													<img src="/image/Pokerworld/coin.png" class="shop-coin">
+													<span>×550</span>
+												</div>
+												<div style="float:left; margin-left: 10px">
+													<div ng-show="accountInfo.diamond>=5" ng-click="buy(8005)" class="shop-button" style="padding-left:10px">
+														<span>购买（5</span>
+														<img src="/image/Pokerworld/diamond.png">
+														<span>)</span>
+													</div>
+													<div ng-show="accountInfo.diamond<5" style="padding-left:20px">
+														<span>需要5</span>
+														<img src="/image/Belltower/diamond.png" style="height: 25px;">
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div style="padding-left: 20px;	float:left">
+													<img src="/image/Pokerworld/coin.png" class="shop-coin">
+													<span>×1200</span>
+												</div>
+												<div style="float:left; margin-left: 10px">
+													<div ng-show="accountInfo.diamond>=10" ng-click="buy(8010)" class="shop-button">
+														<span>购买（10</span>
+														<img src="/image/Pokerworld/diamond.png">
+														<span>)</span>
+													</div>
+													<div ng-show="accountInfo.diamond<10" style="padding-left:20px">
+														<span>需要10</span>
+														<img src="/image/Belltower/diamond.png" style="height: 25px;">
+													</div>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							
+							
+							
 							<div style="position: absolute; top: 30px; right: 30px">
 								<button ng-click="closePlace()">离开</button>
 							</div>
 						</div>
 					</div>
-					
+					<!--
 					<div>
 						<button ng-click="dailyReward()">每日奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
@@ -256,7 +372,7 @@
 					<div>
 						{{accountInfo}}
 					</div>
-					
+					-->
 				</div>
 				
 				

@@ -325,8 +325,11 @@ public class Board {
 			List<Transaction> rewards = a.endGameReward(i);
 			List<String> endGameRewards = new ArrayList<>();
 			for (j=0;j<rewards.size();j++) {
+				/*
 				rewards.get(j).setAccount(a);
 				rewards.get(j).execOnAccount();
+				*/
+				a.addNewTransaction(rewards.get(j));
 				endGameRewards.add(rewards.get(j).toString());
 			}
 			p.setEndGameRewards(endGameRewards);

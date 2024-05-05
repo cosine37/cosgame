@@ -11,6 +11,8 @@ public class AccountEntity {
 	List<List<String>> allSkinImgs;
 	List<List<String>> allSkinNames;
 	List<String> chosenSkins;
+	List<String> shopSkinImgs;
+	List<String> shopSkinNames;
 	
 	public String getName() {
 		return name;
@@ -59,6 +61,18 @@ public class AccountEntity {
 	}
 	public void setChosenSkins(List<String> chosenSkins) {
 		this.chosenSkins = chosenSkins;
+	}
+	public List<String> getShopSkinImgs() {
+		return shopSkinImgs;
+	}
+	public void setShopSkinImgs(List<String> shopSkinImgs) {
+		this.shopSkinImgs = shopSkinImgs;
+	}
+	public List<String> getShopSkinNames() {
+		return shopSkinNames;
+	}
+	public void setShopSkinNames(List<String> shopSkinNames) {
+		this.shopSkinNames = shopSkinNames;
 	}
 	
 }

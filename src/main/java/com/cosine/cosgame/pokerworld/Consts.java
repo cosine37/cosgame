@@ -60,6 +60,7 @@ public class Consts {
 	public static final int BUYCHEST = 8100;
 	public static final int BUYSKIN1 = 8201;
 	public static final int BUYSKIN2 = 8202;
+	public static final int BUYSKIN3 = 8203;
 	
 
 }
