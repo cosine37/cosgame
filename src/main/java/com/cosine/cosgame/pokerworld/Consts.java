@@ -27,12 +27,24 @@ public class Consts {
 	public static final int BIDTRICKS = 1;
 	public static final int CONFIRMROUNDTURN = 5;
 	
+	// suits
+	public static final String SPADE = "s";
+	public static final String HEART = "h";
+	public static final String DIAMOND = "d";
+	public static final String CLUB = "c";
+	
 	// card playability
 	public static final int PLAYABLE = 1;
 	public static final int UNPLAYABLE = 0;
 	
 	// general rules
 	public static final int MAXROUNDS = 20;
+	
+	
+	// horserace related
+	public static final int HORSERACEINITIALCOIN = 10;
+	
+	
 	
 	// skin types
 	//public static final int WIZARD = 1;
