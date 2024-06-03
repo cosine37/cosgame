@@ -56,6 +56,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.SFSJ = 0;
 		$scope.WIZARD = 1;
+		$scope.HORSERACE = 2;
 		
 		$scope.BIDTRICKS = 1;
 		$scope.PLAYCARDS = 3;
