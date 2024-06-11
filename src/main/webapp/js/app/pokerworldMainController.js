@@ -78,10 +78,16 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			"suit": "FR",
 			"color": "pink"
 		}
+		merlin = {
+			"rank": "merlin",
+			"suit": "ME",
+			"color": "bg"
+		}
 		$scope.specials = []
 		$scope.specials.push(bomb);
 		$scope.specials.push(dragon);
 		$scope.specials.push(fairy);
+		$scope.specials.push(merlin);
 		$scope.shownCardIndex = -1;
 	
 		$scope.goto = function(d){

@@ -216,7 +216,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		
+		$scope.cardOptions = []
 		$scope.clickCard = function(x){
 			if ($scope.gameMode == $scope.SFSJ){
 				if ($scope.status == 3 && $scope.myIndex == $scope.curPlayer){
@@ -246,17 +246,52 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 						if ($scope.chosenCard == x){
 							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
 							$scope.chosenCard = -1;
+							$scope.cardOptions = []
 						} else {
 							if ($scope.chosenCard != -1){
 								$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
 							}
 							$scope.chosenCard = x;
 							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-30px"
+							
+							//TODO: add selections here
+							c = $scope.hand[$scope.chosenCard]
+							$scope.cardOptions = []
+							$scope.selectedCardOption = -1;
+							if (c.suit == "ME"){
+								$scope.cardOptions = ["巫师", "小丑"];
+							} else if (c.suit == "?"){
+								$scope.cardOptions = ["\u2660", "\u2665", "\u2663", "\u2666"];
+							}
+							
 						}
+						
 					}
 				}
 			}
 			
+		}
+		
+		$scope.cardOptionStyle = function(y){
+			x = $scope.cardOptions[y];
+			if (x == "\u2660" || x == "\u2663") {
+				return {"color":"black"}
+			}
+			if (x == "\u2665" || x == "\u2666") {
+				return {"color":"red"}
+			}
+			return {}
+		}
+		
+		$scope.selectCardOption = function(x){
+			$scope.selectedCardOption = x;
+		}
+		
+		$scope.showPlayButton = function(){
+			if ($scope.curPlayer != $scope.myIndex) return false
+			if ($scope.chosenCard == -1) return false
+			if ($scope.cardOptions.length > 0 && $scope.selectedCardOption == -1) return false;
+			return true;
 		}
 		
 		$scope.disablePlay = function(){
@@ -310,13 +345,22 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					}
 				}
 			} else if ($scope.gameMode == $scope.WIZARD){
-				playedIndex.push($scope.chosenCard);
+				if ($scope.chosenCard != -1) {
+					playedIndex.push($scope.chosenCard);
+				} else {
+					return;
+				}
 			}
 			
-			var data = {"playedIndex": playedIndex}
-			$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
-				$scope.allRefresh()
-			});
+			if (playedIndex.length > 0){
+				var data = {"playedIndex": playedIndex, "option": $scope.selectedCardOption}
+				$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
+					$scope.chosenCard = -1;
+					$scope.cardOptions = []
+					$scope.allRefresh()
+				});
+			}
+			
 		}
 		
 		$scope.endDistribute = function(){
@@ -346,6 +390,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			if (r == "T") r = "10";
 			card["suitRaw"] = s;
 			var ts = s
+			var cstyle = {
+				"margin-top": "0px"
+			}
 			if (raw == "JO"){
 				r = "joker"
 				s = "\u265b";
@@ -371,6 +418,15 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			if (s == "c"){
 				s = "\u2663";
 				c = "black";
+			}
+			if (s == 'u'){
+				s = "?";
+				c = "navy";
+				
+			}
+			if (r == 'N'){
+				cstyle["background-image"] = 'url(/image/Pokerworld/station.png)'
+				cstyle["background-size"] = 'cover'
 			}
 			customSkin = null;
 			if (raw == "WZ" || raw == "Wz" || raw == "wZ" || raw == "wz"){
@@ -463,13 +519,25 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			}
 			
+			if (raw == "ME" || raw == "Me" || raw == "mE" || raw == "me"){
+				r = "merlin"
+				s = raw;
+				c = "bg";
+				if (raw == "Me") c = "blue";
+				if (raw == "mE") c = "green";
+				
+				if (skins[11] != -1){
+					customSkin = {
+						'background-image': 'url(/image/Pokerworld/Skins/' + skins[11].toString() + '.png)'
+					}
+				}
+			}
+			
 			card["rank"] = r
 			card["suit"] = s
 			card["color"] = c
 			card["chosen"] = 0;
-			card["cstyle"] = {
-				"margin-top": "0px"
-			}
+			card["cstyle"] = cstyle
 			card["custom"] = customSkin
 
 			if (ts == $scope.dominantSuit){
@@ -490,6 +558,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 			}
 			
+			
+			
 			if (p == 1){
 				card["cstyle"]["opacity"] = "1";
 				if ($scope.status == $scope.BIDTRICKS){
@@ -499,6 +569,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				card["cstyle"]["opacity"] = "0.5";
 				card["cstyle"]["cursor"] = "not-allowed"
 			}
+			
+			
 			
 			return card
 		}

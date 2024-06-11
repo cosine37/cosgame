@@ -33,9 +33,14 @@ public class Consts {
 	public static final String DIAMOND = "d";
 	public static final String CLUB = "c";
 	
+	public static final String UNDETERMINED = "u";
+	
 	// card playability
 	public static final int PLAYABLE = 1;
 	public static final int UNPLAYABLE = 0;
+	
+	// card options
+	public static final int NOTSELECTED = -1;
 	
 	// general rules
 	public static final int MAXROUNDS = 20;
@@ -59,11 +64,11 @@ public class Consts {
 	public static final int EPIC = 2;
 	
 	// skin totals
-	public static final int[] SKINTOTALS = {0, 23, 23, 8, 8, 8};
+	public static final int[] SKINTOTALS = {0, 30, 30, 12, 12, 12, 0};
 	
 	// other skin related
 	public static final int NOTCHOSEN = -1;
-	public static final int MAXCHOSENSKINS = 11;
+	public static final int MAXCHOSENSKINS = 12;
 	
 	// buy options
 	public static final int BUY1HCOINS = 8001;

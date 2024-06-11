@@ -42,6 +42,7 @@ public class Board {
 	int numBmRevealed;
 	int numDrRevealed;
 	int numFrRevealed;
+	int numMeRevealed;
 	
 	boolean fiveTenBonus;
 	
@@ -143,7 +144,8 @@ public class Board {
 		
 		int cardsOnRound = round;
 		
-		//cardsOnRound = 20;
+		//TODO: change the number of cards every round here
+		cardsOnRound = 30;
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
@@ -162,6 +164,7 @@ public class Board {
 		numBmRevealed = 0;
 		numDrRevealed = 0;
 		numFrRevealed = 0;
+		numMeRevealed = 0;
 		if (deck.size() > 0) {
 			dominantSuit = "";
 			while (deck.size()>0) {
@@ -176,7 +179,9 @@ public class Board {
 					numDrRevealed++;
 				} else if (dominantCard.getSuit().toUpperCase().contentEquals("FR")) {
 					numFrRevealed++;
-				}
+				} else if (dominantCard.getSuit().toUpperCase().contentEquals("ME")) {
+					numMeRevealed++;
+				} 
 				
 				
 				else {
@@ -219,6 +224,8 @@ public class Board {
 		} else if (currentSuit.toUpperCase().contentEquals("BM")){
 			currentSuit = p.getPlayed().get(0).getSuit();
 		} else if (currentSuit.toUpperCase().contentEquals("FR")){
+			currentSuit = p.getPlayed().get(0).getSuit();
+		} else if (currentSuit.contentEquals("mE")){
 			currentSuit = p.getPlayed().get(0).getSuit();
 		}
 	}
@@ -653,7 +660,6 @@ public class Board {
 	public void setNumJeRevealed(int numJeRevealed) {
 		this.numJeRevealed = numJeRevealed;
 	}
-
 	public PokerCard getFirstCard() {
 		return firstCard;
 	}
@@ -666,13 +672,35 @@ public class Board {
 	public void setDominantSuitLastRound(String dominantSuitLastRound) {
 		this.dominantSuitLastRound = dominantSuitLastRound;
 	}
-
 	public boolean isFiveTenBonus() {
 		return fiveTenBonus;
 	}
-
 	public void setFiveTenBonus(boolean fiveTenBonus) {
 		this.fiveTenBonus = fiveTenBonus;
+	}
+	public int getNumBmRevealed() {
+		return numBmRevealed;
+	}
+	public void setNumBmRevealed(int numBmRevealed) {
+		this.numBmRevealed = numBmRevealed;
+	}
+	public int getNumDrRevealed() {
+		return numDrRevealed;
+	}
+	public void setNumDrRevealed(int numDrRevealed) {
+		this.numDrRevealed = numDrRevealed;
+	}
+	public int getNumFrRevealed() {
+		return numFrRevealed;
+	}
+	public void setNumFrRevealed(int numFrRevealed) {
+		this.numFrRevealed = numFrRevealed;
+	}
+	public int getNumMeRevealed() {
+		return numMeRevealed;
+	}
+	public void setNumMeRevealed(int numMeRevealed) {
+		this.numMeRevealed = numMeRevealed;
 	}
 
 	public void addPlayer(String name) {
@@ -726,6 +754,7 @@ public class Board {
 		dbutil.update("id", id, "numBmRevealed", numBmRevealed);
 		dbutil.update("id", id, "numDrRevealed", numDrRevealed);
 		dbutil.update("id", id, "numFrRevealed", numFrRevealed);
+		dbutil.update("id", id, "numMeRevealed", numMeRevealed);
 	}
 	public Player getPlayerByName(String name) {
 		Player p = null;
@@ -836,6 +865,7 @@ public class Board {
 		doc.append("numBmRevealed", numBmRevealed);
 		doc.append("numDrRevealed", numDrRevealed);
 		doc.append("numFrRevealed", numFrRevealed);
+		doc.append("numMeRevealed", numFrRevealed);
 		doc.append("fiveTenBonus", fiveTenBonus);
 		int i;
 		List<String> playerNames = new ArrayList<>();
@@ -883,6 +913,7 @@ public class Board {
 		numBmRevealed = doc.getInteger("numBmRevealed", 0);
 		numDrRevealed = doc.getInteger("numDrRevealed", 0);
 		numFrRevealed = doc.getInteger("numFrRevealed", 0);
+		numMeRevealed = doc.getInteger("numMeRevealed", 0);
 		fiveTenBonus = doc.getBoolean("fiveTenBonus", false);
 		int i;
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -924,6 +955,7 @@ public class Board {
 		entity.setNumBmRevealed(numBmRevealed);
 		entity.setNumDrRevealed(numDrRevealed);
 		entity.setNumFrRevealed(numFrRevealed);
+		entity.setNumMeRevealed(numMeRevealed);
 		entity.setCurrentSuit(currentSuit);
 		entity.setFiveTenBonus(fiveTenBonus);
 		int i;

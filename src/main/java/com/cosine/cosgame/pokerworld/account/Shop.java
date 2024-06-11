@@ -342,6 +342,7 @@ public class Shop {
 				ts.add(rareSkins.get(i).getId());
 			}
 		}
+		if (ts.size() == 0) return;
 		int x = seed % ts.size();
 		ans.add(ts.remove(x));
 		x = seed % ts.size();
@@ -383,6 +384,9 @@ public class Shop {
 		commonSkins.add(new Skin(1021,Consts.WIZARD, Consts.COMMON,"巫鸦"));
 		commonSkins.add(new Skin(1022,Consts.WIZARD, Consts.COMMON,"巫柿"));
 		commonSkins.add(new Skin(1023,Consts.WIZARD, Consts.COMMON,"海星"));
+		commonSkins.add(new Skin(1024,Consts.WIZARD, Consts.COMMON,"巫时钟"));
+		commonSkins.add(new Skin(1025,Consts.WIZARD, Consts.COMMON,"巫松"));
+		commonSkins.add(new Skin(1026,Consts.WIZARD, Consts.COMMON,"巫石雕"));
 		
 		commonSkins.add(new Skin(2001,Consts.JESTER, Consts.COMMON,"男孩"));
 		commonSkins.add(new Skin(2002,Consts.JESTER, Consts.COMMON,"微笑"));
@@ -399,6 +403,9 @@ public class Shop {
 		commonSkins.add(new Skin(2021,Consts.JESTER, Consts.COMMON,"PC"));
 		commonSkins.add(new Skin(2022,Consts.JESTER, Consts.COMMON,"相机"));
 		commonSkins.add(new Skin(2023,Consts.JESTER, Consts.COMMON,"小丑鱼"));
+		commonSkins.add(new Skin(2024,Consts.JESTER, Consts.COMMON,"烧焦小丑"));
+		commonSkins.add(new Skin(2025,Consts.JESTER, Consts.COMMON,"筹码小丑"));
+		commonSkins.add(new Skin(2026,Consts.JESTER, Consts.COMMON,"憨豆"));
 		
 		rareSkins.add(new Skin(1013,Consts.WIZARD, Consts.RARE,"狐狸"));
 		rareSkins.add(new Skin(1014,Consts.WIZARD, Consts.RARE,"鲨鱼"));
@@ -406,6 +413,9 @@ public class Shop {
 		rareSkins.add(new Skin(1016,Consts.WIZARD, Consts.RARE,"巫狮"));
 		rareSkins.add(new Skin(1017,Consts.WIZARD, Consts.RARE,"巫龟"));
 		rareSkins.add(new Skin(1018,Consts.WIZARD, Consts.RARE,"火龙果"));
+		rareSkins.add(new Skin(1027,Consts.WIZARD, Consts.RARE,"海巫狮"));
+		rareSkins.add(new Skin(1028,Consts.WIZARD, Consts.RARE,"巫贼"));
+		rareSkins.add(new Skin(1029,Consts.WIZARD, Consts.RARE,"巫尸"));
 		
 		rareSkins.add(new Skin(2013,Consts.JESTER, Consts.RARE,"河马"));
 		rareSkins.add(new Skin(2014,Consts.JESTER, Consts.RARE,"小丑鸭"));
@@ -413,6 +423,9 @@ public class Shop {
 		rareSkins.add(new Skin(2016,Consts.JESTER, Consts.RARE,"猪猪"));
 		rareSkins.add(new Skin(2017,Consts.JESTER, Consts.RARE,"菠萝"));
 		rareSkins.add(new Skin(2018,Consts.JESTER, Consts.RARE,"壶铃"));
+		rareSkins.add(new Skin(2027,Consts.JESTER, Consts.RARE,"学者小丑"));
+		rareSkins.add(new Skin(2028,Consts.JESTER, Consts.RARE,"狡诈小丑"));
+		rareSkins.add(new Skin(2029,Consts.JESTER, Consts.RARE,"太空小丑"));
 		
 		rareSkins.add(new Skin(3001,Consts.BOMB, Consts.RARE,"气球"));
 		rareSkins.add(new Skin(3002,Consts.BOMB, Consts.RARE,"刺豚"));
@@ -420,6 +433,9 @@ public class Shop {
 		rareSkins.add(new Skin(3005,Consts.BOMB, Consts.RARE,"南瓜头"));
 		rareSkins.add(new Skin(3006,Consts.BOMB, Consts.RARE,"托尔斯泰"));
 		rareSkins.add(new Skin(3007,Consts.BOMB, Consts.RARE,"蛋弹"));
+		rareSkins.add(new Skin(3009,Consts.BOMB, Consts.RARE,"四个二"));
+		rareSkins.add(new Skin(3010,Consts.BOMB, Consts.RARE,"炸弹猫"));
+		rareSkins.add(new Skin(3011,Consts.BOMB, Consts.RARE,"黑八"));
 		
 		rareSkins.add(new Skin(4001,Consts.DRAGON, Consts.RARE,"龙龙岩"));
 		rareSkins.add(new Skin(4002,Consts.DRAGON, Consts.RARE,"椰树龙"));
@@ -427,6 +443,9 @@ public class Shop {
 		rareSkins.add(new Skin(4005,Consts.DRAGON, Consts.RARE,"蜗龙"));
 		rareSkins.add(new Skin(4006,Consts.DRAGON, Consts.RARE,"摩龙大楼"));
 		rareSkins.add(new Skin(4007,Consts.DRAGON, Consts.RARE,"龙头鼠"));
+		rareSkins.add(new Skin(4009,Consts.DRAGON, Consts.RARE,"龙虾"));
+		rareSkins.add(new Skin(4010,Consts.DRAGON, Consts.RARE,"寿司龙"));
+		rareSkins.add(new Skin(4011,Consts.DRAGON, Consts.RARE,"鼠头龙"));
 		
 		rareSkins.add(new Skin(5001,Consts.FAIRY, Consts.RARE,"洋葱仙"));
 		rareSkins.add(new Skin(5002,Consts.FAIRY, Consts.RARE,"腊肠狗"));
@@ -434,12 +453,17 @@ public class Shop {
 		rareSkins.add(new Skin(5005,Consts.FAIRY, Consts.RARE,"妖匙圈"));
 		rareSkins.add(new Skin(5006,Consts.FAIRY, Consts.RARE,"矿工"));
 		rareSkins.add(new Skin(5007,Consts.FAIRY, Consts.RARE,"妖蘑"));
+		rareSkins.add(new Skin(5009,Consts.FAIRY, Consts.RARE,"豹精"));
+		rareSkins.add(new Skin(5010,Consts.FAIRY, Consts.RARE,"蛇精"));
+		rareSkins.add(new Skin(5011,Consts.FAIRY, Consts.RARE,"蝎子精"));
 		
 		epicSkins.add(new Skin(1019,Consts.WIZARD, Consts.EPIC,"独角兽"));
 		epicSkins.add(new Skin(1020,Consts.WIZARD, Consts.EPIC,"纸杯蛋糕"));
+		epicSkins.add(new Skin(1030,Consts.WIZARD, Consts.EPIC,"巫超"));
 		
 		epicSkins.add(new Skin(2019,Consts.JESTER, Consts.EPIC,"薯条"));
 		epicSkins.add(new Skin(2020,Consts.JESTER, Consts.EPIC,"牛头"));
+		epicSkins.add(new Skin(2030,Consts.JESTER, Consts.EPIC,"别林小丑"));
 		
 		epicSkins.add(new Skin(3004,Consts.BOMB, Consts.EPIC,"拳石"));
 		epicSkins.add(new Skin(4004,Consts.DRAGON, Consts.EPIC,"绿毛龙"));
@@ -447,6 +471,9 @@ public class Shop {
 		epicSkins.add(new Skin(3008,Consts.BOMB, Consts.EPIC,"磁怪"));
 		epicSkins.add(new Skin(4008,Consts.DRAGON, Consts.EPIC,"吃面龙"));
 		epicSkins.add(new Skin(5008,Consts.FAIRY, Consts.EPIC,"面包狗"));
+		epicSkins.add(new Skin(3012,Consts.BOMB, Consts.EPIC,"王炸"));
+		epicSkins.add(new Skin(4012,Consts.DRAGON, Consts.EPIC,"马龙"));
+		epicSkins.add(new Skin(5012,Consts.FAIRY, Consts.EPIC,"白骨精"));
 		
 		allSkins.addAll(commonSkins);
 		allSkins.addAll(rareSkins);

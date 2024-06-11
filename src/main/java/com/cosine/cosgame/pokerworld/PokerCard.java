@@ -26,14 +26,17 @@ public class PokerCard {
 	
 	public int getRealRank(int biggestRank) {
 		int ans = rank;
-		if (rank<=biggestRank) {
-			ans = rank+13;
+		if (ans<100) ans = ans*100;
+		if (ans<=biggestRank*100) {
+			ans = ans+1300;
 		}
 		return ans;
 	}
 	
 	public int getSuitValue() {
-		if (suit.contentEquals("s")) {
+		if (suit.contentEquals("u")) {
+			return 9;
+		} else if (suit.contentEquals("s")) {
 			return 4;
 		} else if (suit.contentEquals("h")) {
 			return 3;
@@ -43,6 +46,27 @@ public class PokerCard {
 			return 1;
 		} else {
 			return 0;
+		}
+	}
+	
+	public void handleOption(int option) {
+		if (option == -1) return;
+		if (suit.contentEquals("ME")) {
+			if (option == 0) {
+				suit = "Me";
+			} else if (option == 1) {
+				suit = "mE";
+			}
+		} else if (suit.contentEquals("u")) {
+			if (option == 0) {
+				suit = "s";
+			} else if (option == 1) {
+				suit = "h";
+			} else if (option == 2) {
+				suit = "c";
+			} else if (option == 3) {
+				suit = "d";
+			}
 		}
 	}
 	
@@ -58,6 +82,7 @@ public class PokerCard {
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
+
 	public String getRankStr() {
 		if (rank == 0) return "";
 		if (rank == 1) return "A";
@@ -65,6 +90,7 @@ public class PokerCard {
 		if (rank == 11) return "J";
 		if (rank == 12) return "Q";
 		if (rank == 13) return "K";
+		if (rank == 975) return "N";
 		return Integer.toString(rank);
 	}
 	
@@ -79,7 +105,7 @@ public class PokerCard {
 			return;
 		}
 		char ch = s.charAt(1);
-		if (ch == 's' || ch == 'h' || ch =='c' || ch == 'd') {
+		if (ch == 's' || ch == 'h' || ch =='c' || ch == 'd' || ch == 'u') {
 			suit = "" + ch;
 			ch = s.charAt(0);
 			rank = 0;
@@ -95,6 +121,8 @@ public class PokerCard {
 				rank = 12;
 			} else if (ch == 'K') {
 				rank = 13;
+			} else if (ch == 'N') {
+				rank = 975;
 			}
 		} else {
 			suit = s;

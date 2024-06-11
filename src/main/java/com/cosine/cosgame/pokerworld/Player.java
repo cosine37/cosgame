@@ -86,7 +86,7 @@ public class Player {
 		return s;
 	}
 	
-	public void play(List<Integer> playedIndex) {
+	public void play(List<Integer> playedIndex, int option) {
 		if (board.getCurPlayer() != index) {
 			return;
 		}
@@ -107,6 +107,7 @@ public class Player {
 				if (playedIndex.size() == 1) {
 					int x = playedIndex.get(0);
 					PokerCard c = hand.remove(x);
+					c.handleOption(option);
 					played = new ArrayList<>();
 					played.add(c);
 					board.currentSuitHandle(this);
@@ -115,6 +116,10 @@ public class Player {
 			}
 		}
 		
+	}
+	
+	public void play(List<Integer> playedIndex) {
+		play(playedIndex, Consts.NOTSELECTED);
 	}
 	
 	public void sortHand() {
@@ -276,6 +281,10 @@ public class Player {
 				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("FR")) {
 					ans.add(Consts.PLAYABLE);
 				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("BM")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("ME")) {
+					ans.add(Consts.PLAYABLE);
+				} else if (hand.get(i).getSuit().toUpperCase().contentEquals("U")) {
 					ans.add(Consts.PLAYABLE);
 				}
 				

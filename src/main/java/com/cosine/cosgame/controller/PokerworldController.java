@@ -181,7 +181,7 @@ public class PokerworldController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/pokerworld/playcards", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> playCards(HttpServletRequest request, @RequestParam List<Integer> playedIndex){
+	public ResponseEntity<StringEntity> playCards(HttpServletRequest request, @RequestParam List<Integer> playedIndex, @RequestParam int option){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -191,7 +191,7 @@ public class PokerworldController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
-				p.play(playedIndex);
+				p.play(playedIndex, option);
 				board.updateBasicDB();
 				board.updatePlayers();
 				board.updateCardsDB();

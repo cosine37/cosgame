@@ -431,6 +431,10 @@ public class Account {
 			}
 		}
 		
+		while (chosenSkins.size()<Consts.MAXCHOSENSKINS) {
+			chosenSkins.add(Consts.NOTCHOSEN);
+		}
+		
 		shopTimestamp = doc.getString("shopTimestamp");
 		String tsToday = getTimestampPST();
 		

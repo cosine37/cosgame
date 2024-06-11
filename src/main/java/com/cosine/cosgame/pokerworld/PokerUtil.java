@@ -80,10 +80,20 @@ public class PokerUtil {
 		List<PokerCard> cards = getWizardDeck();
 		
 		int x = extraCards;
+		int train = x%10;
+		x = x/10;
+		int merlin = x%10;
+		x = x/10;
 		int bomb = x%10;
 		x = x/10;
 		int df = x%10;
 		
+		if (train == 1) {
+			cards.add(new PokerCard("u",975));
+		}
+		if (merlin == 1) {
+			cards.add(new PokerCard("ME", 0));
+		}
 		if (bomb == 1) {
 			cards.add(new PokerCard("BM", 0));
 		}
@@ -104,12 +114,17 @@ public class PokerUtil {
 		return newCards;
 	}
 	
+	
+	/*
+	 * true: first card is bigger
+	 */
 	public static boolean bigger(PokerCard c1, PokerCard c2, String dominantSuit, String currentSuit, int biggestRank, boolean sortHand) {
 		if (dominantSuit == null) dominantSuit = "";
 		if (currentSuit == null) currentSuit = "";
 		System.out.println("dominantSuit = " + dominantSuit);
 		System.out.println("currentSuit = " + currentSuit);
 		System.out.println(c1.toString() + " " + c2.toString());
+		System.out.println(c1.getRealRank(biggestRank) + " " + c2.getRealRank(biggestRank));
 		
 		// Bomb, Dragon and Fairy handles
 		if (c2.getSuit().toUpperCase().contentEquals("BM")) {
@@ -127,15 +142,51 @@ public class PokerUtil {
 		} else
 		// end of Bomb, Dragon and Fairy handles
 			
-		if (c1.getSuit().toUpperCase().contentEquals("WZ")) {
+		/*
+		 * Merlin handles
+		 * ME: not converted.  Beat WZ on hand sorting
+		 * Me: wizard
+		 * mE: jester
+		 * 
+		 */
+		if (c1.getSuit().contentEquals("ME")) {
 			return true;
-		} else if (c2.getSuit().toUpperCase().contentEquals("WZ")) {
+		} else if (c2.getSuit().contentEquals("ME")) {
 			return false;
-		} else if (c2.getSuit().toUpperCase().contentEquals("JE")) {
+		} else
+		
+		if (c1.getSuit().toUpperCase().contentEquals("WZ") || c1.getSuit().contentEquals("Me")) {
 			return true;
-		} else if (c1.getSuit().toUpperCase().contentEquals("JE")) {
+		} else if (c2.getSuit().toUpperCase().contentEquals("WZ") || c1.getSuit().contentEquals("Me")) {
 			return false;
-		} else if (c1.getSuit().contentEquals(dominantSuit)) {
+		} else if (c2.getSuit().toUpperCase().contentEquals("JE") || c2.getSuit().contentEquals("mE")) {
+			return true;
+		} else if (c1.getSuit().toUpperCase().contentEquals("JE") || c2.getSuit().contentEquals("mE")) {
+			return false;
+		} else
+		
+		/*
+		 * undetermined suit handles
+		 * this is only applicable for sort hand
+		 * 
+		 */
+		
+		if (c1.getSuit().contentEquals(Consts.UNDETERMINED)) {
+			if (c2.getSuit().contentEquals(Consts.UNDETERMINED)) {
+				if (c2.getRealRank(biggestRank) > c1.getRealRank(biggestRank)) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else if (c2.getSuit().contentEquals(Consts.UNDETERMINED)) {
+			return false;
+		} else
+		
+		
+		if (c1.getSuit().contentEquals(dominantSuit)) {
 			if (c2.getSuit().contentEquals(dominantSuit)) {
 				if (c2.getRealRank(biggestRank) > c1.getRealRank(biggestRank)) {
 					return false;

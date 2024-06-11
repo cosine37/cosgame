@@ -166,6 +166,17 @@ button:disabled{
 	
 }
 
+.rank-f-hand{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 40px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0px;
+	display: flex;
+}
+
 .joker-hand{
 	position: absolute;
 	left: 0px;
@@ -319,6 +330,22 @@ button:disabled{
 	background-size: cover;
 }
 
+.merlin-big-hand{
+	position: absolute;
+	background-image: url('/image/Pokerworld/merlin.png');
+	height: 140px;
+	width: 93px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
 .custom-big-hand{
 	position: absolute;
 	height: 140px;
@@ -397,6 +424,10 @@ button:disabled{
 	color: black;
 }
 
+.navy {
+	color: navy;
+}
+
 .darkgreen{
 	color: darkgreen;
 }
@@ -409,6 +440,11 @@ button:disabled{
 .green{
 	color: darkgreen;
 	background-color: lightgreen;
+}
+
+.bg{
+	color: darkgreen;
+	background-color: deepskyblue;
 }
 
 .purple{

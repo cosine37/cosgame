@@ -31,6 +31,7 @@ public class BoardEntity {
 	int numBmRevealed;
 	int numDrRevealed;
 	int numFrRevealed;
+	int numMeRevealed;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -257,5 +258,11 @@ public class BoardEntity {
 	}
 	public void setFiveTenBonus(boolean fiveTenBonus) {
 		this.fiveTenBonus = fiveTenBonus;
+	}
+	public int getNumMeRevealed() {
+		return numMeRevealed;
+	}
+	public void setNumMeRevealed(int numMeRevealed) {
+		this.numMeRevealed = numMeRevealed;
 	}
 }

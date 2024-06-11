@@ -153,7 +153,7 @@
 												{{c.name}}
 											</div>
 											<div style="position: absolute; right: 0px; bottom: 0px; ng-show="c.chosen">
-												<img ng-show="c.chosen" style="width: 30px; height: 30px" src="/image/Pokerworld/checked.png"/>
+												<img style="width:30px; height:30px;" src="/image/Pokerworld/checked.png" ng-show="c.chosen"/>
 											</div>
 										</div>
 										
@@ -363,7 +363,7 @@
 							</div>
 						</div>
 					</div>
-					<!--
+					<!-- 
 					<div>
 						<button ng-click="dailyReward()">每日奖励</button>
 						<button ng-click="cleanAccount()">清空</button>
@@ -372,7 +372,7 @@
 					<div>
 						{{accountInfo}}
 					</div>
-					-->
+					 -->
 				</div>
 				
 				
@@ -496,6 +496,7 @@
 								<button ng-click="shownCardIndex = 0" ng-disabled="shownCardIndex == 0">炸弹</button>
 								<button ng-click="shownCardIndex = 1" ng-disabled="shownCardIndex == 1">巨龙</button>
 								<button ng-click="shownCardIndex = 2" ng-disabled="shownCardIndex == 2">妖精</button>
+								<button ng-click="shownCardIndex = 3" ng-disabled="shownCardIndex == 3">梅林</button>
 							</td>
 						</tr>
 						<tr ng-show="shownCardIndex == -1">
@@ -519,6 +520,10 @@
 								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 妖精（2024年2月29日上线）</h4>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">妖精</span>，即使你有与初始玩家打出的牌花色相同的牌。<span class="pokerworldtext">妖精</span>在一般情况下是最小的牌，甚至比<span class="pokerworldtext">小丑</span>还要小（但是大于<span class="pokerworldtext">炸弹</span>）。但若在打出<span class="pokerworldtext">妖精</span>的同一回合有玩家打出<span class="pokerworldtext">巨龙</span>，则当回合结束结算时视<span class="pokerworldtext">妖精</span>为最大的牌。
 								使用<span class="pokerworldtext">妖精</span>的游戏也会使用<span class="pokerworldtext">巨龙</span>。
+							</td>
+							<td style="width: 857px; vertical-align:top" ng-show="shownCardIndex == 3">
+								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 梅林（2024年6月9日上线）</h4>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">梅林</span>，即使你有与初始玩家打出的牌花色相同的牌。在打出<span class="pokerworldtext">梅林</span>前，你决定将该牌视为<span class="pokerworldtext">巫师</span>或<span class="pokerworldtext">小丑</span>。
 							</td>
 						</tr>
 				</div>

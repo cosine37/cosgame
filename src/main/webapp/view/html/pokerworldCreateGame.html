@@ -27,7 +27,7 @@ body {
 		<source src="/sound/Pokerworld/welcome.mp3" type="audio/mpeg"></src>
 	</audio>
 	<div style="height: 30px"></div>
-	<div style="margin-left: 50px; width: 1100px; height: 1000px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
+	<div style="margin-left: 50px; width: 1200px; height: 1000px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
 		<div style="width: 100%; padding-top: 30px; text-align: center">
 			<h1>扑克世界</h1>
 		</div>
@@ -83,6 +83,7 @@ body {
 										<button ng-click="chooseGame(1)" ng-show = "chosenGame != 1">查看</button>
 									</td>
 								</tr>
+								<!-- 
 								<tr>
 									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;" ng-style="highlightStyle(chosenGame == 2)">
 										花色赛马
@@ -92,16 +93,17 @@ body {
 										<button ng-click="chooseGame(2)" ng-show = "chosenGame != 2">查看</button>
 									</td>
 								</tr>
+								 -->
 							</table>
 						</div>
 					</td>
-					<td style="width: 600px; vertical-align: top;">
+					<td style="width: 700px; vertical-align: top;">
 						<div ng-show="chosenGame == 1">
 							<h3>神机妙算</h3>
 							<table>
 								<tr>
 									<th style="width: 80px">最大点数</th>
-									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 460px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -145,7 +147,7 @@ body {
 							<table>
 								<tr>
 									<th style="width: 80px">轮次数</th>
-									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 460px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -189,7 +191,7 @@ body {
 							<table>
 								<tr>
 									<th style="width: 80px">额外卡牌</th>
-									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 460px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -216,12 +218,36 @@ body {
 										<button ng-click="setUseDf(false)" ng-show = "useDf == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
 									</td>
 								</tr>
+								<tr>
+									<td ng-style="highlightStyle(useMerlin)">
+										梅林
+									</td>
+									<td ng-style="highlightStyle(useMerlin)">
+										打出该牌前选择将该牌视为巫师或小丑打出。
+									</td>
+									<td ng-style="highlightStyle(useMerlin)">
+										<button ng-click="setUseMerlin(true)" ng-show = "useMerlin == false && lord == username">选择</button>
+										<button ng-click="setUseMerlin(false)" ng-show = "useMerlin == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
+									</td>
+								</tr>
+								<tr>
+									<td ng-style="highlightStyle(useStation)">
+										站台
+									</td>
+									<td ng-style="highlightStyle(useStation)">
+										该牌点数为9又3/4，打出该牌前选择该牌的花色。打出该牌的轮次吃墩的玩家额外吃一墩。
+									</td>
+									<td ng-style="highlightStyle(useStation)">
+										<button ng-click="setUseStation(true)" ng-show = "useStation == false && lord == username">选择</button>
+										<button ng-click="setUseStation(false)" ng-show = "useStation == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
+									</td>
+								</tr>
 							</table>
 							<div style="height: 30px;"></div>
 							<table>
 								<tr>
 									<th style="width: 80px">额外分数</th>
-									<th style="width: 360px;text-align: center">细节</th>
+									<th style="width: 460px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
