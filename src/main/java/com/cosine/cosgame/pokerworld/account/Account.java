@@ -170,7 +170,7 @@ public class Account {
 	public List<List<String>> allSkinImgs(){
 		List<List<String>> ans = new ArrayList<>();
 		int i,j;
-		for (i=1;i<=5;i++) {
+		for (i=1;i<Consts.SKINTOTALS.length;i++) {
 			List<String> ls = new ArrayList<>();
 			for (j=1;j<=Consts.SKINTOTALS[i];j++) {
 				int x = i*1000+j;
@@ -189,7 +189,7 @@ public class Account {
 		shop = new Shop();
 		List<List<String>> ans = new ArrayList<>();
 		int i,j;
-		for (i=1;i<=5;i++) {
+		for (i=1;i<Consts.SKINTOTALS.length;i++) {
 			List<String> ls = new ArrayList<>();
 			for (j=1;j<=Consts.SKINTOTALS[i];j++) {
 				int x = i*1000+j;

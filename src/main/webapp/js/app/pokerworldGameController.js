@@ -66,6 +66,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.PREENDGAME = 9;
 		$scope.ENDGAME = 10;
 		
+		$scope.STATIONCHOOSE = 21;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -293,6 +295,21 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			if ($scope.cardOptions.length > 0 && $scope.selectedCardOption == -1) return false;
 			return true;
 		}
+		
+		$scope.selectedStationOption = 0
+		$scope.selectStationOption = function(x){
+			$scope.selectedStationOption = x
+		}
+		$scope.submitStationOption = function(){
+			if ($scope.status != $scope.STATIONCHOOSE) return;
+			if ($scope.selectedStationOption == 1 || $scope.selectedStationOption == -1){
+				var data = {"option": $scope.selectedStationOption}
+				$http({url: "/pokerworld/selectStationOption", method: "POST", params: data}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
 		
 		$scope.disablePlay = function(){
 			if ($scope.status == '3'){

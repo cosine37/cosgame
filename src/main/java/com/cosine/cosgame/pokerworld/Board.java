@@ -145,7 +145,7 @@ public class Board {
 		int cardsOnRound = round;
 		
 		//TODO: change the number of cards every round here
-		cardsOnRound = 30;
+		//cardsOnRound = 30;
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
@@ -371,10 +371,12 @@ public class Board {
 			curPlayer = -1;
 			attackerPointsGained = gameUtil.getAttackerPointsGained();
 		} else if (gameModeIs(Consts.WIZARD)) {
-			judgeRoundWizard();
 			status = Consts.CONFIRMROUNDTURN;
-			if (players.get(firstPlayer).getHand().size() == 0) {
-				endSet();
+			judgeRoundWizard();
+			if (status == Consts.CONFIRMROUNDTURN) {
+				if (players.get(firstPlayer).getHand().size() == 0) {
+					endSet();
+				}
 			}
 		}
 		
@@ -383,6 +385,7 @@ public class Board {
 			players.get(i).setConfirmedNextTurn(false);
 		}
 	}
+	
 	
 	public void judgeRoundWizard() {
 		int x = firstPlayer;
@@ -403,8 +406,15 @@ public class Board {
 		if (firstCard.getSuit().toUpperCase().contentEquals("BM")) {
 			hasBomb = true;
 		}
+		
 		// end of Bomb, Dragon and Fairy handles
 		
+		// station handles
+		boolean hasStation = false;
+		if (firstCard.getRank() == 975) {
+			hasStation = true;
+		}
+		// end of station handles
 		
 		int bonusPoints = 0; // calc bonus points
 		if (firstCard.getRank() == 5 || firstCard.getRank() == 10) { // bonus points handles
@@ -417,7 +427,7 @@ public class Board {
 			if (x == firstPlayer) break;
 			
 			PokerCard c = players.get(x).getPlayed().get(0);
-			System.out.println("点数" + c.getRank());
+			//System.out.println("点数" + c.getRank());
 			
 			if (c.getRank() == 5 || c.getRank() == 10) { // bonus points handles
 				bonusPoints = bonusPoints + c.getRank();
@@ -432,6 +442,9 @@ public class Board {
 			if (c.getSuit().toUpperCase().contentEquals("BM")) {
 				hasBomb = true;
 			}
+			if (c.getRank() == 975) {
+				hasStation = true;
+			}
 			if (!PokerUtil.bigger(winCard, c, this)) {
 				winPlayer = x;
 				winCard = c;
@@ -444,14 +457,33 @@ public class Board {
 		if (hasBomb == false) {
 			players.get(winPlayer).winTrick();
 			if (fiveTenBonus) { // bonus points handles
-				System.out.println("加分：" + bonusPoints);
 				players.get(winPlayer).receiveBonus(bonusPoints);
 			}
+			if (hasStation) {
+				status = Consts.STATIONCHOOSE;
+			}
+			
 		}
 		
 		firstPlayer = winPlayer;
 		curPlayer = winPlayer;
 		currentSuit = "";
+	}
+	
+	public void selectStationOption(String pname, int x) {
+		if (status == Consts.STATIONCHOOSE) {
+			Player p = players.get(curPlayer);
+			if (p.getName().contentEquals(pname)) {
+				p.updateBid(x);
+				if (p.getHand().size() == 0) {
+					status = Consts.CONFIRMROUNDTURN;
+					endSet();
+				} else {
+					status = Consts.PLAYCARDS;
+				}
+				
+			}
+		}
 	}
 	
 	public void confirmNextTurn(String username) {

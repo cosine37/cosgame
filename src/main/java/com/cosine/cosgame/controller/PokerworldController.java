@@ -203,6 +203,26 @@ public class PokerworldController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/pokerworld/selectStationOption", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> selectStationOption(HttpServletRequest request, @RequestParam int option){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.selectStationOption(username, option);
+			board.updateBasicDB();
+			board.updatePlayers();
+			board.updateCardsDB();
+			board.updateDominantDB();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/pokerworld/confirmendgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> confirmEndGame(HttpServletRequest request){
 		StringEntity entity = new StringEntity();

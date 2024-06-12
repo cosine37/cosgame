@@ -156,6 +156,13 @@ public class Player {
 		}
 	}
 	
+	public void updateBid(int x) {
+		int y = bids.size()-1;
+		int z = bids.get(y);
+		z = z+x;
+		bids.set(y, z);
+	}
+	
 	public int getBidThisRound() {
 		int ans = -1;
 		if (bids.size() == board.getRound()) {

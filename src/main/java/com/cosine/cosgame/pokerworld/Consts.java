@@ -27,6 +27,8 @@ public class Consts {
 	public static final int BIDTRICKS = 1;
 	public static final int CONFIRMROUNDTURN = 5;
 	
+	public static final int STATIONCHOOSE = 21;
+	
 	// suits
 	public static final String SPADE = "s";
 	public static final String HEART = "h";
@@ -57,6 +59,7 @@ public class Consts {
 	public static final int BOMB = 3;
 	public static final int DRAGON = 4;
 	public static final int FAIRY = 5;
+	public static final int MERLIN = 6;
 	
 	// skin levels
 	public static final int COMMON = 0;
@@ -64,7 +67,7 @@ public class Consts {
 	public static final int EPIC = 2;
 	
 	// skin totals
-	public static final int[] SKINTOTALS = {0, 30, 30, 12, 12, 12, 0};
+	public static final int[] SKINTOTALS = {0, 30, 30, 12, 12, 12, 7};
 	
 	// other skin related
 	public static final int NOTCHOSEN = -1;

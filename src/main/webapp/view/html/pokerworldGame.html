@@ -192,6 +192,14 @@ body {
 					</div>
 				</div>
 				
+				<div id="station-select-info" ng-show="status == STATIONCHOOSE">
+					<span ng-show="curPlayer != myIndex">正等待{{players[curPlayer]["name"]}}决策</span>
+					<span ng-show="curPlayer == myIndex">请选择你本轮目标墩数的变化</span>
+					<button ng-show="curPlayer == myIndex" ng-click="selectStationOption(-1)" ng-disabled="selectedStationOption == -1">少一墩</button>
+					<button ng-show="curPlayer == myIndex" ng-click="selectStationOption(1)" ng-disabled="selectedStationOption == 1">多一墩</button>
+					<button ng-show="curPlayer == myIndex && (selectedStationOption == -1 || selectedStationOption == 1)" ng-click="submitStationOption()">提交</button>
+				</div>
+				
 				<div id="play-card-info" ng-show="status == CONFIRMROUNDTURN || status == PLAYCARDS">
 					<span ng-show="curPlayer != myIndex">现在不是你的回合</span>
 					<span ng-show="curPlayer == myIndex">请选择你要出的牌</span>

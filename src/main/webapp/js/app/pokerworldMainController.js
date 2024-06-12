@@ -185,7 +185,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		
 		
 		$scope.skins = []
-		$scope.skinCategories = ["巫师","小丑","炸弹","巨龙","妖精"]
+		$scope.skinCategories = ["巫师","小丑","炸弹","巨龙","妖精","梅林"]
 		skinChosen = function(raw){
 			for (x=0;x<$scope.accountInfo.chosenSkins.length;x++){
 				if ($scope.accountInfo.chosenSkins[x] == raw) return true;
@@ -193,9 +193,9 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			return false;
 		}
 		setSkinsDisplay = function(){
-			ranks = ["wizard", "jester", "bomb", "dragon", "fairy"]
-			suits = ["WZ", "JE", "BM", "DR", "FR"]
-			colors = ["blue", "green", "darkred", "purple", "pink"]
+			ranks = ["wizard", "jester", "bomb", "dragon", "fairy", "merlin"]
+			suits = ["WZ", "JE", "BM", "DR", "FR", "ME"]
+			colors = ["blue", "green", "darkred", "purple", "pink", "bg"]
 			$scope.skins = []
 			for (i=0;i<$scope.accountInfo.allSkinImgs.length;i++){
 				singleTypeSkins = []
@@ -230,9 +230,9 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		setShopDisplay = function(){
-			ranks = ["wizard", "jester", "bomb", "dragon", "fairy"]
-			suits = ["WZ", "JE", "BM", "DR", "FR"]
-			colors = ["blue", "green", "darkred", "purple", "pink"]
+			ranks = ["wizard", "jester", "bomb", "dragon", "fairy", "merlin"]
+			suits = ["WZ", "JE", "BM", "DR", "FR", "ME"]
+			colors = ["blue", "green", "darkred", "purple", "pink", "bg"]
 			$scope.shopSkins = []
 			$scope.emptySkins = []
 			for (i=0;i<$scope.accountInfo.shopSkinImgs.length;i++){
@@ -373,6 +373,12 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 						"suit": "FR",
 						"color": "pink"
 					}
+				} else if (skinType == '6'){
+					tc = {
+						"rank": "merlin",
+						"suit": "ME",
+						"color": "bg"
+					}
 				}
 				
 				tc["custom"] = {
@@ -470,6 +476,12 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 						"rank": "fairy",
 						"suit": "FR",
 						"color": "pink"
+					}
+				} else if (skinType == '6'){
+					tc = {
+						"rank": "merlin",
+						"suit": "ME",
+						"color": "bg"
 					}
 				}
 				

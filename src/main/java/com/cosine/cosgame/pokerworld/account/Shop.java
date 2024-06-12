@@ -457,6 +457,13 @@ public class Shop {
 		rareSkins.add(new Skin(5010,Consts.FAIRY, Consts.RARE,"蛇精"));
 		rareSkins.add(new Skin(5011,Consts.FAIRY, Consts.RARE,"蝎子精"));
 		
+		rareSkins.add(new Skin(6001,Consts.MERLIN, Consts.RARE,"梅铃"));
+		rareSkins.add(new Skin(6002,Consts.MERLIN, Consts.RARE,"美玲"));
+		rareSkins.add(new Skin(6003,Consts.MERLIN, Consts.RARE,"媒灵"));
+		rareSkins.add(new Skin(6004,Consts.MERLIN, Consts.RARE,"青梅林"));
+		rareSkins.add(new Skin(6005,Consts.MERLIN, Consts.RARE,"草莓林"));
+		rareSkins.add(new Skin(6006,Consts.MERLIN, Consts.RARE,"煤林"));
+		
 		epicSkins.add(new Skin(1019,Consts.WIZARD, Consts.EPIC,"独角兽"));
 		epicSkins.add(new Skin(1020,Consts.WIZARD, Consts.EPIC,"纸杯蛋糕"));
 		epicSkins.add(new Skin(1030,Consts.WIZARD, Consts.EPIC,"巫超"));
@@ -474,6 +481,7 @@ public class Shop {
 		epicSkins.add(new Skin(3012,Consts.BOMB, Consts.EPIC,"王炸"));
 		epicSkins.add(new Skin(4012,Consts.DRAGON, Consts.EPIC,"马龙"));
 		epicSkins.add(new Skin(5012,Consts.FAIRY, Consts.EPIC,"白骨精"));
+		epicSkins.add(new Skin(6007,Consts.MERLIN, Consts.EPIC,"羊梅林"));
 		
 		allSkins.addAll(commonSkins);
 		allSkins.addAll(rareSkins);
