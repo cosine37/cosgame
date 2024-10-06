@@ -79,15 +79,21 @@ public class PokerUtil {
 	public static List<PokerCard> getWizardDeck(int extraCards){
 		List<PokerCard> cards = getWizardDeck();
 		
-		int x = extraCards;
-		int train = x%10;
-		x = x/10;
-		int merlin = x%10;
-		x = x/10;
-		int bomb = x%10;
-		x = x/10;
-		int df = x%10;
+		final int DIVIDER = 2;
 		
+		int x = extraCards;
+		int ballroom = x%DIVIDER;
+		x = x/DIVIDER;
+		int train = x%DIVIDER;
+		x = x/DIVIDER;
+		int merlin = x%DIVIDER;
+		x = x/DIVIDER;
+		int bomb = x%DIVIDER;
+		x = x/DIVIDER;
+		int df = x%DIVIDER;
+		if (ballroom == 1) {
+			cards.add(new PokerCard("u",750));
+		}
 		if (train == 1) {
 			cards.add(new PokerCard("u",975));
 		}
@@ -124,6 +130,7 @@ public class PokerUtil {
 		System.out.println("dominantSuit = " + dominantSuit);
 		System.out.println("currentSuit = " + currentSuit);
 		System.out.println(c1.toString() + " " + c2.toString());
+		System.out.println(c1.getSuit() + " " + c2.getSuit());
 		System.out.println(c1.getRealRank(biggestRank) + " " + c2.getRealRank(biggestRank));
 		
 		// Bomb, Dragon and Fairy handles
@@ -157,11 +164,11 @@ public class PokerUtil {
 		
 		if (c1.getSuit().toUpperCase().contentEquals("WZ") || c1.getSuit().contentEquals("Me")) {
 			return true;
-		} else if (c2.getSuit().toUpperCase().contentEquals("WZ") || c1.getSuit().contentEquals("Me")) {
+		} else if (c2.getSuit().toUpperCase().contentEquals("WZ") || c2.getSuit().contentEquals("Me")) {
 			return false;
 		} else if (c2.getSuit().toUpperCase().contentEquals("JE") || c2.getSuit().contentEquals("mE")) {
 			return true;
-		} else if (c1.getSuit().toUpperCase().contentEquals("JE") || c2.getSuit().contentEquals("mE")) {
+		} else if (c1.getSuit().toUpperCase().contentEquals("JE") || c1.getSuit().contentEquals("mE")) {
 			return false;
 		} else
 		

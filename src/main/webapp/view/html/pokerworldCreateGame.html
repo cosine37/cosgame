@@ -103,7 +103,7 @@ body {
 							<table>
 								<tr>
 									<th style="width: 80px">最大点数</th>
-									<th style="width: 460px;text-align: center">细节</th>
+									<th style="width: 500px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -147,7 +147,7 @@ body {
 							<table>
 								<tr>
 									<th style="width: 80px">轮次数</th>
-									<th style="width: 460px;text-align: center">细节</th>
+									<th style="width: 500px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -191,7 +191,7 @@ body {
 							<table>
 								<tr>
 									<th style="width: 80px">额外卡牌</th>
-									<th style="width: 460px;text-align: center">细节</th>
+									<th style="width: 500px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>
@@ -242,12 +242,24 @@ body {
 										<button ng-click="setUseStation(false)" ng-show = "useStation == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
 									</td>
 								</tr>
+								<tr>
+									<td ng-style="highlightStyle(useBallroom)">
+										舞厅
+									</td>
+									<td ng-style="highlightStyle(useBallroom)">
+										该牌点数为7又1/2，打出该牌前选择该牌的花色。打出该牌的轮次结算完后，所有玩家选择一张手牌交给下一名玩家。
+									</td>
+									<td ng-style="highlightStyle(useBallroom)">
+										<button ng-click="setUseBallroom(true)" ng-show = "useBallroom == false && lord == username">选择</button>
+										<button ng-click="setUseBallroom(false)" ng-show = "useBallroom == true && lord == username" style="color: goldenrod; background-color:black">取消</button>
+									</td>
+								</tr>
 							</table>
 							<div style="height: 30px;"></div>
 							<table>
 								<tr>
 									<th style="width: 80px">额外分数</th>
-									<th style="width: 460px;text-align: center">细节</th>
+									<th style="width: 500px;text-align: center">细节</th>
 									<th style="width: 60px">选择</th>
 								</tr>
 								<tr>

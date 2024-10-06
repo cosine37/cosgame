@@ -16,6 +16,7 @@ public class Player {
 	int phase;
 	int innerId;
 	int index;
+	int circusIndex;
 	boolean confirmedClaim;
 	boolean confirmedNextTurn;
 	Board board;
@@ -38,6 +39,7 @@ public class Player {
 	public void clearAll() {
 		playedIndex = new ArrayList<>();
 		playedCardsStr = "";
+		circusIndex = -1;
 		
 		hand = new ArrayList<>();
 		scores = new ArrayList<>();
@@ -414,6 +416,12 @@ public class Player {
 	public void setBonuses(List<Integer> bonuses) {
 		this.bonuses = bonuses;
 	}
+	public int getCircusIndex() {
+		return circusIndex;
+	}
+	public void setCircusIndex(int circusIndex) {
+		this.circusIndex = circusIndex;
+	}
 
 	public Document toDocument() {
 		int i;
@@ -429,6 +437,7 @@ public class Player {
 		doc.append("actuals", actuals);
 		doc.append("endGameRewards", endGameRewards);
 		doc.append("bonuses", bonuses);
+		doc.append("circusIndex", circusIndex);
 		if (board.getGameMode() == Consts.SFSJ) {
 			doc.append("playedCardsStr", playedCardsStr);
 		} else {
@@ -448,6 +457,7 @@ public class Player {
 		actuals = (List<Integer>) doc.get("actuals");
 		endGameRewards = (List<String>) doc.get("endGameRewards");
 		bonuses = (List<Integer>) doc.get("bonuses");
+		circusIndex = doc.getInteger("circusIndex", -1);
 		if (board.getGameMode() == Consts.SFSJ) {
 			playedCardsStr = doc.getString("playedCardsStr");
 		} else {
@@ -471,6 +481,7 @@ public class Player {
 		entity.setBids(bids);
 		entity.setActuals(actuals);
 		entity.setBonuses(bonuses);
+		entity.setCircusIndex(circusIndex);
 		//entity.setRewards(endGameRewards);
 		Account account = new Account();
 		account.getFromDB(name);

@@ -32,6 +32,7 @@ public class BoardEntity {
 	int numDrRevealed;
 	int numFrRevealed;
 	int numMeRevealed;
+	int myCircusIndex;
 
 	boolean confirmed;
 	boolean confirmedNextTurn;
@@ -264,5 +265,11 @@ public class BoardEntity {
 	}
 	public void setNumMeRevealed(int numMeRevealed) {
 		this.numMeRevealed = numMeRevealed;
+	}
+	public int getMyCircusIndex() {
+		return myCircusIndex;
+	}
+	public void setMyCircusIndex(int myCircusIndex) {
+		this.myCircusIndex = myCircusIndex;
 	}
 }

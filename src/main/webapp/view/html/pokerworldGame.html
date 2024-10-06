@@ -174,13 +174,13 @@ body {
 			<div id="personal-info" style="height: 70px; width: 800px">
 				<div id="bid-info" ng-show="(status == BIDTRICKS || status == SCORING)">
 					<div ng-show="(status == BIDTRICKS || status == SCORING) && round == players[myIndex].bids.length+1 && myIndex == curPlayer">
-						<div>请下注你本轮的墩数(0~{{round}})：</div>
+						<div>请下注你本轮的墩数(推荐0~{{round}}，但是根据场况，可能不在这个范围)：</div>
 						<div>
-							<button ng-click="changeBid(-100)">0墩</button>
-							<button ng-disabled="numTrick == 0" ng-click="changeBid(-1)">-</button>
+							<button ng-click="changeBid(-9999)">0墩</button>
+							<button ng-click="changeBid(-1)">-</button>
 							{{numTrick}}
-							<button ng-disabled="numTrick == round" ng-click="changeBid(1)">+</button>
-							<button ng-click="changeBid(100)">最大</button>
+							<button ng-click="changeBid(1)">+</button>
+							<button ng-click="changeBid(9999)">轮数</button>
 							<button ng-click="bidWizard()">提交</button>
 						</div>
 					</div>
@@ -199,7 +199,11 @@ body {
 					<button ng-show="curPlayer == myIndex" ng-click="selectStationOption(1)" ng-disabled="selectedStationOption == 1">多一墩</button>
 					<button ng-show="curPlayer == myIndex && (selectedStationOption == -1 || selectedStationOption == 1)" ng-click="submitStationOption()">提交</button>
 				</div>
-				
+				<div id="circus-pass-info" ng-show="status == CIRCUSPASS">
+					<span ng-show="gamedata.myCircusIndex != -1">已选择传出的牌（暂时还在手牌中显示），正等待其他玩家确认</span>
+					<span ng-show="gamedata.myCircusIndex == -1">请选择你要交给下家的手牌</span>
+					<button ng-show="gamedata.myCircusIndex == -1 && chosenCard != -1" ng-click="play()">确认</button>
+				</div>
 				<div id="play-card-info" ng-show="status == CONFIRMROUNDTURN || status == PLAYCARDS">
 					<span ng-show="curPlayer != myIndex">现在不是你的回合</span>
 					<span ng-show="curPlayer == myIndex">请选择你要出的牌</span>

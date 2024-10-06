@@ -191,7 +191,11 @@ public class PokerworldController {
 			board.getFromDB(boardId);
 			Player p = board.getPlayerByName(username);
 			if (p != null) {
-				p.play(playedIndex, option);
+				if (board.getRealStatus() == Consts.CIRCUSPASS) {
+					board.circusPassCard(p.getName(),playedIndex.get(0));
+				} else {
+					p.play(playedIndex, option);
+				}
 				board.updateBasicDB();
 				board.updatePlayers();
 				board.updateCardsDB();

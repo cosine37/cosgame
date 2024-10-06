@@ -1,5 +1,5 @@
 <div class="rank-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester' && c.rank != 'bomb' && c.rank != 'dragon' && c.rank != 'fairy' && c.rank != 'merlin' 
-	&& c.rank != '10' && c.rank != 'N' ">
+	&& c.rank != '10' && c.rank != 'N' && c.rank != 'S'">
 	{{c.rank}}
 </div>
 <div class="rank-10-hand" ng-show="c.rank == '10'">
@@ -15,6 +15,20 @@
 		</tr>
 		<tr>
 			<td style="border-top: 2px solid black">4</td>
+		</tr>
+	</table>
+</div>
+
+<div class="rank-f-hand" ng-show="c.rank == 'S'">
+	<table>
+		<tr>
+			<td rowspan="2" style="padding-left: 4px; padding-right: 4px">7</td>
+			<td style="border-bottom: 2px solid black" ng-show="c.color == 'black'">1</td>
+			<td style="border-bottom: 2px solid red" ng-show="c.color == 'red'">1</td>
+			<td style="border-bottom: 2px solid navy" ng-show="c.color == 'navy'">1</td>
+		</tr>
+		<tr>
+			<td style="border-top: 2px solid black">2</td>
 		</tr>
 	</table>
 </div>
@@ -42,7 +56,9 @@
 	<div class="joker-hand-letter">M</div>
 	<div class="joker-hand-letter">E</div>
 </div>
-<div class="suit-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester' && c.rank != 'bomb' && c.rank != 'dragon' && c.rank != 'fairy' && c.rank != 'merlin' && c.rank != 'N'">
+<div class="suit-hand" 
+	ng-show="c.rank != 'wizard' && c.rank != 'jester' && c.rank != 'bomb' && c.rank != 'dragon' && c.rank != 'fairy' && c.rank != 'merlin' 
+	&& c.rank != 'N'  && c.rank != 'S'">
 	{{c.suit}}
 </div>
 <div class="suit-big-hand" ng-show="c.rank != 'wizard' && c.rank != 'jester' && c.rank != 'bomb' && c.rank != 'dragon' && c.rank != 'fairy' && c.rank != 'merlin'">

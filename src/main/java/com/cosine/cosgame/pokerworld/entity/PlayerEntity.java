@@ -12,6 +12,7 @@ public class PlayerEntity {
 	List<Integer> chosenSkins;
 	List<Integer> bonuses;
 	List<String> rewards;
+	int circusIndex;
 
 	public String getName() {
 		return name;
@@ -66,6 +67,12 @@ public class PlayerEntity {
 	}
 	public void setBonuses(List<Integer> bonuses) {
 		this.bonuses = bonuses;
+	}
+	public int getCircusIndex() {
+		return circusIndex;
+	}
+	public void setCircusIndex(int circusIndex) {
+		this.circusIndex = circusIndex;
 	}
 	
 }

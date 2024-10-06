@@ -67,6 +67,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.ENDGAME = 10;
 		
 		$scope.STATIONCHOOSE = 21;
+		$scope.CIRCUSPASS = 22;
 		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -128,8 +129,9 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					v = Math.floor(Math.random() * 4)+1;
 					bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
 				} else if ($scope.round == 11 || ($scope.round == 14 && $scope.totalRound == 15) || $scope.round == 19){
-					v = Math.floor(Math.random() * 2)+1;
-					bgmSrc = '/sound/Pokerworld/game_r11' + v + '.mp3'
+					//v = Math.floor(Math.random() * 2)+1;
+					//bgmSrc = '/sound/Pokerworld/game_r11' + v + '.mp3'
+					bgmSrc = '/sound/Pokerworld/game_r19.mp3'
 				}
 				
 				else {
@@ -206,8 +208,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.changeBid = function(x){
 			playClickSE()
 			$scope.numTrick = $scope.numTrick+x
-			if ($scope.numTrick<0) $scope.numTrick = 0
-			if ($scope.numTrick>$scope.round) $scope.numTrick = $scope.round
+			if ($scope.numTrick<-1000) $scope.numTrick = 0
+			if ($scope.numTrick>1000) $scope.numTrick = $scope.round
 		}
 		
 		$scope.bidWizard = function(){
@@ -241,8 +243,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 						$scope.disableHide = true;
 					}
 				}
-			} else if ($scope.gameMode == $scope.WIZARD && $scope.myIndex == $scope.curPlayer && $scope.playable[x] == 1){
-				if ($scope.status == $scope.PLAYCARDS || $scope.status == $scope.CONFIRMROUNDTURN){
+			} else if ($scope.gameMode == $scope.WIZARD && $scope.playable[x] == 1){
+				if ($scope.status == $scope.PLAYCARDS || $scope.status == $scope.CONFIRMROUNDTURN && $scope.myIndex == $scope.curPlayer){
 					playClickSE()
 					if (x>=0 && x<$scope.hand.length){
 						if ($scope.chosenCard == x){
@@ -269,6 +271,24 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 						}
 						
 					}
+				} else if ($scope.status == $scope.CIRCUSPASS && $scope.gamedata.myCircusIndex == -1){
+					playClickSE()
+					if (x>=0 && x<$scope.hand.length){
+						if ($scope.chosenCard == x){
+							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
+							$scope.chosenCard = -1;
+							$scope.cardOptions = []
+						} else {
+							if ($scope.chosenCard != -1){
+								$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px"
+							}
+							$scope.chosenCard = x;
+							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-30px"
+						}
+						
+					}
+					$scope.selectedCardOption = -1;
+					//alert($scope.chosenCard)
 				}
 			}
 			
@@ -292,7 +312,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.showPlayButton = function(){
 			if ($scope.curPlayer != $scope.myIndex) return false
 			if ($scope.chosenCard == -1) return false
-			if ($scope.cardOptions.length > 0 && $scope.selectedCardOption == -1) return false;
+			if ($scope.cardOptions.length > 0 && $scope.selectedCardOption == -1 && $scope.status != $scope.CIRCUSPASS) return false;
 			return true;
 		}
 		
@@ -371,6 +391,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 			if (playedIndex.length > 0){
 				var data = {"playedIndex": playedIndex, "option": $scope.selectedCardOption}
+				//alert(playedIndex)
 				$http({url: "/pokerworld/playcards", method: "POST", params: data}).then(function(response){
 					$scope.chosenCard = -1;
 					$scope.cardOptions = []
@@ -441,10 +462,15 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				c = "navy";
 				
 			}
+			
 			if (r == 'N'){
 				cstyle["background-image"] = 'url(/image/Pokerworld/station.png)'
 				cstyle["background-size"] = 'cover'
+			} else if (r == 'S'){
+				cstyle["background-image"] = 'url(/image/Pokerworld/ballroom.png)'
+				cstyle["background-size"] = 'cover'
 			}
+			
 			customSkin = null;
 			if (raw == "WZ" || raw == "Wz" || raw == "wZ" || raw == "wz"){
 				r = "wizard"

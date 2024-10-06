@@ -28,6 +28,7 @@ public class Consts {
 	public static final int CONFIRMROUNDTURN = 5;
 	
 	public static final int STATIONCHOOSE = 21;
+	public static final int CIRCUSPASS = 22;
 	
 	// suits
 	public static final String SPADE = "s";
@@ -36,6 +37,11 @@ public class Consts {
 	public static final String CLUB = "c";
 	
 	public static final String UNDETERMINED = "u";
+	
+	// ranks
+	public static final char TEN = 'T';
+	public static final char NINEMORE = 'N';
+	public static final char SEVENMORE = 'S';
 	
 	// card playability
 	public static final int PLAYABLE = 1;

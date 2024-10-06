@@ -50,6 +50,7 @@ public class Board {
 	List<Player> players;
 	List<List<Integer>> sequences;
 	List<Boolean> confirmed;
+	List<Integer> statusInBetween;
 	
 	PokerCard dominantCard;
 	PokerCard firstCard;
@@ -65,6 +66,7 @@ public class Board {
 		confirmed = new ArrayList<>();
 		dominantCard = new PokerCard();
 		firstCard = new PokerCard();
+		statusInBetween = new ArrayList<>();
 		
 		fiveTenBonus = false;
 		
@@ -358,6 +360,7 @@ public class Board {
 	public void nextPlayerPlay() {
 		curPlayer++;
 		curPlayer = curPlayer % players.size();
+		System.out.println(curPlayer);
 		if (curPlayer == firstPlayer) {
 			endRound();
 		}
@@ -373,7 +376,7 @@ public class Board {
 		} else if (gameModeIs(Consts.WIZARD)) {
 			status = Consts.CONFIRMROUNDTURN;
 			judgeRoundWizard();
-			if (status == Consts.CONFIRMROUNDTURN) {
+			if (getRealStatus() == Consts.CONFIRMROUNDTURN) {
 				if (players.get(firstPlayer).getHand().size() == 0) {
 					endSet();
 				}
@@ -386,12 +389,17 @@ public class Board {
 		}
 	}
 	
-	
+	// TODO: add more judge round here
 	public void judgeRoundWizard() {
 		int x = firstPlayer;
 		winPlayer = firstPlayer;
 		PokerCard firstCard = players.get(firstPlayer).getPlayed().get(0);
 		PokerCard winCard = firstCard;
+		
+		boolean handEmpty = false;
+		if (players.get(firstPlayer).getHand().size() == 0) {
+			handEmpty = true;
+		}
 		
 		// Bomb, Dragon and Fairy handles
 		boolean hasBomb = false;
@@ -409,12 +417,16 @@ public class Board {
 		
 		// end of Bomb, Dragon and Fairy handles
 		
-		// station handles
-		boolean hasStation = false;
+		// station and circus handles
+		boolean hasCircus = false;
 		if (firstCard.getRank() == 975) {
-			hasStation = true;
+			this.statusInBetween.add(Consts.STATIONCHOOSE);
 		}
-		// end of station handles
+		if (firstCard.getRank() == 750 && handEmpty == false) {
+			this.statusInBetween.add(Consts.CIRCUSPASS);
+			hasCircus = true;
+		}
+		// end of station and circus handles
 		
 		int bonusPoints = 0; // calc bonus points
 		if (firstCard.getRank() == 5 || firstCard.getRank() == 10) { // bonus points handles
@@ -443,7 +455,11 @@ public class Board {
 				hasBomb = true;
 			}
 			if (c.getRank() == 975) {
-				hasStation = true;
+				this.statusInBetween.add(Consts.STATIONCHOOSE);
+			}
+			if (c.getRank() == 750 && handEmpty == false) {
+				this.statusInBetween.add(Consts.CIRCUSPASS);
+				hasCircus = true;
 			}
 			if (!PokerUtil.bigger(winCard, c, this)) {
 				winPlayer = x;
@@ -459,10 +475,12 @@ public class Board {
 			if (fiveTenBonus) { // bonus points handles
 				players.get(winPlayer).receiveBonus(bonusPoints);
 			}
-			if (hasStation) {
-				status = Consts.STATIONCHOOSE;
-			}
 			
+		}
+		if (hasCircus) { // hasCircus = hand non empty
+			for (int i=0;i<players.size();i++) {
+				players.get(i).setCircusIndex(-1);
+			}
 		}
 		
 		firstPlayer = winPlayer;
@@ -471,17 +489,61 @@ public class Board {
 	}
 	
 	public void selectStationOption(String pname, int x) {
-		if (status == Consts.STATIONCHOOSE) {
+		if (getRealStatus() == Consts.STATIONCHOOSE) {
 			Player p = players.get(curPlayer);
 			if (p.getName().contentEquals(pname)) {
 				p.updateBid(x);
-				if (p.getHand().size() == 0) {
-					status = Consts.CONFIRMROUNDTURN;
-					endSet();
-				} else {
-					status = Consts.PLAYCARDS;
+				statusInBetween.remove(0);
+				if (statusInBetween.size() == 0) {
+					if (p.getHand().size() == 0) {
+						status = Consts.CONFIRMROUNDTURN;
+						endSet();
+					} else {
+						status = Consts.CONFIRMROUNDTURN;
+						potentialNewTurnHandle();
+					}
+					
 				}
-				
+			}
+		}
+	}
+	
+	public void circusPassCard(String pname, int x) {
+		if (getRealStatus() == Consts.CIRCUSPASS) {
+			Player p = getPlayerByName(pname);
+			if (p != null) {
+				p.setCircusIndex(x);
+				int i;
+				boolean f = true;
+				for (i=0;i<players.size();i++) {
+					System.out.println(players.get(i).getCircusIndex());
+					if (players.get(i).getCircusIndex() == -1) {
+						f = false;
+						break;
+					}
+				}
+				if (f) {
+					PokerCard c = players.get(0).getHand().remove(players.get(0).getCircusIndex());
+					for (i=1;i<players.size();i++) {
+						if (c != null) {
+							players.get(i).getHand().add(c);
+							c = players.get(i).getHand().remove(players.get(i).getCircusIndex());
+							players.get(i).sortHand();
+						}
+					}
+					players.get(0).getHand().add(c);
+					players.get(0).sortHand();
+					statusInBetween.remove(0);
+					if (statusInBetween.size() == 0) {
+						if (p.getHand().size() == 0) {
+							status = Consts.CONFIRMROUNDTURN;
+							endSet();
+						} else {
+							status = Consts.CONFIRMROUNDTURN;
+							potentialNewTurnHandle();
+						}
+					}
+				}
 			}
 		}
 	}
@@ -526,6 +588,13 @@ public class Board {
 	}
 	public int getStatus() {
 		return status;
+	}
+	public int getRealStatus() {
+		int realStatus = status;
+		if (statusInBetween.size() != 0) {
+			realStatus = statusInBetween.get(0);
+		}
+		return realStatus;
 	}
 	public void setStatus(int status) {
 		this.status = status;
@@ -768,6 +837,7 @@ public class Board {
 		dbutil.update("id", id, "confirmed", confirmed);
 		dbutil.update("id", id, "attackerPointsGained", attackerPointsGained);
 		dbutil.update("id", id, "currentSuit", currentSuit);
+		dbutil.update("id", id, "statusInBetween", statusInBetween);
 		//dbutil.update("id", id, "cards", gameUtil.toRawCards());
 	}
 	public void updateCardsDB() {
@@ -899,6 +969,7 @@ public class Board {
 		doc.append("numFrRevealed", numFrRevealed);
 		doc.append("numMeRevealed", numFrRevealed);
 		doc.append("fiveTenBonus", fiveTenBonus);
+		doc.append("statusInBetween", statusInBetween);
 		int i;
 		List<String> playerNames = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
@@ -928,6 +999,7 @@ public class Board {
 		numDominant = doc.getInteger("numDominant", 0);
 		curClaimedPlayer = doc.getInteger("curClaimedPlayer", -1);
 		confirmed = (List<Boolean>) doc.get("confirmed");
+		statusInBetween = (List<Integer>) doc.get("statusInBetween");
 		List<String> rawCards = (List<String>) doc.get("cards");
 		gameUtil.buildCards(rawCards);
 		rawHidden = doc.getString("rawHidden");
@@ -964,7 +1036,7 @@ public class Board {
 		BoardEntity entity = new BoardEntity();
 		entity.setId(id);
 		entity.setLord(lord);
-		entity.setStatus(status);
+		entity.setStatus(getRealStatus());
 		entity.setRound(round);
 		entity.setTotalRounds(totalRounds);
 		entity.setPhase(phase);
@@ -1000,10 +1072,12 @@ public class Board {
 					entity.setMyIndex(p.getInnerId());
 					entity.setMyCards(p.getMyRawCardsAfterPlay());
 					entity.setPlayable(new ArrayList<>());
+					
 				} else {
 					entity.setMyIndex(p.getIndex());
 					entity.setMyCards(p.getHandAsStr());
 					entity.setPlayable(p.getPlayable());
+					entity.setMyCircusIndex(p.getCircusIndex());
 				}
 				
 				entity.setConfirmed(p.isConfirmedClaim());

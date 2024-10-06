@@ -41,6 +41,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 		$scope.useBomb = 0;
 		$scope.useMerlin = 0;
 		$scope.useStation = 0;
+		$scope.useBallroom = 0;
 		$scope.useFiveTenBonus = 0;
 	
 		$scope.goto = function(d){
@@ -113,6 +114,10 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			playClickSE()
 			$scope.useStation = x;
 		}
+		$scope.setUseBallroom = function(x){
+			playClickSE()
+			$scope.useBallroom = x;
+		}
 		$scope.setUseFiveTenBonus = function(x){
 			playClickSE()
 			$scope.useFiveTenBonus = x;
@@ -141,20 +146,25 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			}
 			playClickSE();
 			
+			multiplier = 2;
 			x = 0;
 			if ($scope.useDf){
 				x = 1;
 			}
-			x = x*10;
+			x = x*multiplier;
 			if ($scope.useBomb){
 				x = x+1;
 			}
-			x = x*10;
+			x = x*multiplier;
 			if ($scope.useMerlin){
 				x = x+1;
 			}
-			x = x*10;
+			x = x*multiplier;
 			if ($scope.useStation){
+				x = x+1;
+			}
+			x = x*multiplier;
+			if ($scope.useBallroom){
 				x = x+1;
 			}
 			y = 0

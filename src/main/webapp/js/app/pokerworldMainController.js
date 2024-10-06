@@ -83,11 +83,31 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			"suit": "ME",
 			"color": "bg"
 		}
+		station = {
+			"rank": "N",
+			"suit": "?",
+			"color": "navy",
+			"cstyle": {
+				"background-image" : 'url(/image/Pokerworld/station.png)',
+				"background-size" : 'cover'
+			}
+		}
+		circus = {
+			"rank": "S",
+			"suit": "?",
+			"color": "navy",
+			"cstyle":{
+				"background-image" : 'url(/image/Pokerworld/ballroom.png)',
+				"background-size" : 'cover'
+			}
+		}
 		$scope.specials = []
 		$scope.specials.push(bomb);
 		$scope.specials.push(dragon);
 		$scope.specials.push(fairy);
 		$scope.specials.push(merlin);
+		$scope.specials.push(station);
+		$scope.specials.push(circus);
 		$scope.shownCardIndex = -1;
 	
 		$scope.goto = function(d){

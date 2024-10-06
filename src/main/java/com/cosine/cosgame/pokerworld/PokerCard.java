@@ -86,11 +86,12 @@ public class PokerCard {
 	public String getRankStr() {
 		if (rank == 0) return "";
 		if (rank == 1) return "A";
-		if (rank == 10) return "T";
+		if (rank == 10) return "" + Consts.TEN;
 		if (rank == 11) return "J";
 		if (rank == 12) return "Q";
 		if (rank == 13) return "K";
-		if (rank == 975) return "N";
+		if (rank == 975) return "" + Consts.NINEMORE;
+		if (rank == 750) return "" + Consts.SEVENMORE;
 		return Integer.toString(rank);
 	}
 	
@@ -113,7 +114,7 @@ public class PokerCard {
 				rank = Character.getNumericValue(ch);
 			} else if (ch == 'A') {
 				rank = 1;
-			} else if (ch == 'T') {
+			} else if (ch == Consts.TEN) {
 				rank = 10;
 			} else if (ch == 'J') {
 				rank = 11;
@@ -121,8 +122,10 @@ public class PokerCard {
 				rank = 12;
 			} else if (ch == 'K') {
 				rank = 13;
-			} else if (ch == 'N') {
+			} else if (ch == Consts.NINEMORE) {
 				rank = 975;
+			} else if (ch == Consts.SEVENMORE) {
+				rank = 750;
 			}
 		} else {
 			suit = s;
