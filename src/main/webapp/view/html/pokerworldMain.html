@@ -489,6 +489,98 @@
 							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>进阶规则</b></h4></td>
 						</tr>
 						<tr>
+							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>轮数变化</b></h5></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">除去标准轮数，本游戏还支持其他轮数配置。</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><b>仅前五轮：</b>只进行五轮游戏，每轮的牌数等于当前轮数。<s>（该配置单纯就是为了刷钱用）</s></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><b>仅前七轮：</b>只进行七轮游戏，每轮的牌数等于当前轮数。<s>（该配置单纯就是为了不那么明目张胆地刷钱用）</s></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><b>标准十轮：</b>官方锦标赛的配置，每轮的牌数与人数的关系见下表：</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">
+								<table style="text-align: center">
+									<tr style="background-color:lightgrey">
+										<td rowspan="2"><b>人数</b></td><td colspan="10"><b>轮次（标准十轮）</b></td>
+									</tr>
+									
+									<tr style="background-color:lightgrey">
+										<td style="width: 25px">1</td>
+										<td style="width: 25px">2</td>
+										<td style="width: 25px">3</td>
+										<td style="width: 25px">4</td>
+										<td style="width: 25px">5</td>
+										<td style="width: 25px">6</td>
+										<td style="width: 25px">7</td>
+										<td style="width: 25px">8</td>
+										<td style="width: 25px">9</td>
+										<td style="width: 25px">10</td>
+									</tr>
+									
+									<tr>
+										<td style="background-color:lightgrey"><b>3</b></td>
+										<td>2</td><td>4</td><td>6</td><td>8</td><td>10</td><td>12</td><td>14</td><td>16</td><td>18</td><td>20</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>4</b></td>
+										<td>1</td><td>3</td><td>5</td><td>7</td><td>9</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>5</b></td>
+										<td>2</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>6</b></td>
+										<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><b>快速六轮：</b>相对快速的配置，灵感来源于某次时间不长的桌游局。每轮的牌数与人数的关系见下表：</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">
+								<table style="text-align: center">
+									<tr style="background-color:lightgrey">
+										<td rowspan="2"><b>人数</b></td><td colspan="6"><b>轮次（快速六轮）</b></td>
+									</tr>
+									
+									<tr style="background-color:lightgrey">
+										<td style="width: 25px">1</td>
+										<td style="width: 25px">2</td>
+										<td style="width: 25px">3</td>
+										<td style="width: 25px">4</td>
+										<td style="width: 25px">5</td>
+										<td style="width: 25px">6</td>
+									</tr>
+									
+									<tr>
+										<td style="background-color:lightgrey"><b>3</b></td>
+										<td>2</td><td>5</td><td>8</td><td>11</td><td>14</td><td>17</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>4</b></td>
+										<td>2</td><td>5</td><td>8</td><td>10</td><td>12</td><td>14</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>5</b></td>
+										<td>2</td><td>4</td><td>6</td><td>8</td><td>10</td><td>11</td>
+									</tr>
+									<tr>
+										<td style="background-color:lightgrey"><b>6</b></td>
+										<td>2</td><td>4</td><td>6</td><td>7</td><td>8</td><td>9</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
 							<td colspan="2" style="width: 1000px"><h5 class="pokerworldtext"><b>额外卡牌</b></h5></td>
 						</tr>
 						<tr>
@@ -533,7 +625,7 @@
 							</td>
 							<td style="width: 857px; vertical-align:top" ng-show="shownCardIndex == 5">
 								<h4 class="pokerworldtext">&nbsp;&nbsp;&nbsp;&nbsp; 舞厅（2024年10月6日上线）</h4>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">舞厅</span>，即使你有与初始玩家打出的牌花色相同的牌。在打出<span class="pokerworldtext">梅林</span>前，你决定将该牌视为<span class="pokerworldtext">巫师</span>或<span class="pokerworldtext">小丑</span>。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;任何时候都可以打出<span class="pokerworldtext">舞厅</span>，即使你有与初始玩家打出的牌花色相同的牌。在打出<span class="pokerworldtext">舞厅</span>前，你决定该牌的花色（可以不为初始玩家打出的花色）。打出<span class="pokerworldtext">舞厅</span>的回合结束后，若所有玩家还有手牌，则每名玩家选择一张手牌交给下一名玩家。
 							</td>
 						</tr>
 				</div>

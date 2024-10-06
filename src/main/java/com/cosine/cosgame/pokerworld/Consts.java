@@ -50,8 +50,29 @@ public class Consts {
 	// card options
 	public static final int NOTSELECTED = -1;
 	
-	// general rules
+	// round related rules
 	public static final int MAXROUNDS = 20;
+	public static final int FASTGAMEROUNDS = 6;
+	public static final int TORNAMENTROUNDS = 10;
+	public static final int[][] FASTGAMECARDS = {
+		{0,2,5,8,11,14,17},
+		{0,2,5,8,11,14,17},
+		{0,2,5,8,11,14,17},
+		{0,2,5,8,11,14,17},
+		{0,2,5,8,10,12,14},
+		{0,2,4,6,8,10,11},
+		{0,2,4,6,7,8,9}
+	};
+	
+	public static final int[][] TORNAMENTCARDS = {
+		{0,2,4,6,8,10,12,14,16,18,20},
+		{0,2,4,6,8,10,12,14,16,18,20},
+		{0,2,4,6,8,10,12,14,16,18,20},
+		{0,2,4,6,8,10,12,14,16,18,20},
+		{0,1,3,5,7,9,11,12,13,14,15},
+		{0,2,4,5,6,7,8,9,10,11,12},
+		{0,1,2,3,4,5,6,7,8,9,10}
+	};
 	
 	
 	// horserace related

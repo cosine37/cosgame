@@ -119,25 +119,64 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.muteButton = "关闭BGM"
 		randomizeBGM = function(){
 			if ($scope.gameMode == $scope.WIZARD){
-				if ($scope.round == $scope.totalRounds){
-					v = Math.floor(Math.random() * 5)+1;
-					bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
-				} else if ($scope.round == 4 || $scope.round == 9 || $scope.round == 15){
-					v = Math.floor(Math.random() * 3)+1;
-					bgmSrc = '/sound/Pokerworld/game_r8' + v + '.mp3'
-				} else if ($scope.round == 7 || $scope.round == 13 || $scope.round == 17){
-					v = Math.floor(Math.random() * 4)+1;
-					bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
-				} else if ($scope.round == 11 || ($scope.round == 14 && $scope.totalRound == 15) || $scope.round == 19){
-					//v = Math.floor(Math.random() * 2)+1;
-					//bgmSrc = '/sound/Pokerworld/game_r11' + v + '.mp3'
-					bgmSrc = '/sound/Pokerworld/game_r19.mp3'
+				if ($scope.totalRounds == 6){
+					if ($scope.round == 6){
+						v = Math.floor(Math.random() * 5)+1;
+						bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
+					} else if ($scope.round == 4){
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game_r8' + v + '.mp3'
+					} else if ($scope.round == 2){
+						v = Math.floor(Math.random() * 4)+1;
+						bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
+					} else if ($scope.round == 5){
+						bgmSrc = '/sound/Pokerworld/game_r19.mp3'
+					}
+					
+					else {
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+					}
+				} else if ($scope.totalRounds == 10){
+					if ($scope.round == 10){
+						v = Math.floor(Math.random() * 5)+1;
+						bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
+					} else if ($scope.round == 5){
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game_r8' + v + '.mp3'
+					} else if ($scope.round == 3 || $scope.round == 7){
+						v = Math.floor(Math.random() * 4)+1;
+						bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
+					} else if ($scope.round == 9){
+						bgmSrc = '/sound/Pokerworld/game_r19.mp3'
+					}
+					
+					else {
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+					}
+				} else {
+					if ($scope.round == $scope.totalRounds){
+						v = Math.floor(Math.random() * 5)+1;
+						bgmSrc = '/sound/Pokerworld/ending' + v + '.mp3'
+					} else if ($scope.round == 4 || $scope.round == 9 || $scope.round == 15){
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game_r8' + v + '.mp3'
+					} else if ($scope.round == 7 || $scope.round == 13 || $scope.round == 17){
+						v = Math.floor(Math.random() * 4)+1;
+						bgmSrc = '/sound/Pokerworld/game_r4' + v + '.mp3'
+					} else if ($scope.round == 11 || ($scope.round == 14 && $scope.totalRound == 15) || $scope.round == 19){
+						//v = Math.floor(Math.random() * 2)+1;
+						//bgmSrc = '/sound/Pokerworld/game_r11' + v + '.mp3'
+						bgmSrc = '/sound/Pokerworld/game_r19.mp3'
+					}
+					
+					else {
+						v = Math.floor(Math.random() * 3)+1;
+						bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
+					}
 				}
 				
-				else {
-					v = Math.floor(Math.random() * 3)+1;
-					bgmSrc = '/sound/Pokerworld/game' + v + '.mp3'
-				}
 				$scope.bgm.src = bgmSrc
 			}
 			
@@ -209,7 +248,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			playClickSE()
 			$scope.numTrick = $scope.numTrick+x
 			if ($scope.numTrick<-1000) $scope.numTrick = 0
-			if ($scope.numTrick>1000) $scope.numTrick = $scope.round
+			if ($scope.numTrick>1000) $scope.numTrick = $scope.hand.length
 		}
 		
 		$scope.bidWizard = function(){
@@ -714,6 +753,23 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			
 		}
 		
+		setTrickInfo = function(){
+			$scope.trickMsg = "吃了一墩，下回合第一个出牌。";
+			var f = false;
+			for (i=0;i<$scope.players.length;i++){
+				var j = 0;
+				while (j<$scope.players[i].playedCards.length){
+					var rawCard = $scope.players[i].playedCards.substring(j,j+2);
+					if (rawCard == "BM") f = true
+					j = j+2;
+				}
+			}
+			if (f){
+				$scope.trickMsg = "如吃一墩。因为被炸了，所以没吃到，但是下回合依然第一个出牌。";
+			}
+			
+		}
+		
 		setIndexes = function(){
 			$scope.indexSequence = [0,1,2,3];
 			var i;
@@ -821,6 +877,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				setCardStyles()
 				setPlayerInfoDisplay()
 				setRoundDisplay()
+				setTrickInfo()
 				if ($scope.gameMode == $scope.WIZARD){
 					if (prevStatus != null && prevStatus != $scope.status && $scope.status == $scope.SCORING){
 						myBidThisTurn = $scope.players[$scope.myIndex].bidDisplay

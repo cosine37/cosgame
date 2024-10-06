@@ -149,6 +149,12 @@ public class Board {
 		//TODO: change the number of cards every round here
 		//cardsOnRound = 30;
 		
+		if (totalRounds == Consts.FASTGAMEROUNDS) {
+			cardsOnRound = Consts.FASTGAMECARDS[players.size()][round];
+		} else if (totalRounds == Consts.TORNAMENTROUNDS) {
+			cardsOnRound = Consts.TORNAMENTCARDS[players.size()][round];
+		}
+		
 		for (i=0;i<players.size();i++) {
 			players.get(i).emptyHand();
 			

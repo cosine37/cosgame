@@ -27,7 +27,7 @@ body {
 		<source src="/sound/Pokerworld/welcome.mp3" type="audio/mpeg"></src>
 	</audio>
 	<div style="height: 30px"></div>
-	<div style="margin-left: 50px; width: 1200px; height: 1000px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
+	<div style="margin-left: 50px; width: 1200px; height: 1200px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
 		<div style="width: 100%; padding-top: 30px; text-align: center">
 			<h1>扑克世界</h1>
 		</div>
@@ -164,10 +164,10 @@ body {
 								</tr>
 								<tr style="height: 35px">
 									<td ng-style="highlightStyle(totalRounds == 5)">
-										5轮
+										仅前五轮
 									</td>
 									<td ng-style="highlightStyle(totalRounds == 5)">
-										只进行前5轮。
+										只进行前五轮。
 									</td>
 									<td ng-style="highlightStyle(totalRounds == 5)">
 										<div ng-show="totalRounds == 5">&#129092;</div>
@@ -176,14 +176,38 @@ body {
 								</tr>
 								<tr style="height: 35px">
 									<td ng-style="highlightStyle(totalRounds == 7)">
-										7轮
+										仅前七轮
 									</td>
 									<td ng-style="highlightStyle(totalRounds == 7)">
-										只进行前7轮。
+										只进行前七轮。
 									</td>
 									<td ng-style="highlightStyle(totalRounds == 7)">
 										<div ng-show="totalRounds == 7">&#129092;</div>
 										<button ng-click="setTotalRounds(7)" ng-show = "totalRounds != 7 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr style="height: 35px">
+									<td ng-style="highlightStyle(totalRounds == 10)">
+										标准十轮
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 10)">
+										官方锦标赛为固定进行十轮，每轮发牌的数量请参见进阶规则。
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 10)">
+										<div ng-show="totalRounds == 10">&#129092;</div>
+										<button ng-click="setTotalRounds(10)" ng-show = "totalRounds != 10 && lord == username">选择</button>
+									</td>
+								</tr>
+								<tr style="height: 35px">
+									<td ng-style="highlightStyle(totalRounds == 6)">
+										快速六轮
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 6)">
+										只进行六轮，每轮发牌的数量请参见进阶规则。
+									</td>
+									<td ng-style="highlightStyle(totalRounds == 6)">
+										<div ng-show="totalRounds == 6">&#129092;</div>
+										<button ng-click="setTotalRounds(6)" ng-show = "totalRounds != 6 && lord == username">选择</button>
 									</td>
 								</tr>
 							</table>
