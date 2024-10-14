@@ -24,7 +24,10 @@ public class Consts {
 	
 	
 	// places 
-	public static final int PLACE_REGULAR = 0;
+	public static final int PLACE_EMPTY = 0;
+	public static final int PLACE_ESTATE = 1;
+	public static final int PLACE_SPECIAL = 2;
+	public static final int PLACE_CORNER = 3;
 	
 	
 }
