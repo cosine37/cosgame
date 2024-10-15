@@ -16,7 +16,7 @@ public class AllTabs {
 		//allTabs.add(new Tab("水泊传说", "marshbros", "rgb(218,165,32)"));
 		allTabs.add(new Tab("扑克世界", "pokerworld", "goldenrod"));
 		//allTabs.add(new Tab("花园战争", "gardenwar", "darkgreen"));
-		
+		allTabs.add(new Tab("抽象小品", "oink", "rgb(0,150,255)"));
 		return allTabs;
 	}
 }
