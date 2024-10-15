@@ -40,6 +40,8 @@ public class Player {
 			
 			// Step 3: next phase
 			if (board.getStatus() == Consts.INGAME) {
+				board.getLogger().logDraw(this, cost);
+				
 				phase = Consts.PLAYORDISCARD;
 			}
 		}
@@ -66,6 +68,8 @@ public class Player {
 			
 			// Step 3: next phase
 			if (board.getStatus() == Consts.INGAME) {
+				board.getLogger().logTake(this, c, cost);
+				
 				phase = Consts.PLAYORDISCARD;
 			}
 		}
@@ -99,9 +103,12 @@ public class Player {
 				play.add(c);
 			}
 			
+			boolean f = board.potentialChangeAntiMonopoly(this, c);
 			
 			if (board.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
+				board.getLogger().logPlay(this, c, index);
+				if (f)
 				
 				// TODO: add end round handles here
 				board.nextPlayer();
@@ -116,6 +123,7 @@ public class Player {
 			
 			if (board.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
+				board.getLogger().logDiscard(this, c, index);
 				
 				// TODO: add end round handles here
 				board.nextPlayer();
@@ -126,6 +134,17 @@ public class Player {
 	public void emptyHandPlay() {
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
+	}
+	
+	public int numStockPlayed(int stock) {
+		int ans = 0;
+		int i;
+		for (i=0;i<play.size();i++) {
+			if (play.get(i).getNum() == stock) {
+				ans++;
+			}
+		}
+		return ans;
 	}
 	
 	public int numStock(int stock) {

@@ -19,9 +19,13 @@ public class Startups {
 	HashMap<Integer, Integer> antiMonopoly;
 	HashMap<Integer, Integer> shareholder;
 	
+	Logger logger;
+	
 	public Startups() {
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
+		logger = new Logger();
+		round = 0;
 	}
 	
 	public void startRound() {
@@ -62,10 +66,14 @@ public class Startups {
 			}
 		}
 		
-		// Step 6: set status & curPlayer
+		// Step 6: set status, round & curPlayer
 		status = Consts.INGAME;
+		round++;
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startRound();
+		
+		
+		
 	}
 	
 	public Card removeTopCard() {
@@ -96,6 +104,24 @@ public class Startups {
 				discard.get(i).receiveCoin();
 			}
 		}
+	}
+	
+	public boolean potentialChangeAntiMonopoly(Player p, Card c) {
+		int num = c.getNum();
+		int ai = antiMonopoly.get(num);
+		boolean f = false;
+		if (ai == -1) {
+			f = true;
+		} else {
+			Player p2 = players.get(ai);
+			if (p2.numStockPlayed(num) < p.numStockPlayed(num)) {
+				f = true;
+			}
+		}
+		if (f) {
+			antiMonopoly.put(num, p.getIndex());
+		}
+		return f;
 	}
 	
 	public void nextPlayer() {
@@ -179,5 +205,10 @@ public class Startups {
 	public void setShareholder(HashMap<Integer, Integer> shareholder) {
 		this.shareholder = shareholder;
 	}
-	
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 }
