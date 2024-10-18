@@ -3,6 +3,8 @@ package com.cosine.cosgame.oink.startups;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	int index;
@@ -19,7 +21,67 @@ public class Player {
 	List<Card> hand;
 	List<Card> play;
 	
-	Startups board;
+	Startups startups;
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("name", name);
+		doc.append("index", index);
+		doc.append("coins", coins);
+		doc.append("phase", phase);
+		doc.append("numTaken", numTaken);
+		doc.append("coin1RoundEnd", coin1RoundEnd);
+		doc.append("coin3RoundEnd", coin3RoundEnd);
+		doc.append("scores", scores);
+		
+		int i;
+		List<Document> doh = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			doh.add(hand.get(i).toDocument());
+		}
+		doc.append("hand", doh);
+		
+		List<Document> dop = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			dop.add(play.get(i).toDocument());
+		}
+		doc.append("play", dop);
+		
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		name = doc.getString("name");
+		index = doc.getInteger("index", 0);
+		coins = doc.getInteger("coins", 0);
+		phase = doc.getInteger("phase", 0);
+		numTaken = doc.getInteger("numTaken", 0);
+		coin1RoundEnd = doc.getInteger("coin1RoundEnd", 0);
+		coin3RoundEnd = doc.getInteger("coin3RoundEnd", 0);
+		scores = (List<Integer>) doc.get("scores");
+		List<Document> doh = (List<Document>) doc.get("hand");
+		List<Document> dop = (List<Document>) doc.get("play");
+		
+		int i;
+		hand = new ArrayList<>();
+		play = new ArrayList<>();
+		for (i=0;i<doh.size();i++) {
+			hand.add(new Card(doh.get(i)));
+		}
+		for (i=0;i<dop.size();i++) {
+			play.add(new Card(dop.get(i)));
+		}
+		
+	}
+	
+	public Player() {
+		
+	}
+	
+	public Player(String name) {
+		this.name = name;
+		this.coins = 0;
+	}
 	
 	public void startRound() {
 		numTaken = -1;
@@ -29,18 +91,18 @@ public class Player {
 	public void draw() {
 		if (canDraw()) {
 			// Step 1: pay coins
-			int cost = board.drawCost(this);
+			int cost = startups.drawCost(this);
 			coins = coins-cost;
-			board.placeCoins(this);
+			startups.placeCoins(this);
 			
 			// Step 2: put the card in hand
-			Card c = board.removeTopCard();
+			Card c = startups.removeTopCard();
 			if (c != null) hand.add(c);
 			
 			
 			// Step 3: next phase
-			if (board.getStatus() == Consts.INGAME) {
-				board.getLogger().logDraw(this, cost);
+			if (startups.getStatus() == Consts.INGAME) {
+				startups.getLogger().logDraw(this, cost);
 				
 				phase = Consts.PLAYORDISCARD;
 			}
@@ -48,7 +110,7 @@ public class Player {
 	}
 	
 	public boolean canDraw() {
-		int cost = board.drawCost(this);
+		int cost = startups.drawCost(this);
 		if (cost>coins) {
 			return false;
 		} else {
@@ -59,16 +121,17 @@ public class Player {
 	public void take(int index) {
 		if (canTake(index)) {
 			// Step 1: receive coins
-			int cost = board.getDiscard().get(index).getCoinOn();
+			int cost = startups.getDiscard().get(index).getCoinOn();
 			coins = coins+cost;
 			
 			// Step 2: put the card in hand
-			Card c = board.getDiscard().remove(index);
+			Card c = startups.getDiscard().remove(index);
+			c.clearCoin();
 			if (c != null) hand.add(c);
 			
 			// Step 3: next phase
-			if (board.getStatus() == Consts.INGAME) {
-				board.getLogger().logTake(this, c, cost);
+			if (startups.getStatus() == Consts.INGAME) {
+				startups.getLogger().logTake(this, c, cost);
 				
 				phase = Consts.PLAYORDISCARD;
 			}
@@ -76,9 +139,9 @@ public class Player {
 	}
 	
 	public boolean canTake(int index) {
-		if (index < board.getDiscard().size()) {
-			Card c = board.getDiscard().get(index);
-			if (board.getAntiMonopoly().get(c.getNum()) == index) { // if player has antimonopoly token
+		if (index < startups.getDiscard().size()) {
+			Card c = startups.getDiscard().get(index);
+			if (startups.getAntiMonopoly().get(c.getNum()) == index) { // if player has antimonopoly token
 				return false;
 			} else {
 				return true;
@@ -103,15 +166,15 @@ public class Player {
 				play.add(c);
 			}
 			
-			boolean f = board.potentialChangeAntiMonopoly(this, c);
+			boolean f = startups.potentialChangeAntiMonopoly(this, c);
 			
-			if (board.getStatus() == Consts.INGAME) {
+			if (startups.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
-				board.getLogger().logPlay(this, c, index);
+				startups.getLogger().logPlay(this, c, index);
 				if (f)
 				
 				// TODO: add end round handles here
-				board.nextPlayer();
+				startups.nextPlayer();
 			}
 		}
 	}
@@ -119,14 +182,14 @@ public class Player {
 	public void discard(int index) { // index is where from hand
 		if (index < hand.size()) {
 			Card c = hand.remove(index);
-			board.getDiscard().add(c);
+			startups.getDiscard().add(c);
 			
-			if (board.getStatus() == Consts.INGAME) {
+			if (startups.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
-				board.getLogger().logDiscard(this, c, index);
+				startups.getLogger().logDiscard(this, c, index);
 				
 				// TODO: add end round handles here
-				board.nextPlayer();
+				startups.nextPlayer();
 			}
 		}
 	}
@@ -217,11 +280,17 @@ public class Player {
 	public void setPlay(List<Card> play) {
 		this.play = play;
 	}
-	public Startups getBoard() {
-		return board;
+	public int getNumTaken() {
+		return numTaken;
 	}
-	public void setBoard(Startups board) {
-		this.board = board;
+	public void setNumTaken(int numTaken) {
+		this.numTaken = numTaken;
+	}
+	public Startups getStartups() {
+		return startups;
+	}
+	public void setStartups(Startups startups) {
+		this.startups = startups;
 	}
 	
 	

@@ -1,16 +1,38 @@
 package com.cosine.cosgame.oink.startups;
 
+import org.bson.Document;
+
 public class Card {
 	int num;
 	int coinOn;
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("num", num);
+		doc.append("coinOn", coinOn);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		num = doc.getInteger("num", 0);
+		coinOn = doc.getInteger("coinOn", 0);
+	}
 	
 	public Card(int num) {
 		this.num = num;
 		this.coinOn = 0;
 	}
 	
+	public Card(Document doc) {
+		setFromDoc(doc);
+	}
+	
 	public void receiveCoin() {
 		this.coinOn++;
+	}
+	
+	public void clearCoin() {
+		this.coinOn = 0;
 	}
 	
 	public String getName() {

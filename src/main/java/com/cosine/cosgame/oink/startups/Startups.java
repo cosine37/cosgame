@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.Document;
+
+import com.cosine.cosgame.oink.Board;
+
 public class Startups {
-	String id;
-	int status;
 	int round;
 	int curPlayer;
 	int firstPlayer;
@@ -20,6 +22,68 @@ public class Startups {
 	HashMap<Integer, Integer> shareholder;
 	
 	Logger logger;
+	Board board;
+	
+	public Document toDocument() {
+		Document doc = new Document();
+		doc.append("round", round);
+		doc.append("curPlayer", curPlayer);
+		doc.append("firstPlayer", firstPlayer);
+		doc.append("antiMonopoly", antiMonopoly);
+		doc.append("shareholder", shareholder);
+		
+		int i;
+		List<Document> dok = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			dok.add(deck.get(i).toDocument());
+		}
+		List<Document> dos = new ArrayList<>();
+		for (i=0;i<discard.size();i++) {
+			dos.add(discard.get(i).toDocument());
+		}
+		doc.append("deck", dok);
+		doc.append("discard", dos);
+		
+		for (i=0;i<players.size();i++) {
+			String n = players.get(i).getName();
+			n = "player-" + n;
+			doc.append(n, players.get(i).toDocument());
+		}
+		
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc) {
+		round = doc.getInteger("round", -1);
+		curPlayer = doc.getInteger("curPlayer", -1);
+		firstPlayer = doc.getInteger("firstPlayer", -1);
+		antiMonopoly = (HashMap<Integer, Integer>) doc.get("antiMonopoly");
+		shareholder = (HashMap<Integer, Integer>) doc.get("shareholder");
+		
+		int i;
+		List<Document> dok = (List<Document>) doc.get("deck");
+		List<Document> dos = (List<Document>) doc.get("discard");
+		deck = new ArrayList<>();
+		for (i=0;i<dok.size();i++) {
+			deck.add(new Card(dok.get(i)));
+		}
+		discard = new ArrayList<>();
+		for (i=0;i<dos.size();i++) {
+			discard.add(new Card(dos.get(i)));
+		}
+		
+		List<String> playerNames = (List<String>) doc.get("playerNames");
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			String n = playerNames.get(i);
+			n = "player-" + n;
+			Document dop = (Document) doc.get(n);
+			Player p = new Player();
+			p.setStartups(this);
+			p.setFromDoc(dop);
+			players.add(p);
+		}
+	}
 	
 	public Startups() {
 		deck = new ArrayList<>();
@@ -67,7 +131,7 @@ public class Startups {
 		}
 		
 		// Step 6: set status, round & curPlayer
-		status = Consts.INGAME;
+		board.setStatus(Consts.INGAME);
 		round++;
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startRound();
@@ -125,7 +189,7 @@ public class Startups {
 	}
 	
 	public void nextPlayer() {
-		if (status == Consts.INGAME) {
+		if (board.getStatus() == Consts.INGAME) {
 			curPlayer++;
 			if (curPlayer == players.size()) {
 				curPlayer = 0;
@@ -136,7 +200,7 @@ public class Startups {
 	
 	public void endRound() {
 		// Step 1: change status
-		status = Consts.ROUNDEND;
+		// status = Consts.ROUNDEND;
 		
 		// Step 2: get shareholder for each stock
 		
@@ -144,18 +208,19 @@ public class Startups {
 		
 		// Step 4: calc score
 	}
+	
 
 	public String getId() {
-		return id;
+		return board.getId();
 	}
 	public void setId(String id) {
-		this.id = id;
+		board.setId(id);
 	}
 	public int getStatus() {
-		return status;
+		return board.getStatus();
 	}
 	public void setStatus(int status) {
-		this.status = status;
+		board.setStatus(status);
 	}
 	public int getRound() {
 		return round;
