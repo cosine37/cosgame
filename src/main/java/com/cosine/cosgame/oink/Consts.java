@@ -1,6 +1,13 @@
 package com.cosine.cosgame.oink;
 
 public class Consts {
+	// Statuses
+	public static final int PREGAME = 0;
+	public static final int INGAME = 1;
+	public static final int ROUNDEND = 2;
+	public static final int ENDGAME = 3;
+	
+	
 	// Game
 	public static final int UNDECIDED = 0;
 	public static final int STARTUPS = 1;

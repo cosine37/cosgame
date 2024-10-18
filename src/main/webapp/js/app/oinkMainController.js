@@ -54,7 +54,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		$http.post('/username').then(function(response){
 			$scope.username = response.data.value[0];
 		});
-		/*
+		
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
@@ -62,14 +62,14 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		}
 		
 		$scope.newGame = function(){
-			$http({url: "/pokerworld/newboard", method: "POST"}).then(function(response){
+			$http({url: "/oink/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
-		        $scope.goto('pokerworldcreategame')
+		        $scope.goto('oinkcreategame')
 			});
 			
 		}
-		
+		/*
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/pokerworld/setboardid", method: "POST", params: data}).then(function(response){
@@ -87,9 +87,9 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 				$scope.goto('pokerworldgame');
 			});
 		}
-		
+		*/
 		$scope.getAllBoards = function(){
-			$http.get('/pokerworld/allboards').then(function(response){
+			$http.get('/oink/allboards').then(function(response){
 				var n = response.data.value.length / 5;
 				$scope.boards = []
 				$scope.statuses = []
@@ -114,9 +114,9 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 					t = ''
 					if (x == '0'){
 						t = '-'
-					} else if (z == '0'){
-						t = '四副升级'
 					} else if (z == '1'){
+						t = '初创公司'
+					} else if (z == '2'){
 						t = '巫师牌'
 					}
 					$scope.gameModes.push(t);
@@ -131,6 +131,6 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
-		*/
+		
 	
 }]);

@@ -13,33 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cosine.cosgame.pokerworld.account.Account;
-import com.cosine.cosgame.pokerworld.account.Shop;
-import com.cosine.cosgame.pokerworld.account.Transaction;
-import com.cosine.cosgame.pokerworld.Board;
-import com.cosine.cosgame.pokerworld.Player;
-import com.cosine.cosgame.pokerworld.entity.BoardEntity;
-import com.cosine.cosgame.pokerworld.entity.AccountEntity;
-import com.cosine.cosgame.pokerworld.Consts;
-import com.cosine.cosgame.pokerworld.Meta;
+import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.Consts;
+import com.cosine.cosgame.oink.Meta;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
 public class OinkController {
 	@RequestMapping(value="/oink", method = RequestMethod.GET)
-	public String pokerworld() {
+	public String oink() {
 		return "oinkMain";
 	}
 	@RequestMapping(value="/oinkcreategame", method = RequestMethod.GET)
-	public String pokerworldCreateGame() {
+	public String oinkCreateGame() {
 		return "oinkCreateGame";
 	}
 	@RequestMapping(value="/oinkgame", method = RequestMethod.GET)
-	public String pokerworldGame() {
+	public String oinkGame() {
 		return "oinkGame";
 	}
-	/*
-	@RequestMapping(value="/pokerworld/newboard", method = RequestMethod.POST)
+	@RequestMapping(value="/oink/newboard", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> newBoard(HttpServletRequest request){
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -53,7 +46,7 @@ public class OinkController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	@RequestMapping(value="/pokerworld/allboards", method = RequestMethod.GET)
+	@RequestMapping(value="/oink/allboards", method = RequestMethod.GET)
 	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
 		Meta meta = new Meta();
 		HttpSession session = request.getSession(true);
@@ -61,6 +54,7 @@ public class OinkController {
 		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	/*
 	@RequestMapping(value="/pokerworld/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);

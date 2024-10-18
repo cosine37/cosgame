@@ -61,6 +61,10 @@ public class Board {
 		}
 	}
 	
+	public void addPlayer(String name) {
+		playerNames.add(name);
+	}
+	
 	public void genBoardId() {
 		Date date = new Date();
 		id = Long.toString(date.getTime());
