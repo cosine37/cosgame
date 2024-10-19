@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.BoardEntity;
 import com.cosine.cosgame.oink.Consts;
 import com.cosine.cosgame.oink.Meta;
 import com.cosine.cosgame.util.StringEntity;
@@ -54,29 +55,27 @@ public class OinkController {
 		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	/*
-	@RequestMapping(value="/pokerworld/setboardid", method = RequestMethod.POST)
+	@RequestMapping(value="/oink/setboardid", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("boardId", boardId);
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	@RequestMapping(value="/pokerworld/join", method = RequestMethod.POST)
+	@RequestMapping(value="/oink/join", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		if (board.getPlayerByName(username) == null) {
-			board.addPlayer(username);
+		if (board.hasPlayer(username) == false) {
 			board.addPlayerToDB(username);
 		}
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	@RequestMapping(value="/pokerworld/kick", method = RequestMethod.POST)
+	@RequestMapping(value="/oink/kick", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam int index) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -89,7 +88,7 @@ public class OinkController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	@RequestMapping(value="/pokerworld/dismiss", method = RequestMethod.POST)
+	@RequestMapping(value="/oink/dismiss", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -102,6 +101,22 @@ public class OinkController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/oink/getboard", method = RequestMethod.GET)
+	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+		} else {
+			board.setId("NE");
+		}
+		BoardEntity entity = board.toBoardEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	/*
 	@RequestMapping(value="/pokerworld/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
 		StringEntity entity = new StringEntity();
@@ -307,20 +322,7 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/pokerworld/getboard", method = RequestMethod.GET)
-	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
-		Board board = new Board();
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		String boardId = (String) session.getAttribute("boardId");
-		if (board.exists(boardId)) {
-			board.getFromDB(boardId);
-		} else {
-			board.setId("NE");
-		}
-		BoardEntity entity = board.toBoardEntity(username);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
+	
 	
 	
 	

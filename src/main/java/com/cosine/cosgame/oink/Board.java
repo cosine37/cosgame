@@ -61,8 +61,57 @@ public class Board {
 		}
 	}
 	
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setGame(game);
+		entity.setStatus(status);
+		entity.setPlayerNames(playerNames);
+		
+		return entity;
+	}
+	
 	public void addPlayer(String name) {
 		playerNames.add(name);
+	}
+	
+	public void addPlayerToDB(String name) {
+		addPlayer(name);
+		updateDB("playerNames", playerNames);
+	}
+	
+	public void removePlayer(int x) {
+		if (x>0 && x<playerNames.size()) {
+			playerNames.remove(x);
+		}
+	}
+	
+	public void removePlayerFromDB(int x) {
+		removePlayer(x);
+		updateDB("playerNames", playerNames);
+	}
+	
+	public boolean hasPlayer(String name) {
+		for (int i=0;i<playerNames.size();i++) {
+			if (playerNames.get(i).contentEquals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	public void genBoardId() {

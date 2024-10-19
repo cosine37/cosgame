@@ -53,18 +53,18 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.settings[0] = 1;
 			}
 			var data = {"settings" : $scope.settings}
-			$http({url: "/onenightgame/startgame", method: "POST", params: data}).then(function(response){
+			$http({url: "/oink/startgame", method: "POST", params: data}).then(function(response){
 				ws.send("start");
 				$scope.goto('oinkgame');
 			});
 			
 		}
-		/*
+		
 		$scope.getBoard = function(){
-			$http.get('/onenightgame/getboard').then(function(response){
+			$http.get('/oink/getboard').then(function(response){
 				if (response.data.id == "NE"){
 					alert("该游戏已解散");
-					$scope.goto('onenight');
+					$scope.goto('oink');
 					return;
 				}
 				$scope.gamedata = response.data
@@ -79,11 +79,11 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				if (kicked){
 					alert("你已被" + $scope.lord + "踢出");
-					$scope.goto('onenight');
+					$scope.goto('oink');
 					return;
 				}
 				if ($scope.status != "0"){
-					$scope.goto('onenightgame')
+					$scope.goto('oinkgame')
 				}
 			});
 		}
@@ -93,5 +93,5 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		ws.onMessage(function(){
 			$scope.getBoard();
 		});
-		*/
+		
 }]);

@@ -69,25 +69,25 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			});
 			
 		}
-		/*
+		
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/pokerworld/setboardid", method: "POST", params: data}).then(function(response){
-				$http.post("/pokerworld/join").then(function(response){
+			$http({url: "/oink/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/oink/join").then(function(response){
 					//var json_data = '{"type":"notify","content":"refresh"}';
 			        boardws.send("refresh");
-					$scope.goto('pokerworldcreategame')
+					$scope.goto('oinkcreategame')
 				});
 			});
 		}
 		
 		$scope.backToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/pokerworld/setboardid", method: "POST", params: data}).then(function(response){
-				$scope.goto('pokerworldgame');
+			$http({url: "/oink/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('oinkgame');
 			});
 		}
-		*/
+		
 		$scope.getAllBoards = function(){
 			$http.get('/oink/allboards').then(function(response){
 				var n = response.data.value.length / 5;
