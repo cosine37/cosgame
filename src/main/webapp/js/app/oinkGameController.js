@@ -4,8 +4,8 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("oinkCreateGameApp", ["ngWebSocket"]);
-app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+var app = angular.module("oinkGameApp", ["ngWebSocket"]);
+app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/oink/boardrefresh");
 		ws.onError(function(event) {
@@ -17,11 +17,8 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		ws.onOpen(function() {
 		});
 	
-		$scope.settings = [0,0];
-		$scope.gameMode = 0;
-		$scope.firstPlayer = 0;
-		
-		$scope.STARTUPS = 1;
+		$scope.settings = [0];
+		$scope.soleWolfOption = false;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -51,28 +48,6 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
-		$scope.showStart = function(){
-			if ($scope.username != $scope.lord) return false;
-			if ($scope.gameMode < 1) return false;
-			
-			return true;
-		}
-		
-		$scope.setFirstPlayer = function(x){
-			$scope.firstPlayer = x;
-		}
-		
-		$scope.start = function(){
-			$scope.settings[0] = $scope.gameMode;
-			$scope.settings[1] = $scope.firstPlayer;
-			var data = {"settings" : $scope.settings}
-			$http({url: "/oink/startgame", method: "POST", params: data}).then(function(response){
-				ws.send("start");
-				$scope.goto('oinkgame');
-			});
-			
-		}
-		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -94,10 +69,6 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 					alert("你已被" + $scope.lord + "踢出");
 					$scope.goto('oink');
 					return;
-				}
-				
-				if ($scope.status == "1"){
-					$scope.goto('oinkgame')
 				}
 			});
 		}

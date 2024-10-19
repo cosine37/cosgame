@@ -19,21 +19,20 @@ public class Logger {
 		}
 	}
 	
-	public void log(String s) {
-		logs.add(s);
+	public List<String> getLogs(){
+		return logs;
 	}
 	
-	public void startRound(int round) {
-		String s = "第"+Integer.toString(round)+"轮 开始";
-		log(s);
+	public void log(String s) {
+		logs.add(s);
 	}
 	
 	public void logDraw(Player p, int cost) {
 		String s = "";
 		if (cost == 0) {
-			s = p.getName() + "摸了一张未知股份";
+			s = p.getName() + " 从牌堆获得了一张未知股份";
 		} else {
-			s = p.getName() + "花费了$" + Integer.toString(cost) + "摸了一张未知股份";
+			s = p.getName() + " 花费了$" + Integer.toString(cost) + "从牌堆获得一张未知股份";
 		}
 		log(s);
 	}
@@ -41,9 +40,9 @@ public class Logger {
 	public void logTake(Player p, Card c, int coin) {
 		String s = "";
 		if (coin == 0) {
-			s = p.getName() + "获得了弃置的一股 " + c.getName();
+			s = p.getName() + " 获得了弃置的一股 " + c.getName();
 		} else {
-			s = p.getName() + "获得了弃置的一股 " + c.getName() + " 并获得了$" + Integer.toString(coin);
+			s = p.getName() + " 获得了弃置的一股 " + c.getName() + " 并获得了$" + Integer.toString(coin);
 		}
 		log(s);
 	}
@@ -51,9 +50,9 @@ public class Logger {
 	public void logDiscard(Player p, Card c, int index) {
 		String s = "";
 		if (index == 3) {
-			s = p.getName() + "摸切了刚获得的一股 " + c.getName();
+			s = p.getName() + " 摸切了刚获得的一股 " + c.getName();
 		} else {
-			s = p.getName() + "手切了之前持有的一股 " + c.getName();
+			s = p.getName() + " 手切了之前持有的一股 " + c.getName();
 		}
 		log(s);
 	}
@@ -61,9 +60,9 @@ public class Logger {
 	public void logPlay(Player p, Card c, int index) {
 		String s = "";
 		if (index == 3) {
-			s = p.getName() + "打出了刚获得的一股 " + c.getName();
+			s = p.getName() + " 打出了刚获得的一股 " + c.getName();
 		} else {
-			s = p.getName() + "打出了之前持有的一股 " + c.getName();
+			s = p.getName() + " 打出了之前持有的一股 " + c.getName();
 		}
 		log(s);
 	}
@@ -71,6 +70,14 @@ public class Logger {
 	public void logAntiMonopoly(Player p, Card c) {
 		String s = p.getName() + " 明面上暂时持有最多股 " + c.getName() +" 因此获得相应的反垄断标记";
 		log(s);
+	}
+	
+	public void logRoundStart(int x) {
+		String s = "第 " + Integer.toString(x) +" 局 开始";
+		log(s);
+	}
+	public void logStartTurn(Player p) {
+		String s = p.getName() + " 开始了回合";
 	}
 	
 }

@@ -14,6 +14,7 @@ public class Board {
 	String lord;
 	int game;
 	int status;
+	int firstPlayer;
 	
 	List<String> playerNames;
 	
@@ -22,7 +23,7 @@ public class Board {
 	MongoDBUtil dbutil;
 	
 	public Board() {
-		startups = new Startups();
+		startups = new Startups(this);
 		
 		playerNames = new ArrayList<>();
 		
@@ -46,6 +47,7 @@ public class Board {
 		doc.append("lord", lord);
 		doc.append("status", status);
 		doc.append("playerNames", playerNames);
+		doc.append("firstPlayer", firstPlayer);
 		return doc;
 	}
 	
@@ -55,6 +57,7 @@ public class Board {
 		lord = doc.getString("lord");
 		status = doc.getInteger("status", -1);
 		playerNames = (List<String>) doc.get("playerNames");
+		firstPlayer = doc.getInteger("firstPlayer", -1);
 		
 		if (game == Consts.STARTUPS) {
 			startups.setFromDoc(doc);
@@ -90,6 +93,26 @@ public class Board {
 	public void removePlayerFromDB(int x) {
 		removePlayer(x);
 		updateDB("playerNames", playerNames);
+	}
+	
+	public void startGame(List<Integer> settings) {
+		int game = settings.get(Consts.SETTINGS_GAME);
+		if (game>0 && game <= Consts.NUMGAMES) {
+			this.game = game;
+			this.firstPlayer = settings.get(Consts.SETTINGS_FIRSTPLAYER);
+			this.status = Consts.INGAME;
+			
+			updateDB("game", this.game);
+			updateDB("firstPlayer", this.firstPlayer);
+			updateDB("status", this.status);
+			
+			if (this.game == Consts.STARTUPS) {
+				startups.startGame();
+			}
+			
+		}
+		
+		
 	}
 	
 	public boolean hasPlayer(String name) {
@@ -129,6 +152,9 @@ public class Board {
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", id, key, value);
 	}
+	public boolean isLord(String name) {
+		return lord.contentEquals(name);
+	}
 	public String getId() {
 		return id;
 	}
@@ -158,5 +184,11 @@ public class Board {
 	}
 	public void setPlayerNames(List<String> playerNames) {
 		this.playerNames = playerNames;
+	}
+	public int getFirstPlayer() {
+		return firstPlayer;
+	}
+	public void setFirstPlayer(int firstPlayer) {
+		this.firstPlayer = firstPlayer;
 	}
 }

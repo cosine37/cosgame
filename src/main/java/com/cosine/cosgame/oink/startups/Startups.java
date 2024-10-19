@@ -8,11 +8,11 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Startups {
 	int round;
 	int curPlayer;
-	int firstPlayer;
 	
 	List<Card> deck;
 	List<Card> discard;
@@ -24,13 +24,15 @@ public class Startups {
 	Logger logger;
 	Board board;
 	
+	MongoDBUtil dbutil;
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("round", round);
 		doc.append("curPlayer", curPlayer);
-		doc.append("firstPlayer", firstPlayer);
 		doc.append("antiMonopoly", antiMonopoly);
 		doc.append("shareholder", shareholder);
+		doc.append("logs", logger.getLogs());
 		
 		int i;
 		List<Document> dok = new ArrayList<>();
@@ -56,9 +58,11 @@ public class Startups {
 	public void setFromDoc(Document doc) {
 		round = doc.getInteger("round", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
-		firstPlayer = doc.getInteger("firstPlayer", -1);
 		antiMonopoly = (HashMap<Integer, Integer>) doc.get("antiMonopoly");
 		shareholder = (HashMap<Integer, Integer>) doc.get("shareholder");
+		
+		List<String> logs = (List<String>) doc.get("logs");
+		logger = new Logger(logs);
 		
 		int i;
 		List<Document> dok = (List<Document>) doc.get("deck");
@@ -85,12 +89,42 @@ public class Startups {
 		}
 	}
 	
-	public Startups() {
+	public Startups(Board board) {
+		this.board = board;
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
 		logger = new Logger();
 		round = 0;
+		
+		String dbname = "oink";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
+	
+	// Start actual operations
+	// Actual start game operation
+	public void startGame() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Player p = new Player(playerNames.get(i));
+			p.setStartups(this);
+			players.add(p);
+		}
+		
+		// Step 2: set round and curPlayer
+		round = 0;
+		curPlayer = board.getFirstPlayer();
+		startRound();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	// End actual operations
 	
 	public void startRound() {
 		// Step 1: add all cards
@@ -121,20 +155,17 @@ public class Startups {
 			removeTopCard();
 		}
 		
-		// Step 5: deal cards
+		// Step 5: deal cards and coins
 		for (i=0;i<players.size();i++) {
-			players.get(i).setPhase(Consts.OFFTURN);
-			players.get(i).emptyHandPlay();
-			for (j=0;j<Consts.HANDSIZE;j++) {
-				players.get(i).draw();
-			}
+			players.get(i).startRound();
 		}
 		
 		// Step 6: set status, round & curPlayer
 		board.setStatus(Consts.INGAME);
 		round++;
-		curPlayer = firstPlayer;
-		players.get(curPlayer).startRound();
+		logger.logRoundStart(round);
+		//curPlayer = firstPlayer;
+		players.get(curPlayer).startTurn();
 		
 		
 		
@@ -209,6 +240,61 @@ public class Startups {
 		// Step 4: calc score
 	}
 	
+	public Player getPlayerByName(String name) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				return players.get(i);
+			}
+		}
+		return null;
+	}
+	
+	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", board.getId(), playerName, dop);
+		}
+	}
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", board.getId(), playerName, dop);
+		}
+	}
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void updateBasicDB() {
+		int i;
+		List<Document> dok = new ArrayList<>();
+		for (i=0;i<deck.size();i++) {
+			dok.add(deck.get(i).toDocument());
+		}
+		List<Document> dos = new ArrayList<>();
+		for (i=0;i<discard.size();i++) {
+			dos.add(discard.get(i).toDocument());
+		}
+		updateDB("deck", dok);
+		updateDB("discard", dos);
+		
+		updateDB("round", round);
+		updateDB("curPlayer", curPlayer);
+		//updateDB("antiMonopoly", antiMonopoly);
+		//updateDB("shareholder", shareholder);
+		updateDB("logs", logger.getLogs());
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", board.getId(), key, value);
+	}
 
 	public String getId() {
 		return board.getId();
@@ -235,10 +321,10 @@ public class Startups {
 		this.curPlayer = curPlayer;
 	}
 	public int getFirstPlayer() {
-		return firstPlayer;
+		return board.getFirstPlayer();
 	}
 	public void setFirstPlayer(int firstPlayer) {
-		this.firstPlayer = firstPlayer;
+		board.setFirstPlayer(firstPlayer);
 	}
 	public List<Card> getDeck() {
 		return deck;
@@ -275,5 +361,11 @@ public class Startups {
 	}
 	public void setLogger(Logger logger) {
 		this.logger = logger;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 }

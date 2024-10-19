@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Abstract</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/oinkTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/oinkOther.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/lib/angular-websocket.js"></script>
+<script src="/js/app/oinkGameController.js"></script>
+<style>
+</style>
+<body ng-app="oinkGameApp" ng-controller="oinkGameCtrl">
+	<div>
+		<table>
+			<tr>
+				<td colspan="2">
+					<h1>抽象小品</h1>
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top">
+					游戏开始
+				</td>
+				<td style="vertical-align: top">
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button ng-click="goto('oink')">退出</button>
+					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+	
+</body>

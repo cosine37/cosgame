@@ -116,8 +116,8 @@ public class OinkController {
 		BoardEntity entity = board.toBoardEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	/*
-	@RequestMapping(value="/pokerworld/startgame", method = RequestMethod.POST)
+	
+	@RequestMapping(value="/oink/startgame", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam List<Integer> settings){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
@@ -127,25 +127,14 @@ public class OinkController {
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 			if (board.isLord(username)) {
-				board.setSettings(settings);
-				board.startGame();
-				board.updateBasicDB();
-				board.updateCardsDB();
-				board.updatePlayers();
-				board.updateDB("sequences", board.getSequences());
-				board.updateDB("rawHidden", board.getRawHidden());
-				board.updateDB("gameMode", board.getGameMode());
-				board.updateDB("biggestRank", board.getBiggestRank());
-				board.updateDB("extraCards", board.getExtraCards());
-				board.updateDB("totalRounds", board.getTotalRounds());
-				board.updateDB("fiveTenBonus", board.isFiveTenBonus());
-				board.updateDominantDB();
+				board.startGame(settings);
 			}
 		} else {
 			board.setId("NE");
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	/*
 	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> claimDominant(HttpServletRequest request, @RequestParam String dominantSuit, @RequestParam int numDominant){
 		StringEntity entity = new StringEntity();

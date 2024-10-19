@@ -75,15 +75,22 @@ public class Player {
 	}
 	
 	public Player() {
-		
+		scores = new ArrayList<>();
+		hand = new ArrayList<>();
+		play = new ArrayList<>();
 	}
 	
 	public Player(String name) {
+		this();
 		this.name = name;
 		this.coins = 0;
 	}
 	
 	public void startRound() {
+		draw(3);
+	}
+	
+	public void startTurn() {
 		numTaken = -1;
 		phase = Consts.DRAWORTAKE;
 	}
@@ -101,12 +108,16 @@ public class Player {
 			
 			
 			// Step 3: next phase
-			if (startups.getStatus() == Consts.INGAME) {
+			if (startups.getStatus() == Consts.INGAME && phase == Consts.DRAWORTAKE) {
 				startups.getLogger().logDraw(this, cost);
 				
 				phase = Consts.PLAYORDISCARD;
 			}
 		}
+	}
+	
+	public void draw(int x) {
+		for (int i=0;i<x;i++) draw();
 	}
 	
 	public boolean canDraw() {

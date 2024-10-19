@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cosgame Onenight</title>
+<title>Cosgame Abstract</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/oinkTheme.css">
@@ -34,19 +34,27 @@
 							<td>
 								<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
 								<span ng-show="$index == 0">(房主)</span>
+								<span ng-show="firstPlayer == $index  && username == lord">初始玩家</span>
+								<button ng-show="firstPlayer != $index && username == lord" ng-click="setFirstPlayer($index)">设为初始</button>
 							</td>
 						</tr>
 					</table>
 				</td>
-				<td style="vertical-align: top">
+				<td style="vertical-align: top" rowspan="2">
+					<div ng-show="gameMode == STARTUPS">
+						<h4>初创公司</h4>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<table>
 						<tr>
-							<td><h4>游戏设置</h4></td>
+							<td><h4>选择游戏</h4></td>
 						</tr>
 						<tr>
 							<td>
-								<input type="checkbox" ng-disabled="lord != username" ng-model="soleWolfOption">
-								<label>独狼变体</label>
+								<button ng-click="gameMode = STARTUPS" ng-disabled="gameMode == STARTUPS">初创公司</button>
 							</td>
 						</tr>
 					</table>
@@ -56,8 +64,10 @@
 				<td colspan="2">
 					<button ng-click="goto('oink')">退出</button>
 					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+					<!-- 
 					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
-					<button ng-click="start()" ng-show="username == lord">开始</button>
+					 -->
+					<button ng-click="start()" ng-show="showStart()">开始</button>
 				</td>
 			</tr>
 		</table>
