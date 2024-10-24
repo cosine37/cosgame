@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cosgame Abstrack</title>
+<title>Cosgame Abstract</title>
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/oinkTheme.css">
@@ -107,6 +107,8 @@
 							<td colspan="2">
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不明。</br>
 								</p>
+								<div ng-repeat="c in cards track by $index" ng-include="'/view/html/StartupsCard.html'" class="card-size-hand card">
+								</div>
 							</td>
 						</tr>
 					</table>

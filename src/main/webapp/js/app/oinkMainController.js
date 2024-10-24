@@ -132,5 +132,31 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			$scope.getAllBoards();
 		});
 		
+		
+		$scope.cards = []
+		c = {
+			"num" : 5,
+			"name" : "五福铁门",
+			"barColor": {
+				"background-color": "rgb(255,165,0)"
+			},
+			"iconStyle" : {
+				'background-image': 'url(/image/Oink/Startups/5.png)',
+				"background-size" : 'cover'
+			}
+		}
+		c2 = {
+			"num" : 10,
+			"name" : "十年纱窗",
+			"barColor": {
+				"background-color": "rgb(210,43,43)"
+			},
+			"iconStyle" : {
+				'background-image': 'url(/image/Oink/Startups/10.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.cards.push(c);
+		
 	
 }]);
