@@ -8,6 +8,9 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.startups.entity.CardEntity;
+import com.cosine.cosgame.oink.startups.entity.PlayerEntity;
+import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Startups {
@@ -87,6 +90,32 @@ public class Startups {
 			p.setFromDoc(dop);
 			players.add(p);
 		}
+	}
+	
+	public StartupsEntity toStartupsEntity(String username) {
+		StartupsEntity entity = new StartupsEntity();
+		entity.setCurPlayer(curPlayer);
+		entity.setRound(round);
+		entity.setDeckSize(deck.size());
+		
+		int i,j;
+		List<PlayerEntity> lp = new ArrayList<>();
+		List<CardEntity> lc = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			Player p = players.get(i);
+			lp.add(p.toPlayerEntity());
+			if (p.getName().contentEquals(username)) {
+				
+				for (j=0;j<p.getHand().size();j++) {
+					lc.add(p.getHand().get(j).toCardEntity());
+				}
+			}
+		}
+		
+		entity.setPlayers(lp);
+		entity.setMyHand(lc);
+		
+		return entity;
 	}
 	
 	public Startups(Board board) {

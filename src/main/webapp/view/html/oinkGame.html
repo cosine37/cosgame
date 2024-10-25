@@ -40,5 +40,10 @@
 		</table>
 		
 	</div>
-	
+	<div>
+		<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card-size-hand card"></div>
+		
+	</div>
+	<div style="clear:both"></div>
+	{{gamedata}}
 </body>

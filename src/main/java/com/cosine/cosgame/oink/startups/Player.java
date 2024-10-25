@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.startups.entity.CardEntity;
+import com.cosine.cosgame.oink.startups.entity.PlayerEntity;
+
 public class Player {
 	String name;
 	int index;
@@ -72,6 +75,23 @@ public class Player {
 			play.add(new Card(dop.get(i)));
 		}
 		
+	}
+	
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		entity.setIndex(index);
+		entity.setCoins(coins);
+		entity.setPhase(phase);
+		entity.setNumTaken(numTaken);
+		entity.setCoin1RoundEnd(coin1RoundEnd);
+		entity.setCoin3RoundEnd(coin3RoundEnd);
+		entity.setScores(scores);
+		List<CardEntity> lp = new ArrayList<>();
+		for (int i=0;i<play.size();i++) {
+			lp.add(play.get(i).toCardEntity());
+		}
+		return entity;
 	}
 	
 	public Player() {

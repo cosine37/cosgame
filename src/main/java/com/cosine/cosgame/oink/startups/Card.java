@@ -1,6 +1,11 @@
 package com.cosine.cosgame.oink.startups;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bson.Document;
+
+import com.cosine.cosgame.oink.startups.entity.CardEntity;
 
 public class Card {
 	int num;
@@ -16,6 +21,25 @@ public class Card {
 	public void setFromDoc(Document doc) {
 		num = doc.getInteger("num", 0);
 		coinOn = doc.getInteger("coinOn", 0);
+	}
+	
+	public CardEntity toCardEntity() {
+		CardEntity entity = new CardEntity();
+		entity.setNum(num);
+		entity.setCoinOn(coinOn);
+		entity.setName(getName());
+		entity.setColor(getColor());
+		
+		Map<String, String> barColor = new HashMap<>();
+		Map<String, String> iconStyle = new HashMap<>();
+		barColor.put("background-color", getColor());
+		String backgroundImage = "url(/image/Oink/Startups/" + Integer.toString(num) + ".png)";
+		iconStyle.put("background-image", backgroundImage);
+		iconStyle.put("background-size", "cover");
+		entity.setBarColor(barColor);
+		entity.setIconStyle(iconStyle);
+		
+		return entity;
 	}
 	
 	public Card(int num) {

@@ -72,6 +72,10 @@ public class Board {
 		entity.setStatus(status);
 		entity.setPlayerNames(playerNames);
 		
+		if (game == Consts.STARTUPS) {
+			entity.setStartups(startups.toStartupsEntity(username));
+		}
+		
 		return entity;
 	}
 	

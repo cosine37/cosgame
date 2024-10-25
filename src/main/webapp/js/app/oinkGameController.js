@@ -17,8 +17,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		ws.onOpen(function() {
 		});
 	
-		$scope.settings = [0];
-		$scope.soleWolfOption = false;
+		$scope.STARTUPS = 1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -55,10 +54,16 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.goto('oink');
 					return;
 				}
-				$scope.gamedata = response.data
+				$scope.game = response.data.game
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
 				$scope.lord = response.data.lord
+				$scope.hand = []
+				if ($scope.game == $scope.STARTUPS){
+					$scope.gamedata = response.data.startups
+				}
+				$scope.hand = $scope.gamedata.myHand;
+				
 				var kicked = true;
 				for (i=0;i<$scope.playerNames.length;i++){
 					if ($scope.playerNames[i] == $scope.username){
