@@ -10,7 +10,7 @@ public class Consts {
 	// Phases
 	public static final int DRAWORTAKE = 1;
 	public static final int PLAYORDISCARD = 2;
-	public static final int OFFTURN = 3;
+	public static final int OFFTURN = -1;
 	
 	// Rule based
 	public static final int HANDSIZE = 3;

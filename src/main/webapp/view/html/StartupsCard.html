@@ -1,4 +1,4 @@
-<div style="height: 50px; border-top-left-radius: 10px;border-top-right-radius: 10px; padding-top: 5px" ng-style="c.barColor">
+<div style="height: 50px; border-top-left-radius: 10px;border-top-right-radius: 10px; padding-top: 5px" ng-style="c.barColor" ng-show="c.num != 0">
 	<table>
 		<tr style="height: 50px">
 			<td style="text-align: center; vertical-align: center; width: 40px; color:white; font-size: 30px; font-family: 'yzgc';">{{c.num}}</td>
@@ -7,10 +7,21 @@
 		</tr>
 	</table>
 </div>
-<div>
+<div ng-show="c.num != 0">
 	<div style="width: 150px; height: 150px; margin-left:30px; margin-top: 25px" ng-style="c.iconStyle">
 	</div>
 </div>
 
-<div style="height: 73px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; margin-top: 30px" ng-style="c.barColor">
+<div style="height: 73px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; margin-top: 30px" ng-style="c.barColor" ng-show="c.num != 0">
+</div>
+
+<div style="height: 318px; width:208px; background-color:darkslategrey;border-radius: 10px;" 
+	ng-show="c.num == 0">
+	<div style="font-size: 130px; font-weight: bold; color:white; margin-top:25px; margin-left: 70px;">?</div>
+	<div class="card-button-div" ng-show="c.isDeck && phase != -1" ng-disabled="gamedata.canDraw == false" ng-click="draw()" >
+		抽牌
+	</div>
+	
+	<div style="position: absolute; top: 10px; right: 20px; color: white; font-size: 20px; font-weight: bold;" ng-show="c.isDeck">剩余张数：{{gamedata.deckSize}}</div>
+	
 </div>

@@ -99,7 +99,7 @@ public class Board {
 		updateDB("playerNames", playerNames);
 	}
 	
-	public void startGame(List<Integer> settings) {
+	public void startGameUDB(List<Integer> settings) {
 		int game = settings.get(Consts.SETTINGS_GAME);
 		if (game>0 && game <= Consts.NUMGAMES) {
 			this.game = game;
@@ -111,12 +111,9 @@ public class Board {
 			updateDB("status", this.status);
 			
 			if (this.game == Consts.STARTUPS) {
-				startups.startGame();
+				startups.startGameUDB();
 			}
-			
 		}
-		
-		
 	}
 	
 	public boolean hasPlayer(String name) {
@@ -139,6 +136,10 @@ public class Board {
 		} else {
 			return true;
 		}
+	}
+	
+	public boolean isGame(int game) {
+		return this.game == game;
 	}
 	
 	public void genBoardId() {
@@ -194,5 +195,11 @@ public class Board {
 	}
 	public void setFirstPlayer(int firstPlayer) {
 		this.firstPlayer = firstPlayer;
+	}
+	public Startups getStartups() {
+		return startups;
+	}
+	public void setStartups(Startups startups) {
+		this.startups = startups;
 	}
 }

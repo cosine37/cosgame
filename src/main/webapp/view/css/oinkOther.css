@@ -60,12 +60,45 @@ button:disabled{
 	/* cursor: pointer; */
 }
 
-.card-size-hand{
+.card-size{
 	height: 320px;
 	width: 210px;
 	border-radius: 10px;
 }
 
+.card-size-hand{
+	zoom: 0.8
+}
+
+.card-size-discard{
+	zoom: 0.8
+}
+
+
 .card-size-news{
 	zoom: 1.5
+}
+
+.card-button-div{
+	color: white;
+	font-size: 30px;
+	text-align: center;
+	border: 2px solid rgb(0,150,255);
+	border-radius: 8px;
+	width: 160px;
+	margin-left: 24px;
+	background: rgb(0,150,255);
+	cursor: pointer;
+}
+
+.card-button-div[disabled]{
+	color: rgb(0,150,255);
+	font-size: 30px;
+	text-align: center;
+	border: 2px solid white;
+	border-radius: 8px;
+	width: 160px;
+	margin-left: 24px;
+	background: white;
+	cursor: not-allowed;
 }

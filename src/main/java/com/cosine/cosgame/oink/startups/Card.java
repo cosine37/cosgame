@@ -84,7 +84,7 @@ public class Card {
 		} else if (num == 6) {
 			ans = "rgb(0,0,128)";
 		} else if (num == 7) {
-			ans = "rgb(255,192,203)";
+			ans = "rgb(255,105,180)";
 		} else if (num == 8) {
 			ans = "rgb(150,75,0)";
 		} else if (num == 9) {

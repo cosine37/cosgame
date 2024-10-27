@@ -47,6 +47,15 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			});
 		}
 		
+		$scope.draw = function(){
+			if ($scope.game == $scope.STARTUPS){
+				$http.put("/oink/startups/draw").then(function(response){
+					ws.send("refresh");
+				});
+			}
+			
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -61,6 +70,13 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.hand = []
 				if ($scope.game == $scope.STARTUPS){
 					$scope.gamedata = response.data.startups
+					$scope.phase = $scope.gamedata.phase
+					$scope.deck = []
+					c = {
+						"num": 0,
+						"isDeck": true
+					}
+					$scope.deck.push(c);
 				}
 				$scope.hand = $scope.gamedata.myHand;
 				

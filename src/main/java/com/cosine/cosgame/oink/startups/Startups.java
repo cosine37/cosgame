@@ -101,20 +101,23 @@ public class Startups {
 		int i,j;
 		List<PlayerEntity> lp = new ArrayList<>();
 		List<CardEntity> lc = new ArrayList<>();
+		boolean canDraw = false;
+		int phase = Consts.OFFTURN;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			lp.add(p.toPlayerEntity());
 			if (p.getName().contentEquals(username)) {
-				
+				canDraw = p.canDraw();
+				phase = p.getPhase();
 				for (j=0;j<p.getHand().size();j++) {
 					lc.add(p.getHand().get(j).toCardEntity());
 				}
 			}
 		}
-		
+		entity.setCanDraw(canDraw);
 		entity.setPlayers(lp);
 		entity.setMyHand(lc);
-		
+		entity.setPhase(phase);
 		return entity;
 	}
 	
@@ -133,7 +136,7 @@ public class Startups {
 	
 	// Start actual operations
 	// Actual start game operation
-	public void startGame() {
+	public void startGameUDB() {
 		// Step 1: create players
 		int i;
 		List<String> playerNames = board.getPlayerNames();
@@ -195,8 +198,6 @@ public class Startups {
 		logger.logRoundStart(round);
 		//curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
-		
-		
 		
 	}
 	
@@ -269,6 +270,18 @@ public class Startups {
 		// Step 4: calc score
 	}
 	
+	public void playerDrawUDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			if (p.canDraw() && p.getIndex() == curPlayer && p.getPhase() == Consts.DRAWORTAKE) {
+				p.draw();
+				updateBasicDB();
+				updatePlayer(name);
+			}
+		}
+	}
+	
+	
 	public Player getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().contentEquals(name)) {
@@ -323,6 +336,15 @@ public class Startups {
 	
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", board.getId(), key, value);
+	}
+	
+	public boolean hasPlayer(String name) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String getId() {

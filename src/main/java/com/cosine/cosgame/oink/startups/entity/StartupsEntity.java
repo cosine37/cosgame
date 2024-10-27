@@ -9,6 +9,8 @@ public class StartupsEntity {
 	int round;
 	int curPlayer;
 	int deckSize;
+	int phase;
+	boolean canDraw;
 	
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -39,5 +41,17 @@ public class StartupsEntity {
 	}
 	public void setDeckSize(int deckSize) {
 		this.deckSize = deckSize;
+	}
+	public boolean isCanDraw() {
+		return canDraw;
+	}
+	public void setCanDraw(boolean canDraw) {
+		this.canDraw = canDraw;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
 	}
 }

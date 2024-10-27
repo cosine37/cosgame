@@ -107,12 +107,19 @@ public class Player {
 	}
 	
 	public void startRound() {
-		draw(3);
+		takeCard(3);
 	}
 	
 	public void startTurn() {
 		numTaken = -1;
 		phase = Consts.DRAWORTAKE;
+	}
+	
+	public void takeCard(int x) {
+		for (int i=0;i<x;i++) {
+			Card c = startups.removeTopCard();
+			if (c != null) hand.add(c);
+		}
 	}
 	
 	public void draw() {
@@ -141,6 +148,7 @@ public class Player {
 	}
 	
 	public boolean canDraw() {
+		if (phase != Consts.DRAWORTAKE) return false;
 		int cost = startups.drawCost(this);
 		if (cost>coins) {
 			return false;
