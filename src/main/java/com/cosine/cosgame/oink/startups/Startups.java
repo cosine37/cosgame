@@ -74,6 +74,7 @@ public class Startups {
 		doc.append("discard", dos);
 		
 		for (i=0;i<players.size();i++) {
+			players.get(i).setIndex(i);
 			String n = players.get(i).getName();
 			n = "player-" + n;
 			doc.append(n, players.get(i).toDocument());
@@ -113,6 +114,7 @@ public class Startups {
 			Player p = new Player();
 			p.setStartups(this);
 			p.setFromDoc(dop);
+			p.setIndex(i);
 			players.add(p);
 		}
 	}
@@ -121,6 +123,7 @@ public class Startups {
 		StartupsEntity entity = new StartupsEntity();
 		entity.setCurPlayer(curPlayer);
 		entity.setRound(round);
+		entity.setAntiMonopoly(antiMonopoly);
 		entity.setDeckSize(deck.size());
 		
 		int i,j;
@@ -322,6 +325,16 @@ public class Startups {
 		Player p = getPlayerByName(name);
 		if (p != null) {
 			p.discard(cardIndex);
+			updateBasicDB();
+			updatePlayers();
+		}
+	}
+	
+	// Actual play operation
+	public void playerPlayUDB(String name, int cardIndex) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			p.play(cardIndex);
 			updateBasicDB();
 			updatePlayers();
 		}

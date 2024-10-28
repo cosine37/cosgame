@@ -41,6 +41,7 @@ public class Card {
 		entity.setBarColor(barColor);
 		entity.setIconStyle(iconStyle);
 		entity.setCstyle(cstyle);
+		entity.setPlayed(0);
 		
 		return entity;
 	}

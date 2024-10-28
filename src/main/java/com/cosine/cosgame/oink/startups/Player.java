@@ -1,6 +1,7 @@
 package com.cosine.cosgame.oink.startups;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -87,11 +88,43 @@ public class Player {
 		entity.setCoin1RoundEnd(coin1RoundEnd);
 		entity.setCoin3RoundEnd(coin3RoundEnd);
 		entity.setScores(scores);
-		List<CardEntity> lp = new ArrayList<>();
-		for (int i=0;i<play.size();i++) {
-			lp.add(play.get(i).toCardEntity());
-		}
+		entity.setPlay(toPlayEntityList());
+		entity.setAntiMonopoly(toAntiMonopolyEntityList());
 		return entity;
+	}
+	
+	public List<CardEntity> toPlayEntityList(){
+		int i;
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (i=5;i<=10;i++) {
+			map.put(i, 0);
+		}
+		
+		for (i=0;i<play.size();i++) {
+			int x = map.get(play.get(i).getNum())+1;
+			map.put(play.get(i).getNum(), x);
+		}
+		
+		List<CardEntity> lp = new ArrayList<>();
+		for (i=5;i<=10;i++) {
+			CardEntity c = new Card(i).toCardEntity();
+			c.setPlayed(map.get(i));
+			lp.add(c);
+		}
+		
+		return lp;
+	}
+	
+	public List<CardEntity> toAntiMonopolyEntityList(){
+		int i;
+		List<CardEntity> la = new ArrayList<>();
+		for (i=5;i<=10;i++) {
+			if (startups.getAntiMonopoly().get(i) == index) {
+				CardEntity c = new Card(i).toCardEntity();
+				la.add(c);
+			}
+		}
+		return la;
 	}
 	
 	public Player() {
@@ -196,7 +229,8 @@ public class Player {
 			int i;
 			boolean flag = true;
 			Card c = hand.remove(index);
-			for (i=0;i<hand.size();i++) {
+			/*
+			for (i=0;i<play.size();i++) {
 				if (play.get(i).getNum() == c.getNum()) {
 					flag = false;
 					play.add(i,c);
@@ -204,14 +238,14 @@ public class Player {
 			}
 			if (flag) {
 				play.add(c);
-			}
+			}*/
+			play.add(c);
 			
 			boolean f = startups.potentialChangeAntiMonopoly(this, c);
 			
 			if (startups.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
 				startups.getLogger().logPlay(this, c, index);
-				if (f)
 				
 				// TODO: add end round handles here
 				startups.nextPlayer();

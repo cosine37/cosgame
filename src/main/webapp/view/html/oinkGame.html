@@ -41,6 +41,31 @@
 		
 	</div>
 	<div ng-show="game==STARTUPS">
+		<div id="player-zone">
+			<div ng-repeat="p in players track by $index" style="float: left;">
+				<table>
+					<tr>
+						<td>
+							<div ng-repeat="a in p.antiMonopoly track by $index" style="float: left;">
+								{{a.num}}
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr ng-repeat="b in p.play track by $index">
+									<td>{{b.num}}</td>
+									<td>{{b.name}}</td>
+									<td>{{b.played}}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div style="clear:both"></div>
 		<div id="discard-zone">
 			<div id="deck" ng-repeat="c in deck track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard">
 				
@@ -56,6 +81,7 @@
 			<div ng-show="phase == 2">
 				<span>请打出或弃置一张牌</span>
 				<button ng-show="chosenCard != -1" ng-click="discard()">弃置</button>
+				<button ng-show="chosenCard != -1" ng-click="play()">打出</button>
 			</div>
 		</div>
 		<div id="hand-zone" style="padding-top: 40px">

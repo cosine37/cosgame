@@ -1,11 +1,14 @@
 package com.cosine.cosgame.oink.startups.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class StartupsEntity {
 	List<PlayerEntity> players;
 	List<CardEntity> myHand;
 	List<CardEntity> discard;
+	
+	Map<Integer, Integer> antiMonopoly;
 	
 	int round;
 	int curPlayer;
@@ -60,5 +63,11 @@ public class StartupsEntity {
 	}
 	public void setDiscard(List<CardEntity> discard) {
 		this.discard = discard;
+	}
+	public Map<Integer, Integer> getAntiMonopoly() {
+		return antiMonopoly;
+	}
+	public void setAntiMonopoly(Map<Integer, Integer> antiMonopoly) {
+		this.antiMonopoly = antiMonopoly;
 	}
 }

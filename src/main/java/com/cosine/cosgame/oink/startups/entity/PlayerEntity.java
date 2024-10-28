@@ -1,5 +1,6 @@
 package com.cosine.cosgame.oink.startups.entity;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PlayerEntity {
@@ -13,6 +14,7 @@ public class PlayerEntity {
 	
 	List<Integer> scores;
 	List<CardEntity> play;
+	List<CardEntity> antiMonopoly;
 
 	public String getName() {
 		return name;
@@ -68,7 +70,12 @@ public class PlayerEntity {
 	public void setPlay(List<CardEntity> play) {
 		this.play = play;
 	}
-	
+	public List<CardEntity> getAntiMonopoly() {
+		return antiMonopoly;
+	}
+	public void setAntiMonopoly(List<CardEntity> antiMonopoly) {
+		this.antiMonopoly = antiMonopoly;
+	}
 	
 	
 

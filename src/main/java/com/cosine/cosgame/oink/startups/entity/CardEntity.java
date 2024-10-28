@@ -7,6 +7,7 @@ public class CardEntity {
 	int num;
 	int coinOn;
 	String color;
+	int played;
 	Map<String, String> barColor;
 	Map<String, String> iconStyle;
 	Map<String, String> cstyle;
@@ -52,6 +53,12 @@ public class CardEntity {
 	}
 	public void setCstyle(Map<String, String> cstyle) {
 		this.cstyle = cstyle;
+	}
+	public int getPlayed() {
+		return played;
+	}
+	public void setPlayed(int played) {
+		this.played = played;
 	}
 	
 }
