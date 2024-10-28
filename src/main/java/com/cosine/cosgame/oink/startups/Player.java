@@ -108,6 +108,7 @@ public class Player {
 	
 	public void startRound() {
 		takeCard(3);
+		coins = 10;
 	}
 	
 	public void startTurn() {

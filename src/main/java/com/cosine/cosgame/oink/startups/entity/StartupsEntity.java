@@ -5,6 +5,7 @@ import java.util.List;
 public class StartupsEntity {
 	List<PlayerEntity> players;
 	List<CardEntity> myHand;
+	List<CardEntity> discard;
 	
 	int round;
 	int curPlayer;
@@ -53,5 +54,11 @@ public class StartupsEntity {
 	}
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	public List<CardEntity> getDiscard() {
+		return discard;
+	}
+	public void setDiscard(List<CardEntity> discard) {
+		this.discard = discard;
 	}
 }

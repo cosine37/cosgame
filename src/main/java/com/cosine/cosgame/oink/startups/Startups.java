@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.bson.Document;
 
@@ -29,6 +30,27 @@ public class Startups {
 	
 	MongoDBUtil dbutil;
 	
+	public Document hashMapToDocument(HashMap<Integer, Integer> map) {
+		Document doc = new Document();
+		for (int key: map.keySet()) {
+			doc.append(Integer.toString(key), map.get(key));
+		}
+		return doc;
+	}
+	
+	public HashMap<Integer, Integer> documentToHashmap(Document doc) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		if (doc != null) {
+			Set<String> keySet = doc.keySet();
+			for (String s : keySet) {
+				int k = Integer.parseInt(s);
+				int v = doc.getInteger(s, 0);
+				map.put(k, v);
+			}
+		}
+		return map;
+	}
+	
 	public Document toDocument() {
 		Document doc = new Document();
 		doc.append("round", round);
@@ -36,6 +58,8 @@ public class Startups {
 		doc.append("antiMonopoly", antiMonopoly);
 		doc.append("shareholder", shareholder);
 		doc.append("logs", logger.getLogs());
+		doc.append("antiMonopoly", hashMapToDocument(antiMonopoly));
+		doc.append("shareholder", hashMapToDocument(shareholder));
 		
 		int i;
 		List<Document> dok = new ArrayList<>();
@@ -61,8 +85,9 @@ public class Startups {
 	public void setFromDoc(Document doc) {
 		round = doc.getInteger("round", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
-		antiMonopoly = (HashMap<Integer, Integer>) doc.get("antiMonopoly");
-		shareholder = (HashMap<Integer, Integer>) doc.get("shareholder");
+		antiMonopoly = documentToHashmap((Document) doc.get("antiMonopoly"));
+		shareholder = documentToHashmap((Document) doc.get("shareholder"));
+		
 		
 		List<String> logs = (List<String>) doc.get("logs");
 		logger = new Logger(logs);
@@ -101,6 +126,12 @@ public class Startups {
 		int i,j;
 		List<PlayerEntity> lp = new ArrayList<>();
 		List<CardEntity> lc = new ArrayList<>();
+		List<CardEntity> ls = new ArrayList<>();
+		
+		for (i=0;i<discard.size();i++) {
+			ls.add(discard.get(i).toCardEntity());
+		}
+		
 		boolean canDraw = false;
 		int phase = Consts.OFFTURN;
 		for (i=0;i<players.size();i++) {
@@ -117,6 +148,7 @@ public class Startups {
 		entity.setCanDraw(canDraw);
 		entity.setPlayers(lp);
 		entity.setMyHand(lc);
+		entity.setDiscard(ls);
 		entity.setPhase(phase);
 		return entity;
 	}
@@ -128,35 +160,14 @@ public class Startups {
 		logger = new Logger();
 		round = 0;
 		
+		antiMonopoly = new HashMap<>();
+		shareholder = new HashMap<>();
+		
 		String dbname = "oink";
 		String col = "board";
 		dbutil = new MongoDBUtil(dbname);
 		dbutil.setCol(col);
 	}
-	
-	// Start actual operations
-	// Actual start game operation
-	public void startGameUDB() {
-		// Step 1: create players
-		int i;
-		List<String> playerNames = board.getPlayerNames();
-		players = new ArrayList<>();
-		for (i=0;i<playerNames.size();i++) {
-			Player p = new Player(playerNames.get(i));
-			p.setStartups(this);
-			players.add(p);
-		}
-		
-		// Step 2: set round and curPlayer
-		round = 0;
-		curPlayer = board.getFirstPlayer();
-		startRound();
-		
-		updatePlayers();
-		updateBasicDB();
-	}
-	
-	// End actual operations
 	
 	public void startRound() {
 		// Step 1: add all cards
@@ -217,6 +228,7 @@ public class Startups {
 			if (antiMonopoly.get(num) != p.getIndex()) {
 				ans++;
 			}
+			
 		}
 		return ans;
 	}
@@ -255,7 +267,7 @@ public class Startups {
 			if (curPlayer == players.size()) {
 				curPlayer = 0;
 			}
-			players.get(curPlayer).startRound();
+			players.get(curPlayer).startTurn();
 		}
 	}
 	
@@ -270,6 +282,30 @@ public class Startups {
 		// Step 4: calc score
 	}
 	
+	// Start actual operations
+	// Actual start game operation
+	public void startGameUDB() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Player p = new Player(playerNames.get(i));
+			p.setStartups(this);
+			players.add(p);
+		}
+		
+		// Step 2: set round and curPlayer
+		round = 0;
+		curPlayer = board.getFirstPlayer();
+		startRound();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+
+	// Actual draw operation
 	public void playerDrawUDB(String name) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
@@ -280,6 +316,18 @@ public class Startups {
 			}
 		}
 	}
+	
+	// Actual discard operation
+	public void playerDiscardUDB(String name, int cardIndex) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			p.discard(cardIndex);
+			updateBasicDB();
+			updatePlayers();
+		}
+	}
+	
+	// End actual operations
 	
 	
 	public Player getPlayerByName(String name) {
@@ -329,8 +377,8 @@ public class Startups {
 		
 		updateDB("round", round);
 		updateDB("curPlayer", curPlayer);
-		//updateDB("antiMonopoly", antiMonopoly);
-		//updateDB("shareholder", shareholder);
+		updateDB("antiMonopoly", hashMapToDocument(antiMonopoly));
+		updateDB("shareholder", hashMapToDocument(shareholder));
 		updateDB("logs", logger.getLogs());
 	}
 	

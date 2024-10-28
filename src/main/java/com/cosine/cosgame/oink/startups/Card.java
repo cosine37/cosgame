@@ -32,12 +32,15 @@ public class Card {
 		
 		Map<String, String> barColor = new HashMap<>();
 		Map<String, String> iconStyle = new HashMap<>();
+		Map<String, String> cstyle = new HashMap<>();
 		barColor.put("background-color", getColor());
 		String backgroundImage = "url(/image/Oink/Startups/" + Integer.toString(num) + ".png)";
 		iconStyle.put("background-image", backgroundImage);
 		iconStyle.put("background-size", "cover");
+		cstyle.put("margin-top", "0px");
 		entity.setBarColor(barColor);
 		entity.setIconStyle(iconStyle);
+		entity.setCstyle(cstyle);
 		
 		return entity;
 	}

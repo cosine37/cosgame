@@ -40,16 +40,29 @@
 		</table>
 		
 	</div>
-	<div id="discard-zone">
-		<div ng-repeat="c in deck track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard">
+	<div ng-show="game==STARTUPS">
+		<div id="discard-zone">
+			<div id="deck" ng-repeat="c in deck track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard">
+				
+			</div>
+			
+			<div ng-repeat="c in gamedata.discard track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard">
+				
+			</div>
 			
 		</div>
-		
+		<div style="clear:both"></div>
+		<div>
+			<div ng-show="phase == 2">
+				<span>请打出或弃置一张牌</span>
+				<button ng-show="chosenCard != -1" ng-click="discard()">弃置</button>
+			</div>
+		</div>
+		<div id="hand-zone" style="padding-top: 40px">
+			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+		</div>
+		<div style="clear:both"></div>
 	</div>
-	<div style="clear:both"></div>
-	<div id="hand-zone">
-		<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand"></div>
-	</div>
-	<div style="clear:both"></div>
+	
 	{{gamedata}}
 </body>

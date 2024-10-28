@@ -9,6 +9,7 @@ public class CardEntity {
 	String color;
 	Map<String, String> barColor;
 	Map<String, String> iconStyle;
+	Map<String, String> cstyle;
 	
 	public String getName() {
 		return name;
@@ -45,6 +46,12 @@ public class CardEntity {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	public Map<String, String> getCstyle() {
+		return cstyle;
+	}
+	public void setCstyle(Map<String, String> cstyle) {
+		this.cstyle = cstyle;
 	}
 	
 }

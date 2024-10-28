@@ -18,6 +18,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		});
 	
 		$scope.STARTUPS = 1;
+		$scope.chosenCard = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -54,6 +55,35 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				});
 			}
 			
+		}
+		
+		$scope.discard = function(){
+			if ($scope.chosenCard != -1){
+				if ($scope.game == $scope.STARTUPS){
+					var data = {"cardIndex" : $scope.chosenCard}
+					$http({url: "/oink/startups/discard", method: "PUT", params: data}).then(function(response){
+						$scope.chosenCard = -1
+						ws.send("kick");
+					});
+				}
+			}
+			
+		}
+		
+		$scope.clickCard = function(x){
+			if ($scope.game == $scope.STARTUPS){
+				if ($scope.phase != 2) return;
+				if ($scope.chosenCard == x){
+					$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+					$scope.chosenCard = -1
+				} else {
+					if ($scope.chosenCard != -1){
+						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+					}
+					$scope.chosenCard = x
+					$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-40px";
+				}
+			}
 		}
 		
 		$scope.getBoard = function(){

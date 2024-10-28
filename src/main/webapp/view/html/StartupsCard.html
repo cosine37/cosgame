@@ -15,6 +15,13 @@
 <div style="height: 73px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px; margin-top: 30px" ng-style="c.barColor" ng-show="c.num != 0">
 </div>
 
+<div>
+	<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 50px; height: 50px; position: absolute; bottom: 5px; left: 80px;" 
+	   ng-show="c.num != 0 && c.coinOn != 0">
+	   <div style="font-size: 25px; font-weight:bold; margin-top: 7px; text-align: center;">{{c.coinOn}}</div>
+	</div>
+</div>
+
 <div style="height: 318px; width:208px; background-color:darkslategrey;border-radius: 10px;" 
 	ng-show="c.num == 0">
 	<div style="font-size: 130px; font-weight: bold; color:white; margin-top:25px; margin-left: 70px;">?</div>
