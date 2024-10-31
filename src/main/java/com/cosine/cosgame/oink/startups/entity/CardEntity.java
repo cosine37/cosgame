@@ -8,6 +8,8 @@ public class CardEntity {
 	int coinOn;
 	String color;
 	int played;
+	boolean canDiscard;
+	boolean canTake;
 	Map<String, String> barColor;
 	Map<String, String> iconStyle;
 	Map<String, String> cstyle;
@@ -59,6 +61,18 @@ public class CardEntity {
 	}
 	public void setPlayed(int played) {
 		this.played = played;
+	}
+	public boolean isCanDiscard() {
+		return canDiscard;
+	}
+	public void setCanDiscard(boolean canDiscard) {
+		this.canDiscard = canDiscard;
+	}
+	public boolean isCanTake() {
+		return canTake;
+	}
+	public void setCanTake(boolean canTake) {
+		this.canTake = canTake;
 	}
 	
 }

@@ -163,10 +163,12 @@ public class Player {
 			coins = coins-cost;
 			startups.placeCoins(this);
 			
-			// Step 2: put the card in hand
+			// Step 2: set num taken (to be -1)
+			this.numTaken = -1;
+			
+			// Step 3: put the card in hand
 			Card c = startups.removeTopCard();
 			if (c != null) hand.add(c);
-			
 			
 			// Step 3: next phase
 			if (startups.getStatus() == Consts.INGAME && phase == Consts.DRAWORTAKE) {
@@ -176,11 +178,11 @@ public class Player {
 			}
 		}
 	}
-	
+	/*
 	public void draw(int x) {
 		for (int i=0;i<x;i++) draw();
 	}
-	
+	*/
 	public boolean canDraw() {
 		if (phase != Consts.DRAWORTAKE) return false;
 		int cost = startups.drawCost(this);
@@ -197,12 +199,15 @@ public class Player {
 			int cost = startups.getDiscard().get(index).getCoinOn();
 			coins = coins+cost;
 			
-			// Step 2: put the card in hand
+			// Step 2: set num taken
+			this.numTaken = startups.getDiscard().get(index).getNum();
+			
+			// Step 3: put the card in hand
 			Card c = startups.getDiscard().remove(index);
 			c.clearCoin();
 			if (c != null) hand.add(c);
-			
-			// Step 3: next phase
+
+			// Step 4: next phase
 			if (startups.getStatus() == Consts.INGAME) {
 				startups.getLogger().logTake(this, c, cost);
 				
@@ -214,7 +219,7 @@ public class Player {
 	public boolean canTake(int index) {
 		if (index < startups.getDiscard().size()) {
 			Card c = startups.getDiscard().get(index);
-			if (startups.getAntiMonopoly().get(c.getNum()) == index) { // if player has antimonopoly token
+			if (startups.getAntiMonopoly().get(c.getNum()) == this.index) { // if player has antimonopoly token
 				return false;
 			} else {
 				return true;
@@ -229,23 +234,14 @@ public class Player {
 			int i;
 			boolean flag = true;
 			Card c = hand.remove(index);
-			/*
-			for (i=0;i<play.size();i++) {
-				if (play.get(i).getNum() == c.getNum()) {
-					flag = false;
-					play.add(i,c);
-				}
-			}
-			if (flag) {
-				play.add(c);
-			}*/
 			play.add(c);
+			startups.getLogger().logPlay(this, c, index);
 			
 			boolean f = startups.potentialChangeAntiMonopoly(this, c);
 			
 			if (startups.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
-				startups.getLogger().logPlay(this, c, index);
+				
 				
 				// TODO: add end round handles here
 				startups.nextPlayer();
@@ -253,17 +249,28 @@ public class Player {
 		}
 	}
 	
+	public boolean canDiscard(int index) {
+		Card c = hand.get(index);
+		if (c.getNum() == this.numTaken) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public void discard(int index) { // index is where from hand
 		if (index < hand.size()) {
-			Card c = hand.remove(index);
-			startups.getDiscard().add(c);
-			
-			if (startups.getStatus() == Consts.INGAME) {
-				phase = Consts.OFFTURN;
+			if (canDiscard(index)) {
+				Card c = hand.remove(index);
+				startups.getDiscard().add(c);
 				startups.getLogger().logDiscard(this, c, index);
 				
-				// TODO: add end round handles here
-				startups.nextPlayer();
+				if (startups.getStatus() == Consts.INGAME) {
+					phase = Consts.OFFTURN;
+					
+					// TODO: add end round handles here
+					startups.nextPlayer();
+				}
 			}
 		}
 	}

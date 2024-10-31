@@ -67,8 +67,12 @@ public class Logger {
 		log(s);
 	}
 	
-	public void logAntiMonopoly(Player p, Card c) {
-		String s = p.getName() + " 明面上暂时持有最多股 " + c.getName() +" 因此获得相应的反垄断标记";
+	public void logAntiMonopoly(Player p, Card c, Player p2) {
+		String s = p.getName() + " 获得了 " + c.getName() +" 的反垄断标记";
+		if (p2 != null) {
+			s = p.getName() + " 从 " + p2.getName() + " 处获得了 " + c.getName() +" 的反垄断标记";
+		}
+		
 		log(s);
 	}
 	
@@ -76,6 +80,7 @@ public class Logger {
 		String s = "第 " + Integer.toString(x) +" 局 开始";
 		log(s);
 	}
+	
 	public void logStartTurn(Player p) {
 		String s = p.getName() + " 开始了回合";
 	}

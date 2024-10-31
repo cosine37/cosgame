@@ -42,6 +42,8 @@ public class Card {
 		entity.setIconStyle(iconStyle);
 		entity.setCstyle(cstyle);
 		entity.setPlayed(0);
+		entity.setCanDiscard(true);
+		entity.setCanTake(false);
 		
 		return entity;
 	}

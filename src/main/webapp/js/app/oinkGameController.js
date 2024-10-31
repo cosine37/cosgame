@@ -63,7 +63,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					var data = {"cardIndex" : $scope.chosenCard}
 					$http({url: "/oink/startups/discard", method: "PUT", params: data}).then(function(response){
 						$scope.chosenCard = -1
-						ws.send("kick");
+						ws.send("refresh");
 					});
 				}
 			}
@@ -75,7 +75,19 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					var data = {"cardIndex" : $scope.chosenCard}
 					$http({url: "/oink/startups/play", method: "PUT", params: data}).then(function(response){
 						$scope.chosenCard = -1
-						ws.send("kick");
+						ws.send("refresh");
+					});
+				}
+			}
+		}
+		
+		$scope.take = function(x){
+			if (x != -1){
+				if ($scope.game == $scope.STARTUPS){
+					var data = {"cardIndex" : x}
+					$http({url: "/oink/startups/take", method: "PUT", params: data}).then(function(response){
+						$scope.chosenCard = -1
+						ws.send("refresh");
 					});
 				}
 			}

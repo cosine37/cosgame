@@ -131,20 +131,28 @@ public class Startups {
 		List<CardEntity> lc = new ArrayList<>();
 		List<CardEntity> ls = new ArrayList<>();
 		
-		for (i=0;i<discard.size();i++) {
-			ls.add(discard.get(i).toCardEntity());
-		}
+		
 		
 		boolean canDraw = false;
 		int phase = Consts.OFFTURN;
+		int myDrawCost = 0;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			lp.add(p.toPlayerEntity());
 			if (p.getName().contentEquals(username)) {
 				canDraw = p.canDraw();
+				myDrawCost = drawCost(p);
 				phase = p.getPhase();
 				for (j=0;j<p.getHand().size();j++) {
-					lc.add(p.getHand().get(j).toCardEntity());
+					CardEntity e = p.getHand().get(j).toCardEntity();
+					e.setCanDiscard(p.canDiscard(j));
+					lc.add(e);
+				}
+				
+				for (j=0;j<discard.size();j++) {
+					CardEntity e = discard.get(j).toCardEntity();
+					e.setCanTake(p.canTake(j));
+					ls.add(e);
 				}
 			}
 		}
@@ -153,6 +161,7 @@ public class Startups {
 		entity.setMyHand(lc);
 		entity.setDiscard(ls);
 		entity.setPhase(phase);
+		entity.setMyDrawCost(myDrawCost);
 		return entity;
 	}
 	
@@ -259,7 +268,14 @@ public class Startups {
 			}
 		}
 		if (f) {
+			int o = antiMonopoly.get(num);
 			antiMonopoly.put(num, p.getIndex());
+			
+			if (o == -1) {
+				logger.logAntiMonopoly(p, c, null);
+			} else {
+				logger.logAntiMonopoly(p, c, players.get(o));
+			}
 		}
 		return f;
 	}
@@ -339,6 +355,17 @@ public class Startups {
 			updatePlayers();
 		}
 	}
+	
+	// Actual take operation
+	public void playerTakeUDB(String name, int cardIndex) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			p.take(cardIndex);
+			updateBasicDB();
+			updatePlayer(name);
+		}
+	}
+	
 	
 	// End actual operations
 	

@@ -15,6 +15,7 @@ public class StartupsEntity {
 	int deckSize;
 	int phase;
 	boolean canDraw;
+	int myDrawCost;
 	
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -69,5 +70,11 @@ public class StartupsEntity {
 	}
 	public void setAntiMonopoly(Map<Integer, Integer> antiMonopoly) {
 		this.antiMonopoly = antiMonopoly;
+	}
+	public int getMyDrawCost() {
+		return myDrawCost;
+	}
+	public void setMyDrawCost(int myDrawCost) {
+		this.myDrawCost = myDrawCost;
 	}
 }

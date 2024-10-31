@@ -17,16 +17,38 @@
 
 <div>
 	<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 50px; height: 50px; position: absolute; bottom: 5px; left: 80px;" 
-	   ng-show="c.num != 0 && c.coinOn != 0">
+	   ng-show="c.num != 0 && c.coinOn != 0 && (phase != 1 || c.canTake == false)">
 	   <div style="font-size: 25px; font-weight:bold; margin-top: 7px; text-align: center;">{{c.coinOn}}</div>
+	   
 	</div>
+	<div class="card-button-div" ng-show="phase == 1 && c.num != 0 && c.canTake" ng-click="take($index)" style="position: absolute; bottom: 5px;" >
+   		获得
+   		<span ng-show="c.coinOn != 0">(+</span>
+   		<span style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 36px; height: 36px; display:inline-block; color: black; font-weight:bold;" 
+		   ng-show="c.coinOn != 0">
+		   <!-- 
+		   <div style="font-size: 25px; font-weight:bold; margin-top: 7px; text-align: center;">{{c.coinOn}}</div>
+		    -->
+		   {{c.coinOn}}
+		</span>
+   		<span ng-show="c.coinOn != 0">)</span>
+	 </div>
 </div>
 
 <div style="height: 318px; width:208px; background-color:darkslategrey;border-radius: 10px;" 
 	ng-show="c.num == 0">
 	<div style="font-size: 130px; font-weight: bold; color:white; margin-top:25px; margin-left: 70px;">?</div>
-	<div class="card-button-div" ng-show="c.isDeck && phase != -1" ng-disabled="gamedata.canDraw == false" ng-click="draw()" >
+	<div class="card-button-div" ng-show="c.isDeck && phase == 1" ng-disabled="gamedata.canDraw == false" ng-click="draw()">
 		抽牌
+		<span ng-show="gamedata.myDrawCost != 0">(-</span>
+   		<span style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 36px; height: 36px; display:inline-block; color: black; font-weight:bold;" 
+		   ng-show="gamedata.myDrawCost != 0">
+		   <!-- 
+		   <div style="font-size: 25px; font-weight:bold; margin-top: 7px; text-align: center;">{{c.coinOn}}</div>
+		    -->
+		   {{gamedata.myDrawCost}}
+		</span>
+   		<span ng-show="gamedata.myDrawCost != 0">)</span>
 	</div>
 	
 	<div style="position: absolute; top: 10px; right: 20px; color: white; font-size: 20px; font-weight: bold;" ng-show="c.isDeck">剩余张数：{{gamedata.deckSize}}</div>
