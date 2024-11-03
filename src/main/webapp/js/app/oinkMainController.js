@@ -137,6 +137,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		c = {
 			"num" : 5,
 			"name" : "五福铁门",
+			"coinOn" : 0,
 			"barColor": {
 				"background-color": "rgb(255,165,0)"
 			},
@@ -148,6 +149,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		c2 = {
 			"num" : 10,
 			"name" : "十年纱窗",
+			"coinOn" : 0,
 			"barColor": {
 				"background-color": "rgb(210,43,43)"
 			},

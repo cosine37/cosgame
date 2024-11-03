@@ -41,27 +41,52 @@
 		
 	</div>
 	<div ng-show="game==STARTUPS">
-		<div id="player-zone">
+		<div id="player-zone" class="noselect">
 			<div ng-repeat="p in players track by $index" style="float: left;">
 				<table>
 					<tr>
 						<td>
-							<div ng-repeat="a in p.antiMonopoly track by $index" style="float: left;">
-								{{a.num}}
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
 							<table>
-								<tr ng-repeat="b in p.play track by $index">
-									<td>{{b.num}}</td>
-									<td>{{b.name}}</td>
-									<td>{{b.played}}</td>
+								<tr>
+									<td rowspan='2'>Avatar</td>
+									<td>{{p.name}}</td>
+								</tr>
+								<tr>
+									<td>
+										<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; 
+											color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 2px">
+											{{p.coins}}
+										</div>
+									</td>
 								</tr>
 							</table>
 						</td>
 					</tr>
+					<tr>
+						<td style="height: 45px">
+							<div ng-repeat="a in p.antiMonopoly track by $index" ng-style="a.iconStyle"
+								style="float: left; height: 40px; width: 40px;color:red; font-size: 30px; font-family: 'yzgc';text-align: center;" >
+								×
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td style="height: 280px; width: 260px; vertical-align: top">
+							<table>
+								<tr ng-repeat="b in p.play track by $index" ng-show="b.played > 0">
+									<td>
+										<div style="position:relative; height: 40px; border-radius:20px" ng-style="b.barColor">
+											<div style="float:left; height: 40px; width: 40px;" ng-style="b.iconStyle"></div>
+											<div style="float:left; width: 120px; padding-top: 5px; padding-left: 5px; color:white; font-size: 24px; font-family: 'yzgc'">{{b.name}}</div>
+											<div style="float:left; width: 80px; padding-top: 5px; padding-right: 20px; color:white; font-size: 24px; font-family: 'yzgc'; text-align: right">{{b.played}}</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					
 				</table>
 			</div>
 		</div>
