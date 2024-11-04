@@ -15,8 +15,11 @@ public class Consts {
 	// Rule based
 	public static final int HANDSIZE = 3;
 	public static final int MAXROUND = 4;
-	public static final int REMOVENUM = 5;
+	//public static final int REMOVENUM = 5;
+	public static final int REMOVENUM = 34;
 	public static final int TIED = -1;
-	
+	public static final int FIRSTPLACESCORE = 2;
+	public static final int SECONDPLACESCORE = 1;
+	public static final int LASTPLACESCORE = -1;
 	
 }

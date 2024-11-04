@@ -8,6 +8,7 @@ public class CardEntity {
 	int coinOn;
 	String color;
 	int played;
+	int fromHand;
 	boolean canDiscard;
 	boolean canTake;
 	Map<String, String> barColor;
@@ -73,6 +74,12 @@ public class CardEntity {
 	}
 	public void setCanTake(boolean canTake) {
 		this.canTake = canTake;
+	}
+	public int getFromHand() {
+		return fromHand;
+	}
+	public void setFromHand(int fromHand) {
+		this.fromHand = fromHand;
 	}
 	
 }

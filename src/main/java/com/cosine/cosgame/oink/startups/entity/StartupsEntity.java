@@ -9,6 +9,7 @@ public class StartupsEntity {
 	List<CardEntity> discard;
 	
 	Map<Integer, Integer> antiMonopoly;
+	Map<Integer, Integer> shareholder;
 	
 	int round;
 	int curPlayer;
@@ -76,5 +77,11 @@ public class StartupsEntity {
 	}
 	public void setMyDrawCost(int myDrawCost) {
 		this.myDrawCost = myDrawCost;
+	}
+	public Map<Integer, Integer> getShareholder() {
+		return shareholder;
+	}
+	public void setShareholder(Map<Integer, Integer> shareholder) {
+		this.shareholder = shareholder;
 	}
 }

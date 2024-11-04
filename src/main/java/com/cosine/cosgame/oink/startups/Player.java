@@ -94,7 +94,7 @@ public class Player {
 	}
 	
 	public List<CardEntity> toPlayEntityList(){
-		int i;
+		int i,j;
 		HashMap<Integer, Integer> map = new HashMap<>();
 		for (i=5;i<=10;i++) {
 			map.put(i, 0);
@@ -109,7 +109,16 @@ public class Player {
 		for (i=5;i<=10;i++) {
 			CardEntity c = new Card(i).toCardEntity();
 			c.setPlayed(map.get(i));
+			
+			int fromHand = 0;
+			if (startups.getStatus() == Consts.ROUNDEND) {
+				for (j=0;j<hand.size();j++) {
+					if (hand.get(j).getNum() == i) fromHand++;
+				}
+			}
+			c.setFromHand(fromHand);
 			lp.add(c);
+			
 		}
 		
 		return lp;
@@ -178,11 +187,7 @@ public class Player {
 			}
 		}
 	}
-	/*
-	public void draw(int x) {
-		for (int i=0;i<x;i++) draw();
-	}
-	*/
+
 	public boolean canDraw() {
 		if (phase != Consts.DRAWORTAKE) return false;
 		int cost = startups.drawCost(this);
@@ -242,9 +247,11 @@ public class Player {
 			if (startups.getStatus() == Consts.INGAME) {
 				phase = Consts.OFFTURN;
 				
-				
-				// TODO: add end round handles here
-				startups.nextPlayer();
+				if (startups.roundEnd()) {
+					startups.endRound();
+				} else {
+					startups.nextPlayer();
+				}
 			}
 		}
 	}
@@ -268,8 +275,11 @@ public class Player {
 				if (startups.getStatus() == Consts.INGAME) {
 					phase = Consts.OFFTURN;
 					
-					// TODO: add end round handles here
-					startups.nextPlayer();
+					if (startups.roundEnd()) {
+						startups.endRound();
+					} else {
+						startups.nextPlayer();
+					}
 				}
 			}
 		}
@@ -305,6 +315,22 @@ public class Player {
 			}
 		}
 		return ans;
+	}
+	
+	public void subtractCoin1RoundEnd(int x) {
+		coin1RoundEnd = coin1RoundEnd - x;
+	}
+	
+	public void addCoin3RoundEnd(int x) {
+		coin3RoundEnd = coin3RoundEnd + x;
+	}
+	
+	public int finalCoins() {
+		return coin1RoundEnd + 3*coin3RoundEnd;
+	}
+	
+	public void addScore(int x) {
+		scores.add(x);
 	}
 
 	public String getName() {

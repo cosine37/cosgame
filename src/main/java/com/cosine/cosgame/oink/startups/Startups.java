@@ -17,6 +17,7 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Startups {
 	int round;
 	int curPlayer;
+	int firstPlayer;
 	
 	List<Card> deck;
 	List<Card> discard;
@@ -124,6 +125,7 @@ public class Startups {
 		entity.setCurPlayer(curPlayer);
 		entity.setRound(round);
 		entity.setAntiMonopoly(antiMonopoly);
+		entity.setShareholder(shareholder);
 		entity.setDeckSize(deck.size());
 		
 		int i,j;
@@ -219,7 +221,6 @@ public class Startups {
 		board.setStatus(Consts.INGAME);
 		round++;
 		logger.logRoundStart(round);
-		//curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
 		
 	}
@@ -290,15 +291,112 @@ public class Startups {
 		}
 	}
 	
+	public boolean roundEnd() {
+		boolean f = false;
+		if (deck.size() == 0) f = true;
+		return f;
+	}
+	
 	public void endRound() {
-		// Step 1: change status
-		// status = Consts.ROUNDEND;
+		// Step 1: change status?
+		board.setStatus(Consts.ROUNDEND);
 		
 		// Step 2: get shareholder for each stock
+		int i,j;
+		shareholder = new HashMap<>();
+		for (i=5;i<=10;i++) {
+			int t = 0;
+			
+			for (j=0;j<players.size();j++) {
+				if (players.get(j).numStock(i) > t) {
+					t = players.get(j).numStock(i);
+				}
+			}
+			
+			int ip = -1;
+			for (j=0;j<players.size();j++) {
+				if (players.get(j).numStock(i) == t) {
+					if (ip == -1) {
+						ip = j;
+					} else {
+						ip = -2; // multiple shareholder = no shareholder
+					}
+				}
+			}
+			shareholder.put(i, ip);
+		}
 		
 		// Step 3: change coins
+		for (i=0;i<players.size();i++) {
+			players.get(i).setCoin1RoundEnd(players.get(i).getCoins());
+		}
+		for (i=5;i<=10;i++) {
+			int sh = shareholder.get(i);
+			if (sh>=0) {
+				for (j=0;j<players.size();j++) {
+					if (j != sh) {
+						int x = players.get(j).numStock(i);
+						players.get(j).subtractCoin1RoundEnd(x);
+						players.get(sh).addCoin3RoundEnd(x);
+					}
+				}
+			}
+		}
 		
-		// Step 4: calc score
+		// Step 4: get rankings
+		List<Player> lp = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			lp.add(players.get(i));
+		}
+		for (i=0;i<lp.size();i++) {
+			for (j=i+1;j<lp.size();j++) {
+				boolean needSwap = false;
+				if (lp.get(i).finalCoins() < lp.get(j).finalCoins()) { // one with larger final score ranks higher
+					needSwap = true;
+				} else if (lp.get(i).finalCoins() == lp.get(j).finalCoins()) {
+					if (lp.get(i).getCoin3RoundEnd() < lp.get(j).getCoin3RoundEnd()) { // same score, one with more coin3 ranks higher
+						needSwap = true;
+					} else if (lp.get(i).getCoin3RoundEnd() == lp.get(j).getCoin3RoundEnd()) {
+						// get real index
+						int rsi = lp.get(i).getIndex();
+						int rsj = lp.get(j).getIndex();
+						if (rsi < firstPlayer) rsi=rsi+players.size();
+						if (rsj < firstPlayer) rsj=rsj+players.size();
+						if (rsi < rsj) { // one goes last ranks higher
+							needSwap = true;
+						}
+					}
+				}
+				if (needSwap) {
+					Player tp = lp.get(i);
+					lp.set(i, lp.get(j));
+					lp.set(j, tp);
+				}
+			}
+		}
+		int firstPlayerIndex = -1;
+		int secondPlayerIndex = -1;
+		int lastPlayerIndex = -1;
+		
+		firstPlayerIndex = lp.get(0).getIndex();
+		if (lp.size() > 1) secondPlayerIndex = lp.get(1).getIndex();
+		if (lp.size() > 2) lastPlayerIndex = lp.get(lp.size()-1).getIndex();
+		
+		// Step 5: update scores
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getIndex() == firstPlayerIndex) {
+				players.get(i).addScore(Consts.FIRSTPLACESCORE);
+			} else if (players.get(i).getIndex() == secondPlayerIndex) {
+				players.get(i).addScore(Consts.SECONDPLACESCORE);
+			} else if (players.get(i).getIndex() == lastPlayerIndex) {
+				players.get(i).addScore(Consts.LASTPLACESCORE);
+			}
+		}
+		
+		// Step 6: set first player
+		lastPlayerIndex = lp.get(lp.size()-1).getIndex();
+		firstPlayer = lastPlayerIndex;
+		
 	}
 	
 	// Start actual operations
@@ -317,6 +415,7 @@ public class Startups {
 		// Step 2: set round and curPlayer
 		round = 0;
 		curPlayer = board.getFirstPlayer();
+		firstPlayer = board.getFirstPlayer();
 		startRound();
 		
 		updatePlayers();
@@ -416,7 +515,9 @@ public class Startups {
 		updateDB("discard", dos);
 		
 		updateDB("round", round);
+		updateDB("status", board.getStatus());
 		updateDB("curPlayer", curPlayer);
+		updateDB("firstPlayer", firstPlayer);
 		updateDB("antiMonopoly", hashMapToDocument(antiMonopoly));
 		updateDB("shareholder", hashMapToDocument(shareholder));
 		updateDB("logs", logger.getLogs());
