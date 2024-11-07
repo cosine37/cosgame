@@ -1,0 +1,87 @@
+package com.cosine.cosgame.oink.grove;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Role {
+	int num;
+	int height;
+	int age;
+	String name;
+	String description;
+	String gender;
+	String avatar;
+	
+	List<Integer> predicted;
+	
+	public Role() {
+		predicted = new ArrayList<>();
+	}
+	
+	public Role(int num, int height, int age, String name, String description, String gender, String avatar) {
+		this();
+		this.num = num;
+		this.height = height;
+		this.age = age;
+		this.name = name;
+		this.description = description;
+		this.gender = gender;
+		this.avatar = avatar;
+	}
+	
+	public int lastPredicted() {
+		if (predicted.size() == 0) return -1;
+		return predicted.get(predicted.size()-1);
+	}
+	public void addPredicted(int x) {
+		predicted.add(x);
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public List<Integer> getPredicted() {
+		return predicted;
+	}
+	public void setPredicted(List<Integer> predicted) {
+		this.predicted = predicted;
+	}
+}
