@@ -9,8 +9,9 @@ public class PlayerEntity {
 	int coins;
 	int phase;
 	int numTaken;
-	int coin1RoundEnd;
-	int coin3RoundEnd;
+	
+	List<Integer> coin1s;
+	List<Integer> coin3s;
 	
 	List<Integer> scores;
 	List<CardEntity> play;
@@ -46,17 +47,17 @@ public class PlayerEntity {
 	public void setNumTaken(int numTaken) {
 		this.numTaken = numTaken;
 	}
-	public int getCoin1RoundEnd() {
-		return coin1RoundEnd;
+	public List<Integer> getCoin1s() {
+		return coin1s;
 	}
-	public void setCoin1RoundEnd(int coin1RoundEnd) {
-		this.coin1RoundEnd = coin1RoundEnd;
+	public void setCoin1s(List<Integer> coin1s) {
+		this.coin1s = coin1s;
 	}
-	public int getCoin3RoundEnd() {
-		return coin3RoundEnd;
+	public List<Integer> getCoin3s() {
+		return coin3s;
 	}
-	public void setCoin3RoundEnd(int coin3RoundEnd) {
-		this.coin3RoundEnd = coin3RoundEnd;
+	public void setCoin3s(List<Integer> coin3s) {
+		this.coin3s = coin3s;
 	}
 	public List<Integer> getScores() {
 		return scores;

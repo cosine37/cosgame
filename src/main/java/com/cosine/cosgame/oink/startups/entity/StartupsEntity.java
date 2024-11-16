@@ -7,6 +7,7 @@ public class StartupsEntity {
 	List<PlayerEntity> players;
 	List<CardEntity> myHand;
 	List<CardEntity> discard;
+	List<EndRoundEntity> endRoundInfo;
 	
 	Map<Integer, Integer> antiMonopoly;
 	Map<Integer, Integer> shareholder;
@@ -83,5 +84,11 @@ public class StartupsEntity {
 	}
 	public void setShareholder(Map<Integer, Integer> shareholder) {
 		this.shareholder = shareholder;
+	}
+	public List<EndRoundEntity> getEndRoundInfo() {
+		return endRoundInfo;
+	}
+	public void setEndRoundInfo(List<EndRoundEntity> endRoundInfo) {
+		this.endRoundInfo = endRoundInfo;
 	}
 }

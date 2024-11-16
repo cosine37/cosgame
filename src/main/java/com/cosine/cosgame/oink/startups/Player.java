@@ -17,8 +17,8 @@ public class Player {
 	
 	int numTaken;
 	
-	int coin1RoundEnd;
-	int coin3RoundEnd;
+	List<Integer> coin1s;
+	List<Integer> coin3s;
 	
 	List<Integer> scores;
 	
@@ -34,8 +34,8 @@ public class Player {
 		doc.append("coins", coins);
 		doc.append("phase", phase);
 		doc.append("numTaken", numTaken);
-		doc.append("coin1RoundEnd", coin1RoundEnd);
-		doc.append("coin3RoundEnd", coin3RoundEnd);
+		doc.append("coin1s", coin1s);
+		doc.append("coin3s", coin3s);
 		doc.append("scores", scores);
 		
 		int i;
@@ -60,8 +60,8 @@ public class Player {
 		coins = doc.getInteger("coins", 0);
 		phase = doc.getInteger("phase", 0);
 		numTaken = doc.getInteger("numTaken", 0);
-		coin1RoundEnd = doc.getInteger("coin1RoundEnd", 0);
-		coin3RoundEnd = doc.getInteger("coin3RoundEnd", 0);
+		coin1s = (List<Integer>)doc.get("coin1s");
+		coin3s = (List<Integer>)doc.get("coin3s");
 		scores = (List<Integer>) doc.get("scores");
 		List<Document> doh = (List<Document>) doc.get("hand");
 		List<Document> dop = (List<Document>) doc.get("play");
@@ -85,8 +85,8 @@ public class Player {
 		entity.setCoins(coins);
 		entity.setPhase(phase);
 		entity.setNumTaken(numTaken);
-		entity.setCoin1RoundEnd(coin1RoundEnd);
-		entity.setCoin3RoundEnd(coin3RoundEnd);
+		entity.setCoin1s(coin1s);
+		entity.setCoin3s(coin3s);
 		entity.setScores(scores);
 		entity.setPlay(toPlayEntityList());
 		entity.setAntiMonopoly(toAntiMonopolyEntityList());
@@ -140,6 +140,8 @@ public class Player {
 		scores = new ArrayList<>();
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
+		coin1s = new ArrayList<>();
+		coin3s = new ArrayList<>();
 	}
 	
 	public Player(String name) {
@@ -151,6 +153,8 @@ public class Player {
 	public void startRound() {
 		takeCard(3);
 		coins = 10;
+		coin1s = new ArrayList<>();
+		coin3s = new ArrayList<>();
 	}
 	
 	public void startTurn() {
@@ -318,15 +322,37 @@ public class Player {
 	}
 	
 	public void subtractCoin1RoundEnd(int x) {
-		coin1RoundEnd = coin1RoundEnd - x;
+		int coin1RoundEnd = getCoin1RoundEnd() - x;
+		coin1s.add(coin1RoundEnd);
 	}
 	
 	public void addCoin3RoundEnd(int x) {
-		coin3RoundEnd = coin3RoundEnd + x;
+		int coin3RoundEnd = getCoin3RoundEnd() + x;
+		coin3s.add(coin3RoundEnd);
 	}
 	
 	public int finalCoins() {
-		return coin1RoundEnd + 3*coin3RoundEnd;
+		return getCoin1RoundEnd() + 3*getCoin3RoundEnd();
+	}
+	public int getCoin1RoundEnd() {
+		int coin1RoundEnd = coins;
+		if (coin1s.size() > 0) {
+			coin1RoundEnd = coin1s.get(coin1s.size()-1);
+		}
+		return coin1RoundEnd;
+	}
+	public void setCoin1RoundEnd(int x) {
+		coin1s.add(x);
+	}
+	public int getCoin3RoundEnd() {
+		int coin3RoundEnd = 0;
+		if (coin3s.size() > 0) {
+			coin3RoundEnd = coin3s.get(coin3s.size()-1);
+		}
+		return coin3RoundEnd;
+	}
+	public void setCoin3RoundEnd(int x) {
+		coin3s.add(x);
 	}
 	
 	public void addScore(int x) {
@@ -357,18 +383,6 @@ public class Player {
 	public void setPhase(int phase) {
 		this.phase = phase;
 	}
-	public int getCoin1RoundEnd() {
-		return coin1RoundEnd;
-	}
-	public void setCoin1RoundEnd(int coin1RoundEnd) {
-		this.coin1RoundEnd = coin1RoundEnd;
-	}
-	public int getCoin3RoundEnd() {
-		return coin3RoundEnd;
-	}
-	public void setCoin3RoundEnd(int coin3RoundEnd) {
-		this.coin3RoundEnd = coin3RoundEnd;
-	}
 	public List<Integer> getScores() {
 		return scores;
 	}
@@ -398,6 +412,18 @@ public class Player {
 	}
 	public void setStartups(Startups startups) {
 		this.startups = startups;
+	}
+	public List<Integer> getCoin1s() {
+		return coin1s;
+	}
+	public void setCoin1s(List<Integer> coin1s) {
+		this.coin1s = coin1s;
+	}
+	public List<Integer> getCoin3s() {
+		return coin3s;
+	}
+	public void setCoin3s(List<Integer> coin3s) {
+		this.coin3s = coin3s;
 	}
 	
 	

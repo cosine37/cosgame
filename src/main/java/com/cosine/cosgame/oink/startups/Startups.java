@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
 import com.cosine.cosgame.oink.startups.entity.CardEntity;
+import com.cosine.cosgame.oink.startups.entity.EndRoundEntity;
 import com.cosine.cosgame.oink.startups.entity.PlayerEntity;
 import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -164,6 +165,50 @@ public class Startups {
 		entity.setDiscard(ls);
 		entity.setPhase(phase);
 		entity.setMyDrawCost(myDrawCost);
+		
+		// deal with end round msg
+		if (board.getStatus() != Consts.ROUNDEND) {
+			entity.setEndRoundInfo(new ArrayList<>());
+		} else {
+			List<EndRoundEntity> eres = new ArrayList<>();
+			for (i=0;i<=5;i++) {
+				int stockNum = i+5;
+				EndRoundEntity ere = new EndRoundEntity();
+				
+				int sh = shareholder.get(stockNum);
+				if (sh < 0) {
+					ere.setShareholder("没有");
+				} else {
+					ere.setShareholder(players.get(sh).getName());
+				}
+				
+				Card tc = new Card(stockNum);
+				ere.setStockName(tc.getName());
+				ere.setNum(tc.getNum());
+				ere.setIcon(Integer.toString(tc.getNum()));
+				
+				List<Integer> coin1Before = new ArrayList<>();
+				List<Integer> coin1After = new ArrayList<>();
+				List<Integer> coin3Before = new ArrayList<>();
+				List<Integer> coin3After = new ArrayList<>();
+				for (j=0;j<players.size();j++) {
+					Player p = players.get(j);
+					coin1Before.add(p.getCoin1s().get(i));
+					coin3Before.add(p.getCoin3s().get(i));
+					coin1After.add(p.getCoin1s().get(i+1));
+					coin3After.add(p.getCoin3s().get(i+1));
+				}
+				ere.setCoin1Before(coin1Before);
+				ere.setCoin1After(coin1After);
+				ere.setCoin3Before(coin3Before);
+				ere.setCoin3After(coin3After);
+				
+				eres.add(ere);
+			}
+			entity.setEndRoundInfo(eres);
+		}
+		
+		
 		return entity;
 	}
 	
@@ -329,18 +374,23 @@ public class Startups {
 		// Step 3: change coins
 		for (i=0;i<players.size();i++) {
 			players.get(i).setCoin1RoundEnd(players.get(i).getCoins());
+			players.get(i).setCoin3RoundEnd(0);
 		}
 		for (i=5;i<=10;i++) {
 			int sh = shareholder.get(i);
-			if (sh>=0) {
-				for (j=0;j<players.size();j++) {
-					if (j != sh) {
-						int x = players.get(j).numStock(i);
-						players.get(j).subtractCoin1RoundEnd(x);
-						players.get(sh).addCoin3RoundEnd(x);
-					}
+			int y = 0;
+			for (j=0;j<players.size();j++) {
+				if (sh>=0 && j != sh) {
+					int x = players.get(j).numStock(i);
+					players.get(j).subtractCoin1RoundEnd(x);
+					players.get(j).addCoin3RoundEnd(0);
+					y = y+x;
+				} else {
+					players.get(j).subtractCoin1RoundEnd(0);
+					if (j!=sh) players.get(j).addCoin3RoundEnd(0);
 				}
 			}
+			if (sh>=0) players.get(sh).addCoin3RoundEnd(y);
 		}
 		
 		// Step 4: get rankings
