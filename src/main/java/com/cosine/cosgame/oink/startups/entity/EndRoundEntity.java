@@ -12,6 +12,10 @@ public class EndRoundEntity {
 	List<Integer> coin3Before;
 	List<Integer> coin1After;
 	List<Integer> coin3After;
+	List<Integer> numStocks;
+	List<Integer> totalCoins;
+	List<String> scoreDeltaDisplay;
+	List<Integer> scores;
 	int num;
 	
 	public String getStockName() {
@@ -73,5 +77,29 @@ public class EndRoundEntity {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	public List<Integer> getNumStocks() {
+		return numStocks;
+	}
+	public void setNumStocks(List<Integer> numStocks) {
+		this.numStocks = numStocks;
+	}
+	public List<Integer> getTotalCoins() {
+		return totalCoins;
+	}
+	public void setTotalCoins(List<Integer> totalCoins) {
+		this.totalCoins = totalCoins;
+	}
+	public List<String> getScoreDeltaDisplay() {
+		return scoreDeltaDisplay;
+	}
+	public void setScoreDeltaDisplay(List<String> scoreDeltaDisplay) {
+		this.scoreDeltaDisplay = scoreDeltaDisplay;
+	}
+	public List<Integer> getScores() {
+		return scores;
+	}
+	public void setScores(List<Integer> scores) {
+		this.scores = scores;
 	}
 }

@@ -207,6 +207,24 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/oink/startups/confirmnextround", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> confirmNextRround(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.STARTUPS)) {
+				board.getStartups().playerConfirmNextRoundUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	/*
 	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> claimDominant(HttpServletRequest request, @RequestParam String dominantSuit, @RequestParam int numDominant){

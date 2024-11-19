@@ -116,7 +116,7 @@
 			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand noselect" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
 		<div style="clear:both"></div>
-		<div ng-include="'/view/html/StartupsEndRound.html'"></div>
+		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect"></div>
 	</div>
 	
 	{{gamedata}}

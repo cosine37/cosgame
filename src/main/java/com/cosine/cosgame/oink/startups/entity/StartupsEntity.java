@@ -18,6 +18,7 @@ public class StartupsEntity {
 	int phase;
 	boolean canDraw;
 	int myDrawCost;
+	boolean confirmed;
 	
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -90,5 +91,11 @@ public class StartupsEntity {
 	}
 	public void setEndRoundInfo(List<EndRoundEntity> endRoundInfo) {
 		this.endRoundInfo = endRoundInfo;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 }

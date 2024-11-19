@@ -139,6 +139,7 @@ public class Startups {
 		boolean canDraw = false;
 		int phase = Consts.OFFTURN;
 		int myDrawCost = 0;
+		boolean confirmNextRound = false;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			lp.add(p.toPlayerEntity());
@@ -146,6 +147,7 @@ public class Startups {
 				canDraw = p.canDraw();
 				myDrawCost = drawCost(p);
 				phase = p.getPhase();
+				confirmNextRound = p.isConfirmNextRound();
 				for (j=0;j<p.getHand().size();j++) {
 					CardEntity e = p.getHand().get(j).toCardEntity();
 					e.setCanDiscard(p.canDiscard(j));
@@ -165,7 +167,7 @@ public class Startups {
 		entity.setDiscard(ls);
 		entity.setPhase(phase);
 		entity.setMyDrawCost(myDrawCost);
-		
+		entity.setConfirmed(confirmNextRound);
 		// deal with end round msg
 		if (board.getStatus() != Consts.ROUNDEND) {
 			entity.setEndRoundInfo(new ArrayList<>());
@@ -191,18 +193,36 @@ public class Startups {
 				List<Integer> coin1After = new ArrayList<>();
 				List<Integer> coin3Before = new ArrayList<>();
 				List<Integer> coin3After = new ArrayList<>();
+				List<String> names = new ArrayList<>();
+				List<Integer> numStocks = new ArrayList<>();
+				List<Integer> totalCoins = new ArrayList<>();
+				List<String> sdd = new ArrayList<>();
+				List<Integer> scores = new ArrayList<>();
 				for (j=0;j<players.size();j++) {
 					Player p = players.get(j);
+					names.add(p.getName());
 					coin1Before.add(p.getCoin1s().get(i));
 					coin3Before.add(p.getCoin3s().get(i));
 					coin1After.add(p.getCoin1s().get(i+1));
 					coin3After.add(p.getCoin3s().get(i+1));
+					numStocks.add(p.numStock(stockNum));
+					totalCoins.add(p.getCoin1s().get(i+1) + p.getCoin3s().get(i+1) * 3);
+					if (p.getScoreDelta() < 0) {
+						sdd.add(Integer.toString(p.getScoreDelta()));
+					} else {
+						sdd.add("+" + Integer.toString(p.getScoreDelta()));
+					}
+					scores.add(p.getLastScore());
 				}
 				ere.setCoin1Before(coin1Before);
 				ere.setCoin1After(coin1After);
 				ere.setCoin3Before(coin3Before);
 				ere.setCoin3After(coin3After);
-				
+				ere.setPlayerNames(names);
+				ere.setNumStocks(numStocks);
+				ere.setTotalCoins(totalCoins);
+				ere.setScoreDeltaDisplay(sdd);
+				ere.setScores(scores);
 				eres.add(ere);
 			}
 			entity.setEndRoundInfo(eres);
@@ -266,6 +286,7 @@ public class Startups {
 		board.setStatus(Consts.INGAME);
 		round++;
 		logger.logRoundStart(round);
+		curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
 		
 	}
@@ -445,8 +466,24 @@ public class Startups {
 		
 		// Step 6: set first player
 		lastPlayerIndex = lp.get(lp.size()-1).getIndex();
+		//System.out.println(lastPlayerIndex);
 		firstPlayer = lastPlayerIndex;
 		
+		// Step 7: make sure no player is confirmed
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmNextRound(false);
+		}
+		
+	}
+	
+	public boolean allConfirmedNextRound() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmNextRound() == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	// Start actual operations
@@ -512,6 +549,20 @@ public class Startups {
 			p.take(cardIndex);
 			updateBasicDB();
 			updatePlayer(name);
+		}
+	}
+	
+	// Actual confirm next round operation
+	public void playerConfirmNextRoundUDB(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			p.setConfirmNextRound(true);
+			updatePlayer(name);
+			if (allConfirmedNextRound()) {
+				startRound();
+				updateBasicDB();
+				updatePlayers();
+			}
 		}
 	}
 	

@@ -109,6 +109,19 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			}
 		}
 		
+		$scope.confirmNextRound = function(){
+			if ($scope.game == $scope.STARTUPS){
+				$http.put("/oink/startups/confirmnextround").then(function(response){
+					ws.send("refresh");
+				});
+			}
+			
+		}
+		
+		$scope.flipEndRoundPage = function(x){
+			$scope.shownEndRoundPage = $scope.shownEndRoundPage + x;
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -131,6 +144,12 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						"isDeck": true
 					}
 					$scope.deck.push(c);
+					if ($scope.gamedata.confirmed){
+						$scope.shownEndRoundPage = 5
+					} else {
+						$scope.shownEndRoundPage = 0
+					}
+					
 				}
 				$scope.hand = $scope.gamedata.myHand;
 				

@@ -17,6 +17,8 @@ public class Player {
 	
 	int numTaken;
 	
+	boolean confirmNextRound;
+	
 	List<Integer> coin1s;
 	List<Integer> coin3s;
 	
@@ -37,6 +39,7 @@ public class Player {
 		doc.append("coin1s", coin1s);
 		doc.append("coin3s", coin3s);
 		doc.append("scores", scores);
+		doc.append("confirmNextRound", confirmNextRound);
 		
 		int i;
 		List<Document> doh = new ArrayList<>();
@@ -60,6 +63,7 @@ public class Player {
 		coins = doc.getInteger("coins", 0);
 		phase = doc.getInteger("phase", 0);
 		numTaken = doc.getInteger("numTaken", 0);
+		confirmNextRound = doc.getBoolean("confirmNextRound", false);
 		coin1s = (List<Integer>)doc.get("coin1s");
 		coin3s = (List<Integer>)doc.get("coin3s");
 		scores = (List<Integer>) doc.get("scores");
@@ -151,10 +155,13 @@ public class Player {
 	}
 	
 	public void startRound() {
+		hand = new ArrayList<>();
+		play = new ArrayList<>();
 		takeCard(3);
 		coins = 10;
 		coin1s = new ArrayList<>();
 		coin3s = new ArrayList<>();
+		
 	}
 	
 	public void startTurn() {
@@ -358,6 +365,23 @@ public class Player {
 	public void addScore(int x) {
 		scores.add(x);
 	}
+	public int getLastScore() {
+		int ans = 0;
+		if (scores.size() > 0) {
+			ans = scores.get(scores.size()-1);
+		}
+		return ans;
+	}
+	public int getScoreDelta() {
+		int ans = 0;
+		if (scores.size() == 1) {
+			ans = scores.get(0);
+		} else if (scores.size() > 1) {
+			int x = scores.size()-1;
+			ans = scores.get(x) - scores.get(x-1);
+		}
+		return ans;
+	}
 
 	public String getName() {
 		return name;
@@ -424,6 +448,12 @@ public class Player {
 	}
 	public void setCoin3s(List<Integer> coin3s) {
 		this.coin3s = coin3s;
+	}
+	public boolean isConfirmNextRound() {
+		return confirmNextRound;
+	}
+	public void setConfirmNextRound(boolean confirmNextRound) {
+		this.confirmNextRound = confirmNextRound;
 	}
 	
 	

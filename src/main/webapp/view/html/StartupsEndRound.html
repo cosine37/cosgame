@@ -1,5 +1,35 @@
 <div>
-	<div ng-repeat="eri in gamedata.endRoundInfo track by $index">
-		{{eri.stockName}}
+	<div ng-repeat="eri in gamedata.endRoundInfo track by $index" ng-show="shownEndRoundPage == $index">
+		<h2>{{eri.stockName}}</h2>
+		<div>股东：{{eri.shareholder}}</div>
+		<table>
+			<tr>
+				<td>姓名</td>
+				<td>持有数</td>
+				<td colspan="2">结算前</td>
+				<td colspan="2">结算后</td>
+				<td ng-show="shownEndRoundPage != 5">目前总钱币</td>
+				<td ng-show="shownEndRoundPage == 5">最终钱币</td>
+				<td ng-show="shownEndRoundPage == 5">本轮分数</td>
+				<td ng-show="shownEndRoundPage == 5">总分</td>
+			</tr>
+			<tr ng-repeat="row in eri.playerNames track by $index">
+				<td>{{eri.playerNames[$index]}}</td>
+				<td>{{eri.numStocks[$index]}}</td>
+				<td>{{eri.coin1Before[$index]}}</td>
+				<td>{{eri.coin3Before[$index]}}</td>
+				<td>{{eri.coin1After[$index]}}</td>
+				<td>{{eri.coin3After[$index]}}</td>
+				<td>{{eri.totalCoins[$index]}}</td>
+				<td ng-show="shownEndRoundPage == 5">{{eri.scoreDeltaDisplay[$index]}}</td>
+				<td ng-show="shownEndRoundPage == 5">{{eri.scores[$index]}}</td>
+			</tr>
+		</table>
+		<div>
+			<button ng-disabled="shownEndRoundPage == 0" ng-click="flipEndRoundPage(-1)"> &lt; </button>
+			<button ng-disabled="shownEndRoundPage == 5" ng-click="flipEndRoundPage(1)"> &gt; </button>
+			<button ng-show="shownEndRoundPage == 5 && gamedata.confirmed == false" ng-click="confirmNextRound()">确认（进入下一轮）</button>
+			<span ng-show="shownEndRoundPage == 5 && gamedata.confirmed">你已确认，正等待其他玩家确认</span>
+		</div>
 	</div>
 </div>
