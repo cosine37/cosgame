@@ -2,6 +2,7 @@ package com.cosine.cosgame.oink;
 
 import java.util.List;
 
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
 
 public class BoardEntity {
@@ -11,6 +12,7 @@ public class BoardEntity {
 	int status;
 	
 	List<String> playerNames;
+	List<AccountEntity> accounts;
 
 	StartupsEntity startups;
 	
@@ -49,5 +51,11 @@ public class BoardEntity {
 	}
 	public void setStartups(StartupsEntity startups) {
 		this.startups = startups;
+	}
+	public List<AccountEntity> getAccounts() {
+		return accounts;
+	}
+	public void setAccounts(List<AccountEntity> accounts) {
+		this.accounts = accounts;
 	}
 }

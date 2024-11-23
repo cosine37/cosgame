@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.oink.startups.Startups;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -48,6 +50,15 @@ public class Board {
 		doc.append("status", status);
 		doc.append("playerNames", playerNames);
 		doc.append("firstPlayer", firstPlayer);
+		
+		int i;
+		List<Document> da = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Account a = new Account();
+			a.getFromDB(playerNames.get(i));
+			da.add(a.toDocument());
+		}
+		doc.append("accounts", da);
 		return doc;
 	}
 	
@@ -75,6 +86,15 @@ public class Board {
 		if (game == Consts.STARTUPS) {
 			entity.setStartups(startups.toStartupsEntity(username));
 		}
+		
+		int i;
+		List<AccountEntity> aes = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Account a = new Account();
+			a.getFromDB(playerNames.get(i));
+			aes.add(a.toAccountEntity());
+		}
+		entity.setAccounts(aes);
 		
 		return entity;
 	}

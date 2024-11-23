@@ -3,12 +3,15 @@ package com.cosine.cosgame.oink.startups.entity;
 import java.util.HashMap;
 import java.util.List;
 
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
+
 public class PlayerEntity {
 	String name;
 	int index;
 	int coins;
 	int phase;
 	int numTaken;
+	AccountEntity account;
 	
 	List<Integer> coin1s;
 	List<Integer> coin3s;
@@ -76,6 +79,12 @@ public class PlayerEntity {
 	}
 	public void setAntiMonopoly(List<CardEntity> antiMonopoly) {
 		this.antiMonopoly = antiMonopoly;
+	}
+	public AccountEntity getAccount() {
+		return account;
+	}
+	public void setAccount(AccountEntity account) {
+		this.account = account;
 	}
 	
 	

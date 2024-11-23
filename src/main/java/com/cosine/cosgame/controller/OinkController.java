@@ -17,6 +17,8 @@ import com.cosine.cosgame.oink.Board;
 import com.cosine.cosgame.oink.BoardEntity;
 import com.cosine.cosgame.oink.Consts;
 import com.cosine.cosgame.oink.Meta;
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.util.StringEntity;
 
 @Controller
@@ -225,6 +227,48 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	// account handles
+	@RequestMapping(value="/oink/accountinfo", method = RequestMethod.GET)
+	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		AccountEntity entity = account.toAccountEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/oink/cleanaccount", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> cleanAccount(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.cleanAccount();
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/oink/chooseavatar", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseAvatar(HttpServletRequest request, @RequestParam int avatarId) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.chooseAvatar(avatarId);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	/*
 	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> claimDominant(HttpServletRequest request, @RequestParam String dominantSuit, @RequestParam int numDominant){
@@ -430,27 +474,7 @@ public class OinkController {
 	}
 	
 	
-	@RequestMapping(value="/pokerworld/accountinfo", method = RequestMethod.GET)
-	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		Account account = new Account();
-		account.getFromDB(username);
-		AccountEntity entity = account.toAccountEntity();
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
 	
-	@RequestMapping(value="/pokerworld/cleanaccount", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> cleanAccount(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		Account account = new Account();
-		account.getFromDB(username);
-		account.cleanAccount();
-		account.updateAccountDB(username);
-		StringEntity entity = new StringEntity();
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
 	
 	@RequestMapping(value="/pokerworld/dig", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> dig(HttpServletRequest request) {
@@ -492,17 +516,7 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/pokerworld/chooseskin", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> chooseSkin(HttpServletRequest request, @RequestParam int skinId) {
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		Account account = new Account();
-		account.getFromDB(username);
-		account.chooseSkin(skinId);
-		account.updateAccountDB(username);
-		StringEntity entity = new StringEntity();
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
+	
 	@RequestMapping(value="/pokerworld/cancelchooseskin", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> cancelChooseSkin(HttpServletRequest request, @RequestParam int skinId) {
 		HttpSession session = request.getSession(true);

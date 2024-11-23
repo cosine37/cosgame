@@ -30,6 +30,7 @@
 							<td colspan="2"><h4>玩家列表</h4></td>
 						</tr>
 						<tr ng-repeat="pn in playerNames track by $index">
+							<td><div style="height: 60px; width: 60px" ng-style="gamedata.accounts[$index].chosenAvatarStyle"></div></td>
 							<td>{{pn}}</td>
 							<td>
 								<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
@@ -68,6 +69,13 @@
 					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
 					 -->
 					<button ng-click="start()" ng-show="showStart()">开始</button>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div style="height: 60px; width: 60px; float:left; position: relative; cursor:pointer" ng-repeat="avatarStyle in myAvatarStyles track by $index" ng-style="avatarStyle"
+						ng-click="chooseAvatar(myAvatars[$index])">
+					</div>
 				</td>
 			</tr>
 		</table>

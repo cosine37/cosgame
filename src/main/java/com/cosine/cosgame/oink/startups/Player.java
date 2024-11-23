@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.account.Account;
 import com.cosine.cosgame.oink.startups.entity.CardEntity;
 import com.cosine.cosgame.oink.startups.entity.PlayerEntity;
 
@@ -94,6 +95,9 @@ public class Player {
 		entity.setScores(scores);
 		entity.setPlay(toPlayEntityList());
 		entity.setAntiMonopoly(toAntiMonopolyEntityList());
+		Account account = new Account();
+		account.getFromDB(name);
+		entity.setAccount(account.toAccountEntity());
 		return entity;
 	}
 	

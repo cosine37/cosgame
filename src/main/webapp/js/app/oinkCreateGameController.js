@@ -22,6 +22,8 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.firstPlayer = 0;
 		
 		$scope.STARTUPS = 1;
+		
+		$scope.chosenAvatar = -1;
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -48,6 +50,13 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.dismiss = function(){
 			$http.post("/oink/dismiss").then(function(response){
 				ws.send("dismiss");
+			});
+		}
+		
+		$scope.chooseAvatar = function(x){
+			var data = {"avatarId" : x}
+			$http({url: "/oink/chooseavatar", method: "POST", params: data}).then(function(response){
+				ws.send("chooseAvatar");
 			});
 		}
 		
@@ -88,6 +97,9 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 				for (i=0;i<$scope.playerNames.length;i++){
 					if ($scope.playerNames[i] == $scope.username){
 						kicked = false;
+						
+						$scope.myAvatarStyles = $scope.gamedata.accounts[i].avatarStyles;
+						$scope.myAvatars = $scope.gamedata.accounts[i].avatars;
 					}
 				}
 				if (kicked){
