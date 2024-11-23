@@ -12,6 +12,7 @@ import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Account {
 	String name;
+	String signature;
 	int chosenAvatar;
 	List<Integer> avatars;
 	boolean visitedOink;
@@ -24,6 +25,7 @@ public class Account {
 		doc.append("chosenAvatar", chosenAvatar);
 		doc.append("avatars", avatars);
 		doc.append("visitedOink", visitedOink);
+		doc.append("signature", signature);
 		return doc;
 	}
 	
@@ -32,6 +34,8 @@ public class Account {
 		chosenAvatar = doc.getInteger("chosenAvatar", 1000);
 		avatars = (List<Integer>) doc.get("avatars");
 		visitedOink = doc.getBoolean("visitedOink", false);
+		signature = doc.getString("signature");
+		if (signature == null) signature = "";
 	}
 	
 	public AccountEntity toAccountEntity() {
@@ -57,8 +61,30 @@ public class Account {
 			avatarStyle.put("background-size", "cover");
 			avatarStyles.add(avatarStyle);
 		}
-		
 		entity.setAvatarStyles(avatarStyles);
+		
+		
+		entity.setSignature(signature);
+		String signatureDisplay = "";
+		if (signature.length() < 16) {
+			signatureDisplay = signature;
+		} else {
+			for (i=0;i<14;i++) {
+				signatureDisplay = signatureDisplay + signature.charAt(i);
+			}
+			signatureDisplay = signatureDisplay + "...";
+		}
+		entity.setSignatureDisplay(signatureDisplay);
+		String nameDisplay = "";
+		if (name.length() < 14) {
+			nameDisplay = name;
+		} else {
+			for (i=0;i<12;i++) {
+				nameDisplay = nameDisplay + name.charAt(i);
+			}
+			nameDisplay = nameDisplay + "...";
+		}
+		entity.setNameDisplay(nameDisplay);
 		
 		return entity;
 	}
@@ -98,6 +124,10 @@ public class Account {
 		if (hasAvatar(x)) {
 			chosenAvatar = x;
 		}
+	}
+	
+	public void updateSignature(String s) {
+		this.signature = s;
 	}
 	
 	public void getFromDB(String username) {

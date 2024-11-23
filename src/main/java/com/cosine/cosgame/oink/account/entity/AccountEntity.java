@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class AccountEntity {
 	String name;
+	String signature;
+	String signatureDisplay;
+	String nameDisplay;
 	int chosenAvatar;
 	List<Integer> avatars;
 	boolean visitedOink;
@@ -46,6 +49,24 @@ public class AccountEntity {
 	}
 	public void setAvatarStyles(List<Map<String, String>> avatarStyles) {
 		this.avatarStyles = avatarStyles;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+	public String getSignatureDisplay() {
+		return signatureDisplay;
+	}
+	public void setSignatureDisplay(String signatureDisplay) {
+		this.signatureDisplay = signatureDisplay;
+	}
+	public String getNameDisplay() {
+		return nameDisplay;
+	}
+	public void setNameDisplay(String nameDisplay) {
+		this.nameDisplay = nameDisplay;
 	}
 	
 }

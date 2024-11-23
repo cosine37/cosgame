@@ -19,62 +19,72 @@
 	<div>
 		<table>
 			<tr>
-				<td colspan="2">
-					<h1>抽象小品</h1>
+				<td style="height: 100px; background-color: rgb(0,150,255); color: white">
+				</td>
+				<td style="height: 100px; background-color: rgb(0,150,255); color: white; text-align:center">
+					<h1 ng-show="gameMode == 0">抽象小品（请选择游戏）</h1>
+					<h1 ng-show="gameMode == STARTUPS">初创公司</h1>
 				</td>
 			</tr>
 			<tr>
 				<td style="vertical-align: top">
-					<table>
-						<tr>
-							<td colspan="2"><h4>玩家列表</h4></td>
-						</tr>
-						<tr ng-repeat="pn in playerNames track by $index">
-							<td><div style="height: 60px; width: 60px" ng-style="gamedata.accounts[$index].chosenAvatarStyle"></div></td>
-							<td>{{pn}}</td>
-							<td>
-								<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
-								<span ng-show="$index == 0">(房主)</span>
-								<span ng-show="firstPlayer == $index  && username == lord">初始玩家</span>
-								<button ng-show="firstPlayer != $index && username == lord" ng-click="setFirstPlayer($index)">设为初始</button>
-							</td>
-						</tr>
-					</table>
-				</td>
-				<td style="vertical-align: top" rowspan="2">
-					<div ng-show="gameMode == STARTUPS">
-						<h4>初创公司</h4>
+					<div ng-repeat="pn in playerNames track by $index">
+						<table>
+							<tr>
+								<td style="height: 90px;"><div style="height: 80px; width: 80px" ng-style="gamedata.accounts[$index].chosenAvatarStyle"></td>
+								<td style="vertical-align: top; color: gray; width: 250px; padding-left: 15px;">
+									<div style="font-size: 18px">
+										<span style="color: black">{{gamedata.accounts[$index].nameDisplay}}</span>
+										<span ng-show="$index == 0">(房主)</span>
+										<span ng-show="firstPlayer == $index">首位</span>
+									</div>
+									<div style="font-size: 14px">
+										<span>{{gamedata.accounts[$index].signatureDisplay}}</span>
+									</div>
+									<div style="margin-top: 8px;">
+										<button ng-show="firstPlayer != $index && username == lord" ng-click="setFirstPlayer($index)">设为初始</button>
+										<button ng-click="kick($index)" ng-show="$index != 0 && username == lord">踢</button>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</td>
-			</tr>
-			<tr>
-				<td>
-					<table>
-						<tr>
-							<td><h4>选择游戏</h4></td>
-						</tr>
-						<tr>
-							<td>
-								<button ng-click="gameMode = STARTUPS" ng-disabled="gameMode == STARTUPS">初创公司</button>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<button ng-click="goto('oink')">退出</button>
-					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-					<!-- 
-					<button ng-click="addBot()" ng-show="username == lord">添加bot</button>
-					 -->
-					<button ng-click="start()" ng-show="showStart()">开始</button>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div style="height: 60px; width: 60px; float:left; position: relative; cursor:pointer" ng-repeat="avatarStyle in myAvatarStyles track by $index" ng-style="avatarStyle"
-						ng-click="chooseAvatar(myAvatars[$index])">
+				<td style="vertical-align: top; background-color:rgb(240,240,240); border-left: 1px groove lightgrey;">
+					<div style="text-align: right; padding-right: 10px; padding-top: 5px">
+						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+						<button ng-click="goto('oink')">退出</button>
+					</div>
+					<div style="height: 600px; width: 1000px; padding-bottom: 5px;">
+						<div ng-show="gameMode == STARTUPS">
+							<h4>初创公司</h4>
+						</div>
+					</div>
+					<div style="border-top: 1px groove lightgrey; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px;">
+						<button ng-click="gameMode = STARTUPS" ng-disabled="gameMode == STARTUPS">初创公司</button>
+						
+						<button ng-click="chatBox = CHANGESIGNATURE" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
+						<button ng-click="chatBox = 0" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>
+						<button ng-click="chatBox = CHOOSEAVATAR" ng-show="chatBox != CHOOSEAVATAR" style="float:right; margin-left: 5px;">更换头像</button>
+						<button ng-click="chatBox = 0" ng-show="chatBox == CHOOSEAVATAR" style="float:right; margin-left: 5px;">关闭头像</button>
+					</div>
+					<div style="vertical-align: top; height: 200px; padding-top: 5px; padding-left: 10px;">
+						<div ng-show="chatBox == CHOOSEAVATAR">
+							<div style="height: 60px; width: 60px; margin-right: 5px; float:left; position: relative; cursor:pointer" ng-repeat="avatarStyle in myAvatarStyles track by $index" ng-style="avatarStyle"
+								ng-click="chooseAvatar(myAvatars[$index])">
+							</div>
+						</div>
+						<div ng-show="chatBox == CHANGESIGNATURE" style="padding-top: 10px">
+							<span>请输入你的签名：</span>
+							<input type="text" style="width: 400px;"ng-model="mySignature"/>
+							<button ng-click="changeSignature()">提交</button>
+						</div>
+					</div>
+					<div style="text-align: right; height: 70px; padding-top: 5px; padding-right: 10px;">
+						<div>
+							<button style="width:110px; height: 50px; font-size: 20px" ng-click="start()" ng-show="showStart()">启动！</button>
+						</div>
+						
 					</div>
 				</td>
 			</tr>

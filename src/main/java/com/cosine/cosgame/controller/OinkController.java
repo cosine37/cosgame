@@ -268,6 +268,17 @@ public class OinkController {
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/oink/changesignature", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> changeSignature(HttpServletRequest request, @RequestParam String s) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.updateSignature(s);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
 	/*
 	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
