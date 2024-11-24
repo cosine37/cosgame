@@ -128,6 +128,7 @@ public class Startups {
 		entity.setAntiMonopoly(antiMonopoly);
 		entity.setShareholder(shareholder);
 		entity.setDeckSize(deck.size());
+		entity.setLogs(logger.getLogs());
 		
 		int i,j;
 		List<PlayerEntity> lp = new ArrayList<>();
@@ -288,6 +289,7 @@ public class Startups {
 		logger.logRoundStart(round);
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
+		logger.logStartTurn(players.get(curPlayer));
 		
 	}
 	
@@ -354,6 +356,7 @@ public class Startups {
 				curPlayer = 0;
 			}
 			players.get(curPlayer).startTurn();
+			logger.logStartTurn(players.get(curPlayer));
 		}
 	}
 	
@@ -473,6 +476,9 @@ public class Startups {
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmNextRound(false);
 		}
+		
+		// Step 8: Log round end
+		logger.logRoundEnd(round);
 		
 	}
 	

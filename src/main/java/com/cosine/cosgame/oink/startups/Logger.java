@@ -81,8 +81,16 @@ public class Logger {
 		log(s);
 	}
 	
+	public void logRoundEnd(int x) {
+		String s = "第 " + Integer.toString(x) +" 局 结束";
+		log(s);
+		log("==========");
+	}
+	
 	public void logStartTurn(Player p) {
+		log("----------");
 		String s = p.getName() + " 开始了回合";
+		log(s);
 	}
 	
 }

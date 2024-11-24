@@ -113,6 +113,10 @@ body {
 			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand noselect" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
 		<div style="clear:both"></div>
+		<div id="log-zone" style="overflow-y: scroll;overflow:auto;height: 450px;width: 360px;border: 1px solid; position: absolute; right: 20px; bottom: 150px; 
+			background-color: rgba(0,0,0,0.7); color:white; padding: 5px;">
+			<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
+		</div>
 		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect"></div>
 	</div>
 	<!-- 

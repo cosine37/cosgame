@@ -8,6 +8,7 @@ public class StartupsEntity {
 	List<CardEntity> myHand;
 	List<CardEntity> discard;
 	List<EndRoundEntity> endRoundInfo;
+	List<String> logs;
 	
 	Map<Integer, Integer> antiMonopoly;
 	Map<Integer, Integer> shareholder;
@@ -97,5 +98,11 @@ public class StartupsEntity {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 }

@@ -48,6 +48,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			});
 		}
 		
+		adjustLogs = function(logElementId){
+			var logcontent = document.getElementById(logElementId);
+			logcontent.scrollTop = logcontent.scrollHeight;
+		}
+		
 		$scope.draw = function(){
 			if ($scope.game == $scope.STARTUPS){
 				$http.put("/oink/startups/draw").then(function(response){
@@ -134,6 +139,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
 				$scope.lord = response.data.lord
+				
+				
 				$scope.hand = []
 				if ($scope.game == $scope.STARTUPS){
 					$scope.bodyStyle = {
@@ -155,6 +162,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						$scope.shownEndRoundPage = 0
 					}
 					$scope.hand = $scope.gamedata.myHand;
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs("log-zone")
+					});
+					
 				}
 				
 				
