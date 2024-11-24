@@ -15,7 +15,7 @@
 <script src="/js/app/oinkCreateGameController.js"></script>
 <style>
 </style>
-<body ng-app="oinkCreateGameApp" ng-controller="oinkCreateGameCtrl">
+<body ng-app="oinkCreateGameApp" ng-controller="oinkCreateGameCtrl" ng-click="bgm.play()" class="noselect">
 	<div>
 		<table>
 			<tr>
@@ -55,18 +55,29 @@
 						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 						<button ng-click="goto('oink')">退出</button>
 					</div>
-					<div style="height: 600px; width: 1000px; padding-bottom: 5px;">
+					<div style="height: 600px; width: 1000px; padding-bottom: 5px; padding-top: 10px">
 						<div ng-show="gameMode == STARTUPS">
-							<h4>初创公司</h4>
+							<div class="fakemsg-div" style="width: 360px;">
+								<span style="font-weight: bold">支持人数：</span> 3~7人，最佳人数为4人。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">游戏内容：</span> 共45张股份牌，编号为5~10。每种股份牌的数量等于其编号（比如5就有5张）。游戏开始时会随机移除5张牌。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">规则综述：</span> 每名玩家在回合开始时会获得股份，可以选择打出或弃置。每轮游戏结束时，每种股份最多的玩家会向其他同样拥有该股份的玩家收取费用。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">胜利条件：</span> 游戏一共进行4轮，每轮钱币排名第一的玩家获得2分，第二的玩家获得1分，最后一名玩家《获得》-1分。4轮结束后分数最多的玩家获胜。
+							</div>
 						</div>
 					</div>
 					<div style="border-top: 1px groove lightgrey; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px;">
-						<button ng-click="gameMode = STARTUPS" ng-disabled="gameMode == STARTUPS">初创公司</button>
+						<button ng-click="gameMode = STARTUPS; playMsgSE()" ng-disabled="gameMode == STARTUPS">初创公司</button>
 						
-						<button ng-click="chatBox = CHANGESIGNATURE" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
-						<button ng-click="chatBox = 0" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>
-						<button ng-click="chatBox = CHOOSEAVATAR" ng-show="chatBox != CHOOSEAVATAR" style="float:right; margin-left: 5px;">更换头像</button>
-						<button ng-click="chatBox = 0" ng-show="chatBox == CHOOSEAVATAR" style="float:right; margin-left: 5px;">关闭头像</button>
+						<button ng-click="chatBox = CHANGESIGNATURE; playClickSE()" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
+						<button ng-click="chatBox = 0; playClickSE()" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>
+						<button ng-click="chatBox = CHOOSEAVATAR; playClickSE()" ng-show="chatBox != CHOOSEAVATAR" style="float:right; margin-left: 5px;">更换头像</button>
+						<button ng-click="chatBox = 0; playClickSE()" ng-show="chatBox == CHOOSEAVATAR" style="float:right; margin-left: 5px;">关闭头像</button>
 					</div>
 					<div style="vertical-align: top; height: 200px; padding-top: 5px; padding-left: 10px;">
 						<div ng-show="chatBox == CHOOSEAVATAR">

@@ -65,6 +65,20 @@ button:disabled{
 	border-radius: 20px;
 }
 
+.fakemsg-div{
+	background: rgb(0,150,255);
+	color: white;
+	font-size: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 960px;
+}
+
 
 .card{
 	position: relative;

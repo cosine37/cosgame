@@ -19,6 +19,26 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 	
 		$scope.STARTUPS = 1;
 		$scope.chosenCard = -1;
+		
+		$scope.playingBGM = false
+		$scope.bgm = new Audio();
+		randomizeBGM = function(){
+			if ($scope.game == $scope.STARTUPS){
+				v = Math.floor(Math.random() * 3)+1;
+				bgmSrc = '/sound/Oink/default' + v + '.mp3'
+				$scope.bgm.src = bgmSrc
+			}
+			
+		}
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		
+		$scope.playClickSE = function(){
+			var audio = new Audio("/sound/Oink/click.wav")
+			audio.play();
+		}
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -54,6 +74,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.draw = function(){
+			$scope.playClickSE()
 			if ($scope.game == $scope.STARTUPS){
 				$http.put("/oink/startups/draw").then(function(response){
 					ws.send("refresh");
@@ -63,6 +84,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.discard = function(){
+			$scope.playClickSE()
 			if ($scope.chosenCard != -1){
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : $scope.chosenCard}
@@ -75,6 +97,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.play = function(){
+			$scope.playClickSE()
 			if ($scope.chosenCard != -1){
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : $scope.chosenCard}
@@ -87,6 +110,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.take = function(x){
+			$scope.playClickSE()
 			if (x != -1){
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : x}
@@ -99,6 +123,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.clickCard = function(x){
+			$scope.playClickSE()
 			if ($scope.game == $scope.STARTUPS){
 				if ($scope.phase != 2) return;
 				if ($scope.chosenCard == x){
@@ -180,6 +205,12 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.goto('oink');
 					return;
 				}
+				
+				if ($scope.playingBGM == false){
+					randomizeBGM()
+					$scope.playingBGM = true;
+				}
+				
 			});
 		}
 		

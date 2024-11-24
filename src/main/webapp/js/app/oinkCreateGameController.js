@@ -8,6 +8,20 @@ var app = angular.module("oinkCreateGameApp", ["ngWebSocket"]);
 app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
 		var ws = $websocket("ws://" + $window.location.host + "/oink/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
 		ws.onError(function(event) {
 		});
 		
@@ -15,7 +29,10 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		});
 		
 		ws.onOpen(function() {
+			heartCheck.start();
 		});
+		
+		var firstTimeEnter = true;
 	
 		$scope.settings = [0,0];
 		$scope.gameMode = 0;
@@ -28,6 +45,33 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.CHANGESIGNATURE = 2;
 		
 		$scope.chosenAvatar = -1;
+		
+		$scope.bgm = new Audio();
+		randomizeBGM = function(){
+			v = Math.floor(Math.random() * 2)+1;
+			bgmSrc = '/sound/Oink/create' + v + '.mp3'
+			$scope.bgm.src = bgmSrc
+		}
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		randomizeBGM();
+		
+		$scope.playClickSE = function(){
+			var audio = new Audio("/sound/Oink/click.wav")
+			audio.play();
+		}
+		
+		$scope.playMsgSE = function(){
+			var audio = new Audio("/sound/Oink/msg.mp3")
+			audio.play();
+		}
+		
+		$scope.playKnockSE = function(){
+			var audio = new Audio("/sound/Oink/knock.mp3")
+			audio.play();
+		}
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -45,6 +89,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.kick = function(x){
+			$scope.playClickSE()
 			var data = {"index" : x}
 			$http({url: "/oink/kick", method: "POST", params: data}).then(function(response){
 				ws.send("kick");
@@ -58,6 +103,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.chooseAvatar = function(x){
+			$scope.playClickSE()
 			var data = {"avatarId" : x}
 			$http({url: "/oink/chooseavatar", method: "POST", params: data}).then(function(response){
 				ws.send("chooseAvatar");
@@ -65,6 +111,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.changeSignature = function(){
+			$scope.playClickSE()
 			var data = {"s" : $scope.mySignature}
 			$http({url: "/oink/changesignature", method: "POST", params: data}).then(function(response){
 				ws.send("chooseAvatar");
@@ -83,6 +130,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		$scope.start = function(){
+			$scope.playClickSE()
 			$scope.settings[0] = $scope.gameMode;
 			$scope.settings[1] = $scope.firstPlayer;
 			var data = {"settings" : $scope.settings}
@@ -100,6 +148,14 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('oink');
 					return;
 				}
+				
+				
+				var np = 1
+				if ($scope.playerNames != null){
+					np = $scope.playerNames.length;
+				}
+				
+				
 				$scope.gamedata = response.data
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
@@ -119,6 +175,11 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.goto('oink');
 					return;
 				}
+				
+				if ($scope.playerNames.length > np && firstTimeEnter == false){
+					$scope.playKnockSE()
+				}
+				firstTimeEnter = false
 				
 				if ($scope.status == "1"){
 					$scope.goto('oinkgame')
