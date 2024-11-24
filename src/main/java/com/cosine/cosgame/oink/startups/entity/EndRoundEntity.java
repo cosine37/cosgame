@@ -5,7 +5,6 @@ import java.util.List;
 public class EndRoundEntity {
 	String stockName;
 	String icon;
-	String colorStyle;
 	String shareholder;
 	List<String> playerNames;
 	List<Integer> coin1Before;
@@ -17,6 +16,7 @@ public class EndRoundEntity {
 	List<String> scoreDeltaDisplay;
 	List<Integer> scores;
 	int num;
+	CardEntity card;
 	
 	public String getStockName() {
 		return stockName;
@@ -29,12 +29,6 @@ public class EndRoundEntity {
 	}
 	public void setIcon(String icon) {
 		this.icon = icon;
-	}
-	public String getColorStyle() {
-		return colorStyle;
-	}
-	public void setColorStyle(String colorStyle) {
-		this.colorStyle = colorStyle;
 	}
 	public String getShareholder() {
 		return shareholder;
@@ -101,5 +95,11 @@ public class EndRoundEntity {
 	}
 	public void setScores(List<Integer> scores) {
 		this.scores = scores;
+	}
+	public CardEntity getCard() {
+		return card;
+	}
+	public void setCard(CardEntity card) {
+		this.card = card;
 	}
 }

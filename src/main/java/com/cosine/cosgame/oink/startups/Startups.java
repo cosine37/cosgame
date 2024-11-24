@@ -57,6 +57,7 @@ public class Startups {
 		Document doc = new Document();
 		doc.append("round", round);
 		doc.append("curPlayer", curPlayer);
+		doc.append("firstPlayer", firstPlayer);
 		doc.append("antiMonopoly", antiMonopoly);
 		doc.append("shareholder", shareholder);
 		doc.append("logs", logger.getLogs());
@@ -88,6 +89,7 @@ public class Startups {
 	public void setFromDoc(Document doc) {
 		round = doc.getInteger("round", -1);
 		curPlayer = doc.getInteger("curPlayer", -1);
+		firstPlayer = doc.getInteger("firstPlayer", -1);
 		antiMonopoly = documentToHashmap((Document) doc.get("antiMonopoly"));
 		shareholder = documentToHashmap((Document) doc.get("shareholder"));
 		
@@ -169,6 +171,7 @@ public class Startups {
 		entity.setPhase(phase);
 		entity.setMyDrawCost(myDrawCost);
 		entity.setConfirmed(confirmNextRound);
+		
 		// deal with end round msg
 		if (board.getStatus() != Consts.ROUNDEND) {
 			entity.setEndRoundInfo(new ArrayList<>());
@@ -189,6 +192,7 @@ public class Startups {
 				ere.setStockName(tc.getName());
 				ere.setNum(tc.getNum());
 				ere.setIcon(Integer.toString(tc.getNum()));
+				ere.setCard(tc.toCardEntity());
 				
 				List<Integer> coin1Before = new ArrayList<>();
 				List<Integer> coin1After = new ArrayList<>();
@@ -201,19 +205,20 @@ public class Startups {
 				List<Integer> scores = new ArrayList<>();
 				for (j=0;j<players.size();j++) {
 					Player p = players.get(j);
-					names.add(p.getName());
+					names.add(p.getNameDisplay());
 					coin1Before.add(p.getCoin1s().get(i));
 					coin3Before.add(p.getCoin3s().get(i));
 					coin1After.add(p.getCoin1s().get(i+1));
 					coin3After.add(p.getCoin3s().get(i+1));
 					numStocks.add(p.numStock(stockNum));
 					totalCoins.add(p.getCoin1s().get(i+1) + p.getCoin3s().get(i+1) * 3);
-					if (p.getScoreDelta() < 0) {
-						sdd.add(Integer.toString(p.getScoreDelta()));
+					
+					if (p.getLastScore() < 0) {
+						sdd.add(Integer.toString(p.getLastScore()));
 					} else {
-						sdd.add("+" + Integer.toString(p.getScoreDelta()));
+						sdd.add("+" + Integer.toString(p.getLastScore()));
 					}
-					scores.add(p.getLastScore());
+					scores.add(p.getTotalScore());
 				}
 				ere.setCoin1Before(coin1Before);
 				ere.setCoin1After(coin1After);
@@ -283,7 +288,10 @@ public class Startups {
 			players.get(i).startRound();
 		}
 		
-		// Step 6: set status, round & curPlayer
+		// Step 6: empty discards
+		discard = new ArrayList<>();
+		
+		// Step 7: set status, round & curPlayer
 		board.setStatus(Consts.INGAME);
 		round++;
 		logger.logRoundStart(round);
@@ -469,7 +477,7 @@ public class Startups {
 		
 		// Step 6: set first player
 		lastPlayerIndex = lp.get(lp.size()-1).getIndex();
-		//System.out.println(lastPlayerIndex);
+		//System.out.println("Last Player Index:" + lastPlayerIndex);
 		firstPlayer = lastPlayerIndex;
 		
 		// Step 7: make sure no player is confirmed

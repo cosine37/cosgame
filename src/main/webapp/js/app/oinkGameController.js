@@ -18,6 +18,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		});
 	
 		$scope.STARTUPS = 1;
+		
+		$scope.ROUNDEND = 2
+		$scope.showEndRoundInfo = false;
+		
 		$scope.chosenCard = -1;
 		
 		$scope.playingBGM = false
@@ -181,11 +185,17 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						"isDeck": true
 					}
 					$scope.deck.push(c);
-					if ($scope.gamedata.confirmed){
-						$scope.shownEndRoundPage = 5
-					} else {
-						$scope.shownEndRoundPage = 0
+					
+					$scope.showEndRoundInfo = false;
+					if ($scope.status == $scope.ROUNDEND){
+						$scope.showEndRoundInfo = true;
+						if ($scope.gamedata.confirmed){
+							$scope.shownEndRoundPage = 5
+						} else {
+							$scope.shownEndRoundPage = 0
+						}
 					}
+					
 					$scope.hand = $scope.gamedata.myHand;
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs("log-zone")

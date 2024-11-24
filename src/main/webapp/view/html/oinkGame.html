@@ -21,9 +21,9 @@ body {
 	background-size: cover;
 }
 </style>
-<body ng-app="oinkGameApp" ng-controller="oinkGameCtrl" ng-style="bodyStyle" ng-click="bgm.play()">
+<body ng-app="oinkGameApp" ng-controller="oinkGameCtrl" ng-style="bodyStyle" ng-click="bgm.play()" class="noselect">
 
-	<div ng-show="game==STARTUPS" class="game-div noselect">
+	<div ng-show="game==STARTUPS" class="game-div">
 		<div style="position: absolute; bottom: 10px; right: 20px;">
 			<span style="font-weight: bold; font-size: 80px; color:white">初创公司</span>
 		</div>
@@ -52,7 +52,7 @@ body {
 											{{p.coins}}
 										</div>
 										<div style="float:right;margin-top: 7px; margin-left: 10px; font-size: 18px;">
-											<span>分数：0</span>
+											<span>分数：{{p.scoreDisplay}}</span>
 										</div>
 									</td>
 								</tr>
@@ -91,7 +91,7 @@ body {
 			</div>
 		</div>
 		<div style="clear:both"></div>
-		<div id="discard-zone">
+		<div id="discard-zone" ng-show="showEndRoundInfo == false">
 			<div id="deck" ng-repeat="c in deck track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard noselect">
 				
 			</div>
@@ -101,23 +101,23 @@ body {
 			</div>
 			
 		</div>
-		<div style="clear:both"></div>
-		<div style="height: 30px;">
+		<div style="clear:both" ng-show="showEndRoundInfo == false"></div>
+		<div style="height: 30px;" ng-show="showEndRoundInfo == false">
 			<div ng-show="phase == 2">
 				<span>请打出或弃置一张牌</span>
 				<button ng-show="chosenCard != -1 && hand[chosenCard].canDiscard" ng-click="discard()">弃置</button>
 				<button ng-show="chosenCard != -1" ng-click="play()">打出</button>
 			</div>
 		</div>
-		<div id="hand-zone" style="padding-top: 40px">
+		<div id="hand-zone" style="padding-top: 40px" ng-show="showEndRoundInfo == false">
 			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand noselect" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
-		<div style="clear:both"></div>
+		<div style="clear:both" ng-show="showEndRoundInfo == false"></div>
 		<div id="log-zone" style="overflow-y: scroll;overflow:auto;height: 450px;width: 360px;border: 1px solid; position: absolute; right: 20px; bottom: 150px; 
 			background-color: rgba(0,0,0,0.7); color:white; padding: 5px;">
 			<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
 		</div>
-		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect"></div>
+		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect" ng-show="showEndRoundInfo"></div>
 	</div>
 	<!-- 
 	<div>

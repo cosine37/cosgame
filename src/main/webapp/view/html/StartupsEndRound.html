@@ -1,8 +1,17 @@
 <div>
-	<div ng-repeat="eri in gamedata.endRoundInfo track by $index" ng-show="shownEndRoundPage == $index">
-		<h2>{{eri.stockName}}</h2>
-		<div>股东：{{eri.shareholder}}</div>
-		<table>
+	<div ng-repeat="eri in gamedata.endRoundInfo track by $index" ng-show="shownEndRoundPage == $index" ng-style="eri.card.barColor"
+		style="width: 800px;border: 1px solid grey; border-radius: 10px;padding: 20px; color: white;font-family: 'yzgc'">
+		<div>
+			<div style="float:left; padding-top: 18px;">
+				<h1>轮次结算——{{eri.stockName}}</h1>
+			</div>
+			<div style="height: 80px; width: 80px;float:right" ng-style="eri.card.iconStyle">
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		
+		<div style="font-size: 24px; margin-bottom: 20px;">股东：{{eri.shareholder}}</div>
+		<table style="text-align:center">
 			<tr>
 				<td>姓名</td>
 				<td>持有数</td>
@@ -16,17 +25,38 @@
 			<tr ng-repeat="row in eri.playerNames track by $index">
 				<td>{{eri.playerNames[$index]}}</td>
 				<td>{{eri.numStocks[$index]}}</td>
-				<td>{{eri.coin1Before[$index]}}</td>
-				<td>{{eri.coin3Before[$index]}}</td>
-				<td>{{eri.coin1After[$index]}}</td>
-				<td>{{eri.coin3After[$index]}}</td>
+				<td>
+					<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; float:left;
+						color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 3px;font-family:'Trebuchet MS'">
+						{{eri.coin1Before[$index]}}
+					</div>
+				</td>
+				<td>
+					<div style="background:url('/image/Oink/Startups/coin_gold.png'); background-size:cover; width: 42px; height: 42px; float:left;
+						color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 3px;font-family:'Trebuchet MS'">
+						{{eri.coin3Before[$index]}}
+					</div>
+				</td>
+				<td>
+					<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; float:left;
+						color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 3px;font-family:'Trebuchet MS'">
+						{{eri.coin1After[$index]}}
+					</div>
+				</td>
+				<td>
+					<div style="background:url('/image/Oink/Startups/coin_gold.png'); background-size:cover; width: 42px; height: 42px; float:left;
+						color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 3px;font-family:'Trebuchet MS'">
+						{{eri.coin3After[$index]}}
+					</div>
+				</td>
 				<td>{{eri.totalCoins[$index]}}</td>
 				<td ng-show="shownEndRoundPage == 5">{{eri.scoreDeltaDisplay[$index]}}</td>
 				<td ng-show="shownEndRoundPage == 5">{{eri.scores[$index]}}</td>
 			</tr>
 		</table>
-		<div>
+		<div style="margin-top:10px;">
 			<button ng-disabled="shownEndRoundPage == 0" ng-click="flipEndRoundPage(-1)"> &lt; </button>
+			<span>({{$index+1}}/6)</span>
 			<button ng-disabled="shownEndRoundPage == 5" ng-click="flipEndRoundPage(1)"> &gt; </button>
 			<button ng-show="shownEndRoundPage == 5 && gamedata.confirmed == false" ng-click="confirmNextRound()">确认（进入下一轮）</button>
 			<span ng-show="shownEndRoundPage == 5 && gamedata.confirmed">你已确认，正等待其他玩家确认</span>

@@ -95,6 +95,12 @@ public class Player {
 		entity.setScores(scores);
 		entity.setPlay(toPlayEntityList());
 		entity.setAntiMonopoly(toAntiMonopolyEntityList());
+		
+		if (startups.getStatus() == Consts.ROUNDEND) {
+			entity.setScoreDisplay(this.getTotalScore(false));
+		} else {
+			entity.setScoreDisplay(this.getTotalScore());
+		}
 		Account account = new Account();
 		account.getFromDB(name);
 		entity.setAccount(account.toAccountEntity());
@@ -376,15 +382,34 @@ public class Player {
 		}
 		return ans;
 	}
-	public int getScoreDelta() {
+	public int getTotalScore(boolean includeLast) {
 		int ans = 0;
-		if (scores.size() == 1) {
-			ans = scores.get(0);
-		} else if (scores.size() > 1) {
-			int x = scores.size()-1;
-			ans = scores.get(x) - scores.get(x-1);
+		int n = scores.size();
+		if (includeLast) {
+			
+		} else {
+			n = n-1;
 		}
+		for (int i=0;i<n;i++) ans = ans+scores.get(i);
+		
 		return ans;
+	}
+	public int getTotalScore() {
+		return getTotalScore(true);
+	}
+	
+	public String getNameDisplay() {
+		int i;
+		String nameDisplay = "";
+		if (name.length() < 14) {
+			nameDisplay = name;
+		} else {
+			for (i=0;i<12;i++) {
+				nameDisplay = nameDisplay + name.charAt(i);
+			}
+			nameDisplay = nameDisplay + "...";
+		}
+		return nameDisplay;
 	}
 
 	public String getName() {

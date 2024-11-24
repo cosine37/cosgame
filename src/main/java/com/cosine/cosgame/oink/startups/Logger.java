@@ -82,6 +82,7 @@ public class Logger {
 	}
 	
 	public void logRoundEnd(int x) {
+		log("----------");
 		String s = "第 " + Integer.toString(x) +" 局 结束";
 		log(s);
 		log("==========");
