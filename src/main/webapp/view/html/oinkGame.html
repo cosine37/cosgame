@@ -14,48 +14,45 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/oinkGameController.js"></script>
 <style>
+body {
+	-webkit-background-size: cover;
+	-moz-background-size:  cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
 </style>
-<body ng-app="oinkGameApp" ng-controller="oinkGameCtrl">
-	<div>
-		<table>
-			<tr>
-				<td colspan="2">
-					<h1>抽象小品</h1>
-				</td>
-			</tr>
-			<tr>
-				<td style="vertical-align: top">
-					游戏开始
-				</td>
-				<td style="vertical-align: top">
-					
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<button ng-click="goto('oink')">退出</button>
-					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-				</td>
-			</tr>
-		</table>
-		
-	</div>
-	<div ng-show="game==STARTUPS">
-		<div id="player-zone" class="noselect">
+<body ng-app="oinkGameApp" ng-controller="oinkGameCtrl" ng-style="bodyStyle">
+
+	<div ng-show="game==STARTUPS" class="game-div noselect">
+		<div style="position: absolute; bottom: 10px; right: 20px;">
+			<span style="font-weight: bold; font-size: 80px; color:white">初创公司</span>
+		</div>
+		<div style="position: absolute; top: 10px; right: 20px;">
+			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+			<button ng-click="goto('oink')">退出</button>
+		</div>
+		<div id="player-zone">
 			<div ng-repeat="p in players track by $index" style="float: left;">
 				<table>
 					<tr>
 						<td>
 							<table>
 								<tr>
-									<td rowspan='2'>Avatar</td>
-									<td>{{p.name}}</td>
+									<td rowspan='2'>
+										<div style="height: 80px; width: 80px" ng-style="p.account.chosenAvatarStyle"></div>
+									</td>
+									<td style="padding-left: 10px;">
+										<span style="font-size: 20px;font-weight: bold; ">{{p.account.nameDisplay}}</span>
+									</td>
 								</tr>
 								<tr>
-									<td>
-										<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; 
+									<td style="padding-left: 10px;">
+										<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; float:left;
 											color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 2px">
 											{{p.coins}}
+										</div>
+										<div style="float:right;margin-top: 7px; margin-left: 10px; font-size: 18px;">
+											<span>分数：0</span>
 										</div>
 									</td>
 								</tr>
@@ -105,7 +102,7 @@
 			
 		</div>
 		<div style="clear:both"></div>
-		<div>
+		<div style="height: 30px;">
 			<div ng-show="phase == 2">
 				<span>请打出或弃置一张牌</span>
 				<button ng-show="chosenCard != -1 && hand[chosenCard].canDiscard" ng-click="discard()">弃置</button>
@@ -118,6 +115,29 @@
 		<div style="clear:both"></div>
 		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect"></div>
 	</div>
-	
+	<!-- 
+	<div>
+		<table>
+			<tr>
+				<td colspan="2">
+					<h1>抽象小品</h1>
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align: top">
+					游戏开始
+				</td>
+				<td style="vertical-align: top">
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					
+				</td>
+			</tr>
+		</table>
+	</div>
 	{{gamedata}}
+	 -->
 </body>

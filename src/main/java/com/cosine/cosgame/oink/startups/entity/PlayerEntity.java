@@ -19,6 +19,8 @@ public class PlayerEntity {
 	List<Integer> scores;
 	List<CardEntity> play;
 	List<CardEntity> antiMonopoly;
+	
+	int scoreDisplay;
 
 	public String getName() {
 		return name;
@@ -85,6 +87,12 @@ public class PlayerEntity {
 	}
 	public void setAccount(AccountEntity account) {
 		this.account = account;
+	}
+	public int getScoreDisplay() {
+		return scoreDisplay;
+	}
+	public void setScoreDisplay(int scoreDisplay) {
+		this.scoreDisplay = scoreDisplay;
 	}
 	
 	

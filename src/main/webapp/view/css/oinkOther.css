@@ -50,6 +50,21 @@ button:disabled{
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.game-div{
+	position: absolute; 
+	background-color: rgba(255,255,255,0.5);
+	height: 1050px;
+	width: 1900px;
+	margin-top: 40px;
+	margin-left: 40px;
+	padding-top: 20px;
+	padding-left: 45px;
+	padding-right: 45px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
 
 .card{
 	position: relative;

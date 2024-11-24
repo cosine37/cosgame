@@ -129,12 +129,17 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.goto('oink');
 					return;
 				}
+				
 				$scope.game = response.data.game
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
 				$scope.lord = response.data.lord
 				$scope.hand = []
 				if ($scope.game == $scope.STARTUPS){
+					$scope.bodyStyle = {
+						"background": "linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/Startups/game_bg.png')",
+						"background-size": "cover"
+					}
 					$scope.gamedata = response.data.startups
 					$scope.phase = $scope.gamedata.phase
 					$scope.players = $scope.gamedata.players
@@ -149,9 +154,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					} else {
 						$scope.shownEndRoundPage = 0
 					}
-					
+					$scope.hand = $scope.gamedata.myHand;
 				}
-				$scope.hand = $scope.gamedata.myHand;
+				
 				
 				var kicked = true;
 				for (i=0;i<$scope.playerNames.length;i++){
