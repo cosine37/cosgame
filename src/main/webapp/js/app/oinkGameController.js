@@ -20,6 +20,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.STARTUPS = 1;
 		
 		$scope.ROUNDEND = 2
+		$scope.ENDGAME = 3
 		$scope.showEndRoundInfo = false;
 		
 		$scope.chosenCard = -1;
@@ -152,9 +153,24 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			
 		}
 		
+		// STARTUPS only functions
+		$scope.startupsScoreStyle = function(x){
+			var style = {}
+			if (x == 2){
+				style = {"font-weight": "bold", "color": "darkgreen"}
+			}
+			if (x == -1){
+				style = {"color": "red"}
+			}
+			style["width"] = "25px"
+			style["font-size"] = "18px";
+			return style;
+		}
 		$scope.flipEndRoundPage = function(x){
 			$scope.shownEndRoundPage = $scope.shownEndRoundPage + x;
 		}
+		// End STARTUPS only functions
+		
 		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){
@@ -165,6 +181,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				
 				$scope.game = response.data.game
+				var oldStatus = $scope.status
 				$scope.status = response.data.status
 				$scope.playerNames = response.data.playerNames
 				$scope.lord = response.data.lord
@@ -192,7 +209,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						if ($scope.gamedata.confirmed){
 							$scope.shownEndRoundPage = 5
 						} else {
-							$scope.shownEndRoundPage = 0
+							//$scope.shownEndRoundPage = 0
+							if ($scope.shownEndRoundPage == null || oldStatus != $scope.ROUNDEND){
+								$scope.shownEndRoundPage = 0
+							}
 						}
 					}
 					

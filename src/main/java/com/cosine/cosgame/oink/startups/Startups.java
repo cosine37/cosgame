@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
 import com.cosine.cosgame.oink.startups.entity.CardEntity;
+import com.cosine.cosgame.oink.startups.entity.EndGameEntity;
 import com.cosine.cosgame.oink.startups.entity.EndRoundEntity;
 import com.cosine.cosgame.oink.startups.entity.PlayerEntity;
 import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
@@ -232,6 +233,23 @@ public class Startups {
 				eres.add(ere);
 			}
 			entity.setEndRoundInfo(eres);
+			
+			
+			//deal with end game msg
+			EndGameEntity endGameInfo = new EndGameEntity();
+			if (board.getStatus() == Consts.ENDGAME) {
+				List<Player> tps = new ArrayList<>();
+				for (i=0;i<players.size();i++) {
+					tps.add(players.get(i));
+				}
+				for (i=0;i<tps.size();i++) {
+					for (j=i+1;j<tps.size();j++) {
+						
+					}
+				}
+			}
+			entity.setEndGameInfo(endGameInfo);
+			
 		}
 		
 		
@@ -366,6 +384,65 @@ public class Startups {
 			players.get(curPlayer).startTurn();
 			logger.logStartTurn(players.get(curPlayer));
 		}
+	}
+	
+	public boolean gameEnd() {
+		boolean f = false;
+		if (round == 4) f = true;
+		return f;
+	}
+	
+	public void endGame() {
+		// Step 1: change status
+		board.setStatus(Consts.ENDGAME);
+		
+		// Step 2: set rankings for players;
+		int i,j;
+		List<Player> tps = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tps.add(players.get(i));
+		}
+		for (i=0;i<tps.size();i++) {
+			for (j=i+1;j<tps.size();j++) {
+				boolean shouldSwap = false;
+				if (tps.get(i).getTotalScore() < tps.get(j).getTotalScore()) { // one with more total scores goes first
+					shouldSwap = true;
+				} else if (tps.get(i).getTotalScore() == tps.get(j).getTotalScore()) {
+					if (tps.get(i).numScores(2) < tps.get(i).numScores(2)) { // one with more 2s goes first
+						shouldSwap = true;
+					} else if (tps.get(i).numScores(2) == tps.get(i).numScores(2)) {
+						if (tps.get(i).numScores(1) < tps.get(i).numScores(1)) { // one with more 1s goes fitrt
+							shouldSwap = true;
+						} else if (tps.get(i).numScores(1) == tps.get(i).numScores(1)) {
+							if (tps.get(i).finalCoins() < tps.get(j).finalCoins()) { // one with larger final score ranks higher
+								shouldSwap = true;
+							} else if (tps.get(i).finalCoins() == tps.get(j).finalCoins()) {
+								if (tps.get(i).getCoin3RoundEnd() < tps.get(j).getCoin3RoundEnd()) { // same score, one with more coin3 ranks higher
+									shouldSwap = true;
+								} else if (tps.get(i).getCoin3RoundEnd() == tps.get(j).getCoin3RoundEnd()) {
+									// get real index
+									int rsi = tps.get(i).getIndex();
+									int rsj = tps.get(j).getIndex();
+									if (rsi < firstPlayer) rsi=rsi+players.size();
+									if (rsj < firstPlayer) rsj=rsj+players.size();
+									if (rsi < rsj) { // one goes last ranks higher
+										shouldSwap = true;
+									}
+								}
+							}
+							
+						}
+					}
+				}
+				
+				if (shouldSwap) {
+					Player tp = tps.get(i);
+					tps.set(i, tps.get(j));
+					tps.set(j, tp);
+				}
+			}
+		}
+		
 	}
 	
 	public boolean roundEnd() {
@@ -573,7 +650,11 @@ public class Startups {
 			p.setConfirmNextRound(true);
 			updatePlayer(name);
 			if (allConfirmedNextRound()) {
-				startRound();
+				if (gameEnd()) {
+					endGame();
+				} else {
+					startRound();
+				}
 				updateBasicDB();
 				updatePlayers();
 			}

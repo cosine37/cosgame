@@ -21,6 +21,8 @@ public class StartupsEntity {
 	int myDrawCost;
 	boolean confirmed;
 	
+	EndGameEntity endGameInfo;
+	
 	public List<PlayerEntity> getPlayers() {
 		return players;
 	}
@@ -104,5 +106,11 @@ public class StartupsEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public EndGameEntity getEndGameInfo() {
+		return endGameInfo;
+	}
+	public void setEndGameInfo(EndGameEntity endGameInfo) {
+		this.endGameInfo = endGameInfo;
 	}
 }

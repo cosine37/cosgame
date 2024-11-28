@@ -15,7 +15,7 @@ public class Player {
 	int index;
 	int coins;
 	int phase;
-	
+	int ranking;
 	int numTaken;
 	
 	boolean confirmNextRound;
@@ -41,6 +41,7 @@ public class Player {
 		doc.append("coin3s", coin3s);
 		doc.append("scores", scores);
 		doc.append("confirmNextRound", confirmNextRound);
+		doc.append("ranking", ranking);
 		
 		int i;
 		List<Document> doh = new ArrayList<>();
@@ -70,6 +71,7 @@ public class Player {
 		scores = (List<Integer>) doc.get("scores");
 		List<Document> doh = (List<Document>) doc.get("hand");
 		List<Document> dop = (List<Document>) doc.get("play");
+		ranking = doc.getInteger("ranking", 0);
 		
 		int i;
 		hand = new ArrayList<>();
@@ -92,14 +94,20 @@ public class Player {
 		entity.setNumTaken(numTaken);
 		entity.setCoin1s(coin1s);
 		entity.setCoin3s(coin3s);
-		entity.setScores(scores);
 		entity.setPlay(toPlayEntityList());
 		entity.setAntiMonopoly(toAntiMonopolyEntityList());
+		entity.setRanking(ranking);
 		
 		if (startups.getStatus() == Consts.ROUNDEND) {
 			entity.setScoreDisplay(this.getTotalScore(false));
+			List<Integer> tss = new ArrayList<>();
+			for (int i=0;i<scores.size()-1;i++) {
+				tss.add(scores.get(i));
+			}
+			entity.setScores(tss);
 		} else {
 			entity.setScoreDisplay(this.getTotalScore());
+			entity.setScores(scores);
 		}
 		Account account = new Account();
 		account.getFromDB(name);
@@ -296,8 +304,13 @@ public class Player {
 				if (startups.getStatus() == Consts.INGAME) {
 					phase = Consts.OFFTURN;
 					
+					
 					if (startups.roundEnd()) {
-						startups.endRound();
+						if (startups.gameEnd()) {
+							startups.endGame();
+						} else {
+							startups.endRound();
+						}
 					} else {
 						startups.nextPlayer();
 					}
@@ -396,6 +409,13 @@ public class Player {
 	}
 	public int getTotalScore() {
 		return getTotalScore(true);
+	}
+	public int numScores(int x) {
+		int ans = 0;
+		for (int i=0;i<scores.size();i++) {
+			if (scores.get(i) == x) ans++;
+		}
+		return ans;
 	}
 	
 	public String getNameDisplay() {

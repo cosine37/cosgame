@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html></html>		
 <head>
 <meta charset="UTF-8">
 <title>Cosgame Abstract</title>
@@ -23,7 +23,7 @@ body {
 </style>
 <body ng-app="oinkGameApp" ng-controller="oinkGameCtrl" ng-style="bodyStyle" ng-click="bgm.play()" class="noselect">
 
-	<div ng-show="game==STARTUPS" class="game-div">
+	<div ng-show="game==STARTUPS && status != ENDGAME" class="game-div">
 		<div style="position: absolute; bottom: 10px; right: 20px;">
 			<span style="font-weight: bold; font-size: 80px; color:white">初创公司</span>
 		</div>
@@ -38,22 +38,35 @@ body {
 						<td>
 							<table>
 								<tr>
-									<td rowspan='2'>
-										<div style="height: 80px; width: 80px" ng-style="p.account.chosenAvatarStyle"></div>
+									<td rowspan='3'>
+										<div style="height: 90px; width: 90px" ng-style="p.account.chosenAvatarStyle"></div>
 									</td>
-									<td style="padding-left: 10px;">
+									<td style="padding-left: 10px; width: 160px">
 										<span style="font-size: 20px;font-weight: bold; ">{{p.account.nameDisplay}}</span>
 									</td>
 								</tr>
 								<tr>
-									<td style="padding-left: 10px;">
+									<td style="padding-left: 10px; width: 160px">
 										<div style="background:url('/image/Oink/Startups/coin.png'); background-size:cover; width: 42px; height: 42px; float:left;
 											color: black; font-weight:bold; font-size: 24px;text-align: center;padding-top: 2px">
 											{{p.coins}}
 										</div>
-										<div style="float:right;margin-top: 7px; margin-left: 10px; font-size: 18px;">
-											<span>分数：{{p.scoreDisplay}}</span>
+										<div style="float:right;margin-top: 7px; margin-left: 10px; font-size: 18px; font-weight:bold">
+											<span>总分：{{p.scoreDisplay}}</span>
 										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 10px">
+										<span style="font-size:18px">每局分数：</span>
+										<span ng-show="p.scores.length==0" ng-style="startupsScoreStyle(99999)">-</span>
+										<span ng-show="p.scores.length>0" ng-style="startupsScoreStyle(p.scores[0])">{{p.scores[0]}}</span>
+										<span ng-show="p.scores.length<2" ng-style="startupsScoreStyle(99999)">-</span>
+										<span ng-show="p.scores.length>1" ng-style="startupsScoreStyle(p.scores[1])">{{p.scores[1]}}</span>
+										<span ng-show="p.scores.length<3" ng-style="startupsScoreStyle(99999)">-</span>
+										<span ng-show="p.scores.length>2" ng-style="startupsScoreStyle(p.scores[2])">{{p.scores[2]}}</span>
+										<span ng-show="p.scores.length<4" ng-style="startupsScoreStyle(99999)">-</span>
+										<span ng-show="p.scores.length>3" ng-style="startupsScoreStyle(p.scores[3])">{{p.scores[3]}}</span>
 									</td>
 								</tr>
 							</table>
@@ -119,6 +132,11 @@ body {
 		</div>
 		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect" ng-show="showEndRoundInfo"></div>
 	</div>
+	
+	<div ng-show="game==STARTUPS && status == ENDGAME" class="game-div">
+		游戏结束
+	</div>
+	
 	<!-- 
 	<div>
 		<table>
