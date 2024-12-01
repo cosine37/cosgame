@@ -134,33 +134,62 @@ body {
 	</div>
 	
 	<div ng-show="game==STARTUPS && status == ENDGAME" class="game-div">
-		游戏结束
-		{{gamedata.endGameInfo}}
+		<div style="font-family: 'yzgc'; text-align:center;">
+			<h1>游戏结束</h1>
+			<div>
+				<table style="width: 800px;margin-left: 500px;">
+					<tr>
+						<td rowspan="2">
+							<div style="height: 150px; width: 150px;" ng-style="gamedata.endGameInfo.winner.chosenAvatarStyle">
+							</div>
+						</td>
+						<td>
+							<h2>获胜者：{{gamedata.endGameInfo.winner.name}}</h2>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div style="font-size: 24px">
+								感想：{{gamedata.endGameInfo.winner.signature}}
+							</div>
+						</td>
+						
+					</tr>
+				</table>
+			</div>
+			
+			
+			
+			<div style="margin-top: 50px;float:left; margin-left: 500px">
+				<table class="game-end-table">
+					<tr style="color: white; background-color:rgb(0,150,255)">
+						<td>名次</td>
+						<td>姓名</td>
+						<td colspan="4">每轮分数</td>
+						<td>总分</td>
+					</tr>
+					<tr ng-repeat="name in gamedata.endGameInfo.playerNames track by $index">
+						<td>{{$index+1}}</td>
+						<td>{{name}}</td>
+						<td>{{gamedata.endGameInfo.scores[$index][0]}}</td>
+						<td>{{gamedata.endGameInfo.scores[$index][1]}}</td>
+						<td>{{gamedata.endGameInfo.scores[$index][2]}}</td>
+						<td>{{gamedata.endGameInfo.scores[$index][3]}}</td>
+						<td style="font-weight:bold">{{gamedata.endGameInfo.finalScore[$index]}}</td>
+					</tr>
+				</table>
+			</div>
+			<div style="margin-top: 50px;float:left; vertical-align:top; margin-left: 200px; width: 300px;">
+				<h2>你获得了</h2>
+				<div ng-repeat="rewardMsg in gamedata.endGameInfo.endGameRewards">{{rewardMsg}}</div>
+			</div>
+			<div style="clear: both"></div>
+		</div>
+		
+		<div style="width: 1800px; text-align:center; margin-top: 20px">
+			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+			<button ng-click="goto('oink')">退出</button>
+		</div>
 	</div>
 	
-	<!-- 
-	<div>
-		<table>
-			<tr>
-				<td colspan="2">
-					<h1>抽象小品</h1>
-				</td>
-			</tr>
-			<tr>
-				<td style="vertical-align: top">
-					游戏开始
-				</td>
-				<td style="vertical-align: top">
-					
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					
-				</td>
-			</tr>
-		</table>
-	</div>
-	{{gamedata}}
-	 -->
 </body>

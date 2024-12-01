@@ -254,7 +254,10 @@ public class Startups {
 			List<Integer> egfs = new ArrayList<>();
 			
 			for (i=0;i<tps.size();i++) {
-				egpn.add(tps.get(i).getName());
+				if (i==0) {
+					endGameInfo.setWinner(tps.get(0).toPlayerEntity().getAccount());
+				}
+				egpn.add(tps.get(i).getNameDisplay());
 				egs.add(tps.get(i).getScores());
 				egfs.add(tps.get(i).getTotalScore());
 				if (tps.get(i).getName().contentEquals(username)) {

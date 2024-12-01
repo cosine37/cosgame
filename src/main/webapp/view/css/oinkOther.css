@@ -79,6 +79,14 @@ button:disabled{
 	width: 960px;
 }
 
+.game-end-table td{
+	border: 1px solid black;
+	padding: 5px;
+	font-size: 20px;
+}
+
+
+
 
 .card{
 	position: relative;

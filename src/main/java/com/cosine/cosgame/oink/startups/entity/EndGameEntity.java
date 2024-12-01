@@ -2,11 +2,14 @@ package com.cosine.cosgame.oink.startups.entity;
 
 import java.util.List;
 
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
+
 public class EndGameEntity {
 	List<String> playerNames;
 	List<List<Integer>> scores;
 	List<Integer> finalScore;
 	List<String> endGameRewards;
+	AccountEntity winner;
 	
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -31,5 +34,11 @@ public class EndGameEntity {
 	}
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
+	}
+	public AccountEntity getWinner() {
+		return winner;
+	}
+	public void setWinner(AccountEntity winner) {
+		this.winner = winner;
 	}
 }
