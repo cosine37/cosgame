@@ -9,6 +9,9 @@ public class AccountEntity {
 	String signatureDisplay;
 	String nameDisplay;
 	int chosenAvatar;
+	int money;
+	int diamond;
+	int key;
 	List<Integer> avatars;
 	boolean visitedOink;
 	Map<String, String> chosenAvatarStyle;
@@ -67,6 +70,24 @@ public class AccountEntity {
 	}
 	public void setNameDisplay(String nameDisplay) {
 		this.nameDisplay = nameDisplay;
+	}
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	public int getDiamond() {
+		return diamond;
+	}
+	public void setDiamond(int diamond) {
+		this.diamond = diamond;
+	}
+	public int getKey() {
+		return key;
+	}
+	public void setKey(int key) {
+		this.key = key;
 	}
 	
 }

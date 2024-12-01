@@ -16,6 +16,7 @@ public class Player {
 	int coins;
 	int phase;
 	int ranking;
+	int roundRanking;
 	int numTaken;
 	
 	boolean confirmNextRound;
@@ -27,6 +28,8 @@ public class Player {
 	
 	List<Card> hand;
 	List<Card> play;
+	
+	List<String> endGameRewards;
 	
 	Startups startups;
 	
@@ -42,6 +45,7 @@ public class Player {
 		doc.append("scores", scores);
 		doc.append("confirmNextRound", confirmNextRound);
 		doc.append("ranking", ranking);
+		doc.append("endGameRewards", endGameRewards);
 		
 		int i;
 		List<Document> doh = new ArrayList<>();
@@ -69,6 +73,7 @@ public class Player {
 		coin1s = (List<Integer>)doc.get("coin1s");
 		coin3s = (List<Integer>)doc.get("coin3s");
 		scores = (List<Integer>) doc.get("scores");
+		endGameRewards = (List<String>)doc.get("endGameRewards");
 		List<Document> doh = (List<Document>) doc.get("hand");
 		List<Document> dop = (List<Document>) doc.get("play");
 		ranking = doc.getInteger("ranking", 0);
@@ -164,6 +169,8 @@ public class Player {
 		play = new ArrayList<>();
 		coin1s = new ArrayList<>();
 		coin3s = new ArrayList<>();
+		scores = new ArrayList<>();
+		endGameRewards = new ArrayList<>();
 	}
 	
 	public Player(String name) {
@@ -179,6 +186,7 @@ public class Player {
 		coins = 10;
 		coin1s = new ArrayList<>();
 		coin3s = new ArrayList<>();
+		
 		
 	}
 	
@@ -503,6 +511,24 @@ public class Player {
 	}
 	public void setConfirmNextRound(boolean confirmNextRound) {
 		this.confirmNextRound = confirmNextRound;
+	}
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+	public int getRoundRanking() {
+		return roundRanking;
+	}
+	public void setRoundRanking(int roundRanking) {
+		this.roundRanking = roundRanking;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 	
 	

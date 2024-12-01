@@ -6,6 +6,7 @@ public class EndGameEntity {
 	List<String> playerNames;
 	List<List<Integer>> scores;
 	List<Integer> finalScore;
+	List<String> endGameRewards;
 	
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -24,5 +25,11 @@ public class EndGameEntity {
 	}
 	public void setFinalScore(List<Integer> finalScore) {
 		this.finalScore = finalScore;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 }

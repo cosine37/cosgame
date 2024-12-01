@@ -9,6 +9,8 @@ import java.util.Set;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.Transaction;
 import com.cosine.cosgame.oink.startups.entity.CardEntity;
 import com.cosine.cosgame.oink.startups.entity.EndGameEntity;
 import com.cosine.cosgame.oink.startups.entity.EndRoundEntity;
@@ -233,24 +235,38 @@ public class Startups {
 				eres.add(ere);
 			}
 			entity.setEndRoundInfo(eres);
-			
-			
-			//deal with end game msg
-			EndGameEntity endGameInfo = new EndGameEntity();
-			if (board.getStatus() == Consts.ENDGAME) {
-				List<Player> tps = new ArrayList<>();
-				for (i=0;i<players.size();i++) {
-					tps.add(players.get(i));
-				}
-				for (i=0;i<tps.size();i++) {
-					for (j=i+1;j<tps.size();j++) {
-						
+		}
+		
+		//deal with end game msg
+		EndGameEntity endGameInfo = new EndGameEntity();
+		if (board.getStatus() == Consts.ENDGAME) {
+			List<Player> tps = new ArrayList<>();
+			for (i=1;i<=players.size();i++) {
+				for (j=0;j<players.size();j++) {
+					if (players.get(j).getRanking() == i) {
+						tps.add(players.get(j));
 					}
 				}
 			}
-			entity.setEndGameInfo(endGameInfo);
+			
+			List<String> egpn = new ArrayList<>();
+			List<List<Integer>> egs = new ArrayList<>();
+			List<Integer> egfs = new ArrayList<>();
+			
+			for (i=0;i<tps.size();i++) {
+				egpn.add(tps.get(i).getName());
+				egs.add(tps.get(i).getScores());
+				egfs.add(tps.get(i).getTotalScore());
+				if (tps.get(i).getName().contentEquals(username)) {
+					endGameInfo.setEndGameRewards(tps.get(i).getEndGameRewards());
+				}
+			}
+			endGameInfo.setPlayerNames(egpn);
+			endGameInfo.setScores(egs);
+			endGameInfo.setFinalScore(egfs);
 			
 		}
+		entity.setEndGameInfo(endGameInfo);
 		
 		
 		return entity;
@@ -441,6 +457,25 @@ public class Startups {
 					tps.set(j, tp);
 				}
 			}
+		}
+		
+		for (i=0;i<tps.size();i++) {
+			tps.get(i).setRanking(i+1);
+		}
+		
+		// Step 3: deal with awards
+		for (i=0;i<players.size();i++) {
+			Account a = new Account();
+			Player p = players.get(i);
+			a.getFromDB(p.getName());
+			List<Transaction> rewards = a.endGameReward(p.getRanking());
+			List<String> endGameRewards = new ArrayList<>();
+			for (j=0;j<rewards.size();j++) {
+				a.addNewTransaction(rewards.get(j));
+				endGameRewards.add(rewards.get(j).toString());
+			}
+			p.setEndGameRewards(endGameRewards);
+			a.updateAccountDB();
 		}
 		
 	}
