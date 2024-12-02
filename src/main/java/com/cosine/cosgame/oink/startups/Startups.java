@@ -145,6 +145,7 @@ public class Startups {
 		boolean canDraw = false;
 		int phase = Consts.OFFTURN;
 		int myDrawCost = 0;
+		int myRanking = 0;
 		boolean confirmNextRound = false;
 		for (i=0;i<players.size();i++) {
 			Player p = players.get(i);
@@ -152,6 +153,7 @@ public class Startups {
 			if (p.getName().contentEquals(username)) {
 				canDraw = p.canDraw();
 				myDrawCost = drawCost(p);
+				myRanking = p.getRanking();
 				phase = p.getPhase();
 				confirmNextRound = p.isConfirmNextRound();
 				for (j=0;j<p.getHand().size();j++) {
@@ -174,6 +176,7 @@ public class Startups {
 		entity.setPhase(phase);
 		entity.setMyDrawCost(myDrawCost);
 		entity.setConfirmed(confirmNextRound);
+		entity.setMyRanking(myRanking);
 		
 		// deal with end round msg
 		if (board.getStatus() != Consts.ROUNDEND) {

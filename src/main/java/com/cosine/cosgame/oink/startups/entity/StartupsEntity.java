@@ -19,6 +19,7 @@ public class StartupsEntity {
 	int phase;
 	boolean canDraw;
 	int myDrawCost;
+	int myRanking;
 	boolean confirmed;
 	
 	EndGameEntity endGameInfo;
@@ -112,5 +113,11 @@ public class StartupsEntity {
 	}
 	public void setEndGameInfo(EndGameEntity endGameInfo) {
 		this.endGameInfo = endGameInfo;
+	}
+	public int getMyRanking() {
+		return myRanking;
+	}
+	public void setMyRanking(int myRanking) {
+		this.myRanking = myRanking;
 	}
 }

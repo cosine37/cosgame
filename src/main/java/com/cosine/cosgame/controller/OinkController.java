@@ -18,6 +18,7 @@ import com.cosine.cosgame.oink.BoardEntity;
 import com.cosine.cosgame.oink.Consts;
 import com.cosine.cosgame.oink.Meta;
 import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.Shop;
 import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.util.StringEntity;
 
@@ -280,6 +281,21 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/oink/dig", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dig(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Shop shop = new Shop();
+		Account account = new Account();
+		account.getFromDB(username);
+		String rewardMsg = shop.dig(account);
+		List<String> ls = new ArrayList<>();
+		ls.add(rewardMsg);
+		StringEntity entity = new StringEntity();
+		entity.setValue(ls);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
 	/*
 	@RequestMapping(value="/pokerworld/claimdominant", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> claimDominant(HttpServletRequest request, @RequestParam String dominantSuit, @RequestParam int numDominant){
@@ -487,20 +503,7 @@ public class OinkController {
 	
 	
 	
-	@RequestMapping(value="/pokerworld/dig", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> dig(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("username");
-		Shop shop = new Shop();
-		Account account = new Account();
-		account.getFromDB(username);
-		String rewardMsg = shop.dig(account);
-		List<String> ls = new ArrayList<>();
-		ls.add(rewardMsg);
-		StringEntity entity = new StringEntity();
-		entity.setValue(ls);
-		return new ResponseEntity<>(entity, HttpStatus.OK);
-	}
+	
 	
 	@RequestMapping(value="/pokerworld/openchest", method = RequestMethod.POST)
 	public ResponseEntity<StringEntity> openChest(HttpServletRequest request) {

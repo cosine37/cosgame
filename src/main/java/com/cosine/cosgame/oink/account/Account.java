@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -135,6 +136,16 @@ public class Account {
 		avatars.add(1002);
 		avatars.add(1003);
 		chosenAvatar = 1000;
+		
+		// random avatars;
+		Random rand = new Random();
+		for (int i=0;i<4;i++) {
+			int x = rand.nextInt(33);
+			avatars.add(x+1004);
+		}
+		
+		signature = "";
+		lastLoginDate = "";
 		visitedOink = false;
 	}
 	

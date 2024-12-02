@@ -101,6 +101,79 @@ public class Shop {
 		}
 		return ts;
 	}
+	
+	public String dig(Account a) {
+		
+		if (a.getMoney() < DIGPRICE) return "";
+		String rewardMsg = "";
+		/*
+		int randTop = 256;
+		int epicRate = 1;
+		int diamond10Rate = 2;
+		int diamond5Rate = 4;
+		int diamond2Rate = 8;
+		int keyRate = 16;
+		int diamond1Rate = 32;
+		int rareRate = 64;
+		Random rand = new Random();
+		int x = rand.nextInt(randTop);
+		Transaction t1 = new Transaction(Transaction.MONEY, -88, "挖掘");
+		a.addNewTransaction(t1);
+		if (x<epicRate) {
+			Skin s = receiveSkin(Consts.EPIC, a);
+			if (s == null) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d10";
+			} else {
+				a.addSkin(s.getId());
+				rewardMsg = "s3" + Integer.toString(s.getId()) + s.getName();
+			}
+		} else if (x<diamond10Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d10";
+		} else if (x<diamond5Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 5, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d5";
+		} else if (x<diamond2Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 2, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d2";
+		} else if (x<keyRate) {
+			Transaction t2 = new Transaction(Transaction.KEY, 1, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "k1";
+		} else if (x<diamond1Rate) {
+			Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
+			a.addNewTransaction(t2);
+			rewardMsg = "d1";
+		} else if (x<rareRate) {
+			Skin s = receiveSkin(Consts.RARE, a);
+			if (s == null) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			} else {
+				a.addSkin(s.getId());
+				rewardMsg = "s2" + Integer.toString(s.getId()) + s.getName();
+			}
+		} else {
+			Skin s = receiveSkin(Consts.COMMON, a);
+			if (s == null) {
+				Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
+				a.addNewTransaction(t2);
+				rewardMsg = "d1";
+			} else {
+				a.addSkin(s.getId());
+				rewardMsg = "s1" + Integer.toString(s.getId()) + s.getName();
+			}
+		}
+		*/
+		a.updateAccountDB();
+		return rewardMsg;
+	}
 	/*
 	public List<String> openChest(Account a) {
 		List<String> ls = new ArrayList<>();
@@ -194,76 +267,7 @@ public class Shop {
 		return ls;
 	}
 	
-	public String dig(Account a) {
-		if (a.getMoney() < DIGPRICE) return "";
-		String rewardMsg = "";
-		int randTop = 256;
-		int epicRate = 1;
-		int diamond10Rate = 2;
-		int diamond5Rate = 4;
-		int diamond2Rate = 8;
-		int keyRate = 16;
-		int diamond1Rate = 32;
-		int rareRate = 64;
-		Random rand = new Random();
-		int x = rand.nextInt(randTop);
-		Transaction t1 = new Transaction(Transaction.MONEY, -88, "挖掘");
-		a.addNewTransaction(t1);
-		if (x<epicRate) {
-			Skin s = receiveSkin(Consts.EPIC, a);
-			if (s == null) {
-				Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
-				a.addNewTransaction(t2);
-				rewardMsg = "d10";
-			} else {
-				a.addSkin(s.getId());
-				rewardMsg = "s3" + Integer.toString(s.getId()) + s.getName();
-			}
-		} else if (x<diamond10Rate) {
-			Transaction t2 = new Transaction(Transaction.DIAMOND, 10, "挖掘获得");
-			a.addNewTransaction(t2);
-			rewardMsg = "d10";
-		} else if (x<diamond5Rate) {
-			Transaction t2 = new Transaction(Transaction.DIAMOND, 5, "挖掘获得");
-			a.addNewTransaction(t2);
-			rewardMsg = "d5";
-		} else if (x<diamond2Rate) {
-			Transaction t2 = new Transaction(Transaction.DIAMOND, 2, "挖掘获得");
-			a.addNewTransaction(t2);
-			rewardMsg = "d2";
-		} else if (x<keyRate) {
-			Transaction t2 = new Transaction(Transaction.KEY, 1, "挖掘获得");
-			a.addNewTransaction(t2);
-			rewardMsg = "k1";
-		} else if (x<diamond1Rate) {
-			Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
-			a.addNewTransaction(t2);
-			rewardMsg = "d1";
-		} else if (x<rareRate) {
-			Skin s = receiveSkin(Consts.RARE, a);
-			if (s == null) {
-				Transaction t2 = new Transaction(Transaction.DIAMOND, 3, "挖掘获得");
-				a.addNewTransaction(t2);
-				rewardMsg = "d1";
-			} else {
-				a.addSkin(s.getId());
-				rewardMsg = "s2" + Integer.toString(s.getId()) + s.getName();
-			}
-		} else {
-			Skin s = receiveSkin(Consts.COMMON, a);
-			if (s == null) {
-				Transaction t2 = new Transaction(Transaction.DIAMOND, 1, "挖掘获得");
-				a.addNewTransaction(t2);
-				rewardMsg = "d1";
-			} else {
-				a.addSkin(s.getId());
-				rewardMsg = "s1" + Integer.toString(s.getId()) + s.getName();
-			}
-		}
-		
-		a.updateAccountDB();
-		return rewardMsg;
-	}
+	
 	
 	public Skin receiveSkin(int level, Account a) {
 		a.setShop(this);

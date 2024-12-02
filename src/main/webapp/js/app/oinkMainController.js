@@ -132,6 +132,28 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			$scope.getAllBoards();
 		});
 		
+		$scope.chooseAvatar = function(x){
+			var data = {"avatarId" : x}
+			$http({url: "/oink/chooseavatar", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.changeSignature = function(){
+			var data = {"s" : $scope.mySignature}
+			$http({url: "/oink/changesignature", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.getAccountInfo = function(){
+			$http.get('/oink/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
+		
+		$scope.getAccountInfo()
+		
 		
 		$scope.cards = []
 		c = {

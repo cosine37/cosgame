@@ -40,6 +40,19 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			$scope.bgm.play();
 		}, true);
 		
+		$scope.playWinLoseBGM = function(x){
+			if (x == 1){
+				$scope.bgm.src = '/sound/Oink/game_win.mp3'
+				$scope.bgm.play();
+			} else if (x == 2) {
+				$scope.bgm.src = '/sound/Oink/game_tie.mp3'
+				$scope.bgm.play();
+			} else {
+				$scope.bgm.src = '/sound/Oink/game_lose.mp3'
+				$scope.bgm.play();
+			}
+		}
+		
 		$scope.playClickSE = function(){
 			var audio = new Audio("/sound/Oink/click.wav")
 			audio.play();
@@ -239,6 +252,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				if ($scope.playingBGM == false){
 					randomizeBGM()
 					$scope.playingBGM = true;
+				}
+				
+				
+				if ($scope.status == $scope.ENDGAME && $scope.status != oldStatus){
+					$scope.playWinLoseBGM($scope.gamedata.myRanking)
 				}
 				
 			});
