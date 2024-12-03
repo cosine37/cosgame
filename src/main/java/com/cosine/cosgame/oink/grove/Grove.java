@@ -1,20 +1,76 @@
 package com.cosine.cosgame.oink.grove;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
+
+import com.cosine.cosgame.oink.Board;
 
 public class Grove {
 	int curPlayer;
 	int phase;
 	int lastAccused;
 	int predefinedRoles;
-	List<Player> players;
+	List<GrovePlayer> players;
 	List<Role> suspects;
 	List<Role> victims;
+	
+	Board board;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		doc.append("curPlayer",curPlayer);
+		doc.append("phase",phase);
+		doc.append("lastAccused",lastAccused);
+		doc.append("predefinedRoles",predefinedRoles);
+		List<Document> playersDocList = new ArrayList<>();
+		for (i=0;i<players.size();i++){
+			playersDocList.add(players.get(i).toDocument());
+		}
+		List<Document> suspectsDocList = new ArrayList<>();
+		for (i=0;i<suspects.size();i++){
+			suspectsDocList.add(suspects.get(i).toDocument());
+		}
+		List<Document> victimsDocList = new ArrayList<>();
+		for (i=0;i<victims.size();i++){
+			victimsDocList.add(victims.get(i).toDocument());
+		}
+		return doc;
+	}
+	public void setFromDoc(Document doc){
+		int i;
+		curPlayer = doc.getInteger("curPlayer",0);
+		phase = doc.getInteger("phase",0);
+		lastAccused = doc.getInteger("lastAccused",0);
+		predefinedRoles = doc.getInteger("predefinedRoles",0);
+		List<Document> playersDocList = (List<Document>)doc.get("players");
+		players = new ArrayList<>();
+		for (i=0;i<playersDocList.size();i++){
+			GrovePlayer e = new GrovePlayer();
+			e.setFromDoc(playersDocList.get(i));
+			players.add(e);
+		}
+		List<Document> suspectsDocList = (List<Document>)doc.get("suspects");
+		suspects = new ArrayList<>();
+		for (i=0;i<suspectsDocList.size();i++){
+			Role e = new Role();
+			e.setFromDoc(suspectsDocList.get(i));
+			suspects.add(e);
+		}
+		List<Document> victimsDocList = (List<Document>)doc.get("victims");
+		victims = new ArrayList<>();
+		for (i=0;i<victimsDocList.size();i++){
+			Role e = new Role();
+			e.setFromDoc(victimsDocList.get(i));
+			victims.add(e);
+		}
+	}
 	
 	public Grove() {
 		
 	}
-	
 	
 	public int murdererId() {
 		int i;
@@ -50,7 +106,7 @@ public class Grove {
 	}
 	
 	public void playerView(String name, List<Integer> viewed) {
-		Player p = getPlayerByName(name);
+		GrovePlayer p = getPlayerByName(name);
 		if (p != null) {
 			p.setViewed(viewed);
 		}
@@ -58,7 +114,7 @@ public class Grove {
 	
 	
 	public void playerAccuse(String name, int index) {
-		Player p = getPlayerByName(name);
+		GrovePlayer p = getPlayerByName(name);
 		if (p != null && index != lastAccused && index>=0 && index<=Consts.NUMSUSPECTS) {
 			suspects.get(index).addPredicted(p.getIndex());
 			p.setAccused(index);
@@ -66,7 +122,7 @@ public class Grove {
 		}
 	}
 	
-	public Player getPlayerByName(String name) {
+	public GrovePlayer getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().contentEquals(name)) {
 				return players.get(i);
@@ -75,6 +131,12 @@ public class Grove {
 		return null;
 	}
 	
+	public int getStatus() {
+		return board.getStatus();
+	}
+	public void setStatus(int status) {
+		board.setStatus(status);
+	}
 	public int getCurPlayer() {
 		return curPlayer;
 	}
@@ -99,10 +161,10 @@ public class Grove {
 	public void setPredefinedRoles(int predefinedRoles) {
 		this.predefinedRoles = predefinedRoles;
 	}
-	public List<Player> getPlayers() {
+	public List<GrovePlayer> getPlayers() {
 		return players;
 	}
-	public void setPlayers(List<Player> players) {
+	public void setPlayers(List<GrovePlayer> players) {
 		this.players = players;
 	}
 	public List<Role> getSuspects() {

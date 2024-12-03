@@ -3,6 +3,8 @@ package com.cosine.cosgame.oink.grove;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Role {
 	int num;
 	int height;
@@ -13,6 +15,30 @@ public class Role {
 	String avatar;
 	
 	List<Integer> predicted;
+	
+	public Document toDocument(){
+		Document doc = new Document();
+		doc.append("num",num);
+		doc.append("height",height);
+		doc.append("age",age);
+		doc.append("name",name);
+		doc.append("description",description);
+		doc.append("gender",gender);
+		doc.append("avatar",avatar);
+		doc.append("predicted",predicted);
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc){
+		num = doc.getInteger("num",0);
+		height = doc.getInteger("height",0);
+		age = doc.getInteger("age",0);
+		name = doc.getString("name");
+		description = doc.getString("description");
+		gender = doc.getString("gender");
+		avatar = doc.getString("avatar");
+		predicted = (List<Integer>)doc.get("predicted");
+	}
 	
 	public Role() {
 		predicted = new ArrayList<>();
