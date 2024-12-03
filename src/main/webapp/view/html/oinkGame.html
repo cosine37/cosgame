@@ -192,4 +192,13 @@ body {
 		</div>
 	</div>
 	
+	<div ng-show="game==GROVE && status != ENDGAME">
+		狗头侦探
+		<div>
+			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+			<button ng-click="goto('oink')">退出</button>
+		</div>
+		
+		{{gamedata}}
+	</div>
 </body>

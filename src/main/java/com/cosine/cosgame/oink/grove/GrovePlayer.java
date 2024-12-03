@@ -46,6 +46,15 @@ public class GrovePlayer {
 	public GrovePlayer() {
 		liars = new ArrayList<>();
 		viewed = new ArrayList<>();
+		
+		leftOutsider = new Role();
+		rightOutsider = new Role();
+		
+	}
+	
+	public GrovePlayer(String name) {
+		this();
+		this.name = name;
 	}
 	
 	public void newGame() {

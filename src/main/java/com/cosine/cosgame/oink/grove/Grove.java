@@ -6,15 +6,20 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Grove {
 	int curPlayer;
 	int phase;
 	int lastAccused;
 	int predefinedRoles;
+	int round;
+	int firstPlayer;
 	List<GrovePlayer> players;
 	List<Role> suspects;
 	List<Role> victims;
+	
+	MongoDBUtil dbutil;
 	
 	Board board;
 	
@@ -25,18 +30,24 @@ public class Grove {
 		doc.append("phase",phase);
 		doc.append("lastAccused",lastAccused);
 		doc.append("predefinedRoles",predefinedRoles);
-		List<Document> playersDocList = new ArrayList<>();
-		for (i=0;i<players.size();i++){
-			playersDocList.add(players.get(i).toDocument());
+		doc.append("round",round);
+		doc.append("firstPlayer",firstPlayer);
+		for (i=0;i<players.size();i++) {
+			players.get(i).setIndex(i);
+			String n = players.get(i).getName();
+			n = "player-" + n;
+			doc.append(n, players.get(i).toDocument());
 		}
 		List<Document> suspectsDocList = new ArrayList<>();
 		for (i=0;i<suspects.size();i++){
 			suspectsDocList.add(suspects.get(i).toDocument());
 		}
+		doc.append("suspects",suspectsDocList);
 		List<Document> victimsDocList = new ArrayList<>();
 		for (i=0;i<victims.size();i++){
 			victimsDocList.add(victims.get(i).toDocument());
 		}
+		doc.append("victims",victimsDocList);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -45,12 +56,19 @@ public class Grove {
 		phase = doc.getInteger("phase",0);
 		lastAccused = doc.getInteger("lastAccused",0);
 		predefinedRoles = doc.getInteger("predefinedRoles",0);
-		List<Document> playersDocList = (List<Document>)doc.get("players");
+		round = doc.getInteger("round",0);
+		firstPlayer = doc.getInteger("firstPlayer",0);
+		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
-		for (i=0;i<playersDocList.size();i++){
-			GrovePlayer e = new GrovePlayer();
-			e.setFromDoc(playersDocList.get(i));
-			players.add(e);
+		for (i=0;i<playerNames.size();i++) {
+			String n = playerNames.get(i);
+			n = "player-" + n;
+			Document dop = (Document) doc.get(n);
+			GrovePlayer p = new GrovePlayer();
+			p.setGrove(this);
+			p.setFromDoc(dop);
+			p.setIndex(i);
+			players.add(p);
 		}
 		List<Document> suspectsDocList = (List<Document>)doc.get("suspects");
 		suspects = new ArrayList<>();
@@ -68,8 +86,16 @@ public class Grove {
 		}
 	}
 	
-	public Grove() {
+	public Grove(Board board) {
+		this.board = board;
+		players = new ArrayList<>();
+		suspects = new ArrayList<>();
+		victims = new ArrayList<>();
 		
+		String dbname = "oink";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public int murdererId() {
@@ -122,6 +148,31 @@ public class Grove {
 		}
 	}
 	
+	
+	// Start actual operations
+	// Actual start game operation
+	public void startGameUDB() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			GrovePlayer p = new GrovePlayer(playerNames.get(i));
+			p.setGrove(this);
+			players.add(p);
+		}
+		
+		// Step 2: set round and curPlayer
+		round = 0;
+		curPlayer = board.getFirstPlayer();
+		firstPlayer = board.getFirstPlayer();
+		//startRound();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	
 	public GrovePlayer getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().contentEquals(name)) {
@@ -129,6 +180,50 @@ public class Grove {
 			}
 		}
 		return null;
+	}
+	
+	public void updatePlayer(int index) {
+		GrovePlayer p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", board.getId(), playerName, dop);
+		}
+	}
+	public void updatePlayer(String name) {
+		GrovePlayer p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", board.getId(), playerName, dop);
+		}
+	}
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
+	
+	public void updateBasicDB() {
+		updateDB("round", round);
+		updateDB("status", board.getStatus());
+		updateDB("curPlayer", curPlayer);
+		updateDB("firstPlayer", firstPlayer);
+		int i;
+		List<Document> suspectsDocList = new ArrayList<>();
+		for (i=0;i<suspects.size();i++){
+			suspectsDocList.add(suspects.get(i).toDocument());
+		}
+		updateDB("suspects",suspectsDocList);
+		List<Document> victimsDocList = new ArrayList<>();
+		for (i=0;i<victims.size();i++){
+			victimsDocList.add(victims.get(i).toDocument());
+		}
+		updateDB("victims",victimsDocList);
+	}
+	
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", board.getId(), key, value);
 	}
 	
 	public int getStatus() {

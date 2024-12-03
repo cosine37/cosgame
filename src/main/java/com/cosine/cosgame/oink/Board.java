@@ -8,6 +8,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.oink.account.Account;
 import com.cosine.cosgame.oink.account.entity.AccountEntity;
+import com.cosine.cosgame.oink.grove.Grove;
 import com.cosine.cosgame.oink.startups.Startups;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -21,11 +22,13 @@ public class Board {
 	List<String> playerNames;
 	
 	Startups startups;
+	Grove grove;
 	
 	MongoDBUtil dbutil;
 	
 	public Board() {
 		startups = new Startups(this);
+		grove = new Grove(this);
 		
 		playerNames = new ArrayList<>();
 		
@@ -42,6 +45,8 @@ public class Board {
 		
 		if (game == Consts.STARTUPS) {
 			doc = startups.toDocument();
+		} else if (game == Consts.GROVE) {
+			doc = grove.toDocument();
 		}
 		
 		doc.append("id", id);
@@ -72,6 +77,8 @@ public class Board {
 		
 		if (game == Consts.STARTUPS) {
 			startups.setFromDoc(doc);
+		} else if (game == Consts.GROVE) {
+			grove.setFromDoc(doc);
 		}
 	}
 	
@@ -132,6 +139,8 @@ public class Board {
 			
 			if (this.game == Consts.STARTUPS) {
 				startups.startGameUDB();
+			} else if (this.game == Consts.GROVE) {
+				grove.startGameUDB();
 			}
 		}
 	}

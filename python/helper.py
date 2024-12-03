@@ -33,8 +33,9 @@ def toDocument():
             output.append("\tfor (i=0;i<" + attr + ".size();i++){")
             output.append("\t\t" + listDoc + ".add(" + attr + ".get(i).toDocument());")
             output.append("\t}")
+            output.append("\tdoc.append(\"" + attr + "\"," + listDoc + ");");
         else:
-             output.append("\tdoc.append(\"" + attr + "\"," + attr + ".toDocument());");
+            output.append("\tdoc.append(\"" + attr + "\"," + attr + ".toDocument());");
             
             
     output.append("\treturn doc;")

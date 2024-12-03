@@ -40,6 +40,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.firstPlayer = 0;
 		
 		$scope.STARTUPS = 1;
+		$scope.GROVE = 2;
 		
 		$scope.CHOOSEAVATAR = 1;
 		$scope.CHANGESIGNATURE = 2;

@@ -24,6 +24,7 @@
 				<td style="height: 100px; background-color: rgb(0,150,255); color: white; text-align:center">
 					<h1 ng-show="gameMode == 0">抽象小品（请选择游戏）</h1>
 					<h1 ng-show="gameMode == STARTUPS">初创公司</h1>
+					<h1 ng-show="gameMode == GROVE">狗头侦探</h1>
 				</td>
 			</tr>
 			<tr>
@@ -55,6 +56,7 @@
 						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 						<button ng-click="goto('oink')">退出</button>
 					</div>
+					
 					<div style="height: 600px; width: 1000px; padding-bottom: 5px; padding-top: 10px">
 						<div ng-show="gameMode == STARTUPS">
 							<div class="fakemsg-div" style="width: 360px;">
@@ -70,9 +72,27 @@
 								<span style="font-weight: bold">胜利条件：</span> 游戏一共进行4轮，每轮钱币排名第一的玩家获得2分，第二的玩家获得1分，最后一名玩家《获得》-1分。4轮结束后分数最多的玩家获胜。
 							</div>
 						</div>
+						
+						<div ng-show="gameMode == GROVE">
+							<div class="fakemsg-div" style="width: 390px;">
+								<span style="font-weight: bold">支持人数：</span> 2~5人，最佳人数为4~5人。
+							</div>
+							<div class="fakemsg-div" style="width: 370px;">
+								<span style="font-weight: bold">游戏内容：</span> 共9张身份牌和一些标记。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">规则综述：</span> 每名玩家扮演侦探，在每轮游戏开始时得知两名不在场玩家的身份。游戏过程中可以调查两名嫌疑人。每轮游戏结束时投出嫌疑人。
+								在场的嫌疑人中编号最大的为真凶，但是如果编号为5的嫌疑人在场，则编号最小的玩家为真凶。投错的玩家将获得狗头标记，但若你投错且之后有玩家跟票，则你不会获得狗头标记，且最后一个跟票的玩家获得你本应获得的狗头标记。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">胜利条件：</span> 游戏一共进行7轮，或当有一名玩家获得5个狗头标记后游戏结束。获得狗头标记最少的玩家获得胜利。
+							</div>
+						</div>
 					</div>
+					
 					<div style="border-top: 1px groove lightgrey; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px;">
 						<button ng-click="gameMode = STARTUPS; playMsgSE()" ng-disabled="gameMode == STARTUPS">初创公司</button>
+						<button ng-click="gameMode = GROVE; playMsgSE()" ng-disabled="gameMode == GROVE">狗头侦探</button>
 						
 						<button ng-click="chatBox = CHANGESIGNATURE; playClickSE()" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
 						<button ng-click="chatBox = 0; playClickSE()" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>

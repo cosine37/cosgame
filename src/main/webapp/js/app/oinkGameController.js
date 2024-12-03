@@ -18,6 +18,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		});
 	
 		$scope.STARTUPS = 1;
+		$scope.GROVE = 2;
 		
 		$scope.ROUNDEND = 2
 		$scope.ENDGAME = 3
@@ -201,6 +202,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				
 				
 				$scope.hand = []
+				
+				
 				if ($scope.game == $scope.STARTUPS){
 					$scope.bodyStyle = {
 						"background": "linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/Startups/game_bg.png')",
@@ -234,6 +237,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						adjustLogs("log-zone")
 					});
 					
+				} else if ($scope.game == $scope.GROVE){
+					$scope.gamedata = response.data.grove
 				}
 				
 				
