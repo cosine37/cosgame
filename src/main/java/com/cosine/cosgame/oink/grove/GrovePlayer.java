@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.grove.entity.GrovePlayerEntity;
 
 public class GrovePlayer {
 	String name;
@@ -41,6 +42,18 @@ public class GrovePlayer {
 		rightOutsider = new Role();
 		leftOutsider.setFromDoc((Document) doc.get("leftOutsider"));
 		rightOutsider.setFromDoc((Document) doc.get("rightOutsider"));
+	}
+	
+	public GrovePlayerEntity toGrovePlayerEntity() {
+		GrovePlayerEntity entity = new GrovePlayerEntity();
+		entity.setIndex(index);
+		entity.setName(name);
+		entity.setLiars(liars);
+		
+		Account account = new Account();
+		account.getFromDB(name);
+		entity.setAccount(account.toAccountEntity());
+		return entity;
 	}
 	
 	public GrovePlayer() {

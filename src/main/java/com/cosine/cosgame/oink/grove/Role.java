@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.grove.entity.RoleEntity;
+
 public class Role {
 	int num;
 	int height;
@@ -38,6 +40,19 @@ public class Role {
 		gender = doc.getString("gender");
 		avatar = doc.getString("avatar");
 		predicted = (List<Integer>)doc.get("predicted");
+	}
+	
+	public RoleEntity toRoleEntity(){
+		RoleEntity entity = new RoleEntity();
+		entity.setNum(num);
+		entity.setHeight(height);
+		entity.setAge(age);
+		entity.setName(name);
+		entity.setDescription(description);
+		entity.setGender(gender);
+		entity.setAvatar(avatar);
+		entity.setPredicted(predicted);
+		return entity;
 	}
 	
 	public Role() {

@@ -6,6 +6,9 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.grove.entity.GroveEntity;
+import com.cosine.cosgame.oink.grove.entity.GrovePlayerEntity;
+import com.cosine.cosgame.oink.grove.entity.RoleEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Grove {
@@ -84,6 +87,31 @@ public class Grove {
 			e.setFromDoc(victimsDocList.get(i));
 			victims.add(e);
 		}
+	}
+	public GroveEntity toGroveEntity(String username){
+		int i;
+		GroveEntity entity = new GroveEntity();
+		entity.setPhase(phase);
+		entity.setStatus(board.getStatus());
+		entity.setRound(round);
+		entity.setCurPlayer(curPlayer);
+		entity.setFirstPlayer(firstPlayer);
+		List<GrovePlayerEntity> listOfPlayers = new ArrayList<>();
+		for (i=0;i<players.size();i++){
+			listOfPlayers.add(players.get(i).toGrovePlayerEntity());
+		}
+		entity.setPlayers(listOfPlayers);
+		List<RoleEntity> listOfSuspects = new ArrayList<>();
+		for (i=0;i<suspects.size();i++){
+			listOfSuspects.add(suspects.get(i).toRoleEntity());
+		}
+		entity.setSuspects(listOfSuspects);
+		List<RoleEntity> listOfVictims = new ArrayList<>();
+		for (i=0;i<victims.size();i++){
+			listOfVictims.add(victims.get(i).toRoleEntity());
+		}
+		entity.setVictims(listOfVictims);
+		return entity;
 	}
 	
 	public Grove(Board board) {

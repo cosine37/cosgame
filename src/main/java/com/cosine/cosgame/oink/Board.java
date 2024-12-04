@@ -92,6 +92,8 @@ public class Board {
 		
 		if (game == Consts.STARTUPS) {
 			entity.setStartups(startups.toStartupsEntity(username));
+		} else if (game == Consts.GROVE) {
+			entity.setGrove(grove.toGroveEntity(username));
 		}
 		
 		int i;
