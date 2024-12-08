@@ -9,8 +9,6 @@ public class GrovePlayerEntity {
 	int index;
 	List<Integer> liars;
 	AccountEntity account;
-	RoleEntity leftOutsider;
-	RoleEntity rightOutsider;
 	
 	public String getName() {
 		return name;
@@ -35,17 +33,5 @@ public class GrovePlayerEntity {
 	}
 	public void setAccount(AccountEntity account) {
 		this.account = account;
-	}
-	public RoleEntity getLeftOutsider() {
-		return leftOutsider;
-	}
-	public void setLeftOutsider(RoleEntity leftOutsider) {
-		this.leftOutsider = leftOutsider;
-	}
-	public RoleEntity getRightOutsider() {
-		return rightOutsider;
-	}
-	public void setRightOutsider(RoleEntity rightOutsider) {
-		this.rightOutsider = rightOutsider;
 	}
 }

@@ -198,6 +198,23 @@ body {
 			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 			<button ng-click="goto('oink')">退出</button>
 		</div>
+		<div>
+			<table>
+				<tr>
+					<td ng-repeat="c in gamedata.myOutsiders track by $index">
+						<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
+						<div style="clear:both"></div>
+						<div>
+							<span ng-show="$index == 0">上家也见过</span>
+							<span ng-show="$index == 1">下家也见过</span>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div ng-repeat="c in gamedata.myOutsiders track by $index" style="float:left">
+			
+		</div>
 		
 		{{gamedata}}
 	</div>

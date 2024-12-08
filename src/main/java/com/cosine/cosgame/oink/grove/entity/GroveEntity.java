@@ -13,6 +13,8 @@ public class GroveEntity {
 	List<RoleEntity> suspects;
 	List<RoleEntity> victims;
 	
+	List<RoleEntity> myOutsiders;
+	
 	public int getPhase() {
 		return phase;
 	}
@@ -60,6 +62,12 @@ public class GroveEntity {
 	}
 	public void setVictims(List<RoleEntity> victims) {
 		this.victims = victims;
+	}
+	public List<RoleEntity> getMyOutsiders() {
+		return myOutsiders;
+	}
+	public void setMyOutsiders(List<RoleEntity> myOutsiders) {
+		this.myOutsiders = myOutsiders;
 	}
 	
 }

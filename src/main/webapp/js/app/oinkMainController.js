@@ -182,5 +182,16 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		}
 		$scope.cards.push(c);
 		
+		$scope.groveCards = []
+		c = {
+			"num": 5,
+			"name": "托比亚斯·格雷格森",
+			"description": "夏朋婕公寓的房客，克利夫兰的有钱人，但举止粗鲁，经常醉醺醺地回家。有一枚共济会图案的戒指。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Grove/Arthur.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.groveCards.push(c);
 	
 }]);

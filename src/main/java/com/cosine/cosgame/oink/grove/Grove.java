@@ -100,6 +100,13 @@ public class Grove {
 		List<GrovePlayerEntity> listOfPlayers = new ArrayList<>();
 		for (i=0;i<players.size();i++){
 			listOfPlayers.add(players.get(i).toGrovePlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				GrovePlayer p = players.get(i);
+				List<RoleEntity> outsiders = new ArrayList<>();
+				outsiders.add(p.getLeftOutsider().toRoleEntity());
+				outsiders.add(p.getRightOutsider().toRoleEntity());
+				entity.setMyOutsiders(outsiders);
+			}
 		}
 		entity.setPlayers(listOfPlayers);
 		List<RoleEntity> listOfSuspects = new ArrayList<>();
@@ -202,7 +209,7 @@ public class Grove {
 		victims.add(allRoles.remove(x));
 		
 		List<Role> trs = new ArrayList<>();
-		for (i=0;i<players.size()+1;i++) {
+		for (i=0;i<players.size();i++) {
 			x = rand.nextInt(allRoles.size());
 			trs.add(allRoles.remove(x));
 		}

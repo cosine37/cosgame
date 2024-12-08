@@ -1,7 +1,9 @@
 package com.cosine.cosgame.oink.grove;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -52,6 +54,11 @@ public class Role {
 		entity.setGender(gender);
 		entity.setAvatar(avatar);
 		entity.setPredicted(predicted);
+		Map<String, String> avatarStyle = new HashMap<>();
+		String backgroundImage = "url(/image/Oink/Grove/" + avatar + ".png)";
+		avatarStyle.put("background-image", backgroundImage);
+		avatarStyle.put("background-size", "cover");
+		entity.setAvatarStyle(avatarStyle);
 		return entity;
 	}
 	

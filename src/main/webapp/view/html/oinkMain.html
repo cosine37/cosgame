@@ -44,6 +44,10 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#startuprulesstab" ng-click="hideTablesTab()">初创公司规则</a>
 				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#groverulesstab" ng-click="hideTablesTab()">狗头侦探规则</a>
+				    </li>
 				  </ul>
 			</div>
 			<div class="tab-content">
@@ -148,6 +152,40 @@
 								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不明。</br>
 								</p>
 								<div ng-repeat="c in cards track by $index" ng-include="'/view/html/StartupsCard.html'" class="card-size-hand card">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="groverulesstab" class="content container tab-pane fade">
+					<h2><b>狗头侦探规则</b></h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 未知。。。</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~5人。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不明。</br>
+								</p>
+								<div ng-repeat="c in groveCards track by $index" ng-include="'/view/html/GroveCard.html'" class="card-size-hand card card-size">
 								</div>
 							</td>
 						</tr>

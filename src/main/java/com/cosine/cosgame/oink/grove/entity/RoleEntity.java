@@ -1,6 +1,7 @@
 package com.cosine.cosgame.oink.grove.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class RoleEntity {
 	int num;
@@ -12,6 +13,7 @@ public class RoleEntity {
 	String avatar;
 	
 	List<Integer> predicted;
+	Map<String, String> avatarStyle;
 
 	public int getNum() {
 		return num;
@@ -60,6 +62,12 @@ public class RoleEntity {
 	}
 	public void setPredicted(List<Integer> predicted) {
 		this.predicted = predicted;
+	}
+	public Map<String, String> getAvatarStyle() {
+		return avatarStyle;
+	}
+	public void setAvatarStyle(Map<String, String> avatarStyle) {
+		this.avatarStyle = avatarStyle;
 	}
 	
 	
