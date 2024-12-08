@@ -120,8 +120,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			if ($scope.chosenCard != -1){
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : $scope.chosenCard}
+					$scope.chosenCard = -1
 					$http({url: "/oink/startups/play", method: "PUT", params: data}).then(function(response){
-						$scope.chosenCard = -1
 						ws.send("refresh");
 					});
 				}
@@ -133,8 +133,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			if (x != -1){
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : x}
+					$scope.chosenCard = -1
 					$http({url: "/oink/startups/take", method: "PUT", params: data}).then(function(response){
-						$scope.chosenCard = -1
 						ws.send("refresh");
 					});
 				}

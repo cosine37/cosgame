@@ -49,6 +49,8 @@ public class GrovePlayer {
 		entity.setIndex(index);
 		entity.setName(name);
 		entity.setLiars(liars);
+		entity.setLeftOutsider(leftOutsider.toRoleEntity());
+		entity.setRightOutsider(rightOutsider.toRoleEntity());
 		
 		Account account = new Account();
 		account.getFromDB(name);

@@ -2,6 +2,7 @@ package com.cosine.cosgame.oink.grove;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -161,19 +162,65 @@ public class Grove {
 	
 	public void playerView(String name, List<Integer> viewed) {
 		GrovePlayer p = getPlayerByName(name);
-		if (p != null) {
+		if (p != null && p.getPhase() == Consts.VIEWCARDS) {
 			p.setViewed(viewed);
+			p.setPhase(Consts.ACCUSECARD);
 		}
 	}
 	
 	
 	public void playerAccuse(String name, int index) {
 		GrovePlayer p = getPlayerByName(name);
-		if (p != null && index != lastAccused && index>=0 && index<=Consts.NUMSUSPECTS) {
+		if (p != null && index != lastAccused && index>=0 && index<=Consts.NUMSUSPECTS && p.getPhase() == Consts.ACCUSECARD) {
 			suspects.get(index).addPredicted(p.getIndex());
 			p.setAccused(index);
 			lastAccused = index;
+			p.setPhase(Consts.OFFTURN);
+			
+			// next player handle
+			curPlayer = (curPlayer+1) % players.size();
+			if (curPlayer == firstPlayer) {
+				board.setStatus(Consts.ROUNDEND);
+			} else {
+				p.setPhase(Consts.ACCUSECARD);
+			}
 		}
+	}
+	
+	public void startRound() {
+		int i,x,i2;
+		
+		// Step 1: distribute roles
+		List<Role> allRoles = AllRes.genDefaultRoles(players.size());
+		suspects = new ArrayList<>();
+		Random rand = new Random();
+		for (i=0;i<3;i++) {
+			x = rand.nextInt(allRoles.size());
+			suspects.add(allRoles.remove(x));
+		}
+		x = rand.nextInt(allRoles.size());
+		victims.add(allRoles.remove(x));
+		
+		List<Role> trs = new ArrayList<>();
+		for (i=0;i<players.size()+1;i++) {
+			x = rand.nextInt(allRoles.size());
+			trs.add(allRoles.remove(x));
+		}
+		for (i=0;i<players.size();i++) {
+			i2 = (i+1)%players.size();
+			players.get(i).setLeftOutsider(trs.get(i));
+			players.get(i).setRightOutsider(trs.get(i2));
+		}
+		
+		// Step 2: player related
+		curPlayer = firstPlayer;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setPhase(Consts.OFFTURN);
+		}
+		players.get(curPlayer).setPhase(Consts.VIEWCARDS);
+		
+		
+		
 	}
 	
 	
@@ -194,7 +241,7 @@ public class Grove {
 		round = 0;
 		curPlayer = board.getFirstPlayer();
 		firstPlayer = board.getFirstPlayer();
-		//startRound();
+		startRound();
 		
 		updatePlayers();
 		updateBasicDB();
