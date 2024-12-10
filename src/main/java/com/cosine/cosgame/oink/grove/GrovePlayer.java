@@ -31,6 +31,7 @@ public class GrovePlayer {
 		doc.append("liars",liars);
 		doc.append("leftOutsider",leftOutsider.toDocument());
 		doc.append("rightOutsider",rightOutsider.toDocument());
+		doc.append("viewed", viewed);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -43,6 +44,7 @@ public class GrovePlayer {
 		rightOutsider = new Role();
 		leftOutsider.setFromDoc((Document) doc.get("leftOutsider"));
 		rightOutsider.setFromDoc((Document) doc.get("rightOutsider"));
+		viewed = (List<Integer>) doc.get("viewed");
 	}
 	
 	public GrovePlayerEntity toGrovePlayerEntity() {
@@ -79,6 +81,10 @@ public class GrovePlayer {
 		accused = -1;
 		leftOutsider = null;
 		rightOutsider = null;
+		viewed = new ArrayList<>();
+		for (int i=0;i<3;i++) {
+			viewed.add(0);
+		}
 	}
 	
 	public void addLiar(int x) {

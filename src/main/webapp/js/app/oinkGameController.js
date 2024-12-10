@@ -239,6 +239,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					
 				} else if ($scope.game == $scope.GROVE){
 					$scope.gamedata = response.data.grove
+					$scope.players = $scope.gamedata.players
+					$scope.phase = $scope.gamedata.phase
 				}
 				
 				

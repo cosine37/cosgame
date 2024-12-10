@@ -14,7 +14,6 @@ import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Grove {
 	int curPlayer;
-	int phase;
 	int lastAccused;
 	int predefinedRoles;
 	int round;
@@ -31,7 +30,6 @@ public class Grove {
 		int i;
 		Document doc = new Document();
 		doc.append("curPlayer",curPlayer);
-		doc.append("phase",phase);
 		doc.append("lastAccused",lastAccused);
 		doc.append("predefinedRoles",predefinedRoles);
 		doc.append("round",round);
@@ -57,7 +55,6 @@ public class Grove {
 	public void setFromDoc(Document doc){
 		int i;
 		curPlayer = doc.getInteger("curPlayer",0);
-		phase = doc.getInteger("phase",0);
 		lastAccused = doc.getInteger("lastAccused",0);
 		predefinedRoles = doc.getInteger("predefinedRoles",0);
 		round = doc.getInteger("round",0);
@@ -90,13 +87,16 @@ public class Grove {
 		}
 	}
 	public GroveEntity toGroveEntity(String username){
-		int i;
+		int i,j;
 		GroveEntity entity = new GroveEntity();
-		entity.setPhase(phase);
 		entity.setStatus(board.getStatus());
 		entity.setRound(round);
 		entity.setCurPlayer(curPlayer);
 		entity.setFirstPlayer(firstPlayer);
+		List<Integer> viewed = new ArrayList<>();
+		for (i=0;i<suspects.size();i++) {
+			viewed.add(0);
+		}
 		List<GrovePlayerEntity> listOfPlayers = new ArrayList<>();
 		for (i=0;i<players.size();i++){
 			listOfPlayers.add(players.get(i).toGrovePlayerEntity());
@@ -106,19 +106,24 @@ public class Grove {
 				outsiders.add(p.getLeftOutsider().toRoleEntity());
 				outsiders.add(p.getRightOutsider().toRoleEntity());
 				entity.setMyOutsiders(outsiders);
+				entity.setPhase(p.getPhase());
+				for (j=0;j<p.getViewed().size();j++) {
+					viewed.set(j, p.getViewed().get(j));
+				}
 			}
 		}
 		entity.setPlayers(listOfPlayers);
 		List<RoleEntity> listOfSuspects = new ArrayList<>();
 		for (i=0;i<suspects.size();i++){
-			listOfSuspects.add(suspects.get(i).toRoleEntity());
+			if (viewed.get(i) == 1) {
+				listOfSuspects.add(suspects.get(i).toRoleEntity());
+			} else {
+				Role r = new Role(999);
+				listOfSuspects.add(r.toRoleEntity());
+			}
 		}
 		entity.setSuspects(listOfSuspects);
-		List<RoleEntity> listOfVictims = new ArrayList<>();
-		for (i=0;i<victims.size();i++){
-			listOfVictims.add(victims.get(i).toRoleEntity());
-		}
-		entity.setVictims(listOfVictims);
+		
 		return entity;
 	}
 	
@@ -197,7 +202,15 @@ public class Grove {
 	public void startRound() {
 		int i,x,i2;
 		
-		// Step 1: distribute roles
+		// Step 1: initial players and phase
+		curPlayer = firstPlayer;
+		for (i=0;i<players.size();i++) {
+			players.get(i).newRound();
+			players.get(i).setPhase(Consts.OFFTURN);
+		}
+		players.get(curPlayer).setPhase(Consts.VIEWCARDS);
+		
+		// Step 2: distribute roles
 		List<Role> allRoles = AllRes.genDefaultRoles(players.size());
 		suspects = new ArrayList<>();
 		Random rand = new Random();
@@ -218,16 +231,6 @@ public class Grove {
 			players.get(i).setLeftOutsider(trs.get(i));
 			players.get(i).setRightOutsider(trs.get(i2));
 		}
-		
-		// Step 2: player related
-		curPlayer = firstPlayer;
-		for (i=0;i<players.size();i++) {
-			players.get(i).setPhase(Consts.OFFTURN);
-		}
-		players.get(curPlayer).setPhase(Consts.VIEWCARDS);
-		
-		
-		
 	}
 	
 	
@@ -319,12 +322,6 @@ public class Grove {
 	}
 	public void setCurPlayer(int curPlayer) {
 		this.curPlayer = curPlayer;
-	}
-	public int getPhase() {
-		return phase;
-	}
-	public void setPhase(int phase) {
-		this.phase = phase;
 	}
 	public int getLastAccused() {
 		return lastAccused;

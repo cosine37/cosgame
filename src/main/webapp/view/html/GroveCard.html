@@ -1,4 +1,4 @@
-<div ng-show="c.num!=5">
+<div ng-show="c.num!=5 && c.num<10">
 	<div style="height: 208px;width:208px;border-top-left-radius: 10px;border-top-right-radius: 10px;" ng-style="c.avatarStyle"></div>
 	<div style="height: 60px; width:60px; border-radius: 30px; background-color:rgb(0,150,255); color: white; position: absolute; top: 0px;
 		font-weight:bold; font-family: 'yzgc';font-size: 35px; padding-left: 20px; padding-top: 8px">
@@ -7,7 +7,7 @@
 	</div>
 </div>
 <div style="width: 208px; font-size: 23px; margin-top: -37px; text-align:center; color:white; font-family: 'yzgc'; -webkit-text-stroke: 1px black; 
-	background-color:rgba(0,150,255, 0.5);padding-top: 3px;"  ng-show="c.num!=5">
+	background-color:rgba(0,150,255, 0.5);padding-top: 3px;"  ng-show="c.num!=5 && c.num<10">
 	{{c.name}}
 </div>
 
@@ -25,10 +25,14 @@
 	{{c.name}}
 </div>
 
-<div style="clear:both"></div>
+<div style="clear:both" ng-show="c.num<10"></div>
 
-</div>
 <div style="width: 208px; height: 110px; padding-left: 8px; padding-right: 8px; padding-top: 5px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;
-	text-align: center; background-color: lightgrey">
+	text-align: center; background-color: lightgrey" ng-show="c.num<10">
 	{{c.description}}
+</div>
+
+<div ng-show="c.num>9" style="background-color: darkslategrey; color: white; font-size: 90px; font-family: 'yzgc';  padding-top:20px; padding-left:70px; 
+	width:208px; height: 318px; border-radius: 10px;">
+	?
 </div>

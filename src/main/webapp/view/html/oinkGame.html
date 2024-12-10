@@ -194,12 +194,55 @@ body {
 	
 	<div ng-show="game==GROVE && status != ENDGAME">
 		狗头侦探
-		<div>
-			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-			<button ng-click="goto('oink')">退出</button>
-		</div>
+		
+		<table>
+			<tr>
+				<td ng-repeat="i in [0,1,2,3,4]">
+					<div ng-show="i<players.length">
+						<table>
+							<tr>
+								<td rowspan="2"><div style="height: 90px; width: 90px" ng-style="players[i].account.chosenAvatarStyle"></div></td>
+								<td>{{players[i].account.nameDisplay}}</td>
+							</tr>
+							<tr>
+							</tr>
+						</table>
+						
+					</div>
+					<div ng-show="i>=players.length">
+						Empty
+					</div>
+				</td>
+				<td>
+					<div>
+						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+						<button ng-click="goto('oink')">退出</button>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					嫌疑人
+					<table>
+						<tr>
+							<td ng-repeat="c in gamedata.suspects track by $index">
+								<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td rolspan="2">
+					logs
+				</td>
+			</tr>
+		</table>
+		
+		
 		<div>
 			<table>
+				<tr>
+					<td cospan="2">不在场角色</td>
+				</tr>
 				<tr>
 					<td ng-repeat="c in gamedata.myOutsiders track by $index">
 						<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
@@ -211,9 +254,6 @@ body {
 					</td>
 				</tr>
 			</table>
-		</div>
-		<div ng-repeat="c in gamedata.myOutsiders track by $index" style="float:left">
-			
 		</div>
 		
 		{{gamedata}}

@@ -66,6 +66,11 @@ public class Role {
 		predicted = new ArrayList<>();
 	}
 	
+	public Role(int num) {
+		this();
+		this.num = num;
+	}
+	
 	public Role(int num, int height, int age, String name, String description, String gender, String avatar) {
 		this();
 		this.num = num;
