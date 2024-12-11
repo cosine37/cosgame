@@ -138,6 +138,7 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	// Begin STARTUPS 
 	@RequestMapping(value="/oink/startups/draw", method = RequestMethod.PUT)
 	public ResponseEntity<StringEntity> startupsDraw(HttpServletRequest request){
 		StringEntity entity = new StringEntity();
@@ -228,11 +229,47 @@ public class OinkController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
+	// End STARTUPS 
 	
 	
+	// Begin GROVE
+	@RequestMapping(value="/oink/grove/check", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> groveCheck(HttpServletRequest request, @RequestParam int cardIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.GROVE)) {
+				board.getGrove().playerViewUDB(username, cardIndex);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
+	@RequestMapping(value="/oink/grove/accuse", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> groveAccuse(HttpServletRequest request, @RequestParam int cardIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.GROVE)) {
+				board.getGrove().playerAccuseUDB(username, cardIndex);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
-	
+	// End GROVE
 	
 	
 	// account handles

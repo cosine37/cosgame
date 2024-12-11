@@ -233,4 +233,10 @@ public class Board {
 	public void setStartups(Startups startups) {
 		this.startups = startups;
 	}
+	public Grove getGrove() {
+		return grove;
+	}
+	public void setGrove(Grove grove) {
+		this.grove = grove;
+	}
 }

@@ -119,6 +119,7 @@ public class Grove {
 				listOfSuspects.add(suspects.get(i).toRoleEntity());
 			} else {
 				Role r = new Role(999);
+				r.setPredicted(suspects.get(i).getPredicted());
 				listOfSuspects.add(r.toRoleEntity());
 			}
 		}
@@ -183,18 +184,29 @@ public class Grove {
 	
 	public void playerAccuse(String name, int index) {
 		GrovePlayer p = getPlayerByName(name);
-		if (p != null && index != lastAccused && index>=0 && index<=Consts.NUMSUSPECTS && p.getPhase() == Consts.ACCUSECARD) {
+		if (p != null && index>=0 && index<=Consts.NUMSUSPECTS && p.getPhase() == Consts.ACCUSECARD) {
 			suspects.get(index).addPredicted(p.getIndex());
 			p.setAccused(index);
 			lastAccused = index;
 			p.setPhase(Consts.OFFTURN);
 			
-			// next player handle
+			// change next player status
 			curPlayer = (curPlayer+1) % players.size();
 			if (curPlayer == firstPlayer) {
 				board.setStatus(Consts.ROUNDEND);
 			} else {
-				p.setPhase(Consts.ACCUSECARD);
+				players.get(curPlayer).setPhase(Consts.ACCUSECARD);
+				
+				// auto view for next player
+				List<Integer> viewed = new ArrayList<>();
+				for (int i=0;i<3;i++) {
+					if (i == lastAccused) {
+						viewed.add(0);
+					} else {
+						viewed.add(1);
+					}
+				}
+				players.get(curPlayer).setViewed(viewed);
 			}
 		}
 	}
@@ -257,6 +269,32 @@ public class Grove {
 		updateBasicDB();
 	}
 	
+	public void playerViewUDB(String username, int cardIndex) {
+		List<Integer> viewed = new ArrayList<>();
+		viewed.add(0);
+		viewed.add(0);
+		viewed.add(0);
+		int t = cardIndex;
+		viewed.set(2, t%10);
+		t = t/10;
+		viewed.set(1, t%10);
+		t = t/10;
+		viewed.set(0, t);
+		playerView(username,viewed);
+		
+		updatePlayer(username);
+		updateBasicDB();
+	}
+	
+	public void playerAccuseUDB(String username, int cardIndex) {
+		playerAccuse(username, cardIndex);
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	
+	// End actual operations
 	
 	public GrovePlayer getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
@@ -294,6 +332,7 @@ public class Grove {
 		updateDB("status", board.getStatus());
 		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
+		updateDB("lastAccused", lastAccused);
 		int i;
 		List<Document> suspectsDocList = new ArrayList<>();
 		for (i=0;i<suspects.size();i++){

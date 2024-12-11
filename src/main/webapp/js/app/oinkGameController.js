@@ -25,6 +25,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.showEndRoundInfo = false;
 		
 		$scope.chosenCard = -1;
+		$scope.chosenRoles = [0,0,0]
 		
 		$scope.playingBGM = false
 		$scope.bgm = new Audio();
@@ -117,14 +118,33 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.play = function(){
 			$scope.playClickSE()
-			if ($scope.chosenCard != -1){
-				if ($scope.game == $scope.STARTUPS){
+			if ($scope.game == $scope.STARTUPS){
+				if ($scope.chosenCard != -1){
 					var data = {"cardIndex" : $scope.chosenCard}
 					$scope.chosenCard = -1
 					$http({url: "/oink/startups/play", method: "PUT", params: data}).then(function(response){
 						ws.send("refresh");
 					});
 				}
+			} else if ($scope.game == $scope.GROVE){
+				if ($scope.phase == 1){
+					var t = $scope.chosenRoles[0] + $scope.chosenRoles[1] + $scope.chosenRoles[2]
+					if (t == 2){
+						var k = $scope.chosenRoles[0]*100 + $scope.chosenRoles[1]*10 + $scope.chosenRoles[2]
+						var data = {"cardIndex" : k}
+						$scope.chosenRoles = [0,0,0]
+						$http({url: "/oink/grove/check", method: "PUT", params: data}).then(function(response){
+							ws.send("refresh");
+						});			
+					}
+				} else if ($scope.phase == 2){
+					var data = {"cardIndex" : $scope.chosenCard}
+					$scope.chosenCard = -1
+					$http({url: "/oink/grove/accuse", method: "PUT", params: data}).then(function(response){
+						ws.send("refresh");
+					});
+				}
+				
 			}
 		}
 		
@@ -142,9 +162,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.clickCard = function(x){
-			$scope.playClickSE()
 			if ($scope.game == $scope.STARTUPS){
 				if ($scope.phase != 2) return;
+				$scope.playClickSE()
 				if ($scope.chosenCard == x){
 					$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
 					$scope.chosenCard = -1
@@ -155,6 +175,23 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.chosenCard = x
 					$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-40px";
 				}
+			} else if ($scope.game == $scope.GROVE){
+				if ($scope.phase == 1){
+					var t = $scope.chosenRoles[0] + $scope.chosenRoles[1] + $scope.chosenRoles[2]
+					if ($scope.chosenRoles[x] == 1){
+						$scope.chosenRoles[x] = 0
+						$scope.playClickSE()
+					} else {
+						if (t<2){
+							$scope.chosenRoles[x] = 1
+							$scope.playClickSE()
+						}
+					}
+				} else if ($scope.phase == 2){
+					$scope.playClickSE()
+					if ($scope.chosenCard == x) $scope.chosenCard = -1; else $scope.chosenCard = x
+				}
+				
 			}
 		}
 		
@@ -185,6 +222,12 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		// End STARTUPS only functions
 		
+		// GROVE only functions
+		$scope.showSubmitSuspectButton = function(){
+			var t = $scope.chosenRoles[0] + $scope.chosenRoles[1] + $scope.chosenRoles[2]
+			if (t == 2) return true; else return false;
+		}
+		// End GROVE only functions
 		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){

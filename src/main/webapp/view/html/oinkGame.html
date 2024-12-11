@@ -226,7 +226,20 @@ body {
 					<table>
 						<tr>
 							<td ng-repeat="c in gamedata.suspects track by $index">
-								<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
+								<div style="position: relative">
+									<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"
+										ng-click="clickCard($index)">
+										
+									</div>
+									<div style="height: 80px; width: 80px; position: absolute; right: 5px; top: 170px; z-index:100;
+										background:url('/image/Oink/checked.png'); background-size:cover;" ng-show="chosenRoles[$index] == 1 || chosenCard == $index"
+										ng-click="clickCard($index)">
+									</div>
+								</div>
+								<div>
+									{{c.predicted}}
+								</div>
+								
 							</td>
 						</tr>
 					</table>
@@ -239,21 +252,34 @@ body {
 		
 		
 		<div>
-			<table>
-				<tr>
-					<td cospan="2">不在场角色</td>
-				</tr>
-				<tr>
-					<td ng-repeat="c in gamedata.myOutsiders track by $index">
-						<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
-						<div style="clear:both"></div>
-						<div>
-							<span ng-show="$index == 0">上家也见过</span>
-							<span ng-show="$index == 1">下家也见过</span>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<div>
+				<div ng-show="phase == 1">
+					<span>请查看两名嫌疑人</span>
+					<button ng-show="showSubmitSuspectButton()" ng-click="play()">查看</button>
+				</div>
+				<div ng-show="phase == 2">
+					<span>请指控一名嫌疑人</span>
+					<button ng-show="chosenCard != -1"  ng-click="play()">确认</button>
+				</div>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<td cospan="2">不在场角色</td>
+					</tr>
+					<tr>
+						<td ng-repeat="c in gamedata.myOutsiders track by $index">
+							<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
+							<div style="clear:both"></div>
+							<div>
+								<span ng-show="$index == 0">上家也见过</span>
+								<span ng-show="$index == 1">下家也见过</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
 		</div>
 		
 		{{gamedata}}
