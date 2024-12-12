@@ -107,6 +107,7 @@ public class Grove {
 				outsiders.add(p.getRightOutsider().toRoleEntity());
 				entity.setMyOutsiders(outsiders);
 				entity.setPhase(p.getPhase());
+				entity.setConfirmed(p.isConfirmed());
 				for (j=0;j<p.getViewed().size();j++) {
 					viewed.set(j, p.getViewed().get(j));
 				}
@@ -115,15 +116,26 @@ public class Grove {
 		entity.setPlayers(listOfPlayers);
 		List<RoleEntity> listOfSuspects = new ArrayList<>();
 		for (i=0;i<suspects.size();i++){
-			if (viewed.get(i) == 1) {
+			if (board.getStatus() == Consts.ROUNDEND) {
 				listOfSuspects.add(suspects.get(i).toRoleEntity());
 			} else {
-				Role r = new Role(999);
-				r.setPredicted(suspects.get(i).getPredicted());
-				listOfSuspects.add(r.toRoleEntity());
+				if (viewed.get(i) == 1) {
+					listOfSuspects.add(suspects.get(i).toRoleEntity());
+				} else {
+					Role r = new Role(999);
+					r.setPredicted(suspects.get(i).getPredicted());
+					listOfSuspects.add(r.toRoleEntity());
+				}
 			}
+			
 		}
 		entity.setSuspects(listOfSuspects);
+		
+		if (board.getStatus() == Consts.ROUNDEND) {
+			entity.setMurIndex(murdererId());
+		} else {
+			entity.setMurIndex(-1);
+		}
 		
 		return entity;
 	}
@@ -168,7 +180,10 @@ public class Grove {
 		int ans = murdererId();
 		for (int i=0;i<suspects.size();i++) {
 			if (suspects.get(i).getNum() != ans && suspects.get(i).lastPredicted() != -1) {
-				players.get(suspects.get(i).lastPredicted()).addLiar(suspects.get(i).getPredicted().size());
+				GrovePlayer p = players.get(suspects.get(i).lastPredicted());
+				int x = suspects.get(i).getPredicted().size();
+				p.addLiar(1);
+				for (int j=0;j<x-1;j++) p.addLiar(2);
 			}
 		}
 	}
@@ -193,7 +208,7 @@ public class Grove {
 			// change next player status
 			curPlayer = (curPlayer+1) % players.size();
 			if (curPlayer == firstPlayer) {
-				board.setStatus(Consts.ROUNDEND);
+				endRound();
 			} else {
 				players.get(curPlayer).setPhase(Consts.ACCUSECARD);
 				
@@ -208,6 +223,15 @@ public class Grove {
 				}
 				players.get(curPlayer).setViewed(viewed);
 			}
+		}
+	}
+	
+	public void endRound() {
+		board.setStatus(Consts.ROUNDEND);
+		distributeLiar();
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmed(false);
 		}
 	}
 	
@@ -243,6 +267,10 @@ public class Grove {
 			players.get(i).setLeftOutsider(trs.get(i));
 			players.get(i).setRightOutsider(trs.get(i2));
 		}
+		
+		// Step 3: round count and status
+		round++;
+		board.setStatus(Consts.INGAME);
 	}
 	
 	
@@ -289,6 +317,23 @@ public class Grove {
 	public void playerAccuseUDB(String username, int cardIndex) {
 		playerAccuse(username, cardIndex);
 		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	public void playerConfirmUDB(String username) {
+		GrovePlayer p = getPlayerByName(username);
+		p.setConfirmed(true);
+		boolean flag = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmed() == false) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			startRound();
+		}
 		updatePlayers();
 		updateBasicDB();
 	}

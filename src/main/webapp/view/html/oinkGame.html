@@ -225,7 +225,7 @@ body {
 					嫌疑人
 					<table>
 						<tr>
-							<td ng-repeat="c in gamedata.suspects track by $index">
+							<td ng-repeat="c in gamedata.suspects track by $index" style="vertical-align:top">
 								<div style="position: relative">
 									<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"
 										ng-click="clickCard($index)">
@@ -235,6 +235,10 @@ body {
 										background:url('/image/Oink/checked.png'); background-size:cover;" ng-show="chosenRoles[$index] == 1 || chosenCard == $index"
 										ng-click="clickCard($index)">
 									</div>
+								</div>
+								<div>
+									<span ng-show="gamedata.murIndex == c.num && c.gender=='男'">凶手就是他</span>
+									<span ng-show="gamedata.murIndex == c.num && c.gender=='女'">凶手就是她</span>
 								</div>
 								<div>
 									{{c.predicted}}
@@ -260,6 +264,12 @@ body {
 				<div ng-show="phase == 2">
 					<span>请指控一名嫌疑人</span>
 					<button ng-show="chosenCard != -1"  ng-click="play()">确认</button>
+				</div>
+				<div ng-show="status == 2 && gamedata.confirmed==false">
+					回合结束，点击确认进入下一回合。<button ng-click="confirmNextRound()">确认</button>
+				</div>
+				<div ng-show="status == 2 && gamedata.confirmed">
+					你已确认，正等待其他玩家确认。
 				</div>
 			</div>
 			<div>

@@ -200,7 +200,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$http.put("/oink/startups/confirmnextround").then(function(response){
 					ws.send("refresh");
 				});
-			}
+			} else if ($scope.game == $scope.GROVE){
+				$http.put("/oink/grove/confirmnextround").then(function(response){
+					ws.send("refresh");
+				});
+			} 
 			
 		}
 		

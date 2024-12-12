@@ -14,6 +14,7 @@ public class GrovePlayer {
 	int phase;
 	int accused;
 	int index;
+	boolean confirmed;
 	List<Integer> liars;
 	Role leftOutsider;
 	Role rightOutsider;
@@ -32,6 +33,7 @@ public class GrovePlayer {
 		doc.append("leftOutsider",leftOutsider.toDocument());
 		doc.append("rightOutsider",rightOutsider.toDocument());
 		doc.append("viewed", viewed);
+		doc.append("confirmed", confirmed);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -45,6 +47,7 @@ public class GrovePlayer {
 		leftOutsider.setFromDoc((Document) doc.get("leftOutsider"));
 		rightOutsider.setFromDoc((Document) doc.get("rightOutsider"));
 		viewed = (List<Integer>) doc.get("viewed");
+		confirmed = doc.getBoolean("confirmed", false);
 	}
 	
 	public GrovePlayerEntity toGrovePlayerEntity() {
@@ -88,7 +91,11 @@ public class GrovePlayer {
 	}
 	
 	public void addLiar(int x) {
-		liars.add(x);
+		if (x == 1) {
+			liars.add(0, x);
+		} else {
+			liars.add(x);
+		}
 	}
 	
 	public int numLiars() {
@@ -98,7 +105,7 @@ public class GrovePlayer {
 	public int numMyLiars() {
 		int ans = 0;
 		for (int i=0;i<liars.size();i++) {
-			if (liars.get(i) == index) {
+			if (liars.get(i) == 1) {
 				ans++;
 			}
 		}
@@ -158,6 +165,12 @@ public class GrovePlayer {
 	}
 	public void setLiars(List<Integer> liars) {
 		this.liars = liars;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
 	

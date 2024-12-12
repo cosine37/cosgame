@@ -268,6 +268,23 @@ public class OinkController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/oink/grove/confirmnextround", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> groveConfirm(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.GROVE)) {
+				board.getGrove().playerConfirmUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
 	// End GROVE
 	

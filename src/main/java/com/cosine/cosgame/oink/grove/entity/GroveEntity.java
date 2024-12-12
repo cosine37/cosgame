@@ -8,6 +8,8 @@ public class GroveEntity {
 	int round;
 	int curPlayer;
 	int firstPlayer;
+	int murIndex;
+	boolean confirmed;
 	
 	List<GrovePlayerEntity> players;
 	List<RoleEntity> suspects;
@@ -68,6 +70,18 @@ public class GroveEntity {
 	}
 	public void setMyOutsiders(List<RoleEntity> myOutsiders) {
 		this.myOutsiders = myOutsiders;
+	}
+	public int getMurIndex() {
+		return murIndex;
+	}
+	public void setMurIndex(int murIndex) {
+		this.murIndex = murIndex;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
 }
