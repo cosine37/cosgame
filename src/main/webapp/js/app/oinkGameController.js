@@ -288,7 +288,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				
 				if ($scope.game == $scope.STARTUPS){
 					$scope.bodyStyle = {
-						"background": "linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/Startups/game_bg.png')",
+						"background": "linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url('/image/Oink/Startups/game_bg.png')",
 						"background-size": "cover"
 					}
 					$scope.gamedata = response.data.startups

@@ -192,40 +192,41 @@ body {
 		</div>
 	</div>
 	
-	<div ng-show="game==GROVE && status != ENDGAME">
-		狗头侦探
-		
+	<div ng-show="game==GROVE && status != ENDGAME" style="width: 1300px; height: 1070px; background-size:cover;
+		background:linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/Grove/game_bg.png'); ">
 		<table>
 			<tr>
-				<td ng-repeat="i in [0,1,2,3,4]">
+				<td ng-repeat="i in [0,1,2,3,4]" style="vertical-align:top; height: 150px; width: 260px; border: 2px solid darkslategrey;background-color:lightgrey;">
 					<div ng-show="i<players.length">
 						<table>
 							<tr>
-								<td rowspan="2"><div style="height: 90px; width: 90px" ng-style="players[i].account.chosenAvatarStyle"></div></td>
-								<td>{{players[i].account.nameDisplay}}</td>
+								<td><div style="height: 60px; width: 60px" ng-style="players[i].account.chosenAvatarStyle"></div></td>
+								<td style="font-size: 22px;font-family: 'yzgc'; padding-left: 10px">{{players[i].account.nameDisplay}}</td>
 							</tr>
 							<tr>
+								<td colspan="2" style="padding-top: 20px;">
+									<div style="float:left;" ng-repeat="l in players[i].liars track by $index">
+										<div style="height: 40px; width:40px; background:url('/image/Oink//Grove/doge1.png'); background-size:cover;" ng-show="l==1"></div>
+										<div style="height: 40px; width:40px; background:url('/image/Oink//Grove/doge2.png'); background-size:cover;" ng-show="l==2"></div>
+									</div>
+								</td>
 							</tr>
 						</table>
 						
 					</div>
 					<div ng-show="i>=players.length">
-						Empty
-					</div>
-				</td>
-				<td>
-					<div>
-						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-						<button ng-click="goto('oink')">退出</button>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5">
-					嫌疑人
+				<td colspan="3" style="vertical-align:top; height:550px;">
+					<div style="color: white;font-family: 'yzgc'; font-size: 30px; padding-left: 210px;">
+						嫌疑人
+					</div>
+					
 					<table>
 						<tr>
-							<td ng-repeat="c in gamedata.suspects track by $index" style="vertical-align:top">
+							<td ng-repeat="c in gamedata.suspects track by $index" style="vertical-align:top;">
 								<div style="position: relative">
 									<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"
 										ng-click="clickCard($index)">
@@ -236,63 +237,103 @@ body {
 										ng-click="clickCard($index)">
 									</div>
 								</div>
-								<div>
-									<span ng-show="gamedata.murIndex == c.num && c.gender=='男'">凶手就是他</span>
-									<span ng-show="gamedata.murIndex == c.num && c.gender=='女'">凶手就是她</span>
+								<div style="clear:both"></div>
+								<div style="height: 30px; color: white;font-family: 'yzgc'; font-size: 20px;padding-left: 30px;">
+									<span ng-show="gamedata.murIndex == c.num && c.gender=='男'">凶手就是他！</span>
+									<span ng-show="gamedata.murIndex == c.num && c.gender=='女'">凶手就是她！</span>
 								</div>
-								<div>
-									{{c.predicted}}
+								<div ng-repeat="x in c.predicted track by $index" style="color: white;font-family: 'yzgc'; padding-left: 5px; padding-bottom: 5px;
+									font-size: 15px">
+									<div style="float:left; height: 35px; width: 35px" ng-style="players[x].account.chosenAvatarStyle"></div>
+									<div style="padding-top: 5px; margin-left: 5px">{{players[x].account.nameDisplay}}</div>
+									<div style="clear:both"></div>
 								</div>
 								
 							</td>
 						</tr>
 					</table>
 				</td>
-				<td rolspan="2">
-					logs
+				<td rowspan="2" colspan="2" style="vertical-align: top;border: 2px solid darkslategrey;background-color: rgb(25,25,25);">
+					<div style="overflow-y: scroll;overflow:auto; color:white; padding: 5px;">
+						<div>logs</div>
+					</div>
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<div>
+						<div style="height: 30px;color: white;font-family: 'yzgc';">
+							<div ng-show="phase == -1 && status == 1">
+								<span>正等待{{players[gamedata.curPlayer].name}}操作</span>
+							</div>
+							<div ng-show="phase == 1 && status == 1">
+								<span>请查看两名嫌疑人</span>
+								<button ng-show="showSubmitSuspectButton()" ng-click="play()">查看</button>
+							</div>
+							<div ng-show="phase == 2 && status == 1">
+								<span>请指控一名嫌疑人</span>
+								<button ng-show="chosenCard != -1"  ng-click="play()">确认</button>
+							</div>
+							<div ng-show="status == 2 && gamedata.confirmed==false">
+								回合结束，点击确认进入下一回合。<button ng-click="confirmNextRound()">确认</button>
+							</div>
+							<div ng-show="status == 2 && gamedata.confirmed">
+								你已确认，正等待其他玩家确认。
+							</div>
+						</div>
+						<div>
+							<table>
+								<tr>
+									<td colspan="2" style="color: white;font-family: 'yzgc'; font-size: 30px; text-align: center">不在场证明</td>
+									<td rowspan="2" style="vertical-align: top; padding-left: 20px;">
+										<div style="color: white;font-family: 'yzgc'; margin-bottom: 20px;">
+											轮次： {{gamedata.round}} (游戏最多进行7轮)
+										</div>
+										<div>
+											<div style="height: 40px; width:40px; float:left;
+												background:url('/image/Oink//Grove/doge1.png'); background-size:cover;"></div>
+											<div style="color: white;font-family: 'yzgc'; padding-top: 12px;">&nbsp;:因自己指控错误而获得的狗头标记</div>
+											<div style="clear:both;"></div>
+										</div>
+										<div>
+											<div style="height: 40px; width:40px; float:left;
+												background:url('/image/Oink//Grove/doge2.png'); background-size:cover;"></div>
+											<div style="color: white;font-family: 'yzgc'; padding-top: 12px;">&nbsp;:因其他玩家指控错误而获得的狗头标记</div>
+											<div style="clear:both;"></div>
+										</div>
+										<div style="color: white;font-family: 'yzgc'; margin-top: 20px;">
+											揭开真相后，若一名玩家的狗头标记不小于5，游戏会立即结束。
+										</div>
+										<div style="height: 30px; margin-top: 20px; padding-left: 300px;" ng-show="username == lord">
+											<button ng-click="dismiss()">解散</button>
+											<button ng-click="goto('oink')">退出</button>
+										</div>
+										<div style="height: 30px; margin-top: 20px; padding-left: 350px;" ng-show="username != lord">
+											<button ng-click="goto('oink')">退出</button>
+										</div>
+										<span style="font-weight: bold; font-size: 60px; color:white; padding-left: 160px;">狗头侦探</span>
+									</td>
+								</tr>
+								<tr>
+									<td ng-repeat="c in gamedata.myOutsiders track by $index">
+										<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
+										<div style="clear:both"></div>
+										<div style="color: white;font-family: 'yzgc'; font-size: 20px; padding-left: 34px;">
+											<span ng-show="$index == 0">上家也见过</span>
+											<span ng-show="$index == 1">下家也见过</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</td>
+				<td>
+					
 				</td>
 			</tr>
 		</table>
-		
-		
-		<div>
-			<div>
-				<div ng-show="phase == 1">
-					<span>请查看两名嫌疑人</span>
-					<button ng-show="showSubmitSuspectButton()" ng-click="play()">查看</button>
-				</div>
-				<div ng-show="phase == 2">
-					<span>请指控一名嫌疑人</span>
-					<button ng-show="chosenCard != -1"  ng-click="play()">确认</button>
-				</div>
-				<div ng-show="status == 2 && gamedata.confirmed==false">
-					回合结束，点击确认进入下一回合。<button ng-click="confirmNextRound()">确认</button>
-				</div>
-				<div ng-show="status == 2 && gamedata.confirmed">
-					你已确认，正等待其他玩家确认。
-				</div>
-			</div>
-			<div>
-				<table>
-					<tr>
-						<td cospan="2">不在场角色</td>
-					</tr>
-					<tr>
-						<td ng-repeat="c in gamedata.myOutsiders track by $index">
-							<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"></div>
-							<div style="clear:both"></div>
-							<div>
-								<span ng-show="$index == 0">上家也见过</span>
-								<span ng-show="$index == 1">下家也见过</span>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			
-		</div>
-		
-		{{gamedata}}
 	</div>
 	
 	<div ng-show="game==GROVE && status == ENDGAME">
