@@ -273,6 +273,20 @@ public class Grove {
 		board.setStatus(Consts.INGAME);
 	}
 	
+	public boolean gameEnd() {
+		if (round == 8) return true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).numLiars() >= 5) return true;
+		}
+		return false;
+	}
+	
+	public void endGame() {
+		// Step 1: change status
+		board.setStatus(Consts.ENDGAME);
+		
+	}
+	
 	
 	// Start actual operations
 	// Actual start game operation
@@ -332,7 +346,12 @@ public class Grove {
 			}
 		}
 		if (flag) {
-			startRound();
+			if (gameEnd()) {
+				endGame();
+			} else {
+				startRound();
+			}
+			
 		}
 		updatePlayers();
 		updateBasicDB();

@@ -27,6 +27,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.chosenCard = -1;
 		$scope.chosenRoles = [0,0,0]
 		
+		$scope.round = -1;
+		
 		$scope.playingBGM = false
 		$scope.bgm = new Audio();
 		randomizeBGM = function(){
@@ -34,6 +36,25 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				v = Math.floor(Math.random() * 3)+1;
 				bgmSrc = '/sound/Oink/default' + v + '.mp3'
 				$scope.bgm.src = bgmSrc
+			} else if ($scope.game == $scope.GROVE){
+				if ($scope.round == 1){
+					v = Math.floor(Math.random() * 3)+1;
+					bgmSrc = '/sound/Oink/grove1' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				} else if ($scope.round < 4){
+					v = Math.floor(Math.random() * 2)+1;
+					bgmSrc = '/sound/Oink/grove2' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				} else if ($scope.round < 7){
+					v = Math.floor(Math.random() * 3)+1;
+					bgmSrc = '/sound/Oink/grove3' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				} else {
+					v = Math.floor(Math.random() * 2)+1;
+					bgmSrc = '/sound/Oink/grove4' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				}
+				
 			}
 			
 		}
@@ -43,20 +64,33 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}, true);
 		
 		$scope.playWinLoseBGM = function(x){
-			if (x == 1){
-				$scope.bgm.src = '/sound/Oink/game_win.mp3'
-				$scope.bgm.play();
-			} else if (x == 2) {
-				$scope.bgm.src = '/sound/Oink/game_tie.mp3'
-				$scope.bgm.play();
-			} else {
-				$scope.bgm.src = '/sound/Oink/game_lose.mp3'
+			if ($scope.game == $scope.STARTUPS){
+				if (x == 1){
+					$scope.bgm.src = '/sound/Oink/game_win.mp3'
+					$scope.bgm.play();
+				} else if (x == 2) {
+					$scope.bgm.src = '/sound/Oink/game_tie.mp3'
+					$scope.bgm.play();
+				} else {
+					$scope.bgm.src = '/sound/Oink/game_lose.mp3'
+					$scope.bgm.play();
+				}
+			} else if ($scope.game == $scope.GROVE){
+				$scope.bgm.src = '/sound/Oink/lemon.mp3'
 				$scope.bgm.play();
 			}
+			
 		}
 		
 		$scope.playClickSE = function(){
 			var audio = new Audio("/sound/Oink/click.wav")
+			audio.play();
+		}
+		
+		$scope.playRevealSE = function(){
+			v = Math.floor(Math.random() * 3)+1;
+			bgmSrc = '/sound/Oink/reveal' + v + '.mp3'
+			var audio = new Audio(bgmSrc)
 			audio.play();
 		}
 	
@@ -244,6 +278,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.game = response.data.game
 				var oldStatus = $scope.status
 				$scope.status = response.data.status
+				
 				$scope.playerNames = response.data.playerNames
 				$scope.lord = response.data.lord
 				
@@ -288,6 +323,18 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.gamedata = response.data.grove
 					$scope.players = $scope.gamedata.players
 					$scope.phase = $scope.gamedata.phase
+					
+					var oldRound = $scope.round
+					$scope.round = $scope.gamedata.round;
+					
+					if ($scope.status == $scope.ROUNDEND && $scope.status != oldStatus){
+						$scope.playRevealSE();
+					}
+					if ($scope.round != oldRound){
+						randomizeBGM()
+						$scope.bgm.play();
+					}
+					
 				}
 				
 				
