@@ -93,6 +93,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			var audio = new Audio(bgmSrc)
 			audio.play();
 		}
+		
+		$scope.playMsgSE = function(){
+			var audio = new Audio( '/sound/Oink/msg.mp3')
+			audio.play();
+		}
 	
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
@@ -161,6 +166,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					});
 				}
 			} else if ($scope.game == $scope.GROVE){
+				$scope.playClickSE()
 				if ($scope.phase == 1){
 					var t = $scope.chosenRoles[0] + $scope.chosenRoles[1] + $scope.chosenRoles[2]
 					if (t == 2){
@@ -292,6 +298,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						"background-size": "cover"
 					}
 					$scope.gamedata = response.data.startups
+					
+					var oldPhase = $scope.phase
 					$scope.phase = $scope.gamedata.phase
 					$scope.players = $scope.gamedata.players
 					$scope.deck = []
@@ -300,6 +308,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						"isDeck": true
 					}
 					$scope.deck.push(c);
+					
+					if ($scope.phase != -1 && oldPhase == -1){
+						$scope.playMsgSE();
+					}
 					
 					$scope.showEndRoundInfo = false;
 					if ($scope.status == $scope.ROUNDEND){
@@ -322,10 +334,16 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				} else if ($scope.game == $scope.GROVE){
 					$scope.gamedata = response.data.grove
 					$scope.players = $scope.gamedata.players
+					
+					var oldPhase = $scope.phase
 					$scope.phase = $scope.gamedata.phase
 					
 					var oldRound = $scope.round
 					$scope.round = $scope.gamedata.round;
+					
+					if ($scope.phase != -1 && oldPhase == -1){
+						$scope.playMsgSE();
+					}
 					
 					if ($scope.status == $scope.ROUNDEND && $scope.status != oldStatus){
 						$scope.playRevealSE();

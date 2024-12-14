@@ -493,11 +493,14 @@ public class Startups {
 	}
 	
 	public void endRound() {
-		// Step 1: change status?
+		// Step 1: change status and phase
+		int i,j;
 		board.setStatus(Consts.ROUNDEND);
+		for (i=0;i<players.size();i++) {
+			players.get(i).setPhase(Consts.OFFTURN);
+		}
 		
 		// Step 2: get shareholder for each stock
-		int i,j;
 		shareholder = new HashMap<>();
 		for (i=5;i<=10;i++) {
 			int t = 0;

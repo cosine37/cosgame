@@ -278,6 +278,7 @@ public class Grove {
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmed(false);
+			players.get(i).setPhase(Consts.OFFTURN);
 		}
 		
 		firstPlayer = firstPlayer+1;

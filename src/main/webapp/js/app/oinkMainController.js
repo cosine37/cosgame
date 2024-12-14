@@ -184,14 +184,38 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		
 		$scope.groveCards = []
 		c = {
-			"num": 5,
-			"name": "托比亚斯·格雷格森",
-			"description": "夏朋婕公寓的房客，克利夫兰的有钱人，但举止粗鲁，经常醉醺醺地回家。有一枚共济会图案的戒指。",
+			"num": 8,
+			"name": "阿瑟·夏朋婕",
+			"description": "夏朋婕太太的儿子，爱莉丝·夏朋婕的哥哥，服役于海军，最近正好在休假，曾拿着木棍追着德雷伯先生打。",
 			"avatarStyle": {
 				'background-image': 'url(/image/Oink/Grove/Arthur.png)',
 				"background-size" : 'cover'
 			}
 		}
 		$scope.groveCards.push(c);
+		
+		$scope.groveCards2 = []
+		c = {
+			"num": 5,
+			"name": "约瑟夫·斯坦格森",
+			"description": "德雷伯先生的秘书，掌管德雷伯先生的开支，是个沉默寡言、有涵养的人。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Grove/Strangerson.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.groveCards2.push(c);
+		
+		$scope.groveCards3 = []
+		c = {
+			"num": -2,
+			"name": "托比亚斯·格雷格森",
+			"description": "苏格兰场的警探，是那些蠢货中的佼佼者。明明这么普通但却那么自信。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Grove/Gregson.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.groveCards3.push(c);
 	
 }]);

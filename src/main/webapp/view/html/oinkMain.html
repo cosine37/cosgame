@@ -131,7 +131,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 未知。。。</br>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 你是一名天使投资人，准备靠着投资初创公司的股票赚大钱，但前提是要有毒辣的眼光，否则就只能沦为其他投资人的散财童子。</br>
 								</p>
 							</td>
 						</tr>
@@ -140,7 +140,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持3~7人。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持3~7人，最佳人数为4人。
 								</p>
 							</td>
 						</tr>
@@ -148,11 +148,68 @@
 							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容</b></h4></td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不明。</br>
-								</p>
-								<div ng-repeat="c in cards track by $index" ng-include="'/view/html/StartupsCard.html'" class="card-size-hand card">
+							<td>
+								<div ng-repeat="c in cards track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand card noselect">
 								</div>
+							</td>
+							<td  style="width: 790px;vertical-align: top">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有45张牌，编号为5~10，都是公司股份。每张牌的数量等同于牌的编号，如编号为5的牌有5张，编号为10的牌有10张。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有一些钱币和6个反垄断标记，编号为5~10，具体效果参见<b>游戏流程</b>章节。</br>
+								</p>
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏设置</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时洗混牌堆并弃置牌堆顶的5张牌（不能查看这5张牌）。每名玩家获得3张初始手牌以及10个银币。玩家的手牌只对自己可见。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏流程</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏一共进行4大轮，在每一轮游戏中，每名玩家轮流进行回合，在各自的回合，每名玩家会进行两次行动，每次行动时会进行二选一。两次行动过后当前玩家回合结束。</br></br>
+									<b style="font-size: 18px;">第一次行动（二选一）：</b>
+								</p>
+								<ul>
+								  <li><b>抽牌：</b>从牌堆顶获得一张股份。若弃牌区有牌，则每一张弃牌上需放置一枚银币，除非你有该弃牌相应的反垄断标记（参见<b>出牌</b>）。若你的银币不够放置在所有需要放置的弃牌上，你不能选择抽牌。</li>
+								  <li><b>获得弃牌：</b>从弃牌区中获得一张股份（且你不能拥有该股份的反垄断标记，参见<b>出牌</b>），并获得该牌上的所有银币。</li>
+								</ul>
+								<p><b style="font-size: 18px;">第二次行动（二选一）：</b></p>
+								<ul>
+									<li><b>出牌：</b>从手牌中打出一张股份。若此时你打出的该股份为全场最多（并列“最多”不算最多），你获得该股份的反垄断标记。当你拥有一个股份的反垄断标记时，你不能从弃牌区获得该股份的牌（但是可以通过抽牌获得）。</li>
+									<li><b>弃牌：</b>从手牌中选择一张股份置于弃牌区。若第一次行动你选择的是获得弃牌，你不能弃置和你获得的股份相同的股份。</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>轮次结束</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家的回合结束时，若抽牌堆数量为0，则该轮游戏结束。<b>所有玩家自动打出所有手牌</b>并进行所有股份的依次结算。
+								对于每一种股份（5~10），拥有该股份最多的玩家（并列“最多”不算最多）为该股份的大股东。其他玩家每有一张该股份，需要交给该玩家一枚银币，而大股东以此方式收到的银币会增值为金币，价值等同于3枚银币。
+								在此流程中允许有负债的情况出现，比如一名玩家没有银币，但是需要上交银币，此时该玩家的银币为负且大股东依旧会获得银币且增值为金币。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若多名玩家并列最多，则视为该股份没有大股东，所以其他玩家不需要上交。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当所有股份都结算完毕后，所有玩家按拥有钱币的银币价值排名（一枚金币价值等同于3枚银币）。银币价值高的玩家排名靠前。
+								若价值相等，则金币数量多的玩家排名靠前。若依然相等，则行动靠后的玩家排名靠前。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排名第一的玩家获得2分，排名第二的玩家获得1分，排名最后的玩家获得-1分。其他玩家获得0分。</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏结束</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4轮游戏结束后，游戏结束，总分最高的玩家排名靠前。若总分相等，则获得第一（获得2分）次数更多的玩家排名靠前。
+								若依然相等，则获得第二（获得1分）次数更多的玩家排名靠前。若依然相等，则最后一轮游戏排名靠前的玩家总排名靠前。</br>
+								</p>
 							</td>
 						</tr>
 					</table>
@@ -165,7 +222,8 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 未知。。。</br>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 某地发生了一起惨案，共抓获了3名嫌疑人，但没有直接证据证明谁是真凶。无能为力的当地警局只能求助于你们这帮没经过专业训练的私家侦探。
+								对于这次不可多得的机会，你们各个摩拳擦掌，希望能有所表现。即使不经过全面细致的调查，也想要在职业侦探到来之前，迅速把你们认为的“真凶”绳之以法。</br>
 								</p>
 							</td>
 						</tr>
@@ -174,19 +232,60 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~5人。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~5人，最佳人数为4~5人。
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容</b></h4></td>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容与流程</b></h4></td>
+						</tr>
+						<tr>
+							<td>
+								<div ng-repeat="c in groveCards track by $index" ng-include="'/view/html/GroveCard.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有9张牌，其中有7张是嫌疑人，编号为2~8，还有2张警探牌。2人局游戏使用编号为3~8的牌。
+									3人局游戏使用编号为2~8的牌。4人局游戏使用编号为2~8的牌加一张警探牌。5人局游戏使用编号为2~8的牌加两张警探牌。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏最多进行8轮。每轮游戏开始时给每名玩家发一张牌，视为局外人，查看完毕后会将查看的局外人传递给下家并让下家查看
+									（本游戏的UI会自动显示两张局外人的身份，没有传递这个过程）。剩下的4张牌中，弃置一张牌作为受害者，剩下的3张牌作为本轮游戏的嫌疑人。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每名玩家轮流进行回合，回合中，每名玩家查看2名嫌疑人，并根据已有信息指控一名嫌疑人作为真凶（可以指控未查看的嫌疑人）。
+									而查看的嫌疑人不能是上家指控的嫌疑人（第一个行动的玩家无此限制，因为没有上家指控）。<b>请尽可能指控真凶（或误导之后行动的玩家）。</b>关于真凶是谁，见下文。</br>
+									
+								</p>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div ng-repeat="c in groveCards2 track by $index" ng-include="'/view/html/GroveCard.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当所有玩家进行了各自的回合后，当前回合结束。此时职业侦探会赶到并揭发真凶。3张嫌疑人都将被展示，
+								一般情况下数字最大的嫌疑人是真凶，但是有例外。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若3张<b>嫌疑人</b>中有编号为5的嫌疑人，则编号最小的嫌疑人为真凶。若此时5编号最小，则编号为5的嫌疑人为真凶。</br>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>
+								<div ng-repeat="c in groveCards3 track by $index" ng-include="'/view/html/GroveCard.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4~5人游戏中加入的警探牌为当地警局的吃瓜警探，若在3张嫌疑人中，则无论如何都不是真凶。</br>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>轮次与游戏结束</b></h4></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不明。</br>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一轮游戏结束后，对于每个<b>无辜</b>的嫌疑人，<b>最后一名</b>控该嫌疑人的玩家获得等同于指控该嫌疑人玩家数量的<b>狗头标记</b>。
+								(如玩家1和玩家2都指控6，而7是罪犯，且玩家2在玩家1之后指控，此时玩家2获得2个狗头标记，玩家1不获得任何狗头标记)。当一轮游戏结束后一名玩家获得不小于<b>5</b>个狗头标记，或是游戏总共进行了<b>8</b>轮，则游戏结束（你懂我的意思吧）。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;狗头标记数量少的玩家排名靠前。若数量相等，则获得狗头标记次数（非数量，哪怕因为误导，一次性获得3个狗头标记也视为获得一次）少的玩家排名靠前。若依然相同，则最后一轮第一个行动的玩家排名靠前。
 								</p>
-								<div ng-repeat="c in groveCards track by $index" ng-include="'/view/html/GroveCard.html'" class="card-size-hand card card-size">
-								</div>
 							</td>
 						</tr>
 					</table>
