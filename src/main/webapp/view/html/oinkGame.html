@@ -254,10 +254,12 @@ body {
 					</table>
 				</td>
 				<td rowspan="2" colspan="2" style="vertical-align: top;border: 2px solid darkslategrey;background-color: rgb(25,25,25);">
-					<div style="overflow-y: scroll;overflow:auto; color:white; padding: 5px;">
-						<div>logs</div>
+					<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height:820px;">
+						<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
 					</div>
-					
+					<div>
+						<span style="font-weight: bold; font-size: 60px; color:white; padding-left: 260px;">狗头侦探</span>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -305,14 +307,13 @@ body {
 										<div style="color: white;font-family: 'yzgc'; margin-top: 20px;">
 											揭开真相后，若一名玩家的狗头标记不小于5，游戏会立即结束。
 										</div>
-										<div style="height: 30px; margin-top: 20px; padding-left: 300px;" ng-show="username == lord">
+										<div style="height: 30px; margin-top: 90px; padding-left: 300px;" ng-show="username == lord">
 											<button ng-click="dismiss()">解散</button>
 											<button ng-click="goto('oink')">退出</button>
 										</div>
 										<div style="height: 30px; margin-top: 20px; padding-left: 350px;" ng-show="username != lord">
 											<button ng-click="goto('oink')">退出</button>
 										</div>
-										<span style="font-weight: bold; font-size: 60px; color:white; padding-left: 160px;">狗头侦探</span>
 									</td>
 								</tr>
 								<tr>

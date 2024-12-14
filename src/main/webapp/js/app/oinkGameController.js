@@ -334,7 +334,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						randomizeBGM()
 						$scope.bgm.play();
 					}
-					
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs("log-zone-grove")
+					});
 				}
 				
 				

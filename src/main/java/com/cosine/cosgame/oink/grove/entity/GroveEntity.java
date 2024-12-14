@@ -18,6 +18,7 @@ public class GroveEntity {
 	List<RoleEntity> victims;
 	
 	List<RoleEntity> myOutsiders;
+	List<String> logs;
 	List<String> endGameRewards;
 	
 	public int getPhase() {
@@ -97,6 +98,12 @@ public class GroveEntity {
 	}
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 	
 }

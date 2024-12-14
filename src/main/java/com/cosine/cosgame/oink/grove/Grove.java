@@ -23,6 +23,7 @@ public class Grove {
 	List<GrovePlayer> players;
 	List<Role> suspects;
 	List<Role> victims;
+	Logger logger;
 	
 	MongoDBUtil dbutil;
 	
@@ -52,6 +53,7 @@ public class Grove {
 			victimsDocList.add(victims.get(i).toDocument());
 		}
 		doc.append("victims",victimsDocList);
+		doc.append("logs", logger.getLogs());
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -87,6 +89,13 @@ public class Grove {
 			e.setFromDoc(victimsDocList.get(i));
 			victims.add(e);
 		}
+		List<String> logs = (List<String>) doc.get("logs");
+		if (logs == null) {
+			logger = new Logger();
+		} else {
+			logger = new Logger(logs);
+		}
+		
 	}
 	public GroveEntity toGroveEntity(String username){
 		int i,j;
@@ -95,6 +104,7 @@ public class Grove {
 		entity.setRound(round);
 		entity.setCurPlayer(curPlayer);
 		entity.setFirstPlayer(firstPlayer);
+		entity.setLogs(logger.getLogs());
 		List<Integer> viewed = new ArrayList<>();
 		for (i=0;i<suspects.size();i++) {
 			viewed.add(0);
@@ -166,6 +176,7 @@ public class Grove {
 		players = new ArrayList<>();
 		suspects = new ArrayList<>();
 		victims = new ArrayList<>();
+		logger = new Logger();
 		
 		String dbname = "oink";
 		String col = "board";
@@ -199,13 +210,22 @@ public class Grove {
 	
 	public void distributeLiar() {
 		int ans = murdererId();
-		for (int i=0;i<suspects.size();i++) {
+		int i;
+		for (i=0;i<suspects.size();i++) {
+			if (suspects.get(i).getNum() == ans) {
+				logger.logMurderer(suspects.get(i));
+			}
+		}
+		for (i=0;i<suspects.size();i++) {
+			
 			if (suspects.get(i).getNum() != ans && suspects.get(i).lastPredicted() != -1) {
 				GrovePlayer p = players.get(suspects.get(i).lastPredicted());
 				int x = suspects.get(i).getPredicted().size();
 				p.addLiar(1);
 				for (int j=0;j<x-1;j++) p.addLiar(2);
+				logger.logDoge(p, suspects.get(i), x);
 			}
+			
 		}
 	}
 	
@@ -214,6 +234,7 @@ public class Grove {
 		if (p != null && p.getPhase() == Consts.VIEWCARDS) {
 			p.setViewed(viewed);
 			p.setPhase(Consts.ACCUSECARD);
+			logger.logView(p);
 		}
 	}
 	
@@ -225,6 +246,7 @@ public class Grove {
 			p.setAccused(index);
 			lastAccused = index;
 			p.setPhase(Consts.OFFTURN);
+			logger.logAccuse(p);
 			
 			// change next player status
 			curPlayer = (curPlayer+1) % players.size();
@@ -243,17 +265,24 @@ public class Grove {
 					}
 				}
 				players.get(curPlayer).setViewed(viewed);
+				logger.logStartTurn(players.get(curPlayer));
+				logger.logView(players.get(curPlayer));
 			}
 		}
 	}
 	
 	public void endRound() {
+		logger.logRoundEnd(round);
 		board.setStatus(Consts.ROUNDEND);
 		distributeLiar();
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmed(false);
 		}
+		
+		firstPlayer = firstPlayer+1;
+		if (firstPlayer==players.size()) firstPlayer = 0;
+		logger.logRoundEndDivider();
 	}
 	
 	public void startRound() {
@@ -292,6 +321,8 @@ public class Grove {
 		// Step 3: round count and status
 		round++;
 		board.setStatus(Consts.INGAME);
+		logger.logRoundStart(round);
+		logger.logStartTurn(players.get(curPlayer));
 	}
 	
 	public boolean gameEnd() {
@@ -470,6 +501,7 @@ public class Grove {
 		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("lastAccused", lastAccused);
+		updateDB("logs", logger.getLogs());
 		int i;
 		List<Document> suspectsDocList = new ArrayList<>();
 		for (i=0;i<suspects.size();i++){
