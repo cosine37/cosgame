@@ -7,6 +7,8 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.Transaction;
 import com.cosine.cosgame.oink.grove.entity.GroveEntity;
 import com.cosine.cosgame.oink.grove.entity.GrovePlayerEntity;
 import com.cosine.cosgame.oink.grove.entity.RoleEntity;
@@ -111,6 +113,11 @@ public class Grove {
 				for (j=0;j<p.getViewed().size();j++) {
 					viewed.set(j, p.getViewed().get(j));
 				}
+				if (board.getStatus() == Consts.ENDGAME) {
+					entity.setEndGameRewards(p.getEndGameRewards());
+				} else {
+					entity.setEndGameRewards(new ArrayList<>());
+				}
 			}
 		}
 		entity.setPlayers(listOfPlayers);
@@ -135,6 +142,20 @@ public class Grove {
 			entity.setMurIndex(murdererId());
 		} else {
 			entity.setMurIndex(-1);
+		}
+		
+		if (board.getStatus() == Consts.ENDGAME) {
+			List<Integer> rankIndex = new ArrayList<>();
+			for (i=0;i<players.size();i++) {
+				for (j=0;j<players.size();j++) {
+					if (players.get(j).getRanking() == i) {
+						rankIndex.add(j);
+					}
+				}
+			}
+			entity.setRankIndex(rankIndex);
+		} else {
+			entity.setRankIndex(new ArrayList<>());
 		}
 		
 		return entity;
@@ -285,6 +306,58 @@ public class Grove {
 		// Step 1: change status
 		board.setStatus(Consts.ENDGAME);
 		
+		// Step 2: sort players
+		int i,j;
+		List<GrovePlayer> tp = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tp.add(players.get(i));
+		}
+		for (i=0;i<tp.size();i++) {
+			for (j=i+1;j<tp.size();j++) {
+				boolean shouldSwap = false;
+				if (tp.get(i).numLiars() > tp.get(j).numLiars()) { // one with less liars ranks higher
+					shouldSwap = true;
+				} else if (tp.get(i).numLiars() == tp.get(j).numLiars()) {
+					if (tp.get(i).numMyLiars() > tp.get(j).numMyLiars()) { // one with less my liars ranks higher
+						shouldSwap = true;
+					} else if (tp.get(i).numMyLiars() == tp.get(j).numMyLiars()) {
+						int rsi = tp.get(i).getIndex();
+						int rsj = tp.get(j).getIndex();
+						if (rsi < firstPlayer) rsi=rsi+players.size();
+						if (rsj < firstPlayer) rsj=rsj+players.size();
+						if (rsi > rsj) { // one goes first ranks higher
+							shouldSwap = true;
+						}
+					}
+				}
+				
+				if (shouldSwap) {
+					GrovePlayer t = tp.get(i);
+					tp.set(i, tp.get(j));
+					tp.set(j, t);
+				}
+			}
+		}
+		
+		for (i=0;i<tp.size();i++) {
+			tp.get(i).setRanking(i);
+		}
+		
+		// Step 3: deal with awards
+		for (i=0;i<players.size();i++) {
+			Account a = new Account();
+			GrovePlayer p = players.get(i);
+			a.getFromDB(p.getName());
+			List<Transaction> rewards = a.endGameReward(p.getRanking()+1);
+			List<String> endGameRewards = new ArrayList<>();
+			for (j=0;j<rewards.size();j++) {
+				a.addNewTransaction(rewards.get(j));
+				endGameRewards.add(rewards.get(j).toString());
+			}
+			p.setEndGameRewards(endGameRewards);
+			a.updateAccountDB();
+			
+		}
 	}
 	
 	

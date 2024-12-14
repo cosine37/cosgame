@@ -14,12 +14,14 @@ public class GrovePlayer {
 	int phase;
 	int accused;
 	int index;
+	int ranking;
 	boolean confirmed;
 	List<Integer> liars;
 	Role leftOutsider;
 	Role rightOutsider;
 	
 	List<Integer> viewed;
+	List<String> endGameRewards;
 	
 	Grove grove;
 	
@@ -34,6 +36,8 @@ public class GrovePlayer {
 		doc.append("rightOutsider",rightOutsider.toDocument());
 		doc.append("viewed", viewed);
 		doc.append("confirmed", confirmed);
+		doc.append("ranking", ranking);
+		doc.append("endGameRewards", endGameRewards);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -48,6 +52,8 @@ public class GrovePlayer {
 		rightOutsider.setFromDoc((Document) doc.get("rightOutsider"));
 		viewed = (List<Integer>) doc.get("viewed");
 		confirmed = doc.getBoolean("confirmed", false);
+		ranking = doc.getInteger("ranking", -1);
+		endGameRewards = (List<String>) doc.get("endGameRewards");
 	}
 	
 	public GrovePlayerEntity toGrovePlayerEntity() {
@@ -171,6 +177,18 @@ public class GrovePlayer {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 	
 	

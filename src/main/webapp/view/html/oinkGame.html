@@ -206,8 +206,8 @@ body {
 							<tr>
 								<td colspan="2" style="padding-top: 20px;">
 									<div style="float:left;" ng-repeat="l in players[i].liars track by $index">
-										<div style="height: 40px; width:40px; background:url('/image/Oink//Grove/doge1.png'); background-size:cover;" ng-show="l==1"></div>
-										<div style="height: 40px; width:40px; background:url('/image/Oink//Grove/doge2.png'); background-size:cover;" ng-show="l==2"></div>
+										<div style="height: 40px; width:40px; background:url('/image/Oink/Grove/doge1.png'); background-size:cover;" ng-show="l==1"></div>
+										<div style="height: 40px; width:40px; background:url('/image/Oink/Grove/doge2.png'); background-size:cover;" ng-show="l==2"></div>
 									</div>
 								</td>
 							</tr>
@@ -288,7 +288,7 @@ body {
 									<td colspan="2" style="color: white;font-family: 'yzgc'; font-size: 30px; text-align: center">不在场证明</td>
 									<td rowspan="2" style="vertical-align: top; padding-left: 20px;">
 										<div style="color: white;font-family: 'yzgc'; margin-bottom: 20px;">
-											轮次： {{gamedata.round}} (游戏最多进行7轮)
+											轮次： {{gamedata.round}} (游戏最多进行8轮)
 										</div>
 										<div>
 											<div style="height: 40px; width:40px; float:left;
@@ -336,12 +336,50 @@ body {
 		</table>
 	</div>
 	
-	<div ng-show="game==GROVE && status == ENDGAME">
+	<div ng-show="game==GROVE && status == ENDGAME" style="width: 1080px; height: 1080px; background-size:cover;
+		background:linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) ), url('/image/Oink/Grove/end_bg.png'); font-family:'yzgc';color: white;">
+		<div style="margin-left: 30px; padding-top: 50px;">
+			<h1>游戏结束</h1>
+			<table style="font-size: 20px;">
+				<tr>
+					<td rowspan="2">
+						<div ng-style="players[gamedata.rankIndex[0]].account.chosenAvatarStyle" style="width: 100px; height: 100px;"></div>
+					</td>
+					<td style="padding-left: 20px;">获胜者：{{players[gamedata.rankIndex[0]].name}}</td>
+				</tr>
+				<tr>
+					<td style="padding-left: 20px;">感想：{{players[gamedata.rankIndex[0]].account.signature}}</td>
+				</tr>
+			</table>
+		</div>
 		<div>
+			<table style="margin-left: 30px; margin-top: 30px; text-align:center;">
+				<tr style="border-bottom: 2px solid white">
+					<td style="padding: 5px;">名次</td>
+					<td style="padding: 5px;">姓名</td>
+					<td style="width: 400px;">狗头标记</td>
+				</tr>
+				<tr ng-repeat="i in gamedata.rankIndex track by $index">
+					<td>{{i+1}}</td>
+					<td>{{players[i].name}}</td>
+					<td style="padding-left: 20px;height: 42px">
+						<div style="float:left;" ng-repeat="l in players[i].liars track by $index">
+							<div style="height: 40px; width:40px; background:url('/image/Oink/Grove/doge1.png'); background-size:cover;" ng-show="l==1"></div>
+							<div style="height: 40px; width:40px; background:url('/image/Oink/Grove/doge2.png'); background-size:cover;" ng-show="l==2"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="height:30px"></div>
+		<div style="padding-top: 20px; margin-left: 30px;">
+			<h2>你获得了</h2>
+			<div ng-repeat="rewardMsg in gamedata.endGameRewards">{{rewardMsg}}</div>
+		</div>
+		<div style="margin-left: 300px; margin-top: 50px;">
 			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 			<button ng-click="goto('oink')">退出</button>
 		</div>
-		游戏结束
-		{{gamedata}}
+		
 	</div>
 </body>

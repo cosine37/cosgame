@@ -11,11 +11,14 @@ public class GroveEntity {
 	int murIndex;
 	boolean confirmed;
 	
+	List<Integer> rankIndex;
+	
 	List<GrovePlayerEntity> players;
 	List<RoleEntity> suspects;
 	List<RoleEntity> victims;
 	
 	List<RoleEntity> myOutsiders;
+	List<String> endGameRewards;
 	
 	public int getPhase() {
 		return phase;
@@ -82,6 +85,18 @@ public class GroveEntity {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public List<Integer> getRankIndex() {
+		return rankIndex;
+	}
+	public void setRankIndex(List<Integer> rankIndex) {
+		this.rankIndex = rankIndex;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 	
 }
