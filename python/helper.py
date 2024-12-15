@@ -50,7 +50,9 @@ def toDocument():
             output.append("\t\tString n = \"player-\" + players.get(i).getName();");
             output.append("\t\tdoc.append(n, players.get(i).toDocument());");
             output.append("\t}");
-        elif (t == "int" or t == "String" or t == "List<Integer>" or t == "List<String>"):
+        elif (attr == "logger"):
+            output.append("\tdoc.append(\"logs\",logger.getLogs());");
+        elif (t == "boolean" or t == "int" or t == "String" or t == "List<Integer>" or t == "List<String>"):
             output.append("\tdoc.append(\"" + attr + "\"," + attr + ");");
         elif (t[:5] == "List<"):
             nestedT = t[5:-1]
@@ -93,6 +95,11 @@ def setFromDoc():
             output.append("\t\tp.setIndex(i);")
             output.append("\t\tplayers.add(p);")
             output.append("\t}")
+        elif (attr == "logger"):
+            output.append("\tList<String> logs = (List<String>) doc.get(\"logs\");");
+            output.append("\tif (logs == null) logger = new Logger(); else logger = new Logger(logs);");
+        elif (t == "boolean"):
+            output.append("\t" + attr + " = doc.getBoolean(\"" + attr + "\",false);");
         elif (t == "int"):
             output.append("\t" + attr + " = doc.getInteger(\"" + attr + "\",0);");
         elif (t == "String"):

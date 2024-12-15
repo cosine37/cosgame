@@ -2,6 +2,8 @@ package com.cosine.cosgame.oink.pope;
 
 import java.util.List;
 
+import org.bson.Document;
+
 public class PopePlayer {
 	int index;
 	int phase;
@@ -14,6 +16,37 @@ public class PopePlayer {
 	List<Card> hand;
 	Card play;
 	PopeGame game;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		doc.append("index",index);
+		doc.append("phase",phase);
+		doc.append("numKey",numKey);
+		doc.append("protect",protect);
+		doc.append("active",active);
+		doc.append("playedThief",playedThief);
+		doc.append("name",name);
+		if (play != null) {
+			doc.append("play", play.getNum());
+		} else {
+			doc.append("play", -1);
+		}
+		return doc;
+	}
+	
+	public void setFromDoc(Document doc){
+		int i;
+		index = doc.getInteger("index",0);
+		phase = doc.getInteger("phase",0);
+		numKey = doc.getInteger("numKey",0);
+		protect = doc.getBoolean("protect",false);
+		active = doc.getBoolean("active",false);
+		playedThief = doc.getBoolean("playedThief",false);
+		name = doc.getString("name");
+		int playId = doc.getInteger("play");
+		play = CardFactory.makeCard(playId);
+	}
 	
 	public PopePlayer() {
 		
