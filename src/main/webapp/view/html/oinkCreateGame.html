@@ -22,9 +22,13 @@
 				<td style="height: 100px; background-color: rgb(0,150,255); color: white">
 				</td>
 				<td style="height: 100px; background-color: rgb(0,150,255); color: white; text-align:center">
+					<h1>{{gameName[gameMode]}}</h1>
+					<!-- 
 					<h1 ng-show="gameMode == 0">抽象小品（请选择游戏）</h1>
 					<h1 ng-show="gameMode == STARTUPS">初创公司</h1>
 					<h1 ng-show="gameMode == GROVE">狗头侦探</h1>
+					<h1 ng-show="gameMode == POPE">保卫教宗</h1>
+					 -->
 				</td>
 			</tr>
 			<tr>
@@ -88,12 +92,15 @@
 								<span style="font-weight: bold">胜利条件：</span> 游戏一共进行7轮，或当有一名玩家获得5个狗头标记后游戏结束。获得狗头标记最少的玩家获得胜利。
 							</div>
 						</div>
+						
+						<div ng-show="gameMode == GROVE">
+						</div>
 					</div>
 					
 					<div style="border-top: 1px groove lightgrey; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px;">
-						<button ng-click="gameMode = STARTUPS; playMsgSE()" ng-disabled="gameMode == STARTUPS">初创公司</button>
-						
-						<button ng-click="gameMode = GROVE; playMsgSE()" ng-disabled="gameMode == GROVE">狗头侦探</button>
+						<button ng-click="gameMode = STARTUPS; playMsgSE()" ng-disabled="gameMode == STARTUPS">{{gameName[STARTUPS]}}</button>
+						<button ng-click="gameMode = GROVE; playMsgSE()" ng-disabled="gameMode == GROVE">{{gameName[GROVE]}}</button>
+						<button ng-click="gameMode = POPE; playMsgSE()" ng-disabled="gameMode == POPE">{{gameName[POPE]}}</button>
 						
 						<button ng-click="chatBox = CHANGESIGNATURE; playClickSE()" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
 						<button ng-click="chatBox = 0; playClickSE()" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>

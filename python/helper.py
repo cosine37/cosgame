@@ -131,13 +131,49 @@ def cap(s):
 
 def toEntity():
     output = []
-    output.append("public " + entityName + " to" + entityName + "(){")
-    output.append("\tint i;")
+    output.append("public " + entityName + " to" + entityName + "(String username){")
+    output.append("\tint i,j;")
     output.append("\t" + entityName + " entity = new " + entityName + "();")
+    hasPhase = False;
+    hasHand = False;
+    handEntity = ""
     for i in range(len(attributes2)):
         attr = attributes2[i]
         t = types2[i]
-        if (t == "int" or t == "String" or t == "List<Integer>" or t == "List<String>"):
+        if (attr == "phase"):
+            hasPhase = True;
+        elif (attr == "hand"):
+            hasHand = True;
+            handEntity = t
+    for i in range(len(attributes2)):
+        attr = attributes2[i]
+        t = types2[i]
+        if (attr == "logs"):
+            output.append("\tentity.setLogs(logger.getLogs());");
+        elif (attr == "phase"):
+            hasPhase = True;
+        elif (attr == "hand"):
+            hasHand = True;
+        elif (attr == "status"):
+            output.append("\tentity.setStatus(board.getStatus());")
+        elif (attr == "deckSize"):
+            output.append("\tentity.setDeckSize(deck.size());");
+        elif (attr == "players"):
+            output.append("\t" + t + " listOfPlayers = new ArrayList<>();");
+            output.append("\tfor (i=0;i<players.size();i++){");
+            output.append("\t\tlistOfPlayers.add(players.get(i).to" + t[5:-1] +"());");
+            output.append("\t\tif (players.get(i).getName().contentEquals(username)){");
+            output.append("\t\t\t" + t[5:-7] + " p = players.get(i);");
+            if (hasPhase):
+                output.append("\t\t\tentity.setPhase(p.getPhase());");
+            if (hasHand):
+                output.append("\t\t\t" + handEntity + " listOfHand = new ArrayList<>();");
+                output.append("\t\t\tfor (j=0;j<p.getHand().size();j++){");
+                output.append("\t\t\t\tlistOfHand.add(p.getHand().get(j).to" + handEntity[5:-1] + "());");
+                output.append("\t\t\t}");
+            output.append("\t\t}");
+            output.append("\t}");
+        elif (t == "boolean" or t == "int" or t == "String" or t == "List<Integer>" or t == "List<String>"):
             output.append("\t" + "entity.set" + cap(attr) + "(" + attr + ");");
         elif (t[:5] == "List<"):
             nestedT = t[5:-1]

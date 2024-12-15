@@ -19,6 +19,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 	
 		$scope.STARTUPS = 1;
 		$scope.GROVE = 2;
+		$scope.POPE = 6;
 		
 		$scope.ROUNDEND = 2
 		$scope.ENDGAME = 3
@@ -355,6 +356,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs("log-zone-grove")
 					});
+				} else if ($scope.game == $scope.POPE){
+					$scope.gamedata = response.data.pope
 				}
 				
 				

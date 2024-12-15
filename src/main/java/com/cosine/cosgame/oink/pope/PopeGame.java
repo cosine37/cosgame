@@ -6,6 +6,10 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.grove.GrovePlayer;
+import com.cosine.cosgame.oink.pope.entity.CardEntity;
+import com.cosine.cosgame.oink.pope.entity.PopeEntity;
+import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class PopeGame {
@@ -65,10 +69,37 @@ public class PopeGame {
 		if (logs == null) logger = new Logger(); else logger = new Logger(logs);
 	}
 	
-	public PopeGame() {
+	public PopeEntity toPopeEntity(String username){
+		int i,j;
+		PopeEntity entity = new PopeEntity();
+		entity.setStatus(board.getStatus());
+		entity.setRound(round);
+		entity.setCurPlayer(curPlayer);
+		entity.setFirstPlayer(firstPlayer);
+		entity.setDeckSize(deck.size());
+		List<PopePlayerEntity> listOfPlayers = new ArrayList<>();
+		for (i=0;i<players.size();i++){
+			listOfPlayers.add(players.get(i).toPopePlayerEntity());
+			if (players.get(i).getName().contentEquals(username)){
+				PopePlayer p = players.get(i);
+				entity.setPhase(p.getPhase());
+				List<CardEntity> listOfHand = new ArrayList<>();
+				for (j=0;j<p.getHand().size();j++){
+					listOfHand.add(p.getHand().get(j).toCardEntity());
+				}
+			}
+		}
+		entity.setLogs(logger.getLogs());
+		return entity;
+	}
+
+	
+	public PopeGame(Board board) {
+		this.board = board;
 		round = 0;
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
+		logger = new Logger();
 		
 		String dbname = "oink";
 		String col = "board";
@@ -84,6 +115,38 @@ public class PopeGame {
 			return null;
 		}
 	}
+	
+	public void startRound() {
+		int i;
+		round++;
+		for (i=0;i<players.size();i++) {
+			players.get(i).startRound();
+		}
+	}
+	
+	// actual operations
+	public void startGameUDB() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			PopePlayer p = new PopePlayer(playerNames.get(i));
+			p.setGame(this);
+			players.add(p);
+		}
+		
+		// Step 2: set round and curPlayer
+		round = 0;
+		curPlayer = board.getFirstPlayer();
+		firstPlayer = board.getFirstPlayer();
+		startRound();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	// end of actual operations
 	
 	public PopePlayer getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
@@ -122,6 +185,12 @@ public class PopeGame {
 		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("logs", logger.getLogs());
+		int i;
+		List<Integer> deckList = new ArrayList<>();
+		for (i=0;i<deck.size();i++){
+			deckList.add(deck.get(i).getNum());
+		}
+		updateDB("deck", deckList);
 	}
 	
 	public void updateDB(String key, Object value) {

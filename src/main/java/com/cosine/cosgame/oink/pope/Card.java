@@ -2,6 +2,8 @@ package com.cosine.cosgame.oink.pope;
 
 import java.util.List;
 
+import com.cosine.cosgame.oink.pope.entity.CardEntity;
+
 public class Card {
 	int num;
 	String name;
@@ -12,6 +14,17 @@ public class Card {
 	
 	PopePlayer player;
 	PopeGame game;
+	
+	public CardEntity toCardEntity(){
+		int i;
+		CardEntity entity = new CardEntity();
+		entity.setNum(num);
+		entity.setName(name);
+		entity.setImg(img);
+		entity.setDesc(desc);
+		entity.setColor(color);
+		return entity;
+	}
 	
 	public Card() {
 		

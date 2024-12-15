@@ -15,7 +15,7 @@ public class Consts {
 	public static final int SEA = 3;
 	public static final int KOBAYA = 4;
 	public static final int MASKMAN = 5;
-	public static final int LOVELETTER = 6;
+	public static final int POPE = 6;
 	
 	public static final int NUMGAMES = 6;
 	

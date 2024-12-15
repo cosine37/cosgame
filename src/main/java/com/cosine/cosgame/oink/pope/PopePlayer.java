@@ -1,8 +1,11 @@
 package com.cosine.cosgame.oink.pope;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+
+import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
 
 public class PopePlayer {
 	int index;
@@ -48,8 +51,25 @@ public class PopePlayer {
 		play = CardFactory.makeCard(playId);
 	}
 	
+	public PopePlayerEntity toPopePlayerEntity(){
+		int i;
+		PopePlayerEntity entity = new PopePlayerEntity();
+		entity.setIndex(index);
+		entity.setPhase(phase);
+		entity.setNumKey(numKey);
+		entity.setProtect(protect);
+		entity.setActive(active);
+		entity.setPlayedThief(playedThief);
+		entity.setName(name);
+		return entity;
+	}
+	
 	public PopePlayer() {
-		
+		hand = new ArrayList<>();
+	}
+	public PopePlayer(String name) {
+		this();
+		this.name = name;
 	}
 	
 	public void draw() {
