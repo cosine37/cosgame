@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
 <link rel="stylesheet" type="text/css" href="/view/css/indexTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/oinkOther.css">
 </head>
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
@@ -44,6 +45,38 @@
 					<h1>Welcome to Cosgame</h1>
 					<div>
 						<table>
+							<tr>
+								<td colspan="2">
+									<h4>2024.12.15 <span class="oinktext">抽象小品</span> 上线，两款游戏首发</h4>
+								</td>
+							</tr>
+							<tr style="width: 1000px">
+								<td colspan="2" style="width: 1000px; vertical-align:top">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新页面<span class="oinktext">抽象小品</span>上线。<span class="oinktext">抽象小品</span>不是某一个游戏，而是由多个游戏组成。
+									该系列主要收录一些规则相对简单但游戏性绝对不差的桌游。首发游戏有两款，<span class="oinktext">初创公司</span>和<span class="oinktext">狗头侦探</span>。
+									
+								</td>
+							</tr>
+							<tr style="width: 1000px">
+								<td>
+									<div ng-repeat="c in startupsCards track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand card noselect">
+									</div>
+								</td>
+								<td colspan="2" style="width: 790px; vertical-align:top">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在<span class="oinktext">初创公司</span>中，玩家扮演天使投资人，在编号为5~10的股票中争取成为大股东。
+									尽可能和你的对手卷起来吧！但是一旦没有卷成大股东，就要接受严！峻！的！惩！罚！——向大股东支付巨额股息。详情请查看<span class="oinktext">抽象小品</span>的<span class="oinktext">初创公司规则</span>。
+								</td>
+							</tr>
+							<tr style="width: 1000px">
+								<td>
+									<div ng-repeat="c in groveCards track by $index" ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-hand card noselect">
+									</div>
+								</td>
+								<td colspan="2" style="width: 790px; vertical-align:top">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在<span class="oinktext">狗头侦探</span>中，玩家扮演非常不专业但是急躁的不入流侦探。在不经过严谨的调查之下就想要赶在专业侦探之前抓出凶手。
+									一旦蒙错了，有可能会身败名裂，也有可能无事发生，因为有其他侦探替你背锅。详情请查看<span class="oinktext">抽象小品</span>的<span class="oinktext">狗头侦探规则</span>。
+								</td>
+							</tr>
 							<tr>
 								<td colspan="2">
 									<h4>2024.10.06 <span class="pokerworldtext">扑克世界 の 神机妙算</span> 梅林、站台与舞厅上线，增加可变轮数选项</h4>

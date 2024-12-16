@@ -54,6 +54,11 @@
 	color: goldenrod;
 }
 
+.oinktext{
+	font-weight: bold;
+	color: rgb(0,150,255);
+}
+
 .newsImg{
 	height: 320px;
 	width: 210px

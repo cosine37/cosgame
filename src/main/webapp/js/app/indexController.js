@@ -50,26 +50,37 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 			}
 			
 		}
-		/*
-		$scope.show = function(x){
-			var imgs = ["p611", "p405", "p303", "p509", "p612"]
-			var imgUrl = "url('/image/Citadels/Cards/" + imgs[x] + ".png')"
-			$scope.imgStyle = {
-				"background": imgUrl,
-				"background-size": "cover",
-				"height": "544px",
-				"width": "357px"
-			}
-			$scope.showHiddenImg = true;
-		}
 		
-		$scope.unshow = function(){
-			$scope.showHiddenImg = false;
-		}
-		*/
 		$scope.logout = function(){
 			$http({url: "/logout", method: "POST"}).then(function(response){
 				$scope.goto('login');
 			});
 		}
+		
+		$scope.groveCards = []
+		c = {
+			"num": 8,
+			"name": "阿瑟·夏朋婕",
+			"description": "夏朋婕太太的儿子，爱莉丝·夏朋婕的哥哥，服役于海军，最近正好在休假，曾拿着木棍追着德雷伯先生打。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Grove/Arthur.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.groveCards.push(c);
+		
+		$scope.startupsCards = []
+		c = {
+			"num" : 5,
+			"name" : "五福铁门",
+			"coinOn" : 0,
+			"barColor": {
+				"background-color": "rgb(255,165,0)"
+			},
+			"iconStyle" : {
+				'background-image': 'url(/image/Oink/Startups/5.png)',
+				"background-size" : 'cover'
+			}
+		}
+		$scope.startupsCards.push(c);
 }]);
