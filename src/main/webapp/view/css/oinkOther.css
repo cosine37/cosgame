@@ -10,6 +10,11 @@
      src:url('/font/YeZiGongChangAoYeHei-2.woff') format('woff')
 }
 
+@font-face{
+     font-family: 'shxfl'; 
+     src:url('/font/shxfl.woff') format('woff')
+}
+
 button{
 	outline: none;
 	color: white;

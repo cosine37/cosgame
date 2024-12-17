@@ -48,6 +48,10 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#groverulesstab" ng-click="hideTablesTab()">狗头侦探规则</a>
 				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#poperulesstab" ng-click="hideTablesTab()">保卫教宗规则</a>
+				    </li>
 				  </ul>
 			</div>
 			<div class="tab-content">
@@ -289,6 +293,11 @@
 							</td>
 						</tr>
 					</table>
+				</div>
+				<div id="poperulesstab" class="content container tab-pane fade">
+					<h2><b>保卫教宗规则</b></h2>
+					<div ng-repeat="c in popeCards track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect">
+					</div>
 				</div>
 			</div>
 		</div>

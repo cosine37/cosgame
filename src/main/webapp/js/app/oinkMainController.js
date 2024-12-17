@@ -219,5 +219,71 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			}
 		}
 		$scope.groveCards3.push(c);
+		
+		$scope.popeCards = []
+		c = {
+			"num": 9,
+			"name": "教宗",
+			"description": "若你打出或弃置该牌，你出局。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Pope.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "goldenrod"
+			},
+			"secondaryColor": {
+				"background-color": "PaleGoldenRod"
+			}
+		}
+		c2 = {
+			"num": 8,
+			"name": "村长",
+			"description": "若手牌中有女巫或法师，则必须打出该牌。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Mayor.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "DarkGreen"
+			},
+			"secondaryColor": {
+				"background-color": "PaleGreen"
+			}
+		}
+		c3 = {
+			"num": 7,
+			"name": "法师",
+			"description": "与任意一名玩家交换手牌。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Mage.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "rgb(0,150,255)"
+			},
+			"secondaryColor": {
+				"background-color": "PaleTurquoise"
+			}
+		}
+		c4 = {
+			"num": 1,
+			"name": "狼人",
+			"description": "猜另一名玩家的手牌(不能猜狼人)，若猜中则该玩家出局。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Werewolf.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "rgb(126,33,18)"
+			},
+			"secondaryColor": {
+				"background-color": "Wheat"
+			}
+		}
+		$scope.popeCards.push(c);
+		$scope.popeCards.push(c2);
+		$scope.popeCards.push(c3);
+		$scope.popeCards.push(c4);
 	
 }]);
