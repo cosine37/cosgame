@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.pope.entity.CardEntity;
 import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
 
 public class PopePlayer {
@@ -35,6 +36,11 @@ public class PopePlayer {
 		} else {
 			doc.append("play", -1);
 		}
+		List<Integer> hi = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			hi.add(hand.get(i).getNum());
+		}
+		doc.append("hand", hi);
 		return doc;
 	}
 	
@@ -49,6 +55,14 @@ public class PopePlayer {
 		name = doc.getString("name");
 		int playId = doc.getInteger("play");
 		play = CardFactory.makeCard(playId);
+		List<Integer> hi = (List<Integer>) doc.get("hand");
+		hand = new ArrayList<>();
+		for (i=0;i<hi.size();i++) {
+			Card c = CardFactory.makeCard(hi.get(i));
+			c.setPlayer(this);
+			c.setGame(game);
+			hand.add(c);
+		}
 	}
 	
 	public PopePlayerEntity toPopePlayerEntity(){
@@ -61,6 +75,13 @@ public class PopePlayer {
 		entity.setActive(active);
 		entity.setPlayedThief(playedThief);
 		entity.setName(name);
+		if (play == null) {
+			entity.setPlay(new ArrayList<>());
+		} else {
+			List<CardEntity> lp = new ArrayList<>();
+			lp.add(play.toCardEntity());
+			entity.setPlay(lp);
+		}
 		return entity;
 	}
 	
@@ -90,6 +111,14 @@ public class PopePlayer {
 		protect = false;
 		phase = Consts.PLAYCARD;
 		draw();
+	}
+	
+	public void playCard(int x) {
+		if (x>=0 && x<hand.size()) {
+			Card c = hand.remove(x);
+			c.onPlay();
+			play = c;
+		}
 	}
 
 	public int getIndex() {

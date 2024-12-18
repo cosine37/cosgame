@@ -1,19 +1,21 @@
 package com.cosine.cosgame.oink.pope;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cosine.cosgame.oink.pope.entity.CardEntity;
 
 public class Card {
-	int num;
-	String name;
-	String img;
-	String desc;
-	String color;
-	List<String> sound;
+	protected int num;
+	protected String name;
+	protected String img;
+	protected String desc;
+	protected String color;
+	protected List<String> sound;
 	
-	PopePlayer player;
-	PopeGame game;
+	protected PopePlayer player;
+	protected PopeGame game;
 	
 	public CardEntity toCardEntity(){
 		int i;
@@ -21,13 +23,28 @@ public class Card {
 		entity.setNum(num);
 		entity.setName(name);
 		entity.setImg(img);
-		entity.setDesc(desc);
+		entity.setDescription(desc);
 		entity.setColor(color);
+		
+		Map<String, String> avatarStyle = new HashMap<>();
+		Map<String, String> primaryColor = new HashMap<>();
+		Map<String, String> secondaryColor = new HashMap<>();
+		
+		avatarStyle.put("background-image", "url(/image/Oink/Pope/" + img + ".png)");
+		avatarStyle.put("background-size", "cover");
+		primaryColor.put("background-color", color);
+		secondaryColor.put("background-color", getSecondaryColor());
+		
+		entity.setAvatarStyle(avatarStyle);
+		entity.setPrimaryColor(primaryColor);
+		entity.setSecondaryColor(secondaryColor);
+		entity.setCstyle(new HashMap<>());
+		
 		return entity;
 	}
 	
 	public Card() {
-		
+		color = "rgb(0,150,255)";
 	}
 	
 	public void onPlay() {
@@ -40,6 +57,20 @@ public class Card {
 	
 	public boolean canPlay() {
 		return true;
+	}
+	
+	public String getSecondaryColor() {
+		String ans = "";
+		if (color.contentEquals("rgb(0,150,255)")) {
+			ans = "PaleTurquoise";
+		} else if (color.contentEquals("rgb(126,33,18)")) {
+			ans = "Wheat";
+		} else if (color.contentEquals("DarkGreen")) {
+			ans = "PaleGreen";
+		} else if (color.contentEquals("goldenrod")) {
+			ans = "PaleGoldenRod";
+		}
+		return ans;
 	}
 
 	public int getNum() {

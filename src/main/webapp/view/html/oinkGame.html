@@ -386,6 +386,22 @@ body {
 	
 	<div ng-show="game==POPE && status != ENDGAME">
 		保卫教宗
+		<div>
+		
+		</div>
+		<div style="height: 60px;">
+			<div ng-show="phase == 1" >
+				<span>请打出一张手牌</span>
+				<button ng-show="chosenCard > -1" ng-click="play()">确定</button>
+			</div>
+		</div>
+		<div>
+			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect"
+				ng-click="clickCard($index)" ng-style="c.cstyle">
+		</div>
+		<div style="clear:both"></div>
 		{{gamedata}}
+		<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+		<button ng-click="goto('oink')">退出</button>
 	</div>
 </body>

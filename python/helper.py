@@ -171,8 +171,10 @@ def toEntity():
                 output.append("\t\t\tfor (j=0;j<p.getHand().size();j++){");
                 output.append("\t\t\t\tlistOfHand.add(p.getHand().get(j).to" + handEntity[5:-1] + "());");
                 output.append("\t\t\t}");
+                output.append("\t\t\tentity.setHand(listOfHand);");
             output.append("\t\t}");
             output.append("\t}");
+            output.append("\tentity.setPlayers(listOfPlayers);");
         elif (t == "boolean" or t == "int" or t == "String" or t == "List<Integer>" or t == "List<String>"):
             output.append("\t" + "entity.set" + cap(attr) + "(" + attr + ");");
         elif (t[:5] == "List<"):

@@ -250,4 +250,10 @@ public class Board {
 	public void setGrove(Grove grove) {
 		this.grove = grove;
 	}
+	public PopeGame getPope() {
+		return pope;
+	}
+	public void setPope(PopeGame pope) {
+		this.pope = pope;
+	}
 }

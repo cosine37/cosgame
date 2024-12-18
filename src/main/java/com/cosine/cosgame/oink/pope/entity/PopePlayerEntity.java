@@ -1,5 +1,7 @@
 package com.cosine.cosgame.oink.pope.entity;
 
+import java.util.List;
+
 public class PopePlayerEntity {
 	int index;
 	int phase;
@@ -8,6 +10,8 @@ public class PopePlayerEntity {
 	boolean active;
 	boolean playedThief;
 	String name;
+	
+	List<CardEntity> play;
 	
 	public int getIndex() {
 		return index;
@@ -50,5 +54,11 @@ public class PopePlayerEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public List<CardEntity> getPlay() {
+		return play;
+	}
+	public void setPlay(List<CardEntity> play) {
+		this.play = play;
 	}
 }

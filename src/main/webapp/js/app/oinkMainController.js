@@ -239,7 +239,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		c2 = {
 			"num": 8,
 			"name": "村长",
-			"description": "若手牌中有女巫或法师，则必须打出该牌。",
+			"description": "无效果。若你的手牌中有女巫或法师，你必须打出这张村长。",
 			"avatarStyle": {
 				'background-image': 'url(/image/Oink/Pope/Mayor.png)',
 				"background-size" : 'cover'

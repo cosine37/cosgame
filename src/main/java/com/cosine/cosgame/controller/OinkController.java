@@ -228,7 +228,6 @@ public class OinkController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
 	// End STARTUPS 
 	
 	
@@ -288,6 +287,28 @@ public class OinkController {
 	
 	// End GROVE
 	
+	
+	// Begin POPE
+	@RequestMapping(value="/oink/pope/play", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> popePlay(HttpServletRequest request, @RequestParam int cardIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.POPE)) {
+				board.getPope().playerPlayUDB(username, cardIndex);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	
+	// End POPE
 	
 	// account handles
 	@RequestMapping(value="/oink/accountinfo", method = RequestMethod.GET)

@@ -186,6 +186,14 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					});
 				}
 				
+			} else if ($scope.game == $scope.POPE){
+				if ($scope.chosenCard != -1){
+					var data = {"cardIndex" : $scope.chosenCard}
+					$scope.chosenCard = -1
+					$http({url: "/oink/pope/play", method: "PUT", params: data}).then(function(response){
+						ws.send("refresh");
+					});
+				}
 			}
 		}
 		
@@ -233,6 +241,20 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					if ($scope.chosenCard == x) $scope.chosenCard = -1; else $scope.chosenCard = x
 				}
 				
+			} else if ($scope.game == $scope.POPE){
+				if ($scope.phase == 1){
+					$scope.playClickSE();
+					if ($scope.chosenCard == x){
+						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+						$scope.chosenCard = -1
+					} else {
+						if ($scope.chosenCard != -1){
+							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+						}
+						$scope.chosenCard = x
+						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-40px";
+					}
+				}
 			}
 		}
 		
@@ -358,6 +380,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					});
 				} else if ($scope.game == $scope.POPE){
 					$scope.gamedata = response.data.pope
+					$scope.phase = $scope.gamedata.phase
+					$scope.hand = $scope.gamedata.hand;
 				}
 				
 				

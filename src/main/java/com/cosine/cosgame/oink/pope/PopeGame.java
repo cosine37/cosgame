@@ -87,8 +87,10 @@ public class PopeGame {
 				for (j=0;j<p.getHand().size();j++){
 					listOfHand.add(p.getHand().get(j).toCardEntity());
 				}
+				entity.setHand(listOfHand);
 			}
 		}
+		entity.setPlayers(listOfPlayers);
 		entity.setLogs(logger.getLogs());
 		return entity;
 	}
@@ -118,10 +120,18 @@ public class PopeGame {
 	
 	public void startRound() {
 		int i;
+		// Step 1: round # and initialize deck
 		round++;
+		deck = AllRes.allBaseCards();
+		
+		// Step 2: initialize players
 		for (i=0;i<players.size();i++) {
 			players.get(i).startRound();
 		}
+		
+		// Step 3: curPlayer handle
+		curPlayer = firstPlayer;
+		players.get(curPlayer).startTurn();
 	}
 	
 	// actual operations
@@ -136,6 +146,7 @@ public class PopeGame {
 			players.add(p);
 		}
 		
+		
 		// Step 2: set round and curPlayer
 		round = 0;
 		curPlayer = board.getFirstPlayer();
@@ -144,6 +155,24 @@ public class PopeGame {
 		
 		updatePlayers();
 		updateBasicDB();
+	}
+	
+	public void playerPlayUDB(String username, int cardIndex) {
+		PopePlayer p = getPlayerByName(username);
+		if (p != null) {
+			if (cardIndex>=0 && cardIndex<p.getHand().size()) {
+				// Step 1: empty play area
+				for (int i=0;i<players.size();i++) {
+					players.get(i).setPlay(null);
+				}
+				
+				p.playCard(cardIndex);
+			}
+		}
+		
+		updatePlayers();
+		updateBasicDB();
+		
 	}
 	
 	// end of actual operations
