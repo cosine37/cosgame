@@ -15,6 +15,7 @@ public class PopePlayer {
 	boolean protect;
 	boolean active;
 	boolean playedThief;
+	boolean confirmed;
 	String name;
 	
 	List<Card> hand;
@@ -31,6 +32,7 @@ public class PopePlayer {
 		doc.append("active",active);
 		doc.append("playedThief",playedThief);
 		doc.append("name",name);
+		doc.append("confirmed",confirmed);
 		if (play != null) {
 			doc.append("play", play.getNum());
 		} else {
@@ -53,6 +55,7 @@ public class PopePlayer {
 		active = doc.getBoolean("active",false);
 		playedThief = doc.getBoolean("playedThief",false);
 		name = doc.getString("name");
+		confirmed = doc.getBoolean("confirmed", false);
 		int playId = doc.getInteger("play");
 		play = CardFactory.makeCard(playId);
 		List<Integer> hi = (List<Integer>) doc.get("hand");
@@ -75,12 +78,20 @@ public class PopePlayer {
 		entity.setActive(active);
 		entity.setPlayedThief(playedThief);
 		entity.setName(name);
+		entity.setConfirmed(confirmed);
 		if (play == null) {
 			entity.setPlay(new ArrayList<>());
 		} else {
 			List<CardEntity> lp = new ArrayList<>();
 			lp.add(play.toCardEntity());
 			entity.setPlay(lp);
+		}
+		if (game.getStatus() == Consts.ROUNDEND) {
+			List<CardEntity> lh = new ArrayList<>();
+			lh.add(hand.get(0).toCardEntity());
+			entity.setHandRevealed(lh);
+		} else {
+			entity.setHandRevealed(new ArrayList<>());
 		}
 		return entity;
 	}
@@ -103,6 +114,7 @@ public class PopePlayer {
 	public void startRound() {
 		active = true;
 		phase = Consts.OFFTURN;
+		hand = new ArrayList<>();
 		draw();
 	}
 	
@@ -110,6 +122,7 @@ public class PopePlayer {
 		// Step 1: change phase, remove protect, and draw
 		protect = false;
 		phase = Consts.PLAYCARD;
+		
 		draw();
 	}
 	
@@ -119,6 +132,10 @@ public class PopePlayer {
 			c.onPlay();
 			play = c;
 		}
+	}
+	
+	public void addKey() {
+		numKey = numKey+1;
 	}
 
 	public int getIndex() {
@@ -180,6 +197,12 @@ public class PopePlayer {
 	}
 	public void setPlayedThief(boolean playedThief) {
 		this.playedThief = playedThief;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 	
 }

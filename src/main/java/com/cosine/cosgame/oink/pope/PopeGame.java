@@ -2,11 +2,11 @@ package com.cosine.cosgame.oink.pope;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
-import com.cosine.cosgame.oink.grove.GrovePlayer;
 import com.cosine.cosgame.oink.pope.entity.CardEntity;
 import com.cosine.cosgame.oink.pope.entity.PopeEntity;
 import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
@@ -16,6 +16,7 @@ public class PopeGame {
 	int round;
 	int firstPlayer;
 	int curPlayer;
+	String endRoundMsg;
 	List<PopePlayer> players;
 	List<Card> deck;
 	Logger logger;
@@ -41,6 +42,7 @@ public class PopeGame {
 		}
 		doc.append("deck",deckList);
 		doc.append("logs",logger.getLogs());
+		doc.append("endRoundMsg", endRoundMsg);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -67,6 +69,7 @@ public class PopeGame {
 		}
 		List<String> logs = (List<String>) doc.get("logs");
 		if (logs == null) logger = new Logger(); else logger = new Logger(logs);
+		endRoundMsg = doc.getString("endRoundMsg");
 	}
 	
 	public PopeEntity toPopeEntity(String username){
@@ -88,10 +91,12 @@ public class PopeGame {
 					listOfHand.add(p.getHand().get(j).toCardEntity());
 				}
 				entity.setHand(listOfHand);
+				entity.setMyIndex(i);
 			}
 		}
 		entity.setPlayers(listOfPlayers);
 		entity.setLogs(logger.getLogs());
+		entity.setEndRoundMsg(endRoundMsg);
 		return entity;
 	}
 
@@ -102,6 +107,7 @@ public class PopeGame {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		logger = new Logger();
+		endRoundMsg = "";
 		
 		String dbname = "oink";
 		String col = "board";
@@ -120,9 +126,11 @@ public class PopeGame {
 	
 	public void startRound() {
 		int i;
-		// Step 1: round # and initialize deck
+		// Step 1: status, round # and initialize deck
+		board.setStatus(Consts.INGAME);
 		round++;
 		deck = AllRes.allBaseCards();
+		endRoundMsg = "";
 		
 		// Step 2: initialize players
 		for (i=0;i<players.size();i++) {
@@ -132,6 +140,72 @@ public class PopeGame {
 		// Step 3: curPlayer handle
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
+	}
+	
+	public boolean roundEnd() {
+		if (deck.size() == 0) return true;
+		int numActive = 0;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isActive()) numActive++;
+		}
+		if (numActive == 1) return true;
+		return false;
+	}
+	
+	public void endRound() {
+		// Step 1: set status
+		board.setStatus(Consts.ROUNDEND);
+		
+		// Step 2: reveal hand and find the player;
+		int i;
+		int max = -1;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isActive()) {
+				int x = players.get(i).getHand().get(0).getNum();
+				if (max<x) {
+					max = x;
+				}
+			}
+			
+		}
+		List<Integer> winnerIds = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isActive()) {
+				int x = players.get(i).getHand().get(0).getNum();
+				if (max == x) {
+					winnerIds.add(i);
+					players.get(i).addKey();
+				}
+			}
+		}
+		
+		// Step 3: set end game msg
+		endRoundMsg = "本轮获胜者是";
+		for (i=0;i<winnerIds.size();i++) {
+			if (i == 0) {
+				endRoundMsg = endRoundMsg + " " + players.get(winnerIds.get(i)).getName() + " ";
+			} else {
+				endRoundMsg = endRoundMsg + "和 " + players.get(winnerIds.get(i)).getName() + " ";
+			}
+		}
+		
+		// Step 4: decide first player next round
+		Random rand = new Random();
+		int y = rand.nextInt(winnerIds.size());
+		firstPlayer = winnerIds.get(y);
+		
+		// Step 5: clear confirmed for players
+		for (i=0;i<players.size();i++) {
+			players.get(i).setConfirmed(false);
+		}
+	}
+	
+	public boolean gameEnd() {
+		return false;
+	}
+	
+	public void endGame() {
+		
 	}
 	
 	// actual operations
@@ -165,8 +239,19 @@ public class PopeGame {
 				for (int i=0;i<players.size();i++) {
 					players.get(i).setPlay(null);
 				}
-				
 				p.playCard(cardIndex);
+				
+				// Step 2: if nothing needs to be resolved, end turn and potentially end round
+				if (p.getPhase() == Consts.PLAYCARD) {
+					p.setPhase(Consts.OFFTURN);
+					if (roundEnd()) {
+						endRound();
+					} else {
+						curPlayer = (curPlayer+1)%players.size();
+						players.get(curPlayer).startTurn();
+						
+					}
+				}
 			}
 		}
 		
@@ -175,6 +260,27 @@ public class PopeGame {
 		
 	}
 	
+	public void playerConfirmUDB(String username) {
+		PopePlayer p = getPlayerByName(username);
+		p.setConfirmed(true);
+		boolean flag = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmed() == false) {
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			if (gameEnd()) {
+				endGame();
+			} else {
+				startRound();
+			}
+			
+		}
+		updatePlayers();
+		updateBasicDB();
+	}
 	// end of actual operations
 	
 	public PopePlayer getPlayerByName(String name) {
@@ -214,6 +320,7 @@ public class PopeGame {
 		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("logs", logger.getLogs());
+		updateDB("endRoundMsg", endRoundMsg);
 		int i;
 		List<Integer> deckList = new ArrayList<>();
 		for (i=0;i<deck.size();i++){
@@ -267,5 +374,11 @@ public class PopeGame {
 	}
 	public void setDeck(List<Card> deck) {
 		this.deck = deck;
+	}
+	public String getEndRoundMsg() {
+		return endRoundMsg;
+	}
+	public void setEndRoundMsg(String endRoundMsg) {
+		this.endRoundMsg = endRoundMsg;
 	}
 }

@@ -9,9 +9,11 @@ public class PopePlayerEntity {
 	boolean protect;
 	boolean active;
 	boolean playedThief;
+	boolean confirmed;
 	String name;
 	
 	List<CardEntity> play;
+	List<CardEntity> handRevealed;
 	
 	public int getIndex() {
 		return index;
@@ -60,5 +62,17 @@ public class PopePlayerEntity {
 	}
 	public void setPlay(List<CardEntity> play) {
 		this.play = play;
+	}
+	public List<CardEntity> getHandRevealed() {
+		return handRevealed;
+	}
+	public void setHandRevealed(List<CardEntity> handRevealed) {
+		this.handRevealed = handRevealed;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 }

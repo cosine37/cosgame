@@ -9,6 +9,8 @@ public class PopeEntity {
 	int curPlayer;
 	int firstPlayer;
 	int deckSize;
+	int myIndex;
+	String endRoundMsg;
 
 	List<PopePlayerEntity> players;
 	List<CardEntity> hand;
@@ -67,5 +69,17 @@ public class PopeEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public String getEndRoundMsg() {
+		return endRoundMsg;
+	}
+	public void setEndRoundMsg(String endRoundMsg) {
+		this.endRoundMsg = endRoundMsg;
+	}
+	public int getMyIndex() {
+		return myIndex;
+	}
+	public void setMyIndex(int myIndex) {
+		this.myIndex = myIndex;
 	}
 }

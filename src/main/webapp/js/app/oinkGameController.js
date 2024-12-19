@@ -267,7 +267,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$http.put("/oink/grove/confirmnextround").then(function(response){
 					ws.send("refresh");
 				});
-			} 
+			} else if ($scope.game == $scope.POPE){
+				$http.put("/oink/pope/confirmnextround").then(function(response){
+					ws.send("refresh");
+				});
+			}
 			
 		}
 		
@@ -382,6 +386,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.gamedata = response.data.pope
 					$scope.phase = $scope.gamedata.phase
 					$scope.hand = $scope.gamedata.hand;
+					$scope.players = $scope.gamedata.players
+					$scope.myIndex = $scope.gamedata.myIndex
 				}
 				
 				
