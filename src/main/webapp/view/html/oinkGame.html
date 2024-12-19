@@ -403,11 +403,27 @@ body {
 		</div>
 		<div>
 			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect"
-				ng-click="clickCard($index)" ng-style="c.cstyle">
+				ng-click="clickCard($index)" ng-style="c.cstyle"></div>
 		</div>
 		<div style="clear:both"></div>
 		{{gamedata}}
 		<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 		<button ng-click="goto('oink')">退出</button>
 	</div>
+	<div ng-show="game==POPE && status == ENDGAME">
+		保卫教宗
+		<table>
+			<tr ng-repeat="r in gamedata.rankIndex track by $index">
+				<td>{{players[r].ranking}}</td>
+				<td>{{players[r].name}}</td>
+				<td>{{players[r].numKey}}</td>
+			</tr>
+		</table>
+		<h2>你获得了</h2>
+		<div ng-repeat="rewardMsg in gamedata.endGameRewards">{{rewardMsg}}</div>
+		<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+		<button ng-click="goto('oink')">退出</button>
+		{{gamedata}}
+	</div>
+	
 </body>

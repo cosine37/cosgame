@@ -6,6 +6,7 @@ public class PopePlayerEntity {
 	int index;
 	int phase;
 	int numKey;
+	int ranking;
 	boolean protect;
 	boolean active;
 	boolean playedThief;
@@ -74,5 +75,11 @@ public class PopePlayerEntity {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
 	}
 }

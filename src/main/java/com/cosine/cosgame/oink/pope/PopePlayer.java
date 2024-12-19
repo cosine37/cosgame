@@ -12,6 +12,7 @@ public class PopePlayer {
 	int index;
 	int phase;
 	int numKey;
+	int ranking;
 	boolean protect;
 	boolean active;
 	boolean playedThief;
@@ -19,6 +20,7 @@ public class PopePlayer {
 	String name;
 	
 	List<Card> hand;
+	List<String> endGameRewards;
 	Card play;
 	PopeGame game;
 	
@@ -33,6 +35,8 @@ public class PopePlayer {
 		doc.append("playedThief",playedThief);
 		doc.append("name",name);
 		doc.append("confirmed",confirmed);
+		doc.append("ranking", ranking);
+		doc.append("endGameRewards", endGameRewards);
 		if (play != null) {
 			doc.append("play", play.getNum());
 		} else {
@@ -56,6 +60,8 @@ public class PopePlayer {
 		playedThief = doc.getBoolean("playedThief",false);
 		name = doc.getString("name");
 		confirmed = doc.getBoolean("confirmed", false);
+		ranking = doc.getInteger("ranking", 0);
+		endGameRewards = (List<String>) doc.get("endGameRewards");
 		int playId = doc.getInteger("play");
 		play = CardFactory.makeCard(playId);
 		List<Integer> hi = (List<Integer>) doc.get("hand");
@@ -79,6 +85,7 @@ public class PopePlayer {
 		entity.setPlayedThief(playedThief);
 		entity.setName(name);
 		entity.setConfirmed(confirmed);
+		entity.setRanking(ranking);
 		if (play == null) {
 			entity.setPlay(new ArrayList<>());
 		} else {
@@ -203,6 +210,18 @@ public class PopePlayer {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 	
 }

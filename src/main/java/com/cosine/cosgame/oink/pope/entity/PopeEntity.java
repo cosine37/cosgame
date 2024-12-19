@@ -10,7 +10,11 @@ public class PopeEntity {
 	int firstPlayer;
 	int deckSize;
 	int myIndex;
+	int gameEndKeys;
 	String endRoundMsg;
+	
+	List<Integer> rankIndex;
+	List<String> endGameRewards;
 
 	List<PopePlayerEntity> players;
 	List<CardEntity> hand;
@@ -81,5 +85,23 @@ public class PopeEntity {
 	}
 	public void setMyIndex(int myIndex) {
 		this.myIndex = myIndex;
+	}
+	public int getGameEndKeys() {
+		return gameEndKeys;
+	}
+	public void setGameEndKeys(int gameEndKeys) {
+		this.gameEndKeys = gameEndKeys;
+	}
+	public List<Integer> getRankIndex() {
+		return rankIndex;
+	}
+	public void setRankIndex(List<Integer> rankIndex) {
+		this.rankIndex = rankIndex;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 }

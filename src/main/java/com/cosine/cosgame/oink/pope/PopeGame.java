@@ -7,6 +7,8 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.Transaction;
 import com.cosine.cosgame.oink.pope.entity.CardEntity;
 import com.cosine.cosgame.oink.pope.entity.PopeEntity;
 import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
@@ -19,6 +21,7 @@ public class PopeGame {
 	String endRoundMsg;
 	List<PopePlayer> players;
 	List<Card> deck;
+	List<Integer> rankIndex;
 	Logger logger;
 	
 	Board board;
@@ -43,6 +46,7 @@ public class PopeGame {
 		doc.append("deck",deckList);
 		doc.append("logs",logger.getLogs());
 		doc.append("endRoundMsg", endRoundMsg);
+		doc.append("rankIndex", rankIndex);
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -70,6 +74,7 @@ public class PopeGame {
 		List<String> logs = (List<String>) doc.get("logs");
 		if (logs == null) logger = new Logger(); else logger = new Logger(logs);
 		endRoundMsg = doc.getString("endRoundMsg");
+		rankIndex = (List<Integer>) doc.get("rankIndex");
 	}
 	
 	public PopeEntity toPopeEntity(String username){
@@ -92,11 +97,14 @@ public class PopeGame {
 				}
 				entity.setHand(listOfHand);
 				entity.setMyIndex(i);
+				entity.setEndGameRewards(p.getEndGameRewards());
 			}
 		}
 		entity.setPlayers(listOfPlayers);
 		entity.setLogs(logger.getLogs());
 		entity.setEndRoundMsg(endRoundMsg);
+		entity.setGameEndKeys(this.getGameEndKeys());
+		entity.setRankIndex(rankIndex);
 		return entity;
 	}
 
@@ -106,6 +114,7 @@ public class PopeGame {
 		round = 0;
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
+		rankIndex = new ArrayList<>();
 		logger = new Logger();
 		endRoundMsg = "";
 		
@@ -122,6 +131,20 @@ public class PopeGame {
 		} else {
 			return null;
 		}
+	}
+	
+	public void endTurn() {
+		// Step 1: find the next active player
+		curPlayer = (curPlayer+1)%players.size();
+		while (players.get(curPlayer).isActive() == false) {
+			curPlayer = (curPlayer+1)%players.size();
+		}
+		
+		// Step 2: clear phase for each player
+		for (int i=0;i<players.size();i++) {
+			players.get(i).setPhase(Consts.OFFTURN);
+		}
+		players.get(curPlayer).startTurn();
 	}
 	
 	public void startRound() {
@@ -201,11 +224,65 @@ public class PopeGame {
 	}
 	
 	public boolean gameEnd() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getNumKey() == getGameEndKeys()) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	public void endGame() {
+		int i,j;
 		
+		// Step 1: change status
+		setStatus(Consts.ENDGAME);
+		
+		// Step 2: Sort players
+		List<PopePlayer> tps = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tps.add(players.get(i));
+		}
+		for (i=0;i<tps.size();i++) {
+			for (j=i+1;j<tps.size();j++) {
+				if (tps.get(i).getNumKey() < tps.get(j).getNumKey()) {
+					PopePlayer tp = tps.get(i);
+					tps.set(i, tps.get(j));
+					tps.set(j, tp);
+				}
+			}
+		}
+		
+		// Step 3: Ranking related
+		rankIndex = new ArrayList<>();
+		for (i=0;i<tps.size();i++) {
+			if (i>0) {
+				if (tps.get(i).getNumKey() == tps.get(i-1).getNumKey()) {
+					tps.get(i).setRanking(tps.get(i-1).getRanking());
+				} else {
+					tps.get(i).setRanking(i+1);
+				}
+			} else {
+				tps.get(i).setRanking(i+1);
+			}
+			rankIndex.add(tps.get(i).getIndex());
+		}
+		
+		// Step 4: awards
+		for (i=0;i<players.size();i++) {
+			Account a = new Account();
+			PopePlayer p = players.get(i);
+			a.getFromDB(p.getName());
+			List<Transaction> rewards = a.endGameReward(p.getRanking());
+			List<String> endGameRewards = new ArrayList<>();
+			for (j=0;j<rewards.size();j++) {
+				a.addNewTransaction(rewards.get(j));
+				endGameRewards.add(rewards.get(j).toString());
+			}
+			p.setEndGameRewards(endGameRewards);
+			a.updateAccountDB();
+		}
 	}
 	
 	// actual operations
@@ -247,9 +324,7 @@ public class PopeGame {
 					if (roundEnd()) {
 						endRound();
 					} else {
-						curPlayer = (curPlayer+1)%players.size();
-						players.get(curPlayer).startTurn();
-						
+						endTurn();
 					}
 				}
 			}
@@ -321,6 +396,7 @@ public class PopeGame {
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("logs", logger.getLogs());
 		updateDB("endRoundMsg", endRoundMsg);
+		updateDB("rankIndex", rankIndex);
 		int i;
 		List<Integer> deckList = new ArrayList<>();
 		for (i=0;i<deck.size();i++){
@@ -332,7 +408,21 @@ public class PopeGame {
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", board.getId(), key, value);
 	}
-	
+	public int getGameEndKeys() {
+		int ans = 0;
+		if (players.size()<3) {
+			ans = 6;
+		} else if (players.size()==3) {
+			ans = 5;
+		} else if (players.size()==4) {
+			ans = 4;
+		} else if (players.size()==5) {
+			ans = 3;
+		} else if (players.size()==6) {
+			ans = 3;
+		}
+		return ans;
+	}
 	public int getStatus() {
 		return board.getStatus();
 	}
@@ -380,5 +470,11 @@ public class PopeGame {
 	}
 	public void setEndRoundMsg(String endRoundMsg) {
 		this.endRoundMsg = endRoundMsg;
+	}
+	public List<Integer> getRankIndex() {
+		return rankIndex;
+	}
+	public void setRankIndex(List<Integer> rankIndex) {
+		this.rankIndex = rankIndex;
 	}
 }

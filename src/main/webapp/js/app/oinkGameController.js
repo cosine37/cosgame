@@ -388,6 +388,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.hand = $scope.gamedata.hand;
 					$scope.players = $scope.gamedata.players
 					$scope.myIndex = $scope.gamedata.myIndex
+					
+					//alert($scope.status)
+					//alert($scope.ENDGAME)
 				}
 				
 				
