@@ -109,11 +109,15 @@ button:disabled{
 }
 
 .card-size-hand{
-	zoom: 0.8
+	zoom: 1
 }
 
 .card-size-discard{
 	zoom: 0.8
+}
+
+.card-size-play{
+	zoom: 0.5
 }
 
 

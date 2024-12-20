@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.account.Account;
 import com.cosine.cosgame.oink.pope.entity.CardEntity;
 import com.cosine.cosgame.oink.pope.entity.PopePlayerEntity;
 
@@ -21,7 +22,8 @@ public class PopePlayer {
 	
 	List<Card> hand;
 	List<String> endGameRewards;
-	Card play;
+	List<Card> play;
+	Card justPlayed;
 	PopeGame game;
 	
 	public Document toDocument(){
@@ -37,16 +39,23 @@ public class PopePlayer {
 		doc.append("confirmed",confirmed);
 		doc.append("ranking", ranking);
 		doc.append("endGameRewards", endGameRewards);
-		if (play != null) {
-			doc.append("play", play.getNum());
-		} else {
-			doc.append("play", -1);
-		}
 		List<Integer> hi = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
 			hi.add(hand.get(i).getNum());
 		}
+		List<Integer> pi = new ArrayList<>();
+		for (i=0;i<play.size();i++) {
+			pi.add(play.get(i).getNum());
+		}
 		doc.append("hand", hi);
+		doc.append("play", pi);
+		
+		if (justPlayed == null) {
+			doc.append("justPlayed", -1);
+		} else {
+			doc.append("justPlayed", justPlayed.getNum());
+		}
+		
 		return doc;
 	}
 	
@@ -62,8 +71,7 @@ public class PopePlayer {
 		confirmed = doc.getBoolean("confirmed", false);
 		ranking = doc.getInteger("ranking", 0);
 		endGameRewards = (List<String>) doc.get("endGameRewards");
-		int playId = doc.getInteger("play");
-		play = CardFactory.makeCard(playId);
+		
 		List<Integer> hi = (List<Integer>) doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<hi.size();i++) {
@@ -72,6 +80,21 @@ public class PopePlayer {
 			c.setGame(game);
 			hand.add(c);
 		}
+		List<Integer> pi = (List<Integer>) doc.get("play");
+		play = new ArrayList<>();
+		for (i=0;i<pi.size();i++) {
+			Card c = CardFactory.makeCard(pi.get(i));
+			c.setPlayer(this);
+			c.setGame(game);
+			play.add(c);
+		}
+		int ji = doc.getInteger("justPlayed", -1);
+		if (ji == -1) {
+			justPlayed = null;
+		} else {
+			justPlayed = CardFactory.makeCard(ji);
+		}
+		
 	}
 	
 	public PopePlayerEntity toPopePlayerEntity(){
@@ -90,21 +113,31 @@ public class PopePlayer {
 			entity.setPlay(new ArrayList<>());
 		} else {
 			List<CardEntity> lp = new ArrayList<>();
-			lp.add(play.toCardEntity());
+			for (i=0;i<play.size();i++) {
+				lp.add(play.get(i).toCardEntity());
+			}
 			entity.setPlay(lp);
 		}
-		if (game.getStatus() == Consts.ROUNDEND) {
+		if (game.getStatus() == Consts.ROUNDEND || active == false) {
 			List<CardEntity> lh = new ArrayList<>();
 			lh.add(hand.get(0).toCardEntity());
+			entity.setHandRevealed(lh);
+		} else if (game.getStatus() == Consts.INGAME && justPlayed != null){
+			List<CardEntity> lh = new ArrayList<>();
+			lh.add(justPlayed.toCardEntity());
 			entity.setHandRevealed(lh);
 		} else {
 			entity.setHandRevealed(new ArrayList<>());
 		}
+		Account account = new Account();
+		account.getFromDB(name);
+		entity.setAccount(account.toAccountEntity());
 		return entity;
 	}
 	
 	public PopePlayer() {
 		hand = new ArrayList<>();
+		play = new ArrayList<>();
 	}
 	public PopePlayer(String name) {
 		this();
@@ -122,6 +155,8 @@ public class PopePlayer {
 		active = true;
 		phase = Consts.OFFTURN;
 		hand = new ArrayList<>();
+		play = new ArrayList<>();
+		justPlayed = null;
 		draw();
 	}
 	
@@ -129,15 +164,17 @@ public class PopePlayer {
 		// Step 1: change phase, remove protect, and draw
 		protect = false;
 		phase = Consts.PLAYCARD;
-		
+		justPlayed = null;
 		draw();
 	}
 	
 	public void playCard(int x) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
-			c.onPlay();
-			play = c;
+			
+			justPlayed = c;
+			play.add(c);
+			c.onPlay();	
 		}
 	}
 	
@@ -187,10 +224,10 @@ public class PopePlayer {
 	public void setHand(List<Card> hand) {
 		this.hand = hand;
 	}
-	public Card getPlay() {
+	public List<Card> getPlay() {
 		return play;
 	}
-	public void setPlay(Card play) {
+	public void setPlay(List<Card> play) {
 		this.play = play;
 	}
 	public PopeGame getGame() {
@@ -222,6 +259,12 @@ public class PopePlayer {
 	}
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
+	}
+	public Card getJustPlayed() {
+		return justPlayed;
+	}
+	public void setJustPlayed(Card justPlayed) {
+		this.justPlayed = justPlayed;
 	}
 	
 }

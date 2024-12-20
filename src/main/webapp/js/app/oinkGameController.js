@@ -21,6 +21,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.GROVE = 2;
 		$scope.POPE = 6;
 		
+		$scope.INGAME = 1
 		$scope.ROUNDEND = 2
 		$scope.ENDGAME = 3
 		$scope.showEndRoundInfo = false;
@@ -300,6 +301,50 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		// End GROVE only functions
 		
+		// POPE only functions
+		setPlayerPlayStyle = function(){
+			var i,j
+			for (i=0;i<$scope.players.length;i++){
+				var n = $scope.players[i].play.length;
+				for (j=0;j<n;j++){
+					var x = "0px";
+					if (j>0){
+						if (n == 4){
+							x = "-20px"
+						} else if (n == 5){
+							x = "-70px"
+						} else if (n == 6){
+							x = "-100px"
+						} else if (n == 7){
+							x = "-120px"
+						} else if (n == 8){
+							x = "-130px"
+						}
+					}
+					$scope.players[i].play[j].cstyle["margin-left"] = x
+				}
+			}
+		}
+		
+		$scope.playerBgColorPope = function(i){
+			var ans = {"background-color": "lightgrey"};
+			if ($scope.players == null) return ans;
+			if (i<$scope.players.length){
+				if ($scope.players[i].active == true){
+					if ($scope.players[i].protect == true){
+						ans["background-color"] = "DeepSkyBlue";
+					} else {
+						ans["background-color"] = "LightYellow";
+					}
+					
+				}
+			}
+			
+			
+			return ans;
+		}
+		// End POPE only functions
+		
 		$scope.getBoard = function(){
 			$http.get('/oink/getboard').then(function(response){
 				if (response.data.id == "NE"){
@@ -388,7 +433,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.hand = $scope.gamedata.hand;
 					$scope.players = $scope.gamedata.players
 					$scope.myIndex = $scope.gamedata.myIndex
-					
+					$scope.round = $scope.gamedata.round;
+					setPlayerPlayStyle()
 					//alert($scope.status)
 					//alert($scope.ENDGAME)
 				}

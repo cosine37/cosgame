@@ -123,7 +123,7 @@ body {
 			</div>
 		</div>
 		<div id="hand-zone" style="padding-top: 40px" ng-show="showEndRoundInfo == false">
-			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-hand noselect" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/StartupsCard.html'" class="card card-size card-size-discard noselect" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
 		<div style="clear:both" ng-show="showEndRoundInfo == false"></div>
 		<div id="log-zone" style="overflow-y: scroll;overflow:auto;height: 450px;width: 360px;border: 1px solid; position: absolute; right: 20px; bottom: 150px; 
@@ -385,30 +385,99 @@ body {
 	</div>
 	
 	<div ng-show="game==POPE && status != ENDGAME">
-		保卫教宗
-		<div>
+		<table>
+			<tr>
+				<td ng-repeat="i in [0,1,2,3,4,5]" style="border: 2px solid black;" ng-style="playerBgColorPope(i)">
+					<div style="width: 400px; height: 600px;" ng-show="i>=players.length">
+						
+					</div>
+					<div style="width: 400px; height: 600px;" ng-show="i<players.length">
+						<table>
+							<tr>
+								<td rowspan='2'>
+									<div style="height: 100px; width: 100px; filter: grayscale(100%);-webkit-filter: grayscale(100%); "
+										ng-style="players[i].account.chosenAvatarStyle" ng-show="players[i].active == false"></div>
+									<div style="height: 100px; width: 100px"
+										ng-style="players[i].account.chosenAvatarStyle" ng-show="players[i].active == true"></div>
+								</td>
+								<td style="width: 280px; padding-left: 10px">
+									<div style="color: black; font-family:'yzgc'; font-size: 24px" 
+										ng-show="players[i].active == true && i != gamedata.curPlayer">{{players[i].account.nameDisplay}}</div>
+									<div style="color: rgb(0,150,255); font-family:'yzgc'; font-size: 24px" 
+										ng-show="players[i].active == true && i == gamedata.curPlayer">{{players[i].account.nameDisplay}}</div>
+									<div style="color:grey; font-family:'yzgc'; font-size: 24px" 
+										ng-show="players[i].active == false">{{players[i].account.nameDisplay}}</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 280px; padding-left: 10px">
+									<div style="float:left; height: 30px; width:30px; background:url('/image/Oink/Pope/key.png'); background-size:cover;"></div>
+									<div style="float:left;font-family:'yzgc'; font-size: 20px;">×{{players[i].numKey}}</div>
+									<div style="float:left; height: 30px; width:30px; margin-left: 20px; background:url('/image/Oink/Pope/shield.png'); background-size:cover;"
+										ng-show="players[i].protect"></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan='2'>
+									<div ng-repeat="c in players[i].play track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-play card noselect"
+									 ng-style="c.cstyle"></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan='2'>
+									<div ng-show="players[i].handRevealed.length > 0">
+										<div style="color:black;font-family:'yzgc'; font-size: 20px" ng-show="players[i].active == true && status == ROUNDEND">手牌：</div>
+										<div style="color:grey;font-family:'yzgc'; font-size: 20px" ng-show="players[i].active == false">手牌(不参与比较)：</div>
+										<div style="color:black;font-family:'yzgc'; font-size: 20px" ng-show="players[i].active == true && status == INGAME">刚打出的牌：</div>
+										<div ng-repeat="c in players[i].handRevealed track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"
+										 	ng-style="c.cstyle"></div>
+									</div>
+									
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2'>
+					<div style="height: 60px;">
+						<div ng-show="status == 1 && phase == 1" >
+							<span>请打出一张手牌</span>
+							<button ng-show="chosenCard > -1" ng-click="play()">确定</button>
+						</div>
+						<div ng-show="status == 1 && phase == -1">
+							<span>现在不是你的回合</span>
+						</div>
+						<div ng-show="status == 2">
+							<span>轮次 {{round}} 结束，{{gamedata.endRoundMsg}}</span>
+							<span ng-show="players[myIndex].confirmed == false">。点击确认进入下一回合：</span>
+							<button ng-show="players[myIndex].confirmed == false" ng-click="confirmNextRound()">确认</button>
+							<span ng-show="players[myIndex].confirmed == true">。你已确认，正等待其他玩家确认。</span>
+						</div>
+					</div>
+					<div>
+						<div ng-repeat="c in hand track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"
+							ng-click="clickCard($index)" ng-style="c.cstyle"></div>
+					</div>
+				</td>
+				<td colspan='2'>
+					<div>第 {{gamedata.round}} 轮</div>
+					<div>牌堆数量： {{gamedata.deckSize}} </div>
+					play related
+					<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+					<button ng-click="goto('oink')">退出</button>
+				</td>
+				<td>
+					logs
+				</td>
+			</tr>
+			
+		</table>
 		
-		</div>
-		<div style="height: 60px;">
-			<div ng-show="phase == 1" >
-				<span>请打出一张手牌</span>
-				<button ng-show="chosenCard > -1" ng-click="play()">确定</button>
-			</div>
-			<div ng-show="status == 2">
-				<span>{{gamedata.endRoundMsg}}</span>
-				<span ng-show="players[myIndex].confirmed == false">。点击确认进入下一回合：</span>
-				<button ng-show="players[myIndex].confirmed == false" ng-click="confirmNextRound()">确认</button>
-				<span ng-show="players[myIndex].confirmed == true">。你已确认，正等待其他玩家确认。</span>
-			</div>
-		</div>
-		<div>
-			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect"
-				ng-click="clickCard($index)" ng-style="c.cstyle"></div>
-		</div>
 		<div style="clear:both"></div>
-		{{gamedata}}
-		<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-		<button ng-click="goto('oink')">退出</button>
+		
 	</div>
 	<div ng-show="game==POPE && status == ENDGAME">
 		保卫教宗

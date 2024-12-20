@@ -2,6 +2,8 @@ package com.cosine.cosgame.oink.pope.entity;
 
 import java.util.List;
 
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
+
 public class PopePlayerEntity {
 	int index;
 	int phase;
@@ -15,6 +17,8 @@ public class PopePlayerEntity {
 	
 	List<CardEntity> play;
 	List<CardEntity> handRevealed;
+	
+	AccountEntity account;
 	
 	public int getIndex() {
 		return index;
@@ -81,5 +85,11 @@ public class PopePlayerEntity {
 	}
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
+	}
+	public AccountEntity getAccount() {
+		return account;
+	}
+	public void setAccount(AccountEntity account) {
+		this.account = account;
 	}
 }

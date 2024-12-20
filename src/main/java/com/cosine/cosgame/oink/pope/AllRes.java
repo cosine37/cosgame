@@ -12,8 +12,8 @@ public class AllRes {
 		List<Card> shuffled = new ArrayList<>();
 		
 		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(4));
-		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(8));
-		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(9));
+		for (i=0;i<15;i++) cards.add(CardFactory.makeCard(8));
+		for (i=0;i<1;i++) cards.add(CardFactory.makeCard(9));
 		
 		Random rand = new Random();
 		while (cards.size()>0) {

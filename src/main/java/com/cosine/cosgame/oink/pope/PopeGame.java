@@ -312,9 +312,9 @@ public class PopeGame {
 		PopePlayer p = getPlayerByName(username);
 		if (p != null) {
 			if (cardIndex>=0 && cardIndex<p.getHand().size()) {
-				// Step 1: empty play area
+				// Step 1: clear just played and play card
 				for (int i=0;i<players.size();i++) {
-					players.get(i).setPlay(null);
+					players.get(i).setJustPlayed(null);
 				}
 				p.playCard(cardIndex);
 				
