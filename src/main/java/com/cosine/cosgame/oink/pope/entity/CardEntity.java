@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class CardEntity {
 	int num;
+	int type;
 	String name;
 	String img;
 	String description;
@@ -66,5 +67,11 @@ public class CardEntity {
 	}
 	public void setCstyle(Map<String, String> cstyle) {
 		this.cstyle = cstyle;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 }

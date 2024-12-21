@@ -290,7 +290,7 @@ public class OinkController {
 	
 	// Begin POPE
 	@RequestMapping(value="/oink/pope/play", method = RequestMethod.PUT)
-	public ResponseEntity<StringEntity> popePlay(HttpServletRequest request, @RequestParam int cardIndex){
+	public ResponseEntity<StringEntity> popePlay(HttpServletRequest request, @RequestParam int cardIndex, @RequestParam int target){
 		StringEntity entity = new StringEntity();
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
@@ -299,7 +299,7 @@ public class OinkController {
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
 			if (board.isGame(Consts.POPE)) {
-				board.getPope().playerPlayUDB(username, cardIndex);
+				board.getPope().playerPlayUDB(username, cardIndex, target);
 			}
 		} else {
 			board.setId("NE");
@@ -323,7 +323,23 @@ public class OinkController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
-	
+	@RequestMapping(value="/oink/pope/confirmtargeted", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> popeConfirmTargeted(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.POPE)) {
+				board.getPope().playerConfirmTargetedUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	// End POPE
 	
 	// account handles

@@ -98,6 +98,13 @@ public class PopeGame {
 				entity.setHand(listOfHand);
 				entity.setMyIndex(i);
 				entity.setEndGameRewards(p.getEndGameRewards());
+				entity.setTargetedMsg(p.getTargetedMsg());
+				entity.setResolveMsgs(p.getResolveMsgs());
+				List<CardEntity> listOfResolveCards = new ArrayList<>();
+				for (j=0;j<p.getResolveCards().size();j++) {
+					listOfResolveCards.add(p.getResolveCards().get(j).toCardEntity());
+				}
+				entity.setResolveCards(listOfResolveCards);
 			}
 		}
 		entity.setPlayers(listOfPlayers);
@@ -179,8 +186,13 @@ public class PopeGame {
 		// Step 1: set status
 		board.setStatus(Consts.ROUNDEND);
 		
-		// Step 2: reveal hand and find the player;
+		// Step 2: empty player flags
 		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).setProtect(false);
+		}
+		
+		// Step 3: reveal hand and find the player;
 		int max = -1;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).isActive()) {
@@ -202,7 +214,7 @@ public class PopeGame {
 			}
 		}
 		
-		// Step 3: set end game msg
+		// Step 4: set end game msg
 		endRoundMsg = "本轮获胜者是";
 		for (i=0;i<winnerIds.size();i++) {
 			if (i == 0) {
@@ -212,12 +224,12 @@ public class PopeGame {
 			}
 		}
 		
-		// Step 4: decide first player next round
+		// Step 5: decide first player next round
 		Random rand = new Random();
 		int y = rand.nextInt(winnerIds.size());
 		firstPlayer = winnerIds.get(y);
 		
-		// Step 5: clear confirmed for players
+		// Step 6: clear confirmed for players
 		for (i=0;i<players.size();i++) {
 			players.get(i).setConfirmed(false);
 		}
@@ -308,7 +320,7 @@ public class PopeGame {
 		updateBasicDB();
 	}
 	
-	public void playerPlayUDB(String username, int cardIndex) {
+	public void playerPlayUDB(String username, int cardIndex, int target) {
 		PopePlayer p = getPlayerByName(username);
 		if (p != null) {
 			if (cardIndex>=0 && cardIndex<p.getHand().size()) {
@@ -316,10 +328,10 @@ public class PopeGame {
 				for (int i=0;i<players.size();i++) {
 					players.get(i).setJustPlayed(null);
 				}
-				p.playCard(cardIndex);
+				p.playCard(cardIndex, target);
 				
 				// Step 2: if nothing needs to be resolved, end turn and potentially end round
-				if (p.getPhase() == Consts.PLAYCARD) {
+				if (p.getPhase() == Consts.OFFTURN) {
 					p.setPhase(Consts.OFFTURN);
 					if (roundEnd()) {
 						endRound();
@@ -352,6 +364,27 @@ public class PopeGame {
 				startRound();
 			}
 			
+		}
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	public void playerConfirmTargetedUDB(String username) {
+		PopePlayer p = getPlayerByName(username);
+		Card c = getCurCard();
+		if (p != null && c != null && p.getPhase() == Consts.TARGETED) {
+			// Step 1: end resolving the card and reset player status
+			c.onTargetConfirm();
+			p.setPhase(Consts.OFFTURN);
+			
+			// Step 2: if nothing else needs to be resolved, end turn and potentially end round
+			if (c.getPlayer().getPhase() == Consts.OFFTURN) {
+				if (roundEnd()) {
+					endRound();
+				} else {
+					endTurn();
+				}
+			}
 		}
 		updatePlayers();
 		updateBasicDB();
@@ -408,6 +441,20 @@ public class PopeGame {
 	public void updateDB(String key, Object value) {
 		dbutil.update("id", board.getId(), key, value);
 	}
+	
+	public Card getCurCard() {
+		if (curPlayer == -1) {
+			return null;
+		} else {
+			PopePlayer p = players.get(curPlayer);
+			if (p.play.size() == 0) {
+				return null;
+			} else {
+				return p.play.get(p.play.size()-1);
+			}
+		}
+	}
+	
 	public int getGameEndKeys() {
 		int ans = 0;
 		if (players.size()<3) {

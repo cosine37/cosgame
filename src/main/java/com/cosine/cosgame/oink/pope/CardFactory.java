@@ -1,8 +1,6 @@
 package com.cosine.cosgame.oink.pope;
 
-import com.cosine.cosgame.oink.pope.cards.Guard;
-import com.cosine.cosgame.oink.pope.cards.Mayor;
-import com.cosine.cosgame.oink.pope.cards.Pope;
+import com.cosine.cosgame.oink.pope.cards.*;
 
 public class CardFactory {
 	public static Card makeCard(int x) {
@@ -15,6 +13,8 @@ public class CardFactory {
 			c = new Mayor();
 		} else if (x == 9) {
 			c = new Pope();
+		} else if (x == 2) {
+			c = new Seer();
 		}
 		return c;
 	}

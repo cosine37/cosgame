@@ -12,5 +12,11 @@ public class Consts {
 	// Phases
 	public static final int PLAYCARD = 1;
 	public static final int CHOOSEOPTION = 2;
+	public static final int WAITING = 8;
+	public static final int TARGETED = 9;
 	public static final int OFFTURN = -1;
+	
+	// Card Types
+	public static final int CTYPE_NONE = 0;
+	public static final int CTYPE_TARGET = 1;
 }

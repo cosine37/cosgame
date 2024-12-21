@@ -1,6 +1,7 @@
 package com.cosine.cosgame.oink.pope.cards;
 
 import com.cosine.cosgame.oink.pope.Card;
+import com.cosine.cosgame.oink.pope.Consts;
 
 public class Mayor extends Card{
 	public Mayor() {
@@ -9,5 +10,10 @@ public class Mayor extends Card{
 		this.name = "村长";
 		this.img = "Mayor";
 		this.desc = "无效果。若你的手牌中有女巫或法师，你必须打出这张村长。";
+	}
+	
+	public void onPlay(int target) {
+		super.onPlay(target);
+		player.setPhase(Consts.OFFTURN);
 	}
 }

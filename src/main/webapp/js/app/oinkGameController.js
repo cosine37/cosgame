@@ -28,6 +28,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.chosenCard = -1;
 		$scope.chosenRoles = [0,0,0]
+		$scope.chosenPlayer = -1;
 		
 		$scope.round = -1;
 		
@@ -189,8 +190,21 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				
 			} else if ($scope.game == $scope.POPE){
 				if ($scope.chosenCard != -1){
-					var data = {"cardIndex" : $scope.chosenCard}
+					var flag = true;
+					if ($scope.chosenPlayer != -1){
+						if ($scope.players[$scope.chosenPlayer].protect){
+							if (confirm("目标玩家被守卫保护，对其打出的牌会无效，是否依然对其打出？") == true) {
+								flag = true;
+							} else {
+								flag = false;
+							}
+						}
+					}
+					
+					if (flag == false) return;
+					var data = {"cardIndex" : $scope.chosenCard, "target": $scope.chosenPlayer}
 					$scope.chosenCard = -1
+					$scope.chosenPlayer = -1
 					$http({url: "/oink/pope/play", method: "PUT", params: data}).then(function(response){
 						ws.send("refresh");
 					});
@@ -339,9 +353,75 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					
 				}
 			}
-			
-			
 			return ans;
+		}
+		
+		$scope.showPlayCardButton = function(){
+			if ($scope.chosenCard<0){
+				return false;
+			} else {
+				cardType = $scope.hand[$scope.chosenCard].type
+				if (cardType == 0){
+					return true;
+				} else if (cardType == 1){
+					if ($scope.chosenPlayer<0){
+						return false;
+					} else {
+						return true;
+					}
+				}
+				
+				else {
+					return false;
+				}
+			}
+		}
+		
+		$scope.showChecked = function(i,f){
+			if ($scope.chosenCard<0){
+				return false;
+			} else if ($scope.players[i].active == false){
+				return false;
+			} else {
+				cardType = $scope.hand[$scope.chosenCard].type
+				
+				if (cardType == 0){
+					return false;
+				} else if (cardType == 1){
+					//alert(cardType)
+					if (i==$scope.gamedata.myIndex){
+						return false;
+					} else {
+						
+						if ($scope.chosenPlayer == i){
+							return f;
+						} else {
+							return (!f);
+						}
+						
+					}
+				}
+			}
+		}
+		
+		$scope.clickPlayer = function(i){
+			cardType = $scope.hand[$scope.chosenCard].type
+			
+			if (cardType == 1){
+				if ($scope.chosenPlayer == i){
+					$scope.chosenPlayer = -1
+				} else {
+					$scope.chosenPlayer = i;
+				}
+			}
+		}
+		
+		$scope.confirmTargeted = function(){
+			if ($scope.phase == 9){
+				$http.put("/oink/pope/confirmtargeted").then(function(response){
+					ws.send("refresh");
+				});
+			}
 		}
 		// End POPE only functions
 		

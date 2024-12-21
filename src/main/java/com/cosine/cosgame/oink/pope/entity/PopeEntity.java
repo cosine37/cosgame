@@ -12,6 +12,7 @@ public class PopeEntity {
 	int myIndex;
 	int gameEndKeys;
 	String endRoundMsg;
+	String targetedMsg;
 	
 	List<Integer> rankIndex;
 	List<String> endGameRewards;
@@ -19,6 +20,8 @@ public class PopeEntity {
 	List<PopePlayerEntity> players;
 	List<CardEntity> hand;
 	List<String> logs;
+	List<CardEntity> resolveCards;
+	List<String> resolveMsgs;
 	
 	public int getPhase() {
 		return phase;
@@ -103,5 +106,23 @@ public class PopeEntity {
 	}
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
+	}
+	public String getTargetedMsg() {
+		return targetedMsg;
+	}
+	public void setTargetedMsg(String targetedMsg) {
+		this.targetedMsg = targetedMsg;
+	}
+	public List<CardEntity> getResolveCards() {
+		return resolveCards;
+	}
+	public void setResolveCards(List<CardEntity> resolveCards) {
+		this.resolveCards = resolveCards;
+	}
+	public List<String> getResolveMsgs() {
+		return resolveMsgs;
+	}
+	public void setResolveMsgs(List<String> resolveMsgs) {
+		this.resolveMsgs = resolveMsgs;
 	}
 }

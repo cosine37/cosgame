@@ -14,15 +14,20 @@ public class PopePlayer {
 	int phase;
 	int numKey;
 	int ranking;
+	int target;
 	boolean protect;
 	boolean active;
 	boolean playedThief;
 	boolean confirmed;
 	String name;
 	
+	String targetedMsg;
+	
 	List<Card> hand;
 	List<String> endGameRewards;
 	List<Card> play;
+	List<Card> resolveCards;
+	List<String> resolveMsgs;
 	Card justPlayed;
 	PopeGame game;
 	
@@ -39,6 +44,9 @@ public class PopePlayer {
 		doc.append("confirmed",confirmed);
 		doc.append("ranking", ranking);
 		doc.append("endGameRewards", endGameRewards);
+		doc.append("target", target);
+		doc.append("targetedMsg", targetedMsg);
+		doc.append("resolveMsgs", resolveMsgs);
 		List<Integer> hi = new ArrayList<>();
 		for (i=0;i<hand.size();i++) {
 			hi.add(hand.get(i).getNum());
@@ -47,9 +55,13 @@ public class PopePlayer {
 		for (i=0;i<play.size();i++) {
 			pi.add(play.get(i).getNum());
 		}
+		List<Integer> ri = new ArrayList<>();
+		for (i=0;i<resolveCards.size();i++) {
+			ri.add(resolveCards.get(i).getNum());
+		}
 		doc.append("hand", hi);
 		doc.append("play", pi);
-		
+		doc.append("resolveCards", ri);
 		if (justPlayed == null) {
 			doc.append("justPlayed", -1);
 		} else {
@@ -71,7 +83,9 @@ public class PopePlayer {
 		confirmed = doc.getBoolean("confirmed", false);
 		ranking = doc.getInteger("ranking", 0);
 		endGameRewards = (List<String>) doc.get("endGameRewards");
-		
+		target = doc.getInteger("target", -1);
+		targetedMsg = doc.getString("targetedMsg");
+		resolveMsgs = (List<String>) doc.get("resolveMsgs");
 		List<Integer> hi = (List<Integer>) doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<hi.size();i++) {
@@ -88,11 +102,20 @@ public class PopePlayer {
 			c.setGame(game);
 			play.add(c);
 		}
+		List<Integer> ri = (List<Integer>) doc.get("resolveCards");
+		resolveCards = new ArrayList<>();
+		for (i=0;i<ri.size();i++) {
+			Card c = CardFactory.makeCard(ri.get(i));
+			c.setPlayer(this);
+			c.setGame(game);
+			resolveCards.add(c);
+		}
 		int ji = doc.getInteger("justPlayed", -1);
 		if (ji == -1) {
 			justPlayed = null;
 		} else {
 			justPlayed = CardFactory.makeCard(ji);
+			justPlayed.setPlayer(this);
 		}
 		
 	}
@@ -109,6 +132,7 @@ public class PopePlayer {
 		entity.setName(name);
 		entity.setConfirmed(confirmed);
 		entity.setRanking(ranking);
+		entity.setTarget(target);
 		if (play == null) {
 			entity.setPlay(new ArrayList<>());
 		} else {
@@ -138,6 +162,8 @@ public class PopePlayer {
 	public PopePlayer() {
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
+		resolveCards = new ArrayList<>();
+		resolveMsgs = new ArrayList<>();
 	}
 	public PopePlayer(String name) {
 		this();
@@ -161,27 +187,41 @@ public class PopePlayer {
 	}
 	
 	public void startTurn() {
-		// Step 1: change phase, remove protect, and draw
+		// Step 1: empty resolveMsgs and resolveCards
+		resolveMsgs = new ArrayList<>();
+		resolveCards = new ArrayList<>();
+		
+		// Step 2: change phase, remove protect, and draw
 		protect = false;
 		phase = Consts.PLAYCARD;
 		justPlayed = null;
+		target = -1;
 		draw();
 	}
 	
-	public void playCard(int x) {
+	public void playCard(int x, int target) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
 			
 			justPlayed = c;
 			play.add(c);
-			c.onPlay();	
+			c.onPlay(target);	
 		}
 	}
 	
 	public void addKey() {
 		numKey = numKey+1;
 	}
-
+	public void addResolve(String s, Card c) {
+		addResolveMsg(s);
+		addResolveCard(c);
+	}
+	public void addResolveMsg(String s) {
+		resolveMsgs.add(s);
+	}
+	public void addResolveCard(Card c) {
+		resolveCards.add(c);
+	}
 	public int getIndex() {
 		return index;
 	}
@@ -265,6 +305,30 @@ public class PopePlayer {
 	}
 	public void setJustPlayed(Card justPlayed) {
 		this.justPlayed = justPlayed;
+	}
+	public int getTarget() {
+		return target;
+	}
+	public void setTarget(int target) {
+		this.target = target;
+	}
+	public String getTargetedMsg() {
+		return targetedMsg;
+	}
+	public void setTargetedMsg(String targetedMsg) {
+		this.targetedMsg = targetedMsg;
+	}
+	public List<Card> getResolveCards() {
+		return resolveCards;
+	}
+	public void setResolveCards(List<Card> resolveCards) {
+		this.resolveCards = resolveCards;
+	}
+	public List<String> getResolveMsgs() {
+		return resolveMsgs;
+	}
+	public void setResolveMsgs(List<String> resolveMsgs) {
+		this.resolveMsgs = resolveMsgs;
 	}
 	
 }

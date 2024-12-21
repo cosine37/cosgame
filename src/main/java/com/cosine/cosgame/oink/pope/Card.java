@@ -8,6 +8,7 @@ import com.cosine.cosgame.oink.pope.entity.CardEntity;
 
 public class Card {
 	protected int num;
+	protected int type;
 	protected String name;
 	protected String img;
 	protected String desc;
@@ -22,6 +23,7 @@ public class Card {
 		CardEntity entity = new CardEntity();
 		entity.setNum(num);
 		entity.setName(name);
+		entity.setType(type);
 		entity.setImg(img);
 		entity.setDescription(desc);
 		entity.setColor(color);
@@ -45,13 +47,18 @@ public class Card {
 	
 	public Card() {
 		color = "rgb(0,150,255)";
+		type = Consts.CTYPE_NONE;
 	}
 	
-	public void onPlay() {
-		
+	public void onPlay(int target) {
+		player.setTarget(target);
 	}
 	
 	public void onDiscard() {
+		
+	}
+	
+	public void onTargetConfirm() {
 		
 	}
 	
@@ -120,6 +127,12 @@ public class Card {
 	}
 	public void setGame(PopeGame game) {
 		this.game = game;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 }

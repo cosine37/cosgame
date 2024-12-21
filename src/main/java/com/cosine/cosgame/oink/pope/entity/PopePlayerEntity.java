@@ -9,6 +9,7 @@ public class PopePlayerEntity {
 	int phase;
 	int numKey;
 	int ranking;
+	int target;
 	boolean protect;
 	boolean active;
 	boolean playedThief;
@@ -91,5 +92,11 @@ public class PopePlayerEntity {
 	}
 	public void setAccount(AccountEntity account) {
 		this.account = account;
+	}
+	public int getTarget() {
+		return target;
+	}
+	public void setTarget(int target) {
+		this.target = target;
 	}
 }

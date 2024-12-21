@@ -391,7 +391,7 @@ body {
 					<div style="width: 400px; height: 600px;" ng-show="i>=players.length">
 						
 					</div>
-					<div style="width: 400px; height: 600px;" ng-show="i<players.length">
+					<div style="width: 400px; height: 600px; position: relative" ng-show="i<players.length">
 						<table>
 							<tr>
 								<td rowspan='2'>
@@ -437,6 +437,13 @@ body {
 								
 							</tr>
 						</table>
+						
+						
+						<div style="position:absolute; right: 5px; bottom: 5px; height: 100px; width: 100px; background:url('/image/Oink/Pope/not-checked.png'); 
+							background-size:cover;" ng-show="showChecked(i,false)" ng-click="clickPlayer(i)"></div>
+							
+						<div style="position:absolute; right: 5px; bottom: 5px; height: 100px; width: 100px; background:url('/image/Oink/Pope/checked.png'); 
+							background-size:cover;" ng-show="showChecked(i,true)" ng-click="clickPlayer(i)"></div>
 					</div>
 				</td>
 			</tr>
@@ -445,10 +452,17 @@ body {
 					<div style="height: 60px;">
 						<div ng-show="status == 1 && phase == 1" >
 							<span>请打出一张手牌</span>
-							<button ng-show="chosenCard > -1" ng-click="play()">确定</button>
+							<button ng-show="showPlayCardButton()" ng-click="play()">确定</button>
 						</div>
 						<div ng-show="status == 1 && phase == -1">
 							<span>现在不是你的回合</span>
+						</div>
+						<div ng-show="status == 1 && phase == 9">
+							<span>{{gamedata.targetedMsg}}</span>
+							<button ng-click="confirmTargeted()">确定</button>
+						</div>
+						<div ng-show="status == 1 && phase == 8">
+							<span>{{gamedata.targetedMsg}}</span>
 						</div>
 						<div ng-show="status == 2">
 							<span>轮次 {{round}} 结束，{{gamedata.endRoundMsg}}</span>
@@ -461,6 +475,20 @@ body {
 						<div ng-repeat="c in hand track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"
 							ng-click="clickCard($index)" ng-style="c.cstyle"></div>
 					</div>
+				</td>
+				<td>
+					<table>
+						<tr>
+							<td ng-repeat="s in gamedata.resolveMsgs track by $index" style="width: 168px;">
+								{{s}}
+							</td>
+						</tr>
+						<tr>
+							<td ng-repeat="c in gamedata.resolveCards track by $index" >
+								<div ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"></div>
+							</td>
+						</tr>
+					</table>
 				</td>
 				<td colspan='2'>
 					<div>第 {{gamedata.round}} 轮</div>
