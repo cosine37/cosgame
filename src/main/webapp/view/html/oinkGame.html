@@ -477,18 +477,37 @@ body {
 					</div>
 				</td>
 				<td>
-					<table>
-						<tr>
-							<td ng-repeat="s in gamedata.resolveMsgs track by $index" style="width: 168px;">
-								{{s}}
-							</td>
-						</tr>
-						<tr>
-							<td ng-repeat="c in gamedata.resolveCards track by $index" >
-								<div ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"></div>
-							</td>
-						</tr>
-					</table>
+					<div ng-show="phase != 2">
+						<table>
+							<tr>
+								<td ng-repeat="s in gamedata.resolveMsgs track by $index" style="width: 168px;">
+									{{s}}
+								</td>
+							</tr>
+							<tr>
+								<td ng-repeat="c in gamedata.resolveCards track by $index" >
+									<div ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-discard card noselect"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="phase == 2">
+						<div>请选择你要猜的身份</div>
+						<div>
+							<button ng-click="popeResolve(2)">2.预言家</button>
+							<button ng-click="popeResolve(3)">3.骑士</button>
+							<button ng-click="popeResolve(4)">4.守卫</button>
+							<button ng-click="popeResolve(5)">5.女巫</button>
+							
+						</div>
+						<div style="height: 10px;">
+						</div>
+						<div>
+							<button ng-click="popeResolve(7)">7.法师</button>
+							<button ng-click="popeResolve(8)">8.村长</button>
+							<button ng-click="popeResolve(9)">9.教宗</button>
+						</div>
+					</div>
 				</td>
 				<td colspan='2'>
 					<div>第 {{gamedata.round}} 轮</div>

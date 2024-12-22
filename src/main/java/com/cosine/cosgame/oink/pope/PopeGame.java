@@ -356,7 +356,6 @@ public class PopeGame {
 		
 		updatePlayers();
 		updateBasicDB();
-		
 	}
 	
 	public void playerConfirmUDB(String username) {
@@ -398,6 +397,29 @@ public class PopeGame {
 				}
 			}
 		}
+		updatePlayers();
+		updateBasicDB();
+	}
+	
+	public void playerResolveUDB(String username, int val) {
+		PopePlayer p = getPlayerByName(username);
+		if (p != null) {
+			if (p.getPlay() != null) {
+				// Step 1: end resolving the card and reset player status
+				Card c = p.getPlay().get(p.getPlay().size()-1);
+				c.onResolve(val);
+				
+				// Step 2: if nothing else needs to be resolved, end turn and potentially end round
+				if (c.getPlayer().getPhase() == Consts.OFFTURN) {
+					if (roundEnd()) {
+						endRound();
+					} else {
+						endTurn();
+					}
+				}
+			}
+		}
+		
 		updatePlayers();
 		updateBasicDB();
 	}

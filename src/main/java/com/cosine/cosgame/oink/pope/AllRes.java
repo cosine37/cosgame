@@ -18,6 +18,7 @@ public class AllRes {
 		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(7));
 		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(5));
 		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(3));
+		for (i=0;i<5;i++) cards.add(CardFactory.makeCard(1));
 		
 		Random rand = new Random();
 		while (cards.size()>0) {

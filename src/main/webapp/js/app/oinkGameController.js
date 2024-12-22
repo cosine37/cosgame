@@ -430,6 +430,13 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				});
 			}
 		}
+		
+		$scope.popeResolve = function(x){
+			var data = {"val": x}
+			$http({url: "/oink/pope/resolve", method: "PUT", params: data}).then(function(response){
+				ws.send("refresh");
+			});
+		}
 		// End POPE only functions
 		
 		$scope.getBoard = function(){

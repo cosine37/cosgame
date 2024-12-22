@@ -52,7 +52,9 @@ public class Card {
 	}
 	
 	public void onPlay(int target) {
-		player.setTarget(target);
+		if (player.getPhase() == Consts.PLAYCARD) {
+			player.setTarget(target);
+		}
 	}
 	
 	public void onDiscard() {
@@ -60,6 +62,10 @@ public class Card {
 	}
 	
 	public void onTargetConfirm() {
+		
+	}
+	
+	public void onResolve(int val) {
 		
 	}
 	

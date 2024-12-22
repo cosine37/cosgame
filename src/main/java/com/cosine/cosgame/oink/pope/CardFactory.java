@@ -21,6 +21,8 @@ public class CardFactory {
 			c = new Witch();
 		} else if (x == 3) {
 			c = new Knight();
+		} else if (x == 1) {
+			c = new Werewolf();
 		}
 		return c;
 	}

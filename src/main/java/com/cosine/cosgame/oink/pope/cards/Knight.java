@@ -53,14 +53,4 @@ public class Knight extends Card{
 		}
 	}
 	
-	public boolean canPlay() {
-		if (player != null) {
-			for (int i=0;i<player.getHand().size();i++) {
-				Card c = player.getHand().get(i);
-				if (c.getNum() == 8) return false;
-			}
-		}
-		return true;
-	}
-	
 }
