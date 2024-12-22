@@ -110,6 +110,20 @@ public class PokerUtil {
 		
 		return cards;
 	}
+	public static List<PokerCard> getHeartsDeck(int numPlayers){
+		List<PokerCard> cards = getStandardDeck();
+		if (numPlayers == 3) {
+			// remove club 3 for 3 player games
+			for (int i=0;i<cards.size();i++) {
+				PokerCard c = cards.get(i);
+				if (c.getRank() == 3 && c.getSuit().contentEquals("c")) {
+					cards.remove(i);
+					break;
+				}
+			}
+		}
+		return cards;
+	}
 	public static List<PokerCard> shuffle(List<PokerCard> cards){
 		List<PokerCard> newCards = new ArrayList<>();
 		Random rand = new Random();
@@ -119,7 +133,19 @@ public class PokerUtil {
 		}
 		return newCards;
 	}
-	
+	public static int getHeartsSuitValue(String suit) {
+		if (suit.contentEquals("c")) {
+			return 1;
+		} else if (suit.contentEquals("d")) {
+			return 2;
+		} else if (suit.contentEquals("s")) {
+			return 3;
+		} else if (suit.contentEquals("h")) {
+			return 4;
+		} else {
+			return 0;
+		}
+	}
 	
 	/*
 	 * true: first card is bigger

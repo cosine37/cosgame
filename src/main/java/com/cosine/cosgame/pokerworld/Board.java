@@ -89,6 +89,8 @@ public class Board {
 			startGameSFSJ();
 		} else if (gameMode == Consts.WIZARD) {
 			startGameWizard();
+		} else if (gameMode == Consts.HEARTS) {
+			startGameHearts();
 		}
 	}
 	
@@ -137,6 +139,11 @@ public class Board {
 		round = 1;
 		dealWizard();
 		status = Consts.BIDTRICKS;
+	}
+	
+	public void startGameHearts() {
+		round = 1;
+		dealHearts();
 	}
 	
 	public void dealWizard() {
@@ -204,6 +211,32 @@ public class Board {
 		
 		for (i=0;i<players.size();i++) {
 			players.get(i).sortHand();
+		}
+	}
+	
+	public void dealHearts() {
+		// Step 1: generate a deck for Hearts
+		int i,j;
+		int n = players.size();
+		List<PokerCard> deck = PokerUtil.getHeartsDeck(n);
+		deck = PokerUtil.shuffle(deck);
+		
+		// Step 2 : deal cards
+		int handSize = 13;
+		if (n == 3) handSize = 17;
+		for (i=0;i<players.size();i++) {
+			players.get(i).emptyHand();
+			
+			for (j=0;j<handSize;j++) {
+				PokerCard c = deck.remove(0);
+				players.get(i).getHand().add(c);
+			}
+			
+		}
+		
+		// Step 3: sort cards
+		for (i=0;i<players.size();i++) {
+			players.get(i).sortHandHearts();
 		}
 	}
 	

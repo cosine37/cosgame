@@ -13,6 +13,7 @@ public class Consts {
 	public static final int SFSJ = 0;
 	public static final int WIZARD = 1;
 	public static final int CAMELUP = 2;
+	public static final int HEARTS = 3;
 	
 	// game statuses
 	public static final int PREGAME = 0;

@@ -94,6 +94,15 @@ body {
 									</td>
 								</tr>
 								 -->
+								 <tr>
+									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;" ng-style="highlightStyle(chosenGame == 3)">
+										红心大战
+									</td>
+									<td style="width: 90px; border: 0px; padding: 0px" ng-style="highlightStyle(chosenGame == 3)">
+										<div ng-show="chosenGame == 3" style="background-color: goldenrod; width: 100%">&#129092;</div>
+										<button ng-click="chooseGame(3)" ng-show = "chosenGame != 3">查看</button>
+									</td>
+								</tr>
 							</table>
 						</div>
 					</td>
@@ -359,7 +368,14 @@ body {
 								<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
 							</div>
 						</div>
-					
+						<div ng-show="chosenGame == 3">
+							<h3>红心大战</h3>
+							
+							<div style="width: 500px;text-align:center">
+								<button ng-click="chooseGame(-1)">返回</button>
+								<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</table>

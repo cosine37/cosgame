@@ -138,6 +138,29 @@ public class Player {
 		}
 	}
 	
+	public void sortHandHearts() {
+		int i,j;
+
+		for (i=0;i<hand.size();i++) {
+			for (j=i+1;j<hand.size();j++) {
+				PokerCard c1 = hand.get(i);
+				PokerCard c2 = hand.get(j);
+				boolean shouldSwap = false;
+				if (PokerUtil.getHeartsSuitValue(c1.getSuit()) > PokerUtil.getHeartsSuitValue(c2.getSuit())) {
+					shouldSwap = true;
+				} else if (PokerUtil.getHeartsSuitValue(c1.getSuit()) == PokerUtil.getHeartsSuitValue(c2.getSuit())) {
+					if (c1.getRank()>c2.getRank()) {
+						shouldSwap = true;
+					}	
+				}
+				if (shouldSwap) {
+					hand.set(i, c2);
+					hand.set(j, c1);
+				}
+			}
+		}
+	}
+	
 	public void genPlayedCardsStr() {
 		playedCardsStr = "";
 		String myRawCards = getMyRawCards();
