@@ -343,7 +343,7 @@ public class PopeGame {
 				p.playCard(cardIndex, target);
 				
 				// Step 2: if nothing needs to be resolved, end turn and potentially end round
-				if (p.getPhase() == Consts.OFFTURN) {
+				if (p.getPhase() == Consts.OFFTURN || p.getPhase() == Consts.OUT) {
 					p.setPhase(Consts.OFFTURN);
 					if (roundEnd()) {
 						endRound();
@@ -386,10 +386,12 @@ public class PopeGame {
 		if (p != null && c != null && p.getPhase() == Consts.TARGETED) {
 			// Step 1: end resolving the card and reset player status
 			c.onTargetConfirm();
-			p.setPhase(Consts.OFFTURN);
+			if (p.isActive()) {
+				p.setPhase(Consts.OFFTURN);
+			}
 			
 			// Step 2: if nothing else needs to be resolved, end turn and potentially end round
-			if (c.getPlayer().getPhase() == Consts.OFFTURN) {
+			if (c.getPlayer().getPhase() == Consts.OFFTURN || c.getPlayer().getPhase() == Consts.OUT) {
 				if (roundEnd()) {
 					endRound();
 				} else {

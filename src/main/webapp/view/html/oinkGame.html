@@ -462,6 +462,9 @@ body {
 						<div ng-show="status == 1 && phase == -1">
 							<span>现在不是你的回合</span>
 						</div>
+						<div ng-show="status == 1 && phase == -2">
+							<span>你已出局，下一局游戏开始时你将复活</span>
+						</div>
 						<div ng-show="status == 1 && phase == 9">
 							<span>{{gamedata.targetedMsg}}</span>
 							<button ng-click="confirmTargeted()">确定</button>
@@ -517,7 +520,7 @@ body {
 				</td>
 				<td colspan='2' style="vertical-align: top;color:rgb(0,150,255);font-family:'yzgc'; font-size: 20px;
 					border-bottom: 2px solid black;background-color: rgba(0,0,0,0.6); padding-bottom: 20px;">
-					<div>第 {{gamedata.round}} 轮</div>
+					<div>第 {{gamedata.round}} 局</div>
 					<div>牌堆数量： {{gamedata.deckSize}} </div>
 					<div>
 						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
@@ -536,8 +539,8 @@ body {
 		
 	</div>
 	<div ng-show="game==POPE && status == ENDGAME" style="width: 1080px; height: 1080px; position: relative;
-		background:url('/image/Oink/Pope/end_bg.png'); background-size:cover; font-family:'yzgc';color: white;">
-		<div style="position:absolute;left: 30px; top: 50px; border: 1px solid black; border-radius: 10px; background-color:rgba(0,0,0,0.7);
+		background:linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/Pope/end_bg.png'); background-size:cover; font-family:'yzgc';color: white;">
+		<div style="position:absolute;left: 30px; top: 50px;
 			padding:20px">
 			<h1>游戏结束</h1>
 			<table style="font-size: 20px;">

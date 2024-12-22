@@ -15,6 +15,7 @@ public class Consts {
 	public static final int WAITING = 8;
 	public static final int TARGETED = 9;
 	public static final int OFFTURN = -1;
+	public static final int OUT = -2;
 	
 	// Card Types
 	public static final int CTYPE_NONE = 0;

@@ -209,7 +209,7 @@ public class PopePlayer {
 	
 	public void inactivate() {
 		this.active = false;
-		this.phase = Consts.OFFTURN;
+		this.phase = Consts.OUT;
 	}
 	
 	public void playCard(int x, int target) {

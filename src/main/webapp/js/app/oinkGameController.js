@@ -29,6 +29,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.chosenCard = -1;
 		$scope.chosenRoles = [0,0,0]
 		$scope.chosenPlayer = -1;
+		$scope.oldKey = 0
+		$scope.alive = true;
+		$scope.firstRefresh = true;
 		
 		$scope.round = -1;
 		
@@ -58,6 +61,26 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.bgm.src = bgmSrc
 				}
 				
+			} else if ($scope.game == $scope.POPE){
+				if ($scope.status == $scope.ENDGAME){
+					$scope.playWinLoseBGM(0);
+				} else {
+					if ($scope.round == 1){
+						bgmSrc = '/sound/Oink/pope1.mp3'
+						$scope.bgm.src = bgmSrc
+					} else if ($scope.bgm.src == '/sound/Oink/pope2.mp3'){
+						bgmSrc = '/sound/Oink/pope3.mp3'
+						$scope.bgm.src = bgmSrc
+					} else if ($scope.round > 9){
+						bgmSrc = '/sound/Oink/pope4.mp3'
+						$scope.bgm.src = bgmSrc
+					} else {
+						v = Math.floor(Math.random() * 2)+2;
+						bgmSrc = '/sound/Oink/pope' + v + '.mp3'
+						$scope.bgm.src = bgmSrc
+					}
+				}
+				
 			}
 			
 		}
@@ -81,6 +104,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			} else if ($scope.game == $scope.GROVE){
 				$scope.bgm.src = '/sound/Oink/lemon.mp3'
 				$scope.bgm.play();
+			} else if ($scope.game == $scope.POPE){
+				$scope.bgm.src = '/sound/Oink/flame.mp3'
+				$scope.bgm.play();
 			}
 			
 		}
@@ -99,6 +125,18 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.playMsgSE = function(){
 			var audio = new Audio( '/sound/Oink/msg.mp3')
+			audio.play();
+		}
+		
+		$scope.playPopeReceiveKeySE = function(){
+			var audio = new Audio( '/sound/Oink/pope5.mp3')
+			audio.play();
+		}
+		
+		$scope.playDownSE = function(){
+			v = Math.floor(Math.random() * 2)+6;
+			bgmSrc = '/sound/Oink/pope' + v + '.mp3'
+			var audio = new Audio(bgmSrc)
 			audio.play();
 		}
 	
@@ -412,6 +450,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.clickPlayer = function(i){
+			$scope.playClickSE();
 			cardType = $scope.hand[$scope.chosenCard].type
 			
 			if (cardType == 1|| cardType == 2){
@@ -424,6 +463,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.confirmTargeted = function(){
+			$scope.playClickSE();
 			if ($scope.phase == 9){
 				$http.put("/oink/pope/confirmtargeted").then(function(response){
 					ws.send("refresh");
@@ -432,6 +472,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.popeResolve = function(x){
+			$scope.playClickSE();
 			var data = {"val": x}
 			$http({url: "/oink/pope/resolve", method: "PUT", params: data}).then(function(response){
 				ws.send("refresh");
@@ -522,12 +563,26 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						adjustLogs("log-zone-grove")
 					});
 				} else if ($scope.game == $scope.POPE){
+					var oldPhase = $scope.phase
 					$scope.gamedata = response.data.pope
 					$scope.phase = $scope.gamedata.phase
 					$scope.hand = $scope.gamedata.hand;
 					$scope.players = $scope.gamedata.players
 					$scope.myIndex = $scope.gamedata.myIndex
 					$scope.round = $scope.gamedata.round;
+					if ($scope.phase != -1 && oldPhase == -1){
+						$scope.playMsgSE();
+					}
+					if ($scope.oldKey<$scope.players[$scope.myIndex].numKey && $scope.firstRefresh == false){
+						$scope.playPopeReceiveKeySE()
+					}
+					$scope.oldKey = $scope.players[$scope.myIndex].numKey;
+					
+					if ($scope.alive && $scope.players[$scope.myIndex].active == false  && $scope.firstRefresh == false){
+						$scope.playDownSE()
+					}
+					$scope.alive = $scope.players[$scope.myIndex].active
+					
 					setPlayerPlayStyle()
 					//alert($scope.status)
 					//alert($scope.ENDGAME)
@@ -552,10 +607,14 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				
 				
-				if ($scope.status == $scope.ENDGAME && $scope.status != oldStatus){
-					$scope.playWinLoseBGM($scope.gamedata.myRanking)
+				if ($scope.status == $scope.ENDGAME){
+					if ($scope.firstRefresh == true || $scope.status != oldStatus){
+						$scope.playWinLoseBGM($scope.gamedata.myRanking)
+					}
+					
 				}
 				
+				$scope.firstRefresh = false;
 			});
 		}
 		
