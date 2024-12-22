@@ -341,14 +341,14 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.playerBgColorPope = function(i){
-			var ans = {"background-color": "lightgrey"};
+			var ans = {"background-color": "rgba(211,211,211,0.6)"};
 			if ($scope.players == null) return ans;
 			if (i<$scope.players.length){
 				if ($scope.players[i].active == true){
-					if ($scope.players[i].protect == true){
-						ans["background-color"] = "DeepSkyBlue";
+					if (i == $scope.gamedata.curPlayer){
+						ans["background-color"] = "rgba(0,191,255,0.6)";
 					} else {
-						ans["background-color"] = "LightYellow";
+						ans["background-color"] = "rgba(255,255,224,0.6)";
 					}
 					
 				}
