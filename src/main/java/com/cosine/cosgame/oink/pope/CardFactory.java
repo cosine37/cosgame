@@ -15,6 +15,12 @@ public class CardFactory {
 			c = new Pope();
 		} else if (x == 2) {
 			c = new Seer();
+		} else if (x == 7) {
+			c = new Mage();
+		} else if (x == 5) {
+			c = new Witch();
+		} else if (x == 3) {
+			c = new Knight();
 		}
 		return c;
 	}

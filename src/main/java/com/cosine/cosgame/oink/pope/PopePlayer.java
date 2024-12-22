@@ -177,6 +177,14 @@ public class PopePlayer {
 		}
 	}
 	
+	public void discard() {
+		if (hand.size() == 1) {
+			Card c = hand.remove(0);
+			play.add(c);
+			c.onDiscard();
+		}
+	}
+	
 	public void startRound() {
 		active = true;
 		phase = Consts.OFFTURN;
@@ -199,6 +207,11 @@ public class PopePlayer {
 		draw();
 	}
 	
+	public void inactivate() {
+		this.active = false;
+		this.phase = Consts.OFFTURN;
+	}
+	
 	public void playCard(int x, int target) {
 		if (x>=0 && x<hand.size()) {
 			Card c = hand.remove(x);
@@ -211,6 +224,10 @@ public class PopePlayer {
 	
 	public void addKey() {
 		numKey = numKey+1;
+	}
+	public void cleanResolve() {
+		resolveMsgs = new ArrayList<>();
+		resolveCards = new ArrayList<>();
 	}
 	public void addResolve(String s, Card c) {
 		addResolveMsg(s);

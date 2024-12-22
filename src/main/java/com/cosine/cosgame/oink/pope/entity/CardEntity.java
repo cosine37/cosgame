@@ -9,6 +9,7 @@ public class CardEntity {
 	String img;
 	String description;
 	String color;
+	boolean canPlay;
 	Map<String, String> avatarStyle;
 	Map<String, String> primaryColor;
 	Map<String, String> secondaryColor;
@@ -73,5 +74,11 @@ public class CardEntity {
 	}
 	public void setType(int type) {
 		this.type = type;
+	}
+	public boolean isCanPlay() {
+		return canPlay;
+	}
+	public void setCanPlay(boolean canPlay) {
+		this.canPlay = canPlay;
 	}
 }

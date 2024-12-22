@@ -27,6 +27,7 @@ public class Card {
 		entity.setImg(img);
 		entity.setDescription(desc);
 		entity.setColor(color);
+		entity.setCanPlay(canPlay());
 		
 		Map<String, String> avatarStyle = new HashMap<>();
 		Map<String, String> primaryColor = new HashMap<>();

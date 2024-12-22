@@ -359,11 +359,15 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.showPlayCardButton = function(){
 			if ($scope.chosenCard<0){
 				return false;
-			} else {
+			} else if ($scope.hand[$scope.chosenCard].canPlay == false){
+				return false;
+			}
+			
+			else {
 				cardType = $scope.hand[$scope.chosenCard].type
 				if (cardType == 0){
 					return true;
-				} else if (cardType == 1){
+				} else if (cardType == 1 || cardType == 2){
 					if ($scope.chosenPlayer<0){
 						return false;
 					} else {
@@ -382,14 +386,17 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				return false;
 			} else if ($scope.players[i].active == false){
 				return false;
-			} else {
+			} else if ($scope.hand[$scope.chosenCard].canPlay == false){
+				return false;
+			}
+			
+			else {
 				cardType = $scope.hand[$scope.chosenCard].type
 				
 				if (cardType == 0){
 					return false;
-				} else if (cardType == 1){
-					//alert(cardType)
-					if (i==$scope.gamedata.myIndex){
+				} else if (cardType == 1 || cardType == 2){
+					if (i==$scope.gamedata.myIndex && cardType == 1){
 						return false;
 					} else {
 						
@@ -407,7 +414,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.clickPlayer = function(i){
 			cardType = $scope.hand[$scope.chosenCard].type
 			
-			if (cardType == 1){
+			if (cardType == 1|| cardType == 2){
 				if ($scope.chosenPlayer == i){
 					$scope.chosenPlayer = -1
 				} else {

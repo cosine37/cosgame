@@ -23,6 +23,7 @@ public class PopeGame {
 	List<Card> deck;
 	List<Integer> rankIndex;
 	Logger logger;
+	Card setAside;
 	
 	Board board;
 	
@@ -47,6 +48,12 @@ public class PopeGame {
 		doc.append("logs",logger.getLogs());
 		doc.append("endRoundMsg", endRoundMsg);
 		doc.append("rankIndex", rankIndex);
+		if (setAside != null) {
+			doc.append("setAside", setAside.getNum());
+		} else {
+			doc.append("setAside", -1);
+		}
+		
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -75,6 +82,8 @@ public class PopeGame {
 		if (logs == null) logger = new Logger(); else logger = new Logger(logs);
 		endRoundMsg = doc.getString("endRoundMsg");
 		rankIndex = (List<Integer>) doc.get("rankIndex");
+		int si = doc.getInteger("setAside", -1);
+		setAside = CardFactory.makeCard(si);
 	}
 	
 	public PopeEntity toPopeEntity(String username){
@@ -162,12 +171,15 @@ public class PopeGame {
 		deck = AllRes.allBaseCards();
 		endRoundMsg = "";
 		
-		// Step 2: initialize players
+		// Step 2: set aside top cards
+		setAside = deck.remove(0);
+		
+		// Step 3: initialize players
 		for (i=0;i<players.size();i++) {
 			players.get(i).startRound();
 		}
 		
-		// Step 3: curPlayer handle
+		// Step 4: curPlayer handle
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
 	}
@@ -430,6 +442,11 @@ public class PopeGame {
 		updateDB("logs", logger.getLogs());
 		updateDB("endRoundMsg", endRoundMsg);
 		updateDB("rankIndex", rankIndex);
+		if (setAside != null) {
+			updateDB("setAside", setAside.getNum());
+		} else {
+			updateDB("setAside", -1);
+		}
 		int i;
 		List<Integer> deckList = new ArrayList<>();
 		for (i=0;i<deck.size();i++){
@@ -523,5 +540,11 @@ public class PopeGame {
 	}
 	public void setRankIndex(List<Integer> rankIndex) {
 		this.rankIndex = rankIndex;
+	}
+	public Card getSetAside() {
+		return setAside;
+	}
+	public void setSetAside(Card setAside) {
+		this.setAside = setAside;
 	}
 }

@@ -19,4 +19,5 @@ public class Consts {
 	// Card Types
 	public static final int CTYPE_NONE = 0;
 	public static final int CTYPE_TARGET = 1;
+	public static final int CTYPE_TARGETSELF = 2;
 }

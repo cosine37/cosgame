@@ -14,13 +14,12 @@ public class Pope extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
-		player.setActive(false);
-		player.setPhase(Consts.OFFTURN);
+		player.inactivate();
 		
 	}
 	
 	public void onDiscard() {
 		super.onDiscard();
-		player.setActive(false);
+		player.inactivate();
 	}
 }

@@ -4,14 +4,14 @@ import com.cosine.cosgame.oink.pope.Card;
 import com.cosine.cosgame.oink.pope.Consts;
 import com.cosine.cosgame.oink.pope.PopePlayer;
 
-public class Seer extends Card{
-	public Seer() {
+public class Mage extends Card{
+	public Mage() {
 		super();
-		this.num = 2;
+		this.num = 7;
 		type = Consts.CTYPE_TARGET;
-		this.name = "预言家";
-		this.img = "Seer";
-		this.desc = "查看一名其他在场玩家的手牌。";
+		this.name = "法师";
+		this.img = "Mage";
+		this.desc = "与一名其他在场玩家交换手牌。";
 	}
 	
 	public void onPlay(int target) {
@@ -23,9 +23,7 @@ public class Seer extends Card{
 			} else {
 				String s = "正等待" + player.getName() + "的确认。";
 				player.setTargetedMsg(s);
-				Card h = tp.getHand().get(0);
-				player.addResolve("预言家查看" + tp.getName() + "的手牌", h);
-				s = player.getName() + "对你打出了" + this.name + "，并查看了你的手牌。";
+				s = player.getName() + "对你打出了" + this.name + "，其手牌将会与你的手牌交换。";
 				tp.setTargetedMsg(s);
 				tp.setPhase(Consts.TARGETED);
 				player.setPhase(Consts.WAITING);
@@ -38,11 +36,23 @@ public class Seer extends Card{
 		int target = player.getTarget();
 		if (target != -1) {
 			PopePlayer tp = game.getPlayers().get(target);
+			Card c1 = tp.getHand().get(0);
+			Card c2 = player.getHand().get(0);
+			tp.getHand().set(0, c2);
+			player.getHand().set(0, c1);
 			player.setPhase(Consts.OFFTURN);
 			tp.setPhase(Consts.OFFTURN);
 		}
 	}
 	
-	
+	public boolean canPlay() {
+		if (player != null) {
+			for (int i=0;i<player.getHand().size();i++) {
+				Card c = player.getHand().get(i);
+				if (c.getNum() == 8) return false;
+			}
+		}
+		return true;
+	}
 	
 }
