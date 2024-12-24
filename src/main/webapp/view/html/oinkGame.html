@@ -529,7 +529,10 @@ body {
 					
 				</td>
 				<td style="vertical-align: top;border: 2px solid black;background-color: rgba(0,0,0,0.6); padding-bottom: 20px;">
-					logs
+					<div id="log-zone-pope" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height: 300px;">
+						<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
+					</div>
+					
 				</td>
 			</tr>
 			

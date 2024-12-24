@@ -69,6 +69,36 @@ public class Card {
 		
 	}
 	
+	public void log(String s) {
+		if (game != null) {
+			game.getLogger().log(s);
+		}
+	}
+	
+	public void logPlay() {
+		if (game != null) {
+			game.getLogger().logPlayCard(player, this);
+		}
+	}
+	
+	public void logPlay(int target) {
+		if (target == -1) {
+			logPlay();
+		} else {
+			if (game != null) {
+				PopePlayer tp = game.getPlayers().get(target);
+				game.getLogger().logPlayCard(player, tp, this);
+			}
+		}
+		
+	}
+	
+	public void logProtect(PopePlayer p) {
+		if (game != null) {
+			game.getLogger().logProtect(p);
+		}
+	}
+	
 	public boolean canPlay() {
 		return true;
 	}

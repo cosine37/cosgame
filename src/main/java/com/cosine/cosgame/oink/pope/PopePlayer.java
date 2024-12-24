@@ -181,6 +181,7 @@ public class PopePlayer {
 		if (hand.size() == 1) {
 			Card c = hand.remove(0);
 			play.add(c);
+			game.getLogger().log(this.getName() + "弃置了" + c.getName());
 			c.onDiscard();
 		}
 	}
@@ -205,11 +206,15 @@ public class PopePlayer {
 		justPlayed = null;
 		target = -1;
 		draw();
+		
+		// Step 3: log
+		game.getLogger().logStartTurn(this);
 	}
 	
 	public void inactivate() {
 		this.active = false;
 		this.phase = Consts.OUT;
+		game.getLogger().logInactive(this);
 	}
 	
 	public void playCard(int x, int target) {

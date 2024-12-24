@@ -584,6 +584,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.alive = $scope.players[$scope.myIndex].active
 					
 					setPlayerPlayStyle()
+					
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs("log-zone-pope")
+					});
 					//alert($scope.status)
 					//alert($scope.ENDGAME)
 				}

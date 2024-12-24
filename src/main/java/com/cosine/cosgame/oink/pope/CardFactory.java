@@ -26,4 +26,9 @@ public class CardFactory {
 		}
 		return c;
 	}
+	
+	public static String getCardName(int x) {
+		Card tc = makeCard(x);
+		return tc.getName();
+	}
 }

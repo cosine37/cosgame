@@ -16,12 +16,14 @@ public class Seer extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
+		logPlay(target);
 		if (target != -1) {
 			PopePlayer tp = game.getPlayers().get(target);
 			if (tp.isProtect()) {
+				logProtect(tp);
 				player.setPhase(Consts.OFFTURN);
 			} else {
-				String s = "正等待" + player.getName() + "的确认。";
+				String s = "正等待" + tp.getName() + "的确认。";
 				player.setTargetedMsg(s);
 				Card h = tp.getHand().get(0);
 				player.addResolve("预言家查看" + tp.getName() + "的手牌", h);
@@ -38,6 +40,7 @@ public class Seer extends Card{
 		int target = player.getTarget();
 		if (target != -1) {
 			PopePlayer tp = game.getPlayers().get(target);
+			log(tp.getName() + "的手牌被" + player.getName() + "查看了");
 			player.setPhase(Consts.OFFTURN);
 			tp.setPhase(Consts.OFFTURN);
 		}

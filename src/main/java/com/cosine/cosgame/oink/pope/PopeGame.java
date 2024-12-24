@@ -165,11 +165,12 @@ public class PopeGame {
 	
 	public void startRound() {
 		int i;
-		// Step 1: status, round # and initialize deck
+		// Step 1: status, round # and initialize deck, and log round start
 		board.setStatus(Consts.INGAME);
 		round++;
 		deck = AllRes.allBaseCards();
 		endRoundMsg = "";
+		logger.logRoundStart(round);
 		
 		// Step 2: set aside top cards
 		setAside = deck.remove(0);
@@ -182,6 +183,8 @@ public class PopeGame {
 		// Step 4: curPlayer handle
 		curPlayer = firstPlayer;
 		players.get(curPlayer).startTurn();
+		
+		
 	}
 	
 	public boolean roundEnd() {
@@ -227,6 +230,8 @@ public class PopeGame {
 		}
 		
 		// Step 4: set end game msg
+		logger.logRoundEnd(round);
+		
 		endRoundMsg = "本轮获胜者是";
 		for (i=0;i<winnerIds.size();i++) {
 			if (i == 0) {
@@ -235,6 +240,8 @@ public class PopeGame {
 				endRoundMsg = endRoundMsg + "和 " + players.get(winnerIds.get(i)).getName() + " ";
 			}
 		}
+		logger.log(endRoundMsg);
+		logger.logRoundEndDivider();
 		
 		// Step 5: decide first player next round
 		Random rand = new Random();
@@ -340,6 +347,7 @@ public class PopeGame {
 				for (int i=0;i<players.size();i++) {
 					players.get(i).setJustPlayed(null);
 				}
+				//logger.logPlayCard(p, p.getHand().get(cardIndex));
 				p.playCard(cardIndex, target);
 				
 				// Step 2: if nothing needs to be resolved, end turn and potentially end round
@@ -570,5 +578,11 @@ public class PopeGame {
 	}
 	public void setSetAside(Card setAside) {
 		this.setAside = setAside;
+	}
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 }

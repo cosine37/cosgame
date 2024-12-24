@@ -16,12 +16,14 @@ public class Knight extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
+		logPlay(target);
 		if (target != -1) {
 			PopePlayer tp = game.getPlayers().get(target);
 			if (tp.isProtect()) {
+				logProtect(tp);
 				player.setPhase(Consts.OFFTURN);
 			} else {
-				String s = "你与" + tp.getName() + "手牌声望更小的玩家将出局，正等待" + player.getName() + "的确认。";
+				String s = "你与" + tp.getName() + "手牌声望更小的玩家将出局，正等待" + tp.getName() + "的确认。";
 				player.setTargetedMsg(s);
 				s = player.getName() + "对你打出了" + this.name + "，手牌声望更小的玩家将出局。";
 				tp.setTargetedMsg(s);
@@ -44,9 +46,13 @@ public class Knight extends Card{
 			Card c1 = tp.getHand().get(0);
 			Card c2 = player.getHand().get(0);
 			if (c1.getNum() > c2.getNum()) {
+				log("但是，" + player.getName() + "反而被" + tp.getName() + "击败，这就尴尬了。。。");
 				player.inactivate();
 			} else if (c2.getNum() > c1.getNum()) {
+				log(player.getName() + "在决斗中击败了" + tp.getName());
 				tp.inactivate();
+			} else {
+				log("两人打得难解难分，不分胜负");
 			}
 			player.setPhase(Consts.OFFTURN);
 			tp.setPhase(Consts.OFFTURN);

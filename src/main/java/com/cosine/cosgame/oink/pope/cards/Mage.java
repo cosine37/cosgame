@@ -16,12 +16,14 @@ public class Mage extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
+		logPlay(target);
 		if (target != -1) {
 			PopePlayer tp = game.getPlayers().get(target);
 			if (tp.isProtect()) {
+				logProtect(tp);
 				player.setPhase(Consts.OFFTURN);
 			} else {
-				String s = "正等待" + player.getName() + "的确认。";
+				String s = "正等待" + tp.getName() + "的确认。";
 				player.setTargetedMsg(s);
 				s = player.getName() + "对你打出了" + this.name + "，其手牌将会与你的手牌交换。";
 				tp.setTargetedMsg(s);
@@ -40,6 +42,7 @@ public class Mage extends Card{
 			Card c2 = player.getHand().get(0);
 			tp.getHand().set(0, c2);
 			player.getHand().set(0, c1);
+			log(player.getName() + "和" + tp.getName() + "交换了各自的手牌");
 			player.setPhase(Consts.OFFTURN);
 			tp.setPhase(Consts.OFFTURN);
 		}

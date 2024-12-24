@@ -14,6 +14,8 @@ public class Mayor extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
+		logPlay();
+		log("无事发生。。。");
 		player.setPhase(Consts.OFFTURN);
 	}
 }

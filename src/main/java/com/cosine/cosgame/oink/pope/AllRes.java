@@ -12,12 +12,12 @@ public class AllRes {
 		List<Card> shuffled = new ArrayList<>();
 		
 		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(4));
-		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(8));
+		for (i=0;i<1;i++) cards.add(CardFactory.makeCard(8));
 		for (i=0;i<1;i++) cards.add(CardFactory.makeCard(9));
-		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(2));
-		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(7));
-		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(5));
-		for (i=0;i<3;i++) cards.add(CardFactory.makeCard(3));
+		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(2));
+		for (i=0;i<1;i++) cards.add(CardFactory.makeCard(7));
+		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(5));
+		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(3));
 		for (i=0;i<5;i++) cards.add(CardFactory.makeCard(1));
 		
 		Random rand = new Random();

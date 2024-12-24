@@ -14,12 +14,15 @@ public class Pope extends Card{
 	
 	public void onPlay(int target) {
 		super.onPlay(target);
+		logPlay();
+		log("纳尼？居然暴露了教宗！" + player.getName() + "不可饶恕！");
 		player.inactivate();
 		
 	}
 	
 	public void onDiscard() {
 		super.onDiscard();
+		log("纳尼？居然暴露了教宗！" + player.getName() + "不可饶恕！");
 		player.inactivate();
 	}
 }
