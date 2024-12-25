@@ -12,6 +12,7 @@ public class Knight extends Card{
 		this.name = "骑士";
 		this.img = "Knight";
 		this.desc = "与一名其他在场玩家秘密比较手牌声望，声望小的玩家出局，相同则无人出局。";
+		this.color = "OrangeRed";
 	}
 	
 	public void onPlay(int target) {

@@ -113,6 +113,12 @@ public class Card {
 			ans = "PaleGreen";
 		} else if (color.contentEquals("goldenrod")) {
 			ans = "PaleGoldenRod";
+		} else if (color.contentEquals("DarkCyan")) {
+			ans = "LightCyan";
+		} else if (color.contentEquals("Purple")) {
+			ans = "Plum";
+		} else if (color.contentEquals("OrangeRed")) {
+			ans = "LightSalmon";
 		}
 		return ans;
 	}

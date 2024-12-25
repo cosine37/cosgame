@@ -12,6 +12,7 @@ public class Witch extends Card{
 		this.name = "女巫";
 		this.img = "Witch";
 		this.desc = "指定一名在场玩家（可以是自己），该玩家弃置手牌并抽一张牌。";
+		this.color = "Purple";
 	}
 	
 	public void onPlay(int target) {

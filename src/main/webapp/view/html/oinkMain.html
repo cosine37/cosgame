@@ -48,11 +48,11 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#groverulesstab" ng-click="hideTablesTab()">狗头侦探规则</a>
 				    </li>
-				    <!-- 
+
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#poperulesstab" ng-click="hideTablesTab()">保卫教宗规则</a>
 				    </li>
-				     -->
+
 				  </ul>
 			</div>
 			<div class="tab-content">
@@ -297,8 +297,80 @@
 				</div>
 				<div id="poperulesstab" class="content container tab-pane fade">
 					<h2><b>保卫教宗规则</b></h2>
-					<div ng-repeat="c in popeCards track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect">
-					</div>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 你是雪原中的一位酒店老板。这片雪原可不太平，因为今晚是月圆之夜，有狼人出没。近些日子，教宗会经过这一带雪原并且会借宿此地，
+								有可能就是你的酒店。除了教宗，还有其他客人也会借宿，甚至包括狼人。但你的旅店很小，只能同时接待两位旅客并且只能最终留下一名。如果你要接纳新的旅客，就不得不将已有的旅客赶走。作为报酬（报仇），
+								被你赶走的旅客会给你一些惊喜。而你若是赶走不应该赶走的旅客，或是被狼人袭击，也会让你的酒店关门大吉。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 今晚结束后，教会会根据你接纳的旅客派发奖励。最终留下过夜的旅客声望最高的酒店将会获得教会派发的灵杖，虽然并没有什么法力。
+								对于一个完全不信教的唯物主义者，教宗的死活与你无关，灵杖的象征含义你也不关心，但是灵杖能卖钱啊！尽可能接纳德高望重的客人，甚至利用狼人去袭击其他酒店吧，一切都值得！</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标准模式支持2~4人，进阶模式支持2~6人。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容与流程</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下为本游戏的所有卡牌。其中狼人有5张， 法师、村长与教宗各一张，其余牌各2张。左上角的数字为该牌的声望。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div ng-repeat="c in popeCards track by $index" ng-include="'/view/html/PopeCard.html'" class="card card-size card-size-hand card noselect">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏会进行若干轮。每轮开始时将所有牌洗混并暗弃一张牌（但这张牌不是完全没用，请看到最后），给每名玩家发一张牌。
+								玩家将轮流进行回合。在各自的回合，每名玩家会抽一张牌，打出一张牌并执行打出牌的效果。当一轮游戏只剩一名玩家在场或是牌堆抽完，当前轮次结束。所有<b>在场</b>玩家比较手牌的声望。
+								声望最高的玩家获得一个法杖。若有并列最高，则所有并列最高的玩家获得一个灵杖。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏结束</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>当一名玩家获得等同于游戏结束条件的灵杖时，游戏结束。灵杖数量与游戏结束的条件如下：</p>
+								<table>
+									<tr>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;"><b>人数</b></td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">2</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">3</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">4</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">5</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">6</td>
+									</tr>
+									<tr>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;"><b>权杖</b></td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">6</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">6</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">5</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">4</td>
+										<td style="border: 1px solid; padding-left: 5px; padding-right: 5px;">3</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					
 				</div>
 			</div>
 		</div>

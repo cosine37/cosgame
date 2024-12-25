@@ -12,6 +12,7 @@ public class Seer extends Card{
 		this.name = "预言家";
 		this.img = "Seer";
 		this.desc = "查看一名其他在场玩家的手牌。";
+		this.color = "DarkCyan";
 	}
 	
 	public void onPlay(int target) {

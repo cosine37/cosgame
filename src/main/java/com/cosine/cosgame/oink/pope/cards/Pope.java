@@ -10,6 +10,7 @@ public class Pope extends Card{
 		this.name = "教宗";
 		this.img = "Pope";
 		this.desc = "若你打出或弃置该牌，你出局。";
+		this.color = "goldenrod";
 	}
 	
 	public void onPlay(int target) {

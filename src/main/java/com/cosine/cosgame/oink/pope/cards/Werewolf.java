@@ -13,6 +13,7 @@ public class Werewolf extends Card{
 		this.name = "狼人";
 		this.img = "Werewolf";
 		this.desc = "猜一名其他在场玩家的手牌（不能猜狼人），若猜中则该玩家出局。";
+		this.color = "rgb(126,33,18)";
 	}
 	
 	public void onPlay(int target) {

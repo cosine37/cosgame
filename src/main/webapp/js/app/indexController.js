@@ -83,4 +83,22 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		$scope.startupsCards.push(c);
+		
+		$scope.popeCards = []
+		c9 = {
+			"num": 9,
+			"name": "教宗",
+			"description": "若你打出或弃置该牌，你出局。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Pope.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "goldenrod"
+			},
+			"secondaryColor": {
+				"background-color": "PaleGoldenRod"
+			}
+		}
+		$scope.popeCards.push(c9);
 }]);

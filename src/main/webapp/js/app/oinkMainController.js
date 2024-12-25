@@ -221,7 +221,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		$scope.groveCards3.push(c);
 		
 		$scope.popeCards = []
-		c = {
+		c9 = {
 			"num": 9,
 			"name": "教宗",
 			"description": "若你打出或弃置该牌，你出局。",
@@ -236,7 +236,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 				"background-color": "PaleGoldenRod"
 			}
 		}
-		c2 = {
+		c8 = {
 			"num": 8,
 			"name": "村长",
 			"description": "无效果。若你的手牌中有女巫或法师，你必须打出这张村长。",
@@ -251,7 +251,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 				"background-color": "PaleGreen"
 			}
 		}
-		c3 = {
+		c7 = {
 			"num": 7,
 			"name": "法师",
 			"description": "与任意一名玩家交换手牌。",
@@ -260,13 +260,13 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 				"background-size" : 'cover'
 			},
 			"primaryColor": {
-				"background-color": "rgb(0,150,255)"
+				"background-color": "Purple"
 			},
 			"secondaryColor": {
-				"background-color": "PaleTurquoise"
+				"background-color": "Plum"
 			}
 		}
-		c4 = {
+		c1 = {
 			"num": 1,
 			"name": "狼人",
 			"description": "猜另一名玩家的手牌(不能猜狼人)，若猜中则该玩家出局。",
@@ -281,9 +281,78 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 				"background-color": "Wheat"
 			}
 		}
-		$scope.popeCards.push(c);
+		
+		c2 = {
+			"num": 2,
+			"name": "预言家",
+			"description": "查看一名其他在场玩家的手牌。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Seer.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "DarkCyan"
+			},
+			"secondaryColor": {
+				"background-color": "LightCyan"
+			}
+		}
+		
+		c3 = {
+			"num": 3,
+			"name": "骑士",
+			"description": "与一名其他在场玩家秘密比较手牌声望，声望小的玩家出局，相同则无人出局。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Knight.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "OrangeRed"
+			},
+			"secondaryColor": {
+				"background-color": "LightSalmon"
+			}
+		}
+		
+		c4 = {
+			"num": 4,
+			"name": "守卫",
+			"description": "到下一回合开始前，所有牌对你无效。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Guard.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "rgb(0,150,255)"
+			},
+			"secondaryColor": {
+				"background-color": "PaleTurquoise"
+			}
+		}
+		
+		c5 = {
+			"num": 5,
+			"name": "女巫",
+			"description": "指定一名在场玩家（可以是自己），该玩家弃置手牌并抽一张牌。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Witch.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "Purple"
+			},
+			"secondaryColor": {
+				"background-color": "Plum"
+			}
+		}
+		
+		$scope.popeCards.push(c1);
 		$scope.popeCards.push(c2);
 		$scope.popeCards.push(c3);
 		$scope.popeCards.push(c4);
+		$scope.popeCards.push(c5);
+		$scope.popeCards.push(c7);
+		$scope.popeCards.push(c8);
+		$scope.popeCards.push(c9);
 	
 }]);

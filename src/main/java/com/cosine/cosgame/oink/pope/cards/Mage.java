@@ -12,6 +12,7 @@ public class Mage extends Card{
 		this.name = "法师";
 		this.img = "Mage";
 		this.desc = "与一名其他在场玩家交换手牌。";
+		this.color = "Purple";
 	}
 	
 	public void onPlay(int target) {

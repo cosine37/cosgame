@@ -191,6 +191,8 @@ public class PopePlayer {
 		phase = Consts.OFFTURN;
 		hand = new ArrayList<>();
 		play = new ArrayList<>();
+		resolveMsgs = new ArrayList<>();
+		resolveCards = new ArrayList<>();
 		justPlayed = null;
 		draw();
 	}
