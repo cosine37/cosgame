@@ -27,13 +27,26 @@ public class Logger {
 		logs.add(s);
 	}
 	
-	public void logView(GrovePlayer p) {
-		String s = p.getName() + " 调查了两名嫌疑人";
+	public void logView(GrovePlayer p, List<Integer> viewed) {
+		String s = p.getName() + " 调查了 ";
+		boolean flag = false;
+		for (int i=0;i<viewed.size();i++) {
+			if (viewed.get(i) == 1) {
+				if (flag) {
+					s = s+" 和 ";
+				}
+				char ch = (char) ('A' + i);
+				s = s+"嫌疑人"+ch;
+				flag = true;
+			}
+		}
 		log(s);
 	}
 	
-	public void logAccuse(GrovePlayer p) {
-		String s = p.getName() + " 指控了一名嫌疑人";
+	public void logAccuse(GrovePlayer p, int index) {
+		String s = p.getName() + " 指控了 嫌疑人";
+		char ch = (char) ('A' + index);
+		s = s + ch;
 		log(s);
 	}
 	
@@ -48,7 +61,7 @@ public class Logger {
 	}
 	
 	public void logDoge(GrovePlayer p, Role r, int x) {
-		String s = p.getName() + " 最终指控了无辜的 " + r.getName() + "，因此获得了" + Integer.toString(x) + "个狗头标记。";
+		String s =  "无辜的 " + r.getName() + " 最终被 " + p.getName() + " 愿望，因此" + p.getName() + "获得了" + Integer.toString(x) + "个狗头标记";
 		log(s);
 	}
 	

@@ -219,14 +219,13 @@ body {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="vertical-align:top; height:550px;">
-					<div style="color: white;font-family: 'yzgc'; font-size: 30px; padding-left: 210px;">
-						嫌疑人
-					</div>
-					
+				<td colspan="2" style="vertical-align:top; height:550px;">
 					<table>
 						<tr>
 							<td ng-repeat="c in gamedata.suspects track by $index" style="vertical-align:top;">
+								<div style="color: white;font-family: 'yzgc'; font-size: 30px; padding-left: 32px;" ng-show="$index == 0">嫌疑人A</div>
+								<div style="color: white;font-family: 'yzgc'; font-size: 30px; padding-left: 32px;" ng-show="$index == 1">嫌疑人B</div>
+								<div style="color: white;font-family: 'yzgc'; font-size: 30px; padding-left: 32px;" ng-show="$index == 2">嫌疑人C</div>
 								<div style="position: relative">
 									<div ng-include="'/view/html/GroveCard.html'" class="card card-size card-size-discard noselect"
 										ng-click="clickCard($index)">
@@ -253,6 +252,28 @@ body {
 						</tr>
 					</table>
 				</td>
+				<td style="color: white;font-family: 'yzgc';vertical-align: top">
+					<div style="margin-top: 10px">
+						<button ng-show="showRuleGrove == false" ng-click="showRuleGrove=true">显示规则</button>
+						<button ng-show="showRuleGrove == true" ng-click="showRuleGrove=false">隐藏规则</button>
+					</div>
+					<div ng-show="showRuleGrove">
+						<div style="height: 10px"></div>
+						<div ng-show="players.length <= 2">本局游戏一共有6名角色，嫌疑值分别为3~8。</div>
+						<div ng-show="players.length == 3">本局游戏一共有7名角色，嫌疑值分别为2~8。</div>
+						<div ng-show="players.length == 4">本局游戏一共有8名角色，包括嫌疑值分别为2~8的角色和一名警探。</div>
+						<div ng-show="players.length >= 5">本局游戏一共有9名角色，包括嫌疑值分别为2~8的角色和两名警探。</div>
+						<div style="height: 20px"></div>
+						<div>面杀每轮游戏开始时，每名玩家会查看一名拥有不在场证明的角色，并将该角色传递给下家查看。为了简化流程，本游戏改为直接显示查看到的两名角色。</div>
+						<div style="height: 20px"></div>
+						<div>一般情况下，三名嫌疑人中，嫌疑值最高的角色是犯人。</div>
+						<div>若三名嫌疑人中有5号角色，则嫌疑人中嫌疑值最低的角色是犯人。</div>
+						<div ng-show="players.length > 3">警探不会是犯人。</div>
+						<div style="height: 20px"></div>
+						<div>揭开真相后，对于每个无辜嫌疑人，最后一个指控该嫌疑人的玩家将会获得等同于指控该嫌疑人玩家数量的狗头标记。不是最后一个指控该嫌疑人的玩家则不会获得狗头标记。</div>
+					</div>
+					
+				</td>
 				<td rowspan="2" colspan="2" style="vertical-align: top;border: 2px solid darkslategrey;background-color: rgb(25,25,25);">
 					<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height:820px;">
 						<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
@@ -270,11 +291,11 @@ body {
 								<span>正等待{{players[gamedata.curPlayer].name}}操作</span>
 							</div>
 							<div ng-show="phase == 1 && status == 1">
-								<span>请查看两名嫌疑人</span>
+								<span>请点击两张嫌疑人牌选择你要查看的嫌疑人，并点击确认</span>
 								<button ng-show="showSubmitSuspectButton()" ng-click="play()">查看</button>
 							</div>
 							<div ng-show="phase == 2 && status == 1">
-								<span>请指控一名嫌疑人</span>
+								<span>请点击一张嫌疑人牌指控一名嫌疑人，并点击确认</span>
 								<button ng-show="chosenCard != -1"  ng-click="play()">确认</button>
 							</div>
 							<div ng-show="status == 2 && gamedata.confirmed==false">
@@ -289,7 +310,7 @@ body {
 								<tr>
 									<td colspan="2" style="color: white;font-family: 'yzgc'; font-size: 30px; text-align: center">不在场证明</td>
 									<td rowspan="2" style="vertical-align: top; padding-left: 20px;">
-										<div style="color: white;font-family: 'yzgc'; margin-bottom: 20px;">
+										<div style="color: white;font-family: 'yzgc';margin-bottom: 20px;">
 											轮次： {{gamedata.round}} (游戏最多进行8轮)
 										</div>
 										<div>
@@ -361,7 +382,7 @@ body {
 					<td style="width: 400px;">狗头标记</td>
 				</tr>
 				<tr ng-repeat="i in gamedata.rankIndex track by $index">
-					<td>{{i+1}}</td>
+					<td>{{$index+1}}</td>
 					<td>{{players[i].name}}</td>
 					<td style="padding-left: 20px;height: 42px">
 						<div style="float:left;" ng-repeat="l in players[i].liars track by $index">
@@ -373,6 +394,12 @@ body {
 			</table>
 		</div>
 		<div style="height:30px"></div>
+		<div style="margin-left:30px;">
+			<div style="float:left">*狗头标记少的玩家排名靠前。若数量相等，则因自己指控而获得的狗头标记(</div>
+			<div style="float:left;height: 20px; width:20px; background:url('/image/Oink/Grove/doge1.png'); background-size:cover;"></div>
+			<div>)少的玩家排名靠前。若依然相等，则最后一轮行动顺序靠前的玩家排名靠前。</div>
+			<div style="clear:both;"></div>
+		</div>
 		<div style="padding-top: 20px; margin-left: 30px;">
 			<h2>你获得了</h2>
 			<div ng-repeat="rewardMsg in gamedata.endGameRewards">{{rewardMsg}}</div>

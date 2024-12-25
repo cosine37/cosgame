@@ -32,6 +32,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.oldKey = 0
 		$scope.alive = true;
 		$scope.firstRefresh = true;
+		$scope.showRuleGrove = false;
 		
 		$scope.round = -1;
 		

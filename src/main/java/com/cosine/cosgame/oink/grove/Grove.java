@@ -234,7 +234,7 @@ public class Grove {
 		if (p != null && p.getPhase() == Consts.VIEWCARDS) {
 			p.setViewed(viewed);
 			p.setPhase(Consts.ACCUSECARD);
-			logger.logView(p);
+			logger.logView(p, viewed);
 		}
 	}
 	
@@ -246,7 +246,7 @@ public class Grove {
 			p.setAccused(index);
 			lastAccused = index;
 			p.setPhase(Consts.OFFTURN);
-			logger.logAccuse(p);
+			logger.logAccuse(p, index);
 			
 			// change next player status
 			curPlayer = (curPlayer+1) % players.size();
@@ -266,7 +266,7 @@ public class Grove {
 				}
 				players.get(curPlayer).setViewed(viewed);
 				logger.logStartTurn(players.get(curPlayer));
-				logger.logView(players.get(curPlayer));
+				logger.logView(players.get(curPlayer),viewed);
 			}
 		}
 	}
