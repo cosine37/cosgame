@@ -119,6 +119,10 @@ public class Card {
 			ans = "Plum";
 		} else if (color.contentEquals("OrangeRed")) {
 			ans = "LightSalmon";
+		} else if (color.contentEquals("DarkSlateGrey")) {
+			ans = "LightGrey";
+		} else if (color.contentEquals("Magenta")) {
+			ans = "LightPink";
 		}
 		return ans;
 	}

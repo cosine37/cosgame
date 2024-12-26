@@ -48,6 +48,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.CHANGESIGNATURE = 2;
 		
 		$scope.chosenAvatar = -1;
+		$scope.useDeluxe = true;
 		
 		$scope.bgm = new Audio();
 		randomizeBGM = function(){
@@ -136,6 +137,10 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.playClickSE()
 			$scope.settings[0] = $scope.gameMode;
 			$scope.settings[1] = $scope.firstPlayer;
+			$scope.settings[2] = 0;
+			if ($scope.useDeluxe == true && $scope.gameMode == $scope.POPE){
+				$scope.settings[2] = 1;
+			}
 			var data = {"settings" : $scope.settings}
 			$http({url: "/oink/startgame", method: "POST", params: data}).then(function(response){
 				ws.send("start");

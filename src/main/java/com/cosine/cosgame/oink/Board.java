@@ -153,7 +153,7 @@ public class Board {
 			} else if (this.game == Consts.GROVE) {
 				grove.startGameUDB();
 			} else if (this.game == Consts.POPE) {
-				pope.startGameUDB();
+				pope.startGameUDB(settings);
 			}
 		}
 	}

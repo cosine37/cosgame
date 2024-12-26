@@ -346,11 +346,44 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			}
 		}
 		
+		c0 = {
+			"num": 0,
+			"name": "盗贼",
+			"description": "本轮游戏结束时，若你是唯一在场打出或弃置盗贼的玩家，你获得一个灵杖。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Thief.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "DarkSlateGrey"
+			},
+			"secondaryColor": {
+				"background-color": "LightGrey"
+			}
+		}
+		
+		c6 = {
+			"num": 6,
+			"name": "学者",
+			"description": "抽3张牌（不足则全抽），将你的手牌放回至牌堆直至你只有一张手牌。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/Pope/Scholar.png)',
+				"background-size" : 'cover'
+			},
+			"primaryColor": {
+				"background-color": "Magenta"
+			},
+			"secondaryColor": {
+				"background-color": "LightPink"
+			}
+		}
+		$scope.popeCards.push(c0);
 		$scope.popeCards.push(c1);
 		$scope.popeCards.push(c2);
 		$scope.popeCards.push(c3);
 		$scope.popeCards.push(c4);
 		$scope.popeCards.push(c5);
+		$scope.popeCards.push(c6);
 		$scope.popeCards.push(c7);
 		$scope.popeCards.push(c8);
 		$scope.popeCards.push(c9);

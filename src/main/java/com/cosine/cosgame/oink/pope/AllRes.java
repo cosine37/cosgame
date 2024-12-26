@@ -33,6 +33,10 @@ public class AllRes {
 		List<Card> cards = allBaseCards();
 		List<Card> shuffled = new ArrayList<>();
 		
+		int i;
+		cards.add(CardFactory.makeCard(1));
+		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(0));
+		for (i=0;i<2;i++) cards.add(CardFactory.makeCard(6));
 		
 		Random rand = new Random();
 		while (cards.size()>0) {

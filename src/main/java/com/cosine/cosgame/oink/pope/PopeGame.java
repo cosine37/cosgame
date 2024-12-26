@@ -24,6 +24,7 @@ public class PopeGame {
 	List<Integer> rankIndex;
 	Logger logger;
 	Card setAside;
+	boolean useDeluxe;
 	
 	Board board;
 	
@@ -48,6 +49,7 @@ public class PopeGame {
 		doc.append("logs",logger.getLogs());
 		doc.append("endRoundMsg", endRoundMsg);
 		doc.append("rankIndex", rankIndex);
+		doc.append("useDeluxe", useDeluxe);
 		if (setAside != null) {
 			doc.append("setAside", setAside.getNum());
 		} else {
@@ -84,6 +86,7 @@ public class PopeGame {
 		rankIndex = (List<Integer>) doc.get("rankIndex");
 		int si = doc.getInteger("setAside", -1);
 		setAside = CardFactory.makeCard(si);
+		useDeluxe = doc.getBoolean("useDeluxe", false);
 	}
 	
 	public PopeEntity toPopeEntity(String username){
@@ -121,6 +124,7 @@ public class PopeGame {
 		entity.setEndRoundMsg(endRoundMsg);
 		entity.setGameEndKeys(this.getGameEndKeys());
 		entity.setRankIndex(rankIndex);
+		entity.setUseDeluxe(useDeluxe);
 		return entity;
 	}
 
@@ -165,15 +169,22 @@ public class PopeGame {
 	
 	public void startRound() {
 		int i;
-		// Step 1: status, round # and initialize deck, and log round start
+		// Step 1: status, round #, and log round start
 		board.setStatus(Consts.INGAME);
 		round++;
-		deck = AllRes.allBaseCards();
+	
+		
 		endRoundMsg = "";
 		logger.logRoundStart(round);
 		
-		// Step 2: set aside top cards
+		// Step 2: deck related
+		deck = AllRes.allBaseCards();
+		if (useDeluxe) {
+			deck = AllRes.allDeluxeCards();
+		}
 		setAside = deck.remove(0);
+		
+		
 		
 		// Step 3: initialize players
 		for (i=0;i<players.size();i++) {
@@ -229,6 +240,19 @@ public class PopeGame {
 			}
 		}
 		
+		// Step 4: thief handles
+		int numThief = 0;
+		int thiefIndex = -1;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isActive() && players.get(i).isPlayedThief()) {
+				numThief++;
+				thiefIndex = i;
+			}
+		}
+		if (numThief == 1) {
+			players.get(thiefIndex).addKey();
+		}
+		
 		// Step 4: set end game msg
 		logger.logRoundEnd(round);
 		
@@ -241,6 +265,10 @@ public class PopeGame {
 			}
 		}
 		logger.log(endRoundMsg);
+		logger.log("以上获胜者都获得了一个灵杖");
+		if (numThief == 1) {
+			logger.log("盗贼为" + players.get(thiefIndex).getName() + "偷得一个灵杖");
+		}
 		logger.logRoundEndDivider();
 		
 		// Step 5: decide first player next round
@@ -257,7 +285,7 @@ public class PopeGame {
 	public boolean gameEnd() {
 		int i;
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getNumKey() == getGameEndKeys()) {
+			if (players.get(i).getNumKey() >= getGameEndKeys()) {
 				return true;
 			}
 		}
@@ -317,7 +345,7 @@ public class PopeGame {
 	}
 	
 	// actual operations
-	public void startGameUDB() {
+	public void startGameUDB(List<Integer> settings) {
 		// Step 1: create players
 		int i;
 		List<String> playerNames = board.getPlayerNames();
@@ -328,8 +356,13 @@ public class PopeGame {
 			players.add(p);
 		}
 		
+		// Step 2: set useDeluxe
+		useDeluxe = false;
+		if (settings.size()>2 && settings.get(2) == 1) {
+			useDeluxe = true;
+		}
 		
-		// Step 2: set round and curPlayer
+		// Step 3: set round and curPlayer
 		round = 0;
 		curPlayer = board.getFirstPlayer();
 		firstPlayer = board.getFirstPlayer();
@@ -474,6 +507,7 @@ public class PopeGame {
 		updateDB("logs", logger.getLogs());
 		updateDB("endRoundMsg", endRoundMsg);
 		updateDB("rankIndex", rankIndex);
+		updateDB("useDeluxe", useDeluxe);
 		if (setAside != null) {
 			updateDB("setAside", setAside.getNum());
 		} else {

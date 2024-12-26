@@ -445,6 +445,8 @@ body {
 									<div style="float:left;font-family:'yzgc'; font-size: 20px;">×{{players[i].numKey}}</div>
 									<div style="float:left; height: 30px; width:30px; margin-left: 20px; background:url('/image/Oink/Pope/shield.png'); background-size:cover;"
 										ng-show="players[i].protect"></div>
+									<div style="float:left; height: 30px; width:30px; margin-left: 20px; background:url('/image/Oink/Pope/pickaxe.png'); background-size:cover;"
+										ng-show="players[i].playedThief"></div>
 								</td>
 							</tr>
 							<tr>
@@ -492,6 +494,10 @@ body {
 						<div ng-show="status == 1 && phase == -2">
 							<span>你已出局，下一局游戏开始时你将复活</span>
 						</div>
+						<div ng-show="status == 1 && phase == 3">
+							<span>请选择一张手牌返回抽牌堆</span>
+							<button ng-show="showReturnCardButton()" ng-click="popeResolve(chosenCard)">确定</button>
+						</div>
 						<div ng-show="status == 1 && phase == 9">
 							<span>{{gamedata.targetedMsg}}</span>
 							<button ng-click="confirmTargeted()">确定</button>
@@ -530,6 +536,7 @@ body {
 						<div>请选择你要猜的身份：</div>
 						<div style="height: 10px;"></div>
 						<div>
+							<button ng-click="popeResolve(0)" ng-show="gamedata.useDeluxe == true">0. 盗贼</button>
 							<button ng-click="popeResolve(2)">2. 预言家</button>
 							<button ng-click="popeResolve(3)">3. 骑士</button>
 							<button ng-click="popeResolve(4)">4. 守卫</button>
@@ -539,6 +546,7 @@ body {
 						<div style="height: 10px;">
 						</div>
 						<div>
+							<button ng-click="popeResolve(6)" ng-show="gamedata.useDeluxe == true">6. 学者</button>
 							<button ng-click="popeResolve(7)">7. 法师</button>
 							<button ng-click="popeResolve(8)">8. 村长</button>
 							<button ng-click="popeResolve(9)">9. 教宗</button>

@@ -296,7 +296,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				
 			} else if ($scope.game == $scope.POPE){
-				if ($scope.phase == 1){
+				if ($scope.phase == 1 || $scope.phase == 3){
 					$scope.playClickSE();
 					if ($scope.chosenCard == x){
 						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
@@ -372,6 +372,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 							x = "-120px"
 						} else if (n == 8){
 							x = "-130px"
+						} else if (n == 9){
+							x = "-140px"
+						} else if (n == 10){
+							x = "-150px"
 						}
 					}
 					$scope.players[i].play[j].cstyle["margin-left"] = x
@@ -421,7 +425,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		
 		$scope.showChecked = function(i,f){
-			if ($scope.chosenCard<0){
+			if ($scope.phase != 1){
+				return false;
+			} else if ($scope.chosenCard<0){
 				return false;
 			} else if ($scope.players[i].active == false){
 				return false;
@@ -474,10 +480,19 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.popeResolve = function(x){
 			$scope.playClickSE();
+			$scope.chosenCard = -1;
 			var data = {"val": x}
 			$http({url: "/oink/pope/resolve", method: "PUT", params: data}).then(function(response){
 				ws.send("refresh");
 			});
+		}
+		
+		$scope.showReturnCardButton = function(){
+			if ($scope.chosenCard<0){
+				return false;
+			} else {
+				return true;
+			}
 		}
 		// End POPE only functions
 		

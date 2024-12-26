@@ -23,12 +23,6 @@
 				</td>
 				<td style="height: 100px; background-color: rgb(0,150,255); color: white; text-align:center">
 					<h1>{{gameName[gameMode]}}</h1>
-					<!-- 
-					<h1 ng-show="gameMode == 0">抽象小品（请选择游戏）</h1>
-					<h1 ng-show="gameMode == STARTUPS">初创公司</h1>
-					<h1 ng-show="gameMode == GROVE">狗头侦探</h1>
-					<h1 ng-show="gameMode == POPE">保卫教宗</h1>
-					 -->
 				</td>
 			</tr>
 			<tr>
@@ -93,7 +87,28 @@
 							</div>
 						</div>
 						
-						<div ng-show="gameMode == GROVE">
+						<div ng-show="gameMode == POPE">
+							<div class="fakemsg-div" style="width: 480px;">
+								<span style="font-weight: bold">支持人数：</span> 经典版支持2~4人，完整版支持2~6人。
+							</div>
+							<div class="fakemsg-div" style="width: 440px;">
+								<span style="font-weight: bold">游戏内容：</span> 经典版共16张牌，完整版为21张。
+							</div>
+							<div class="fakemsg-div">
+								<span style="font-weight: bold">规则综述：</span> 每名玩家扮演酒店老板，轮流接待不同的客人。玩家每轮开始时抽一张牌，在每回合抽一张牌并打出一张牌。当某回合结束后只有一名玩家在场或牌堆抽完，所有在场玩家展示剩余的手牌。
+								手牌声望值最高的玩家将获得一个灵杖。
+							</div>
+							<div class="fakemsg-div" style="width: 830px;">
+								<span style="font-weight: bold">胜利条件：</span> 当一名玩家获得指定数量的灵杖，游戏结束。灵杖数量最多的玩家将获得胜利。
+							</div>
+							<div class="fakemsg-div" style="width: 180px;">
+								<div style="font-weight: bold; float:left">游玩完整版：</div>
+								<div style="float:left;height: 30px; width: 30px;background:url('/image/Oink/Pope/not-checked.png'); 
+									background-size:cover" ng-show="useDeluxe == false" ng-click="useDeluxe=true;playClickSE();"></div>
+								<div style="float:left;height: 30px; width: 30px;background:url('/image/Oink/Pope/checked.png'); 
+									background-size:cover" ng-show="useDeluxe == true" ng-click="useDeluxe=false;playClickSE();"></div>
+								<div style="clear:both"></div>
+							</div>
 						</div>
 					</div>
 					

@@ -23,6 +23,10 @@ public class CardFactory {
 			c = new Knight();
 		} else if (x == 1) {
 			c = new Werewolf();
+		} else if (x == 0) {
+			c = new Thief();
+		} else if (x == 6) {
+			c = new Scholar();
 		}
 		return c;
 	}

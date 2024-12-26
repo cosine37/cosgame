@@ -176,6 +176,19 @@ public class PopePlayer {
 			hand.add(c);
 		}
 	}
+	public void draw(int n) {
+		int i;
+		if (game.getDeck().size()<n) {
+			n = game.getDeck().size();
+		}
+		for (i=0;i<n;i++) {
+			Card c = game.removeFromDeck();
+			if (c != null) {
+				hand.add(c);
+			}
+		}
+		
+	}
 	
 	public void discard() {
 		if (hand.size() == 1) {
@@ -188,6 +201,7 @@ public class PopePlayer {
 	
 	public void startRound() {
 		active = true;
+		playedThief = false;
 		phase = Consts.OFFTURN;
 		hand = new ArrayList<>();
 		play = new ArrayList<>();

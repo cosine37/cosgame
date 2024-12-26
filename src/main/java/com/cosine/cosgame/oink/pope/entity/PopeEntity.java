@@ -13,6 +13,7 @@ public class PopeEntity {
 	int gameEndKeys;
 	String endRoundMsg;
 	String targetedMsg;
+	boolean useDeluxe;
 	
 	List<Integer> rankIndex;
 	List<String> endGameRewards;
@@ -124,5 +125,11 @@ public class PopeEntity {
 	}
 	public void setResolveMsgs(List<String> resolveMsgs) {
 		this.resolveMsgs = resolveMsgs;
+	}
+	public boolean isUseDeluxe() {
+		return useDeluxe;
+	}
+	public void setUseDeluxe(boolean useDeluxe) {
+		this.useDeluxe = useDeluxe;
 	}
 }
