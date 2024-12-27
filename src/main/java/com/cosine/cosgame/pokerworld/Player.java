@@ -124,6 +124,16 @@ public class Player {
 		play(playedIndex, Consts.NOTSELECTED);
 	}
 	
+	public void selectPassCards(List<Integer> passIndex) {
+		this.playedIndex = new ArrayList<>();
+		for (int i=0;i<passIndex.size();i++) {
+			playedIndex.add(passIndex.get(i));
+		}
+		this.phase = Consts.HEARTSPASSWAITING;
+		
+		//TODO: start from here
+	}
+	
 	public void sortHand() {
 		int i,j;
 		for (i=0;i<hand.size();i++) {
@@ -149,7 +159,7 @@ public class Player {
 				if (PokerUtil.getHeartsSuitValue(c1.getSuit()) > PokerUtil.getHeartsSuitValue(c2.getSuit())) {
 					shouldSwap = true;
 				} else if (PokerUtil.getHeartsSuitValue(c1.getSuit()) == PokerUtil.getHeartsSuitValue(c2.getSuit())) {
-					if (c1.getRank()>c2.getRank()) {
+					if (c1.getRealRank(board.getBiggestRank())>c2.getRealRank(board.getBiggestRank())) {
 						shouldSwap = true;
 					}	
 				}
@@ -461,6 +471,8 @@ public class Player {
 		doc.append("endGameRewards", endGameRewards);
 		doc.append("bonuses", bonuses);
 		doc.append("circusIndex", circusIndex);
+		doc.append("phase", phase);
+		
 		if (board.getGameMode() == Consts.SFSJ) {
 			doc.append("playedCardsStr", playedCardsStr);
 		} else {
@@ -481,6 +493,7 @@ public class Player {
 		endGameRewards = (List<String>) doc.get("endGameRewards");
 		bonuses = (List<Integer>) doc.get("bonuses");
 		circusIndex = doc.getInteger("circusIndex", -1);
+		phase = doc.getInteger("phase", 0);
 		if (board.getGameMode() == Consts.SFSJ) {
 			playedCardsStr = doc.getString("playedCardsStr");
 		} else {

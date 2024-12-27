@@ -31,6 +31,11 @@ public class Consts {
 	public static final int STATIONCHOOSE = 21;
 	public static final int CIRCUSPASS = 22;
 	
+	public static final int HEARTSPASS = 301;
+	public static final int HEARTSPASSSELECT = 301;
+	public static final int HEARTSRECEIVE = 302;
+	public static final int HEARTSPASSWAITING = 303;
+	
 	// suits
 	public static final String SPADE = "s";
 	public static final String HEART = "h";

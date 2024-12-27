@@ -43,6 +43,7 @@ public class BoardEntity {
 	List<Integer> playable;
 	List<Integer> myChosenSkins;
 	List<String> myEndGameRewards;
+	List<Integer> myPlayedIndex;
 
 	public String getId() {
 		return id;
@@ -271,5 +272,11 @@ public class BoardEntity {
 	}
 	public void setMyCircusIndex(int myCircusIndex) {
 		this.myCircusIndex = myCircusIndex;
+	}
+	public List<Integer> getMyPlayedIndex() {
+		return myPlayedIndex;
+	}
+	public void setMyPlayedIndex(List<Integer> myPlayedIndex) {
+		this.myPlayedIndex = myPlayedIndex;
 	}
 }

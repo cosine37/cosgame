@@ -70,6 +70,13 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.STATIONCHOOSE = 21;
 		$scope.CIRCUSPASS = 22;
 		
+		$scope.passTo = ""
+		$scope.HEARTSPASS = 301;
+		$scope.HEARTSPASSSELECT = 301;
+		$scope.HEARTSRECEIVE = 302;
+		$scope.HEARTSWAITING = 303;
+		$scope.numCardsChosen = 0;
+		
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
 			$window.location.href = x + "/" + d;
@@ -330,6 +337,22 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.selectedCardOption = -1;
 					//alert($scope.chosenCard)
 				}
+			} else if ($scope.gameMode == $scope.HEARTS){
+				if ($scope.phase == $scope.HEARTSPASSSELECT){
+					if (x>=0 && x<$scope.hand.length){
+						$scope.hand[x].chosen = 1-$scope.hand[x].chosen
+						if ($scope.hand[x].chosen != 1){
+							$scope.hand[x].cstyle["margin-top"] = "0px"
+						} else {
+							$scope.hand[x].cstyle["margin-top"] = "-30px"
+						}
+						
+						$scope.numCardsChosen = 0;
+						for (i=0;i<$scope.hand.length;i++){
+							$scope.numCardsChosen = $scope.hand[i].chosen + $scope.numCardsChosen
+						}
+					}
+				}
 			}
 			
 		}
@@ -437,7 +460,26 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					$scope.cardOptions = []
 					$scope.allRefresh()
 				});
+			}	
+		}
+		
+		$scope.pass = function(){
+			if ($scope.gameMode == $scope.HEARTS && $scope.status == $scope.HEARTSPASS){
+				playPlaySE()
+				var passedIndex = []
+				for (i=0;i<$scope.hand.length;i++){
+					if ($scope.hand[i].chosen == 1){
+						passedIndex.push(i);
+					}
+				}
+				if (passedIndex.length == 3){
+					var data = {"passedIndex": passedIndex}
+					$http({url: "/pokerworld/passcards", method: "POST", params: data}).then(function(response){
+						$scope.allRefresh()
+					});
+				}
 			}
+			
 			
 		}
 		
@@ -663,7 +705,17 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			var i = 0;
 			while (i<$scope.myCards.length){
 				var rawCard = $scope.myCards.substring(i,i+2);
-				$scope.hand.push(translateRawCard(rawCard, $scope.playable[i/2], false, $scope.gamedata.myChosenSkins));
+				var c = translateRawCard(rawCard, $scope.playable[i/2], false, $scope.gamedata.myChosenSkins)
+				c["cstyle"]["margin-top"] = "0px";
+				if ($scope.gameMode == $scope.HEARTS){
+					var f = false;
+					for (j=0;j<$scope.gamedata.myPlayedIndex.length;j++){
+						if ($scope.gamedata.myPlayedIndex[j] == i/2){
+							c["cstyle"]["margin-top"] = "-30px";
+						}
+					}
+				}
+				$scope.hand.push(c);
 				i=i+2;
 			}
 			for (i=0;i<$scope.players.length;i++){
@@ -817,6 +869,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.gamedata = response.data
 				$scope.id = response.data.id
 				$scope.status = response.data.status
+				$scope.phase = response.data.phase
 				$scope.gameMode = response.data.gameMode
 				$scope.players = response.data.players
 				$scope.lord = response.data.lord
@@ -879,12 +932,20 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				setPlayerInfoDisplay()
 				setRoundDisplay()
 				setTrickInfo()
+				
 				if ($scope.gameMode == $scope.WIZARD){
 					if (prevStatus != null && prevStatus != $scope.status && $scope.status == $scope.SCORING){
 						myBidThisTurn = $scope.players[$scope.myIndex].bidDisplay
 						myActualThisTurn = $scope.players[$scope.myIndex].actualDisplay
 						$scope.playWinLoseBGM(myBidThisTurn == myActualThisTurn)
 					}
+				} else if ($scope.gameMode == $scope.HEARTS){
+					
+					var x = ($scope.myIndex + $scope.round) % $scope.players.length
+					$scope.passTo = $scope.players[x].name
+					$scope.resetChosen()
+					
+					$scope.numCardsChosen = 0;
 				}
 				
 				if ($scope.status == $scope.PREENDGAME){

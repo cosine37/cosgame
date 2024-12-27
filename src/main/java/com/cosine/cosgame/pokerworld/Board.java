@@ -143,6 +143,7 @@ public class Board {
 	
 	public void startGameHearts() {
 		round = 1;
+		biggestRank = 1;
 		dealHearts();
 	}
 	
@@ -237,6 +238,17 @@ public class Board {
 		// Step 3: sort cards
 		for (i=0;i<players.size();i++) {
 			players.get(i).sortHandHearts();
+		}
+		
+		// Step 4: set status
+		int x = round % players.size();
+		if (x == 0) {
+			
+		} else {
+			status = Consts.HEARTSPASS;
+			for (i=0;i<players.size();i++) {
+				players.get(i).setPhase(Consts.HEARTSPASSSELECT);
+			}
 		}
 	}
 	
@@ -584,6 +596,13 @@ public class Board {
 					}
 				}
 			}
+		}
+	}
+	
+	public void heartsPassCard(String pname, List<Integer> passedCards) {
+		Player p = getPlayerByName(pname);
+		if (p != null){
+			p.selectPassCards(passedCards);
 		}
 	}
 	
@@ -1117,6 +1136,11 @@ public class Board {
 					entity.setMyCards(p.getHandAsStr());
 					entity.setPlayable(p.getPlayable());
 					entity.setMyCircusIndex(p.getCircusIndex());
+				}
+				
+				if (gameMode == Consts.HEARTS) {
+					entity.setPhase(p.getPhase());
+					entity.setMyPlayedIndex(p.getPlayedIndex());
 				}
 				
 				entity.setConfirmed(p.isConfirmedClaim());

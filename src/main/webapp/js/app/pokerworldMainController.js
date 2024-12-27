@@ -181,7 +181,9 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 					} else if (z == '0'){
 						t = '四副升级'
 					} else if (z == '1'){
-						t = '巫师牌'
+						t = '神机妙算'
+					} else if (z == '3'){
+						t = '红心大战'
 					}
 					$scope.gameModes.push(t);
 					var y = response.data.value[i*5+4]
