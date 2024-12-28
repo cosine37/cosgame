@@ -215,7 +215,7 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 					return;
 				}
 				
-				if ($scope.status == '1'){
+				if ($scope.status == '1' || $scope.status == '301'){
 					$scope.goto('pokerworldgame');
 				}
 

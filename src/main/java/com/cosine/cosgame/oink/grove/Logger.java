@@ -61,7 +61,7 @@ public class Logger {
 	}
 	
 	public void logDoge(GrovePlayer p, Role r, int x) {
-		String s =  "无辜的 " + r.getName() + " 最终被 " + p.getName() + " 愿望，因此" + p.getName() + "获得了" + Integer.toString(x) + "个狗头标记";
+		String s =  "无辜的 " + r.getName() + " 最终被 " + p.getName() + " 冤枉，因此" + p.getName() + "获得了" + Integer.toString(x) + "个狗头标记";
 		log(s);
 	}
 	

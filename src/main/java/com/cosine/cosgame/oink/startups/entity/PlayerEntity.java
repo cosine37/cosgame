@@ -12,6 +12,7 @@ public class PlayerEntity {
 	int phase;
 	int numTaken;
 	int ranking;
+	int lastPlayed;
 	AccountEntity account;
 	
 	List<Integer> coin1s;
@@ -100,6 +101,12 @@ public class PlayerEntity {
 	}
 	public void setRanking(int ranking) {
 		this.ranking = ranking;
+	}
+	public int getLastPlayed() {
+		return lastPlayed;
+	}
+	public void setLastPlayed(int lastPlayed) {
+		this.lastPlayed = lastPlayed;
 	}
 	
 	

@@ -216,16 +216,7 @@ public class PokerworldController {
 		String boardId = (String) session.getAttribute("boardId");
 		if (board.exists(boardId)) {
 			board.getFromDB(boardId);
-			Player p = board.getPlayerByName(username);
-			if (p != null) {
-				if (board.getStatus() == Consts.HEARTSPASS) {
-					p.selectPassCards(passedIndex);
-				}
-				board.updateBasicDB();
-				board.updatePlayers();
-				board.updateCardsDB();
-				board.updateDominantDB();
-			}
+			board.heartsPassCardUDB(username, passedIndex);
 		} else {
 			board.setId("NE");
 		}
@@ -246,6 +237,22 @@ public class PokerworldController {
 			board.updatePlayers();
 			board.updateCardsDB();
 			board.updateDominantDB();
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/pokerworld/confirmpasscard", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> confirmPassCard(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.heartsConfirmpassCardUDB(username);
 		} else {
 			board.setId("NE");
 		}

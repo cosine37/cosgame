@@ -130,8 +130,45 @@ public class Player {
 			playedIndex.add(passIndex.get(i));
 		}
 		this.phase = Consts.HEARTSPASSWAITING;
-		
-		//TODO: start from here
+	}
+	
+	/**
+	 * Removes all cards indexed by playedIndex and empty playedIndex
+	 * @return the removed cards
+	 */
+	public List<PokerCard> removePlayedCards(){
+		int i,j;
+		List<PokerCard> cards = new ArrayList<>();
+		for (i=hand.size()-1;i>=0;i--) {
+			for (j=0;j<playedIndex.size();j++) {
+				if (i == playedIndex.get(j)) {
+					PokerCard c = hand.remove(i);
+					cards.add(c);
+				}
+			}
+		}
+		playedIndex = new ArrayList<>();
+		return cards;
+	}
+	
+	/**
+	 * Receives the passed cards and set playedIndex as passed cards
+	 * @return the removed cards
+	 */
+	public void receivePassedCards(List<PokerCard> passedCards) {
+		int i,j;
+		for (i=0;i<passedCards.size();i++) {
+			hand.add(passedCards.get(i));
+		}
+		sortHandHearts();
+		playedIndex = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			for (j=0;j<passedCards.size();j++) {
+				if (hand.get(i).contentEquals(passedCards.get(j))) {
+					playedIndex.add(i);
+				}
+			}
+		}
 	}
 	
 	public void sortHand() {

@@ -414,13 +414,6 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		
-		$scope.resetChosen = function(){
-			var i
-			for (i=0;i<$scope.hand.length;i++){
-				$scope.hand[i].chosen = 0
-			}
-		}
-		
 		$scope.confirmHide = function(){
 			var playedIndex = []
 			for (i=0;i<$scope.hand.length;i++){
@@ -463,6 +456,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			}	
 		}
 		
+		// Begin HEARTS functions
 		$scope.pass = function(){
 			if ($scope.gameMode == $scope.HEARTS && $scope.status == $scope.HEARTSPASS){
 				playPlaySE()
@@ -479,9 +473,18 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					});
 				}
 			}
-			
-			
 		}
+		
+		$scope.confirmPass = function(){
+			if ($scope.gameMode == $scope.HEARTS && $scope.status == $scope.HEARTSPASS && $scope.phase == $scope.HEARTSRECEIVE){
+				playPlaySE()
+				$http({url: "/pokerworld/confirmpasscard", method: "POST"}).then(function(response){
+					$scope.allRefresh()
+				});
+			}
+		}
+		
+		// End HEARTS functions
 		
 		$scope.endDistribute = function(){
 			$http({url: "/pokerworld/enddistribute", method: "POST"}).then(function(response){
@@ -701,18 +704,46 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		}
 		
 		setCardStyles = function(){
-			$scope.hand = [];
 			var i = 0;
+			chosen = []
+			if ($scope.gameMode == $scope.HEARTS){
+				for (i=0;i<$scope.hand.length;i++){
+					if ($scope.hand[i].chosen == null){
+						chosen.push(0);
+					} else if ($scope.hand[i].chosen == 1){
+						chosen.push(1);
+					} else {
+						chosen.push(0);
+					}
+				}
+			}
+			
+			$scope.hand = [];
+			i=0;
+			$scope.numCardsChosen = 0;
 			while (i<$scope.myCards.length){
 				var rawCard = $scope.myCards.substring(i,i+2);
 				var c = translateRawCard(rawCard, $scope.playable[i/2], false, $scope.gamedata.myChosenSkins)
 				c["cstyle"]["margin-top"] = "0px";
-				if ($scope.gameMode == $scope.HEARTS){
+				// hearts pass cards handle
+				if ($scope.gameMode == $scope.HEARTS && $scope.status == 301 && ($scope.phase == 302 ||$scope.phase == 303) ){
 					var f = false;
 					for (j=0;j<$scope.gamedata.myPlayedIndex.length;j++){
 						if ($scope.gamedata.myPlayedIndex[j] == i/2){
 							c["cstyle"]["margin-top"] = "-30px";
 						}
+					}
+				}
+				if ($scope.gameMode == $scope.HEARTS && $scope.phase == 301){
+					if (i/2 < chosen.length){
+						z = chosen[i/2]
+						c.chosen = z;
+						$scope.numCardsChosen = $scope.numCardsChosen+z;
+						if (z == 1){
+							c["cstyle"]["margin-top"] = "-30px";
+						}
+					} else {
+						c.chosen = 0;
 					}
 				}
 				$scope.hand.push(c);
@@ -943,9 +974,8 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 					
 					var x = ($scope.myIndex + $scope.round) % $scope.players.length
 					$scope.passTo = $scope.players[x].name
-					$scope.resetChosen()
 					
-					$scope.numCardsChosen = 0;
+					//$scope.numCardsChosen = 0;
 				}
 				
 				if ($scope.status == $scope.PREENDGAME){

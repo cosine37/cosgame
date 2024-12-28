@@ -262,6 +262,16 @@ public class Board {
 		return true;
 	}
 	
+	public boolean allPassed() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getPhase() != Consts.HEARTSPASSWAITING) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public void startRoundWizard() {
 		firstCard = new PokerCard();
 		for (int i=0;i<players.size();i++) {
@@ -599,12 +609,7 @@ public class Board {
 		}
 	}
 	
-	public void heartsPassCard(String pname, List<Integer> passedCards) {
-		Player p = getPlayerByName(pname);
-		if (p != null){
-			p.selectPassCards(passedCards);
-		}
-	}
+	
 	
 	public void confirmNextTurn(String username) {
 		Player p = getPlayerByName(username);
@@ -631,6 +636,67 @@ public class Board {
 			players.get(i).emptyPlayedIndex();
 		}
 	}
+	
+	// start actual operations
+	public void heartsPassCardUDB(String pname, List<Integer> passedCards) {
+		// Step 1: set passed cards
+		Player p = getPlayerByName(pname);
+		if (p != null){
+			p.selectPassCards(passedCards);
+		}
+		
+		// Step 2: all passed?
+		int i;
+		boolean flag = true;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getPhase() != Consts.HEARTSPASSWAITING) flag = false;
+		}
+		
+		// Step 3: actual pass operations
+		if (flag) {
+			List<List<PokerCard>> allPassedCards = new ArrayList<>();
+			for (i=0;i<players.size();i++) {
+				allPassedCards.add(players.get(i).removePlayedCards());
+			}
+			
+			int x = round%players.size();
+			for (i=0;i<players.size();i++) {
+				int y = i-x;
+				if (y<0) y = y+players.size();
+				players.get(i).receivePassedCards(allPassedCards.get(y));
+				
+				players.get(i).setPhase(Consts.HEARTSRECEIVE);
+				players.get(i).setConfirmedClaim(false);
+			}
+		}
+		
+		updateBasicDB();
+		updatePlayers();
+		updateCardsDB();
+		updateDominantDB();
+	}
+	
+	public void heartsConfirmpassCardUDB(String pname) {
+		Player p = getPlayerByName(pname);
+		if (p != null) {
+			p.setConfirmedNextTurn(true);
+			p.setPlayedIndex(new ArrayList<>());
+		}
+		
+		boolean flag = true;
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).isConfirmedNextTurn() == false) flag = false;
+		}
+		if (flag) {
+			this.status = Consts.PLAYCARDS;
+		}
+		
+		updateBasicDB();
+		updatePlayers();
+		updateCardsDB();
+		updateDominantDB();
+	}
+	// end actual operations
 	
 	public String getId() {
 		return id;

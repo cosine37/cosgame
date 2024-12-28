@@ -88,7 +88,10 @@ body {
 									<td>
 										<div style="position:relative; height: 40px; border-radius:20px" ng-style="b.barColor">
 											<div style="float:left; height: 40px; width: 40px;" ng-style="b.iconStyle"></div>
-											<div style="float:left; width: 120px; padding-top: 5px; padding-left: 5px; color:white; font-size: 24px; font-family: 'yzgc'">{{b.name}}</div>
+											<div style="float:left; width: 120px; padding-top: 5px; padding-left: 5px; color:white; font-size: 24px; font-family: 'yzgc'">
+												{{b.name}}
+												<span ng-show="p.lastPlayed == b.num">*</span>
+											</div>
 											<div style="float:left; width: 80px; padding-top: 5px; padding-right: 20px; color:white; font-size: 24px; font-family: 'yzgc'; text-align: right">
 												<span>{{b.played}}</span>
 												<span ng-show="b.fromHand != 0">+{{b.fromHand}}</span>

@@ -70,6 +70,13 @@ public class PokerCard {
 		}
 	}
 	
+	public boolean contentEquals(PokerCard c) {
+		if (c.getRank() == this.rank && c.getSuitValue() == this.getSuitValue()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String getSuit() {
 		return suit;
 	}

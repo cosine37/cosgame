@@ -18,6 +18,7 @@ public class Player {
 	int ranking;
 	int roundRanking;
 	int numTaken;
+	int lastPlayed;
 	
 	boolean confirmNextRound;
 	
@@ -46,6 +47,7 @@ public class Player {
 		doc.append("confirmNextRound", confirmNextRound);
 		doc.append("ranking", ranking);
 		doc.append("endGameRewards", endGameRewards);
+		doc.append("lastPlayed", lastPlayed);
 		
 		int i;
 		List<Document> doh = new ArrayList<>();
@@ -77,6 +79,7 @@ public class Player {
 		List<Document> doh = (List<Document>) doc.get("hand");
 		List<Document> dop = (List<Document>) doc.get("play");
 		ranking = doc.getInteger("ranking", 0);
+		lastPlayed = doc.getInteger("lastPlayed", 0);
 		
 		int i;
 		hand = new ArrayList<>();
@@ -102,6 +105,7 @@ public class Player {
 		entity.setPlay(toPlayEntityList());
 		entity.setAntiMonopoly(toAntiMonopolyEntityList());
 		entity.setRanking(ranking);
+		entity.setLastPlayed(lastPlayed);
 		
 		if (startups.getStatus() == Consts.ROUNDEND) {
 			entity.setScoreDisplay(this.getTotalScore(false));
@@ -276,6 +280,7 @@ public class Player {
 			int i;
 			boolean flag = true;
 			Card c = hand.remove(index);
+			lastPlayed = c.getNum();
 			play.add(c);
 			startups.getLogger().logPlay(this, c, index);
 			
@@ -529,6 +534,12 @@ public class Player {
 	}
 	public void setEndGameRewards(List<String> endGameRewards) {
 		this.endGameRewards = endGameRewards;
+	}
+	public int getLastPlayed() {
+		return lastPlayed;
+	}
+	public void setLastPlayed(int lastPlayed) {
+		this.lastPlayed = lastPlayed;
 	}
 	
 	

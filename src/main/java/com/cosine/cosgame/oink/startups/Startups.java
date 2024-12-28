@@ -593,6 +593,8 @@ public class Startups {
 				players.get(i).addScore(Consts.SECONDPLACESCORE);
 			} else if (players.get(i).getIndex() == lastPlayerIndex) {
 				players.get(i).addScore(Consts.LASTPLACESCORE);
+			} else {
+				players.get(i).addScore(0);
 			}
 		}
 		
@@ -671,6 +673,9 @@ public class Startups {
 	public void playerPlayUDB(String name, int cardIndex) {
 		Player p = getPlayerByName(name);
 		if (p != null) {
+			for (int i=0;i<players.size();i++) {
+				players.get(i).setLastPlayed(0);
+			}
 			p.play(cardIndex);
 			updateBasicDB();
 			updatePlayers();

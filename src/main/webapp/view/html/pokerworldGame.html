@@ -241,12 +241,17 @@ body {
 			<button ng-click="dismiss()" ng-show="lord == username">解散</button>
 		</div>
 		<div>
-			<div ng-show="phase == HEARTSPASSSELECT">请选择3张牌与{{passTo}}交换<button ng-show="numCardsChosen==3" ng-click="pass()">确定</button></div>
+			<div ng-show="status == HEARTSPASS && phase == HEARTSPASSSELECT">请选择3张牌与{{passTo}}交换<button ng-show="numCardsChosen==3" ng-click="pass()">确定</button></div>
+			<div ng-show="status == HEARTSPASS && phase == HEARTSRECEIVE && confirmedNextTurn == false">
+				请确认你收到的牌<button ng-click="confirmPass()">确定</button></div>
+			<div ng-show="status == HEARTSPASS && phase == HEARTSRECEIVE && confirmedNextTurn">
+				你已确认，正等待其他玩家确认</div>
 		</div>
 		<div class="hand-size">
 			<div class="card-hand card-size noselect" ng-repeat="c in hand track by $index" ng-include="'/view/html/WizardCard.html'"  ng-class="c.color" ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
-		
+		<div style="clear:both">
+		</div>
 		{{hand}}
 	</div>
 	
