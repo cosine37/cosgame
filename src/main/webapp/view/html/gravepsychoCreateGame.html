@@ -52,6 +52,8 @@ body {
 		<table>
 			<tr>
 				<td>
+					<input type="checkbox" ng-checked="useEvent==true" ng-click="eventSwitch()" ng-disabled="lord != username">
+					<label>使用事件</label>
 					<button ng-click="goto('gravepsycho')">退出</button>
 					<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
 					<button ng-click="dismiss()" ng-show="lord == username">解散</button>

@@ -55,6 +55,13 @@ body {
 						<span class="round-text" ng-show="status == '2' || status == '3'">结束</span>
 					</td>
 				</tr>
+				<tr>
+					<td>
+						<div ng-show="useEvent">
+							{{event.name}}
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<div style="margin-top: 20px" class="adventure">

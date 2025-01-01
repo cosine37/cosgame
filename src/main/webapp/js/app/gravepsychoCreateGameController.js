@@ -41,8 +41,21 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 			});
 		}
 		
+		$scope.useEvent=false
+		$scope.eventSwitch = function(){
+			if ($scope.useEvent == true){
+				$scope.useEvent=false
+			} else {
+				$scope.useEvent=true
+			}
+		}
 		$scope.startGame = function(){
-			$http.post('/gravepsycho/startgame').then(function(response){
+			var x = 0;
+			if ($scope.useEvent){
+				x = 1;
+			}
+			var data = {"useEvent" : x}
+			$http({url: "/gravepsycho/startgame", method: "POST", params: data}).then(function(response){
 				$scope.goto('gravepsychogame')
 			});
 		}

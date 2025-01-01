@@ -20,7 +20,9 @@ public class Board {
 	int leftover;
 	String id;
 	String lord;
+	boolean useEvent;
 	AllRes allRes;
+	Event event;
 	MongoDBUtil dbutil;
 	
 	public Board() {
@@ -30,6 +32,7 @@ public class Board {
 		treasures = new ArrayList<>();
 		removed = new ArrayList<>();
 		allRes = new AllRes();
+		event = new Event();
 		
 		String dbname = "gravepsycho";
 		String col = "board";
@@ -41,11 +44,15 @@ public class Board {
 		status = Consts.CREATEGAME;
 	}
 	
-	public void startGame() {
+	public void startGame(int ue) {
 		round = 0;
 		leftover = 0;
 		deck = allRes.getDeck();
 		treasures = allRes.getTreasures();
+		useEvent = false;
+		if (ue == 1) {
+			useEvent = true;
+		}
 		newRoundHandle();
 	}
 	
@@ -332,6 +339,18 @@ public class Board {
 	public void setRemoved(List<Card> removed) {
 		this.removed = removed;
 	}
+	public boolean isUseEvent() {
+		return useEvent;
+	}
+	public void setUseEvent(boolean useEvent) {
+		this.useEvent = useEvent;
+	}
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 	public void genBoardId() {
 		Date date = new Date();
@@ -492,6 +511,8 @@ public class Board {
 		entity.setMyDecision(myDecision);
 		entity.setMyMoney(myMoney);
 		entity.setAvatar(avatar);
+		entity.setUseEvent(useEvent);
+		entity.setEvent(event.toEventEntity());
 		return entity;
 	}
 	
@@ -532,6 +553,8 @@ public class Board {
 		doc.append("status", status);
 		doc.append("round", round);
 		doc.append("leftover", leftover);
+		doc.append("event", event.getNum());
+		doc.append("useEvent", useEvent);
 		return doc;
 	}
 	
@@ -541,6 +564,7 @@ public class Board {
 		status = doc.getInteger("status", 0);
 		round = doc.getInteger("round", 0);
 		leftover = doc.getInteger("leftover", 0);
+		useEvent = doc.getBoolean("useEvent", false);
 		List<Document> lod = (List<Document>) doc.get("deck");
 		List<Document> lor = (List<Document>) doc.get("revealed");
 		List<Document> lot = (List<Document>) doc.get("treasures");
@@ -579,5 +603,7 @@ public class Board {
 			p.setFromDoc(dop);
 			players.add(p);
 		}
+		int eid = doc.getInteger("event", 0);
+		event = EventFactory.makeEvent(eid);
 	}
 }

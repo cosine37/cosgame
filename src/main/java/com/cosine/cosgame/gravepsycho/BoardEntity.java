@@ -11,6 +11,7 @@ public class BoardEntity {
 	String myDecision;
 	String myIndex;
 	String myMoney;
+	boolean useEvent;
 	
 	List<String> playerNames;
 	List<String> revealed;
@@ -20,6 +21,8 @@ public class BoardEntity {
 	List<String> money;
 	List<String> moneyThisTurn;
 	List<String> avatar;
+	
+	EventEntity event;
 	
 	public String getId() {
 		return id;
@@ -116,6 +119,18 @@ public class BoardEntity {
 	}
 	public void setAvatar(List<String> avatar) {
 		this.avatar = avatar;
+	}
+	public boolean isUseEvent() {
+		return useEvent;
+	}
+	public void setUseEvent(boolean useEvent) {
+		this.useEvent = useEvent;
+	}
+	public EventEntity getEvent() {
+		return event;
+	}
+	public void setEvent(EventEntity event) {
+		this.event = event;
 	}
 	
 }

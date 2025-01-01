@@ -86,15 +86,16 @@ public class GravepsychoController {
 	}
 	
 	@RequestMapping(value="/gravepsycho/startgame", method = RequestMethod.POST)
-	public ResponseEntity<StringEntity> startGame(HttpServletRequest request) {
+	public ResponseEntity<StringEntity> startGame(HttpServletRequest request, @RequestParam int useEvent) {
 		Board board = new Board();
 		HttpSession session = request.getSession(true);
 		String username = (String) session.getAttribute("username");
 		String boardId = (String) session.getAttribute("boardId");
 		board.getFromDB(boardId);
-		board.startGame();
+		board.startGame(useEvent);
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
+		board.updateDB("useEvent", board.isUseEvent());
 		board.updateDeck();
 		board.updateTreasures();
 		board.updatePlayers();

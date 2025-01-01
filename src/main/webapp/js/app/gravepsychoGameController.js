@@ -85,6 +85,8 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.stillIn = response.data.stillIn;
 				$scope.leftover = response.data.leftover;
 				$scope.removed = response.data.removed;
+				$scope.useEvent = response.data.useEvent;
+				$scope.event = response.data.event;
 				setRevealedStyle()
 			});
 		}
