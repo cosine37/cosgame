@@ -153,6 +153,12 @@ public class Board {
 		shuffle();
 		status = Consts.PENDING;
 		leftover = 0;
+		if (useEvent) {
+			AllRes allRes = new AllRes();
+			event = allRes.getRandomEvent();
+			event.setBoard(this);
+			event.newRound();
+		}
 		round++;
 	}
 	
@@ -605,5 +611,6 @@ public class Board {
 		}
 		int eid = doc.getInteger("event", 0);
 		event = EventFactory.makeEvent(eid);
+		event.setBoard(this);
 	}
 }

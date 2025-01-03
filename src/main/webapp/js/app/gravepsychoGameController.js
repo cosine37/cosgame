@@ -87,6 +87,10 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.removed = response.data.removed;
 				$scope.useEvent = response.data.useEvent;
 				$scope.event = response.data.event;
+				$scope.event.estyle = {
+					"background":"url('/image/Gravepsycho/Events/" + $scope.event.img + ".png')",
+					"background-size":"cover"
+				}
 				setRevealedStyle()
 			});
 		}

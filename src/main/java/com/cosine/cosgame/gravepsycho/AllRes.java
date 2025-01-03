@@ -2,10 +2,14 @@ package com.cosine.cosgame.gravepsycho;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import com.cosine.cosgame.gravepsycho.event.*;
 
 public class AllRes {
 	List<Card> deck;
 	List<Card> treasures;
+	List<Event> events;
 	
 	public AllRes() {
 		deck = new ArrayList<>();
@@ -70,6 +74,14 @@ public class AllRes {
 		c = new Card("t12", Consts.TREASURE, 12);
 		treasures.add(c);
 	}
+	
+	public void genEvents() {
+		Event e;
+		e = new Classic();
+		events.add(e);
+		e = new Windfall();
+		events.add(e);
+	}
 
 	public List<Card> getDeck() {
 		return deck;
@@ -77,6 +89,15 @@ public class AllRes {
 
 	public List<Card> getTreasures() {
 		return treasures;
+	}
+	
+	public Event getRandomEvent() {
+		events = new ArrayList<>();
+		genEvents();
+		
+		Random rand = new Random();
+		int x = rand.nextInt(events.size());
+		return events.get(x);
 	}
 	
 }

@@ -7,6 +7,8 @@ public class EventFactory {
 		Event event = new Event();
 		if (x == 0) {
 			event = new Classic();
+		} else if (x == 11) {
+			event = new Windfall();
 		}
 		return event;
 	}

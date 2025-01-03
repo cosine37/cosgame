@@ -21,6 +21,7 @@ public class Event {
 	public boolean disaster(boolean f) {
 		return f;
 	}
+	public void newRound() {}
 
 	public int getNum() {
 		return num;
@@ -45,6 +46,12 @@ public class Event {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 	

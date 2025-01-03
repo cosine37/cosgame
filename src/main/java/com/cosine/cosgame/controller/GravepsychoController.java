@@ -96,6 +96,7 @@ public class GravepsychoController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
 		board.updateDB("useEvent", board.isUseEvent());
+		board.updateDB("event", board.getEvent().getNum());
 		board.updateDeck();
 		board.updateTreasures();
 		board.updatePlayers();
@@ -128,6 +129,7 @@ public class GravepsychoController {
 		board.updateDB("status", board.getStatus());
 		board.updateDB("round", board.getRound());
 		board.updateDB("leftover", board.getLeftover());
+		board.updateDB("event", board.getEvent().getNum());
 		board.updateDeck();
 		board.updateTreasures();
 		board.updateRevealed();
