@@ -19,5 +19,6 @@ public class Windfall extends Event{
 		for (int i=0;i<players.size();i++) {
 			players.get(i).addMoney(8);
 		}
+		board.getLogger().log("天降横财！所有玩家获得了从天而降的8枚钱币！");
 	}
 }

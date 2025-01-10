@@ -72,13 +72,12 @@ button:disabled{
 }
 
 .game-div{
-	position: absolute; 
-	left: 50%;
 	width: 1200px;
 	height: 800px;
-	margin-left: -600px;
+	margin-left: 200px;
 	margin-top: 20px;
 	color: rgb(230,179,61);
+	float:left;
 }
 
 .game-div table{

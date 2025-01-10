@@ -21,6 +21,12 @@ public class Event {
 	public boolean disaster(boolean f) {
 		return f;
 	}
+	public boolean distributeCoins(int x) {
+		return false;
+	}
+	public boolean singleBackHandle(Player p) {
+		return false;
+	}
 	public void newRound() {}
 
 	public int getNum() {

@@ -34,6 +34,11 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
+		adjustLogs = function(logElementId){
+			var logcontent = document.getElementById(logElementId);
+			logcontent.scrollTop = logcontent.scrollHeight;
+		}
+		
 		setRevealedStyle = function(){
 			$scope.revealedStyle = []
 			for (i=0;i<$scope.revealed.length;i++){
@@ -85,6 +90,7 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 				$scope.stillIn = response.data.stillIn;
 				$scope.leftover = response.data.leftover;
 				$scope.removed = response.data.removed;
+				$scope.logs = response.data.logs;
 				$scope.useEvent = response.data.useEvent;
 				$scope.event = response.data.event;
 				$scope.event.estyle = {
@@ -92,6 +98,10 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 					"background-size":"cover"
 				}
 				setRevealedStyle()
+				
+				$http.post('/citadelsgame/empty').then(function(response){
+					adjustLogs("log-zone")
+				});
 			});
 		}
 		

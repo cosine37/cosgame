@@ -23,6 +23,7 @@ public class Board {
 	boolean useEvent;
 	AllRes allRes;
 	Event event;
+	Logger logger;
 	MongoDBUtil dbutil;
 	
 	public Board() {
@@ -33,6 +34,7 @@ public class Board {
 		removed = new ArrayList<>();
 		allRes = new AllRes();
 		event = new Event();
+		logger = new Logger();
 		
 		String dbname = "gravepsycho";
 		String col = "board";
@@ -69,6 +71,9 @@ public class Board {
 				}
 			}
 		}
+		if (useEvent && event != null) {
+			ans = event.disaster(ans);
+		}
 		return ans;
 	}
 	
@@ -92,12 +97,20 @@ public class Board {
 		int y = leftover % n;
 		int i;
 		leftover = y;
-		for (i=0;i<backPlayers.size();i++) {
-			backPlayers.get(i).setStillIn(false);
-			backPlayers.get(i).addMoney(x);
-		}
+		
+		logger.logBack(backPlayers);
+		
 		if (backPlayers.size() == 1) {
 			Player p = backPlayers.get(0);
+			if (useEvent && event != null) {
+				boolean finished = event.singleBackHandle(p);
+				if (finished) return;
+			}
+			for (i=0;i<backPlayers.size();i++) {
+				backPlayers.get(i).setStillIn(false);
+				backPlayers.get(i).addMoney(x);
+			}
+			
 			for (i=revealed.size()-1;i>=0;i--) {
 				if (revealed.get(i).getType() == Consts.TREASURE) {
 					Card c = revealed.remove(i);
@@ -105,7 +118,14 @@ public class Board {
 					p.addMoney(c.getNum());
 				}
 			}
+		} else {
+			for (i=0;i<backPlayers.size();i++) {
+				backPlayers.get(i).setStillIn(false);
+				backPlayers.get(i).addMoney(x);
+			}
 		}
+		
+		
 	}
 	
 	public void allBackHandle() {
@@ -153,13 +173,15 @@ public class Board {
 		shuffle();
 		status = Consts.PENDING;
 		leftover = 0;
+		round++;
+		logger.logRoundStart(round);
 		if (useEvent) {
 			AllRes allRes = new AllRes();
 			event = allRes.getRandomEvent();
 			event.setBoard(this);
 			event.newRound();
 		}
-		round++;
+		
 	}
 	
 	public void shuffle() {
@@ -176,23 +198,34 @@ public class Board {
 	
 	public void distributeCoins(Card c) {
 		if (c.getType() == Consts.COIN) {
+			if (useEvent && event != null) {
+				boolean finished = event.distributeCoins(c.getNum());
+				if (finished) return;
+			}
+			
 			int i;
 			int n=0;
+			
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).isStillIn()) {
 					n++;
 				}
 			}
+			
 			if (n>0) {
+				List<String> pnames = new ArrayList<>();
 				int x = c.getNum()/n;
 				int y = c.getNum()%n;
 				leftover = leftover+y;
 				for (i=0;i<players.size();i++) {
 					if (players.get(i).isStillIn()) {
 						players.get(i).addMoney(x);
+						pnames.add(players.get(i).getName());
 					}
 				}
+				logger.logDistributeCoins(pnames, x);
 			}
+			
 		}
 	}
 	
@@ -205,6 +238,7 @@ public class Board {
 		}
 		Card c = deck.remove(0);
 		revealed.add(c);
+		logger.logRevealCard(c);
 		if (c.getType() == Consts.DISASTER) {
 			if (disaster()) {
 				disasterHandle();
@@ -357,6 +391,12 @@ public class Board {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
 
 	public void genBoardId() {
 		Date date = new Date();
@@ -451,6 +491,10 @@ public class Board {
 		dbutil.update("id", id, "removed", lot);
 	}
 	
+	public void updateLogs() {
+		dbutil.update("id", id, "logs", logger.getLogs());
+	}
+	
 	public void dismiss() {
 		dbutil.delete("id", id);
 	}
@@ -519,6 +563,7 @@ public class Board {
 		entity.setAvatar(avatar);
 		entity.setUseEvent(useEvent);
 		entity.setEvent(event.toEventEntity());
+		entity.setLogs(logger.getLogs());
 		return entity;
 	}
 	
@@ -561,6 +606,7 @@ public class Board {
 		doc.append("leftover", leftover);
 		doc.append("event", event.getNum());
 		doc.append("useEvent", useEvent);
+		doc.append("logs", logger.getLogs());
 		return doc;
 	}
 	
@@ -611,6 +657,8 @@ public class Board {
 		}
 		int eid = doc.getInteger("event", 0);
 		event = EventFactory.makeEvent(eid);
+		List<String> logs = (List<String>) doc.get("logs");
+		logger = new Logger(logs);
 		event.setBoard(this);
 	}
 }

@@ -81,6 +81,16 @@ public class AllRes {
 		events.add(e);
 		e = new Windfall();
 		events.add(e);
+		e = new Relic();
+		events.add(e);
+		e = new Danger();
+		events.add(e);
+		e = new Disappear();
+		events.add(e);
+		e = new Pride();
+		events.add(e);
+		e = new Panic();
+		events.add(e);
 	}
 
 	public List<Card> getDeck() {
@@ -97,7 +107,10 @@ public class AllRes {
 		
 		Random rand = new Random();
 		int x = rand.nextInt(events.size());
-		return events.get(x);
+		Event e = events.get(x);
+		// TODO: test events here
+		e = new Pride();
+		return e;
 	}
 	
 }

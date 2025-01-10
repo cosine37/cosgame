@@ -21,6 +21,7 @@ public class BoardEntity {
 	List<String> money;
 	List<String> moneyThisTurn;
 	List<String> avatar;
+	List<String> logs;
 	
 	EventEntity event;
 	
@@ -131,6 +132,12 @@ public class BoardEntity {
 	}
 	public void setEvent(EventEntity event) {
 		this.event = event;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 	
 }

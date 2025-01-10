@@ -100,6 +100,8 @@ public class GravepsychoController {
 		board.updateDeck();
 		board.updateTreasures();
 		board.updatePlayers();
+		board.updateRevealed();
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
@@ -135,6 +137,7 @@ public class GravepsychoController {
 		board.updateRevealed();
 		board.updatePlayers();
 		board.updateRemoved();
+		board.updateLogs();
 		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}

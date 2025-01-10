@@ -80,7 +80,7 @@ body {
 				</tr>
 				<tr>
 					<td>
-						归途剩余钱币{{leftover}}
+						归途剩余钱币：{{leftover}}
 					</td>
 				</tr>
 			</table>
@@ -137,5 +137,11 @@ body {
 			</table>
 		</div>
 		
+	</div>
+	<div style="width: 400px; color:white;margin-left: 20px; margin-top: 80px; float:left">
+		<div id="log-zone" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height: 500px;
+			border: 1px solid black; background:rgba(0,0,0,0.5)">
+			<div ng-repeat="log in logs track by $index">{{log}}</div>
+		</div>
 	</div>
 </body>

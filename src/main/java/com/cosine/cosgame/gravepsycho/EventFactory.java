@@ -9,6 +9,16 @@ public class EventFactory {
 			event = new Classic();
 		} else if (x == 11) {
 			event = new Windfall();
+		} else if (x == 13) {
+			event = new Relic();
+		} else if (x == 5) {
+			event = new Danger();
+		} else if (x == 8) {
+			event = new Disappear();
+		} else if (x == 3) {
+			event = new Pride();
+		} else if (x == 14) {
+			event = new Panic();
 		}
 		return event;
 	}
