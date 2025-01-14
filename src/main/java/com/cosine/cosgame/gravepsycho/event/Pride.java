@@ -37,6 +37,5 @@ public class Pride extends Event{
 			return false;
 		}
 		
-		
 	}
 }

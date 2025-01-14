@@ -91,6 +91,16 @@ public class AllRes {
 		events.add(e);
 		e = new Panic();
 		events.add(e);
+		e = new Focus();
+		events.add(e);
+		e = new WealOrWoe();
+		events.add(e);
+		e = new Search();
+		events.add(e);
+		e = new Rain();
+		events.add(e);
+		e = new Impatient();
+		events.add(e);
 	}
 
 	public List<Card> getDeck() {
@@ -109,7 +119,7 @@ public class AllRes {
 		int x = rand.nextInt(events.size());
 		Event e = events.get(x);
 		// TODO: test events here
-		e = new Pride();
+		e = new Impatient();
 		return e;
 	}
 	

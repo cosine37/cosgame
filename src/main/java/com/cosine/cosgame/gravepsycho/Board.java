@@ -196,36 +196,55 @@ public class Board {
 		}
 	}
 	
-	public void distributeCoins(Card c) {
-		if (c.getType() == Consts.COIN) {
-			if (useEvent && event != null) {
-				boolean finished = event.distributeCoins(c.getNum());
-				if (finished) return;
+	public void distributeCoins(int numCoins) {
+		if (useEvent && event != null) {
+			boolean finished = event.distributeCoins(numCoins);
+			if (finished) return;
+		}
+		
+		int i;
+		int n=0;
+		
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).isStillIn()) {
+				n++;
 			}
-			
-			int i;
-			int n=0;
-			
+		}
+		
+		if (n>0) {
+			List<String> pnames = new ArrayList<>();
+			int x = numCoins/n;
+			int y = numCoins%n;
+			leftover = leftover+y;
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).isStillIn()) {
-					n++;
+					players.get(i).addMoney(x);
+					pnames.add(players.get(i).getName());
 				}
 			}
-			
-			if (n>0) {
-				List<String> pnames = new ArrayList<>();
-				int x = c.getNum()/n;
-				int y = c.getNum()%n;
-				leftover = leftover+y;
-				for (i=0;i<players.size();i++) {
-					if (players.get(i).isStillIn()) {
-						players.get(i).addMoney(x);
-						pnames.add(players.get(i).getName());
-					}
-				}
-				logger.logDistributeCoins(pnames, x);
+			logger.logDistributeCoins(pnames, x);
+		}
+	}
+	
+	public void distributeCoins(Card c) {
+		if (c.getType() == Consts.COIN) {
+			distributeCoins(c.getNum());
+		}
+	}
+	
+	public void revealACard() {
+		Card c = deck.remove(0);
+		revealed.add(c);
+		logger.logRevealCard(c);
+		if (useEvent && event != null) {
+			event.onReveal(c);
+		}
+		if (c.getType() == Consts.DISASTER) {
+			if (disaster()) {
+				disasterHandle();
 			}
-			
+		} else if (c.getType() == Consts.COIN) {
+			distributeCoins(c);
 		}
 	}
 	
@@ -236,16 +255,13 @@ public class Board {
 				players.get(i).setDecision(Consts.UNDECIDED);
 			}
 		}
-		Card c = deck.remove(0);
-		revealed.add(c);
-		logger.logRevealCard(c);
-		if (c.getType() == Consts.DISASTER) {
-			if (disaster()) {
-				disasterHandle();
-			}
-		} else if (c.getType() == Consts.COIN) {
-			distributeCoins(c);
+		
+		if (useEvent && event != null) {
+			boolean finished = event.revealNext();
+			if (finished) return;
 		}
+		
+		revealACard();
 	}
 	
 	public boolean allBack() {

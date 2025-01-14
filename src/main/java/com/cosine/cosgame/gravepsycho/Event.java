@@ -27,6 +27,12 @@ public class Event {
 	public boolean singleBackHandle(Player p) {
 		return false;
 	}
+	public boolean revealNext() {
+		return false;
+	}
+	public void onReveal(Card c) {
+		
+	}
 	public void newRound() {}
 
 	public int getNum() {

@@ -19,6 +19,16 @@ public class EventFactory {
 			event = new Pride();
 		} else if (x == 14) {
 			event = new Panic();
+		} else if (x == 9) {
+			event = new Focus();
+		} else if (x == 1) {
+			event = new WealOrWoe();
+		} else if (x == 2) {
+			event = new Search();
+		} else if (x == 16) {
+			event = new Rain();
+		} else if (x == 6) {
+			event = new Impatient();
 		}
 		return event;
 	}
