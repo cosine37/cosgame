@@ -101,6 +101,14 @@ public class AllRes {
 		events.add(e);
 		e = new Impatient();
 		events.add(e);
+		e = new Echo();
+		events.add(e);
+		e = new Guard();
+		events.add(e);
+		e = new Valuable();
+		events.add(e);
+		e = new Certify();
+		events.add(e);
 	}
 
 	public List<Card> getDeck() {
@@ -119,7 +127,7 @@ public class AllRes {
 		int x = rand.nextInt(events.size());
 		Event e = events.get(x);
 		// TODO: test events here
-		e = new Impatient();
+		//e = new Certify();
 		return e;
 	}
 	

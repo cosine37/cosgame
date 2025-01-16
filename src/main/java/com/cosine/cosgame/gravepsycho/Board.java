@@ -78,13 +78,16 @@ public class Board {
 	}
 	
 	public void disasterHandle() {
+		List<String> pnames = new ArrayList<>();
 		for (int i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			p.setDecision(Consts.UNDECIDED);
 			if (p.isStillIn()) {
 				p.setMoneyThisTurn(0);
+				pnames.add(p.getName());
 			}
 		}
+		logger.logDisaster(pnames);
 		status = Consts.DISASTERROUND;
 	}
 	
@@ -109,6 +112,10 @@ public class Board {
 			for (i=0;i<backPlayers.size();i++) {
 				backPlayers.get(i).setStillIn(false);
 				backPlayers.get(i).addMoney(x);
+				if (useEvent && event != null) {
+					boolean finished = event.backHandle(backPlayers.get(i));
+					if (finished) return;
+				}
 			}
 			
 			for (i=revealed.size()-1;i>=0;i--) {
@@ -116,12 +123,18 @@ public class Board {
 					Card c = revealed.remove(i);
 					removed.add(c);
 					p.addMoney(c.getNum());
+					
+					logger.logTreasure(p.getName(), c.getTreasureName());
 				}
 			}
 		} else {
 			for (i=0;i<backPlayers.size();i++) {
 				backPlayers.get(i).setStillIn(false);
 				backPlayers.get(i).addMoney(x);
+				if (useEvent && event != null) {
+					boolean finished = event.backHandle(backPlayers.get(i));
+					if (finished) return;
+				}
 			}
 		}
 		
@@ -148,8 +161,14 @@ public class Board {
 		int i;
 		if (status == Consts.DISASTERROUND) {
 			int x = revealed.size()-1;
-			Card c = revealed.remove(x);
-			removed.add(c);
+			while (x>0) {
+				if (revealed.get(x).getType() == Consts.DISASTER) {
+					Card c = revealed.remove(x);
+					removed.add(c);
+					break;
+				}
+				x--;
+			}
 		}
 		while (revealed.size() > 0) {
 			Card c = revealed.remove(0);
@@ -197,6 +216,8 @@ public class Board {
 	}
 	
 	public void distributeCoins(int numCoins) {
+		if (status == Consts.DISASTERROUND) return;
+		
 		if (useEvent && event != null) {
 			boolean finished = event.distributeCoins(numCoins);
 			if (finished) return;
@@ -235,7 +256,17 @@ public class Board {
 	public void revealACard() {
 		Card c = deck.remove(0);
 		revealed.add(c);
-		logger.logRevealCard(c);
+		if (useEvent && event != null) {
+			boolean override = event.overrideLogReveal(c);
+			if (override) {
+				
+			} else {
+				logger.logRevealCard(c);
+			}
+		} else {
+			logger.logRevealCard(c);
+		}
+		
 		if (useEvent && event != null) {
 			event.onReveal(c);
 		}
@@ -530,7 +561,11 @@ public class Board {
 		String myMoney = "";
 		int i;
 		for (i=0;i<revealed.size();i++) {
-			lor.add(revealed.get(i).getImage());
+			String img = revealed.get(i).getImage();
+			if (useEvent && event != null) {
+				img = event.cardImg(revealed.get(i));
+			}
+			lor.add(img);
 		}
 		for (i=0;i<removed.size();i++) {
 			lov.add(removed.get(i).getImage());

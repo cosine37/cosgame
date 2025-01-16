@@ -8,18 +8,21 @@ import com.cosine.cosgame.gravepsycho.Consts;
 import com.cosine.cosgame.gravepsycho.Event;
 import com.cosine.cosgame.gravepsycho.Player;
 
-public class Search extends Event{
-	public Search() {
+public class Valuable extends Event{
+	public Valuable() {
 		super();
-		this.num = 2;
-		this.img = "search";
-		this.name = "东搜西罗";
-		this.desc = "若你是唯一一个选择返回营地的玩家，获得5枚钱币。";
+		this.num = 19;
+		this.img = "valuable";
+		this.name = "价值连城";
+		this.desc = "本轮游戏翻出的宝物牌价值额外增加5。";
 	}
 	
 	public boolean singleBackHandle(Player p) {
-		p.addMoney(5);
-		board.getLogger().log(p.getName() + "从归途的犄角旮旯中找到了5枚钱币");
+		for (int i=0;i<board.getRevealed().size();i++) {
+			if (board.getRevealed().get(i).getType() == Consts.TREASURE) {
+				p.addMoney(5);
+			}
+		}
 		return false;
 	}
 }

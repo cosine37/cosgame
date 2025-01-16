@@ -82,6 +82,10 @@ public class Logger {
 		log(s);
 	}
 	
+	public void logTreasure(String pname, String tname) {
+		log(pname + "带走了宝物：" + tname);
+	}
+	
 	public void logBack(List<Player> backPlayers) {
 		String s = "";
 		if (backPlayers.size() == 1) {

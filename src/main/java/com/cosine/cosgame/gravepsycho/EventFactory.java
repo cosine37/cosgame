@@ -29,6 +29,14 @@ public class EventFactory {
 			event = new Rain();
 		} else if (x == 6) {
 			event = new Impatient();
+		} else if (x == 18) {
+			event = new Echo();
+		} else if (x == 17) {
+			event = new Guard();
+		} else if (x == 19) {
+			event = new Valuable();
+		} else if (x == 20) {
+			event = new Certify();
 		}
 		return event;
 	}

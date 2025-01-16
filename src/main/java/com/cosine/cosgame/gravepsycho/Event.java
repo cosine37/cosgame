@@ -18,21 +18,14 @@ public class Event {
 		entity.setDesc(desc);
 		return entity;
 	}
-	public boolean disaster(boolean f) {
-		return f;
-	}
-	public boolean distributeCoins(int x) {
-		return false;
-	}
-	public boolean singleBackHandle(Player p) {
-		return false;
-	}
-	public boolean revealNext() {
-		return false;
-	}
-	public void onReveal(Card c) {
-		
-	}
+	public boolean disaster(boolean f) {return f;}
+	public boolean distributeCoins(int x) {return false;}
+	public boolean backHandle(Player p) {return false;}
+	public boolean singleBackHandle(Player p) {return false;}
+	public boolean revealNext() {return false;}
+	public void onReveal(Card c) {}
+	public String cardImg(Card c) {return c.getImage();}
+	public boolean overrideLogReveal(Card c) {return false;}
 	public void newRound() {}
 
 	public int getNum() {
