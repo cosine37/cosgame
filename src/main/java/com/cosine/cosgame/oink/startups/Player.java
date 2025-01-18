@@ -319,11 +319,7 @@ public class Player {
 					
 					
 					if (startups.roundEnd()) {
-						if (startups.gameEnd()) {
-							startups.endGame();
-						} else {
-							startups.endRound();
-						}
+						startups.endRound();
 					} else {
 						startups.nextPlayer();
 					}

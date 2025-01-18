@@ -11,6 +11,7 @@ import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.oink.grove.Grove;
 import com.cosine.cosgame.oink.pope.PopeGame;
 import com.cosine.cosgame.oink.startups.Startups;
+import com.cosine.cosgame.oink.west.West;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -25,6 +26,7 @@ public class Board {
 	Startups startups;
 	Grove grove;
 	PopeGame pope;
+	West west;
 	
 	MongoDBUtil dbutil;
 	
@@ -32,6 +34,7 @@ public class Board {
 		startups = new Startups(this);
 		grove = new Grove(this);
 		pope = new PopeGame(this);
+		west = new West(this);
 		
 		playerNames = new ArrayList<>();
 		
@@ -51,6 +54,8 @@ public class Board {
 		} else if (game == Consts.GROVE) {
 			doc = grove.toDocument();
 		} else if (game == Consts.POPE) {
+			doc = pope.toDocument();
+		} else if (game == Consts.WEST) {
 			doc = pope.toDocument();
 		}
 		
@@ -86,6 +91,8 @@ public class Board {
 			grove.setFromDoc(doc);
 		} else if (game == Consts.POPE) {
 			pope.setFromDoc(doc);
+		} else if (game == Consts.WEST) {
+			west.setFromDoc(doc);
 		}
 	}
 	

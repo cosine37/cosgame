@@ -3,6 +3,8 @@ package com.cosine.cosgame.oink.west;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public class Player {
 	String name;
 	int index;
@@ -16,6 +18,53 @@ public class Player {
 	List<Card> discard;
 	
 	West west;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		doc.append("name",name);
+		doc.append("index",index);
+		doc.append("phase",phase);
+		doc.append("coins",coins);
+		doc.append("stillIn",stillIn);
+		doc.append("alive",alive);
+		doc.append("confirmed",confirmed);
+		List<Document> handDocList = new ArrayList<>();
+		for (i=0;i<hand.size();i++){
+			handDocList.add(hand.get(i).toDocument());
+		}
+		doc.append("hand",handDocList);
+		List<Document> discardDocList = new ArrayList<>();
+		for (i=0;i<discard.size();i++){
+			discardDocList.add(discard.get(i).toDocument());
+		}
+		doc.append("discard",discardDocList);
+		return doc;
+	}
+	public void setFromDoc(Document doc){
+		int i;
+		name = doc.getString("name");
+		index = doc.getInteger("index",0);
+		phase = doc.getInteger("phase",0);
+		coins = doc.getInteger("coins",0);
+		stillIn = doc.getBoolean("stillIn",false);
+		alive = doc.getBoolean("alive",false);
+		confirmed = doc.getBoolean("confirmed",false);
+		List<Document> handDocList = (List<Document>)doc.get("hand");
+		hand = new ArrayList<>();
+		for (i=0;i<handDocList.size();i++){
+			Card e = new Card();
+			e.setFromDoc(handDocList.get(i));
+			hand.add(e);
+		}
+		List<Document> discardDocList = (List<Document>)doc.get("discard");
+		discard = new ArrayList<>();
+		for (i=0;i<discardDocList.size();i++){
+			Card e = new Card();
+			e.setFromDoc(discardDocList.get(i));
+			discard.add(e);
+		}
+	}
 	
 	public Player() {
 		

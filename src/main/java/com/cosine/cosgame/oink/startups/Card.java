@@ -77,7 +77,7 @@ public class Card {
 		} else if (num == 8) {
 			ans = "八哥软件";
 		} else if (num == 9) {
-			ans = "九转香肠";
+			ans = "九转腊肠";
 		} else if (num == 10) {
 			ans = "十年纱窗";
 		}
