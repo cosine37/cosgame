@@ -110,6 +110,16 @@ public class AllRes {
 		e = new Certify();
 		events.add(e);
 	}
+	
+	public List<EventEntity> genEventsAsEntity(){
+		events = new ArrayList<>();
+		genEvents();
+		List<EventEntity> ees = new ArrayList<>();
+		for (int i=0;i<events.size();i++) {
+			ees.add(events.get(i).toEventEntity());
+		}
+		return ees;
+	}
 
 	public List<Card> getDeck() {
 		return deck;

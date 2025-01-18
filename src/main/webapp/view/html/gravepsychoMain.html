@@ -10,6 +10,7 @@
 <script src="/js/lib/angular.js"></script>
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
+<script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/gravepsychoMainController.js"></script>
 <body ng-app="gravepsychoMainApp" ng-controller="gravepsychoMainCtrl" style="background-color:rgb(230,179,61)">
 	<div id="header" class="header">
@@ -35,7 +36,10 @@
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
+				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">基本规则</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#eventstab" ng-click="hideTablesTab()">事事顺意</a>
 				    </li>
 				  </ul>
 			</div>
@@ -69,7 +73,7 @@
 					</table>
 				</div>
 				<div id="rulestab" class="content container tab-pane fade">
-					<h2><b>规则</b></h2>
+					<h2><b>基本规则</b></h2>
 					<table>
 						<tr>
 							<td colspan="2" style="width: 1000px"><h4><b>背景</b></h4></td>
@@ -145,6 +149,29 @@
 						<tr>
 							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第5轮结束后游戏结束，分数最高的玩家获得胜利。若平手，则共同胜利。</td>
 						</tr>
+					</table>
+				</div>
+				<div id="eventstab" class="content container tab-pane fade">
+					<h2><b>事事顺意</b></h2>
+					<table>
+						<tr>
+							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时可以选择使用<b>事事顺意</b>扩展。改编于官方在2024年出的新版游戏。
+							在每一轮游戏开始前会翻出一张<b>事件</b>。<b>事件</b>不是牌库里的牌，而是在当前轮次引入的额外规则。以下为该扩展的全部事件。
+							</td>
+						</tr>
+						<tr ng-repeat = "event in allEvents track by $index">
+							<td style="width: 1000px; padding-top: 10px">
+								<div style="border: 10px solid grey; border-radius: 10px; width: 490px; height: 280px;
+									 position:relative" ng-style="event.estyle">
+									<div style="border: 2px solid rgb(200,149,31); background:rgb(23,44,60); margin-top: -10px; width: 170px; margin-left: 158px; border-radius: 5px;
+										font-family: 'ls'; font-size: 36px; color: rgb(200,149,31);  text-align:center">{{event.name}}</div>
+									<div style="background:rgba(0,0,0,0.8);color: white;position: absolute; bottom: 0px; width: 470px; height: 50px; text-align:center">
+										{{event.desc}}
+									</div>
+								</div>
+							</td>
+						</tr>
+						
 					</table>
 				</div>
 			</div>

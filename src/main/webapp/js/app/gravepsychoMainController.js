@@ -4,9 +4,9 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("gravepsychoMainApp", []);
-app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("gravepsychoMainApp", ["ngWebSocket"]);
+app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
 		const thisTab = "gravepsycho";
 		$http.get('/alltabs').then(function(response){
 			var tempTabs = response.data;
@@ -24,6 +24,26 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 			}
 			
 			$scope.allTabs = tempTabs;
+		});
+		
+		var ws = $websocket("ws://" + $window.location.host + "/gravepsycho/allboardsrefresh");
+		ws.onError(function(event) {
+		});
+	
+		ws.onClose(function(event) {
+		});
+	
+		ws.onOpen(function() {
+		});
+		
+		var boardws = $websocket("ws://" + $window.location.host + "/gravepsycho/boardrefresh");
+		boardws.onError(function(event) {
+		});
+	
+		boardws.onClose(function(event) {
+		});
+	
+		boardws.onOpen(function() {
 		});
 		
 		$scope.onTablesTab = true;
@@ -80,6 +100,8 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 		
 		$scope.newGame = function(){
 			$http({url: "/gravepsycho/newboard", method: "POST"}).then(function(response){
+				var json_data = '{"type":"notify","content":"refresh"}';
+		        ws.send(json_data);
 				$scope.goto('gravepsychocreategame');
 			});
 		}
@@ -88,6 +110,7 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/gravepsycho/setboardid", method: "POST", params: data}).then(function(response){
 				$http.post("/gravepsycho/join").then(function(response){
+					boardws.send("refresh");
 					$scope.goto('gravepsychocreategame')
 				});
 			});
@@ -100,17 +123,24 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			if ($scope.onTablesTab){
-				$scope.getAllBoards();
-			}
-			
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},4000);
-			
+		$scope.getAllEvents = function(){
+			$scope.allEvents = [];
+			$http.get('/gravepsycho/allevents').then(function(response){
+				$scope.allEvents = response.data;
+				for (var i=0;i<$scope.allEvents.length;i++){
+					var estyle = {
+						"background":"url('/image/Gravepsycho/Events/" + $scope.allEvents[i].img + ".png')",
+						"background-size":"cover"
+					}
+					$scope.allEvents[i].estyle = estyle;
+				}
+			});
 		}
+		$scope.getAllEvents();
 		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getAllBoards();
+		});
+		$scope.getAllBoards();
 		
 }]);

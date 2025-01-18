@@ -4,9 +4,34 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("gravepsychoCreateGameApp", []);
-app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("gravepsychoCreateGameApp", ["ngWebSocket"]);
+app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/gravepsycho/boardrefresh");
+		var heartCheck = {
+			timeout: 10000,//10s
+			timeoutObj: null,
+			reset: function(){
+				clearTimeout(this.timeoutObj);
+			　　 	this.start();
+			},
+			start: function(){
+				this.timeoutObj = setTimeout(function(){
+					var msg = $scope.username + " heart beat"
+					ws.send(msg);
+				}, this.timeout)
+			}
+		}
+		ws.onError(function(event) {
+		});
+		
+		ws.onClose(function(event) {
+		});
+		
+		ws.onOpen(function() {
+			heartCheck.start();
+		});
+		
 		$scope.avatars=[]
 		for (i=0;i<4;i++){
 			var singleLine = []
@@ -37,7 +62,7 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 		$scope.changeAvatar = function(x){
 			var data = {"x" : x}
 			$http({url: "/gravepsycho/setavatar", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("chooseAvatar");
 			});
 		}
 		
@@ -56,13 +81,14 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 			}
 			var data = {"useEvent" : x}
 			$http({url: "/gravepsycho/startgame", method: "POST", params: data}).then(function(response){
+				ws.send("start");
 				$scope.goto('gravepsychogame')
 			});
 		}
 		
 		$scope.dismiss = function(){
 			$http.post('/gravepsycho/dismiss').then(function(response){
-				$scope.goto('gravepsycho')
+				ws.send("dismiss");
 			});
 		}
 		
@@ -84,13 +110,10 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			$scope.getBoard();
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},2500);
-		}
+		$scope.getBoard();
 		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
 		
 }]);

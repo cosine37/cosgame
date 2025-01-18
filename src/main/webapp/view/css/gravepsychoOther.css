@@ -1,8 +1,5 @@
 @charset "UTF-8";
-@font-face{
-     font-family: 'ls'; 
-     src:url('/font/FZLSJW.woff') format('woff')
-}
+
 button{
 	outline: none;
 	color: rgb(230,179,61);

@@ -1,4 +1,9 @@
 @charset "UTF-8";
+@font-face{
+     font-family: 'ls'; 
+     src:url('/font/FZLSJW.woff') format('woff')
+}
+
 .nav-tabs .nav-link.active{
 	background: rgb(0,100,100);
 	color: white;

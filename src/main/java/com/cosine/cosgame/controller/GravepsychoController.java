@@ -1,5 +1,7 @@
 package com.cosine.cosgame.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.gravepsycho.AllRes;
 import com.cosine.cosgame.gravepsycho.Board;
 import com.cosine.cosgame.gravepsycho.BoardEntity;
+import com.cosine.cosgame.gravepsycho.EventEntity;
 import com.cosine.cosgame.gravepsycho.GravepsychoMeta;
 import com.cosine.cosgame.gravepsycho.Player;
 import com.cosine.cosgame.util.StringEntity;
@@ -172,5 +176,11 @@ public class GravepsychoController {
 		
 		BoardEntity entity = board.toBoardEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/gravepsycho/allevents", method = RequestMethod.GET)
+	public ResponseEntity<List<EventEntity>> allEvents(HttpServletRequest request){
+		AllRes allRes = new AllRes();
+		return new ResponseEntity<>(allRes.genEventsAsEntity(), HttpStatus.OK);
 	}
 }

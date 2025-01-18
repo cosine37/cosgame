@@ -4,9 +4,19 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("gravepsychoGameApp", []);
-app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout',
-	function($scope, $window, $http, $document, $timeout){
+var app = angular.module("gravepsychoGameApp", ["ngWebSocket"]);
+app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+	function($scope, $window, $http, $document, $timeout, $websocket){
+		var ws = $websocket("ws://" + $window.location.host + "/oink/boardrefresh");
+		ws.onError(function(event) {
+		});
+		
+		ws.onClose(function(event) {
+		});
+		
+		ws.onOpen(function() {
+		});
+		
 		$scope.myDecision = "-1"
 		$scope.revealed = []
 		$scope.removedIndexes = [[0,1,2,3,4],[5,6,7,8,9]]
@@ -30,7 +40,7 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 		$scope.decision = function(x){
 			var data = {"x" : x}
 			$http({url: "/gravepsycho/decision", method: "POST", params: data}).then(function(response){
-				$scope.getBoard()
+				ws.send("refresh");
 			});
 		}
 		
@@ -105,14 +115,9 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
-		$scope.offturnHandle = function(){
-			if ($scope.myDecision != "0"){
-				$scope.getBoard();
-			}
-			$timeout(function(){
-			    $scope.offturnHandle();
-			},1500);
-		}
+		$scope.getBoard();
 		
-		$scope.offturnHandle();
+		ws.onMessage(function(){
+			$scope.getBoard();
+		});
 }]);
