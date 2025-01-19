@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.west.entity.CardEntity;
+import com.cosine.cosgame.oink.west.entity.PlayerEntity;
+
 public class Player {
 	String name;
 	int index;
@@ -65,9 +68,29 @@ public class Player {
 			discard.add(e);
 		}
 	}
+	public PlayerEntity toPlayerEntity(String username){
+		int i,j;
+		PlayerEntity entity = new PlayerEntity();
+		entity.setName(name);
+		entity.setIndex(index);
+		entity.setCoins(coins);
+		entity.setStillIn(stillIn);
+		entity.setAlive(alive);
+		entity.setConfirmed(confirmed);
+		List<CardEntity> listOfDiscard = new ArrayList<>();
+		for (i=0;i<discard.size();i++){
+			listOfDiscard.add(discard.get(i).toCardEntity(username));
+		}
+		entity.setDiscard(listOfDiscard);
+		return entity;
+	}
 	
 	public Player() {
 		
+	}
+	
+	public Player(String name) {
+		this.name = name;
 	}
 	
 	public void newGame() {

@@ -56,7 +56,7 @@ public class Board {
 		} else if (game == Consts.POPE) {
 			doc = pope.toDocument();
 		} else if (game == Consts.WEST) {
-			doc = pope.toDocument();
+			doc = west.toDocument();
 		}
 		
 		doc.append("id", id);
@@ -110,6 +110,8 @@ public class Board {
 			entity.setGrove(grove.toGroveEntity(username));
 		} else if (game == Consts.POPE) {
 			entity.setPope(pope.toPopeEntity(username));
+		} else if (game == Consts.WEST) {
+			entity.setWest(west.toWestEntity(username));
 		}
 		
 		int i;
@@ -161,6 +163,8 @@ public class Board {
 				grove.startGameUDB();
 			} else if (this.game == Consts.POPE) {
 				pope.startGameUDB(settings);
+			} else if (this.game == Consts.WEST) {
+				west.startGameUDB();
 			}
 		}
 	}

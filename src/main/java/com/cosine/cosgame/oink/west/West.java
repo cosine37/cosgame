@@ -6,6 +6,9 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.west.entity.CardEntity;
+import com.cosine.cosgame.oink.west.entity.PlayerEntity;
+import com.cosine.cosgame.oink.west.entity.WestEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class West {
@@ -83,6 +86,34 @@ public class West {
 			e.setFromDoc(assistDocList.get(i));
 			assist.add(e);
 		}
+	}
+	public WestEntity toWestEntity(String username){
+		int i,j;
+		WestEntity entity = new WestEntity();
+		List<PlayerEntity> listOfPlayers = new ArrayList<>();
+		for (i=0;i<players.size();i++){
+			listOfPlayers.add(players.get(i).toPlayerEntity(username));
+			if (players.get(i).getName().contentEquals(username)){
+				Player p = players.get(i);
+				List<CardEntity> myHand = new ArrayList<>();
+				for (j=0;j<p.getHand().size();j++) {
+					myHand.add(p.getHand().get(j).toCardEntity(username));
+				}
+			}
+		}
+		entity.setPlayers(listOfPlayers);
+		entity.setStatus(board.getStatus());
+		entity.setRound(round);
+		entity.setPool(pool);
+		entity.setWinner(winner);
+		entity.setFirstPlayer(firstPlayer);
+		entity.setCurPlayer(curPlayer);
+		List<CardEntity> listOfAssistEntity = new ArrayList<>();
+		for (i=0;i<assist.size();i++){
+			listOfAssistEntity.add(assist.get(i).toCardEntity(username));
+		}
+		entity.setAssistEntity(listOfAssistEntity);
+		return entity;
 	}
 	
 	public West(Board board) {
@@ -186,6 +217,30 @@ public class West {
 		return x == 1;
 	}
 	
+	// Start actual operations
+	// Actual start game operation
+	public void startGameUDB() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Player p = new Player(playerNames.get(i));
+			p.setWest(this);
+			players.add(p);
+		}
+		
+		// Step 2: set round and curPlayer
+		round = 0;
+		curPlayer = board.getFirstPlayer();
+		firstPlayer = board.getFirstPlayer();
+		newRound();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	// End actual operations
+	
 	public Player getPlayerByName(String name) {
 		for (int i=0;i<players.size();i++) {
 			if (players.get(i).getName().contentEquals(name)) {
@@ -194,7 +249,6 @@ public class West {
 		}
 		return null;
 	}
-	
 	
 	public void updatePlayer(int index) {
 		Player p = players.get(index);

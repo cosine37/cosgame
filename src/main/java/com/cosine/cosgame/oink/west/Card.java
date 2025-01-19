@@ -2,6 +2,8 @@ package com.cosine.cosgame.oink.west;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.west.entity.CardEntity;
+
 public class Card {
 	int num;
 	String name;
@@ -18,6 +20,15 @@ public class Card {
 		num = doc.getInteger("num",0);
 		name = doc.getString("name");
 		desc = doc.getString("desc");
+	}
+	public CardEntity toCardEntity(String username){
+		int i,j;
+		CardEntity entity = new CardEntity();
+		entity.setNum(num);
+		entity.setName(name);
+		entity.setDesc(desc);
+		entity.setImg(getImg());
+		return entity;
 	}
 	
 	public Card() {
@@ -49,6 +60,10 @@ public class Card {
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	public String getImg() {
+		String ans = Integer.toString(num);
+		return ans;
 	}
 	
 }

@@ -20,6 +20,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.STARTUPS = 1;
 		$scope.GROVE = 2;
 		$scope.POPE = 6;
+		$scope.WEST = 4;
 		
 		$scope.INGAME = 1
 		$scope.ROUNDEND = 2

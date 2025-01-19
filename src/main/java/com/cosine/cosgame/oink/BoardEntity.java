@@ -6,6 +6,7 @@ import com.cosine.cosgame.oink.account.entity.AccountEntity;
 import com.cosine.cosgame.oink.grove.entity.GroveEntity;
 import com.cosine.cosgame.oink.pope.entity.PopeEntity;
 import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
+import com.cosine.cosgame.oink.west.entity.WestEntity;
 
 public class BoardEntity {
 	String id;
@@ -19,6 +20,7 @@ public class BoardEntity {
 	StartupsEntity startups;
 	GroveEntity grove;
 	PopeEntity pope;
+	WestEntity west;
 	
 	public String getId() {
 		return id;
@@ -73,5 +75,11 @@ public class BoardEntity {
 	}
 	public void setPope(PopeEntity pope) {
 		this.pope = pope;
+	}
+	public WestEntity getWest() {
+		return west;
+	}
+	public void setWest(WestEntity west) {
+		this.west = west;
 	}
 }
