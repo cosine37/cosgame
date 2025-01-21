@@ -267,4 +267,10 @@ public class Board {
 	public void setPope(PopeGame pope) {
 		this.pope = pope;
 	}
+	public West getWest() {
+		return west;
+	}
+	public void setWest(West west) {
+		this.west = west;
+	}
 }

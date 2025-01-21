@@ -5,12 +5,13 @@ import java.util.List;
 public class WestEntity {
 	List<PlayerEntity> players;
 	int status;
+	int phase;
 	int round;
 	int pool;
 	int winner;
 	int firstPlayer;
 	int curPlayer;
-	List<CardEntity> assistEntity;
+	List<CardEntity> assist;
 	List<CardEntity> myHand;
 	
 	public List<PlayerEntity> getPlayers() {
@@ -55,16 +56,22 @@ public class WestEntity {
 	public void setCurPlayer(int curPlayer) {
 		this.curPlayer = curPlayer;
 	}
-	public List<CardEntity> getAssistEntity() {
-		return assistEntity;
+	public List<CardEntity> getAssist() {
+		return assist;
 	}
-	public void setAssistEntity(List<CardEntity> assistEntity) {
-		this.assistEntity = assistEntity;
+	public void setAssist(List<CardEntity> assistEntity) {
+		this.assist = assistEntity;
 	}
 	public List<CardEntity> getMyHand() {
 		return myHand;
 	}
 	public void setMyHand(List<CardEntity> myHand) {
 		this.myHand = myHand;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
 	}
 }

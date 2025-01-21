@@ -104,6 +104,9 @@ public class Player {
 		if (alive) {
 			stillIn = true;
 		}
+		phase = Consts.OFFTURN;
+		confirmed = false;
+		draw();
 	}
 	
 	public void draw() {

@@ -181,6 +181,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$http.put("/oink/startups/draw").then(function(response){
 					ws.send("refresh");
 				});
+			} else if ($scope.game == $scope.WEST){
+				$http.put("/oink/west/draw").then(function(response){
+					ws.send("refresh");
+				});
 			}
 			
 		}
@@ -191,6 +195,12 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				if ($scope.game == $scope.STARTUPS){
 					var data = {"cardIndex" : $scope.chosenCard}
 					$http({url: "/oink/startups/discard", method: "PUT", params: data}).then(function(response){
+						$scope.chosenCard = -1
+						ws.send("refresh");
+					});
+				} else if ($scope.game == $scope.WEST){
+					var data = {"cardIndex" : $scope.chosenCard}
+					$http({url: "/oink/west/discard", method: "PUT", params: data}).then(function(response){
 						$scope.chosenCard = -1
 						ws.send("refresh");
 					});
@@ -249,6 +259,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						ws.send("refresh");
 					});
 				}
+			} else if ($scope.game == $scope.WEST){
+				$http({url: "/oink/west/exchange", method: "PUT", params: data}).then(function(response){
+					ws.send("refresh");
+				});
 			}
 		}
 		
@@ -607,6 +621,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					});
 					//alert($scope.status)
 					//alert($scope.ENDGAME)
+				} else if ($scope.game == $scope.WEST){
+					$scope.gamedata = response.data.west
+					$scope.hand = $scope.gamedata.myHand
+					$scope.phase = $scope.gamedata.phase
 				}
 				
 				

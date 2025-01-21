@@ -99,6 +99,8 @@ public class West {
 				for (j=0;j<p.getHand().size();j++) {
 					myHand.add(p.getHand().get(j).toCardEntity(username));
 				}
+				entity.setMyHand(myHand);
+				entity.setPhase(p.getPhase());
 			}
 		}
 		entity.setPlayers(listOfPlayers);
@@ -112,7 +114,7 @@ public class West {
 		for (i=0;i<assist.size();i++){
 			listOfAssistEntity.add(assist.get(i).toCardEntity(username));
 		}
-		entity.setAssistEntity(listOfAssistEntity);
+		entity.setAssist(listOfAssistEntity);
 		return entity;
 	}
 	
@@ -143,6 +145,9 @@ public class West {
 		for (i=0;i<players.size();i++) {
 			players.get(i).newRound();
 		}
+		
+		// Step 3: update first player phase
+		players.get(firstPlayer).setPhase(Consts.DRAWORREPLACE);
 	}
 	
 	public Card removeTop() {
@@ -161,16 +166,16 @@ public class West {
 	public void updateAssist() {
 		Card c = removeTop();
 		if (c != null) {
-			assist.add(c);
+			assist.add(0,c);
 		}
+		
 	}
 	
 	public Card getCurAssist() {
-		int x = assist.size()-1;
-		if (x>=0) {
-			return assist.get(x);
-		} else {
+		if (assist.size() == 0) {
 			return null;
+		} else {
+			return assist.get(0);
 		}
 	}
 	
@@ -217,6 +222,37 @@ public class West {
 		return x == 1;
 	}
 	
+	public void nextPlayer() {
+		// Step 1: offturn current player
+		players.get(curPlayer).setPhase(Consts.OFFTURN);
+		
+		// Step 2: find next active player
+		int x = (curPlayer+1) % players.size();
+		while (players.get(x).isAlive() == false && x != firstPlayer) {
+			x = (x+1) % players.size();
+		}
+		curPlayer = x;
+		
+		// Step 3: define next player's status
+		if (status == Consts.INGAME) {
+			if (curPlayer == firstPlayer) {
+				status = Consts.BID;
+				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
+			} else {
+				players.get(curPlayer).setPhase(Consts.DRAWORREPLACE);
+			}
+		} else if (status == Consts.BID) {
+			if (curPlayer == firstPlayer) {
+				status = Consts.RESULT;
+			} else {
+				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
+			}
+		}
+		
+		System.out.println(status);
+		
+	}
+	
 	// Start actual operations
 	// Actual start game operation
 	public void startGameUDB() {
@@ -239,6 +275,44 @@ public class West {
 		updatePlayers();
 		updateBasicDB();
 	}
+	
+	// Actual exchange assist operation
+	public void exchangeUDB(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
+			updateAssist();
+			nextPlayer();
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+		
+	}
+	
+	// Actual draw operation
+	public void playerDrawUDB(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
+			p.draw();
+			p.setPhase(Consts.DISCARD);
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+	}
+	
+	// Actual discard operation
+	public void playerDiscardUDB(String username, int index) {
+		Player p = getPlayerByName(username);
+		if (p != null && p.getPhase() == Consts.DISCARD) {
+			p.discard(index);
+			nextPlayer();
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+	}
+	
 	// End actual operations
 	
 	public Player getPlayerByName(String name) {

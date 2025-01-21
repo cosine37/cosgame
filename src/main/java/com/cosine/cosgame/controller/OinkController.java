@@ -359,6 +359,61 @@ public class OinkController {
 	}
 	// End POPE
 	
+	// Begin WEST
+	@RequestMapping(value="/oink/west/exchange", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westExchange(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().exchangeUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/oink/west/draw", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westDraw(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().playerDrawUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/oink/west/discard", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westDiscard(HttpServletRequest request, @RequestParam int cardIndex){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().playerDiscardUDB(username, cardIndex);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	// End WEST
+	
 	// account handles
 	@RequestMapping(value="/oink/accountinfo", method = RequestMethod.GET)
 	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
