@@ -1,5 +1,8 @@
 package com.cosine.cosgame.oink.west;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.west.entity.CardEntity;
@@ -28,6 +31,23 @@ public class Card {
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setImg(getImg());
+		
+		Map<String, String> avatarStyle = new HashMap<>();
+		avatarStyle.put("background-image", "url(/image/Oink/West/" + getImg() + ".png)");
+		avatarStyle.put("background-size", "cover");
+		
+		Map<String, String> winStyle = new HashMap<>();
+		winStyle.put("background-image", "url(/image/Oink/West/" + getImg() + "w.png)");
+		winStyle.put("background-size", "cover");
+		
+		Map<String, String> loseStyle = new HashMap<>();
+		loseStyle.put("background-image", "url(/image/Oink/West/" + getImg() + "l.png)");
+		loseStyle.put("background-size", "cover");
+		
+		entity.setAvatarStyle(avatarStyle);
+		entity.setWinStyle(winStyle);
+		entity.setLoseStyle(loseStyle);
+		
 		return entity;
 	}
 	

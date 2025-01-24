@@ -52,6 +52,10 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#poperulesstab" ng-click="hideTablesTab()">保卫教宗规则</a>
 				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#westrulesstab" ng-click="hideTablesTab()">兄莠弟攻规则</a>
+				    </li>
 
 				  </ul>
 			</div>
@@ -371,6 +375,11 @@
 						</tr>
 					</table>
 					
+				</div>
+				<div id="westrulesstab" class="content container tab-pane fade">
+					<h2><b>兄莠弟攻规则</b></h2>
+					<div ng-repeat="c in westCards track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-hand card noselect">
+					</div>
 				</div>
 			</div>
 		</div>

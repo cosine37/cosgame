@@ -38,7 +38,7 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.gameMode = 0;
 		$scope.chatBox = 0;
 		$scope.firstPlayer = 0;
-		$scope.gameName = ["抽象小品（请选择游戏）", "初创公司","狗头侦探","","兄友弟恭","","保卫教宗",""]
+		$scope.gameName = ["抽象小品（请选择游戏）", "初创公司","狗头侦探","","兄莠弟攻","","保卫教宗",""]
 		
 		$scope.STARTUPS = 1;
 		$scope.GROVE = 2;

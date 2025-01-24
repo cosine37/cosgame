@@ -15,6 +15,20 @@
      src:url('/font/shxfl.woff') format('woff')
 }
 
+@font-face{
+     font-family: 'lyt'; 
+     src:url('/font/lyt.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'weibei'; 
+     src:url('/font/weibei.woff') format('woff')
+}
+@font-face{
+     font-family: 'hbt'; 
+     src:url('/font/hbt.woff') format('woff')
+}
+
 button{
 	outline: none;
 	color: white;

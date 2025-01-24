@@ -632,7 +632,8 @@ body {
 			<button ng-click="goto('oink')">退出</button>
 		</div>
 		
-		<div>{{gamedata.assist}}</div>
+		<div><div ng-repeat="c in gamedata.assist track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"></div></div>
+		<div style="clear:both"></div>
 		<div ng-show="phase == 1">
 			你可以选择重置救兵或是置换手牌
 			<button ng-click="play()">重置救兵</button>
@@ -644,7 +645,7 @@ body {
 			<button ng-click="chosenCard=1;discard()">弃置1</button>
 		</div>
 		<div>
-			{{gamedata.myHand}}
+			<div ng-repeat="c in gamedata.myHand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"></div>
 		</div>
 		
 	</div>

@@ -121,7 +121,7 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 					} else if (z == '6'){
 						t = '保卫教宗'
 					} else if (z == '4'){
-						t = '兄友弟恭'
+						t = '兄莠弟攻'
 					}
 					$scope.gameModes.push(t);
 					var y = response.data.value[i*5+4]
@@ -389,5 +389,17 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		$scope.popeCards.push(c7);
 		$scope.popeCards.push(c8);
 		$scope.popeCards.push(c9);
+		
+		wc1 = {
+			"num": 15,
+			"name": "孙悟空",
+			"desc": "石头里蹦出来的猢狲，保唐僧西天取经。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/West/1l.png)',
+				"background-size" : 'cover'
+			},
+		}
+		$scope.westCards = []
+		//$scope.westCards.push(wc1);
 	
 }]);
