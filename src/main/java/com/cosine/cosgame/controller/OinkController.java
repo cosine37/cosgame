@@ -412,6 +412,42 @@ public class OinkController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/oink/west/bid", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westBid(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().playerBidUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/oink/west/retreat", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westRetreat(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().playerRetreatUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	// End WEST
 	
 	// account handles

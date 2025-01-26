@@ -14,4 +14,7 @@ public class Consts {
 	public static final int DRAWORREPLACE = 1;
 	public static final int DISCARD = 2;
 	public static final int BIDORRETREAT = 3;
+	
+	// Other rule related
+	public static final int STARTCOINS = 4;
 }

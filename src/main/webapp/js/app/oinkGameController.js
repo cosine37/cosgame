@@ -275,6 +275,17 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$http({url: "/oink/startups/take", method: "PUT", params: data}).then(function(response){
 						ws.send("refresh");
 					});
+				} else if ($scope.game == $scope.WEST){
+					if (x == 1){
+						$http({url: "/oink/west/bid", method: "PUT", params: data}).then(function(response){
+							ws.send("refresh");
+						});
+					} else if (x == 0){
+						$http({url: "/oink/west/retreat", method: "PUT", params: data}).then(function(response){
+							ws.send("refresh");
+						});
+					}
+					
 				}
 			}
 		}
@@ -312,6 +323,20 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				
 			} else if ($scope.game == $scope.POPE){
 				if ($scope.phase == 1 || $scope.phase == 3){
+					$scope.playClickSE();
+					if ($scope.chosenCard == x){
+						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+						$scope.chosenCard = -1
+					} else {
+						if ($scope.chosenCard != -1){
+							$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
+						}
+						$scope.chosenCard = x
+						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "-40px";
+					}
+				}
+			} else if ($scope.game == $scope.WEST){
+				if ($scope.phase == 2){
 					$scope.playClickSE();
 					if ($scope.chosenCard == x){
 						$scope.hand[$scope.chosenCard].cstyle["margin-top"] = "0px";
@@ -625,6 +650,11 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.gamedata = response.data.west
 					$scope.hand = $scope.gamedata.myHand
 					$scope.phase = $scope.gamedata.phase
+					$scope.players = $scope.gamedata.players
+					
+					for (i=0;i<$scope.hand.length;i++){
+						$scope.hand[i].cstyle={}
+					}
 				}
 				
 				

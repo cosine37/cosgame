@@ -95,15 +95,14 @@ public class Player {
 	
 	public void newGame() {
 		alive = true;
-		newRound();
+		coins = Consts.STARTCOINS;
+		//newRound();
 	}
 	
 	public void newRound() {
 		hand = new ArrayList<>();
 		discard = new ArrayList<>();
-		if (alive) {
-			stillIn = true;
-		}
+		stillIn = false;
 		phase = Consts.OFFTURN;
 		confirmed = false;
 		draw();
@@ -126,6 +125,11 @@ public class Player {
 	public void bid(int x) {
 		coins = coins-x;
 		west.addPool(x);
+		stillIn = true;
+	}
+	
+	public void retreat() {
+		stillIn = false;
 	}
 	
 	public int getHandNum() {

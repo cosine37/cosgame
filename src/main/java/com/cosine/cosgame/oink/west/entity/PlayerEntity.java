@@ -11,6 +11,7 @@ public class PlayerEntity {
 	boolean alive;
 	boolean confirmed;
 	List<CardEntity> discard;
+	List<CardEntity> revealed;
 	
 	public String getName() {
 		return name;
@@ -59,5 +60,11 @@ public class PlayerEntity {
 	}
 	public void setDiscard(List<CardEntity> discard) {
 		this.discard = discard;
+	}
+	public List<CardEntity> getRevealed() {
+		return revealed;
+	}
+	public void setRevealed(List<CardEntity> revealed) {
+		this.revealed = revealed;
 	}
 }

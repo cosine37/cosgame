@@ -626,26 +626,47 @@ body {
 	</div>
 	
 	<div ng-show="game==WEST && status != ENDGAME">
-		兄友弟恭
+		兄莠弟攻
 		<div>
 			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 			<button ng-click="goto('oink')">退出</button>
 		</div>
 		
-		<div><div ng-repeat="c in gamedata.assist track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"></div></div>
+		<div ng-repeat="p in players track by $index">
+			{{p.name}}
+			{{p.stillIn}}
+		</div>
 		<div style="clear:both"></div>
-		<div ng-show="phase == 1">
-			你可以选择重置救兵或是置换手牌
-			<button ng-click="play()">重置救兵</button>
-			<button ng-click="draw()">置换手牌</button>
-		</div>
-		<div ng-show="phase == 2">
-			请弃置一张手牌
-			<button ng-click="chosenCard=0;discard()">弃置0</button>
-			<button ng-click="chosenCard=1;discard()">弃置1</button>
-		</div>
+		
 		<div>
-			<div ng-repeat="c in gamedata.myHand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"></div>
+			<div ng-repeat="c in gamedata.assist track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect">
+			</div>
+		</div>
+		<div style="clear:both"></div>
+		
+		<div style="height: 40px;">
+			<div ng-show="phase == -1">
+				现在不是你的回合
+			</div>
+			<div ng-show="phase == 1">
+				你可以选择重置救兵或是置换手牌
+				<button ng-click="play()">重置救兵</button>
+				<button ng-click="draw()">置换手牌</button>
+			</div>
+			<div ng-show="phase == 2">
+				请弃置一张手牌
+				<button ng-click="discard()" ng-show="chosenCard!=-1">弃置</button>
+			</div>
+			<div ng-show="phase == 3">
+				请选择是否需要加入战斗
+				<button ng-click="take(1)">加入</button>
+				<button ng-click="take(0)">退出</button>
+			</div>
+		</div>
+		
+		<div style="padding-top: 50px;">
+			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"
+				ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
 		
 	</div>

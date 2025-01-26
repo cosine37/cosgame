@@ -13,7 +13,6 @@ import com.cosine.cosgame.util.MongoDBUtil;
 
 public class West {
 	List<Player> players;
-	int status;
 	int round;
 	int pool;
 	int winner;
@@ -35,7 +34,6 @@ public class West {
 			String n = "player-" + players.get(i).getName();
 			doc.append(n, players.get(i).toDocument());
 		}
-		doc.append("status",status);
 		doc.append("round",round);
 		doc.append("pool",pool);
 		doc.append("winner",winner);
@@ -66,7 +64,6 @@ public class West {
 			p.setIndex(i);
 			players.add(p);
 		}
-		status = doc.getInteger("status",0);
 		round = doc.getInteger("round",0);
 		pool = doc.getInteger("pool",0);
 		winner = doc.getInteger("winner",0);
@@ -163,6 +160,16 @@ public class West {
 		pool = pool+x;
 	}
 	
+	public int bidCost() {
+		int ans;
+		if (round == 7) {
+			ans = 2;
+		} else {
+			ans = 1;
+		}
+		return ans;
+	}
+	
 	public void updateAssist() {
 		Card c = removeTop();
 		if (c != null) {
@@ -234,22 +241,22 @@ public class West {
 		curPlayer = x;
 		
 		// Step 3: define next player's status
-		if (status == Consts.INGAME) {
+		if (board.getStatus() == Consts.INGAME) {
 			if (curPlayer == firstPlayer) {
-				status = Consts.BID;
+				board.setStatus(Consts.BID);
 				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
 			} else {
 				players.get(curPlayer).setPhase(Consts.DRAWORREPLACE);
 			}
-		} else if (status == Consts.BID) {
+		} else if (board.getStatus() == Consts.BID) {
 			if (curPlayer == firstPlayer) {
-				status = Consts.RESULT;
+				board.setStatus(Consts.RESULT);
 			} else {
 				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
 			}
 		}
 		
-		System.out.println(status);
+		//System.out.println(status);
 		
 	}
 	
@@ -263,6 +270,7 @@ public class West {
 		for (i=0;i<playerNames.size();i++) {
 			Player p = new Player(playerNames.get(i));
 			p.setWest(this);
+			p.newGame();
 			players.add(p);
 		}
 		
@@ -306,6 +314,29 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.DISCARD) {
 			p.discard(index);
+			nextPlayer();
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+	}
+	
+	// Actual bid operation
+	public void playerBidUDB(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
+			p.bid(bidCost());
+			nextPlayer();
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+	}
+	// Actual retreat operation
+	public void playerRetreatUDB(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
+			p.retreat();
 			nextPlayer();
 			
 			updatePlayers();
@@ -385,12 +416,6 @@ public class West {
 	}
 	public void setPlayers(List<Player> players) {
 		this.players = players;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
 	}
 	public int getRound() {
 		return round;
