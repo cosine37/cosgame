@@ -668,6 +668,8 @@ body {
 			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"
 				ng-style="c.cstyle" ng-click="clickCard($index)"></div>
 		</div>
-		
+		<div>
+			{{gamedata.logs}}
+		</div>
 	</div>
 </body>

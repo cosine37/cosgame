@@ -13,6 +13,7 @@ public class WestEntity {
 	int curPlayer;
 	List<CardEntity> assist;
 	List<CardEntity> myHand;
+	List<String> logs;
 	
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -73,5 +74,11 @@ public class WestEntity {
 	}
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 }

@@ -23,6 +23,7 @@ public class West {
 	List<Card> assist;
 	
 	Board board;
+	Logger logger;
 	
 	MongoDBUtil dbutil;
 	
@@ -49,6 +50,7 @@ public class West {
 			assistDocList.add(assist.get(i).toDocument());
 		}
 		doc.append("assist",assistDocList);
+		doc.append("logs", logger.getLogs());
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -83,6 +85,8 @@ public class West {
 			e.setFromDoc(assistDocList.get(i));
 			assist.add(e);
 		}
+		List<String> logs = (List<String>) doc.get("logs");
+		logger = new Logger(logs);
 	}
 	public WestEntity toWestEntity(String username){
 		int i,j;
@@ -112,11 +116,14 @@ public class West {
 			listOfAssistEntity.add(assist.get(i).toCardEntity(username));
 		}
 		entity.setAssist(listOfAssistEntity);
+		entity.setLogs(logger.getLogs());
 		return entity;
 	}
 	
 	public West(Board board) {
 		this.board = board;
+		
+		logger = new Logger();
 		
 		String dbname = "oink";
 		String col = "board";
@@ -145,6 +152,9 @@ public class West {
 		
 		// Step 3: update first player phase
 		players.get(firstPlayer).setPhase(Consts.DRAWORREPLACE);
+		
+		// Step 4: log new round
+		logger.logRoundStart(round);
 	}
 	
 	public Card removeTop() {
@@ -290,6 +300,7 @@ public class West {
 		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
 			updateAssist();
 			nextPlayer();
+			logger.logExchange(p, getCurAssist());
 			
 			updatePlayers();
 			updateBasicDB();
@@ -303,6 +314,7 @@ public class West {
 		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
 			p.draw();
 			p.setPhase(Consts.DISCARD);
+			logger.logDraw(p);
 			
 			updatePlayers();
 			updateBasicDB();
@@ -315,6 +327,7 @@ public class West {
 		if (p != null && p.getPhase() == Consts.DISCARD) {
 			p.discard(index);
 			nextPlayer();
+			logger.logDiscard(p, p.getDiscard().get(0));
 			
 			updatePlayers();
 			updateBasicDB();
@@ -327,17 +340,20 @@ public class West {
 		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
 			p.bid(bidCost());
 			nextPlayer();
+			logger.logBid(p, bidCost());
 			
 			updatePlayers();
 			updateBasicDB();
 		}
 	}
+	
 	// Actual retreat operation
 	public void playerRetreatUDB(String username) {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
 			p.retreat();
 			nextPlayer();
+			logger.logRetreat(p);
 			
 			updatePlayers();
 			updateBasicDB();
@@ -396,6 +412,7 @@ public class West {
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("winner", winner);
 		updateDB("pool", pool);
+		updateDB("logs", logger.getLogs());
 	}
 	
 	public void updateDB(String key, Object value) {
