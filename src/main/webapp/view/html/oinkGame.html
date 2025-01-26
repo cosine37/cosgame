@@ -133,6 +133,11 @@ body {
 			background-color: rgba(0,0,0,0.7); color:white; padding: 5px;">
 			<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
 		</div>
+		<div style="position: absolute; right: 20px; bottom: 110px;">
+			<label for="volumeControl">音量: </label>
+			<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+			<span>{{ (volume * 100) | number:0 }}%</span>
+		</div>
 		<div ng-include="'/view/html/StartupsEndRound.html'" class="noselect" ng-show="showEndRoundInfo"></div>
 	</div>
 	
@@ -278,8 +283,13 @@ body {
 					
 				</td>
 				<td rowspan="2" colspan="2" style="vertical-align: top;border: 2px solid darkslategrey;background-color: rgb(25,25,25);">
-					<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height:820px;">
+					<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 5px; height:780px;">
 						<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
+					</div>
+					<div style="padding-left: 290px;">
+						<label for="volumeControl" style="color:white">音量: </label>
+						<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+						<span style="color:white">{{ (volume * 100) | number:0 }}%</span>
 					</div>
 					<div>
 						<span style="font-weight: bold; font-size: 60px; color:white; padding-left: 260px;">狗头侦探</span>
@@ -397,7 +407,7 @@ body {
 			</table>
 		</div>
 		<div style="height:30px"></div>
-		<div style="margin-left:30px;">
+		<div style="margin-left:30px; width: 1020px">
 			<div style="float:left">*狗头标记少的玩家排名靠前。若数量相等，则因自己指控而获得的狗头标记(</div>
 			<div style="float:left;height: 20px; width:20px; background:url('/image/Oink/Grove/doge1.png'); background-size:cover;"></div>
 			<div>)少的玩家排名靠前。若依然相等，则最后一轮行动顺序靠前的玩家排名靠前。</div>
@@ -407,7 +417,12 @@ body {
 			<h2>你获得了</h2>
 			<div ng-repeat="rewardMsg in gamedata.endGameRewards">{{rewardMsg}}</div>
 		</div>
-		<div style="margin-left: 300px; margin-top: 50px;">
+		<div style="margin-left: 260px; margin-top: 20px;">
+			<label for="volumeControl" style="color:white">音量: </label>
+			<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+			<span style="color:white">{{ (volume * 100) | number:0 }}%</span>
+		</div>
+		<div style="margin-left: 300px; margin-top: 30px;">
 			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 			<button ng-click="goto('oink')">退出</button>
 		</div>
@@ -560,6 +575,11 @@ body {
 					border-bottom: 2px solid black;background-color: rgba(0,0,0,0.6); padding-bottom: 20px;">
 					<div>第 {{gamedata.round}} 局</div>
 					<div>牌堆数量： {{gamedata.deckSize}} </div>
+					<div>
+						<label for="volumeControl">音量: </label>
+						<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+						<span>{{ (volume * 100) | number:0 }}%</span>
+					</div>
 					<div>
 						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 						<button ng-click="goto('oink')">退出</button>

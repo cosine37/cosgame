@@ -39,6 +39,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.playingBGM = false
 		$scope.bgm = new Audio();
+		$scope.volume = 0.5;
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
 		randomizeBGM = function(){
 			if ($scope.game == $scope.STARTUPS){
 				v = Math.floor(Math.random() * 3)+1;
@@ -84,7 +88,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				
 			}
-			
+			$scope.bgm.volume = $scope.volume;
 		}
 		$scope.bgm.addEventListener("ended", function() {
 			randomizeBGM()
@@ -115,6 +119,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.playClickSE = function(){
 			var audio = new Audio("/sound/Oink/click.wav")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
@@ -122,16 +127,19 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			v = Math.floor(Math.random() * 3)+1;
 			bgmSrc = '/sound/Oink/reveal' + v + '.mp3'
 			var audio = new Audio(bgmSrc)
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		$scope.playMsgSE = function(){
 			var audio = new Audio( '/sound/Oink/msg.mp3')
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		$scope.playPopeReceiveKeySE = function(){
 			var audio = new Audio( '/sound/Oink/pope5.mp3')
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
@@ -139,6 +147,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			v = Math.floor(Math.random() * 2)+6;
 			bgmSrc = '/sound/Oink/pope' + v + '.mp3'
 			var audio = new Audio(bgmSrc)
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 	

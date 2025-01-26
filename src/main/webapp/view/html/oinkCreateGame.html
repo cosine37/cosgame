@@ -51,6 +51,10 @@
 				</td>
 				<td style="vertical-align: top; background-color:rgb(240,240,240); border-left: 1px groove lightgrey;">
 					<div style="text-align: right; padding-right: 10px; padding-top: 5px">
+						<label for="volumeControl">音量: </label>
+						<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+						<span>{{ (volume * 100) | number:0 }}%</span>
+						
 						<button ng-click="dismiss()" ng-show="username == lord">解散</button>
 						<button ng-click="goto('oink')">退出</button>
 					</div>

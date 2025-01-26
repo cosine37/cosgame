@@ -52,11 +52,16 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.useDeluxe = true;
 		
 		$scope.bgm = new Audio();
+		$scope.volume = 0.5;
 		randomizeBGM = function(){
 			v = Math.floor(Math.random() * 2)+1;
 			bgmSrc = '/sound/Oink/create' + v + '.mp3'
 			$scope.bgm.src = bgmSrc
+			$scope.bgm.volume = $scope.volume;
 		}
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
 		$scope.bgm.addEventListener("ended", function() {
 			randomizeBGM()
 			$scope.bgm.play();
@@ -65,16 +70,19 @@ app.controller("oinkCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.playClickSE = function(){
 			var audio = new Audio("/sound/Oink/click.wav")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		$scope.playMsgSE = function(){
 			var audio = new Audio("/sound/Oink/msg.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		$scope.playKnockSE = function(){
 			var audio = new Audio("/sound/Oink/knock.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 	
