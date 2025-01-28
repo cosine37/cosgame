@@ -646,50 +646,98 @@ body {
 	</div>
 	
 	<div ng-show="game==WEST && status != ENDGAME">
-		兄莠弟攻
-		<div>
-			<button ng-click="dismiss()" ng-show="username == lord">解散</button>
-			<button ng-click="goto('oink')">退出</button>
+		<div style="width: 1800px; height: 1005px; position: relative;
+			background:linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/image/Oink/West/game_bg.png'); background-size:cover;">
+			<table>
+				<tr>
+					<td ng-repeat="i in [0,1,2,3,4,5]" style="border:1px solid black; height: 320px; width: 300px; 
+						background-color:rgba(64,64,64,0.5); vertical-align:top">
+						<div ng-show="i<players.length">
+							<table>
+								<tr><td colspan="2" style="font-size:24px; text-align: center; color: goldenrod">{{players[i].name}}</td></tr>
+								<tr><td colspan="2" style="text-align: center; color: goldenrod">仙丹数：{{players[i].coins}}</td></tr>
+								<tr>
+									<td style="width: 149px; text-align: center; color: goldenrod">弃牌</td>
+									<td style="width: 149px; text-align: center; color: goldenrod">手牌</td>
+								</tr>
+								<tr>
+									<td>
+										<div ng-repeat="c in players[i].discard track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-play2 card noselect">
+										</div>
+									</td>
+									<td>
+										<div ng-repeat="c in players[i].revealed track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-play2 card noselect">
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div ng-show="players.length<=i"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div style="height: 320px; padding-top: 10px; padding-left: 10px;">
+							<div ng-repeat="c in gamedata.assist track by $index" style="float:left">
+								<div ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect">
+								</div>
+								<div style="clear:both"></div>
+								<div ng-show="$index == 0" style="width:168px; text-align:center; font-size: 24px; font-weight:bold; color:rgb(0,150,255)">救兵</div>
+								<div ng-show="$index == 1" style="width:168px; text-align:center; font-size: 24px; color: lightgrey">弃置的救兵</div>
+							</div>
+							
+						</div>
+					</td>
+					<td colspan="2" rowspan="3" style="background-color: rgba(218,165,32,0.3); vertical-align:top;">
+						<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 10px; height:520px;">
+							<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
+						</div>
+						<div style="color: lightgrey; float:right;padding-right: 20px;">
+							<label for="volumeControl">音量: </label>
+							<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+							<span>{{ (volume * 100) | number:0 }}%</span>
+						</div>
+						<div style="clear:both"></div>
+						<div style=" float:right;padding-right: 20px;">
+							<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+							<button ng-click="goto('oink')">退出</button>
+						</div>
+						<div style="clear:both"></div>
+						<div style="font-size:60px; font-weight:bold; float:right;padding-right: 20px; color:lightgrey">兄莠弟攻</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="height: 40px; padding-left: 10px; color:white">
+						<div ng-show="phase == -1">
+							现在不是你的回合
+						</div>
+						<div ng-show="phase == 1">
+							你可以选择重置救兵或是置换手牌
+							<button ng-click="play()">重置救兵</button>
+							<button ng-click="draw()">置换手牌</button>
+						</div>
+						<div ng-show="phase == 2">
+							请弃置一张手牌
+							<button ng-click="discard()" ng-show="chosenCard!=-1">弃置</button>
+						</div>
+						<div ng-show="phase == 3">
+							请选择是否需要加入战斗
+							<button ng-click="take(1)">加入</button>
+							<button ng-click="take(0)">退出</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding-top: 20px; height: 320px; padding-left: 10px;">
+						<div ng-repeat="c in hand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"
+							ng-style="c.cstyle" ng-click="clickCard($index)"></div>
+					</td>
+					<td colspan="2" style="color: white; font-size: 30px; vertical-align: top; padding-left: 20px;">
+						仙丹池：<span style="font-weight:bold">{{gamedata.pool}}</span>
+					</td>
+				</tr>
+			</table>
 		</div>
 		
-		<div ng-repeat="p in players track by $index">
-			{{p.name}}
-			{{p.stillIn}}
-		</div>
-		<div style="clear:both"></div>
-		
-		<div>
-			<div ng-repeat="c in gamedata.assist track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect">
-			</div>
-		</div>
-		<div style="clear:both"></div>
-		
-		<div style="height: 40px;">
-			<div ng-show="phase == -1">
-				现在不是你的回合
-			</div>
-			<div ng-show="phase == 1">
-				你可以选择重置救兵或是置换手牌
-				<button ng-click="play()">重置救兵</button>
-				<button ng-click="draw()">置换手牌</button>
-			</div>
-			<div ng-show="phase == 2">
-				请弃置一张手牌
-				<button ng-click="discard()" ng-show="chosenCard!=-1">弃置</button>
-			</div>
-			<div ng-show="phase == 3">
-				请选择是否需要加入战斗
-				<button ng-click="take(1)">加入</button>
-				<button ng-click="take(0)">退出</button>
-			</div>
-		</div>
-		
-		<div style="padding-top: 50px;">
-			<div ng-repeat="c in hand track by $index" ng-include="'/view/html/WestCard.html'" class="card card-size card-size-discard card noselect"
-				ng-style="c.cstyle" ng-click="clickCard($index)"></div>
-		</div>
-		<div>
-			{{gamedata.logs}}
-		</div>
 	</div>
 </body>
