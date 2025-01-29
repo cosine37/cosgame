@@ -28,6 +28,7 @@ public class Logger {
 	public void logRoundStart(int x) {
 		String s = "第 " + Integer.toString(x) +" 局 开始";
 		log(s);
+		log("----------");
 	}
 	
 	public void logRoundEnd(int x) {
@@ -38,6 +39,10 @@ public class Logger {
 	
 	public void logRoundEndDivider() {
 		log("==========");
+	}
+	
+	public void logSmallDivider() {
+		log("----------");
 	}
 	
 	public void logExchange(Player p, Card c) {
@@ -56,12 +61,27 @@ public class Logger {
 	}
 	
 	public void logBid(Player p, int x) {
-		String s = p.getName() + "花费了" + Integer.toString(x) + "枚仙丹加入了吃瓜";
+		String s = p.getName() + "加入了吃瓜，将" + Integer.toString(x) + "枚仙丹加入池中";
 		log(s);
 	}
 	
 	public void logRetreat(Player p) {
 		String s = p.getName() + "退出了吃瓜队列";
+		log(s);
+	}
+	
+	public void logWin(Player p) {
+		String s = p.getName() + "获胜";
+		log(s);
+	}
+	
+	public void logReceivePool(Player p, int pool) {
+		String s = p.getName() + "获得了池中的" + pool + "枚仙丹";
+		log(s);
+	}
+	
+	public void logInitialAssist(Card c) {
+		String s = "本轮初始救兵为" + c.getName() + "（战力：" + c.getNum() + "）";
 		log(s);
 	}
 }

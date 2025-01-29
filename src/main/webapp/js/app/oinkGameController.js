@@ -374,6 +374,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$http.put("/oink/pope/confirmnextround").then(function(response){
 					ws.send("refresh");
 				});
+			} else if ($scope.game == $scope.WEST){
+				$http.put("/oink/west/confirmnextround").then(function(response){
+					ws.send("refresh");
+				});
 			}
 			
 		}
@@ -663,6 +667,18 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					
 					for (i=0;i<$scope.hand.length;i++){
 						$scope.hand[i].cstyle={}
+					}
+					$scope.playStyle = []
+					for (i=0;i<6;i++){
+						var tstyle = {
+							"background-color": "rgba(64,64,64,0.5)"
+						}
+						if ($scope.gamedata.winner == i && $scope.status == 6){
+							tstyle = {
+								"background-color": "rgba(0,150,255,0.4)"
+							}
+						}
+						$scope.playStyle.push(tstyle)
 					}
 				}
 				

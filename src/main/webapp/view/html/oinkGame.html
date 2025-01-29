@@ -651,7 +651,7 @@ body {
 			<table>
 				<tr>
 					<td ng-repeat="i in [0,1,2,3,4,5]" style="border:1px solid black; height: 320px; width: 300px; 
-						background-color:rgba(64,64,64,0.5); vertical-align:top">
+						vertical-align:top" ng-style="playStyle[i]">
 						<div ng-show="i<players.length">
 							<table>
 								<tr><td colspan="2" style="font-size:24px; text-align: center; color: goldenrod">{{players[i].name}}</td></tr>
@@ -708,7 +708,14 @@ body {
 				</tr>
 				<tr>
 					<td colspan="4" style="height: 40px; padding-left: 10px; color:white">
-						<div ng-show="phase == -1">
+						<div ng-show="status == 6 && gamedata.confirmed == false">
+							本局获胜者是{{players[winner].name}}，点击确认进入下一轮
+							<button ng-click="confirmNextRound()">确认</button>
+						</div>
+						<div ng-show="status == 6 && gamedata.confirmed == true">
+							你已确认，正等待其他玩家确认
+						</div>
+						<div ng-show="phase == -1 && status != 6">
 							现在不是你的回合
 						</div>
 						<div ng-show="phase == 1">

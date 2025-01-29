@@ -12,6 +12,8 @@ public class Card {
 	String name;
 	String desc;
 	
+	West west;
+	
 	public Document toDocument(){
 		Document doc = new Document();
 		doc.append("num",num);
@@ -24,24 +26,24 @@ public class Card {
 		name = doc.getString("name");
 		desc = doc.getString("desc");
 	}
-	public CardEntity toCardEntity(String username){
+	public CardEntity toCardEntity(String username, int flag){
 		int i,j;
 		CardEntity entity = new CardEntity();
 		entity.setNum(num);
 		entity.setName(name);
 		entity.setDesc(desc);
-		entity.setImg(getImg());
+		entity.setImg(getImg(flag));
 		
 		Map<String, String> avatarStyle = new HashMap<>();
-		avatarStyle.put("background-image", "url(/image/Oink/West/" + getImg() + ".png)");
+		avatarStyle.put("background-image", "url(/image/Oink/West/" + getImg(flag) + ".png)");
 		avatarStyle.put("background-size", "cover");
 		
 		Map<String, String> winStyle = new HashMap<>();
-		winStyle.put("background-image", "url(/image/Oink/West/" + getImg() + "w.png)");
+		winStyle.put("background-image", "url(/image/Oink/West/" + getImg(flag) + "w.png)");
 		winStyle.put("background-size", "cover");
 		
 		Map<String, String> loseStyle = new HashMap<>();
-		loseStyle.put("background-image", "url(/image/Oink/West/" + getImg() + "l.png)");
+		loseStyle.put("background-image", "url(/image/Oink/West/" + getImg(flag) + "l.png)");
 		loseStyle.put("background-size", "cover");
 		
 		entity.setAvatarStyle(avatarStyle);
@@ -62,6 +64,16 @@ public class Card {
 		this.name = name;
 		this.desc = desc;
 	}
+	
+	public String getImg(int flag) {
+		String ans = Integer.toString(num);
+		if (flag == -1) {
+			ans = ans+"l";
+		} else if (flag == 1) {
+			ans = ans+"w";
+		}
+		return ans;
+	}
 
 	public int getNum() {
 		return num;
@@ -81,9 +93,12 @@ public class Card {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getImg() {
-		String ans = Integer.toString(num);
-		return ans;
+	public West getWest() {
+		return west;
 	}
+	public void setWest(West west) {
+		this.west = west;
+	}
+	
 	
 }

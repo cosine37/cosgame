@@ -57,6 +57,7 @@ public class Player {
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
 			Card e = new Card();
+			e.setWest(west);
 			e.setFromDoc(handDocList.get(i));
 			hand.add(e);
 		}
@@ -64,6 +65,7 @@ public class Player {
 		discard = new ArrayList<>();
 		for (i=0;i<discardDocList.size();i++){
 			Card e = new Card();
+			e.setWest(west);
 			e.setFromDoc(discardDocList.get(i));
 			discard.add(e);
 		}
@@ -79,9 +81,23 @@ public class Player {
 		entity.setConfirmed(confirmed);
 		List<CardEntity> listOfDiscard = new ArrayList<>();
 		for (i=0;i<discard.size();i++){
-			listOfDiscard.add(discard.get(i).toCardEntity(username));
+			listOfDiscard.add(discard.get(i).toCardEntity(username, 0));
 		}
 		entity.setDiscard(listOfDiscard);
+		
+		List<CardEntity> lr = new ArrayList<>();
+		if (west.getStatus() == Consts.RESULT && stillIn) {
+			int x = west.getWinner();
+			int flag;
+			if (x == index) {
+				flag = 1;
+			} else {
+				flag = -1;
+			}
+			lr.add(hand.get(0).toCardEntity(username, flag));
+		}
+		entity.setRevealed(lr);
+		
 		return entity;
 	}
 	
@@ -126,6 +142,10 @@ public class Player {
 		coins = coins-x;
 		west.addPool(x);
 		stillIn = true;
+	}
+	
+	public void addCoins(int x) {
+		coins = coins+x;
 	}
 	
 	public void retreat() {

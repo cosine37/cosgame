@@ -11,6 +11,7 @@ public class WestEntity {
 	int winner;
 	int firstPlayer;
 	int curPlayer;
+	boolean confirmed;
 	List<CardEntity> assist;
 	List<CardEntity> myHand;
 	List<String> logs;
@@ -80,5 +81,11 @@ public class WestEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 }

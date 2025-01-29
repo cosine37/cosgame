@@ -18,6 +18,7 @@ public class West {
 	int winner;
 	int firstPlayer;
 	int curPlayer;
+	boolean assistWin;
 	
 	List<Card> deck;
 	List<Card> assist;
@@ -38,6 +39,7 @@ public class West {
 		doc.append("round",round);
 		doc.append("pool",pool);
 		doc.append("winner",winner);
+		doc.append("assistWin", assistWin);
 		doc.append("firstPlayer",firstPlayer);
 		doc.append("curPlayer",curPlayer);
 		List<Document> deckDocList = new ArrayList<>();
@@ -69,12 +71,14 @@ public class West {
 		round = doc.getInteger("round",0);
 		pool = doc.getInteger("pool",0);
 		winner = doc.getInteger("winner",0);
+		assistWin = doc.getBoolean("assistWin", false);
 		firstPlayer = doc.getInteger("firstPlayer",0);
 		curPlayer = doc.getInteger("curPlayer",0);
 		List<Document> deckDocList = (List<Document>)doc.get("deck");
 		deck = new ArrayList<>();
 		for (i=0;i<deckDocList.size();i++){
 			Card e = new Card();
+			e.setWest(this);
 			e.setFromDoc(deckDocList.get(i));
 			deck.add(e);
 		}
@@ -82,6 +86,7 @@ public class West {
 		assist = new ArrayList<>();
 		for (i=0;i<assistDocList.size();i++){
 			Card e = new Card();
+			e.setWest(this);
 			e.setFromDoc(assistDocList.get(i));
 			assist.add(e);
 		}
@@ -96,9 +101,18 @@ public class West {
 			listOfPlayers.add(players.get(i).toPlayerEntity(username));
 			if (players.get(i).getName().contentEquals(username)){
 				Player p = players.get(i);
+				entity.setConfirmed(p.isConfirmed());
 				List<CardEntity> myHand = new ArrayList<>();
 				for (j=0;j<p.getHand().size();j++) {
-					myHand.add(p.getHand().get(j).toCardEntity(username));
+					int flag = 0;
+					if (getStatus() == Consts.RESULT) {
+						if (i == winner) {
+							flag = 1;
+						} else {
+							flag = -1;
+						}
+					}
+					myHand.add(p.getHand().get(j).toCardEntity(username, flag));
 				}
 				entity.setMyHand(myHand);
 				entity.setPhase(p.getPhase());
@@ -113,7 +127,16 @@ public class West {
 		entity.setCurPlayer(curPlayer);
 		List<CardEntity> listOfAssistEntity = new ArrayList<>();
 		for (i=0;i<assist.size();i++){
-			listOfAssistEntity.add(assist.get(i).toCardEntity(username));
+			int flag = 0;
+			if (i==0 && getStatus() == Consts.RESULT) {
+				if (assistWin) {
+					flag = 1;
+				} else {
+					flag = -1;
+				}
+			}
+			
+			listOfAssistEntity.add(assist.get(i).toCardEntity(username, flag));
 		}
 		entity.setAssist(listOfAssistEntity);
 		entity.setLogs(logger.getLogs());
@@ -132,12 +155,12 @@ public class West {
 	}
 	
 	public void newRound() {
-		// Step 1: update deck, assist and pool
+		// Step 1: update status, deck, assist and pool
 		round++;
+		board.setStatus(Consts.INGAME);
 		deck = AllRes.genShuffledDeck();
 		assist = new ArrayList<>();
 		updateAssist();
-		// TODO: may need to update this
 		if (round == 7) {
 			pool = 2;
 		} else {
@@ -155,6 +178,18 @@ public class West {
 		
 		// Step 4: log new round
 		logger.logRoundStart(round);
+	}
+	
+	public void endRound() {
+		// Step 1: winner receives coins
+		Player winPlayer = players.get(winner);
+		winPlayer.addCoins(pool);
+		logger.logReceivePool(winPlayer, pool);
+		logger.logRoundEndDivider();
+		
+		// Step 2: start a new round
+		newRound();
+		
 	}
 	
 	public Card removeTop() {
@@ -226,6 +261,17 @@ public class West {
 				}
 			}
 		}
+		
+		// Step 3: define if assist wins
+		if (winner == minIndex) {
+			assistWin = true;
+		} else {
+			assistWin = false;
+		}
+		
+		// Step 4: log related
+		logger.logRoundEnd(round);
+		logger.logWin(players.get(winner));
 	}
 	
 	public boolean oneStillIn() {
@@ -253,6 +299,7 @@ public class West {
 		// Step 3: define next player's status
 		if (board.getStatus() == Consts.INGAME) {
 			if (curPlayer == firstPlayer) {
+				logger.logSmallDivider();
 				board.setStatus(Consts.BID);
 				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
 			} else {
@@ -261,12 +308,11 @@ public class West {
 		} else if (board.getStatus() == Consts.BID) {
 			if (curPlayer == firstPlayer) {
 				board.setStatus(Consts.RESULT);
+				calcWinner();
 			} else {
 				players.get(curPlayer).setPhase(Consts.BIDORRETREAT);
 			}
 		}
-		
-		//System.out.println(status);
 		
 	}
 	
@@ -299,8 +345,8 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
 			updateAssist();
-			nextPlayer();
 			logger.logExchange(p, getCurAssist());
+			nextPlayer();
 			
 			updatePlayers();
 			updateBasicDB();
@@ -313,8 +359,8 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.DRAWORREPLACE) {
 			p.draw();
-			p.setPhase(Consts.DISCARD);
 			logger.logDraw(p);
+			p.setPhase(Consts.DISCARD);
 			
 			updatePlayers();
 			updateBasicDB();
@@ -326,8 +372,8 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.DISCARD) {
 			p.discard(index);
-			nextPlayer();
 			logger.logDiscard(p, p.getDiscard().get(0));
+			nextPlayer();
 			
 			updatePlayers();
 			updateBasicDB();
@@ -339,8 +385,8 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
 			p.bid(bidCost());
-			nextPlayer();
 			logger.logBid(p, bidCost());
+			nextPlayer();
 			
 			updatePlayers();
 			updateBasicDB();
@@ -352,12 +398,36 @@ public class West {
 		Player p = getPlayerByName(username);
 		if (p != null && p.getPhase() == Consts.BIDORRETREAT) {
 			p.retreat();
-			nextPlayer();
 			logger.logRetreat(p);
+			nextPlayer();
 			
 			updatePlayers();
 			updateBasicDB();
 		}
+	}
+	
+	// Actual confirm next round
+	public void playerConfirmUDB(String username) {
+		Player p = getPlayerByName(username);
+		if (p != null && board.getStatus() == Consts.RESULT) {
+			p.setConfirmed(true);
+			int i;
+			boolean allConfirmed = true;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).confirmed == false) {
+					allConfirmed = false;
+					break;
+				}
+			}
+			
+			if (allConfirmed) {
+				endRound();
+			}
+			
+			updatePlayers();
+			updateBasicDB();
+		}
+		
 	}
 	
 	// End actual operations
@@ -411,6 +481,7 @@ public class West {
 		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
 		updateDB("winner", winner);
+		updateDB("assistWin", assistWin);
 		updateDB("pool", pool);
 		updateDB("logs", logger.getLogs());
 	}
@@ -427,7 +498,10 @@ public class West {
 		}
 		return false;
 	}
-
+	
+	public int getStatus() {
+		return board.getStatus();
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -482,5 +556,12 @@ public class West {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	public boolean isAssistWin() {
+		return assistWin;
+	}
+	public void setAssistWin(boolean assistWin) {
+		this.assistWin = assistWin;
+	}
+	
 	
 }

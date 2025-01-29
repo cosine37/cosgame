@@ -448,7 +448,32 @@ public class OinkController {
 		}
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
+	@RequestMapping(value="/oink/west/confirmnextround", method = RequestMethod.PUT)
+	public ResponseEntity<StringEntity> westConfirm(HttpServletRequest request){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			if (board.isGame(Consts.WEST)) {
+				board.getWest().playerConfirmUDB(username);
+			}
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	// End WEST
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// account handles
 	@RequestMapping(value="/oink/accountinfo", method = RequestMethod.GET)
