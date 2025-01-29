@@ -689,7 +689,7 @@ body {
 						</div>
 					</td>
 					<td colspan="2" rowspan="3" style="background-color: rgba(218,165,32,0.3); vertical-align:top;">
-						<div id="log-zone-grove" style="overflow-y: scroll;overflow:auto; color:white; padding: 10px; height:520px;">
+						<div id="log-zone-west" style="overflow-y: scroll;overflow:auto; color:white; padding: 10px; height:520px;">
 							<div ng-repeat="log in gamedata.logs track by $index">{{log}}</div>
 						</div>
 						<div style="color: lightgrey; float:right;padding-right: 20px;">
@@ -709,7 +709,7 @@ body {
 				<tr>
 					<td colspan="4" style="height: 40px; padding-left: 10px; color:white">
 						<div ng-show="status == 6 && gamedata.confirmed == false">
-							本局获胜者是{{players[winner].name}}，点击确认进入下一轮
+							本局获胜者是{{players[gamedata.winner].name}}，点击确认进入下一轮
 							<button ng-click="confirmNextRound()">确认</button>
 						</div>
 						<div ng-show="status == 6 && gamedata.confirmed == true">

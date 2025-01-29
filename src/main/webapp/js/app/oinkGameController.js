@@ -86,7 +86,22 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						$scope.bgm.src = bgmSrc
 					}
 				}
-				
+			} else if ($scope.game == $scope.WEST){
+				if ($scope.round == 1){
+					bgmSrc = '/sound/Oink/west1.mp3'
+					$scope.bgm.src = bgmSrc
+				} else if ($scope.round < 4){
+					v = Math.floor(Math.random() * 3)+2;
+					bgmSrc = '/sound/Oink/west' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				} else if ($scope.round < 6){
+					v = Math.floor(Math.random() * 4)+2;
+					bgmSrc = '/sound/Oink/west' + v + '.mp3'
+					$scope.bgm.src = bgmSrc
+				} else {
+					bgmSrc = '/sound/Oink/west6.mp3'
+					$scope.bgm.src = bgmSrc
+				}
 			}
 			$scope.bgm.volume = $scope.volume;
 		}
@@ -112,6 +127,9 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.bgm.play();
 			} else if ($scope.game == $scope.POPE){
 				$scope.bgm.src = '/sound/Oink/flame.mp3'
+				$scope.bgm.play();
+			} else if ($scope.game == $scope.WEST){
+				$scope.bgm.src = '/sound/Oink/west7.mp3'
 				$scope.bgm.play();
 			}
 			
@@ -660,11 +678,15 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					//alert($scope.status)
 					//alert($scope.ENDGAME)
 				} else if ($scope.game == $scope.WEST){
+					var oldPhase = $scope.phase
 					$scope.gamedata = response.data.west
 					$scope.hand = $scope.gamedata.myHand
 					$scope.phase = $scope.gamedata.phase
+					$scope.round = $scope.gamedata.round;
 					$scope.players = $scope.gamedata.players
-					
+					if ($scope.phase != -1 && oldPhase == -1){
+						$scope.playMsgSE();
+					}
 					for (i=0;i<$scope.hand.length;i++){
 						$scope.hand[i].cstyle={}
 					}
@@ -680,6 +702,10 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						}
 						$scope.playStyle.push(tstyle)
 					}
+					
+					$http.post('/citadelsgame/empty').then(function(response){
+						adjustLogs("log-zone-west")
+					});
 				}
 				
 				
