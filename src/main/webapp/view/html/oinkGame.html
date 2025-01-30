@@ -654,8 +654,13 @@ body {
 						vertical-align:top" ng-style="playStyle[i]">
 						<div ng-show="i<players.length">
 							<table>
-								<tr><td colspan="2" style="font-size:24px; text-align: center; color: goldenrod">{{players[i].name}}</td></tr>
-								<tr><td colspan="2" style="text-align: center; color: goldenrod">仙丹数：{{players[i].coins}}</td></tr>
+								<tr>
+									<td rowspan="2" style="padding-left: 50px">
+										<div style="height: 80px; width: 80px;" ng-style="players[i].account.chosenAvatarStyle"></div>
+									</td>
+									<td style="font-size:24px; color: goldenrod">{{players[i].name}}</td>
+								</tr>
+								<tr><td style="color: goldenrod">仙丹数：{{players[i].coins}}</td></tr>
 								<tr>
 									<td style="width: 149px; text-align: center; color: goldenrod">弃牌</td>
 									<td style="width: 149px; text-align: center; color: goldenrod">手牌</td>
@@ -747,4 +752,44 @@ body {
 		</div>
 		
 	</div>
+	<div ng-show="game==WEST && status == ENDGAME">
+		<div style="width: 1080px; height: 960px; color: goldenrod; padding: 20px; font-family:'hbt';
+			background:linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url('/image/Oink/West/end_bg.png'); background-size:cover; ">
+			<h1>游戏结束</h1>
+			<div>
+				<table style="font-size: 24px;">
+					<tr>
+						<td style="width: 60px; text-align:center">名次</td>
+						<td style="width: 160px; text-align:center" colspan="2">姓名</td>
+						<td style="width: 100px; text-align:center">仙丹数</td>
+						<td style="width: 600px; text-align:center">感想</td>
+					</tr>
+					
+					<tr ng-repeat="p in sortedPlayers track by $index">
+						<td style="text-align:center">{{p.rank}}</td>
+						<td><div style="height: 60px; width: 60px" ng-style="p.account.chosenAvatarStyle"></div></td>
+						<td style="text-align:left">{{p.name}}</td>
+						<td style="text-align:center">{{p.coins}}</td>
+						<td style="text-align:center; font-family:serif;">{{p.account.signature}}</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div style="margin-top: 50px;float:left; vertical-align:top;width: 300px; font-size: 20px">
+				<h2>你获得了</h2>
+				<div ng-repeat="rewardMsg in gamedata.endGameRewards">{{rewardMsg}}</div>
+			</div>
+			<div style="clear: both; height: 20px"></div>
+			<div>
+				<div>
+					<label for="volumeControl">音量: </label>
+					<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+					<span>{{ (volume * 100) | number:0 }}%</span>
+				</div>
+				<button ng-click="dismiss()" ng-show="username == lord">解散</button>
+				<button ng-click="goto('oink')">退出</button>
+			</div>
+		</div>
+	</div>
+
 </body>

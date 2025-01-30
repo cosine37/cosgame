@@ -15,6 +15,7 @@ public class WestEntity {
 	List<CardEntity> assist;
 	List<CardEntity> myHand;
 	List<String> logs;
+	List<String> endGameRewards;
 	
 	public List<PlayerEntity> getPlayers() {
 		return players;
@@ -87,5 +88,11 @@ public class WestEntity {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 }

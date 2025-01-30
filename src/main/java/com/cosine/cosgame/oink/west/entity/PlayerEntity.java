@@ -2,16 +2,21 @@ package com.cosine.cosgame.oink.west.entity;
 
 import java.util.List;
 
+import com.cosine.cosgame.oink.account.entity.AccountEntity;
+
 public class PlayerEntity {
 	String name;
 	int index;
 	int phase;
 	int coins;
+	int rank;
 	boolean stillIn;
 	boolean alive;
 	boolean confirmed;
 	List<CardEntity> discard;
 	List<CardEntity> revealed;
+	
+	AccountEntity account;
 	
 	public String getName() {
 		return name;
@@ -66,5 +71,17 @@ public class PlayerEntity {
 	}
 	public void setRevealed(List<CardEntity> revealed) {
 		this.revealed = revealed;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	public AccountEntity getAccount() {
+		return account;
+	}
+	public void setAccount(AccountEntity account) {
+		this.account = account;
 	}
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.oink.Board;
+import com.cosine.cosgame.oink.account.Account;
+import com.cosine.cosgame.oink.account.Transaction;
 import com.cosine.cosgame.oink.west.entity.CardEntity;
 import com.cosine.cosgame.oink.west.entity.PlayerEntity;
 import com.cosine.cosgame.oink.west.entity.WestEntity;
@@ -102,6 +104,7 @@ public class West {
 			if (players.get(i).getName().contentEquals(username)){
 				Player p = players.get(i);
 				entity.setConfirmed(p.isConfirmed());
+				entity.setEndGameRewards(p.getEndGameRewards());
 				List<CardEntity> myHand = new ArrayList<>();
 				for (j=0;j<p.getHand().size();j++) {
 					int flag = 0;
@@ -174,7 +177,8 @@ public class West {
 		}
 		
 		// Step 3: update first player phase
-		players.get(firstPlayer).setPhase(Consts.DRAWORREPLACE);
+		curPlayer = firstPlayer;
+		players.get(curPlayer).setPhase(Consts.DRAWORREPLACE);
 		
 		// Step 4: log new round
 		logger.logRoundStart(round);
@@ -182,14 +186,76 @@ public class West {
 	
 	public void endRound() {
 		// Step 1: winner receives coins
-		Player winPlayer = players.get(winner);
-		winPlayer.addCoins(pool);
-		logger.logReceivePool(winPlayer, pool);
-		logger.logRoundEndDivider();
+		if (winner == -1) {
+			logger.log("仙丹池中的" + pool + "枚仙丹全部打水漂了");
+			logger.logRoundEndDivider();
+		} else {
+			Player winPlayer = players.get(winner);
+			winPlayer.addCoins(pool);
+			logger.logReceivePool(winPlayer, pool);
+			logger.logRoundEndDivider();
+		}
 		
-		// Step 2: start a new round
+		
+		// Step 2: change first player
+		firstPlayer = (firstPlayer+1)%players.size();
+		
+		// Step 3: start a new round
 		newRound();
 		
+	}
+	
+	public void endGame() {
+		// Step 1: set status
+		board.setStatus(Consts.ENDGAME);
+		
+		// Step 2: sort players
+		int i,j;
+		List<Player> tps = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			tps.add(players.get(i));
+		}
+		for (i=0;i<tps.size();i++) {
+			for (j=i+1;j<tps.size();j++) {
+				boolean shouldSwap = false;
+				
+				if (tps.get(i).getCoins()<tps.get(j).getCoins()) {
+					shouldSwap = true;
+				}
+				
+				if (shouldSwap) {
+					Player t = tps.get(i);
+					tps.set(i, tps.get(j));
+					tps.set(j, t);
+				}
+			}
+		}
+		
+		// Step 3: set rankings
+		int curRank = 0;
+		int curCoin = -1;
+		for (i=0;i<tps.size();i++) {
+			if (curCoin != tps.get(i).getCoins()) {
+				curRank = i+1;
+				tps.get(i).setRank(curRank);
+				curCoin = tps.get(i).getCoins();
+			} else {
+				tps.get(i).setRank(curRank);
+			}
+		}
+		
+		// Step 4: set rewards
+		for (i=0;i<players.size();i++) {
+			Account a = new Account();
+			Player p = players.get(i);
+			List<Transaction> rewards = a.endGameReward(p.getRank());
+			List<String> endGameRewards = new ArrayList<>();
+			for (j=0;j<rewards.size();j++) {
+				a.addNewTransaction(rewards.get(j));
+				endGameRewards.add(rewards.get(j).toString());
+			}
+			p.setEndGameRewards(endGameRewards);
+		}
 	}
 	
 	public Card removeTop() {
@@ -271,7 +337,12 @@ public class West {
 		
 		// Step 4: log related
 		logger.logRoundEnd(round);
-		logger.logWin(players.get(winner));
+		if (winner == -1) {
+			logger.log("因无玩家参与吃瓜，所以这一轮没有获胜者");
+		} else {
+			logger.logWin(players.get(winner));
+		}
+		
 	}
 	
 	public boolean oneStillIn() {
@@ -421,7 +492,13 @@ public class West {
 			}
 			
 			if (allConfirmed) {
-				endRound();
+				//TODO: update this!
+				if (round == 7) {
+					endGame();
+				} else {
+					endRound();
+				}
+				
 			}
 			
 			updatePlayers();

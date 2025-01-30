@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.oink.account.Account;
 import com.cosine.cosgame.oink.west.entity.CardEntity;
 import com.cosine.cosgame.oink.west.entity.PlayerEntity;
 
@@ -13,12 +14,14 @@ public class Player {
 	int index;
 	int phase;
 	int coins;
+	int rank;
 	boolean stillIn;
 	boolean alive;
 	boolean confirmed;
 	
 	List<Card> hand;
 	List<Card> discard;
+	List<String> endGameRewards;
 	
 	West west;
 	
@@ -31,7 +34,9 @@ public class Player {
 		doc.append("coins",coins);
 		doc.append("stillIn",stillIn);
 		doc.append("alive",alive);
+		doc.append("rank", rank);
 		doc.append("confirmed",confirmed);
+		doc.append("endGameRewards", endGameRewards);
 		List<Document> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
 			handDocList.add(hand.get(i).toDocument());
@@ -52,7 +57,9 @@ public class Player {
 		coins = doc.getInteger("coins",0);
 		stillIn = doc.getBoolean("stillIn",false);
 		alive = doc.getBoolean("alive",false);
+		rank = doc.getInteger("rank", 0);
 		confirmed = doc.getBoolean("confirmed",false);
+		endGameRewards = (List<String>) doc.get("endGameRewards");
 		List<Document> handDocList = (List<Document>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -78,6 +85,7 @@ public class Player {
 		entity.setCoins(coins);
 		entity.setStillIn(stillIn);
 		entity.setAlive(alive);
+		entity.setRank(rank);
 		entity.setConfirmed(confirmed);
 		List<CardEntity> listOfDiscard = new ArrayList<>();
 		for (i=0;i<discard.size();i++){
@@ -98,6 +106,10 @@ public class Player {
 		}
 		entity.setRevealed(lr);
 		
+		
+		Account a = new Account();
+		a.getFromDB(name);
+		entity.setAccount(a.toAccountEntity());
 		return entity;
 	}
 	
@@ -215,6 +227,18 @@ public class Player {
 	}
 	public void setWest(West west) {
 		this.west = west;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	public List<String> getEndGameRewards() {
+		return endGameRewards;
+	}
+	public void setEndGameRewards(List<String> endGameRewards) {
+		this.endGameRewards = endGameRewards;
 	}
 	
 }

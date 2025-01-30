@@ -703,6 +703,20 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						$scope.playStyle.push(tstyle)
 					}
 					
+					if ($scope.status == $scope.ENDGAME){
+						$scope.sortedPlayers = []
+						for (i=1;i<=6;i++){
+							for (j=0;j<$scope.players.length;j++){
+								var p = $scope.players[j]
+								if (p.rank == i){
+									$scope.sortedPlayers.push(p);
+								}
+							}
+						}
+					}
+					
+					
+					
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs("log-zone-west")
 					});
