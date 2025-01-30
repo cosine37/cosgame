@@ -101,4 +101,16 @@ app.controller("indexCtrl", ['$scope', '$window', '$http', '$document',
 			}
 		}
 		$scope.popeCards.push(c9);
+		
+		wc1 = {
+			"num": 13,
+			"name": "孙悟空",
+			"desc": "天生地产的石猴，唐僧的大徒弟，神通广大但经常张口就来。最喜欢别人称其为弼马温。",
+			"avatarStyle": {
+				'background-image': 'url(/image/Oink/West/13.png)',
+				"background-size" : 'cover'
+			},
+		}
+		$scope.westCards = []
+		$scope.westCards.push(wc1);
 }]);

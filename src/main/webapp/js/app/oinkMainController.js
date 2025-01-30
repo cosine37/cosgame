@@ -391,15 +391,15 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		$scope.popeCards.push(c9);
 		
 		wc1 = {
-			"num": 15,
+			"num": 13,
 			"name": "孙悟空",
-			"desc": "石头里蹦出来的猢狲，保唐僧西天取经。",
+			"desc": "天生地产的石猴，唐僧的大徒弟，神通广大但经常张口就来。最喜欢别人称其为弼马温。",
 			"avatarStyle": {
-				'background-image': 'url(/image/Oink/West/1l.png)',
+				'background-image': 'url(/image/Oink/West/13.png)',
 				"background-size" : 'cover'
 			},
 		}
 		$scope.westCards = []
-		//$scope.westCards.push(wc1);
+		$scope.westCards.push(wc1);
 	
 }]);

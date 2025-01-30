@@ -306,7 +306,7 @@ public class West {
 		
 		// Step 1: Calc min player
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).getHandNum() < min) {
+			if (players.get(i).isStillIn() && players.get(i).getHandNum() < min) {
 				min = players.get(i).getHandNum();
 				minIndex = i;
 			}
