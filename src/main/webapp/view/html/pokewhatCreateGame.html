@@ -22,11 +22,8 @@ body {
 	background-size: cover;
 }
 </style>
-<body ng-app="pokewhatCreateGameApp" ng-controller="pokewhatCreateGameCtrl">
-	<audio autoplay loop>
-		<source src="/sound/Pokewhat/create_game_bgm.mp3" type="audio/mpeg"></src>
-	</audio>
-	<div class="create-div">
+<body ng-app="pokewhatCreateGameApp" ng-controller="pokewhatCreateGameCtrl" >
+	<div class="create-div" ng-click="bgm.play()">
 		
 		<div class="players-waiting-div">
 			<table>
@@ -78,6 +75,12 @@ body {
 					<button ng-click="setGameEndScore(12)" ng-show="username == lord" ng-disabled="gameEndScore == '12'">12</button>
 					<button ng-click="setGameEndScore(14)" ng-show="username == lord" ng-disabled="gameEndScore == '14'">14</button>
 					<button ng-click="setGameEndScore(16)" ng-show="username == lord" ng-disabled="gameEndScore == '16'">16</button>
+					
+					
+					
+					<label for="volumeControl" style="margin-left:20px; color:white">音量: </label>
+					<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" style="color:white" />
+					<span style="color:white">{{ (volume * 100) | number:0 }}%</span>
 				</div>
 				<div style="padding-top: 10px;">
 					<button ng-click="goto('pokewhat')">退出</button>

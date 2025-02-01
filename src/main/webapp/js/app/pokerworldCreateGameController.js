@@ -65,13 +65,34 @@ app.controller("pokerworldCreateGameCtrl", ['$scope', '$window', '$http', '$docu
 			});
 		}
 		
+		$scope.volume = 0.5;
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		
+		$scope.bgm = new Audio();
+		randomizeBGM = function(){
+			$scope.bgm.src ='/sound/Pokerworld/welcome.mp3'
+			$scope.bgm.volume = $scope.volume;
+		}
+		randomizeBGM();
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		
+		
+		
+		
 		playClickSE = function(){
 			var audio = new Audio("/sound/Pokerworld/click.wav")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		playRandomizeSE = function(){
 			var audio = new Audio("/sound/Pokerworld/randomize.wav")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		

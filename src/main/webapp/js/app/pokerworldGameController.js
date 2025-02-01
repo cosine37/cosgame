@@ -98,9 +98,15 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.volume = 0.5;
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		
 		playClickSE = function(){
 			if ($scope.playSE){
 				var audio = new Audio("/sound/Pokerworld/click.wav")
+				audio.volume = $scope.volume;
 				audio.play();
 			}
 		}
@@ -108,6 +114,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		playPlaySE = function(){
 			if ($scope.playSE){
 				var audio = new Audio("/sound/Pokerworld/play.wav")
+				audio.volume = $scope.volume;
 				audio.play();
 			}
 		}
@@ -115,6 +122,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		playBidSE = function(){
 			if ($scope.playSE){
 				var audio = new Audio("/sound/Pokerworld/bid.wav")
+				audio.volume = $scope.volume;
 				audio.play();
 			}
 		}
@@ -186,6 +194,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				
 				$scope.bgm.src = bgmSrc
+				$scope.bgm.volume = $scope.volume;
 			}
 			
 		}

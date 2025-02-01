@@ -23,13 +23,20 @@ body {
 }
 </style>
 <body ng-app="architectGameApp" ng-controller="architectGameCtrl">
-	<div id="in-game" class="game-area" ng-show="status == '1' || status == '2'">
+	<div id="in-game" class="game-area" ng-show="status == '1' || status == '2'" ng-click="potentialPlay()">
 		<div id="other-player-info" style="float: left; color: white">
 			<div>
 				<table>
 					<tr>
 						<td><button ng-click="goto('architect')">退出</button></td>
 						<td><button ng-click="dismiss()" ng-show="lord == username">解散</button></td>
+						<td>
+							<span>
+								<label for="volumeControl">音量: </label>
+								<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+								<span>{{ (volume * 100) | number:0 }}%</span>
+							</span>
+						</td>
 					</tr>
 				</table>
 			</div>

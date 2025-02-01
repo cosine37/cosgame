@@ -37,6 +37,23 @@ app.controller("pokewhatCreateGameCtrl", ['$scope', '$window', '$http', '$docume
 			});
 		}
 		
+		$scope.volume = 0.5;
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		
+		$scope.bgm = new Audio();
+		randomizeBGM = function(){
+			$scope.bgm.src ='/sound/Pokewhat/create_game_bgm.mp3'
+			$scope.bgm.volume = $scope.volume;
+		}
+		randomizeBGM();
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		
+		
 		$scope.addBot = function(){
 			$http.post('/pokewhatgame/addbot').then(function(response){
 				ws.send("addbot");

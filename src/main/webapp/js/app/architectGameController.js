@@ -90,11 +90,13 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 				$scope.allRefresh()
 			});
 		}
-		
+		$scope.bgm = new Audio()
+		$scope.volume = 0.5;
 		playClickQuote = function(c){
 			var n = c.clickQuote.length
 			var x = Math.floor(Math.random() * n);
 			var audio = new Audio("/sound/Architect/" + c.clickQuote[x] + ".mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
@@ -102,6 +104,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var n = c.resolveQuote.length
 			var x = Math.floor(Math.random() * n);
 			var audio = new Audio("/sound/Architect/" + c.resolveQuote[x] + ".mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
@@ -109,26 +112,31 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var quotes = ["recover01","recover02","recover03","recover04"]
 			var x = Math.floor(Math.random() * 4);
 			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		playYourTurnMusic = function(){
 			var audio = new Audio("/sound/Architect/yourturn.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		playNeedDiscardMusic = function(){
 			var audio = new Audio("/sound/Architect/uhoh.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		playHiredMusic = function(){
 			var audio = new Audio("/sound/Architect/hired.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
 		playDiscardMusic = function(){
 			var audio = new Audio("/sound/Architect/discard.mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
@@ -136,15 +144,29 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			var quotes = ["build01","build02"]
 			var x = Math.floor(Math.random() * quotes.length);
 			var audio = new Audio("/sound/Architect/" + quotes[x] + ".mp3")
+			audio.volume = $scope.volume;
 			audio.play();
 		}
 		
+		$scope.isPlaying = false;
 		playEndingMusic = function(){
 			if ($scope.endingIndex == '-1') return
+			
 			var	endingMusic = "ending0" + $scope.endingIndex
-			var audio = new Audio("/sound/Architect/" + endingMusic + ".mp3")
-			audio.play();
+			$scope.bgm.src= "/sound/Architect/" + endingMusic + ".mp3"
+			
+			$scope.bgm.volume = $scope.volume;
+			$scope.bgm.play();
+			
 		}
+		$scope.potentialPlay = function(){
+			if ($scope.isPlaying == true) return
+			playEndingMusic()
+			$scope.isPlaying = true
+		}
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
 		
 		$scope.play = function(x){
 			var c = $scope.hand[x]

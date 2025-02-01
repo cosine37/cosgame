@@ -22,10 +22,7 @@ body {
 	background-size: cover;
 }
 </style>
-<body ng-app="pokerworldCreateGameApp" ng-controller="pokerworldCreateGameCtrl">
-	<audio id="bgm" autoplay loop>
-		<source src="/sound/Pokerworld/welcome.mp3" type="audio/mpeg"></src>
-	</audio>
+<body ng-app="pokerworldCreateGameApp" ng-controller="pokerworldCreateGameCtrl" ng-click="bgm.play()">
 	<div style="height: 30px"></div>
 	<div style="margin-left: 50px; width: 1200px; height: 1200px; background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ); border-radius: 10px; position: relative">
 		<div style="width: 100%; padding-top: 30px; text-align: center">
@@ -94,6 +91,7 @@ body {
 									</td>
 								</tr>
 								 -->
+								<!-- 
 								 <tr>
 									<td style="width: 180px; border: 0px; padding: 0px; height: 35px;" ng-style="highlightStyle(chosenGame == 3)">
 										红心大战
@@ -101,6 +99,16 @@ body {
 									<td style="width: 90px; border: 0px; padding: 0px" ng-style="highlightStyle(chosenGame == 3)">
 										<div ng-show="chosenGame == 3" style="background-color: goldenrod; width: 100%">&#129092;</div>
 										<button ng-click="chooseGame(3)" ng-show = "chosenGame != 3">查看</button>
+									</td>
+								</tr>
+								 -->
+								<tr><td colspan="2" style="height: 10px;"></td></tr>
+								
+								<tr>
+									<td colspan="2">
+										<label for="volumeControl">音量: </label>
+										<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+										<span>{{ (volume * 100) | number:0 }}%</span>
 									</td>
 								</tr>
 							</table>

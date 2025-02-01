@@ -17,7 +17,7 @@
 <script src="/js/app/pokewhatGameController.js"></script>
 
 <body ng-app="pokewhatGameApp" ng-controller="pokewhatGameCtrl">
-	<div class="game-container" ng-click="playBGM()">
+	<div class="game-container" ng-click="bgm.play()">
 		<table>
 			<tr>
 				<td ng-style="otherTdStyle" ng-repeat="i in otherIndexes">
@@ -227,17 +227,27 @@
 						<p ng-repeat="log in logs track by $index" style="margin-bottom: 0px;margin-top: 0px;">{{log}}</p>
 					</div>
 					<div>
-						<span style="width: 203px; float:left">
+						<span>
+							<label for="volumeControl">音量: </label>
+							<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+							<span>{{ (volume * 100) | number:0 }}%</span>
+						</span>
+						<span style="float:right">
+							<!-- 
+							<button ng-click="mute()">{{muteButton}}</button>
+							 -->
+							<button ng-click="goto('pokewhat')">退出</button>
+						</span>
+					</div>
+					<div>
+						<span style="float:left">
 							<button ng-click="endTurn()"
 								ng-show="status == 1 && phase == 1 && lastMove != -1">结束回合</button>
 							<button ng-click="botNextMove()" ng-show="status == 1 && username == lord && phase != 1">Bot行动</button>
-							<button ng-click="botChoosePm()" ng-show="status == 3 && phase != 1 && username == lord && hasBot">Bot选择宝可梦</button>
+							<button ng-click="botChoosePm()" ng-show="status == 3 && phase != 1 && username == lord && hasBot">Bot选择</button>
 							&nbsp;
 						</span>
-						<span>
-							<button ng-click="mute()">{{muteButton}}</button>
-							<button ng-click="goto('pokewhat')">退出</button>
-						</span>
+						
 						
 					</div>
 				</td>

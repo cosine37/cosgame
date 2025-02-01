@@ -84,6 +84,13 @@ body {
 									<td style="width: 90px">最大点数:</td>
 									<td style="text-align: left">{{biggestRankDisplay}}</td>
 								</tr>
+								<tr>
+									<td colspan="2"; style="padding-top: 20px;">
+										<label for="volumeControl">音量: </label>
+										<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+										<span>{{ (volume * 100) | number:0 }}%</span>
+									</td>
+								</tr>
 								<!-- 
 								<tr>
 									<td>当前花色:</td>
@@ -162,8 +169,10 @@ body {
 					</td>
 					<td style="text-align:right">
 						<div style="margin: 5px"><button ng-click="scoreTableSwitch(true)">积分表</button></div>
+						<!-- 
 						<div style="margin: 5px"><button ng-click="mute()">{{muteButton}}</button></div>
 						<div style="margin: 5px"><button ng-click="muteSE()">{{muteSEButton}}</button></div>
+						 -->
 						<div style="margin: 5px"><button ng-click="goto('pokerworld')">退出游戏</button></div>
 						<div style="margin: 5px"><button ng-show="status == PREENDGAME && username == lord" ng-click="dismiss()">解散游戏</button></div>
 					</td>

@@ -57,11 +57,31 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.bigImageDivStyle = {};
 		$scope.muteButton = "播放"
 		$scope.playedBGM = false;
-		$scope.bgm = new Audio('/sound/Pokewhat/game_bgm.mp3');
+		//$scope.bgm = new Audio('/sound/Pokewhat/game_bgm.mp3');
 		$scope.showAnimationImg = []
 		$scope.playingAnimation = false;
 		$scope.firstGetBoard = true;
 		$scope.animationDivStyles = []
+		
+		
+		$scope.volume = 0.5;
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		$scope.bgm = new Audio();
+		randomizeBGM = function(){
+			v = Math.floor(Math.random() * 3);
+			$scope.bgm.src ='/sound/Pokewhat/game_bgm.mp3'
+			if (v == 0){
+				$scope.bgm.src ='/sound/Pokewhat/game_bgm_old.mp3'
+			}
+			$scope.bgm.volume = $scope.volume;
+		}
+		randomizeBGM();
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
 
 		$scope.goto = function(d){
 			var x = "http://" + $window.location.host;
