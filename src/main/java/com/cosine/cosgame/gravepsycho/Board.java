@@ -96,10 +96,7 @@ public class Board {
 		if (n==0) {
 			return;
 		}
-		int x = leftover / n;
-		int y = leftover % n;
 		int i;
-		leftover = y;
 		
 		logger.logBack(backPlayers);
 		
@@ -109,15 +106,15 @@ public class Board {
 				boolean finished = event.singleBackHandle(p);
 				if (finished) return;
 			}
+			leftover = 0;
 			for (i=0;i<backPlayers.size();i++) {
 				backPlayers.get(i).setStillIn(false);
-				backPlayers.get(i).addMoney(x);
+				backPlayers.get(i).addMoney(leftover);
 				if (useEvent && event != null) {
 					boolean finished = event.backHandle(backPlayers.get(i));
 					if (finished) return;
 				}
 			}
-			
 			for (i=revealed.size()-1;i>=0;i--) {
 				if (revealed.get(i).getType() == Consts.TREASURE) {
 					Card c = revealed.remove(i);
@@ -128,6 +125,9 @@ public class Board {
 				}
 			}
 		} else {
+			int x = leftover / n;
+			int y = leftover % n;
+			leftover = y;
 			for (i=0;i<backPlayers.size();i++) {
 				backPlayers.get(i).setStillIn(false);
 				backPlayers.get(i).addMoney(x);
@@ -136,6 +136,7 @@ public class Board {
 					if (finished) return;
 				}
 			}
+			
 		}
 		
 		
@@ -256,6 +257,11 @@ public class Board {
 	public void revealACard() {
 		Card c = deck.remove(0);
 		revealed.add(c);
+		
+		if (useEvent && event != null) {
+			event.onReveal(c);
+		}
+		
 		if (useEvent && event != null) {
 			boolean override = event.overrideLogReveal(c);
 			if (override) {
@@ -267,9 +273,6 @@ public class Board {
 			logger.logRevealCard(c);
 		}
 		
-		if (useEvent && event != null) {
-			event.onReveal(c);
-		}
 		if (c.getType() == Consts.DISASTER) {
 			if (disaster()) {
 				disasterHandle();

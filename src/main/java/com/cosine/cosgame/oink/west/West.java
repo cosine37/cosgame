@@ -206,6 +206,17 @@ public class West {
 	}
 	
 	public void endGame() {
+		// Step 0: winner receive coins
+		if (winner == -1) {
+			logger.log("仙丹池中的" + pool + "枚仙丹全部打水漂了");
+			logger.logRoundEndDivider();
+		} else {
+			Player winPlayer = players.get(winner);
+			winPlayer.addCoins(pool);
+			logger.logReceivePool(winPlayer, pool);
+			logger.logRoundEndDivider();
+		}
+		
 		// Step 1: set status
 		board.setStatus(Consts.ENDGAME);
 		

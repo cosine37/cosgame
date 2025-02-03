@@ -47,7 +47,7 @@ public class Echo extends Event{
 					pnames.add(board.getPlayers().get(i).getName());
 				}
 			}
-			board.getLogger().logDistributeCoins(pnames, x);
+			board.getLogger().logDistributeCoins(pnames, t);
 		}
 		return true;
 	}

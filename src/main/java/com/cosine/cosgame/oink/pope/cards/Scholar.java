@@ -18,11 +18,18 @@ public class Scholar extends Card{
 	public void onPlay(int target) {
 		super.onPlay(target);
 		logPlay();
-		player.setPhase(Consts.RETURNCARDS);
+		
 		int x = game.getDeck().size();
-		if (x>3) x=3;
-		player.draw(x);
-		log(player.getName() + "抽了" + Integer.toString(x) + "张牌");
+		if (x == 0) {
+			log("但是牌堆已经空了，所以无事发生。。。");
+			player.setPhase(Consts.OFFTURN);
+		} else {
+			player.setPhase(Consts.RETURNCARDS);
+			if (x>3) x=3;
+			player.draw(x);
+			log(player.getName() + "抽了" + Integer.toString(x) + "张牌");
+		}
+		
 	}
 	
 	public void onResolve(int val) {
