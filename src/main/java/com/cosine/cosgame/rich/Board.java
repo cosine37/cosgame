@@ -10,6 +10,16 @@ public class Board {
 	int curCardId;
 	int curPlayer;
 	
+	int height;
+	int width;
+	
 	List<Place> places;
 	List<Player> players;
+	
+	List<List<Event>> eventsList;
+
+	public int getSalary() {
+		return 0;
+	}
+	
 }

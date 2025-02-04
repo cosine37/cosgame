@@ -1,12 +1,14 @@
 package com.cosine.cosgame.rich;
 
-public abstract class Place {
-	int id;
-	int type;
+public class Place {
+	protected int id;
+	protected int type;
 	
-	String name;
-	Place left;
-	Place right;
+	protected String name;
+	protected Place left;
+	protected Place right;
+	
+	protected Board board;
 	
 	public Place(int id, String name, int type) {
 		this.id = id;
@@ -14,6 +16,8 @@ public abstract class Place {
 		this.type = type;
 	}
 	
-	public abstract void stepOn(Player p);
+	public void stepOn(Player p) {}
+	
+	public void bypass(Player p) {}
 
 }

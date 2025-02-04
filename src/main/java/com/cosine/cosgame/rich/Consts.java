@@ -7,6 +7,9 @@ public class Consts {
 	public static final int INGAME = 1;
 	public static final int ENDGAME = 2;
 	
+	// game modes
+	public static final int CLASSIC = 0;
+	
 	// player phases
 	public static final int PHASE_DRAW = 100;
 	public static final int PHASE_PLAY = 200;
@@ -29,5 +32,8 @@ public class Consts {
 	public static final int PLACE_SPECIAL = 2;
 	public static final int PLACE_CORNER = 3;
 	
+	// events
+	public static final int FATE = 1;
+	public static final int CHANCE = 2;
 	
 }

@@ -2,6 +2,8 @@ package com.cosine.cosgame.rich;
 
 import java.util.List;
 
+import com.cosine.cosgame.rich.basicplaces.Estate;
+
 public class Player {
 	String name;
 	int hp;
@@ -17,6 +19,18 @@ public class Player {
 	List<Card> discard;
 	
 	List<Estate> estates;
+	
+	public void addMoney(int x) {
+		money = money+x;
+	}
+	
+	public void loseMoney(int x) {
+		money = money-x;
+	}
+	
+	public void addSalary() {
+		money = money+salary;
+	}
 	
 	public String getName() {
 		return name;
