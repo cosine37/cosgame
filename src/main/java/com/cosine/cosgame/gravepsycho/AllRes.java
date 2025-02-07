@@ -137,7 +137,7 @@ public class AllRes {
 		int x = rand.nextInt(events.size());
 		Event e = events.get(x);
 		// TODO: test events here
-		e = new Echo();
+		//e = new Echo();
 		return e;
 	}
 	

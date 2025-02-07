@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+@font-face{
+     font-family: 'qishu'; 
+     src:url('/font/AaQiShu-2.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'yzgc'; 
+     src:url('/font/YeZiGongChangAoYeHei-2.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'shxfl'; 
+     src:url('/font/shxfl.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'lyt'; 
+     src:url('/font/lyt.woff') format('woff')
+}
+
+@font-face{
+     font-family: 'weibei'; 
+     src:url('/font/weibei.woff') format('woff')
+}
+@font-face{
+     font-family: 'hbt'; 
+     src:url('/font/hbt.woff') format('woff')
+}
+
+button{
+	outline: none;
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid darkgreen;
+	border-radius: 8px;
+	
+	background: darkgreen;
+}
+
+button:disabled{
+	outline: none;
+	color: darkgreen;
+	font-size: 16px;
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 6px;
+	padding-right: 6px;
+	border: 2px solid darkgreen;
+	border-radius: 8px;
+	
+	background: white;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.game-div{
+	position: absolute; 
+	background-color: rgba(255,255,255,0.5);
+	height: 1080px;
+	width: 1900px;
+	margin-top: 40px;
+	margin-left: 40px;
+	padding-top: 20px;
+	padding-left: 45px;
+	padding-right: 45px;
+	border: 1px solid rgba(120,120,120);
+	filter: drop-shadow(0px 0px 5px black);
+	border-radius: 20px;
+}
+
+.fakemsg-div{
+	background: rgb(0,150,255);
+	color: white;
+	font-size: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 960px;
+}
+
+.game-end-table td{
+	border: 1px solid black;
+	padding: 5px;
+	font-size: 20px;
+}
+
+
+
+
+.card{
+	position: relative;
+	float: left;
+	border: 1px solid black;
+	border-radius: 10px;
+	background-color: white;
+	/* cursor: pointer; */
+}
+
+.card-size{
+	height: 320px;
+	width: 210px;
+	border-radius: 10px;
+}
+
+.card-size-hand{
+	zoom: 1
+}
+
+.card-size-discard{
+	zoom: 0.8
+}
+
+.card-size-play{
+	zoom: 0.5
+}
+
+.card-size-play2{
+	zoom: 0.65
+}
+
+.card-size-news{
+	zoom: 1.5
+}
+
+.card-button-div{
+	color: white;
+	font-size: 24px;
+	text-align: center;
+	border: 2px solid rgb(0,150,255);
+	border-radius: 8px;
+	width: 160px;
+	margin-left: 24px;
+	margin-top: 15px;
+	background: rgb(0,150,255);
+	cursor: pointer;
+}
+
+.card-button-div[disabled]{
+	color: rgb(0,150,255);
+	font-size: 24px;
+	text-align: center;
+	border: 2px solid white;
+	border-radius: 8px;
+	width: 160px;
+	margin-left: 24px;
+	margin-top: 15px;
+	background: white;
+	cursor: not-allowed;
+}

@@ -106,7 +106,7 @@ public class Board {
 				boolean finished = event.singleBackHandle(p);
 				if (finished) return;
 			}
-			leftover = 0;
+			
 			for (i=0;i<backPlayers.size();i++) {
 				backPlayers.get(i).setStillIn(false);
 				backPlayers.get(i).addMoney(leftover);
@@ -115,6 +115,7 @@ public class Board {
 					if (finished) return;
 				}
 			}
+			leftover = 0;
 			for (i=revealed.size()-1;i>=0;i--) {
 				if (revealed.get(i).getType() == Consts.TREASURE) {
 					Card c = revealed.remove(i);
