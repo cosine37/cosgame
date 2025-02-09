@@ -5,20 +5,34 @@ import java.util.List;
 import com.cosine.cosgame.rich.basicplaces.Estate;
 
 public class Player {
-	String name;
-	int hp;
-	int energy;
-	int san;
-	int money;
-	int star;
-	int salary;
-	int phase;
+	protected String name;
+	protected int hp;
+	protected int energy;
+	protected int san;
+	protected int money;
+	protected int star;
+	protected int salary;
+	protected int phase;
+	protected int index;
 	
-	List<Card> hand;
-	List<Card> deck;
-	List<Card> discard;
+	protected List<Card> hand;
+	protected List<Card> deck;
+	protected List<Card> discard;
 	
-	List<Estate> estates;
+	protected Place place;
+	
+	protected Board board;
+	protected List<Estate> estates;
+	
+	public void move(int n) {
+		place.removePlayer(this);
+		Place np = place;
+		for (int i=0;i<n;i++) {
+			np = np.getNext();
+			np.bypass(this);
+		}
+		board.putPlayerOnPlace(this, np);
+	}
 	
 	public void addMoney(int x) {
 		money = money+x;
@@ -103,5 +117,23 @@ public class Player {
 	}
 	public void setEstates(List<Estate> estates) {
 		this.estates = estates;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	public Place getPlace() {
+		return place;
+	}
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 }

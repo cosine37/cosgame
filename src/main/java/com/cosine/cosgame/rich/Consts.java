@@ -30,7 +30,9 @@ public class Consts {
 	public static final int PLACE_EMPTY = 0;
 	public static final int PLACE_ESTATE = 1;
 	public static final int PLACE_SPECIAL = 2;
-	public static final int PLACE_CORNER = 3;
+	public static final int PLACE_STARTPOINT = 3;
+	
+	public static final int STARTPOINT_INDEX = 0;
 	
 	// events
 	public static final int FATE = 1;

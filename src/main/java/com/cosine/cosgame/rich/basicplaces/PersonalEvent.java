@@ -12,12 +12,8 @@ public class PersonalEvent extends Place {
 
 	@Override
 	public void stepOn(Player p) {
-		
+		super.stepOn(p);
 	}
 
-	@Override
-	public void bypass(Player p) {
-		
-	}
 
 }
