@@ -3,6 +3,8 @@ package com.cosine.cosgame.rich;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
 public abstract class Place {
 	protected int id;
 	protected int type;
@@ -14,6 +16,33 @@ public abstract class Place {
 	protected Board board;
 	
 	protected List<Player> playersOn;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		doc.append("id",id);
+		doc.append("type",type);
+		doc.append("name",name);
+		List<Integer> playersOnDocList = new ArrayList<>();
+		for (i=0;i<playersOn.size();i++){
+			playersOnDocList.add(playersOn.get(i).getIndex());
+		}
+		doc.append("playersOn",playersOnDocList);
+		return doc;
+	}
+	public void setFromDoc(Document doc){
+		int i;
+		id = doc.getInteger("id",0);
+		type = doc.getInteger("type",0);
+		name = doc.getString("name");
+		List<Integer> playersOnDocList = (List<Integer>)doc.get("playersOn");
+		playersOn = new ArrayList<>();
+		for (i=0;i<playersOnDocList.size();i++){
+			int index = playersOnDocList.get(i);
+			Player e = board.getPlayers().get(index);
+			playersOn.add(e);
+		}
+	}
 	
 	public Place(int id, String name, int type) {
 		this.id = id;

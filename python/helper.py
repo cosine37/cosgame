@@ -17,6 +17,9 @@ def openFile(fileName, filename2):
         line = lineRaw.strip()
         t = line.split()[0]
         attr = line.split()[1][:-1]
+        if (t == "protected"):
+            t = line.split()[1]
+            attr = line.split()[2][:-1]
         types.append(t)
         attributes.append(attr)
     g = open(fileName2, 'r');

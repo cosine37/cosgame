@@ -1,9 +1,32 @@
 package com.cosine.cosgame.rich;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bson.Document;
 
 public class Map {
 	List<Place> places;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		List<Document> placesDocList = new ArrayList<>();
+		for (i=0;i<places.size();i++){
+			placesDocList.add(places.get(i).toDocument());
+		}
+		doc.append("places",placesDocList);
+		return doc;
+	}
+	public void setFromDoc(Document doc){
+		int i;
+		List<Document> placesDocList = (List<Document>)doc.get("places");
+		places = new ArrayList<>();
+		for (i=0;i<placesDocList.size();i++){
+			Place e = Factory.genPlace(placesDocList.get(i));
+			places.add(e);
+		}
+	}
 	
 	public Map() {
 		
