@@ -61,20 +61,16 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			});
 		}
 		
-		$scope.newGame = function(){
-			$scope.goto('richcreategame')
-		}
 		
-		/*
 		$scope.newGame = function(){
-			$http({url: "/oink/newboard", method: "POST"}).then(function(response){
+			$http({url: "/rich/newboard", method: "POST"}).then(function(response){
 				var json_data = '{"type":"notify","content":"refresh"}';
 		        ws.send(json_data);
-		        $scope.goto('oinkcreategame')
+		        $scope.goto('richcreategame')
 			});
 			
 		}
-		
+		/*
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
 			$http({url: "/oink/setboardid", method: "POST", params: data}).then(function(response){

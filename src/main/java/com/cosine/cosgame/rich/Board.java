@@ -1,13 +1,16 @@
 package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.util.MongoDBUtil;
+
 public class Board {
 	protected String id;
-	protected String lotd;
+	protected String lord;
 	
 	protected int status;
 	protected int curCardId;
@@ -23,12 +26,14 @@ public class Board {
 	protected List<Integer> settings;
 	protected List<String> playerNames;
 	protected List<Player> players;
+	
+	protected MongoDBUtil dbutil;
 
 	public Document toDocument(){
 		int i;
 		Document doc = new Document();
 		doc.append("id",id);
-		doc.append("lotd",lotd);
+		doc.append("lord",lord);
 		doc.append("status",status);
 		doc.append("curCardId",curCardId);
 		doc.append("curPlayer",curPlayer);
@@ -50,7 +55,7 @@ public class Board {
 	public void setFromDoc(Document doc){
 		int i;
 		id = doc.getString("id");
-		lotd = doc.getString("lotd");
+		lord = doc.getString("lord");
 		status = doc.getInteger("status",0);
 		curCardId = doc.getInteger("curCardId",0);
 		curPlayer = doc.getInteger("curPlayer",0);
@@ -79,6 +84,11 @@ public class Board {
 		map = new Map();
 		players = new ArrayList<>();
 		playerNames = new ArrayList<>();
+		
+		String dbname = "rich";
+		String col = "board";
+		dbutil = new MongoDBUtil(dbname);
+		dbutil.setCol(col);
 	}
 	
 	public void startGame() {
@@ -98,6 +108,17 @@ public class Board {
 		return 0;
 	}
 	
+	// Actual Operations
+	public void startGameUDB(List<Integer> settings) {
+		this.status = Consts.INGAME;
+		updateDB("status", this.status);
+	}
+	
+	// End Actual Operations
+	
+	
+	
+	
 	public void addPlayer(String name) {
 		playerNames.add(name);
 		Player p = new Player();
@@ -105,17 +126,56 @@ public class Board {
 		p.setBoard(this);
 		players.add(p);
 	}
+	public boolean hasPlayer(String name) {
+		for (int i=0;i<playerNames.size();i++) {
+			if (playerNames.get(i).contentEquals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void dismiss() {
+		dbutil.delete("id", id);
+	}
+	
+	public boolean exists(String id) {
+		Document doc = dbutil.read("id", id);
+		if (doc == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	public void genBoardId() {
+		Date date = new Date();
+		id = Long.toString(date.getTime());
+	}
+	public void storeToDB() {
+		Document doc = toDocument();
+		dbutil.insert(doc);
+	}
+	public void getFromDB(String id) {
+		Document doc = dbutil.read("id", id);
+		setFromDoc(doc);
+	}
+	public void updateDB(String key, Object value) {
+		dbutil.update("id", id, key, value);
+	}
+	public boolean isLord(String name) {
+		return lord.contentEquals(name);
+	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getLotd() {
-		return lotd;
+	public String getLord() {
+		return lord;
 	}
-	public void setLotd(String lotd) {
-		this.lotd = lotd;
+	public void setLord(String lord) {
+		this.lord = lord;
 	}
 	public int getStatus() {
 		return status;

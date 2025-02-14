@@ -98,6 +98,12 @@ public class Player {
 		}
 	}
 	
+	public Player() {
+		hand = new ArrayList<>();
+		deck = new ArrayList<>();
+		discard = new ArrayList<>();
+	}
+	
 	public void move(int n) {
 		place.removePlayer(this);
 		Place np = place;

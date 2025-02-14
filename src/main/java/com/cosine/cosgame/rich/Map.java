@@ -29,7 +29,7 @@ public class Map {
 	}
 	
 	public Map() {
-		
+		places = new ArrayList<>();
 	}
 	
 	public void genMap(int x) {
