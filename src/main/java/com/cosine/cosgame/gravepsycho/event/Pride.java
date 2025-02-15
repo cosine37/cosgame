@@ -27,6 +27,7 @@ public class Pride extends Event{
 		if (totalIn > 1) {
 			Random rand = new Random();
 			int x = rand.nextInt(2);
+			p.setDecision(Consts.GO);
 			String s = "但是" + p.getName() + "被其他玩家嘲笑是怂包，所以硬着头皮继续了冒险";
 			if (x == 1) {
 				s = "其他玩家表示谁回去谁是狗，死要面子的" + p.getName() + "只得继续冒险";

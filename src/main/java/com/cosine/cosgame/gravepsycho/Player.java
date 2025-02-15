@@ -9,7 +9,7 @@ public class Player {
 	int moneyThisTurn;
 	int decision;
 	int decisionLastTurn;
-
+	boolean canUseThief;
 	boolean stillIn;
 	
 	public Player() {
@@ -77,6 +77,12 @@ public class Player {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	public boolean isCanUseThief() {
+		return canUseThief;
+	}
+	public void setCanUseThief(boolean canUseThief) {
+		this.canUseThief = canUseThief;
+	}
 
 	public Document toDocument() {
 		Document doc = new Document();
@@ -87,6 +93,7 @@ public class Player {
 		doc.append("decisionLastTurn", decisionLastTurn);
 		doc.append("stillIn", stillIn);
 		doc.append("avatar", avatar);
+		doc.append("canUseThief", canUseThief);
 		return doc;
 	}
 	
@@ -98,6 +105,7 @@ public class Player {
 		decisionLastTurn = doc.getInteger("decisionLastTurn", 0);
 		stillIn = doc.getBoolean("stillIn", false);
 		avatar = doc.getString("avatar");
+		canUseThief = doc.getBoolean("canUseThief", false);
 	}
 	
 }

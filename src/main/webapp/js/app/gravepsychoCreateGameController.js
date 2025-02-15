@@ -74,12 +74,24 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 				$scope.useEvent=true
 			}
 		}
+		$scope.useThief=false
+		$scope.thiefSwitch = function(){
+			if ($scope.useThief == true){
+				$scope.useThief=false
+			} else {
+				$scope.useThief=true
+			}
+		}
 		$scope.startGame = function(){
 			var x = 0;
 			if ($scope.useEvent){
 				x = 1;
 			}
-			var data = {"useEvent" : x}
+			var y = 0;
+			if ($scope.useEvent){
+				y = 1;
+			}
+			var data = {"useEvent" : x, "useThief": y}
 			$http({url: "/gravepsycho/startgame", method: "POST", params: data}).then(function(response){
 				ws.send("start");
 				$scope.goto('gravepsychogame')

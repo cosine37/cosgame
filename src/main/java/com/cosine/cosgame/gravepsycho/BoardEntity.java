@@ -12,6 +12,8 @@ public class BoardEntity {
 	String myIndex;
 	String myMoney;
 	boolean useEvent;
+	boolean useThief;
+	boolean canUseThief;
 	
 	List<String> playerNames;
 	List<String> revealed;
@@ -138,6 +140,18 @@ public class BoardEntity {
 	}
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
+	}
+	public boolean isUseThief() {
+		return useThief;
+	}
+	public void setUseThief(boolean useThief) {
+		this.useThief = useThief;
+	}
+	public boolean isCanUseThief() {
+		return canUseThief;
+	}
+	public void setCanUseThief(boolean canUseThief) {
+		this.canUseThief = canUseThief;
 	}
 	
 }

@@ -20,7 +20,7 @@ public class Disappear extends Event{
 		int i;
 		int n=0;
 		for (i=0;i<board.getPlayers().size();i++) {
-			if (board.getPlayers().get(i).isStillIn()) {
+			if (board.getPlayers().get(i).isStillIn() && board.getPlayers().get(i).getDecisionLastTurn() == Consts.GO) {
 				n++;
 			}
 		}
@@ -28,7 +28,7 @@ public class Disappear extends Event{
 			List<String> pnames = new ArrayList<>();
 			int t = x/n;
 			for (i=0;i<board.getPlayers().size();i++) {
-				if (board.getPlayers().get(i).isStillIn()) {
+				if (board.getPlayers().get(i).isStillIn() && board.getPlayers().get(i).getDecisionLastTurn() == Consts.GO) {
 					board.getPlayers().get(i).addMoney(t);
 					pnames.add(board.getPlayers().get(i).getName());
 				}

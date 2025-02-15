@@ -28,7 +28,7 @@ body {
 		<div>
 			<table>
 				<tr>
-					<td ng-repeat="pn in playerNames">
+					<td ng-repeat="pn in playerNames track by $index">
 						<table>
 							<tr>
 								<td>
@@ -42,6 +42,19 @@ body {
 							<tr>
 								<td>本轮收益：{{moneyThisTurn[$index]}}</td>
 							</tr>
+							<tr>
+								<td style="height: 35px;">
+									<div ng-show="canUseThief && myIndex != $index && stillIn[$index] == 'y' && myDecision == '0' && status == '1'">
+										<span>偷窃目标<span>
+										<img ng-show="thiefTarget != $index" ng-click="clickThiefTarget($index)" src="/image/Gravepsycho/not-checked.png"
+											style="height: 30px; width: 30px;"/>
+										<img ng-show="thiefTarget == $index" ng-click="clickThiefTarget($index)" src="/image/Gravepsycho/checked.png"
+											style="height: 30px; width: 30px;"/>
+									</div>
+									
+								</td>
+							</tr>
+							
 						</table>
 					</td>
 				</tr>
@@ -93,10 +106,14 @@ body {
 						<div ng-show="myDecision == '0' && status == '1'">
 							<button ng-click="decision(1)">继续冒险</button>
 							<button ng-click="decision(2)">返回营地</button>
+							<button ng-click="decisionThief()" ng-show="useThief && canUseThief" ng-disabled="canUseThief == false || thiefTarget == -1">偷窃玩家</button>
 						</div>
 						<div ng-show="myDecision != '0' && status == '1'">
 							<span ng-show="myDecision == 1">你选择了继续冒险</span>
 							<span ng-show="myDecision == 2">你选择了返回营地</span>
+							<span ng-show="myDecision>99">
+								你选择了偷窃{{playerNames[myDecision-100]}}
+							</span>
 						</div>
 						<div ng-show="myDecision == '0' && (status == '2' || status == '3')">
 							<button ng-click="decision(1)">确认</button>

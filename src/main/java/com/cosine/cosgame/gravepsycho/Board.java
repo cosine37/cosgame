@@ -2,7 +2,9 @@ package com.cosine.cosgame.gravepsycho;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.bson.Document;
@@ -21,6 +23,7 @@ public class Board {
 	String id;
 	String lord;
 	boolean useEvent;
+	boolean useThief;
 	AllRes allRes;
 	Event event;
 	Logger logger;
@@ -46,7 +49,7 @@ public class Board {
 		status = Consts.CREATEGAME;
 	}
 	
-	public void startGame(int ue) {
+	public void startGame(int ue, int ut) {
 		round = 0;
 		leftover = 0;
 		deck = allRes.getDeck();
@@ -54,6 +57,10 @@ public class Board {
 		useEvent = false;
 		if (ue == 1) {
 			useEvent = true;
+		}
+		useThief = false;
+		if (ut == 1) {
+			useThief = true;
 		}
 		newRoundHandle();
 	}
@@ -139,8 +146,44 @@ public class Board {
 			}
 			
 		}
+	}
+	
+	public void thiefHandle() {
+		int i;
+		Map<Integer, Integer> map = new HashMap<>();
+		// step 1: multiple player steal map handle
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getDecision() >= Consts.THIEFDECISIONS) {
+				int target = players.get(i).getDecision() - 100;
+				if (map.containsKey(target)) {
+					map.put(target, 2);
+				} else {
+					map.put(target, 1);
+				}
+			}
+		}
 		
-		
+		// step 2: actual steal handle
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getDecision() >= Consts.THIEFDECISIONS) {
+				int target = players.get(i).getDecision() - 100;
+				players.get(i).setCanUseThief(false);
+				logger.logSteal(players.get(i).getName(), players.get(target).getName());
+				if (players.get(target).getDecision() == Consts.BACK) {
+					if (map.get(target) == 1) {
+						int x = players.get(target).getMoneyThisTurn();
+						if (x > 10) x = 10;
+						players.get(target).addMoney(0-x);
+						players.get(i).addMoney(x);
+						logger.logStealSuccess(players.get(i).getName(), players.get(target).getName(), x);
+					} else {
+						logger.logStealDuplicate(players.get(i).getName(), players.get(target).getName());
+					}
+				} else {
+					logger.logStealFail(players.get(i).getName(), players.get(target).getName());
+				}
+			}
+		}
 	}
 	
 	public void allBackHandle() {
@@ -190,6 +233,11 @@ public class Board {
 			players.get(i).setMoneyThisTurn(0);
 			players.get(i).setDecisionLastTurn(Consts.NA);
 			players.get(i).setDecision(Consts.UNDECIDED);
+			if (useThief) {
+				players.get(i).setCanUseThief(true);
+			} else {
+				players.get(i).setCanUseThief(false);
+			}
 		}
 		shuffle();
 		status = Consts.PENDING;
@@ -229,7 +277,7 @@ public class Board {
 		int n=0;
 		
 		for (i=0;i<players.size();i++) {
-			if (players.get(i).isStillIn()) {
+			if (players.get(i).isStillIn() && players.get(i).getDecisionLastTurn() == Consts.GO) {
 				n++;
 			}
 		}
@@ -240,7 +288,7 @@ public class Board {
 			int y = numCoins%n;
 			leftover = leftover+y;
 			for (i=0;i<players.size();i++) {
-				if (players.get(i).isStillIn()) {
+				if (players.get(i).isStillIn() && players.get(i).getDecisionLastTurn() == Consts.GO) {
 					players.get(i).addMoney(x);
 					pnames.add(players.get(i).getName());
 				}
@@ -343,6 +391,7 @@ public class Board {
 						}
 					}
 					goBackHandle(backPlayers);
+					thiefHandle();
 					if (allBack()) {
 						allBackHandle();
 					} else {
@@ -447,6 +496,12 @@ public class Board {
 	}
 	public void setLogger(Logger logger) {
 		this.logger = logger;
+	}
+	public boolean isUseThief() {
+		return useThief;
+	}
+	public void setUseThief(boolean useThief) {
+		this.useThief = useThief;
 	}
 
 	public void genBoardId() {
@@ -563,6 +618,7 @@ public class Board {
 		String myIndex = "";
 		String myDecision = "";
 		String myMoney = "";
+		boolean canUseThief = false;
 		int i;
 		for (i=0;i<revealed.size();i++) {
 			String img = revealed.get(i).getImage();
@@ -597,6 +653,7 @@ public class Board {
 				myIndex = Integer.toString(i);
 				myDecision = Integer.toString(players.get(i).getDecision());
 				myMoney = Integer.toString(players.get(i).getMoney());
+				canUseThief = players.get(i).isCanUseThief();
 			}
 		}
 		
@@ -617,8 +674,10 @@ public class Board {
 		entity.setMyMoney(myMoney);
 		entity.setAvatar(avatar);
 		entity.setUseEvent(useEvent);
+		entity.setUseThief(useThief);
 		entity.setEvent(event.toEventEntity());
 		entity.setLogs(logger.getLogs());
+		entity.setCanUseThief(canUseThief);
 		return entity;
 	}
 	
@@ -661,6 +720,7 @@ public class Board {
 		doc.append("leftover", leftover);
 		doc.append("event", event.getNum());
 		doc.append("useEvent", useEvent);
+		doc.append("useThief", useThief);
 		doc.append("logs", logger.getLogs());
 		return doc;
 	}
@@ -672,6 +732,7 @@ public class Board {
 		round = doc.getInteger("round", 0);
 		leftover = doc.getInteger("leftover", 0);
 		useEvent = doc.getBoolean("useEvent", false);
+		useThief = doc.getBoolean("useThief", false);
 		List<Document> lod = (List<Document>) doc.get("deck");
 		List<Document> lor = (List<Document>) doc.get("revealed");
 		List<Document> lot = (List<Document>) doc.get("treasures");

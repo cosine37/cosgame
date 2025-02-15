@@ -44,6 +44,24 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 			});
 		}
 		
+		$scope.thiefTarget = -1;
+		$scope.clickThiefTarget = function(x){
+			if (x == $scope.thiefTarget){
+				$scope.thiefTarget = -1;
+			} else {
+				$scope.thiefTarget = x
+			}
+		}
+		$scope.decisionThief = function(){
+			if ($scope.thiefTarget == -1) return;
+			var x = 100+$scope.thiefTarget
+			var data = {"x" : x}
+			$http({url: "/gravepsycho/decision", method: "POST", params: data}).then(function(response){
+				$scope.thiefTarget = -1;
+				ws.send("refresh");
+			});
+		}
+		
 		adjustLogs = function(logElementId){
 			var logcontent = document.getElementById(logElementId);
 			logcontent.scrollTop = logcontent.scrollHeight;
@@ -107,6 +125,8 @@ app.controller("gravepsychoGameCtrl", ['$scope', '$window', '$http', '$document'
 					"background":"url('/image/Gravepsycho/Events/" + $scope.event.img + ".png')",
 					"background-size":"cover"
 				}
+				$scope.useThief = response.data.useThief;
+				$scope.canUseThief = response.data.canUseThief;
 				setRevealedStyle()
 				
 				$http.post('/citadelsgame/empty').then(function(response){

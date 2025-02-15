@@ -13,6 +13,7 @@ public class Consts {
 	public static final int UNDECIDED = 0;
 	public static final int GO = 1;
 	public static final int BACK = 2;
+	public static final int THIEFDECISIONS = 100;
 	
 	// card types
 	public static final int COIN = 0;
