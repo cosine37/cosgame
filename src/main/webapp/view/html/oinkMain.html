@@ -38,7 +38,11 @@
 				    </li>
 				    
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="showTablesTab()">商城</a>
+				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="hideTablesTab()">个人中心</a>
+				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#shoptab" ng-click="hideTablesTab()">商城</a>
 				    </li>
 				    
 				    <li class="nav-item">
@@ -91,7 +95,7 @@
 				</div>
 				
 				<div id="accounttab" class="content container tab-pane fade">
-					<h2><b>商城</b></h2>
+					<h2><b>个人中心</b></h2>
 					<div style="border-radius: 10px; background-color:rgb(0,150,255); padding: 20px; width: 500px; color:white">
 						<table>
 							<tr>
@@ -118,19 +122,45 @@
 						<button ng-click="changeSignature()">提交</button>
 					</div>
 					<div>
-						<div>修改头像：</div>
+						<div>更换头像：</div>
 						<div style="height: 60px; width: 60px; margin-right: 5px; float:left; position: relative; cursor:pointer" ng-repeat="avatarStyle in accountInfo.avatarStyles track by $index" ng-style="avatarStyle"
 							ng-click="chooseAvatar(accountInfo.avatars[$index])">
 						</div>
 					</div>
-					<div style="clear:both"></div>
+				</div>
+				
+				<div id="shoptab" class="content container tab-pane fade">
+					<h2><b>商城</b></h2>
 					<div>
 						<b>金币：</b>{{accountInfo.money}}
 					</div>
 					<div>
-						抽头像功能正在施工中。。。
+						<div ng-repeat="shopAvatarStyle in accountInfo.shopAvatarStyles track by $index" style="float:left;margin-right: 30px;">
+							<table>
+								<tr>
+									<td>
+										<div style="height: 180px; width: 180px; position: relative;" ng-style="shopAvatarStyle"></div>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center;font-size: 24px; font-weight:bold">
+										{{accountInfo.shopAvatarNames[$index]}}
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center; font-size: 20px;">
+										<span ng-show="accountInfo.canBuyAvatar[$index] == 1">${{avatarPrices[$index]}}</span>
+										<button ng-show="accountInfo.canBuyAvatar[$index] == 1" ng-disabled="avatarPrices[$index]>accountInfo.money" 
+											ng-click="buyAvatar($index)">购买</button>
+										<span ng-show="accountInfo.canBuyAvatar[$index] == 0" style="color:grey">已拥有</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
 					</div>
 				</div>
+				
 				
 				<div id="startuprulesstab" class="content container tab-pane fade">
 					<h2><b>初创公司规则</b></h2>

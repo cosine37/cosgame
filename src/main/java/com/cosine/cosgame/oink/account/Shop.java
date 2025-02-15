@@ -20,6 +20,9 @@ public class Shop {
 	public static final int NUMCOMMONAVATAR = 10;
 	
 	Map<Integer, String> avatarDict;
+	List<Integer> commonAvatar;
+	List<Integer> rareAvatar;
+	List<Integer> epicAvatar;
 	/*
 	List<Skin> epicSkins;
 	List<Skin> rareSkins;
@@ -30,6 +33,9 @@ public class Shop {
 	*/
 	public Shop() {
 		avatarDict = new HashMap<>();
+		commonAvatar = new ArrayList<>();
+		rareAvatar = new ArrayList<>();
+		epicAvatar = new ArrayList<>();
 		
 		allAvatars();
 	}
@@ -101,6 +107,7 @@ public class Shop {
 		}
 		return ts;
 	}
+
 	
 	public String dig(Account a) {
 		
@@ -292,9 +299,29 @@ public class Shop {
 		}
 		return s;
 	}
-	
+	*/
 	public String buy(Account a, int option) {
 		String buyMsg = "";
+		
+		if (option<100) {
+			Transaction t1;
+			if (option<5) {
+				t1 = new Transaction(Transaction.MONEY, -88, "购买皮肤支付");
+				a.addNewTransaction(t1);
+				a.addAvatar(a.getShopAvatars().get(option));
+			} else if (option<7) {
+				t1 = new Transaction(Transaction.MONEY, -588, "购买皮肤支付");
+				a.addNewTransaction(t1);
+				a.addAvatar(a.getShopAvatars().get(option));
+			} else if (option == 7) {
+				t1 = new Transaction(Transaction.MONEY, -1388, "购买皮肤支付");
+				a.addNewTransaction(t1);
+				a.addAvatar(a.getShopAvatars().get(option));
+			}
+			
+		}
+		
+		/*
 		if (option == Consts.BUY1HCOINS) {
 			Transaction t1 = new Transaction(Transaction.DIAMOND, -1, "购买金币支付");
 			Transaction t2 = new Transaction(Transaction.MONEY, 100, "购买金币");
@@ -328,39 +355,53 @@ public class Shop {
 			a.addNewTransaction(t1);
 			a.addSkin(a.getShopSkins().get(2));
 		}
+		*/
 		a.updateAccountDB();
 		return buyMsg;
 	}
 	
-	public void generateShopSkins(Account a, int seed){
-		int i;
+	public void generateShopAvatar(Account a, int seed){
+		int i,j,x;
 		List<Integer> ans = new ArrayList<>();
-		List<Integer> ts = new ArrayList<>();
-		for (i=0;i<rareSkins.size();i++) {
-			if (a.hasSkin(rareSkins.get(i).getId())) {
+		List<Integer> ta = new ArrayList<>();
+		for (i=0;i<commonAvatar.size();i++) {
+			if (a.hasAvatar(commonAvatar.get(i))) {
 				
 			} else {
-				ts.add(rareSkins.get(i).getId());
+				ta.add(commonAvatar.get(i));
 			}
 		}
-		if (ts.size() == 0) return;
-		int x = seed % ts.size();
-		ans.add(ts.remove(x));
-		x = seed % ts.size();
-		ans.add(ts.remove(x));
-		ts = new ArrayList<>();
-		for (i=0;i<epicSkins.size();i++) {
-			if (a.hasSkin(epicSkins.get(i).getId())) {
+		if (ta.size()<5) return;
+		for (i=0;i<5;i++) {
+			x = seed % ta.size();
+			ans.add(ta.remove(x));
+		}
+		ta = new ArrayList<>();
+		for (i=0;i<rareAvatar.size();i++) {
+			if (a.hasAvatar(rareAvatar.get(i))) {
 				
 			} else {
-				ts.add(epicSkins.get(i).getId());
+				ta.add(rareAvatar.get(i));
 			}
 		}
-		x = seed % ts.size();
-		ans.add(ts.remove(x));
-		a.setShopSkins(ans);
+		if (ta.size() == 0) return;
+		x = seed % ta.size();
+		ans.add(ta.remove(x));
+		x = seed % ta.size();
+		ans.add(ta.remove(x));
+		ta = new ArrayList<>();
+		for (i=0;i<epicAvatar.size();i++) {
+			if (a.hasAvatar(epicAvatar.get(i))) {
+				
+			} else {
+				ta.add(epicAvatar.get(i));
+			}
+		}
+		x = seed % ta.size();
+		ans.add(ta.remove(x));
+		a.setShopAvatars(ans);
 	}
-	*/
+	
 	public String getAvatarName(int avatarId) {
 		String ans = "";
 		if (avatarDict.containsKey(avatarId)) {
@@ -376,6 +417,97 @@ public class Shop {
 		avatarDict.put(1003, "冲浪企鹅");
 		avatarDict.put(1004, "型男");
 		avatarDict.put(1005, "发夹女生");
+		avatarDict.put(1006, "黄发男");
+		avatarDict.put(1007, "风般男子");
+		avatarDict.put(1008, "商务女");
+		avatarDict.put(1009, "小女生");
+		avatarDict.put(1010, "羞涩男");
+		avatarDict.put(1011, "酷男");
+		avatarDict.put(1012, "宅男");
+		avatarDict.put(1013, "红发女郎");
+		avatarDict.put(1014, "蓝发女郎");
+		avatarDict.put(1015, "红发女生");
+		avatarDict.put(1016, "小白兔");
+		avatarDict.put(1017, "小只因");
+		avatarDict.put(1018, "小猫");
+		avatarDict.put(1019, "粉耳兔");
+		avatarDict.put(1020, "青恐龙");
+		avatarDict.put(1021, "调侃兔");
+		avatarDict.put(1022, "小三毛");
+		avatarDict.put(1023, "熟男");
+		avatarDict.put(1024, "白领男");
+		avatarDict.put(1025, "墨镜酷男");
+		avatarDict.put(1026, "小男孩");
+		avatarDict.put(1027, "眼镜呆子");
+		avatarDict.put(1028, "护士");
+		avatarDict.put(1029, "红发女");
+		avatarDict.put(1030, "白领女");
+		avatarDict.put(1031, "熊猫");
+		avatarDict.put(1032, "老鸭");
+		avatarDict.put(1033, "醒目兔");
+		avatarDict.put(1034, "紫色大狗");
+		avatarDict.put(1035, "老虎");
+		avatarDict.put(1036, "大黄狗");
+		avatarDict.put(1037, "大叔");
+		avatarDict.put(1038, "络腮大叔");
+		avatarDict.put(1039, "商务男");
+		avatarDict.put(1040, "QQ男");
+		avatarDict.put(1041, "大熊");
+		avatarDict.put(1042, "大眼男");
+		avatarDict.put(1043, "街舞装扮");
+		avatarDict.put(1044, "小朋友");
+		avatarDict.put(1045, "黄发女孩");
+		avatarDict.put(1046, "羞涩女");
+		avatarDict.put(1047, "短发女生");
+		avatarDict.put(1048, "绿辫女生");
+		avatarDict.put(1049, "可爱猫");
+		avatarDict.put(1050, "大象");
+		avatarDict.put(1051, "绿鸭");
+		avatarDict.put(1052, "BB熊");
+		avatarDict.put(1053, "海象");
+		avatarDict.put(1054, "海狮");
+		
+		avatarDict.put(2000, "悟空");
+		avatarDict.put(2001, "海王子");
+		avatarDict.put(2002, "春丽");
+		avatarDict.put(2003, "包子头");
+		avatarDict.put(2004, "酷比");
+		avatarDict.put(2005, "好运莲莲");
+		avatarDict.put(2006, "玛卡巴卡");
+		avatarDict.put(2007, "村民猫");
+		avatarDict.put(2008, "村民男");
+		avatarDict.put(2009, "村民女");
+		avatarDict.put(2010, "村民象");
+		avatarDict.put(2011, "村民鹦鹉");
+		avatarDict.put(2012, "旺仔");
+		avatarDict.put(2013, "花开富贵");
+		avatarDict.put(2014, "杀马特红");
+		avatarDict.put(2015, "杀马特绿");
+		avatarDict.put(2016, "岁月静好");
+		avatarDict.put(2017, "友谊干杯");
+		avatarDict.put(2018, "古月哥欠");
+		
+		avatarDict.put(3000, "姚明");
+		avatarDict.put(3001, "奥尼尔");
+		avatarDict.put(3002, "库里");
+		avatarDict.put(3003, "登哥");
+		avatarDict.put(3004, "梅东");
+		avatarDict.put(3005, "姆巴佩");
+		avatarDict.put(3006, "哈兰德");
+		avatarDict.put(3007, "锦鲤");
+		avatarDict.put(3008, "挺懂球啊");
+		
+		int i;
+		for (i=0;i<55;i++) {
+			commonAvatar.add(1000+i);
+		}
+		for (i=0;i<19;i++) {
+			rareAvatar.add(2000+i);
+		}
+		for (i=0;i<9;i++) {
+			epicAvatar.add(3000+i);
+		}
+		
 	}
 
 }

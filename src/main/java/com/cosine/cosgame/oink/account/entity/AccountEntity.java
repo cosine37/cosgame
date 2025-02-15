@@ -16,6 +16,10 @@ public class AccountEntity {
 	boolean visitedOink;
 	Map<String, String> chosenAvatarStyle;
 	List<Map<String, String>> avatarStyles;
+	List<Integer> shopAvatars;
+	List<String> shopAvatarNames;
+	List<Map<String, String>> shopAvatarStyles;
+	List<Integer> canBuyAvatar;
 	
 	public String getName() {
 		return name;
@@ -88,6 +92,30 @@ public class AccountEntity {
 	}
 	public void setKey(int key) {
 		this.key = key;
+	}
+	public List<Integer> getShopAvatars() {
+		return shopAvatars;
+	}
+	public void setShopAvatars(List<Integer> shopAvatars) {
+		this.shopAvatars = shopAvatars;
+	}
+	public List<Map<String, String>> getShopAvatarStyles() {
+		return shopAvatarStyles;
+	}
+	public void setShopAvatarStyles(List<Map<String, String>> shopAvatarStyles) {
+		this.shopAvatarStyles = shopAvatarStyles;
+	}
+	public List<String> getShopAvatarNames() {
+		return shopAvatarNames;
+	}
+	public void setShopAvatarNames(List<String> shopAvatarNames) {
+		this.shopAvatarNames = shopAvatarNames;
+	}
+	public List<Integer> getCanBuyAvatar() {
+		return canBuyAvatar;
+	}
+	public void setCanBuyAvatar(List<Integer> canBuyAvatar) {
+		this.canBuyAvatar = canBuyAvatar;
 	}
 	
 }

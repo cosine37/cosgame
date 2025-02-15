@@ -136,9 +136,18 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			$scope.getAllBoards();
 		});
 		
+		
+		$scope.avatarPrices = [88,88,88,88,88,588,588,1388]
 		$scope.chooseAvatar = function(x){
 			var data = {"avatarId" : x}
 			$http({url: "/oink/chooseavatar", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.buyAvatar = function(x){
+			var data = {"option" : x}
+			$http({url: "/oink/buyavatar", method: "POST", params: data}).then(function(response){
 				$scope.getAccountInfo()
 			});
 		}
