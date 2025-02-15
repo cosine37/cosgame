@@ -27,6 +27,9 @@ public class Event {
 	public String cardImg(Card c) {return c.getImage();}
 	public boolean overrideLogReveal(Card c) {return false;}
 	public void newRound() {}
+	public void stealSuccessful(Player p) {}
+	public boolean disasterHandle(Player p) {return false;}
+	public void singleStealHandle(Player p) {}
 
 	public int getNum() {
 		return num;

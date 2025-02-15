@@ -63,8 +63,12 @@ public class Logger {
 		}
 	}
 	
+	public void logDisasterHappen() {
+		log("灾难发生！");
+	}
+	
 	public void logDisaster(List<String> pnames) {
-		String s = "灾难发生，";
+		String s = "";
 		if (pnames.size() == 1) {
 			s = s+ pnames.get(0);
 		} else {
@@ -112,22 +116,32 @@ public class Logger {
 	}
 	
 	public void logSteal(String pname, String tname) {
-		String s = pname + "准备在半路伏击" + tname;
+		String s = pname + "准备在归途伏击" + tname;
 		log(s);
 	}
 	
 	public void logStealFail(String pname, String tname) {
-		String s = "但是" + tname + "并没有返回营地，所以" + pname + "什么都没有偷到，这就尴尬了。";
+		String s = "但是" + tname + "并没有返回营地，所以" + pname + "什么都没有偷到，这就尴尬了";
 		log(s);
 	}
 	
 	public void logStealDuplicate(String pname, String tname) {
-		String s = "但是有其他玩家也选择伏击" + tname + "，隐蔽失败，所以" + pname + "什么都没有偷到，这就尴尬了。";
+		String s = "但是有其他玩家也选择伏击" + tname + "，隐蔽失败，所以" + pname + "什么都没有偷到，这就尴尬了";
 		log(s);
 	}
 	
 	public void logStealSuccess(String pname, String tname, int x) {
-		String s = tname + "在返回营地的路上被伏击的" + pname + "偷走了" + x + "枚钱币，" + pname + "真的太脏了。";
+		Random rand = new Random();
+		int y = rand.nextInt(2);
+		String s = "";
+		if (y == 0) {
+			s = tname + "在返回营地的路上被伏击的" + pname + "偷走了" + x + "枚钱币，" + pname + "真是脏的飞起";
+		} else if (y == 1) {
+			s = tname + "在返回营地的路上被伏击的" + pname + "偷走了" + x + "枚钱币，" + pname + "实在是太素质了";
+		} else {
+			
+		}
+		
 		log(s);
 	}
 

@@ -37,6 +37,14 @@ public class EventFactory {
 			event = new Valuable();
 		} else if (x == 20) {
 			event = new Certify();
+		} else if (x == 21) {
+			event = new Raider();
+		} else if (x == 22) {
+			event = new Dodge();
+		} else if (x == 24) {
+			event = new Pilfer();
+		} else if (x == 23) {
+			event = new Greed();
 		}
 		return event;
 	}

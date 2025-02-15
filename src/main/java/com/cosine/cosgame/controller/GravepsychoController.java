@@ -184,4 +184,10 @@ public class GravepsychoController {
 		AllRes allRes = new AllRes();
 		return new ResponseEntity<>(allRes.genEventsAsEntity(), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/gravepsycho/allthiefevents", method = RequestMethod.GET)
+	public ResponseEntity<List<EventEntity>> allThiefEvents(HttpServletRequest request){
+		AllRes allRes = new AllRes();
+		return new ResponseEntity<>(allRes.genThiefEventsAsEntity(), HttpStatus.OK);
+	}
 }

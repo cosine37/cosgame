@@ -86,10 +86,15 @@ public class Board {
 	
 	public void disasterHandle() {
 		List<String> pnames = new ArrayList<>();
+		logger.logDisasterHappen();
 		for (int i=0;i<players.size();i++) {
 			Player p = players.get(i);
 			p.setDecision(Consts.UNDECIDED);
 			if (p.isStillIn()) {
+				if (useEvent && event != null) {
+					boolean f = event.disasterHandle(p);
+					if (f) continue;
+				}
 				p.setMoneyThisTurn(0);
 				pnames.add(p.getName());
 			}
@@ -164,18 +169,26 @@ public class Board {
 		}
 		
 		// step 2: actual steal handle
+		int numSteal = 0;
+		Player singleSteal = null;
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getDecision() >= Consts.THIEFDECISIONS) {
+				numSteal++;
+				singleSteal = players.get(i);
 				int target = players.get(i).getDecision() - 100;
 				players.get(i).setCanUseThief(false);
 				logger.logSteal(players.get(i).getName(), players.get(target).getName());
 				if (players.get(target).getDecision() == Consts.BACK) {
-					if (map.get(target) == 1) {
+					if (map.get(target) == 1) { // steal successful
 						int x = players.get(target).getMoneyThisTurn();
 						if (x > 10) x = 10;
 						players.get(target).addMoney(0-x);
 						players.get(i).addMoney(x);
 						logger.logStealSuccess(players.get(i).getName(), players.get(target).getName(), x);
+						
+						if (useEvent && event != null) {
+							event.stealSuccessful(players.get(i));
+						}
 					} else {
 						logger.logStealDuplicate(players.get(i).getName(), players.get(target).getName());
 					}
@@ -184,6 +197,14 @@ public class Board {
 				}
 			}
 		}
+		
+		// step 3: single steal handle
+		if (numSteal == 1) {
+			if (useEvent && event != null) {
+				event.singleStealHandle(singleSteal);
+			}
+		}
+		
 	}
 	
 	public void allBackHandle() {
@@ -246,7 +267,7 @@ public class Board {
 		logger.logRoundStart(round);
 		if (useEvent) {
 			AllRes allRes = new AllRes();
-			event = allRes.getRandomEvent();
+			event = allRes.getRandomEvent(useThief);
 			event.setBoard(this);
 			event.newRound();
 		}
@@ -294,6 +315,8 @@ public class Board {
 				}
 			}
 			logger.logDistributeCoins(pnames, x);
+		} else {
+			leftover = leftover+numCoins;
 		}
 	}
 	

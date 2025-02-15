@@ -111,9 +111,31 @@ public class AllRes {
 		events.add(e);
 	}
 	
+	public void genThiefEvents() {
+		Event e;
+		e = new Raider();
+		events.add(e);
+		e = new Dodge();
+		events.add(e);
+		e = new Pilfer();
+		events.add(e);
+		e = new Greed();
+		events.add(e);
+	}
+	
 	public List<EventEntity> genEventsAsEntity(){
 		events = new ArrayList<>();
 		genEvents();
+		List<EventEntity> ees = new ArrayList<>();
+		for (int i=0;i<events.size();i++) {
+			ees.add(events.get(i).toEventEntity());
+		}
+		return ees;
+	}
+	
+	public List<EventEntity> genThiefEventsAsEntity(){
+		events = new ArrayList<>();
+		genThiefEvents();
 		List<EventEntity> ees = new ArrayList<>();
 		for (int i=0;i<events.size();i++) {
 			ees.add(events.get(i).toEventEntity());
@@ -129,15 +151,20 @@ public class AllRes {
 		return treasures;
 	}
 	
-	public Event getRandomEvent() {
+	public Event getRandomEvent(boolean useThief) {
 		events = new ArrayList<>();
 		genEvents();
+		if (useThief) {
+			genThiefEvents();
+		}
+		
+		int n = events.size()*1000;
 		
 		Random rand = new Random();
-		int x = rand.nextInt(events.size());
+		int x = rand.nextInt(n) % events.size();
 		Event e = events.get(x);
 		// TODO: test events here
-		//e = new Echo();
+		//e = new Greed();
 		return e;
 	}
 	

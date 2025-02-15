@@ -41,6 +41,9 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#eventstab" ng-click="hideTablesTab()">事事顺意</a>
 				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#thieftab" ng-click="hideTablesTab()">鸡鸣狗盗</a>
+				    </li>
 				  </ul>
 			</div>
 			
@@ -107,7 +110,7 @@
 							<td colspan="2" style="width: 1000px"><h5 class="pokewhatheader"><b>回合流程</b></h5></td>
 						</tr>
 						<tr>
-							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每一回合开始时每名玩家先同时决定<b>返回营地</b>或<b>继续寻宝</b>。
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每一回合开始时每名玩家先同时决定<b>返回营地</b>或<b>继续冒险</b>。
 							所有<b>返回营地</b>的玩家将平分置于一旁的<b>铜钱</b>分数（若有余数，则将余数继续置于一旁）。若本回合只有一个玩家<b>返回营地</b>，则该玩家获得等同于所有已翻出的<b>宝物</b>价值的分数并将所有翻出的<b>宝物</b>移除。
 							若依然有玩家决定<b>继续寻宝</b>，则翻出牌堆顶的一张牌。以下为翻出牌堆顶的牌所执行的效果。</br></td>
 						</tr>
@@ -115,7 +118,7 @@
 							<td><img src="/image/Gravepsycho/Cards/c17.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="nothankstext">&nbsp;&nbsp;&nbsp;&nbsp; 铜钱</h4>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有仍然<b>继续寻宝</b>的玩家将根据翻出<b>铜钱</b>的数量平分并获得相应的分数。余数将置于一旁。当有玩家返回时将会获得剩余分数。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有仍然<b>继续冒险</b>的玩家将根据翻出<b>铜钱</b>的数量平分并获得相应的分数。余数将置于一旁。当有玩家返回时将会获得剩余分数。
 							</td>
 							
 						</tr>
@@ -123,7 +126,7 @@
 							<td><img src="/image/Gravepsycho/Cards/d04.png" class="newsImg"></td>
 							<td style="width: 790px; vertical-align:top">
 								<h4 class="nothankstext">&nbsp;&nbsp;&nbsp;&nbsp; 灾难</h4>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>灾难</b>共有5种类型，每种各3张。当翻出<b>灾难</b>时，若本轮之前已翻出相同类型的<b>灾难</b>，回合立即结束，所有仍然<b>继续寻宝</b>的玩家将失去本轮获得的所有分数。
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>灾难</b>共有5种类型，每种各3张。当翻出<b>灾难</b>时，若本轮之前已翻出相同类型的<b>灾难</b>，回合立即结束，所有仍然<b>继续冒险</b>的玩家将失去本轮获得的所有分数。
 							</td>
 						</tr>
 						<tr>
@@ -160,6 +163,39 @@
 							</td>
 						</tr>
 						<tr ng-repeat = "event in allEvents track by $index">
+							<td style="width: 1000px; padding-top: 10px">
+								<div style="border: 10px solid grey; border-radius: 10px; width: 490px; height: 280px;
+									 position:relative" ng-style="event.estyle">
+									<div style="border: 2px solid rgb(200,149,31); background:rgb(23,44,60); margin-top: -10px; width: 170px; margin-left: 158px; border-radius: 5px;
+										font-family: 'ls'; font-size: 36px; color: rgb(200,149,31);  text-align:center">{{event.name}}</div>
+									<div style="background:rgba(0,0,0,0.8);color: white;position: absolute; bottom: 0px; width: 470px; height: 50px; text-align:center">
+										{{event.desc}}
+									</div>
+								</div>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+				
+				<div id="thieftab" class="content container tab-pane fade">
+					<h2><b>鸡鸣狗盗</b></h2>
+					<table>
+						<tr>
+							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在翻出一张牌前，每名玩家除了选择<b>返回营地</b>或<b>继续冒险</b>外，
+							每轮还有一次选择<b>偷窃玩家</b>的机会。 选择<b>偷窃玩家</b>时，需要指定一名依然在冒险的其他玩家，若该玩家本回合选择的是<b>返回营地</b>，且你是唯一一个偷窃该玩家的玩家，
+							在该玩家结算完毕收益（获得归途剩余钱币和宝物）后， 你获得该玩家本轮本应获得的10枚钱币（若不足则全部获得）。若有其他玩家和你同时偷窃你的目标玩家，
+							或是你偷窃的玩家并没有选择<b>返回营地</b>，你不会有任何收益。<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择<b>偷窃玩家</b>的玩家视为依然在冒险，所以若当回合灾难发生， 选择偷窃玩家的玩家也会失去本轮获得的所有钱币。
+							但是若当回合翻出的是钱币，选择偷窃玩家的玩家不参与分发钱币。<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;偷窃玩家的选项每轮只能使用一次（游戏共进行5轮）且必须要指定依然在冒险的玩家为目标！ 若你本轮已经选择过偷窃玩家选项或没有其他玩家依然在冒险，你无法选择偷窃玩家选项。
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若同时使用<b>鸡鸣狗盗</b>扩展和<b>事事顺意</b>扩展。则以下事件也有可能被翻出。
+							</td>
+						</tr>
+						<tr ng-repeat = "event in allThiefEvents track by $index">
 							<td style="width: 1000px; padding-top: 10px">
 								<div style="border: 10px solid grey; border-radius: 10px; width: 490px; height: 280px;
 									 position:relative" ng-style="event.estyle">

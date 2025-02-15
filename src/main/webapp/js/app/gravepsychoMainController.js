@@ -138,6 +138,21 @@ app.controller("gravepsychoMainCtrl", ['$scope', '$window', '$http', '$document'
 		}
 		$scope.getAllEvents();
 		
+		$scope.getAllThiefEvents = function(){
+			$scope.allThiefEvents = [];
+			$http.get('/gravepsycho/allthiefevents').then(function(response){
+				$scope.allThiefEvents = response.data;
+				for (var i=0;i<$scope.allThiefEvents.length;i++){
+					var estyle = {
+						"background":"url('/image/Gravepsycho/Events/" + $scope.allThiefEvents[i].img + ".png')",
+						"background-size":"cover"
+					}
+					$scope.allThiefEvents[i].estyle = estyle;
+				}
+			});
+		}
+		$scope.getAllThiefEvents();
+		
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
