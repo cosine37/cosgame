@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -14,7 +14,7 @@ app.controller("gravepsychoEndGameCtrl", ['$scope', '$window', '$http', '$docume
 		$scope.championMoney = 0;
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

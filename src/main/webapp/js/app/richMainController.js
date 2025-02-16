@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -26,7 +26,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			$scope.allTabs = tempTabs;
 		});
 		
-		var ws = $websocket("ws://" + $window.location.host + "/rich/allboardsrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/rich/allboardsrefresh");
 		ws.onError(function(event) {
 		});
 	
@@ -36,7 +36,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		ws.onOpen(function() {
 		});
 		
-		var boardws = $websocket("ws://" + $window.location.host + "/rich/boardrefresh");
+		var boardws = $websocket("wss://" + $window.location.host + "/rich/boardrefresh");
 		boardws.onError(function(event) {
 		});
 	
@@ -47,7 +47,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		});
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

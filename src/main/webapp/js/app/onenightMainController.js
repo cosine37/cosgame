@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -26,7 +26,7 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 			$scope.allTabs = tempTabs;
 		});
 		
-		var ws = $websocket("ws://" + $window.location.host + "/onenight/allboardsrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/onenight/allboardsrefresh");
 		ws.onError(function(event) {
 		});
 	
@@ -36,7 +36,7 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 		ws.onOpen(function() {
 		});
 		
-		var boardws = $websocket("ws://" + $window.location.host + "/onenight/boardrefresh");
+		var boardws = $websocket("wss://" + $window.location.host + "/onenight/boardrefresh");
 		boardws.onError(function(event) {
 		});
 	
@@ -49,7 +49,7 @@ app.controller("onenightMainCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.onTablesTab = true;
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

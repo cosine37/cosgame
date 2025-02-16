@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("onenightGameApp", ["ngWebSocket"]);
 app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/onenight/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/onenight/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
 			timeoutObj: null,
@@ -58,7 +58,7 @@ app.controller("onenightGameCtrl", ['$scope', '$window', '$http', '$document', '
 		$scope.centerZoneMsg = "中央区域"
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

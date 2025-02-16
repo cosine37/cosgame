@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -26,7 +26,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.allTabs = tempTabs;
 		});
 	
-		var ws = $websocket("ws://" + $window.location.host + "/pokerworld/allboardsrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/pokerworld/allboardsrefresh");
 		ws.onError(function(event) {
 		});
 	
@@ -36,7 +36,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		ws.onOpen(function() {
 		});
 		
-		var boardws = $websocket("ws://" + $window.location.host + "/pokerworld/boardrefresh");
+		var boardws = $websocket("wss://" + $window.location.host + "/pokerworld/boardrefresh");
 		boardws.onError(function(event) {
 		});
 	
@@ -111,7 +111,7 @@ app.controller("pokerworldMainCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.shownCardIndex = -1;
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

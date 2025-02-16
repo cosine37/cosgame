@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("gravepsychoCreateGameApp", ["ngWebSocket"]);
 app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/gravepsycho/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/gravepsycho/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
 			timeoutObj: null,
@@ -45,7 +45,7 @@ app.controller("gravepsychoCreateGameCtrl", ['$scope', '$window', '$http', '$doc
 	
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

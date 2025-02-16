@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("oinkGameApp", ["ngWebSocket"]);
 app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/oink/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/oink/boardrefresh");
 		ws.onError(function(event) {
 		});
 		
@@ -170,7 +170,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

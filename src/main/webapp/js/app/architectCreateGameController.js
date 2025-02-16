@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -8,7 +8,7 @@ var app = angular.module("architectCreateGameApp", ["ngWebSocket"]);
 app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$websocket',
 	function($scope, $window, $http, $document, $websocket){
 		
-		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/architect/boardrefresh");
 		ws.onError(function(event) {
 		});
 	
@@ -21,7 +21,7 @@ app.controller("architectCreateGameCtrl", ['$scope', '$window', '$http', '$docum
 		$scope.settings = [1,1,0]
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

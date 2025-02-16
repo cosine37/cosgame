@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -11,7 +11,7 @@ var sleep = function(ms) {
 var app = angular.module("pokerworldGameApp", ["ngWebSocket"]);
 app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/pokerworld/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/pokerworld/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
 			timeoutObj: null,
@@ -78,7 +78,7 @@ app.controller("pokerworldGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.numCardsChosen = 0;
 		
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

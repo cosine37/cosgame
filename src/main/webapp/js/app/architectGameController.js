@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -13,7 +13,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 			$scope.username = response.data.value[0];
 		});
 	
-		var ws = $websocket("ws://" + $window.location.host + "/architect/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/architect/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
 			timeoutObj: null,
@@ -64,7 +64,7 @@ app.controller("architectGameCtrl", ['$scope', '$window', '$http', '$document', 
 		$scope.shownPlayerBuildings = -1
 	
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		

@@ -1,5 +1,5 @@
 var setUrl = function(d){
-	hearder = "http://";
+	hearder = "https://";
 	server = "localhost:8080";
 	return header + server + d;
 }
@@ -7,7 +7,7 @@ var setUrl = function(d){
 var app = angular.module("pokewhatGameApp", ["ngWebSocket"]);
 app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
-		var ws = $websocket("ws://" + $window.location.host + "/pokewhat/boardrefresh");
+		var ws = $websocket("wss://" + $window.location.host + "/pokewhat/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
 			timeoutObj: null,
@@ -84,7 +84,7 @@ app.controller("pokewhatGameCtrl", ['$scope', '$window', '$http', '$document', '
 		}, true);
 
 		$scope.goto = function(d){
-			var x = "http://" + $window.location.host;
+			var x = "https://" + $window.location.host;
 			$window.location.href = x + "/" + d;
 		}
 		
