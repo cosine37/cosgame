@@ -30,6 +30,7 @@ public class Event {
 	public void stealSuccessful(Player p) {}
 	public boolean disasterHandle(Player p) {return false;}
 	public void singleStealHandle(Player p) {}
+	public void preBackStealHandle() {}
 
 	public int getNum() {
 		return num;

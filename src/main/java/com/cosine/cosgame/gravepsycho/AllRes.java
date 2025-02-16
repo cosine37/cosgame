@@ -164,7 +164,7 @@ public class AllRes {
 		int x = rand.nextInt(n) % events.size();
 		Event e = events.get(x);
 		// TODO: test events here
-		//e = new Greed();
+		//e = new Pilfer();
 		return e;
 	}
 	

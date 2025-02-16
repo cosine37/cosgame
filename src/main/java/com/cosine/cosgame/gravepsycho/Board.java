@@ -413,6 +413,9 @@ public class Board {
 							}
 						}
 					}
+					if (useEvent && event != null) {
+						event.preBackStealHandle();
+					}
 					goBackHandle(backPlayers);
 					thiefHandle();
 					if (allBack()) {

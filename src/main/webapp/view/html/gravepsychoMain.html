@@ -39,10 +39,10 @@
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">基本规则</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#eventstab" ng-click="hideTablesTab()">事事顺意</a>
+				      <a class="nav-link" data-toggle="tab" href="#eventstab" ng-click="hideTablesTab()">事事顺意扩展</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#thieftab" ng-click="hideTablesTab()">鸡鸣狗盗</a>
+				      <a class="nav-link" data-toggle="tab" href="#thieftab" ng-click="hideTablesTab()">鸡鸣狗盗扩展</a>
 				    </li>
 				  </ul>
 			</div>
@@ -155,7 +155,7 @@
 					</table>
 				</div>
 				<div id="eventstab" class="content container tab-pane fade">
-					<h2><b>事事顺意</b></h2>
+					<h2><b>事事顺意扩展</b></h2>
 					<table>
 						<tr>
 							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时可以选择使用<b>事事顺意</b>扩展。改编于官方在2024年出的新版游戏。
@@ -179,17 +179,51 @@
 				</div>
 				
 				<div id="thieftab" class="content container tab-pane fade">
-					<h2><b>鸡鸣狗盗</b></h2>
+					<h2><b>鸡鸣狗盗扩展</b></h2>
 					<table>
 						<tr>
-							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在翻出一张牌前，每名玩家除了选择<b>返回营地</b>或<b>继续冒险</b>外，
-							每轮还有一次选择<b>偷窃玩家</b>的机会。 选择<b>偷窃玩家</b>时，需要指定一名依然在冒险的其他玩家，若该玩家本回合选择的是<b>返回营地</b>，且你是唯一一个偷窃该玩家的玩家，
-							在该玩家结算完毕收益（获得归途剩余钱币和宝物）后， 你获得该玩家本轮本应获得的10枚钱币（若不足则全部获得）。若有其他玩家和你同时偷窃你的目标玩家，
-							或是你偷窃的玩家并没有选择<b>返回营地</b>，你不会有任何收益。<br/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择<b>偷窃玩家</b>的玩家视为依然在冒险，所以若当回合灾难发生， 选择偷窃玩家的玩家也会失去本轮获得的所有钱币。
-							但是若当回合翻出的是钱币，选择偷窃玩家的玩家不参与分发钱币。<br/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;偷窃玩家的选项每轮只能使用一次（游戏共进行5轮）且必须要指定依然在冒险的玩家为目标！ 若你本轮已经选择过偷窃玩家选项或没有其他玩家依然在冒险，你无法选择偷窃玩家选项。
+							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时可以选择使用<b>鸡鸣狗盗</b>扩展。改编于官方在2024年出的新版游戏。
+							该扩展与<b>事事顺意</b>扩展兼容，可以一起食用。<br/><br/></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px"><h4><b>新的选项：偷窃玩家</b></h4></td>
+						</tr>
+						<tr>
+							<td>
+								<ul>
+									<li><b>使用时机:</b> 在翻出每一张牌前选择，是<b>返回营地</b>与<b>继续冒险</b>之外的第三选项。</li>
+									<li><b>使用目标:</b> 与<b>返回营地</b>和<b>继续冒险</b>选项没有目标不同，选择<b>偷窃玩家</b>时必须指定一名<b>依然在冒险</b>的其他玩家。
+									不能指定自己或在之前的回合已经返回营地的玩家。</li>
+									<li><b>使用限制:</b> 每一轮游戏（游戏一共进行5轮）只有一次选择<b>偷窃玩家</b>的机会，若本轮游戏之前回合已选择过<b>偷窃玩家</b>，则之后的回合不能再次选择，
+									即只能选择<b>返回营地</b>与<b>继续冒险</b>。新的一轮开始时，每名玩家重新获得一次选择<b>偷窃玩家</b>的机会。</li>
+								</ul>
 							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px"><h4><b>偷窃成功的条件</b></h4></td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指定一名玩家的偷窃不一定会成功。需要<b>同时</b>满足以下条件，偷窃才能成功：<br/><br/>
+								<ul>
+									<li><b>目标玩家在当回合选择返回营地:</b> 在你选择<b>偷窃玩家</b>的当回合，若目标玩家选择了<b>继续冒险</b>或<b>偷窃玩家</b>，则你对该玩家的偷窃失败。
+									只有目标玩家选择<b>返回营地</b>时，偷窃才<b>有可能</b>成功（需满足之后的条件）。</li>
+									<li><b>你是唯一一个偷窃该玩家的玩家:</b> 若当回合有其他玩家也选择了偷窃你指定的玩家，则所有选择偷窃你指定的玩家的玩家都偷窃失败。当只有你一名玩家选择目标玩家偷窃时，
+									且目标玩家选择<b>返回营地</b>，偷窃才能成功。</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px"><h4><b>偷窃成功的结算</b></h4></td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若你偷窃成功，在目标玩家结算完毕返回营地收益（获得归途剩余钱币和宝物）后，你获得该玩家本轮本应获得的10枚钱币
+								（若目标玩家本轮的收益不足10枚钱币，则你获得该玩家本轮的所有收益）。你不会因此获得目标玩家之前轮次获得的钱币。<br/><br/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px"><h4><b>新的事件</b></h4></td>
 						</tr>
 						<tr>
 							<td style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若同时使用<b>鸡鸣狗盗</b>扩展和<b>事事顺意</b>扩展。则以下事件也有可能被翻出。
