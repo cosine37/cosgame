@@ -70,27 +70,27 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			});
 			
 		}
-		/*
+
 		$scope.goToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/oink/setboardid", method: "POST", params: data}).then(function(response){
-				$http.post("/oink/join").then(function(response){
+			$http({url: "/rich/setboardid", method: "POST", params: data}).then(function(response){
+				$http.post("/rich/join").then(function(response){
 					//var json_data = '{"type":"notify","content":"refresh"}';
 			        boardws.send("refresh");
-					$scope.goto('oinkcreategame')
+					$scope.goto('richcreategame')
 				});
 			});
 		}
 		
 		$scope.backToBoard = function(index){
 			var data = {"boardId" : $scope.boards[index]}
-			$http({url: "/oink/setboardid", method: "POST", params: data}).then(function(response){
-				$scope.goto('oinkgame');
+			$http({url: "/rich/setboardid", method: "POST", params: data}).then(function(response){
+				$scope.goto('richgame');
 			});
 		}
-		
+
 		$scope.getAllBoards = function(){
-			$http.get('/oink/allboards').then(function(response){
+			$http.get('/rich/allboards').then(function(response){
 				var n = response.data.value.length / 5;
 				$scope.boards = []
 				$scope.statuses = []
@@ -116,13 +116,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 					if (x == '0'){
 						t = '-'
 					} else if (z == '1'){
-						t = '初创公司'
-					} else if (z == '2'){
-						t = '狗头侦探'
-					} else if (z == '6'){
-						t = '保卫教宗'
-					} else if (z == '4'){
-						t = '兄莠弟攻'
+						t = '经典'
 					}
 					$scope.gameModes.push(t);
 					var y = response.data.value[i*5+4]
@@ -136,7 +130,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		ws.onMessage(function(){
 			$scope.getAllBoards();
 		});
-		*/
+		
 		
 	
 }]);

@@ -4,8 +4,8 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("richCreateGameApp", ["ngWebSocket"]);
-app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
+var app = angular.module("richGameApp", ["ngWebSocket"]);
+app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
 	function($scope, $window, $http, $document, $timeout, $websocket){
 		var ws = $websocket("wss://" + $window.location.host + "/rich/boardrefresh");
 		var heartCheck = {
@@ -46,14 +46,6 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 				$scope.goto('login');
 			});
 		}
-		$scope.startGame = function(){
-			var settings = [1]
-			var data = {"settings" : settings}
-			$http({url: "/rich/startgame", method: "POST", params: data}).then(function(response){
-				ws.send("start");
-				$scope.goto('richgame')
-			});
-		}
 		
 		$scope.dismiss = function(){
 			$http.post('/rich/dismiss').then(function(response){
@@ -72,10 +64,6 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 					return;
 				}
 				$scope.status = response.data.status;
-				if ($scope.status != "0"){
-					$scope.goto('richgame')
-				}
-				
 				$scope.lord = response.data.lord
 			});
 		}

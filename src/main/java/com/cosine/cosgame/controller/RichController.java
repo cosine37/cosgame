@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cosine.cosgame.rich.Meta;
+import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.rich.Board;
 import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.util.StringEntity;
@@ -43,6 +45,75 @@ public class RichController {
 		board.storeToDB();
 		session.setAttribute("boardId", board.getId());
 		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/allboards", method = RequestMethod.GET)
+	public ResponseEntity<StringEntity> allBoards(HttpServletRequest request){
+		Meta meta = new Meta();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		StringEntity entity = meta.getBoardIdsAsStringEntity(username);
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/setboardid", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> setboardid(HttpServletRequest request, @RequestParam String boardId) {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("boardId", boardId);
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/join", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> join(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.hasPlayer(username) == false) {
+			board.addPlayerToDB(username);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/kick", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> kick(HttpServletRequest request, @RequestParam int index) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.removePlayerFromDB(index);
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/dismiss", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> dismiss(HttpServletRequest request) {
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		board.getFromDB(boardId);
+		if (board.getLord().contentEquals(username)) {
+			board.dismiss();
+		}
+		StringEntity entity = new StringEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/rich/getboard", method = RequestMethod.GET)
+	public ResponseEntity<BoardEntity> getBoard(HttpServletRequest request){
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+		} else {
+			board.setId("NE");
+		}
+		BoardEntity entity = board.toBoardEntity(username);
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	@RequestMapping(value="/rich/startgame", method = RequestMethod.POST)

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -18,6 +19,7 @@ public class Board {
 	protected int firstPlayer;
 	protected int round;
 	protected int targetMoney;
+	protected int mode;
 	
 	protected int height;
 	protected int width;
@@ -45,6 +47,7 @@ public class Board {
 		doc.append("map",map.toDocument());
 		doc.append("settings",settings);
 		doc.append("playerNames",playerNames);
+		doc.append("mode", mode);
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
 			String n = "player-" + players.get(i).getName();
@@ -64,9 +67,13 @@ public class Board {
 		targetMoney = doc.getInteger("targetMoney",0);
 		height = doc.getInteger("height",0);
 		width = doc.getInteger("width",0);
-		map = (Map)doc.get("map");
 		settings = (List<Integer>)doc.get("settings");
 		playerNames = (List<String>)doc.get("playerNames");
+		mode = doc.getInteger("mode", 0);
+		
+		Document mapDoc = (Document) doc.get("map");
+		map = new Map();
+		map.setFromDoc(mapDoc);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++){
@@ -78,6 +85,15 @@ public class Board {
 			p.setIndex(i);
 			players.add(p);
 		}
+	}
+	
+	public BoardEntity toBoardEntity(String username) {
+		BoardEntity entity = new BoardEntity();
+		entity.setId(id);
+		entity.setLord(lord);
+		entity.setMode(mode);
+		entity.setStatus(status);
+		return entity;
 	}
 	
 	public Board() {
@@ -111,13 +127,39 @@ public class Board {
 	// Actual Operations
 	public void startGameUDB(List<Integer> settings) {
 		this.status = Consts.INGAME;
+		this.mode = 0;
+		if (settings.size()>0) {
+			this.mode = settings.get(0);
+		}
 		updateDB("status", this.status);
+		updateDB("mode", this.mode);
 	}
 	
 	// End Actual Operations
 	
 	
+	public void removePlayerFromDB(int index) {
+		String playerName = "player-" + players.get(index).getName();
+		players.remove(index);
+		dbutil.removeKey("id", id, playerName);
+		List<String> playerNames = new ArrayList<>();
+		int i;
+		for (i=0;i<players.size();i++) {
+			playerName = players.get(i).getName();
+			playerNames.add(players.get(i).getName());
+		}
+		dbutil.update("id", id, "playerNames", playerNames);
+	}
 	
+	public void removePlayerFromDB(String name) {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				removePlayerFromDB(i);
+				break;
+			}
+		}
+	}
 	
 	public void addPlayer(String name) {
 		playerNames.add(name);
@@ -126,6 +168,12 @@ public class Board {
 		p.setBoard(this);
 		players.add(p);
 	}
+	
+	public void addPlayerToDB(String name) {
+		addPlayer(name);
+		updateDB("playerNames", playerNames);
+	}
+	
 	public boolean hasPlayer(String name) {
 		for (int i=0;i<playerNames.size();i++) {
 			if (playerNames.get(i).contentEquals(name)) {
@@ -248,5 +296,11 @@ public class Board {
 	}
 	public void setPlayers(List<Player> players) {
 		this.players = players;
+	}
+	public int getMode() {
+		return mode;
+	}
+	public void setMode(int mode) {
+		this.mode = mode;
 	}
 }

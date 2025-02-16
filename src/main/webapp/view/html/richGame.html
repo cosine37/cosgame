@@ -12,13 +12,12 @@
 <script src="/js/lib/jquery.js"></script>
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
-<script src="/js/app/richCreateGameController.js"></script>
-<body ng-app="richCreateGameApp" ng-controller="richCreateGameCtrl">
-	富豪游戏
+<script src="/js/app/richGameController.js"></script>
+<body ng-app="richGameApp" ng-controller="richGameCtrl">
+	富豪游戏 开始！
 	<div>
 		<button ng-click="goto('rich')">退出</button>
 		<button ng-click="dismiss()" ng-show="lord == username">解散</button>
-		<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
 	</div>
 	
 	<!-- 
