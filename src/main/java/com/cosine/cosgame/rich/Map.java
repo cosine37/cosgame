@@ -5,12 +5,19 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.entity.MapEntity;
+import com.cosine.cosgame.rich.entity.PlaceEntity;
+
 public class Map {
+	int width;
+	int height;
 	List<Place> places;
 	
 	public Document toDocument(){
 		int i;
 		Document doc = new Document();
+		doc.append("width", width);
+		doc.append("height", height);
 		List<Document> placesDocList = new ArrayList<>();
 		for (i=0;i<places.size();i++){
 			placesDocList.add(places.get(i).toDocument());
@@ -20,12 +27,26 @@ public class Map {
 	}
 	public void setFromDoc(Document doc){
 		int i;
+		height = doc.getInteger("height", 0);
+		width = doc.getInteger("width", 0);
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
 			Place e = Factory.genPlace(placesDocList.get(i));
 			places.add(e);
 		}
+	}
+	public MapEntity toMapEntity() {
+		int i;
+		MapEntity entity = new MapEntity();
+		List<PlaceEntity> pes = new ArrayList<>();
+		for (i=0;i<places.size();i++) {
+			pes.add(places.get(i).toPlaceEntity());
+		}
+		entity.setPlaces(pes);
+		entity.setHeight(height);
+		entity.setWidth(width);
+		return entity;
 	}
 	
 	public Map() {
@@ -36,6 +57,10 @@ public class Map {
 		if (x == 0) {
 			places = AllRes.genTestMap();
 		}
+	}
+	
+	public void addPlace(Place place) {
+		places.add(place);
 	}
 	
 	public Place getPlace(int x) {
@@ -57,5 +82,18 @@ public class Map {
 			}
 			System.out.println(line);
 		}
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

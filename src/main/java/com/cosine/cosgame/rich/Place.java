@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.entity.PlaceEntity;
+
 public abstract class Place {
 	protected int id;
 	protected int type;
@@ -43,6 +45,11 @@ public abstract class Place {
 			playersOn.add(e);
 		}
 	}
+	public PlaceEntity toPlaceEntity() {
+		PlaceEntity entity = new PlaceEntity();
+		entity.setName(name);
+		return entity;
+	}
 	
 	public Place(int id, String name, int type) {
 		this.id = id;
@@ -50,6 +57,10 @@ public abstract class Place {
 		this.type = type;
 		
 		playersOn = new ArrayList<>();
+	}
+	
+	public Place(Document doc) {
+		setFromDoc(doc);
 	}
 	
 	public void stepOn(Player p) {

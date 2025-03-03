@@ -8,6 +8,8 @@ public class BoardEntity {
 	int round;
 	int mode;
 	
+	MapEntity map;
+	
 	public String getId() {
 		return id;
 	}
@@ -37,6 +39,12 @@ public class BoardEntity {
 	}
 	public void setMode(int mode) {
 		this.mode = mode;
+	}
+	public MapEntity getMap() {
+		return map;
+	}
+	public void setMap(MapEntity map) {
+		this.map = map;
 	}
 	
 	

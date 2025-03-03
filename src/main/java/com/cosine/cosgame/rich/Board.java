@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -93,6 +94,7 @@ public class Board {
 		entity.setLord(lord);
 		entity.setMode(mode);
 		entity.setStatus(status);
+		entity.setMap(map.toMapEntity());
 		return entity;
 	}
 	
@@ -131,8 +133,10 @@ public class Board {
 		if (settings.size()>0) {
 			this.mode = settings.get(0);
 		}
-		updateDB("status", this.status);
+		map = MapBuilder.genTestMap();
+		
 		updateDB("mode", this.mode);
+		updateBasicDB();
 	}
 	
 	// End Actual Operations
@@ -181,6 +185,12 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	
+	public void updateBasicDB() {
+		updateDB("status", this.status);
+		updateDB("map", map.toDocument());
 	}
 	
 	public void dismiss() {
