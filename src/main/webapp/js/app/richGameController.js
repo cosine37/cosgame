@@ -53,6 +53,14 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			});
 		}
 		
+		genArray = function(s,n){
+			ans = []
+			for (i=s;i<n;i++) ans.push(i);
+			return ans;
+		}
+		
+		
+		
 		$scope.getBoard = function(){
 			$http.get('/rich/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -64,7 +72,11 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					return;
 				}
 				$scope.status = response.data.status;
-				$scope.lord = response.data.lord
+				$scope.lord = response.data.lord;
+				
+				// map related)
+				$scope.colArray = genArray(0,$scope.gamedata.map.width)
+				$scope.rowArray = genArray(2,$scope.gamedata.map.height-1)
 			});
 		}
 		

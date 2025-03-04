@@ -14,34 +14,58 @@
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/richGameController.js"></script>
 <body ng-app="richGameApp" ng-controller="richGameCtrl">
-	富豪游戏 开始！
 	<div>
-		<button ng-click="goto('rich')">退出</button>
-		<button ng-click="dismiss()" ng-show="lord == username">解散</button>
+		<table>
+			<tr>
+				<td>Special 2</td>
+				<td ng-repeat="k in colArray track by $index" class="grid-td">
+					<div ng-init="g=gamedata.map.places[k+gamedata.map.width+gamedata.map.height-2]" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+				<td>Special 3</td>
+			</tr>
+			<tr ng-if="gamedata.map.places">
+				<td rowspan="{{gamedata.map.height-2}}">Player Info</td>
+				<td class="grid-td" ng-repeat="x in [0]" ng-init="g3=gamedata.map.places[gamedata.map.width+gamedata.map.height-3]">
+					<div ng-init="g=g3" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+
+				<td colspan="{{gamedata.map.width-2}}" rowspan="{{gamedata.map.height-2}}"  ng-repeat="x in [0] track by $index">
+					Big big grid
+				</td>
+
+				<td class="grid-td" ng-repeat="x in [0]" ng-init="g4=gamedata.map.places[gamedata.map.width*2+gamedata.map.height-2]">
+					<div ng-init="g=g4" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+				<td rowspan="{{gamedata.map.height-2}}">logs</td>
+			</tr>
+			<tr ng-repeat="i in rowArray track by $index"
+				ng-init="g1=gamedata.map.places[gamedata.map.width+gamedata.map.height-2-i];
+					g2=gamedata.map.places[gamedata.map.width*2+gamedata.map.height-3+i]">
+				<td class="grid-td" ng-repeat="x in [0]">
+					<div ng-init="g=g1" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+				<td class="grid-td" ng-repeat="x in [0]">
+					<div ng-init="g=g2" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>Special 1</td>
+				<td ng-repeat="k in colArray track by $index" class="grid-td">
+					<div ng-init="g=gamedata.map.places[gamedata.map.width-k-1]" ng-include="'/view/html/richGrid.html'"></div>
+				</td>
+				<td>
+					<div>
+						<button ng-click="goto('rich')">退出</button>
+						<button ng-click="dismiss()" ng-show="lord == username">解散</button>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- End actual map -->
+		</table>
 	</div>
 	<div>
 		{{gamedata}}
 	</div>
-	<!-- 
-	<button ng-click="goto('nothanks')">back</button>
-	<button ng-click="addbot()">add bot</button>
-	<button ng-click="startGame()">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
-	<div>
-		<table>
-			<tr ng-repeat="p in playerNames track by $index">
-				<td>{{p}}</td>
-				<td><span ng-show="$index == curPlayer">起始玩家</span></td>
-				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">设为起始玩家</button></td>
-				<td><button ng-show="lord == username && $index != '0'" ng-click="kick($index)">踢</button></td>
-			</tr>
-		</table>
-		<p>每名玩家初始红包数量：{{initialRevealedMoney}}</p>
-	</div>
-	<div ng-show="username == lord">
-		<p>你可以调整每名玩家初始红包数量：</p>
-		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
-	</div>
-	 -->
 </body>
 </html>

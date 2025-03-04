@@ -13,8 +13,8 @@ public class MapBuilder {
 		final int n = (height+width-2)*2;
 		
 		Map map = new Map();
-		map.setHeight(10);
-		map.setWidth(10);
+		map.setHeight(height);
+		map.setWidth(width);
 		int i;
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
