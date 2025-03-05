@@ -21,26 +21,30 @@
 		<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
 	</div>
 	
-	<!-- 
-	<button ng-click="goto('nothanks')">back</button>
-	<button ng-click="addbot()">add bot</button>
-	<button ng-click="startGame()">start game</button>
-	<button ng-click="dismiss()" ng-show="lord == username">dismiss</button>
 	<div>
-		<table>
-			<tr ng-repeat="p in playerNames track by $index">
-				<td>{{p}}</td>
-				<td><span ng-show="$index == curPlayer">起始玩家</span></td>
-				<td><button ng-show="username == lord && $index != curPlayer" ng-click="setStartPlayer($index)">设为起始玩家</button></td>
-				<td><button ng-show="lord == username && $index != '0'" ng-click="kick($index)">踢</button></td>
-			</tr>
-		</table>
-		<p>每名玩家初始红包数量：{{initialRevealedMoney}}</p>
+		<div>
+			初始资金:
+			<button ng-disabled="startMoney==10000" ng-click="startMoney=10000">10000</button>
+			<button ng-disabled="startMoney==15000" ng-click="startMoney=15000">15000</button>
+			<button ng-disabled="startMoney==20000" ng-click="startMoney=20000">20000</button>
+			<button ng-disabled="startMoney==25000" ng-click="startMoney=25000">25000</button>
+		</div>
+		
+		<div>
+			初始收入:
+			<button ng-disabled="startSalary==1000" ng-click="startSalary=1000">1000</button>
+			<button ng-disabled="startSalary==2000" ng-click="startSalary=2000">2000</button>
+			<button ng-disabled="startSalary==2500" ng-click="startSalary=2500">2500</button>
+		</div>
+		
+		<div>
+			游戏结束条件:
+			<button ng-disabled="endCondition==0" ng-click="endCondition=0">吃鸡模式</button>
+			<button ng-disabled="endCondition==1" ng-click="endCondition=1">速战速决</button>
+			<button ng-disabled="endCondition==52" ng-click="endCondition=52">52回合</button>
+			<button ng-disabled="endCondition==58000" ng-click="endCondition=58000">58同城</button>
+		</div>
+		
 	</div>
-	<div ng-show="username == lord">
-		<p>你可以调整每名玩家初始红包数量：</p>
-		<button ng-repeat="t in initialMoneyOptions" ng-click="setInitialRevealedMoney(t)">{{t}}</button>
-	</div>
-	 -->
 </body>
 </html>

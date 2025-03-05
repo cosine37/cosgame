@@ -9,6 +9,7 @@ public class BoardEntity {
 	int mode;
 	
 	MapEntity map;
+	SettingsEntity settings;
 	
 	public String getId() {
 		return id;
@@ -45,6 +46,12 @@ public class BoardEntity {
 	}
 	public void setMap(MapEntity map) {
 		this.map = map;
+	}
+	public SettingsEntity getSettings() {
+		return settings;
+	}
+	public void setSettings(SettingsEntity settings) {
+		this.settings = settings;
 	}
 	
 	

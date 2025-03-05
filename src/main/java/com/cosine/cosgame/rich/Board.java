@@ -19,16 +19,12 @@ public class Board {
 	protected int curPlayer;
 	protected int firstPlayer;
 	protected int round;
-	protected int targetMoney;
-	protected int mode;
-	
-	protected int height;
-	protected int width;
 	
 	protected Map map;
-	protected List<Integer> settings;
 	protected List<String> playerNames;
 	protected List<Player> players;
+	
+	protected Settings settings;
 	
 	protected MongoDBUtil dbutil;
 
@@ -42,13 +38,9 @@ public class Board {
 		doc.append("curPlayer",curPlayer);
 		doc.append("firstPlayer",firstPlayer);
 		doc.append("round",round);
-		doc.append("targetMoney",targetMoney);
-		doc.append("height",height);
-		doc.append("width",width);
 		doc.append("map",map.toDocument());
-		doc.append("settings",settings);
+		doc.append("settings",settings.getSettings());
 		doc.append("playerNames",playerNames);
-		doc.append("mode", mode);
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
 			String n = "player-" + players.get(i).getName();
@@ -65,12 +57,9 @@ public class Board {
 		curPlayer = doc.getInteger("curPlayer",0);
 		firstPlayer = doc.getInteger("firstPlayer",0);
 		round = doc.getInteger("round",0);
-		targetMoney = doc.getInteger("targetMoney",0);
-		height = doc.getInteger("height",0);
-		width = doc.getInteger("width",0);
-		settings = (List<Integer>)doc.get("settings");
+		List<Integer> settingsList = (List<Integer>)doc.get("settings");
+		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
-		mode = doc.getInteger("mode", 0);
 		
 		Document mapDoc = (Document) doc.get("map");
 		map = new Map();
@@ -92,14 +81,15 @@ public class Board {
 		BoardEntity entity = new BoardEntity();
 		entity.setId(id);
 		entity.setLord(lord);
-		entity.setMode(mode);
 		entity.setStatus(status);
 		entity.setMap(map.toMapEntity());
+		entity.setSettings(settings.toSettingsEntity());
 		return entity;
 	}
 	
 	public Board() {
 		map = new Map();
+		settings = new Settings();
 		players = new ArrayList<>();
 		playerNames = new ArrayList<>();
 		
@@ -127,15 +117,11 @@ public class Board {
 	}
 	
 	// Actual Operations
-	public void startGameUDB(List<Integer> settings) {
+	public void startGameUDB(List<Integer> settingsList) {
 		this.status = Consts.INGAME;
-		this.mode = 0;
-		if (settings.size()>0) {
-			this.mode = settings.get(0);
-		}
 		map = MapBuilder.genTestMap();
-		
-		updateDB("mode", this.mode);
+		settings = new Settings(settingsList);
+		updateDB("settings", settings.getSettings());
 		updateBasicDB();
 	}
 	
@@ -265,35 +251,11 @@ public class Board {
 	public void setRound(int round) {
 		this.round = round;
 	}
-	public int getTargetMoney() {
-		return targetMoney;
-	}
-	public void setTargetMoney(int targetMoney) {
-		this.targetMoney = targetMoney;
-	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
 	public Map getMap() {
 		return map;
 	}
 	public void setMap(Map map) {
 		this.map = map;
-	}
-	public List<Integer> getSettings() {
-		return settings;
-	}
-	public void setSettings(List<Integer> settings) {
-		this.settings = settings;
 	}
 	public List<String> getPlayerNames() {
 		return playerNames;
@@ -307,10 +269,10 @@ public class Board {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-	public int getMode() {
-		return mode;
+	public Settings getSettings() {
+		return settings;
 	}
-	public void setMode(int mode) {
-		this.mode = mode;
+	public void setSettings(Settings settings) {
+		this.settings = settings;
 	}
 }

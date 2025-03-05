@@ -126,6 +126,11 @@ public class Player {
 		money = money+salary;
 	}
 	
+	public void startGame() {
+		money = board.getSettings().getStartMoney();
+		salary = board.getSettings().getStartSalary();
+	}
+	
 	public String getName() {
 		return name;
 	}

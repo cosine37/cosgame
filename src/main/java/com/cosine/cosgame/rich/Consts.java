@@ -38,4 +38,10 @@ public class Consts {
 	public static final int FATE = 1;
 	public static final int CHANCE = 2;
 	
+	
+	// settings related
+	public static final int SETTINGS_MODE = 0;
+	public static final int SETTINGS_START_MONEY = 1;
+	public static final int SETTINGS_START_SALARY = 2;
+	public static final int SETTINGS_END_CONDITION = 3;
 }

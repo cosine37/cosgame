@@ -111,6 +111,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 						t = '游戏中'
 					}
 					$scope.statuses.push(t)
+					
 					var z = response.data.value[i*5+3]
 					t = ''
 					if (x == '0'){
@@ -120,6 +121,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 					}
 					$scope.gameModes.push(t);
 					var y = response.data.value[i*5+4]
+					
 					$scope.canBack.push(y)
 				}
 			});
