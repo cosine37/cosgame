@@ -1,5 +1,7 @@
 package com.cosine.cosgame.rich.entity;
 
+import java.util.List;
+
 public class BoardEntity {
 	String id;
 	String lord;
@@ -8,6 +10,7 @@ public class BoardEntity {
 	int round;
 	int mode;
 	
+	List<PlayerEntity> players;
 	MapEntity map;
 	SettingsEntity settings;
 	
@@ -52,6 +55,12 @@ public class BoardEntity {
 	}
 	public void setSettings(SettingsEntity settings) {
 		this.settings = settings;
+	}
+	public List<PlayerEntity> getPlayers() {
+		return players;
+	}
+	public void setPlayers(List<PlayerEntity> players) {
+		this.players = players;
 	}
 	
 	

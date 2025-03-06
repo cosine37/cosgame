@@ -8,6 +8,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.entity.BoardEntity;
+import com.cosine.cosgame.rich.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -61,9 +62,7 @@ public class Board {
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
 		
-		Document mapDoc = (Document) doc.get("map");
-		map = new Map();
-		map.setFromDoc(mapDoc);
+		
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++){
@@ -75,15 +74,27 @@ public class Board {
 			p.setIndex(i);
 			players.add(p);
 		}
+		
+		Document mapDoc = (Document) doc.get("map");
+		map = new Map();
+		map.setBoard(this);
+		map.setFromDoc(mapDoc);
+		
 	}
 	
 	public BoardEntity toBoardEntity(String username) {
+		int i;
 		BoardEntity entity = new BoardEntity();
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(status);
 		entity.setMap(map.toMapEntity());
 		entity.setSettings(settings.toSettingsEntity());
+		List<PlayerEntity> pes = new ArrayList<>();
+		for (i=0;i<players.size();i++) {
+			pes.add(players.get(i).toPlayerEntity());
+		}
+		entity.setPlayers(pes);
 		return entity;
 	}
 	
@@ -121,8 +132,14 @@ public class Board {
 		this.status = Consts.INGAME;
 		map = MapBuilder.genTestMap();
 		settings = new Settings(settingsList);
+		int i;
+		for (i=0;i<players.size();i++) {
+			players.get(i).startGame();
+		}
+		
 		updateDB("settings", settings.getSettings());
 		updateBasicDB();
+		updatePlayers();
 	}
 	
 	// End Actual Operations
@@ -172,7 +189,36 @@ public class Board {
 		}
 		return false;
 	}
+	public Player getPlayerByName(String name) {
+		for (int i=0;i<players.size();i++) {
+			if (players.get(i).getName().contentEquals(name)) {
+				return players.get(i);
+			}
+		}
+		return null;
+	}
 	
+	public void updatePlayer(int index) {
+		Player p = players.get(index);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	public void updatePlayer(String name) {
+		Player p = getPlayerByName(name);
+		if (p != null) {
+			Document dop = p.toDocument();
+			String playerName = "player-" + p.getName();
+			dbutil.update("id", id, playerName, dop);
+		}
+	}
+	public void updatePlayers() {
+		for (int i=0;i<players.size();i++) {
+			updatePlayer(i);
+		}
+	}
 	
 	public void updateBasicDB() {
 		updateDB("status", this.status);

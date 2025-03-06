@@ -2,6 +2,7 @@ package com.cosine.cosgame.rich.basicplaces;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.Board;
 import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.rich.Place;
 
@@ -11,8 +12,8 @@ public class Empty extends Place{
 		super(id, name, Consts.PLACE_EMPTY);
 	}
 	
-	public Empty(Document doc) {
-		super(doc);
+	public Empty(Document doc, Board board) {
+		super(doc, board);
 	}
 
 }

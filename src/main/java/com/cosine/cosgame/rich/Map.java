@@ -13,6 +13,8 @@ public class Map {
 	int height;
 	List<Place> places;
 	
+	Board board;
+	
 	public Document toDocument(){
 		int i;
 		Document doc = new Document();
@@ -32,7 +34,7 @@ public class Map {
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
-			Place e = Factory.genPlace(placesDocList.get(i));
+			Place e = Factory.genPlace(placesDocList.get(i), board);
 			places.add(e);
 		}
 	}
@@ -95,5 +97,17 @@ public class Map {
 	}
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	public List<Place> getPlaces() {
+		return places;
+	}
+	public void setPlaces(List<Place> places) {
+		this.places = places;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 }

@@ -43,11 +43,18 @@ public abstract class Place {
 			int index = playersOnDocList.get(i);
 			Player e = board.getPlayers().get(index);
 			playersOn.add(e);
+			e.setPlace(this);
 		}
 	}
 	public PlaceEntity toPlaceEntity() {
 		PlaceEntity entity = new PlaceEntity();
 		entity.setName(name);
+		int i;
+		List<Integer> pis = new ArrayList<>();
+		for (i=0;i<playersOn.size();i++) {
+			pis.add(playersOn.get(i).getIndex());
+		}
+		entity.setPlayersOn(pis);
 		return entity;
 	}
 	
@@ -59,7 +66,8 @@ public abstract class Place {
 		playersOn = new ArrayList<>();
 	}
 	
-	public Place(Document doc) {
+	public Place(Document doc, Board board) {
+		this.board = board;
 		setFromDoc(doc);
 	}
 	
@@ -135,6 +143,12 @@ public abstract class Place {
 	}
 	public void setPlayersOn(List<Player> playersOn) {
 		this.playersOn = playersOn;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 

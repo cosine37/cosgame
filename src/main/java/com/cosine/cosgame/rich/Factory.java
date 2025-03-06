@@ -11,11 +11,11 @@ public class Factory {
 		return c;
 	}
 	
-	public static Place genPlace(Document doc) {
+	public static Place genPlace(Document doc, Board board) {
 		Place p = null;
 		int type = doc.getInteger("type", 0);
 		if (type == Consts.PLACE_EMPTY) {
-			p = new Empty(doc);
+			p = new Empty(doc, board);
 		}
 		return p;
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.Estate;
+import com.cosine.cosgame.rich.entity.PlayerEntity;
 
 public class Player {
 	protected String name;
@@ -97,6 +98,17 @@ public class Player {
 			discard.add(c);
 		}
 	}
+	public PlayerEntity toPlayerEntity() {
+		PlayerEntity entity = new PlayerEntity();
+		entity.setIndex(index);
+		entity.setMoney(money);
+		entity.setName(name);
+		entity.setConfirmed(confirmed);
+		entity.setPhase(phase);
+		entity.setSalary(salary);
+		entity.setOwned(owned);
+		return entity;
+	}
 	
 	public Player() {
 		hand = new ArrayList<>();
@@ -126,9 +138,15 @@ public class Player {
 		money = money+salary;
 	}
 	
+	public void moveToPlace(int x) {
+		place = board.getMap().getPlace(x);
+		place.addPlayerOn(this);
+	}
+	
 	public void startGame() {
 		money = board.getSettings().getStartMoney();
 		salary = board.getSettings().getStartSalary();
+		moveToPlace(0);
 	}
 	
 	public String getName() {

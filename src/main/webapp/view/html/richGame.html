@@ -24,7 +24,12 @@
 				<td>Special 3</td>
 			</tr>
 			<tr ng-if="gamedata.map.places">
-				<td rowspan="{{gamedata.map.height-2}}">Player Info</td>
+				<td id="players-grid" rowspan="{{gamedata.map.height-2}}" style="vertical-align:top">
+					<div ng-repeat="p in players track by $index">
+						{{p.name}}
+						{{p.money}}
+					</div>
+				</td>
 				<td class="grid-td" ng-repeat="x in [0]" ng-init="g3=gamedata.map.places[gamedata.map.width+gamedata.map.height-3]">
 					<div ng-init="g=g3" ng-include="'/view/html/richGrid.html'"></div>
 				</td>

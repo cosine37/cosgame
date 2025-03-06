@@ -73,6 +73,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				$scope.status = response.data.status;
 				$scope.lord = response.data.lord;
+				$scope.players = response.data.players;
 				
 				// map related)
 				$scope.colArray = genArray(0,$scope.gamedata.map.width)

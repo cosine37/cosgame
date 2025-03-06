@@ -25,7 +25,7 @@ public class Meta {
 		
 		boardIds = dbutil.getValues("id");
 		boardStatuses = dbutil.getIntValues("status");
-		//boardGameModes = dbutil.getIntValues("mode");
+		boardGameModes = dbutil.getIntValues("mode");
 		playerNames = dbutil.getListValues("playerNames");
 		lords = dbutil.getValues("lord");
 	}
@@ -37,7 +37,7 @@ public class Meta {
 			value.add(boardIds.get(i));
 			value.add(lords.get(i));
 			value.add(Integer.toString(boardStatuses.get(i)));
-			//value.add(Integer.toString(boardGameModes.get(i)));
+			value.add(Integer.toString(boardGameModes.get(i)));
 			String canBack="n";
 			for (int j=0;j<playerNames.get(i).size();j++) {
 				
