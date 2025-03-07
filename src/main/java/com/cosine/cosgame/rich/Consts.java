@@ -11,11 +11,10 @@ public class Consts {
 	public static final int CLASSIC = 0;
 	
 	// player phases
-	public static final int PHASE_DRAW = 100;
-	public static final int PHASE_PLAY = 200;
-	public static final int PHASE_DISCARD = 300;
-	public static final int PHASE_MOVE = 400;
-	public static final int PHASE_OFFTURN = 500;
+	public static final int PHASE_ROLL = 100;
+	public static final int PHASE_MOVE = 200;
+	public static final int PHASE_RESOLVE = 300;
+	public static final int PHASE_OFFTURN = -1;
 	
 	// card type indexes
 	public static final int TYPE_ACTION = 0;
@@ -44,4 +43,5 @@ public class Consts {
 	public static final int SETTINGS_START_MONEY = 1;
 	public static final int SETTINGS_START_SALARY = 2;
 	public static final int SETTINGS_END_CONDITION = 3;
+	public static final int SETTINGS_FIRST_PLAYER = 4;
 }

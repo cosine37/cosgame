@@ -5,6 +5,7 @@ public class SettingsEntity {
 	int startMoney;
 	int startSalary;
 	int endCondition;
+	int firstPlayer;
 	
 	public int getStartMoney() {
 		return startMoney;
@@ -29,5 +30,11 @@ public class SettingsEntity {
 	}
 	public void setEndCondition(int endCondition) {
 		this.endCondition = endCondition;
+	}
+	public int getFirstPlayer() {
+		return firstPlayer;
+	}
+	public void setFirstPlayer(int firstPlayer) {
+		this.firstPlayer = firstPlayer;
 	}
 }

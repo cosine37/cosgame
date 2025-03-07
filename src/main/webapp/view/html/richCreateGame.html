@@ -20,7 +20,13 @@
 		<button ng-click="dismiss()" ng-show="lord == username">解散</button>
 		<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
 	</div>
-	
+	<div>
+		<div ng-repeat="player in players track by $index">
+			{{player.name}}
+			<button ng-show="player.index != firstPlayer">设为初始</button>
+			<span ng-show="player.index == firstPlayer">初始玩家</span>
+		</div>
+	</div>
 	<div>
 		<div>
 			初始资金:

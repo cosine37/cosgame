@@ -147,6 +147,25 @@ public class Player {
 		money = board.getSettings().getStartMoney();
 		salary = board.getSettings().getStartSalary();
 		moveToPlace(0);
+		phase = Consts.PHASE_OFFTURN;
+	}
+	
+	public List<String> getOptions(){
+		List<String> ans = new ArrayList<>();
+		if (phase == Consts.PHASE_ROLL) {
+			ans.add("掷骰");
+		} else if (phase == Consts.PHASE_MOVE) {
+			ans.add("移动");
+		}
+		
+		return ans;
+	}
+	
+	public void phaseRoll(int option) {
+		if (option == 0) {
+			board.roll();
+			phase = Consts.PHASE_MOVE;
+		}
 	}
 	
 	public String getName() {

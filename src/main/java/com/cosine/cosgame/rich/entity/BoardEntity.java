@@ -9,8 +9,11 @@ public class BoardEntity {
 	int status;
 	int round;
 	int mode;
+	int phase;
+	int lastRolled;
 	
 	List<PlayerEntity> players;
+	List<String> myOptions;
 	MapEntity map;
 	SettingsEntity settings;
 	
@@ -61,6 +64,24 @@ public class BoardEntity {
 	}
 	public void setPlayers(List<PlayerEntity> players) {
 		this.players = players;
+	}
+	public int getPhase() {
+		return phase;
+	}
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	public int getLastRolled() {
+		return lastRolled;
+	}
+	public void setLastRolled(int lastRolled) {
+		this.lastRolled = lastRolled;
+	}
+	public List<String> getMyOptions() {
+		return myOptions;
+	}
+	public void setMyOptions(List<String> myOptions) {
+		this.myOptions = myOptions;
 	}
 	
 	

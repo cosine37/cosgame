@@ -70,6 +70,10 @@
 		</table>
 	</div>
 	<div>
+		<div ng-show="phase == OFFTURN">现在不是你的回合</div>
+		<div ng-show="phase == ROLL">请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+	</div>
+	<div>
 		{{gamedata}}
 	</div>
 </body>

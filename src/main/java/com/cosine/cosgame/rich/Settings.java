@@ -14,6 +14,7 @@ public class Settings {
 		entity.setStartMoney(getStartMoney());
 		entity.setStartSalary(getStartSalary());
 		entity.setEndCondition(getEndCondition());
+		
 		return entity;
 	}
 	
@@ -51,5 +52,9 @@ public class Settings {
 	
 	public int getEndCondition() {
 		return get(Consts.SETTINGS_END_CONDITION);
+	}
+	
+	public int getFirstPlayer() {
+		return get(Consts.SETTINGS_FIRST_PLAYER);
 	}
 }

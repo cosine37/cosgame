@@ -3,6 +3,7 @@ package com.cosine.cosgame.rich;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -18,8 +19,8 @@ public class Board {
 	protected int status;
 	protected int curCardId;
 	protected int curPlayer;
-	protected int firstPlayer;
 	protected int round;
+	protected int lastRolled;
 	
 	protected Map map;
 	protected List<String> playerNames;
@@ -37,11 +38,11 @@ public class Board {
 		doc.append("status",status);
 		doc.append("curCardId",curCardId);
 		doc.append("curPlayer",curPlayer);
-		doc.append("firstPlayer",firstPlayer);
 		doc.append("round",round);
 		doc.append("map",map.toDocument());
 		doc.append("settings",settings.getSettings());
 		doc.append("playerNames",playerNames);
+		doc.append("lastRolled", lastRolled);
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
 			String n = "player-" + players.get(i).getName();
@@ -56,8 +57,8 @@ public class Board {
 		status = doc.getInteger("status",0);
 		curCardId = doc.getInteger("curCardId",0);
 		curPlayer = doc.getInteger("curPlayer",0);
-		firstPlayer = doc.getInteger("firstPlayer",0);
 		round = doc.getInteger("round",0);
+		lastRolled = doc.getInteger("lastRolled", 0);
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
@@ -90,9 +91,15 @@ public class Board {
 		entity.setStatus(status);
 		entity.setMap(map.toMapEntity());
 		entity.setSettings(settings.toSettingsEntity());
+		entity.setLastRolled(lastRolled);
 		List<PlayerEntity> pes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			pes.add(players.get(i).toPlayerEntity());
+			if (players.get(i).getName().contentEquals(username)) {
+				Player p = players.get(i);
+				entity.setPhase(p.getPhase());
+				entity.setMyOptions(p.getOptions());
+			}
 		}
 		entity.setPlayers(pes);
 		return entity;
@@ -110,10 +117,6 @@ public class Board {
 		dbutil.setCol(col);
 	}
 	
-	public void startGame() {
-		
-	}
-	
 	public void putPlayerOnPlace(Player player, Place place) {
 		place.addPlayerOn(player);
 	}
@@ -123,8 +126,19 @@ public class Board {
 		place.addPlayerOn(p);
 	}
 	
-	public int getSalary() {
-		return 0;
+	public void roll(int n) {
+		int result = 0;
+		Random rand = new Random();
+		for (int i=0;i<n;i++) {
+			int t = rand.nextInt(60000);
+			int x = t%6+1;
+			result = result+x;
+		}
+		lastRolled = result;
+	}
+	
+	public void roll() {
+		roll(1);
 	}
 	
 	// Actual Operations
@@ -136,8 +150,20 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).startGame();
 		}
-		
+		players.get(getFirstPlayer()).setPhase(Consts.PHASE_ROLL);
 		updateDB("settings", settings.getSettings());
+		updateBasicDB();
+		updatePlayers();
+	}
+	
+	public void buttonPressUDB(String username, int option) {
+		Player p = getPlayerByName(username);
+		if (p == null) return;
+		if (p.getPhase() == Consts.PHASE_OFFTURN) {
+			
+		} else if (p.getPhase() == Consts.PHASE_ROLL) {
+			p.phaseRoll(option);
+		}
 		updateBasicDB();
 		updatePlayers();
 	}
@@ -222,6 +248,7 @@ public class Board {
 	
 	public void updateBasicDB() {
 		updateDB("status", this.status);
+		updateDB("lastRolled", this.lastRolled);
 		updateDB("map", map.toDocument());
 	}
 	
@@ -255,6 +282,9 @@ public class Board {
 	public boolean isLord(String name) {
 		return lord.contentEquals(name);
 	}
+	public int getFirstPlayer() {
+		return settings.getFirstPlayer();
+	}
 	public String getId() {
 		return id;
 	}
@@ -284,12 +314,6 @@ public class Board {
 	}
 	public void setCurPlayer(int curPlayer) {
 		this.curPlayer = curPlayer;
-	}
-	public int getFirstPlayer() {
-		return firstPlayer;
-	}
-	public void setFirstPlayer(int firstPlayer) {
-		this.firstPlayer = firstPlayer;
 	}
 	public int getRound() {
 		return round;

@@ -53,13 +53,23 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			});
 		}
 		
+		$scope.buttonPress = function(option){
+			var data = {"option" : option}
+			$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
+				ws.send("refresh");
+			});
+		}
+		
 		genArray = function(s,n){
 			ans = []
 			for (i=s;i<n;i++) ans.push(i);
 			return ans;
 		}
 		
-		
+		$scope.OFFTURN = -1;
+		$scope.ROLL = 100;
+		$scope.MOVE = 200;
+		$scope.RESOLVE = 300;
 		
 		$scope.getBoard = function(){
 			$http.get('/rich/getboard').then(function(response){
@@ -72,6 +82,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					return;
 				}
 				$scope.status = response.data.status;
+				$scope.phase = response.data.phase;
 				$scope.lord = response.data.lord;
 				$scope.players = response.data.players;
 				

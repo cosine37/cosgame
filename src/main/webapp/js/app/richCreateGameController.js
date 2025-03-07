@@ -50,9 +50,10 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.startMoney = 15000;
 		$scope.startSalary = 2000;
 		$scope.endCondition = 0;
+		$scope.firstPlayer = 0;
 		
 		$scope.startGame = function(){
-			var settings = [0, $scope.startMoney, $scope.startSalary,$scope.endCondition]
+			var settings = [0, $scope.startMoney, $scope.startSalary,$scope.endCondition,$scope.firstPlayer]
 			var data = {"settings" : settings}
 			$http({url: "/rich/startgame", method: "POST", params: data}).then(function(response){
 				ws.send("start");
@@ -82,6 +83,9 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 				}
 				
 				$scope.lord = response.data.lord
+				$scope.players = response.data.players;
+				
+				//alert($scope.players)
 			});
 		}
 		
