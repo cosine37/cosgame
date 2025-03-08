@@ -18,6 +18,7 @@ public class Player {
 	protected int salary;
 	protected int phase;
 	protected int index;
+	protected int rollDisplay;
 	protected boolean confirmed;
 	
 	protected List<Card> hand;
@@ -25,7 +26,7 @@ public class Player {
 	protected List<Card> discard;
 	protected List<Integer> owned;
 	
-	protected Place place;
+	protected int placeIndex;
 	
 	protected Board board;
 	
@@ -43,6 +44,7 @@ public class Player {
 		doc.append("index",index);
 		doc.append("confirmed",confirmed);
 		doc.append("owned", owned);
+		doc.append("rollDisplay", rollDisplay);
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
 			handDocList.add(hand.get(i).getId());
@@ -73,6 +75,7 @@ public class Player {
 		index = doc.getInteger("index",0);
 		confirmed = doc.getBoolean("confirmed",false);
 		owned = (List<Integer>) doc.get("owned");
+		rollDisplay = doc.getInteger("rollDisplay", 0);
 		List<Integer> handDocList = (List<Integer>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -116,16 +119,6 @@ public class Player {
 		discard = new ArrayList<>();
 	}
 	
-	public void move(int n) {
-		place.removePlayer(this);
-		Place np = place;
-		for (int i=0;i<n;i++) {
-			np = np.getNext();
-			np.bypass(this);
-		}
-		board.putPlayerOnPlace(this, np);
-	}
-	
 	public void addMoney(int x) {
 		money = money+x;
 	}
@@ -139,8 +132,8 @@ public class Player {
 	}
 	
 	public void moveToPlace(int x) {
-		place = board.getMap().getPlace(x);
-		place.addPlayerOn(this);
+		placeIndex = x;
+		board.getMap().getPlace(x).addPlayerOn(this);
 	}
 	
 	public void startGame() {
@@ -161,10 +154,31 @@ public class Player {
 		return ans;
 	}
 	
+	public String myNextPlaceName() {
+		Place place = board.getMap().getPlaceAfter(placeIndex,rollDisplay);
+		if (place == null) return ""; else return place.getName();
+	}
+	
 	public void phaseRoll(int option) {
-		if (option == 0) {
+		if (option == 0 && phase == Consts.PHASE_ROLL) {
 			board.roll();
 			phase = Consts.PHASE_MOVE;
+			rollDisplay = board.getLastRolled();
+		}
+	}
+	
+	public void phaseMove(int option) {
+		if (option == 0 && phase == Consts.PHASE_MOVE) {
+			board.getMap().getPlace(placeIndex).removePlayer(this);
+			int t = placeIndex;
+			for (int i=rollDisplay-1;i>=0;i--) {
+				t = (t+1)%board.getMap().mapSize();
+				if (i!=0) board.getMap().getPlace(t).bypass(this);
+			}
+			moveToPlace(t);
+			
+			phase = Consts.PHASE_RESOLVE;
+			rollDisplay = 0;
 		}
 	}
 	
@@ -241,10 +255,7 @@ public class Player {
 		this.index = index;
 	}
 	public Place getPlace() {
-		return place;
-	}
-	public void setPlace(Place place) {
-		this.place = place;
+		return board.getMap().getPlace(placeIndex);
 	}
 	public Board getBoard() {
 		return board;
@@ -257,5 +268,23 @@ public class Player {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
+	}
+	public int getRollDisplay() {
+		return rollDisplay;
+	}
+	public void setRollDisplay(int rollDisplay) {
+		this.rollDisplay = rollDisplay;
+	}
+	public List<Integer> getOwned() {
+		return owned;
+	}
+	public void setOwned(List<Integer> owned) {
+		this.owned = owned;
+	}
+	public int getPlaceIndex() {
+		return placeIndex;
+	}
+	public void setPlaceIndex(int placeIndex) {
+		this.placeIndex = placeIndex;
 	}
 }

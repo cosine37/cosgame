@@ -43,7 +43,7 @@ public abstract class Place {
 			int index = playersOnDocList.get(i);
 			Player e = board.getPlayers().get(index);
 			playersOn.add(e);
-			e.setPlace(this);
+			e.setPlaceIndex(this.id);
 		}
 	}
 	public PlaceEntity toPlaceEntity() {
@@ -104,7 +104,7 @@ public abstract class Place {
 	public void addPlayerOn(Player p) {
 		if (hasPlayer(p) == false) {
 			playersOn.add(p);
-			p.setPlace(this);
+			p.setPlaceIndex(this.id);
 		}
 	}
 	

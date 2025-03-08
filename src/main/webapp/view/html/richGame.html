@@ -72,6 +72,8 @@
 	<div>
 		<div ng-show="phase == OFFTURN">现在不是你的回合</div>
 		<div ng-show="phase == ROLL">请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+		<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
+			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 	</div>
 	<div>
 		{{gamedata}}

@@ -5,6 +5,7 @@ import java.util.List;
 public class BoardEntity {
 	String id;
 	String lord;
+	String myNextPlace;
 	
 	int status;
 	int round;
@@ -82,6 +83,12 @@ public class BoardEntity {
 	}
 	public void setMyOptions(List<String> myOptions) {
 		this.myOptions = myOptions;
+	}
+	public String getMyNextPlace() {
+		return myNextPlace;
+	}
+	public void setMyNextPlace(String myNextPlace) {
+		this.myNextPlace = myNextPlace;
 	}
 	
 	

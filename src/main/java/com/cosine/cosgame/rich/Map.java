@@ -35,6 +35,7 @@ public class Map {
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
 			Place e = Factory.genPlace(placesDocList.get(i), board);
+			e.setId(i);
 			places.add(e);
 		}
 	}
@@ -66,13 +67,18 @@ public class Map {
 	}
 	
 	public Place getPlace(int x) {
-		int i;
-		for (i=0;i<places.size();i++) {
-			if (places.get(i).getId() == x) {
-				return places.get(i);
-			}
+		if (x>=0 && x<places.size()) {
+			return places.get(x);
+		} else return null;
+	}
+	
+	public Place getPlaceAfter(int x, int k) {
+		if (places.size() == 0) return null;
+		int t = x;
+		for (int i=0;i<k;i++) {
+			t = (t+1)%places.size();
 		}
-		return null;
+		return places.get(t); 
 	}
 	
 	public void printMap() {
@@ -85,7 +91,9 @@ public class Map {
 			System.out.println(line);
 		}
 	}
-	
+	public int mapSize() {
+		return places.size();
+	}
 	public int getWidth() {
 		return width;
 	}

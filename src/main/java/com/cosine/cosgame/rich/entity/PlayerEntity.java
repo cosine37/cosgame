@@ -8,6 +8,7 @@ public class PlayerEntity {
 	int salary;
 	int phase;
 	int index;
+	int rollDisplay;
 	boolean confirmed;
 	
 	List<Integer> owned;
@@ -53,6 +54,12 @@ public class PlayerEntity {
 	}
 	public void setOwned(List<Integer> owned) {
 		this.owned = owned;
+	}
+	public int getRollDisplay() {
+		return rollDisplay;
+	}
+	public void setRollDisplay(int rollDisplay) {
+		this.rollDisplay = rollDisplay;
 	}
 	
 }

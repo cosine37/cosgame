@@ -99,6 +99,7 @@ public class Board {
 				Player p = players.get(i);
 				entity.setPhase(p.getPhase());
 				entity.setMyOptions(p.getOptions());
+				entity.setMyNextPlace(p.myNextPlaceName());
 			}
 		}
 		entity.setPlayers(pes);
@@ -163,6 +164,8 @@ public class Board {
 			
 		} else if (p.getPhase() == Consts.PHASE_ROLL) {
 			p.phaseRoll(option);
+		} else if (p.getPhase() == Consts.PHASE_MOVE) {
+			p.phaseMove(option);
 		}
 		updateBasicDB();
 		updatePlayers();
@@ -344,5 +347,11 @@ public class Board {
 	}
 	public void setSettings(Settings settings) {
 		this.settings = settings;
+	}
+	public int getLastRolled() {
+		return lastRolled;
+	}
+	public void setLastRolled(int lastRolled) {
+		this.lastRolled = lastRolled;
 	}
 }
