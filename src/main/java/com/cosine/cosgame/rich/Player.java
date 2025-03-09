@@ -149,6 +149,8 @@ public class Player {
 			ans.add("掷骰");
 		} else if (phase == Consts.PHASE_MOVE) {
 			ans.add("移动");
+		} else if (phase == Consts.PHASE_RESOLVE) {
+			ans.add("确定");
 		}
 		
 		return ans;
@@ -159,7 +161,13 @@ public class Player {
 		if (place == null) return ""; else return place.getName();
 	}
 	
+	public String myCurrentPlaceName() {
+		Place place = board.getMap().getPlace(placeIndex);
+		if (place == null) return ""; else return place.getName();
+	}
+	
 	public void phaseRoll(int option) {
+		if (phase != Consts.PHASE_ROLL) return;
 		if (option == 0 && phase == Consts.PHASE_ROLL) {
 			board.roll();
 			phase = Consts.PHASE_MOVE;
@@ -168,7 +176,8 @@ public class Player {
 	}
 	
 	public void phaseMove(int option) {
-		if (option == 0 && phase == Consts.PHASE_MOVE) {
+		if (phase != Consts.PHASE_MOVE) return;
+		if (option == 0) {
 			board.getMap().getPlace(placeIndex).removePlayer(this);
 			int t = placeIndex;
 			for (int i=rollDisplay-1;i>=0;i--) {
@@ -179,6 +188,15 @@ public class Player {
 			
 			phase = Consts.PHASE_RESOLVE;
 			rollDisplay = 0;
+		}
+	}
+	
+	public void phaseResolve(int option) {
+		if (phase != Consts.PHASE_RESOLVE)
+		System.out.println("in phase resolve");
+		if (option == 0) {
+			// TODO: place handle here
+			board.nextPlayer();
 		}
 	}
 	

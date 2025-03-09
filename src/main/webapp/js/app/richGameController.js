@@ -71,6 +71,29 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.MOVE = 200;
 		$scope.RESOLVE = 300;
 		
+		setMapLayout = function(){
+			var i,j
+			$scope.bottomRow = []
+			$scope.topRow = []
+			for (i=0;i<$scope.map.width;i++){
+				$scope.bottomRow.push($scope.map.places[$scope.map.width-i-1])
+				$scope.topRow.push($scope.map.places[$scope.map.width+$scope.map.height-2+i])
+			}
+			$scope.secondRow = []
+			$scope.secondRow.push([$scope.map.places[$scope.map.width+$scope.map.height-3]])
+			$scope.secondRow.push([$scope.map.places[$scope.map.width*2+$scope.map.height-2]])
+			
+			$scope.restRows = []
+			for (i=0;i<$scope.map.height-3;i++){
+				var restRowCols = []
+				restRowCols.push([$scope.map.places[$scope.map.width+$scope.map.height-4-i]])
+				restRowCols.push([$scope.map.places[$scope.map.width*2+$scope.map.height-1+i]])
+				$scope.restRows.push(restRowCols);
+			}
+			
+			//alert(Json.stringify($scope.restRows[0]))
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/rich/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -81,14 +104,18 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.goto('rich');
 					return;
 				}
+				
+				
+				
+				
 				$scope.status = response.data.status;
 				$scope.phase = response.data.phase;
 				$scope.lord = response.data.lord;
 				$scope.players = response.data.players;
 				
-				// map related)
-				$scope.colArray = genArray(0,$scope.gamedata.map.width)
-				$scope.rowArray = genArray(2,$scope.gamedata.map.height-1)
+				$scope.map = response.data.map;
+				setMapLayout();
+				//$scope.$apply()
 			});
 		}
 		

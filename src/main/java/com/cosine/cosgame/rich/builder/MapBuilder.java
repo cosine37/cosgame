@@ -8,7 +8,7 @@ import com.cosine.cosgame.rich.basicplaces.*;
 
 public class MapBuilder {
 	public static Map genTestMap() {
-		final int height = 10;
+		final int height = 7;
 		final int width = 10;
 		final int n = (height+width-2)*2;
 		

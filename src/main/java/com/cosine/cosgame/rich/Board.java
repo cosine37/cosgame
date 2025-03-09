@@ -92,6 +92,8 @@ public class Board {
 		entity.setMap(map.toMapEntity());
 		entity.setSettings(settings.toSettingsEntity());
 		entity.setLastRolled(lastRolled);
+		entity.setRound(round);
+		entity.setCurPlayer(curPlayer);
 		List<PlayerEntity> pes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			pes.add(players.get(i).toPlayerEntity());
@@ -100,6 +102,7 @@ public class Board {
 				entity.setPhase(p.getPhase());
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
+				entity.setMyCurrentPlace(p.myCurrentPlaceName());
 			}
 		}
 		entity.setPlayers(pes);
@@ -141,6 +144,15 @@ public class Board {
 	public void roll() {
 		roll(1);
 	}
+	public void nextPlayer() {
+		players.get(curPlayer).setPhase(Consts.PHASE_OFFTURN);
+		curPlayer = (curPlayer+1)%players.size();
+		if (curPlayer == settings.getFirstPlayer()) newRound();
+		players.get(curPlayer).setPhase(Consts.PHASE_ROLL);
+	}
+	public void newRound() {
+		round++;
+	}
 	
 	// Actual Operations
 	public void startGameUDB(List<Integer> settingsList) {
@@ -151,6 +163,7 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).startGame();
 		}
+		newRound();
 		players.get(getFirstPlayer()).setPhase(Consts.PHASE_ROLL);
 		updateDB("settings", settings.getSettings());
 		updateBasicDB();
@@ -166,6 +179,8 @@ public class Board {
 			p.phaseRoll(option);
 		} else if (p.getPhase() == Consts.PHASE_MOVE) {
 			p.phaseMove(option);
+		} else if (p.getPhase() == Consts.PHASE_RESOLVE) {
+			p.phaseResolve(option);
 		}
 		updateBasicDB();
 		updatePlayers();
@@ -173,6 +188,13 @@ public class Board {
 	
 	// End Actual Operations
 	
+	public void updateBasicDB() {
+		updateDB("status", this.status);
+		updateDB("lastRolled", this.lastRolled);
+		updateDB("map", map.toDocument());
+		updateDB("round", round);
+		updateDB("curPlayer", curPlayer);
+	}
 	
 	public void removePlayerFromDB(int index) {
 		String playerName = "player-" + players.get(index).getName();
@@ -247,12 +269,6 @@ public class Board {
 		for (int i=0;i<players.size();i++) {
 			updatePlayer(i);
 		}
-	}
-	
-	public void updateBasicDB() {
-		updateDB("status", this.status);
-		updateDB("lastRolled", this.lastRolled);
-		updateDB("map", map.toDocument());
 	}
 	
 	public void dismiss() {

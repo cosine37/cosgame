@@ -6,12 +6,14 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String myNextPlace;
+	String myCurrentPlace;
 	
 	int status;
 	int round;
 	int mode;
 	int phase;
 	int lastRolled;
+	int curPlayer;
 	
 	List<PlayerEntity> players;
 	List<String> myOptions;
@@ -89,6 +91,18 @@ public class BoardEntity {
 	}
 	public void setMyNextPlace(String myNextPlace) {
 		this.myNextPlace = myNextPlace;
+	}
+	public String getMyCurrentPlace() {
+		return myCurrentPlace;
+	}
+	public void setMyCurrentPlace(String myCurrentPlace) {
+		this.myCurrentPlace = myCurrentPlace;
+	}
+	public int getCurPlayer() {
+		return curPlayer;
+	}
+	public void setCurPlayer(int curPlayer) {
+		this.curPlayer = curPlayer;
 	}
 	
 	

@@ -18,45 +18,43 @@
 		<table>
 			<tr>
 				<td>Special 2</td>
-				<td ng-repeat="k in colArray track by $index" class="grid-td">
-					<div ng-init="g=gamedata.map.places[k+gamedata.map.width+gamedata.map.height-2]" ng-include="'/view/html/richGrid.html'"></div>
+				<td ng-repeat="g in topRow track by $index" class="grid-td">
+					<div ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 				<td>Special 3</td>
 			</tr>
-			<tr ng-if="gamedata.map.places">
-				<td id="players-grid" rowspan="{{gamedata.map.height-2}}" style="vertical-align:top">
+			<tr ng-if="map.places">
+				<td id="players-grid" rowspan="{{map.height-2}}" style="vertical-align:top">
 					<div ng-repeat="p in players track by $index">
 						{{p.name}}
 						{{p.money}}
 					</div>
 				</td>
-				<td class="grid-td" ng-repeat="x in [0]" ng-init="g3=gamedata.map.places[gamedata.map.width+gamedata.map.height-3]">
-					<div ng-init="g=g3" ng-include="'/view/html/richGrid.html'"></div>
+				<td class="grid-td">
+					<div ng-repeat="g in secondRow[0] track by $index" ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 
-				<td colspan="{{gamedata.map.width-2}}" rowspan="{{gamedata.map.height-2}}"  ng-repeat="x in [0] track by $index">
+				<td colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index">
 					Big big grid
 				</td>
 
-				<td class="grid-td" ng-repeat="x in [0]" ng-init="g4=gamedata.map.places[gamedata.map.width*2+gamedata.map.height-2]">
-					<div ng-init="g=g4" ng-include="'/view/html/richGrid.html'"></div>
+				<td class="grid-td">
+					<div ng-repeat="g in secondRow[1] track by $index"  ng-include="'/view/html/richGrid.html'"></div>
 				</td>
-				<td rowspan="{{gamedata.map.height-2}}">logs</td>
+				<td rowspan="{{map.height-2}}">logs</td>
 			</tr>
-			<tr ng-repeat="i in rowArray track by $index"
-				ng-init="g1=gamedata.map.places[gamedata.map.width+gamedata.map.height-2-i];
-					g2=gamedata.map.places[gamedata.map.width*2+gamedata.map.height-3+i]">
-				<td class="grid-td" ng-repeat="x in [0]">
-					<div ng-init="g=g1" ng-include="'/view/html/richGrid.html'"></div>
+			<tr ng-repeat="rr in restRows track by $index">
+				<td class="grid-td">
+					<div ng-repeat="g in rr[0] track by $index" ng-include="'/view/html/richGrid.html'"></div>
 				</td>
-				<td class="grid-td" ng-repeat="x in [0]">
-					<div ng-init="g=g2" ng-include="'/view/html/richGrid.html'"></div>
+				<td class="grid-td">
+					<div ng-repeat="g in rr[1] track by $index" ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 			</tr>
 			<tr>
 				<td>Special 1</td>
-				<td ng-repeat="k in colArray track by $index" class="grid-td">
-					<div ng-init="g=gamedata.map.places[gamedata.map.width-k-1]" ng-include="'/view/html/richGrid.html'"></div>
+				<td ng-repeat="g in bottomRow track by $index" class="grid-td">
+					<div ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 				<td>
 					<div>
@@ -71,8 +69,10 @@
 	</div>
 	<div>
 		<div ng-show="phase == OFFTURN">现在不是你的回合</div>
-		<div ng-show="phase == ROLL">请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+		<div ng-show="phase == ROLL">你的回合开始，请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 		<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
+			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+		<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace}}，
 			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 	</div>
 	<div>
