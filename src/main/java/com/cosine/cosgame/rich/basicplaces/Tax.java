@@ -39,6 +39,8 @@ public class Tax extends Place{
 	
 	public void stepOn(Player p) {
 		p.loseMoney(rate);
+		
+		board.getLogger().logPlayerLoseMoney(p, rate);
 	}
 
 	public int getRate() {

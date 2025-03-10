@@ -18,6 +18,7 @@ public class BoardEntity {
 	
 	List<PlayerEntity> players;
 	List<String> myOptions;
+	List<String> logs;
 	MapEntity map;
 	SettingsEntity settings;
 	
@@ -110,6 +111,12 @@ public class BoardEntity {
 	}
 	public void setMyLandMsg(String myLandMsg) {
 		this.myLandMsg = myLandMsg;
+	}
+	public List<String> getLogs() {
+		return logs;
+	}
+	public void setLogs(List<String> logs) {
+		this.logs = logs;
 	}
 	
 	

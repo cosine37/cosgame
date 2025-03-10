@@ -41,7 +41,12 @@
 				<td class="grid-td">
 					<div ng-repeat="g in secondRow[1] track by $index"  ng-include="'/view/html/richGrid.html'"></div>
 				</td>
-				<td rowspan="{{map.height-2}}">logs</td>
+				<td rowspan="{{map.height-2}}" >
+					<div style="max-height:480px;overflow-y:auto" >
+						<div ng-repeat="log in logs track by $index">{{log}}</div>
+					</div>
+					
+				</td>
 			</tr>
 			<tr ng-repeat="rr in restRows track by $index">
 				<td class="grid-td">

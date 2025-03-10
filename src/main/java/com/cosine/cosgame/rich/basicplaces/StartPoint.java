@@ -20,11 +20,16 @@ public class StartPoint extends Place {
 	public void stepOn(Player p) {
 		super.stepOn(p);
 		p.addSalary();
+		
+		board.getLogger().logPlayerReceiveMoney(p, p.getSalary());
 	}
 	
 	public void bypass(Player p) {
 		super.bypass(p);
 		p.addSalary();
+		
+		board.getLogger().logBypass(p, this);
+		board.getLogger().logPlayerReceiveMoney(p, p.getSalary());
 	}
 
 }

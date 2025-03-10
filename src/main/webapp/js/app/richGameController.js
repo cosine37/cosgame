@@ -104,14 +104,12 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.goto('rich');
 					return;
 				}
-				
-				
-				
-				
+
 				$scope.status = response.data.status;
 				$scope.phase = response.data.phase;
 				$scope.lord = response.data.lord;
 				$scope.players = response.data.players;
+				$scope.logs = response.data.logs;
 				
 				$scope.map = response.data.map;
 				setMapLayout();

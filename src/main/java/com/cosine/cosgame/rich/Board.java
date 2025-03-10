@@ -27,7 +27,7 @@ public class Board {
 	protected List<Player> players;
 	
 	protected Settings settings;
-	
+	protected Logger logger;
 	protected MongoDBUtil dbutil;
 
 	public Document toDocument(){
@@ -43,6 +43,7 @@ public class Board {
 		doc.append("settings",settings.getSettings());
 		doc.append("playerNames",playerNames);
 		doc.append("lastRolled", lastRolled);
+		doc.append("logs", logger.getLogs());
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
 			String n = "player-" + players.get(i).getName();
@@ -62,7 +63,8 @@ public class Board {
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
-		
+		List<String> logs = (List<String>) doc.get("logs");
+		logger = new Logger(logs);
 		
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
@@ -94,6 +96,7 @@ public class Board {
 		entity.setLastRolled(lastRolled);
 		entity.setRound(round);
 		entity.setCurPlayer(curPlayer);
+		entity.setLogs(logger.getLogs());
 		List<PlayerEntity> pes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			pes.add(players.get(i).toPlayerEntity());
@@ -113,6 +116,7 @@ public class Board {
 	public Board() {
 		map = new Map();
 		settings = new Settings();
+		logger = new Logger();
 		players = new ArrayList<>();
 		playerNames = new ArrayList<>();
 		
@@ -150,17 +154,25 @@ public class Board {
 		roll(1);
 	}
 	public void nextPlayer() {
+		// Step 1: end the turn for the current player
 		players.get(curPlayer).setPhase(Consts.PHASE_OFFTURN);
+		
+		// Step 2: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
-		if (curPlayer == settings.getFirstPlayer()) newRound();
-		players.get(curPlayer).setPhase(Consts.PHASE_ROLL);
+		if (curPlayer == settings.getFirstPlayer()) {
+			logger.logRoundEndDivider();
+			newRound();
+		}
+		players.get(curPlayer).startTurn();
 	}
 	public void newRound() {
 		round++;
+		logger.logRoundStart(round);
 	}
 	
 	// Actual Operations
 	public void startGameUDB(List<Integer> settingsList) {
+		// Step 1: initialize Map, settings and players
 		this.status = Consts.INGAME;
 		map = MapBuilder.genTestMap();
 		settings = new Settings(settingsList);
@@ -168,8 +180,12 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			players.get(i).startGame();
 		}
+		
+		// Step 2: start round
 		newRound();
-		players.get(getFirstPlayer()).setPhase(Consts.PHASE_ROLL);
+		players.get(curPlayer).startTurn();
+		
+		// Last Step: update DB
 		updateDB("settings", settings.getSettings());
 		updateBasicDB();
 		updatePlayers();
@@ -199,6 +215,7 @@ public class Board {
 		updateDB("map", map.toDocument());
 		updateDB("round", round);
 		updateDB("curPlayer", curPlayer);
+		updateDB("logs", logger.getLogs());
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -374,5 +391,11 @@ public class Board {
 	}
 	public void setLastRolled(int lastRolled) {
 		this.lastRolled = lastRolled;
+	}
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 }

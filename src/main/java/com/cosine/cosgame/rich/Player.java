@@ -143,6 +143,11 @@ public class Player {
 		phase = Consts.PHASE_OFFTURN;
 	}
 	
+	public void startTurn() {
+		phase = Consts.PHASE_ROLL;
+		board.getLogger().logStartTurn(this);
+	}
+	
 	public List<String> getOptions(){
 		List<String> ans = new ArrayList<>();
 		if (phase == Consts.PHASE_ROLL) {
@@ -152,7 +157,6 @@ public class Player {
 		} else if (phase == Consts.PHASE_RESOLVE) {
 			ans.add("确定");
 		}
-		
 		return ans;
 	}
 	
@@ -173,10 +177,12 @@ public class Player {
 	
 	public void phaseRoll(int option) {
 		if (phase != Consts.PHASE_ROLL) return;
-		if (option == 0 && phase == Consts.PHASE_ROLL) {
+		if (option == 0) {
 			board.roll();
 			phase = Consts.PHASE_MOVE;
 			rollDisplay = board.getLastRolled();
+			
+			board.getLogger().logPlayerRoll(this);
 		}
 	}
 	
@@ -191,17 +197,19 @@ public class Player {
 			}
 			moveToPlace(t);
 			
+			board.getLogger().logPlayerArrive(this);
+			
 			phase = Consts.PHASE_RESOLVE;
 			rollDisplay = 0;
 		}
 	}
 	
 	public void phaseResolve(int option) {
-		if (phase != Consts.PHASE_RESOLVE)
-		System.out.println("in phase resolve");
+		if (phase != Consts.PHASE_RESOLVE) return;
 		if (option == 0) {
 			// TODO: place handle here
 			board.getMap().getPlace(placeIndex).stepOn(this);
+			board.getLogger().logEndTurn(this);
 			board.nextPlayer();
 		}
 	}
