@@ -14,6 +14,8 @@ public abstract class Place {
 	protected String name;
 	protected Place prev;
 	protected Place next;
+	protected String desc;
+	protected String landMsg;
 	
 	protected Board board;
 	
@@ -25,6 +27,8 @@ public abstract class Place {
 		doc.append("id",id);
 		doc.append("type",type);
 		doc.append("name",name);
+		doc.append("desc",desc);
+		doc.append("landMsg", landMsg);
 		List<Integer> playersOnDocList = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++){
 			playersOnDocList.add(playersOn.get(i).getIndex());
@@ -37,6 +41,8 @@ public abstract class Place {
 		id = doc.getInteger("id",0);
 		type = doc.getInteger("type",0);
 		name = doc.getString("name");
+		desc = doc.getString("desc");
+		landMsg = doc.getString("landMsg");
 		List<Integer> playersOnDocList = (List<Integer>)doc.get("playersOn");
 		playersOn = new ArrayList<>();
 		for (i=0;i<playersOnDocList.size();i++){
@@ -49,6 +55,7 @@ public abstract class Place {
 	public PlaceEntity toPlaceEntity() {
 		PlaceEntity entity = new PlaceEntity();
 		entity.setName(name);
+		entity.setDesc(desc);
 		int i;
 		List<Integer> pis = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++) {
@@ -149,6 +156,18 @@ public abstract class Place {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getLandMsg() {
+		return landMsg;
+	}
+	public void setLandMsg(String landMsg) {
+		this.landMsg = landMsg;
 	}
 	
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PlaceEntity {
 	String name;
+	String desc;
 	int type;
 	List<Integer> playersOn;
 
@@ -24,6 +25,12 @@ public class PlaceEntity {
 	}
 	public void setPlayersOn(List<Integer> playersOn) {
 		this.playersOn = playersOn;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	
 }

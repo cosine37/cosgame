@@ -7,6 +7,7 @@ public class BoardEntity {
 	String lord;
 	String myNextPlace;
 	String myCurrentPlace;
+	String myLandMsg;
 	
 	int status;
 	int round;
@@ -103,6 +104,12 @@ public class BoardEntity {
 	}
 	public void setCurPlayer(int curPlayer) {
 		this.curPlayer = curPlayer;
+	}
+	public String getMyLandMsg() {
+		return myLandMsg;
+	}
+	public void setMyLandMsg(String myLandMsg) {
+		this.myLandMsg = myLandMsg;
 	}
 	
 	

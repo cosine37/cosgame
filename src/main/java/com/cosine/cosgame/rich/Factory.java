@@ -16,6 +16,10 @@ public class Factory {
 		int type = doc.getInteger("type", 0);
 		if (type == Consts.PLACE_EMPTY) {
 			p = new Empty(doc, board);
+		} else if (type == Consts.PLACE_STARTPOINT) {
+			p = new StartPoint(doc, board);
+		} else if (type == Consts.PLACE_TAX) {
+			p = new Tax(doc, board);
 		}
 		return p;
 	}

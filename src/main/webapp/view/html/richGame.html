@@ -72,7 +72,7 @@
 		<div ng-show="phase == ROLL">你的回合开始，请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 		<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
 			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
-		<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace}}，
+		<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace}}，{{gamedata.myLandMsg}}，
 			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 	</div>
 	<div>

@@ -30,6 +30,7 @@ public class Consts {
 	public static final int PLACE_ESTATE = 1;
 	public static final int PLACE_SPECIAL = 2;
 	public static final int PLACE_STARTPOINT = 3;
+	public static final int PLACE_TAX = 4;
 	
 	public static final int STARTPOINT_INDEX = 0;
 	

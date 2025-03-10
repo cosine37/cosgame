@@ -166,6 +166,11 @@ public class Player {
 		if (place == null) return ""; else return place.getName();
 	}
 	
+	public String myLandMsg() {
+		Place place = board.getMap().getPlace(placeIndex);
+		if (place == null) return ""; else return place.getLandMsg();
+	}
+	
 	public void phaseRoll(int option) {
 		if (phase != Consts.PHASE_ROLL) return;
 		if (option == 0 && phase == Consts.PHASE_ROLL) {
@@ -196,6 +201,7 @@ public class Player {
 		System.out.println("in phase resolve");
 		if (option == 0) {
 			// TODO: place handle here
+			board.getMap().getPlace(placeIndex).stepOn(this);
 			board.nextPlayer();
 		}
 	}

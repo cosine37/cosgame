@@ -103,6 +103,7 @@ public class Board {
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
 				entity.setMyCurrentPlace(p.myCurrentPlaceName());
+				entity.setMyLandMsg(p.myLandMsg());
 			}
 		}
 		entity.setPlayers(pes);
@@ -138,6 +139,10 @@ public class Board {
 			int x = t%6+1;
 			result = result+x;
 		}
+		
+		// TODO: edit dice result here;
+		//result = 15;
+		
 		lastRolled = result;
 	}
 	
