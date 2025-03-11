@@ -155,7 +155,8 @@ public class Player {
 		} else if (phase == Consts.PHASE_MOVE) {
 			ans.add("移动");
 		} else if (phase == Consts.PHASE_RESOLVE) {
-			ans.add("确定");
+			Place p = board.getMap().getPlace(placeIndex);
+			ans = p.getResolveOptions(this);
 		}
 		return ans;
 	}
@@ -172,13 +173,20 @@ public class Player {
 	
 	public String myLandMsg() {
 		Place place = board.getMap().getPlace(placeIndex);
-		if (place == null) return ""; else return place.getLandMsg();
+		if (place == null) return ""; else return place.getLandMsg(this);
 	}
 	
 	public void phaseRoll(int option) {
 		if (phase != Consts.PHASE_ROLL) return;
 		if (option == 0) {
 			board.roll();
+			phase = Consts.PHASE_MOVE;
+			rollDisplay = board.getLastRolled();
+			
+			board.getLogger().logPlayerRoll(this);
+		} else if (option>100000) {
+			int x = option-100000;
+			board.setLastRolled(x);
 			phase = Consts.PHASE_MOVE;
 			rollDisplay = board.getLastRolled();
 			
@@ -206,12 +214,9 @@ public class Player {
 	
 	public void phaseResolve(int option) {
 		if (phase != Consts.PHASE_RESOLVE) return;
-		if (option == 0) {
-			// TODO: place handle here
-			board.getMap().getPlace(placeIndex).stepOn(this);
-			board.getLogger().logEndTurn(this);
-			board.nextPlayer();
-		}
+		board.getMap().getPlace(placeIndex).stepOn(this, option);
+		board.getLogger().logEndTurn(this);
+		board.nextPlayer();
 	}
 	
 	public String getName() {

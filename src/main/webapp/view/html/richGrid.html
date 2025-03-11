@@ -1,6 +1,12 @@
 <div>
 	{{g.name}}
 </div>
+<div ng-show="g.type==ESTATE">
+	{{g.level}}/{{g.maxLevel}}
+</div>
 <div>
 	{{g.playersOn}}
+</div>
+<div ng-show="g.type==ESTATE">
+	<span ng-show="g.ownerId != -1">{{g.ownerName}}</span>
 </div>

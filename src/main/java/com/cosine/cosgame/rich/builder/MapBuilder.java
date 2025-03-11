@@ -1,5 +1,7 @@
 package com.cosine.cosgame.rich.builder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.cosine.cosgame.rich.Map;
@@ -19,7 +21,7 @@ public class MapBuilder {
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
 			if (i == 0) {
-				p = new StartPoint(i, "游客中心");
+				p = new StartPoint(i, "钱庄");
 				p.setDesc("经过或停留此处领取$2000");
 				p.setLandMsg("将会获得$2000");
 			} else if (i == 7) {
@@ -29,6 +31,8 @@ public class MapBuilder {
 			} else if (i == 15) {
 				p = new Empty(i, "免费停车场");
 				p.setLandMsg("无事发生");
+			} else if (i == 1) {
+				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
 			}
 			map.addPlace(p);
 		}

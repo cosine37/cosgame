@@ -20,6 +20,8 @@ public class Factory {
 			p = new StartPoint(doc, board);
 		} else if (type == Consts.PLACE_TAX) {
 			p = new Tax(doc, board);
+		} else if (type == Consts.PLACE_ESTATE) {
+			p = new Estate(doc, board);
 		}
 		return p;
 	}

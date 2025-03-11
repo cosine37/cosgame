@@ -71,6 +71,8 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.MOVE = 200;
 		$scope.RESOLVE = 300;
 		
+		$scope.ESTATE = 1;
+		
 		setMapLayout = function(){
 			var i,j
 			$scope.bottomRow = []

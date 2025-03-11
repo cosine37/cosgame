@@ -252,6 +252,7 @@ public class Board {
 	public void addPlayerToDB(String name) {
 		addPlayer(name);
 		updateDB("playerNames", playerNames);
+		updatePlayers();
 	}
 	
 	public boolean hasPlayer(String name) {

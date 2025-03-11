@@ -54,8 +54,9 @@ public abstract class Place {
 	}
 	public PlaceEntity toPlaceEntity() {
 		PlaceEntity entity = new PlaceEntity();
+		entity.setType(type);
 		entity.setName(name);
-		entity.setDesc(desc);
+		entity.setDesc(this.getDesc());
 		int i;
 		List<Integer> pis = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++) {
@@ -80,6 +81,10 @@ public abstract class Place {
 	
 	public void stepOn(Player p) {
 		addPlayerOn(p);
+	}
+	
+	public void stepOn(Player p, int option) {
+		stepOn(p);
 	}
 	
 	public void bypass(Player p) {}
@@ -114,7 +119,11 @@ public abstract class Place {
 			p.setPlaceIndex(this.id);
 		}
 	}
-	
+	public List<String> getResolveOptions(Player player){
+		List<String> ans = new ArrayList<>();
+		ans.add("确定");
+		return ans;
+	}
 	public int getId() {
 		return id;
 	}
@@ -163,7 +172,7 @@ public abstract class Place {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getLandMsg() {
+	public String getLandMsg(Player player) {
 		return landMsg;
 	}
 	public void setLandMsg(String landMsg) {
