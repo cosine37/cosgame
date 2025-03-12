@@ -21,6 +21,7 @@ public class Board {
 	protected int curPlayer;
 	protected int round;
 	protected int lastRolled;
+	protected int lastFateId;
 	
 	protected Map map;
 	protected List<String> playerNames;
@@ -43,6 +44,7 @@ public class Board {
 		doc.append("settings",settings.getSettings());
 		doc.append("playerNames",playerNames);
 		doc.append("lastRolled", lastRolled);
+		doc.append("lastFateId", lastFateId);
 		doc.append("logs", logger.getLogs());
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
@@ -60,6 +62,7 @@ public class Board {
 		curPlayer = doc.getInteger("curPlayer",0);
 		round = doc.getInteger("round",0);
 		lastRolled = doc.getInteger("lastRolled", 0);
+		lastFateId = doc.getInteger("lastFateId", 0);
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
@@ -97,6 +100,21 @@ public class Board {
 		entity.setRound(round);
 		entity.setCurPlayer(curPlayer);
 		entity.setLogs(logger.getLogs());
+		Fate fate = Factory.genFate(lastFateId);
+		if (fate != null) {
+			String s = "";
+			for (i=0;i<fate.getConversation().length();i++) {
+				if (fate.getConversation().charAt(i) == 'p') {
+					s = s+players.get(curPlayer);
+				} else {
+					s = s+fate.getConversation().charAt(i);
+				}
+			}
+			entity.setFateMsg(s);
+		} else {
+			entity.setFateMsg("");
+		}
+		
 		List<PlayerEntity> pes = new ArrayList<>();
 		for (i=0;i<players.size();i++) {
 			pes.add(players.get(i).toPlayerEntity());
@@ -157,7 +175,10 @@ public class Board {
 		// Step 1: end the turn for the current player
 		players.get(curPlayer).setPhase(Consts.PHASE_OFFTURN);
 		
-		// Step 2: find the next player and potentially start round
+		// Step 2: reset fate id for display purposes
+		lastFateId = 0;
+		
+		// Step 3: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();
@@ -212,6 +233,7 @@ public class Board {
 	public void updateBasicDB() {
 		updateDB("status", this.status);
 		updateDB("lastRolled", this.lastRolled);
+		updateDB("lastFateId", this.lastFateId);
 		updateDB("map", map.toDocument());
 		updateDB("round", round);
 		updateDB("curPlayer", curPlayer);
@@ -398,5 +420,11 @@ public class Board {
 	}
 	public void setLogger(Logger logger) {
 		this.logger = logger;
+	}
+	public int getLastFateId() {
+		return lastFateId;
+	}
+	public void setLastFateId(int lastFateId) {
+		this.lastFateId = lastFateId;
 	}
 }

@@ -88,6 +88,7 @@ public abstract class Place {
 	}
 	
 	public void bypass(Player p) {}
+	public void preStepOn(Player p) {}
 
 	public boolean hasPlayer(int index) {
 		boolean f = false;

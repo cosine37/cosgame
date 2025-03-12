@@ -31,12 +31,18 @@ public class Consts {
 	public static final int PLACE_SPECIAL = 2;
 	public static final int PLACE_STARTPOINT = 3;
 	public static final int PLACE_TAX = 4;
+	public static final int PLACE_FATE = 5;
 	
 	public static final int STARTPOINT_INDEX = 0;
 	
 	// events
 	public static final int FATE = 1;
 	public static final int CHANCE = 2;
+	
+	// fate types
+	public static final int FATE_ADD = 1;
+	public static final int FATE_LOSE = 2;
+	
 	
 	
 	// settings related

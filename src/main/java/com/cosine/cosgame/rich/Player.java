@@ -204,7 +204,7 @@ public class Player {
 				if (i!=0) board.getMap().getPlace(t).bypass(this);
 			}
 			moveToPlace(t);
-			
+			board.getMap().getPlace(t).preStepOn(this);
 			board.getLogger().logPlayerArrive(this);
 			
 			phase = Consts.PHASE_RESOLVE;

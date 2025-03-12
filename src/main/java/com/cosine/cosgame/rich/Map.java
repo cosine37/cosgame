@@ -2,6 +2,7 @@ package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -12,6 +13,7 @@ public class Map {
 	int width;
 	int height;
 	List<Place> places;
+	List<Integer> fateIds;
 	
 	Board board;
 	
@@ -20,6 +22,7 @@ public class Map {
 		Document doc = new Document();
 		doc.append("width", width);
 		doc.append("height", height);
+		doc.append("fateIds", fateIds);
 		List<Document> placesDocList = new ArrayList<>();
 		for (i=0;i<places.size();i++){
 			placesDocList.add(places.get(i).toDocument());
@@ -31,6 +34,7 @@ public class Map {
 		int i;
 		height = doc.getInteger("height", 0);
 		width = doc.getInteger("width", 0);
+		fateIds = (List<Integer>) doc.get("fateIds");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -91,6 +95,18 @@ public class Map {
 			System.out.println(line);
 		}
 	}
+	public int genRandomFateId() {
+		int n = fateIds.size();
+		if (n == 0) {
+			return -1;
+		} else {
+			Random rand = new Random();
+			int x = rand.nextInt(n*1000);
+			x = x%n;
+			return fateIds.get(x);
+		}
+		
+	}
 	public int mapSize() {
 		return places.size();
 	}
@@ -117,5 +133,11 @@ public class Map {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	public List<Integer> getFateIds() {
+		return fateIds;
+	}
+	public void setFateIds(List<Integer> fateIds) {
+		this.fateIds = fateIds;
 	}
 }

@@ -8,6 +8,7 @@ public class BoardEntity {
 	String myNextPlace;
 	String myCurrentPlace;
 	String myLandMsg;
+	String fateMsg;
 	
 	int status;
 	int round;
@@ -118,6 +119,11 @@ public class BoardEntity {
 	public void setLogs(List<String> logs) {
 		this.logs = logs;
 	}
-	
-	
+	public String getFateMsg() {
+		return fateMsg;
+	}
+	public void setFateMsg(String fateMsg) {
+		this.fateMsg = fateMsg;
+	}
+
 }

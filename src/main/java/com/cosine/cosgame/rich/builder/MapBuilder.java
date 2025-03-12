@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cosine.cosgame.rich.Consts;
+import com.cosine.cosgame.rich.Fate;
 import com.cosine.cosgame.rich.Map;
 import com.cosine.cosgame.rich.Place;
 import com.cosine.cosgame.rich.basicplaces.*;
@@ -33,9 +35,13 @@ public class MapBuilder {
 				p.setLandMsg("无事发生");
 			} else if (i == 1) {
 				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
+			} else if (i == 6) {
+				p = new PersonalEvent(i, "见闻");
 			}
 			map.addPlace(p);
 		}
+		
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2)));
 		
 		return map;
 	}
