@@ -19,6 +19,8 @@ public class MapBuilder {
 		Map map = new Map();
 		map.setHeight(height);
 		map.setWidth(width);
+		map.setJailIndex(9);
+		map.setJailZone(1);
 		int i;
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
@@ -37,6 +39,12 @@ public class MapBuilder {
 				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
 			} else if (i == 6) {
 				p = new PersonalEvent(i, "见闻");
+			} else if (i == 9) {
+				p = new Jail(i, "监狱大门");
+				p.setLandMsg("你来到了监狱大门口，但只是路过");
+			} else if (i == 24) {
+				p = new GoToJail(i, "入狱");
+				p.setLandMsg("你将立即入狱");
 			}
 			map.addPlace(p);
 		}

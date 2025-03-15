@@ -6,6 +6,8 @@ public class MapEntity {
 	int width;
 	int height;
 	List<PlaceEntity> places;
+	List<Integer> jailPlayersIndex;
+	int jailZone;
 	
 	public int getWidth() {
 		return width;
@@ -24,6 +26,18 @@ public class MapEntity {
 	}
 	public void setPlaces(List<PlaceEntity> places) {
 		this.places = places;
+	}
+	public List<Integer> getJailPlayersIndex() {
+		return jailPlayersIndex;
+	}
+	public void setJailPlayersIndex(List<Integer> jailPlayersIndex) {
+		this.jailPlayersIndex = jailPlayersIndex;
+	}
+	public int getJailZone() {
+		return jailZone;
+	}
+	public void setJailZone(int jailZone) {
+		this.jailZone = jailZone;
 	}
 	
 }

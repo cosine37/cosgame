@@ -57,7 +57,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Special 1</td>
+				<td>Special 1
+					<div>{{map.jailPlayersIndex}}</div>
+				</td>
 				<td ng-repeat="g in bottomRow track by $index" class="grid-td">
 					<div ng-include="'/view/html/richGrid.html'"></div>
 				</td>
@@ -74,7 +76,9 @@
 	</div>
 	<div>
 		<div ng-show="phase == OFFTURN">现在不是你的回合</div>
-		<div ng-show="phase == ROLL">你的回合开始，请选择一项：
+		<div ng-show="phase == ROLL && gamedata.inJail">你的回合开始，这是你入狱的第{{gamedata.jailRound}}回合，请选择一项：
+		</div>
+		<div ng-show="phase == ROLL && gamedata.inJail == false">你的回合开始，请选择一项：
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 			<button ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
 		</div>

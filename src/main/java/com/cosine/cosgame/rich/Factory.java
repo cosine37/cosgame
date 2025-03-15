@@ -24,6 +24,10 @@ public class Factory {
 			p = new Estate(doc, board);
 		} else if (type == Consts.PLACE_FATE) {
 			p = new PersonalEvent(doc, board);
+		} else if (type == Consts.PLACE_JAIL) {
+			p = new Jail(doc, board);
+		} else if (type == Consts.PLACE_GOTOJAIL) {
+			p = new GoToJail(doc, board);
 		}
 		return p;
 	}

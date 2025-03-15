@@ -9,6 +9,8 @@ public class PlayerEntity {
 	int phase;
 	int index;
 	int rollDisplay;
+	int jailRound;
+	boolean inJail;
 	boolean confirmed;
 	
 	List<Integer> owned;
@@ -60,6 +62,18 @@ public class PlayerEntity {
 	}
 	public void setRollDisplay(int rollDisplay) {
 		this.rollDisplay = rollDisplay;
+	}
+	public int getJailRound() {
+		return jailRound;
+	}
+	public void setJailRound(int jailRound) {
+		this.jailRound = jailRound;
+	}
+	public boolean isInJail() {
+		return inJail;
+	}
+	public void setInJail(boolean inJail) {
+		this.inJail = inJail;
 	}
 	
 }

@@ -32,6 +32,8 @@ public class Consts {
 	public static final int PLACE_STARTPOINT = 3;
 	public static final int PLACE_TAX = 4;
 	public static final int PLACE_FATE = 5;
+	public static final int PLACE_JAIL = 6;
+	public static final int PLACE_GOTOJAIL = 7;
 	
 	public static final int STARTPOINT_INDEX = 0;
 	

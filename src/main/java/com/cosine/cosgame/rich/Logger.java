@@ -69,4 +69,14 @@ public class Logger {
 		String s = p.getName() + " 经过了 " + place.getName();
 		log(s);
 	}
+	
+	public void logGoToJail(Player p) {
+		String s = p.getName() + " 被关进监狱";
+		log(s);
+	}
+	
+	public void logJailRound(Player p, int x) {
+		String s = "这是 " + p.getName() + " 入狱的第 " + x + " 回合";
+		log(s);
+	}
 }

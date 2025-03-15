@@ -37,11 +37,13 @@ public class PersonalEvent extends Place {
 	public String getLandMsg(Player player) {
 		String s = "";
 		Fate fate = Factory.genFate(board.getLastFateId());
-		for (int i=0;i<fate.getConversation().length();i++) {
-			if (fate.getConversation().charAt(i) == 'p') {
-				s = s+"你";
-			} else {
-				s = s+fate.getConversation().charAt(i);
+		if (fate != null) {
+			for (int i=0;i<fate.getConversation().length();i++) {
+				if (fate.getConversation().charAt(i) == 'p') {
+					s = s+"你";
+				} else {
+					s = s+fate.getConversation().charAt(i);
+				}
 			}
 		}
 		return s;

@@ -125,6 +125,8 @@ public class Board {
 				entity.setMyNextPlace(p.myNextPlaceName());
 				entity.setMyCurrentPlace(p.myCurrentPlaceName());
 				entity.setMyLandMsg(p.myLandMsg());
+				entity.setInJail(p.isInJail());
+				entity.setJailRound(p.getJailRound());
 			}
 		}
 		entity.setPlayers(pes);

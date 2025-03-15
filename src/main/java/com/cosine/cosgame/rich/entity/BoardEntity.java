@@ -16,6 +16,9 @@ public class BoardEntity {
 	int phase;
 	int lastRolled;
 	int curPlayer;
+	int jailRound;
+	
+	boolean inJail;
 	
 	List<PlayerEntity> players;
 	List<String> myOptions;
@@ -124,6 +127,18 @@ public class BoardEntity {
 	}
 	public void setFateMsg(String fateMsg) {
 		this.fateMsg = fateMsg;
+	}
+	public boolean isInJail() {
+		return inJail;
+	}
+	public void setInJail(boolean inJail) {
+		this.inJail = inJail;
+	}
+	public int getJailRound() {
+		return jailRound;
+	}
+	public void setJailRound(int jailRound) {
+		this.jailRound = jailRound;
 	}
 
 }

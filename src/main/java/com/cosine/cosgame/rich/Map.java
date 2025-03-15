@@ -14,6 +14,9 @@ public class Map {
 	int height;
 	List<Place> places;
 	List<Integer> fateIds;
+	List<Player> jailPlayers;
+	int jailIndex;
+	int jailZone;
 	
 	Board board;
 	
@@ -23,6 +26,13 @@ public class Map {
 		doc.append("width", width);
 		doc.append("height", height);
 		doc.append("fateIds", fateIds);
+		doc.append("jailIndex", jailIndex);
+		doc.append("jailZone", jailZone);
+		List<Integer> jailPlayerIndexes = new ArrayList<>();
+		for (i=0;i<jailPlayers.size();i++) {
+			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
+		}
+		doc.append("jailPlayerIndexes", jailPlayerIndexes);
 		List<Document> placesDocList = new ArrayList<>();
 		for (i=0;i<places.size();i++){
 			placesDocList.add(places.get(i).toDocument());
@@ -35,12 +45,19 @@ public class Map {
 		height = doc.getInteger("height", 0);
 		width = doc.getInteger("width", 0);
 		fateIds = (List<Integer>) doc.get("fateIds");
+		jailIndex = doc.getInteger("jailIndex", -1);
+		jailZone = doc.getInteger("jailZone", -1);
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
 			Place e = Factory.genPlace(placesDocList.get(i), board);
 			e.setId(i);
 			places.add(e);
+		}
+		List<Integer> jailPlayerIndexes = (List<Integer>) doc.get("jailPlayerIndexes");
+		jailPlayers = new ArrayList<>();
+		for (i=0;i<jailPlayerIndexes.size();i++) {
+			jailPlayers.add(board.getPlayers().get(jailPlayerIndexes.get(i)));
 		}
 	}
 	public MapEntity toMapEntity() {
@@ -53,11 +70,19 @@ public class Map {
 		entity.setPlaces(pes);
 		entity.setHeight(height);
 		entity.setWidth(width);
+		entity.setJailZone(jailZone);
+		List<Integer> jailPlayerIndexes = new ArrayList<>();
+		for (i=0;i<jailPlayers.size();i++) {
+			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
+		}
+		entity.setJailPlayersIndex(jailPlayerIndexes);
 		return entity;
 	}
 	
 	public Map() {
 		places = new ArrayList<>();
+		fateIds = new ArrayList<>();
+		jailPlayers = new ArrayList<>();
 	}
 	
 	public void genMap(int x) {
@@ -107,6 +132,24 @@ public class Map {
 		}
 		
 	}
+	
+	public Place getJail() {
+		if (jailIndex>=0 && jailIndex<places.size()) {
+			return places.get(jailIndex); 
+		} else {
+			return null;
+		}
+	}
+	public void addToJail(Player p) {
+		jailPlayers.add(p);
+	}
+	public void removeFromJail(Player p) {
+		for (int i=0;i<jailPlayers.size();i++) {
+			if (jailPlayers.get(i).getName().contentEquals(p.getName())) {
+				jailPlayers.remove(i);
+			}
+		}
+	}
 	public int mapSize() {
 		return places.size();
 	}
@@ -139,5 +182,23 @@ public class Map {
 	}
 	public void setFateIds(List<Integer> fateIds) {
 		this.fateIds = fateIds;
+	}
+	public List<Player> getJailPlayers() {
+		return jailPlayers;
+	}
+	public void setJailPlayers(List<Player> jailPlayers) {
+		this.jailPlayers = jailPlayers;
+	}
+	public int getJailIndex() {
+		return jailIndex;
+	}
+	public void setJailIndex(int jailIndex) {
+		this.jailIndex = jailIndex;
+	}
+	public int getJailZone() {
+		return jailZone;
+	}
+	public void setJailZone(int jailZone) {
+		this.jailZone = jailZone;
 	}
 }

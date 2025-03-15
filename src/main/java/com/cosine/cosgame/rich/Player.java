@@ -20,6 +20,8 @@ public class Player {
 	protected int index;
 	protected int rollDisplay;
 	protected boolean confirmed;
+	protected boolean inJail;
+	protected int jailRound;
 	
 	protected List<Card> hand;
 	protected List<Card> deck;
@@ -45,6 +47,8 @@ public class Player {
 		doc.append("confirmed",confirmed);
 		doc.append("owned", owned);
 		doc.append("rollDisplay", rollDisplay);
+		doc.append("inJail", inJail);
+		doc.append("jailRound", jailRound);
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
 			handDocList.add(hand.get(i).getId());
@@ -76,6 +80,8 @@ public class Player {
 		confirmed = doc.getBoolean("confirmed",false);
 		owned = (List<Integer>) doc.get("owned");
 		rollDisplay = doc.getInteger("rollDisplay", 0);
+		inJail = doc.getBoolean("inJail", false);
+		jailRound = doc.getInteger("jailRound", 0);
 		List<Integer> handDocList = (List<Integer>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -110,6 +116,8 @@ public class Player {
 		entity.setPhase(phase);
 		entity.setSalary(salary);
 		entity.setOwned(owned);
+		entity.setInJail(inJail);
+		entity.setJailRound(jailRound);
 		return entity;
 	}
 	
@@ -141,11 +149,19 @@ public class Player {
 		salary = board.getSettings().getStartSalary();
 		moveToPlace(0);
 		phase = Consts.PHASE_OFFTURN;
+		inJail = false;
 	}
 	
 	public void startTurn() {
+		// Step 1: basic phase and log updates
 		phase = Consts.PHASE_ROLL;
 		board.getLogger().logStartTurn(this);
+		
+		// Step 2: jail related
+		if (inJail) {
+			jailRound++;
+			board.getLogger().logJailRound(this, jailRound);
+		}
 	}
 	
 	public List<String> getOptions(){
@@ -174,6 +190,27 @@ public class Player {
 	public String myLandMsg() {
 		Place place = board.getMap().getPlace(placeIndex);
 		if (place == null) return ""; else return place.getLandMsg(this);
+	}
+	
+	public void goToJail() {
+		// Step 1: remove from the current place and add player in jail
+		board.getMap().getPlace(placeIndex).removePlayer(this);
+		board.getMap().addToJail(this);
+		
+		// Step 2: set related status
+		inJail = true;
+		jailRound = 0;
+		
+	}
+	
+	public void outOfJail() {
+		// Step 1: remove from the jail and add to jail index
+		board.getMap().removeFromJail(this);
+		board.getMap().getJail().addPlayerOn(this);
+		
+		// Step 2: set related status
+		inJail = false;
+		jailRound = 0;
 	}
 	
 	public void phaseRoll(int option) {
@@ -323,5 +360,17 @@ public class Player {
 	}
 	public void setPlaceIndex(int placeIndex) {
 		this.placeIndex = placeIndex;
+	}
+	public boolean isInJail() {
+		return inJail;
+	}
+	public void setInJail(boolean inJail) {
+		this.inJail = inJail;
+	}
+	public int getJailRound() {
+		return jailRound;
+	}
+	public void setJailRound(int jailRound) {
+		this.jailRound = jailRound;
 	}
 }
