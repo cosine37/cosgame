@@ -70,6 +70,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.ROLL = 100;
 		$scope.MOVE = 200;
 		$scope.RESOLVE = 300;
+		$scope.ESCAPE = 99999;
 		
 		$scope.ESTATE = 1;
 		

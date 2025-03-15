@@ -8,6 +8,8 @@ public class MapEntity {
 	List<PlaceEntity> places;
 	List<Integer> jailPlayersIndex;
 	int jailZone;
+	int bailCost;
+	int numDice;
 	
 	public int getWidth() {
 		return width;
@@ -38,6 +40,18 @@ public class MapEntity {
 	}
 	public void setJailZone(int jailZone) {
 		this.jailZone = jailZone;
+	}
+	public int getBailCost() {
+		return bailCost;
+	}
+	public void setBailCost(int bailCost) {
+		this.bailCost = bailCost;
+	}
+	public int getNumDice() {
+		return numDice;
+	}
+	public void setNumDice(int numDice) {
+		this.numDice = numDice;
 	}
 	
 }

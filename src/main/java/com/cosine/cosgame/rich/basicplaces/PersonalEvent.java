@@ -25,6 +25,8 @@ public class PersonalEvent extends Place {
 		
 		if (fate != null) {
 			fate.apply(p);
+			
+			board.getLogger().logFate(p, fate.getConversation());
 		}
 		
 	}

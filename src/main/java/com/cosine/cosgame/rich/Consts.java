@@ -14,6 +14,7 @@ public class Consts {
 	public static final int PHASE_ROLL = 100;
 	public static final int PHASE_MOVE = 200;
 	public static final int PHASE_RESOLVE = 300;
+	public static final int PHASE_ESCAPE = 99999;
 	public static final int PHASE_OFFTURN = -1;
 	
 	// card type indexes
@@ -44,7 +45,7 @@ public class Consts {
 	// fate types
 	public static final int FATE_ADD = 1;
 	public static final int FATE_LOSE = 2;
-	
+	public static final int FATE_GOTOJAIL = 3;
 	
 	
 	// settings related

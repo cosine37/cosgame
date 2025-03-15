@@ -79,4 +79,31 @@ public class Logger {
 		String s = "这是 " + p.getName() + " 入狱的第 " + x + " 回合";
 		log(s);
 	}
+	
+	public void logEscapeSuccess(Player p) {
+		String s = p.getName() + " 越狱成功";
+		log(s);
+	}
+	
+	public void logEscapeFail(Player p) {
+		String s = p.getName() + " 越狱失败";
+		log(s);
+	}
+	
+	public void logBait(Player p, int baitCost) {
+		String s = p.getName() + " 花费了 $"+baitCost + " 保释出狱";
+		log(s);
+	}
+	
+	public void logFate(Player p, String conversation) {
+		String s = "";
+		for (int i=0;i<conversation.length();i++) {
+			if (conversation.charAt(i) == 'p'){
+				s = s+p.getName();
+			} else {
+				s = s+conversation.charAt(i);
+			}
+		}
+		log(s);
+	}
 }

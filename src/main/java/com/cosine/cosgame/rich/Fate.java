@@ -20,6 +20,8 @@ public class Fate {
 			p.addMoney(value);
 		} else if (type == Consts.FATE_LOSE) {
 			p.loseMoney(value);
+		} else if (type == Consts.FATE_GOTOJAIL) {
+			p.goToJail();
 		}
 	}
 	

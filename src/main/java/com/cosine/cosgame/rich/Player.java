@@ -164,19 +164,6 @@ public class Player {
 		}
 	}
 	
-	public List<String> getOptions(){
-		List<String> ans = new ArrayList<>();
-		if (phase == Consts.PHASE_ROLL) {
-			ans.add("掷骰");
-		} else if (phase == Consts.PHASE_MOVE) {
-			ans.add("移动");
-		} else if (phase == Consts.PHASE_RESOLVE) {
-			Place p = board.getMap().getPlace(placeIndex);
-			ans = p.getResolveOptions(this);
-		}
-		return ans;
-	}
-	
 	public String myNextPlaceName() {
 		Place place = board.getMap().getPlaceAfter(placeIndex,rollDisplay);
 		if (place == null) return ""; else return place.getName();
@@ -210,24 +197,87 @@ public class Player {
 		
 		// Step 2: set related status
 		inJail = false;
-		jailRound = 0;
+	}
+	
+	public List<String> getOptions(){
+		List<String> ans = new ArrayList<>();
+		if (phase == Consts.PHASE_ROLL) {
+			if (inJail) {
+				ans.add("越狱");
+				if (money>=board.getMap().getBailCost()) {
+					ans.add("保释");
+				}
+			} else {
+				ans.add("掷骰");
+			}
+			
+		} else if (phase == Consts.PHASE_MOVE) {
+			ans.add("移动");
+		} else if (phase == Consts.PHASE_RESOLVE) {
+			Place p = board.getMap().getPlace(placeIndex);
+			ans = p.getResolveOptions(this);
+		} else if (phase == Consts.PHASE_ESCAPE) {
+			ans.add("确定");
+		}
+		return ans;
 	}
 	
 	public void phaseRoll(int option) {
 		if (phase != Consts.PHASE_ROLL) return;
 		if (option == 0) {
-			board.roll();
-			phase = Consts.PHASE_MOVE;
-			rollDisplay = board.getLastRolled();
+			if (inJail) {
+				board.roll();
+				rollDisplay = board.getLastRolled();
+				board.getLogger().logPlayerRoll(this);
+				if (board.getMap().escapedFromJail()) {
+					board.getLogger().logEscapeSuccess(this);
+					phase = Consts.PHASE_ESCAPE;
+					outOfJail();
+				} else {
+					board.getLogger().logEscapeFail(this);
+					phase = Consts.PHASE_ESCAPE;
+				}
+			} else { // regular roll and move
+				board.roll();
+				phase = Consts.PHASE_MOVE;
+				rollDisplay = board.getLastRolled();
+				board.getLogger().logPlayerRoll(this);
+			}
 			
-			board.getLogger().logPlayerRoll(this);
-		} else if (option>100000) {
+		} else if (option == 1) {
+			if (inJail) {// bail option
+				if (money>=board.getMap().getBailCost()) {
+					loseMoney(board.getMap().getBailCost());
+					outOfJail();
+					board.getLogger().logBait(this, board.getMap().getBailCost());
+				}
+			} else {
+				
+			}
+		}
+		
+		else if (option>100000) {
 			int x = option-100000;
-			board.setLastRolled(x);
-			phase = Consts.PHASE_MOVE;
-			rollDisplay = board.getLastRolled();
+			if (inJail) {
+				board.setLastRolled(x);
+				rollDisplay = board.getLastRolled();
+				board.getLogger().logPlayerRoll(this);
+				if (board.getMap().escapedFromJail()) {
+					board.getLogger().logEscapeSuccess(this);
+					phase = Consts.PHASE_ESCAPE;
+					outOfJail();
+				} else {
+					board.getLogger().logEscapeFail(this);
+					phase = Consts.PHASE_ESCAPE;
+				}
+			} else { // regular roll and move
+				board.setLastRolled(x);
+				phase = Consts.PHASE_MOVE;
+				rollDisplay = board.getLastRolled();
+				board.getLogger().logPlayerRoll(this);
+			}
 			
-			board.getLogger().logPlayerRoll(this);
+			
 		}
 	}
 	
@@ -254,6 +304,24 @@ public class Player {
 		board.getMap().getPlace(placeIndex).stepOn(this, option);
 		board.getLogger().logEndTurn(this);
 		board.nextPlayer();
+	}
+	
+	public void phaseEscape(int option) {
+		if (phase != Consts.PHASE_ESCAPE) return;
+		if (inJail) {
+			// TODO: custom here
+			if (jailRound == 3) {
+				loseMoney(board.getMap().getBailCost());
+				outOfJail();
+				phase = Consts.PHASE_ROLL;
+				board.getLogger().logBait(this, board.getMap().getBailCost());
+			} else {
+				board.getLogger().logEndTurn(this);
+				board.nextPlayer();
+			}
+		} else {
+			phase = Consts.PHASE_ROLL;			
+		}
 	}
 	
 	public String getName() {

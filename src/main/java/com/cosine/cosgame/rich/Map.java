@@ -17,6 +17,8 @@ public class Map {
 	List<Player> jailPlayers;
 	int jailIndex;
 	int jailZone;
+	int bailCost;
+	int numDice;
 	
 	Board board;
 	
@@ -28,6 +30,8 @@ public class Map {
 		doc.append("fateIds", fateIds);
 		doc.append("jailIndex", jailIndex);
 		doc.append("jailZone", jailZone);
+		doc.append("bailCost", bailCost);
+		doc.append("numDice", numDice);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -47,6 +51,8 @@ public class Map {
 		fateIds = (List<Integer>) doc.get("fateIds");
 		jailIndex = doc.getInteger("jailIndex", -1);
 		jailZone = doc.getInteger("jailZone", -1);
+		bailCost = doc.getInteger("bailCost", 0);
+		numDice = doc.getInteger("numDice", 1);
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -71,6 +77,8 @@ public class Map {
 		entity.setHeight(height);
 		entity.setWidth(width);
 		entity.setJailZone(jailZone);
+		entity.setBailCost(bailCost);
+		entity.setNumDice(numDice);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -133,6 +141,17 @@ public class Map {
 		
 	}
 	
+	public boolean escapedFromJail() {
+		if (numDice == 1) {
+			if (board.getLastRolled() == 6) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 	public Place getJail() {
 		if (jailIndex>=0 && jailIndex<places.size()) {
 			return places.get(jailIndex); 
@@ -200,5 +219,17 @@ public class Map {
 	}
 	public void setJailZone(int jailZone) {
 		this.jailZone = jailZone;
+	}
+	public int getBailCost() {
+		return bailCost;
+	}
+	public void setBailCost(int bailCost) {
+		this.bailCost = bailCost;
+	}
+	public int getNumDice() {
+		return numDice;
+	}
+	public void setNumDice(int numDice) {
+		this.numDice = numDice;
 	}
 }

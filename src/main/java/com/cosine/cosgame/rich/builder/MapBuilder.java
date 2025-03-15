@@ -19,8 +19,10 @@ public class MapBuilder {
 		Map map = new Map();
 		map.setHeight(height);
 		map.setWidth(width);
+		map.setNumDice(1);
 		map.setJailIndex(9);
 		map.setJailZone(1);
+		map.setBailCost(500);
 		int i;
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
@@ -49,7 +51,7 @@ public class MapBuilder {
 			map.addPlace(p);
 		}
 		
-		map.setFateIds(new ArrayList<>(Arrays.asList(1,2)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3)));
 		
 		return map;
 	}
