@@ -18,8 +18,6 @@ public class Estate extends Place{
 	int level;
 	int maxLevel;
 	
-	String img;
-	
 	int ownerId;
 	
 	List<Integer> rents;

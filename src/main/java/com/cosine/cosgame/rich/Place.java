@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -16,6 +17,9 @@ public abstract class Place {
 	protected Place next;
 	protected String desc;
 	protected String landMsg;
+	protected String img;
+	protected String fontFamily;
+	protected int fontSize;
 	
 	protected Board board;
 	
@@ -29,6 +33,9 @@ public abstract class Place {
 		doc.append("name",name);
 		doc.append("desc",desc);
 		doc.append("landMsg", landMsg);
+		doc.append("img", img);
+		doc.append("fontFamily", fontFamily);
+		doc.append("fontSize", fontSize);
 		List<Integer> playersOnDocList = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++){
 			playersOnDocList.add(playersOn.get(i).getIndex());
@@ -43,6 +50,9 @@ public abstract class Place {
 		name = doc.getString("name");
 		desc = doc.getString("desc");
 		landMsg = doc.getString("landMsg");
+		img = doc.getString("img");
+		fontFamily = doc.getString("fontFamily");
+		fontSize = doc.getInteger("fontSize", 16);
 		List<Integer> playersOnDocList = (List<Integer>)doc.get("playersOn");
 		playersOn = new ArrayList<>();
 		for (i=0;i<playersOnDocList.size();i++){
@@ -63,6 +73,13 @@ public abstract class Place {
 			pis.add(playersOn.get(i).getIndex());
 		}
 		entity.setPlayersOn(pis);
+		HashMap<String, String> imgStyle = new HashMap<>();
+		imgStyle.put("background-image", "url(/image/Rich/" + img + ".png)");
+		entity.setImgStyle(imgStyle);
+		HashMap<String, String> fontStyle = new HashMap<>();
+		fontStyle.put("font-family", fontFamily);
+		fontStyle.put("font-size", Integer.toString(fontSize)+"px");
+		entity.setFontStyle(fontStyle);
 		return entity;
 	}
 	
@@ -125,6 +142,10 @@ public abstract class Place {
 		ans.add("确定");
 		return ans;
 	}
+	public void setFont(String fontFamily, int fontSize) {
+		this.fontFamily = fontFamily;
+		this.fontSize = fontSize;
+	}
 	public int getId() {
 		return id;
 	}
@@ -178,6 +199,24 @@ public abstract class Place {
 	}
 	public void setLandMsg(String landMsg) {
 		this.landMsg = landMsg;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public String getFontFamily() {
+		return fontFamily;
+	}
+	public void setFontFamily(String fontFamily) {
+		this.fontFamily = fontFamily;
+	}
+	public int getFontSize() {
+		return fontSize;
+	}
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
 	}
 	
 

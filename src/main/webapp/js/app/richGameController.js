@@ -74,7 +74,13 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.UTILITYPHASE = 99998;
 		$scope.STATIONPHASE = 99997;
 		
+		$scope.EMPTY = 0;
 		$scope.ESTATE = 1;
+		$scope.STARTPOINT = 3;
+		$scope.TAX = 4;
+		$scope.FATE = 5;
+		$scope.JAIL = 6;
+		$scope.GOTOJAIL = 7;
 		
 		setMapLayout = function(){
 			var i,j

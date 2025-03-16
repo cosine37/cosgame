@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class PlaceEntity {
 	String name;
@@ -17,6 +18,8 @@ public class PlaceEntity {
 	int cost;
 	int upgradeCost;
 	List<Integer> rents;
+	Map<String, String> imgStyle;
+	Map<String, String> fontStyle;
 
 	public String getName() {
 		return name;
@@ -89,6 +92,18 @@ public class PlaceEntity {
 	}
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+	public Map<String, String> getImgStyle() {
+		return imgStyle;
+	}
+	public void setImgStyle(Map<String, String> imgStyle) {
+		this.imgStyle = imgStyle;
+	}
+	public Map<String, String> getFontStyle() {
+		return fontStyle;
+	}
+	public void setFontStyle(Map<String, String> fontStyle) {
+		this.fontStyle = fontStyle;
 	}
 	
 }

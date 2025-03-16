@@ -28,6 +28,14 @@
      font-family: 'hbt'; 
      src:url('/font/hbt.woff') format('woff')
 }
+@font-face{
+     font-family: 'tyh'; 
+     src:url('/font/tyh.woff') format('woff')
+}
+@font-face{
+     font-family: 'jnk'; 
+     src:url('/font/jnk.woff') format('woff')
+}
 
 button{
 	outline: none;
@@ -70,9 +78,18 @@ button:disabled{
 }
 
 .grid-td{
+	height: 120px;
+	width: 120px;
+	margin: 0px;
+	padding: 0px;
 	border: 1px solid black;
-	height: 100px;
-	width: 100px;
+}
+
+.grid-div{
+	height: 120px;
+	width: 120px;
+	text-align:center;
+	vertical-algn:top;
 }
 
 .game-div{
