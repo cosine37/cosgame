@@ -12,6 +12,7 @@ public class PlayerEntity {
 	int jailRound;
 	boolean inJail;
 	boolean confirmed;
+	AvatarEntity avatar;
 	
 	List<Integer> owned;
 
@@ -74,6 +75,12 @@ public class PlayerEntity {
 	}
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
+	}
+	public AvatarEntity getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(AvatarEntity avatar) {
+		this.avatar = avatar;
 	}
 	
 }

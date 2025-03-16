@@ -20,39 +20,83 @@
 	</div>
 	
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 50px; width:50px;margin-left: 35px;margin-top:5px;" ng-show="g.area>100"></div>
+	
+	<div class="grid-avatars-div" style="top: 60px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==EMPTY" class="grid-div" style="background-color:LightSkyBlue">
 	<div style="padding-top:3px" ng-style="g.fontStyle">{{g.name}}</div>
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==TAX" class="grid-div" style="background-color:LightGoldenRodYellow">
 	<div style="padding-top:3px" ng-style="g.fontStyle">{{g.name}}</div>
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 60px; width:60px;margin-left: 30px;"></div>
 	<div style="font-size: 14px">{{g.desc}}</div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==STARTPOINT" class="grid-div" ng-style="g.imgStyle" style="background-size:cover;">
 	<div style="color: gold" ng-style="g.fontStyle">{{g.name}}</div>
 	<div style="font-size: 16px; color: white; font-weight:bold"><span style="font-size:20px;">&#x21E6;&nbsp;&nbsp;</span>由此去</div>
 	<div style="font-size: 14px; color: white">{{g.desc}}</div>
+	
+	<div class="grid-avatars-div" style="top: 70px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==FATE" class="grid-div" style="background-color:red">
 	<div style="padding-top:3px;color:white" ng-style="g.fontStyle">{{g.name}}</div>
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==JAIL" class="grid-div" style="background-color:SlateGrey">
 	<div style="padding-top:3px; color:white" ng-style="g.fontStyle">{{g.name}}</div>
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
 
 <div ng-show="g.type==GOTOJAIL" class="grid-div" style="background-color:SlateBlue">
 	<div style="padding-top:3px; color:white" ng-style="g.fontStyle">{{g.name}}</div>
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
+
+
 <!-- 
 <div>
 	{{g.name}}

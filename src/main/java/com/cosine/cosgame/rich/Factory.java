@@ -43,4 +43,12 @@ public class Factory {
 		}
 		return fate;
 	}
+	
+	public static Avatar genAvatar(int id) {
+		Avatar avatar = null;
+		if (id == 1) {
+			avatar = new Avatar(1,"蓝猫");
+		}
+		return avatar;
+	}
 }
