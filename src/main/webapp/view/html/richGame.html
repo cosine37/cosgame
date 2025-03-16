@@ -92,7 +92,13 @@
 			<span ng-show="gamedata.inJail == false">越狱成功！</span>
 			<span ng-show="gamedata.inJail">越狱失败。</span>
 			<span ng-show="gamedata.inJail && gamedata.jailRound == 3">因为这是你入狱的第三回合，请支付${{map.bailCost}}保释费出狱。</span>
-			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		</div>
+		<div ng-show="phase == UTILITYPHASE">你来到了{{gamedata.myCurrentPlace}}，需要掷一次骰子：
+			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		</div>
+		<div ng-show="phase == STATIONPHASE">你可以移动到其他地点（移动后不能购买且不需支付路费）：
+			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		</div>
 	</div>
 	<div>

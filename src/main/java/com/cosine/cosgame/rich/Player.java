@@ -21,6 +21,7 @@ public class Player {
 	protected int rollDisplay;
 	protected boolean confirmed;
 	protected boolean inJail;
+	protected boolean turnEnd;
 	protected int jailRound;
 	
 	protected List<Card> hand;
@@ -49,6 +50,7 @@ public class Player {
 		doc.append("rollDisplay", rollDisplay);
 		doc.append("inJail", inJail);
 		doc.append("jailRound", jailRound);
+		doc.append("turnEnd", turnEnd);
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
 			handDocList.add(hand.get(i).getId());
@@ -82,6 +84,7 @@ public class Player {
 		rollDisplay = doc.getInteger("rollDisplay", 0);
 		inJail = doc.getBoolean("inJail", false);
 		jailRound = doc.getInteger("jailRound", 0);
+		turnEnd = doc.getBoolean("turnEnd", turnEnd);
 		List<Integer> handDocList = (List<Integer>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -218,6 +221,20 @@ public class Player {
 			ans = p.getResolveOptions(this);
 		} else if (phase == Consts.PHASE_ESCAPE) {
 			ans.add("确定");
+		} else if (phase == Consts.PHASE_UTILITY) {
+			ans.add("确定");
+		} else if (phase == Consts.PHASE_STATION) {
+			Place p = board.getMap().getPlace(placeIndex);
+			if (p.getType() == Consts.PLACE_ESTATE) {
+				Estate e = (Estate) p;
+				if (e.getArea() == Consts.AREA_STATION) {
+					ans = e.getStationOptions();
+				} else {
+					ans.add("不移动");
+				}
+			} else {
+				ans.add("不移动");
+			}
 		}
 		return ans;
 	}
@@ -290,20 +307,27 @@ public class Player {
 				t = (t+1)%board.getMap().mapSize();
 				if (i!=0) board.getMap().getPlace(t).bypass(this);
 			}
+			phase = Consts.PHASE_RESOLVE;
+			
 			moveToPlace(t);
 			board.getMap().getPlace(t).preStepOn(this);
 			board.getLogger().logPlayerArrive(this);
 			
-			phase = Consts.PHASE_RESOLVE;
+			//board.setLastRolled(0);
 			rollDisplay = 0;
 		}
 	}
 	
 	public void phaseResolve(int option) {
 		if (phase != Consts.PHASE_RESOLVE) return;
+		
+		turnEnd = true;
 		board.getMap().getPlace(placeIndex).stepOn(this, option);
-		board.getLogger().logEndTurn(this);
-		board.nextPlayer();
+		if (turnEnd) {
+			board.getLogger().logEndTurn(this);
+			board.nextPlayer();
+		}
+		
 	}
 	
 	public void phaseEscape(int option) {
@@ -322,6 +346,29 @@ public class Player {
 		} else {
 			phase = Consts.PHASE_ROLL;			
 		}
+	}
+	
+	public void phaseUtility(int option) {
+		if (phase != Consts.PHASE_UTILITY) return;
+		if (option == 0) {
+			board.roll();
+			rollDisplay = board.getLastRolled();
+			phase = Consts.PHASE_RESOLVE;
+		}
+	}
+	
+	public void phaseStation(int option) {
+		if (phase != Consts.PHASE_STATION) return;
+		Place p = board.getMap().getPlace(placeIndex);
+		if (p.getType() == Consts.PLACE_ESTATE) {
+			Estate e = (Estate) p;
+			if (e.getArea() == Consts.AREA_STATION) {
+				e.resolveStation(this, option);
+			}
+		}
+		board.getLogger().logEndTurn(this);
+		board.nextPlayer();
+		
 	}
 	
 	public String getName() {
@@ -440,5 +487,11 @@ public class Player {
 	}
 	public void setJailRound(int jailRound) {
 		this.jailRound = jailRound;
+	}
+	public boolean isTurnEnd() {
+		return turnEnd;
+	}
+	public void setTurnEnd(boolean turnEnd) {
+		this.turnEnd = turnEnd;
 	}
 }

@@ -39,6 +39,8 @@ public class MapBuilder {
 				p.setLandMsg("无事发生");
 			} else if (i == 1) {
 				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
+			} else if (i == 2) {
+				p = new Estate(i, "三锡堂码头", 1, 1000,500,3,new ArrayList<>(Arrays.asList(100,650,1350,2900)));
 			} else if (i == 6) {
 				p = new PersonalEvent(i, "见闻");
 			} else if (i == 9) {
@@ -47,6 +49,14 @@ public class MapBuilder {
 			} else if (i == 24) {
 				p = new GoToJail(i, "入狱");
 				p.setLandMsg("你将立即入狱");
+			} else if (i == 11) {
+				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+			} else if (i == 26) {
+				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+			} else if (i == 5) {
+				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
+			} else if (i == 21) {
+				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
 			}
 			map.addPlace(p);
 		}

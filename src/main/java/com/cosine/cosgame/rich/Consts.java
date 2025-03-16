@@ -15,6 +15,8 @@ public class Consts {
 	public static final int PHASE_MOVE = 200;
 	public static final int PHASE_RESOLVE = 300;
 	public static final int PHASE_ESCAPE = 99999;
+	public static final int PHASE_UTILITY = 99998;
+	public static final int PHASE_STATION = 99997;
 	public static final int PHASE_OFFTURN = -1;
 	
 	// card type indexes
@@ -37,6 +39,10 @@ public class Consts {
 	public static final int PLACE_GOTOJAIL = 7;
 	
 	public static final int STARTPOINT_INDEX = 0;
+	
+	// areas
+	public static final int AREA_UTILITY = 101;
+	public static final int AREA_STATION = 102;
 	
 	// events
 	public static final int FATE = 1;

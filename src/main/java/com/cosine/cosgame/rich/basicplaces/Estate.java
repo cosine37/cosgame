@@ -12,7 +12,7 @@ import com.cosine.cosgame.rich.Player;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
 
 public class Estate extends Place{
-	int area; // can be view as color
+	int area; // can be viewed as color
 	int cost;
 	int upgradeCost;
 	int level;
@@ -98,16 +98,68 @@ public class Estate extends Place{
 	
 	public void stepOn(Player p) {
 		super.stepOn(p);
-		if (isUnoccupied()) {
-			
-		} else {
+	}
+	
+	public boolean monopoly() {
+		for (int i=0;i<board.getMap().mapSize();i++) {
+			Place p = board.getMap().getPlace(i);
+			if (p.getType() == Consts.PLACE_ESTATE) {
+				Estate e = (Estate) p;
+				if (e.getArea() == area && e.getOwnerId() != ownerId) {
+					return false;
+				}
+			}
 			
 		}
+		return true;
+	}
+	
+	public int numOccupiedInArea() {
+		int ans = 0;
+		for (int i=0;i<board.getMap().mapSize();i++) {
+			Place p = board.getMap().getPlace(i);
+			if (p.getType() == Consts.PLACE_ESTATE) {
+				Estate e = (Estate) p;
+				if (e.getArea() == area && e.getOwnerId() == ownerId) {
+					ans++;
+				}
+			}
+		}
+		return ans;
+	}
+	
+	public List<Place> otherStations(){
+		List<Place> ans = new ArrayList<>();
+		for (int i=0;i<board.getMap().mapSize();i++) {
+			Place p = board.getMap().getPlace(i);
+			if (p.getType() == Consts.PLACE_ESTATE) {
+				Estate e = (Estate) p;
+				if (e.getArea() == Consts.AREA_STATION && e.getId() != id) {
+					ans.add(e);
+				}
+			}
+		}
+		return ans;
 	}
 	
 	public int getRent() {
 		if (level<rents.size()) {
-			return rents.get(level);
+			int ans = rents.get(level);
+			if (area == Consts.AREA_UTILITY) {
+				int x = numOccupiedInArea();
+				ans = ans*x;
+				
+				ans = ans*board.getLastRolled();
+			} else if (area == Consts.AREA_STATION) {
+				int x = numOccupiedInArea();
+				ans = ans*x;
+			} else {
+				if (monopoly()) {
+					ans = ans*2;
+				}
+				
+			}
+			return ans;
 		} else {
 			return 0;
 		}
@@ -132,7 +184,11 @@ public class Estate extends Place{
 		if (isUnoccupied()) {
 			return "你可以花费$" + cost + "购买该地块";
 		} else if (player.getIndex() != ownerId) {
-			return "你需要支付$" + getRent() + "给" + board.getPlayers().get(ownerId).getName();
+			if (area == Consts.AREA_UTILITY) {
+				return "你掷了一个" + board.getLastRolled() + "，需要支付$" + getRent() + "给" + board.getPlayers().get(ownerId).getName();
+			} else {
+				return "你需要支付$" + getRent() + "给" + board.getPlayers().get(ownerId).getName();
+			}
 		} else if (level < maxLevel){
 			return "你可以升级该地块";
 		} else {
@@ -141,8 +197,6 @@ public class Estate extends Place{
 	}
 	@Override
 	public List<String> getResolveOptions(Player player){
-		System.out.println("in estate");
-		System.out.println(ownerId);
 		List<String> ans = new ArrayList<>();
 		if (isUnoccupied()) {
 			ans.add("不购买");
@@ -161,7 +215,11 @@ public class Estate extends Place{
 		}
 		return ans;
 	}
-	
+	public void preStepOn(Player p) {
+		if (area == Consts.AREA_UTILITY && isUnoccupied() == false) {
+			p.setPhase(Consts.PHASE_UTILITY);
+		}
+	}
 	public void stepOn(Player p, int option) {
 		stepOn(p);
 		if (isUnoccupied()) {
@@ -179,6 +237,9 @@ public class Estate extends Place{
 			Player owner = board.getPlayers().get(ownerId);
 			owner.addMoney(paidRent);
 			p.loseMoney(paidRent);
+			if (area == Consts.AREA_UTILITY) {
+				board.getLogger().logPlayerRoll(p);
+			}
 			board.getLogger().log(p.getName() + " 向 " + owner.getName() + " 支付了租金$" + paidRent);
 		} else if (level < maxLevel){
 			if (option == 0) {
@@ -187,12 +248,59 @@ public class Estate extends Place{
 				if (p.getMoney()>=upgradeCost && level<maxLevel) {
 					p.loseMoney(upgradeCost);
 					level++;
-					board.getLogger().log(p.getName() + " 花费了$" + cost + "加盖了 " + name + " （当前等级：" + level + "级）");
+					board.getLogger().log(p.getName() + " 花费了$" + upgradeCost + "加盖了 " + name + " （当前等级：" + level + "级）");
 				}
 			}
 		} else {
 
 		}
+		
+		if (area == Consts.AREA_STATION) {
+			p.setTurnEnd(false);
+			p.setPhase(Consts.PHASE_STATION);
+		}
+		
 	}
-
+	
+	public List<String> getStationOptions(){
+		List<String> ans = new ArrayList<>();
+		List<Place> oss = otherStations();
+		ans.add("不移动");
+		for (int i=0;i<oss.size();i++) {
+			ans.add("移动到" + oss.get(i).getName());
+		}
+		return ans;
+	}
+	public void resolveStation(Player p, int option) {
+		List<Place> oss = otherStations();
+		if (option > 0) {
+			int x = option-1;
+			removePlayer(p);
+			
+			int t = id;
+			int newId = oss.get(x).getId();
+			while (t!=newId) {
+				t++;
+				if (t == board.getMap().mapSize()) {
+					t = 0;
+				}
+				board.getMap().getPlace(t).bypass(p);
+			}
+			
+			p.moveToPlace(newId);
+			board.getLogger().log(p.getName() + " 移动到了 " + oss.get(x).getName());
+		}
+	}
+	public int getArea() {
+		return area;
+	}
+	public void setArea(int area) {
+		this.area = area;
+	}
+	public int getOwnerId() {
+		return ownerId;
+	}
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
 }

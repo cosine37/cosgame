@@ -227,6 +227,10 @@ public class Board {
 			p.phaseResolve(option);
 		} else if (p.getPhase() == Consts.PHASE_ESCAPE) {
 			p.phaseEscape(option);
+		} else if (p.getPhase() == Consts.PHASE_UTILITY) {
+			p.phaseUtility(option);
+		} else if (p.getPhase() == Consts.PHASE_STATION) {
+			p.phaseStation(option);
 		}
 		updateBasicDB();
 		updatePlayers();
