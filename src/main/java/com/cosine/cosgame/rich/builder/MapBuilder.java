@@ -23,6 +23,7 @@ public class MapBuilder {
 		map.setJailIndex(9);
 		map.setJailZone(1);
 		map.setBailCost(500);
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","maroon","darkgreen","red","darkviolet","orange","navy")));
 		int i;
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
@@ -34,14 +35,14 @@ public class MapBuilder {
 				p.setDesc("经过或停留此处领取$2000");
 				p.setLandMsg("将会获得$2000");
 			} else if (i == 7) {
-				p = new Tax(i, "所得税", 2000);
+				p = new Tax(i, "所得税", 600);
 				p.setImg("incomeTax");
-				p.setDesc("支付$2000");
+				p.setDesc("支付$600");
 				p.setFont("jnk", 22);
 			} else if (i == 20) {
-				p = new Tax(i, "奢侈税", 1000);
+				p = new Tax(i, "奢侈税", 800);
 				p.setImg("luxuryTax");
-				p.setDesc("支付$1000");
+				p.setDesc("支付$800");
 				p.setFont("jnk", 22);
 			} else if (i == 15) {
 				p = new Empty(i, "免费停车场");
@@ -50,27 +51,45 @@ public class MapBuilder {
 				p.setLandMsg("无事发生");
 			} else if (i == 1) {
 				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
+				p.setImg("qingguo/zhuochuqiao");
+				p.setFont("jnk", 18);
 			} else if (i == 2) {
 				p = new Estate(i, "三锡堂码头", 1, 1000,500,3,new ArrayList<>(Arrays.asList(100,650,1350,2900)));
-			} else if (i == 6) {
+				p.setFont("jnk", 18);
+			} else if (i == 3 || i == 6 || i == 13 || i == 18 || i == 22 || i == 28) {
 				p = new PersonalEvent(i, "见闻");
 				p.setImg("fate");
 				p.setFont("jnk", 22);
 			} else if (i == 9) {
 				p = new Jail(i, "监狱大门");
+				p.setImg("jailDoor");
+				p.setFont("jnk", 22);
 				p.setLandMsg("你来到了监狱大门口，但只是路过");
 			} else if (i == 24) {
 				p = new GoToJail(i, "入狱");
+				p.setImg("goToJail");
+				p.setFont("jnk", 22);
 				p.setLandMsg("你将立即入狱");
 			} else if (i == 11) {
 				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+				p.setFont("jnk", 18);
+				p.setImg("bubbleTea");
 			} else if (i == 26) {
 				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+				p.setFont("jnk", 18);
+				p.setImg("bubbleTea");
 			} else if (i == 5) {
 				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
+				p.setFont("jnk", 18);
+				p.setImg("station");
 			} else if (i == 21) {
 				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
-			}
+				p.setFont("jnk", 18);
+				p.setImg("station");
+			}else if (i == 29) {
+				p = new Estate(i, "城隍庙戏楼", 6, 4000,200,3,new ArrayList<>(Arrays.asList(500,2250,5000,13500)));
+				p.setFont("jnk", 18);
+			} 
 			map.addPlace(p);
 		}
 		

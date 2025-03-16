@@ -17,9 +17,11 @@ public class PlaceEntity {
 	int ownerId;
 	int cost;
 	int upgradeCost;
+	int rent;
 	List<Integer> rents;
 	Map<String, String> imgStyle;
 	Map<String, String> fontStyle;
+	Map<String, String> areaStyle;
 
 	public String getName() {
 		return name;
@@ -104,6 +106,18 @@ public class PlaceEntity {
 	}
 	public void setFontStyle(Map<String, String> fontStyle) {
 		this.fontStyle = fontStyle;
+	}
+	public int getRent() {
+		return rent;
+	}
+	public void setRent(int rent) {
+		this.rent = rent;
+	}
+	public Map<String, String> getAreaStyle() {
+		return areaStyle;
+	}
+	public void setAreaStyle(Map<String, String> areaStyle) {
+		this.areaStyle = areaStyle;
 	}
 	
 }

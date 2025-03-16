@@ -74,6 +74,9 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.UTILITYPHASE = 99998;
 		$scope.STATIONPHASE = 99997;
 		
+		$scope.UTILITYAREA = 101;
+		$scope.STATIONAREA = 102;
+		
 		$scope.EMPTY = 0;
 		$scope.ESTATE = 1;
 		$scope.STARTPOINT = 3;

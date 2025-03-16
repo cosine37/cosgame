@@ -1,5 +1,25 @@
-<div ng-show="g.type==ESTATE">
-	{{g.name}}
+<div ng-show="g.type==ESTATE" class="grid-div">
+	<div style="height: 60px;">
+		<div ng-style="g.fontStyle">{{g.name}}</div>
+		<div style="font-size:16px" ng-show="g.ownerId==-1">${{g.cost}}</div>
+		<div style="font-size:14px" ng-show="g.ownerId!=-1">{{g.ownerName}}</div>
+		<div style="font-size:14px" ng-show="g.ownerId!=-1 && g.area != UTILITYAREA"><b>路费：</b>${{g.rent}}</div>
+		
+		<div style="font-size:14px" ng-show="g.ownerId!=-1 && g.area == UTILITYAREA"><b>路费：</b>${{g.rent}}&times;N</div>
+	</div>
+	
+	<div style="height: 30px" ng-show="g.area<100">
+		
+	</div>
+	<div style="height: 30px" ng-show="g.area<100" ng-style="g.areaStyle">
+		<span style="color:white; font-size: 18px;" ng-show="g.level==1">&#x2617;</span>
+		<span style="color:white; font-size: 18px;" ng-show="g.level==2">&#x2617;&#x2617;</span>
+		<span style="color:white; font-size: 18px;" ng-show="g.level==3">&#x2617;&#x2617;&#x2617;</span>
+		<span style="color:white; font-size: 18px;" ng-show="g.level==4">&#x2617;&#x2617;&#x2617;&#x2617;</span>
+		<span style="color:white; font-size: 18px;" ng-show="g.level==5">&#x2617;&#x2617;&#x2617;&#x2617;&#x2617;</span>
+	</div>
+	
+	<div ng-style="g.imgStyle" style="background-size:cover;height: 50px; width:50px;margin-left: 35px;margin-top:5px;" ng-show="g.area>100"></div>
 </div>
 
 <div ng-show="g.type==EMPTY" class="grid-div" style="background-color:LightSkyBlue">
@@ -24,12 +44,14 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 </div>
 
-<div ng-show="g.type==JAIL">
-	{{g.name}}
+<div ng-show="g.type==JAIL" class="grid-div" style="background-color:SlateGrey">
+	<div style="padding-top:3px; color:white" ng-style="g.fontStyle">{{g.name}}</div>
+	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 </div>
 
-<div ng-show="g.type==GOTOJAIL">
-	{{g.name}}
+<div ng-show="g.type==GOTOJAIL" class="grid-div" style="background-color:SlateBlue">
+	<div style="padding-top:3px; color:white" ng-style="g.fontStyle">{{g.name}}</div>
+	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 </div>
 <!-- 
 <div>

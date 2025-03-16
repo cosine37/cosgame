@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich.basicplaces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -53,11 +54,22 @@ public class Estate extends Place{
 		entity.setMaxLevel(maxLevel);
 		entity.setOwnerId(ownerId);
 		entity.setRents(rents);
+		if (area == Consts.AREA_UTILITY) {
+			entity.setRent(getRentUtilityDisplay());
+		} else {
+			entity.setRent(getRent());
+		}
+		
 		if (ownerId == -1) {
 			entity.setOwnerName("");
 		} else if (ownerId < board.getPlayers().size()){
 			entity.setOwnerName(board.getPlayers().get(ownerId).getName());
 		}
+		HashMap<String, String> areaStyle = new HashMap<>();
+		if (area < board.getMap().getAreaColors().size()) {
+			areaStyle.put("background-color", board.getMap().getAreaColors().get(area));
+		}
+		entity.setAreaStyle(areaStyle);
 		return entity;
 	}
 	
@@ -139,7 +151,11 @@ public class Estate extends Place{
 		}
 		return ans;
 	}
-	
+	public int getRentUtilityDisplay() {
+		int ans = rents.get(level);
+		int x = numOccupiedInArea();
+		return ans*x;
+	}
 	public int getRent() {
 		if (level<rents.size()) {
 			int ans = rents.get(level);
