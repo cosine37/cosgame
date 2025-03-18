@@ -20,6 +20,7 @@ public abstract class Place {
 	protected String img;
 	protected String fontFamily;
 	protected int fontSize;
+	protected Detail detail;
 	
 	protected Board board;
 	
@@ -41,6 +42,7 @@ public abstract class Place {
 			playersOnDocList.add(playersOn.get(i).getIndex());
 		}
 		doc.append("playersOn",playersOnDocList);
+		doc.append("detail", detail.toDocument());
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -61,6 +63,9 @@ public abstract class Place {
 			playersOn.add(e);
 			e.setPlaceIndex(this.id);
 		}
+		Document detailDoc = (Document) doc.get("detail");
+		detail = new Detail(this);
+		detail.setFromDoc(detailDoc);
 	}
 	public PlaceEntity toPlaceEntity() {
 		PlaceEntity entity = new PlaceEntity();
@@ -80,6 +85,9 @@ public abstract class Place {
 		fontStyle.put("font-family", fontFamily);
 		fontStyle.put("font-size", Integer.toString(fontSize)+"px");
 		entity.setFontStyle(fontStyle);
+		if (detail != null) {
+			entity.setDetail(detail.toDetailEntity());
+		}
 		return entity;
 	}
 	
@@ -89,6 +97,7 @@ public abstract class Place {
 		this.type = type;
 		
 		playersOn = new ArrayList<>();
+		detail = new Detail(this);
 	}
 	
 	public Place(Document doc, Board board) {
@@ -145,6 +154,9 @@ public abstract class Place {
 	public void setFont(String fontFamily, int fontSize) {
 		this.fontFamily = fontFamily;
 		this.fontSize = fontSize;
+	}
+	public void createDetail() {
+		detail = new Detail(this);
 	}
 	public int getId() {
 		return id;
@@ -217,6 +229,12 @@ public abstract class Place {
 	}
 	public void setFontSize(int fontSize) {
 		this.fontSize = fontSize;
+	}
+	public Detail getDetail() {
+		return detail;
+	}
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 	
 

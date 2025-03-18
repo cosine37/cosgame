@@ -6,7 +6,6 @@ public class BoardEntity {
 	String id;
 	String lord;
 	String myNextPlace;
-	String myCurrentPlace;
 	String myLandMsg;
 	String fateMsg;
 	
@@ -25,6 +24,7 @@ public class BoardEntity {
 	List<String> logs;
 	MapEntity map;
 	SettingsEntity settings;
+	PlaceEntity myCurrentPlace;
 	
 	public String getId() {
 		return id;
@@ -98,10 +98,10 @@ public class BoardEntity {
 	public void setMyNextPlace(String myNextPlace) {
 		this.myNextPlace = myNextPlace;
 	}
-	public String getMyCurrentPlace() {
+	public PlaceEntity getMyCurrentPlace() {
 		return myCurrentPlace;
 	}
-	public void setMyCurrentPlace(String myCurrentPlace) {
+	public void setMyCurrentPlace(PlaceEntity myCurrentPlace) {
 		this.myCurrentPlace = myCurrentPlace;
 	}
 	public int getCurPlayer() {

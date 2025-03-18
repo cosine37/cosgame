@@ -16,6 +16,7 @@ public class Map {
 	List<Integer> fateIds;
 	List<Player> jailPlayers;
 	List<String> areaColors;
+	List<String> areaNames;
 	int jailIndex;
 	int jailZone;
 	int bailCost;
@@ -34,6 +35,7 @@ public class Map {
 		doc.append("bailCost", bailCost);
 		doc.append("numDice", numDice);
 		doc.append("areaColors", areaColors);
+		doc.append("areaNames", areaNames);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -56,6 +58,7 @@ public class Map {
 		bailCost = doc.getInteger("bailCost", 0);
 		numDice = doc.getInteger("numDice", 1);
 		areaColors = (List<String>) doc.get("areaColors");
+		areaNames = (List<String>) doc.get("areaNames");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -240,5 +243,11 @@ public class Map {
 	}
 	public void setAreaColors(List<String> areaColors) {
 		this.areaColors = areaColors;
+	}
+	public List<String> getAreaNames() {
+		return areaNames;
+	}
+	public void setAreaNames(List<String> areaNames) {
+		this.areaNames = areaNames;
 	}
 }

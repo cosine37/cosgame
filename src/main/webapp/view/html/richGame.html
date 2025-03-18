@@ -34,8 +34,67 @@
 					<div ng-repeat="g in secondRow[0] track by $index" ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 
-				<td colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index">
-					Big big grid
+				<td colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index" style="padding:0px">
+					<div style="height: 602px; width: 964px; background-color: AntiqueWhite">
+						<div style="float:left; height: 200px; width: 200px; margin:20px; background-size:cover"
+							ng-style="gamedata.myCurrentPlace.detail.imgStyle">
+						</div>
+						<div style="padding-left: 220px;">
+							<div style="padding-top:20px;">
+								<div ng-style="gamedata.myCurrentPlace.detail.titleStyle" style="padding-bottom:5px;">
+									<span style="font-size:28px;">{{gamedata.myCurrentPlace.detail.title}}</span>
+									<span style="font-size:28px;float:right; padding-right: 20px">{{gamedata.myCurrentPlace.detail.areaName}}</span>
+								</div>
+							</div>
+							<div style="height: 10px;" ng-show="gamedata.myCurrentPlace.type==ESTATE"></div>
+							<div ng-show="gamedata.myCurrentPlace.type==ESTATE">
+								<table>
+									<tr>
+										<td style="width: 200px">
+											<span><b>地价:</b></span>
+											<span>${{gamedata.myCurrentPlace.cost}}</span>
+										</td>
+										<td style="width: 200px">
+											<span><b>拥有者:</b></span>
+											<span ng-show="gamedata.myCurrentPlace.ownerId==-1">-</span>
+											<span style="width: 200px;" ng-show="gamedata.myCurrentPlace.ownerId!=-1">{{gamedata.myCurrentPlace.ownerName}}</span>
+										</td>
+										<td style="width: 200px">
+											<span><b>路费:</b></span>
+											<span ng-show="gamedata.myCurrentPlace.ownerId==-1">-</span>
+											<span ng-show="gamedata.myCurrentPlace.ownerId!=-1 && gamedata.myCurrentPlace.area != UTILITYAREA">
+												${{gamedata.myCurrentPlace.rent}}
+											</span>
+											<span ng-show="gamedata.myCurrentPlace.ownerId!=-1 && gamedata.myCurrentPlace.area == UTILITYAREA">
+												${{gamedata.myCurrentPlace.rent}}&times;N
+											</span>
+										</td>
+										<td style="width: 200px">
+											<span><b>等级:</b></span>
+											<span ng-show="gamedata.myCurrentPlace.level==0">空地</span>
+											<span ng-show="gamedata.myCurrentPlace.level==1">一级</span>
+											<span ng-show="gamedata.myCurrentPlace.level==2">二级</span>
+											<span ng-show="gamedata.myCurrentPlace.level==3">三级</span>
+											<span ng-show="gamedata.myCurrentPlace.level==4">四级</span>
+											<span ng-show="gamedata.myCurrentPlace.level==5">五级</span>
+										</td>
+									</tr>
+								</table>
+
+							</div>
+							
+							<div style="height: 10px"></div>
+							<div ng-style="gamedata.myCurrentPlace.detail.descStyle" style="padding-right: 20px;">
+								{{gamedata.myCurrentPlace.detail.desc}}
+							</div>
+							<div ng-style="gamedata.myCurrentPlace.detail.descStyle" style="padding-right: 20px;">
+								{{gamedata.myCurrentPlace.detail.desc2}}
+							</div>
+						</div>
+						
+						
+					</div>
+					
 				</td>
 
 				<td class="grid-td">
@@ -75,18 +134,18 @@
 		</table>
 	</div>
 	<div>
-		<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace}}，现在不是你的回合</div>
+		<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace.name}}，现在不是你的回合</div>
 		<div ng-show="phase == ROLL && gamedata.inJail">你的回合开始，这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 			<button ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
 		</div>
-		<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace}}，你的回合开始，请选择一项：
+		<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace.name}}，你的回合开始，请选择一项：
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 			<button ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
 		</div>
 		<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
 			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
-		<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace}}，{{gamedata.myLandMsg}}，
+		<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace.name}}，{{gamedata.myLandMsg}}，
 			请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
 		<div ng-show="phase == ESCAPE">你掷了一个{{gamedata.lastRolled}}，
 			<span ng-show="gamedata.inJail == false">越狱成功！</span>
@@ -94,7 +153,7 @@
 			<span ng-show="gamedata.inJail && gamedata.jailRound == 3">因为这是你入狱的第三回合，请支付${{map.bailCost}}保释费出狱。</span>
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		</div>
-		<div ng-show="phase == UTILITYPHASE">你来到了{{gamedata.myCurrentPlace}}，需要掷一次骰子：
+		<div ng-show="phase == UTILITYPHASE">你来到了{{gamedata.myCurrentPlace.name}}，需要掷一次骰子：
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		</div>
 		<div ng-show="phase == STATIONPHASE">你可以移动到其他地点（移动后不能购买且不需支付路费）：

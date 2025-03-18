@@ -9,6 +9,7 @@ public class PlaceEntity {
 	String ownerName;
 	int type;
 	List<Integer> playersOn;
+	DetailEntity detail;
 	
 	// estate related
 	int level;
@@ -118,6 +119,12 @@ public class PlaceEntity {
 	}
 	public void setAreaStyle(Map<String, String> areaStyle) {
 		this.areaStyle = areaStyle;
+	}
+	public DetailEntity getDetail() {
+		return detail;
+	}
+	public void setDetail(DetailEntity detail) {
+		this.detail = detail;
 	}
 	
 }

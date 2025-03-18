@@ -123,7 +123,9 @@ public class Board {
 				entity.setPhase(p.getPhase());
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
-				entity.setMyCurrentPlace(p.myCurrentPlaceName());
+				if (map.getPlace(p.getPlaceIndex()) != null) {
+					entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
+				}
 				entity.setMyLandMsg(p.myLandMsg());
 				entity.setInJail(p.isInJail());
 				entity.setJailRound(p.getJailRound());
