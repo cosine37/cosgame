@@ -10,6 +10,9 @@ public class MapEntity {
 	int jailZone;
 	int bailCost;
 	int numDice;
+	String utilityName;
+	String stationName;
+	List<String> areaNames;
 	
 	public int getWidth() {
 		return width;
@@ -52,6 +55,24 @@ public class MapEntity {
 	}
 	public void setNumDice(int numDice) {
 		this.numDice = numDice;
+	}
+	public String getUtilityName() {
+		return utilityName;
+	}
+	public void setUtilityName(String utilityName) {
+		this.utilityName = utilityName;
+	}
+	public String getStationName() {
+		return stationName;
+	}
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
+	}
+	public List<String> getAreaNames() {
+		return areaNames;
+	}
+	public void setAreaNames(List<String> areaNames) {
+		this.areaNames = areaNames;
 	}
 	
 }

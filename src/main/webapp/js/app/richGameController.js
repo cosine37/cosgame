@@ -85,6 +85,25 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.JAIL = 6;
 		$scope.GOTOJAIL = 7;
 		
+		// For estate details
+		$scope.chosenEstateIndex = -1;
+		$scope.chosenEstate = null;
+		$scope.clickEstate = function(x){
+			if (x == $scope.chosenEstateIndex){
+				$scope.chosenEstateIndex = -1
+			} else {
+				$scope.chosenEstateIndex = x;
+				if (x>=$scope.map.places.length || x<0) $scope.chosenEstateIndex = -1
+			}
+			
+			if ($scope.chosenEstateIndex == -1){
+				$scope.chosenEstate = null;
+			} else {
+				$scope.chosenEstate = $scope.map.places[x];
+			}
+			
+		}
+		
 		setMapLayout = function(){
 			var i,j
 			$scope.bottomRow = []

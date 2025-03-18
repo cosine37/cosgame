@@ -7,7 +7,9 @@ public class PlaceEntity {
 	String name;
 	String desc;
 	String ownerName;
+	String areaName;
 	int type;
+	int id;
 	List<Integer> playersOn;
 	DetailEntity detail;
 	
@@ -125,6 +127,18 @@ public class PlaceEntity {
 	}
 	public void setDetail(DetailEntity detail) {
 		this.detail = detail;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 	
 }

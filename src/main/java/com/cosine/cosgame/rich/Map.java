@@ -21,6 +21,8 @@ public class Map {
 	int jailZone;
 	int bailCost;
 	int numDice;
+	String utilityName;
+	String stationName;
 	
 	Board board;
 	
@@ -36,6 +38,8 @@ public class Map {
 		doc.append("numDice", numDice);
 		doc.append("areaColors", areaColors);
 		doc.append("areaNames", areaNames);
+		doc.append("utilityName", utilityName);
+		doc.append("stationName", stationName);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -59,6 +63,8 @@ public class Map {
 		numDice = doc.getInteger("numDice", 1);
 		areaColors = (List<String>) doc.get("areaColors");
 		areaNames = (List<String>) doc.get("areaNames");
+		utilityName = doc.getString("utilityName");
+		stationName = doc.getString("stationName");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -85,6 +91,9 @@ public class Map {
 		entity.setJailZone(jailZone);
 		entity.setBailCost(bailCost);
 		entity.setNumDice(numDice);
+		entity.setStationName(stationName);
+		entity.setUtilityName(utilityName);
+		entity.setAreaNames(areaNames);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -249,5 +258,17 @@ public class Map {
 	}
 	public void setAreaNames(List<String> areaNames) {
 		this.areaNames = areaNames;
+	}
+	public String getUtilityName() {
+		return utilityName;
+	}
+	public void setUtilityName(String utilityName) {
+		this.utilityName = utilityName;
+	}
+	public String getStationName() {
+		return stationName;
+	}
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
 	}
 }

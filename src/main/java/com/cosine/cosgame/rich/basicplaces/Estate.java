@@ -65,6 +65,17 @@ public class Estate extends Place{
 		} else if (ownerId < board.getPlayers().size()){
 			entity.setOwnerName(board.getPlayers().get(ownerId).getName());
 		}
+		
+		String areaName = "";
+		if (area == Consts.AREA_UTILITY) {
+			areaName = board.getMap().getUtilityName();
+		} else if (area == Consts.AREA_STATION) {
+			areaName = board.getMap().getStationName();
+		} else {
+			areaName = board.getMap().getAreaNames().get(area);
+		}
+		entity.setAreaName(areaName);
+		
 		HashMap<String, String> areaStyle = new HashMap<>();
 		if (area < board.getMap().getAreaColors().size()) {
 			areaStyle.put("background-color", board.getMap().getAreaColors().get(area));

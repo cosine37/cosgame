@@ -1,4 +1,4 @@
-<div ng-show="g.type==ESTATE" class="grid-div">
+<div ng-show="g.type==ESTATE" class="grid-div" style="cursor:pointer" ng-click="clickEstate(g.id)">
 	<div style="height: 60px;">
 		<div ng-style="g.fontStyle">{{g.name}}</div>
 		<div style="font-size:16px" ng-show="g.ownerId==-1">${{g.cost}}</div>

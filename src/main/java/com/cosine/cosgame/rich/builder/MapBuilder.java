@@ -25,6 +25,8 @@ public class MapBuilder {
 		map.setBailCost(500);
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","maroon","darkgreen","red","darkviolet","orange","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setUtilityName("茶馆");
+		map.setStationName("游览车站");
 		int i;
 		for (i=0;i<n;i++){
 			Place p = new Empty(i, "地点"+i);
@@ -88,30 +90,52 @@ public class MapBuilder {
 				p.setLandMsg("你将立即入狱");
 				p.createDetail();
 			} else if (i == 11) {
-				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,1,new ArrayList<>(Arrays.asList(100,200)));
 				p.setFont("jnk", 18);
 				p.setImg("bubbleTea");
 				p.createDetail();
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
 			} else if (i == 26) {
-				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100)));
+				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,1,new ArrayList<>(Arrays.asList(100,200)));
 				p.setFont("jnk", 18);
 				p.setImg("bubbleTea");
 				p.createDetail();
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
 			} else if (i == 5) {
-				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
+				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,1,new ArrayList<>(Arrays.asList(500,1000)));
 				p.setFont("jnk", 18);
 				p.setImg("station");
 				p.createDetail();
+				p.getDetail().setImg("qingguo/xuedongxiang");
+				p.getDetail().setDesc("可移动至其他游览车站。经过可以触发被动效果的地点则会触发被动效果（如钱庄），到达后无法购买且不需要支付路费。"); 
+				//p.getDetail().setDesc2("雪洞巷位于半园以西，巷中建筑多为清式硬山造砖木结构。半园始建于明中，由唐荆川祖父唐贵所建，是当年“唐氏八宅”之一的贞和堂后花园。占地约为6亩，除筠星、易书、贞和、四并四堂外，还有一竹斋、分缘山房及廊轩亭榭等。园中凿有荷池，池畔置以湖石，叠石为山，亭台楼阁筑于池周。");
+				p.getDetail().setDesc2("雪洞巷位于顾孝子祠以西，巷中建筑多为清式硬山造砖木结构。顾孝子祠为清代纪念孝子顾寿南而建的专祠，门厅的阴阳鱼纹具有极高的艺术价值。根据阳湖县志记载，“顾寿南，字菊友。性至孝，父病，焚香祷于天，愿灭己寿算以代；母病，割股和药以进。父母竟愈，人以为孝感格天，一时齐称顾孝子。”祠后是清贵阳知府恽鸿仪故居。");
 			} else if (i == 21) {
-				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500)));
+				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,1,new ArrayList<>(Arrays.asList(500,1000)));
 				p.setFont("jnk", 18);
 				p.setImg("station");
 				p.createDetail();
+				p.getDetail().setImg("qingguo/sheyuanxiang");
+				p.getDetail().setDesc("可移动至其他游览车站。经过可以触发被动效果的地点则会触发被动效果（如钱庄），到达后无法购买且不需要支付路费。"); 
+				p.getDetail().setDesc2("涉园巷位于涉园以西，涉园是著名金融家和藏书家陶湘的故居，陶氏先祖名陶人群，明朝万历年间与常州名儒刘养心联姻后迁至常州，世居青果巷。复原后的涉园中建造了藏书阁，供游客阅览。");
 			}else if (i == 29) {
-				p = new Estate(i, "城隍庙戏楼", 6, 4000,200,3,new ArrayList<>(Arrays.asList(500,2250,5000,13500)));
+				p = new Estate(i, "城隍庙戏楼", 6, 4000,2000,3,new ArrayList<>(Arrays.asList(500,2250,5000,13500)));
+				p.setImg("qingguo/chenghuangmiaoxilou");
 				p.setFont("jnk", 18);
 				p.createDetail();
+				p.getDetail().setDesc("阳湖城隍庙戏楼位于青果巷，为阳湖县城隍庙附属建筑。建于清乾隆24年(1759年)，清同治、光绪年间扩建，1890年竣工。戏楼为歇山顶二层木结构，下层由麻石方柱四根支撑，内外三面皆有木雕。上屋后台为子楼三间，下层作出入口，有砖雕门框“歌舞”、“升平”题额各一方。常州城内原有3座城隍庙，阳湖县城隍庙戏楼是仅存的一座城隍庙戏楼。城隍是中国民间和道教信奉的守护地方城池之神，大多由有功于地方民众的名臣英雄充当。");
 			} 
+			else if (i == 8) {
+				p = new Estate(i, "礼和堂", 2, 3200,2000,3,new ArrayList<>(Arrays.asList(300,1800,4500,11000)));
+				p.setImg("qingguo/lihetang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("礼和堂 · 周有光故居");
+				p.getDetail().setDesc("原为唐荆川曾叔祖、明代画家唐世宁居住，在清朝末年被周有光先祖购得。周有光原名周耀平，笔名有光。青年和中年时期主要从事经济、金融工作，当过经济学教授，1955年开始专职从事语言文字研究。周有光是汉语拼音方案的主要制订者，并主持制订了《汉语拼音正词法基本规则》。");
+			}
+			
 			map.addPlace(p);
 		}
 		

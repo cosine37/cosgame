@@ -79,7 +79,7 @@ public class Detail {
 	
 	public void apply() {
 		title = place.getName();
-		desc = place.getDesc();
+		if (place.getDesc() != null && place.getDesc().length()>0) desc = place.getDesc() + "。";
 		img = place.getImg();
 		if (place.getType() == Consts.PLACE_ESTATE) {
 			Estate e = (Estate) place;

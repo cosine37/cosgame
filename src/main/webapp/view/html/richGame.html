@@ -34,12 +34,12 @@
 					<div ng-repeat="g in secondRow[0] track by $index" ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 
-				<td colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index" style="padding:0px">
+				<td id="central-grid" colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index" style="padding:0px">
 					<div style="height: 602px; width: 964px; background-color: AntiqueWhite">
-						<div style="float:left; height: 200px; width: 200px; margin:20px; background-size:cover"
+						<div style="float:left; height: 250px; width: 250px; margin:20px; background-size:cover"
 							ng-style="gamedata.myCurrentPlace.detail.imgStyle">
 						</div>
-						<div style="padding-left: 220px;">
+						<div style="padding-left: 270px;">
 							<div style="padding-top:20px;">
 								<div ng-style="gamedata.myCurrentPlace.detail.titleStyle" style="padding-bottom:5px;">
 									<span style="font-size:28px;">{{gamedata.myCurrentPlace.detail.title}}</span>
@@ -50,16 +50,16 @@
 							<div ng-show="gamedata.myCurrentPlace.type==ESTATE">
 								<table>
 									<tr>
-										<td style="width: 200px">
-											<span><b>地价:</b></span>
-											<span>${{gamedata.myCurrentPlace.cost}}</span>
-										</td>
-										<td style="width: 200px">
+										<td style="width: 280px">
 											<span><b>拥有者:</b></span>
 											<span ng-show="gamedata.myCurrentPlace.ownerId==-1">-</span>
 											<span style="width: 200px;" ng-show="gamedata.myCurrentPlace.ownerId!=-1">{{gamedata.myCurrentPlace.ownerName}}</span>
 										</td>
-										<td style="width: 200px">
+										<td style="width: 160px">
+											<span><b>地价:</b></span>
+											<span>${{gamedata.myCurrentPlace.cost}}</span>
+										</td>
+										<td style="width: 160px">
 											<span><b>路费:</b></span>
 											<span ng-show="gamedata.myCurrentPlace.ownerId==-1">-</span>
 											<span ng-show="gamedata.myCurrentPlace.ownerId!=-1 && gamedata.myCurrentPlace.area != UTILITYAREA">
@@ -70,28 +70,153 @@
 											</span>
 										</td>
 										<td style="width: 200px">
-											<span><b>等级:</b></span>
-											<span ng-show="gamedata.myCurrentPlace.level==0">空地</span>
-											<span ng-show="gamedata.myCurrentPlace.level==1">一级</span>
-											<span ng-show="gamedata.myCurrentPlace.level==2">二级</span>
-											<span ng-show="gamedata.myCurrentPlace.level==3">三级</span>
-											<span ng-show="gamedata.myCurrentPlace.level==4">四级</span>
-											<span ng-show="gamedata.myCurrentPlace.level==5">五级</span>
+											<div ng-show="gamedata.myCurrentPlace.area<100">
+												<span><b>等级:</b></span>
+												<span ng-show="gamedata.myCurrentPlace.level==0">空地</span>
+												<span ng-show="gamedata.myCurrentPlace.level==1">一级</span>
+												<span ng-show="gamedata.myCurrentPlace.level==2">二级</span>
+												<span ng-show="gamedata.myCurrentPlace.level==3">三级</span>
+												<span ng-show="gamedata.myCurrentPlace.level==4">四级</span>
+												<span ng-show="gamedata.myCurrentPlace.level==5">五级</span>
+											</div>
+											
 										</td>
 									</tr>
 								</table>
-
 							</div>
 							
 							<div style="height: 10px"></div>
 							<div ng-style="gamedata.myCurrentPlace.detail.descStyle" style="padding-right: 20px;">
 								{{gamedata.myCurrentPlace.detail.desc}}
 							</div>
+							<div style="height: 10px;"></div>
 							<div ng-style="gamedata.myCurrentPlace.detail.descStyle" style="padding-right: 20px;">
 								{{gamedata.myCurrentPlace.detail.desc2}}
 							</div>
 						</div>
-						
+						<div style="clear:both"></div>
+						<div>
+							<div></div>
+							<div style="float:right; padding:20px; padding-top:120px; width:240px;height:312px;background-color:slategrey;color:white; text-align:center" 
+								ng-show="chosenEstateIndex == -1">
+								可点击地产格查看细节。点击与显示的地产相同的地产格会关闭地产细节。
+							</div>
+							<div style="float:right; width:240px;height:312px; background-color:white;" ng-show="chosenEstateIndex != -1">
+								<div ng-style="chosenEstate.areaStyle" style="padding:5px;padding-bottom: 7px;text-align:center">
+									<span ng-style="{'font-family': chosenEstate.fontStyle['font-family']}" style="color:white; font-size:23px"
+										ng-show="chosenEstate.area<100">{{chosenEstate.detail.title}}</span>
+									<span ng-style="{'font-family': chosenEstate.fontStyle['font-family']}" style=" font-size:23px"
+										ng-show="chosenEstate.area>100">{{chosenEstate.detail.title}}</span>
+								</div>
+								<div style="height:100px; width:100px;background-size:cover; margin:10px; float:left" ng-show="chosenEstate.area<100"
+									ng-style="chosenEstate.imgStyle">
+								</div>
+								<div style="height:70px; width:70px;background-size:cover; margin:10px; float:left" ng-show="chosenEstate.area>100"
+									ng-style="chosenEstate.imgStyle">
+								</div>
+								<div style="float:left; margin-top:30px" ng-show="chosenEstate.area<100">
+									<table>
+										<tr><td style="text-align:right; font-weight:bold">地价：</td><td>${{chosenEstate.cost}}</td></tr>
+										<tr ng-show="chosenEstate.area<100">
+											<td style="text-align:right; font-weight:bold">升级：</td>
+											<td>${{chosenEstate.upgradeCost}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.area>100">
+											<td style="text-align:center; font-weight:bold" colspan="2">无法升级</td>
+										</tr>
+									</table>
+								</div>
+								<div style="float:left; margin-top:10px; margin-left: 20px" ng-show="chosenEstate.area>100">
+									<table>
+										<tr><td style="text-align:right; font-weight:bold">地价：</td><td>${{chosenEstate.cost}}</td></tr>
+										<tr ng-show="chosenEstate.area<100">
+											<td style="text-align:right; font-weight:bold">升级：</td>
+											<td>${{chosenEstate.upgradeCost}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.area>100">
+											<td style="text-align:center; font-weight:bold" colspan="2">无法升级</td>
+										</tr>
+									</table>
+								</div>
+								<div style="clear:both; text-align:center;width:240px; font-size:18px; font-weight:bold">路费</div>
+								<div ng-show="chosenEstate.area<100"  style="font-size:15px;">
+									<table>
+										<tr>
+											<td style="text-align:right; width: 60px;"><b>空地：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[0]}}</td>
+											<td style="text-align:right; width: 60px;"><b>一级：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[1]}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.maxLevel>=3">
+											<td style="text-align:right; width: 60px;"><b>二级：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[2]}}</td>
+											<td style="text-align:right; width: 60px;"><b>三级：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[3]}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.maxLevel>=5">
+											<td style="text-align:right; width: 60px;"><b>四级：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[4]}}</td>
+											<td style="text-align:right; width: 60px;"><b>五级：</b></td>
+											<td style="text-align:left; width: 60px;">${{chosenEstate.rents[5]}}</td>
+										</tr>
+									</table>
+								</div>
+								<div ng-show="chosenEstate.area == UTILITYAREA" style="font-size:13px;">
+									<div style="width:240px; text-align:center">到达后掷一次骰子</div>
+									<table>
+										<tr>
+											<td style="text-align:right; width: 120px;"><b>拥有一个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 120px;">${{chosenEstate.rents[0]}}&times;所掷之数</td>
+										</tr>
+										<tr>
+											<td style="text-align:right; width: 120px;"><b>拥有两个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 120px;">${{chosenEstate.rents[1]}}&times;所掷之数</td>
+										</tr>
+										<tr ng-show="chosenEstate.rents.length>2">
+											<td style="text-align:right; width: 120px;"><b>拥有三个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 120px;">${{chosenEstate.rents[2]}}&times;所掷之数</td>
+										</tr>
+										<tr ng-show="chosenEstate.rents.length>3">
+											<td style="text-align:right; width: 120px;"><b>拥有四个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 120px;">${{chosenEstate.rents[3]}}&times;所掷之数</td>
+										</tr>
+									</table>
+								</div>
+								<div ng-show="chosenEstate.area == STATIONAREA" style="font-size:13px;">
+									<table>
+										<tr>
+											<td style="text-align:right; width: 150px;"><b>拥有一个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 90px;">${{chosenEstate.rents[0]}}</td>
+										</tr>
+										<tr>
+											<td style="text-align:right; width: 150px;"><b>拥有两个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 90px;">${{chosenEstate.rents[1]}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.rents.length>2">
+											<td style="text-align:right; width: 150px;"><b>拥有三个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 90px;">${{chosenEstate.rents[2]}}</td>
+										</tr>
+										<tr ng-show="chosenEstate.rents.length>3">
+											<td style="text-align:right; width: 150px;"><b>拥有四个{{chosenEstate.areaName}}：</b></td>
+											<td style="text-align:left; width: 90px;">${{chosenEstate.rents[3]}}</td>
+										</tr>
+									</table>
+									<div style="width:240px; text-align:center">可移动到其他{{chosenEstate.areaName}}</div>
+								</div>
+								<div ng-show="chosenEstate.area<100">
+									<div ng-show="chosenEstate.maxLevel<5" style="width: 240px;margin-top: 30px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
+								</div>
+								<div ng-show="chosenEstate.area == UTILITYAREA">
+									<div ng-show="chosenEstate.maxLevel<2" style="width: 240px;margin-top: 45px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
+								</div>
+								<div ng-show="chosenEstate.area == STATIONAREA">
+									<div ng-show="chosenEstate.maxLevel<2" style="width: 240px;margin-top: 45px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
+								</div>
+							</div>
+						</div>
 						
 					</div>
 					

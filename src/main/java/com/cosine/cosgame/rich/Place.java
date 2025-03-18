@@ -69,6 +69,7 @@ public abstract class Place {
 	}
 	public PlaceEntity toPlaceEntity() {
 		PlaceEntity entity = new PlaceEntity();
+		entity.setId(id);
 		entity.setType(type);
 		entity.setName(name);
 		entity.setDesc(this.getDesc());
@@ -96,6 +97,7 @@ public abstract class Place {
 		this.name = name;
 		this.type = type;
 		
+		desc = "";
 		playersOn = new ArrayList<>();
 		detail = new Detail(this);
 	}
