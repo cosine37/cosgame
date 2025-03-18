@@ -46,9 +46,26 @@ public class Factory {
 	
 	public static Avatar genAvatar(int id) {
 		Avatar avatar = null;
-		if (id == 1) {
-			avatar = new Avatar(1,"蓝猫");
+		if (id == -1) {
+			avatar = new Avatar(9999,"未解锁");
+		} else if (id == 0) {
+			avatar = new Avatar(0,"蓝猫");
+		} else if (id == 1) {
+			avatar = new Avatar(1,"淘气");
+		} else if (id == 2) {
+			avatar = new Avatar(2,"菲菲");
+		} else if (id == 3) {
+			avatar = new Avatar(3,"咖喱");
+		} else if (id == 4) {
+			avatar = new Avatar(4,"肥仔");
+		} else if (id == 5) {
+			avatar = new Avatar(5,"鸡大婶");
+		} else if (id == 6) {
+			avatar = new Avatar(6,"甜妞");
+		} else if (id == 7) {
+			avatar = new Avatar(7,"啦啦");
 		}
+		
 		return avatar;
 	}
 }

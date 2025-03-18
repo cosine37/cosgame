@@ -22,9 +22,16 @@
 	</div>
 	<div>
 		<div ng-repeat="player in players track by $index">
-			{{player.name}}
-			<button ng-show="player.index != firstPlayer">设为初始</button>
-			<span ng-show="player.index == firstPlayer">初始玩家</span>
+			<table>
+				<tr>
+					<td><div style="height:80px; width:80px;" ng-style="player.avatar.avatarStyle"></div></td>
+					<td>{{player.name}}</td>
+					<td>
+						<button ng-show="player.index != firstPlayer && lord == username">设为初始</button>
+						<span ng-show="player.index == firstPlayer">初始玩家</span>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	<div>
@@ -51,6 +58,16 @@
 			<button ng-disabled="endCondition==58000" ng-click="endCondition=58000">58同城</button>
 		</div>
 		
+	</div>
+	
+	<div>
+		<div>
+			<div style="float:left;width: 80px; text-align:center;" ng-repeat="entity in accountInfo.avatarEntities track by $index">
+				<div ng-style="entity.avatarStyle" style="height:80px; width: 80px;cursor:pointer" ng-click="chooseAvatar($index)"></div>
+				<div style="clear:both"></div>
+				<div>{{entity.name}}</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

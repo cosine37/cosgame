@@ -95,5 +95,20 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 			$scope.getBoard();
 		});
 		
+		$scope.getAccountInfo = function(){
+			$http.get('/rich/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
+		
+		$scope.chooseAvatar = function(x){
+			var data = {"avatarId" : x}
+			$http({url: "/rich/chooseavatar", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo();
+				$scope.getBoard();
+			});
+		}
+		
+		$scope.getAccountInfo()
 		
 }]);

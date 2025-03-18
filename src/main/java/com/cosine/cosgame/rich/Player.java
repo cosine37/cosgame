@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.account.Account;
 import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.AvatarEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
@@ -24,7 +25,6 @@ public class Player {
 	protected boolean inJail;
 	protected boolean turnEnd;
 	protected int jailRound;
-	protected Avatar avatar;
 	
 	protected List<Card> hand;
 	protected List<Card> deck;
@@ -53,11 +53,6 @@ public class Player {
 		doc.append("inJail", inJail);
 		doc.append("jailRound", jailRound);
 		doc.append("turnEnd", turnEnd);
-		if (avatar == null) {
-			doc.append("avatar", -1);
-		} else {
-			doc.append("avatar", avatar.getId());
-		}
 		
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
@@ -94,7 +89,6 @@ public class Player {
 		jailRound = doc.getInteger("jailRound", 0);
 		turnEnd = doc.getBoolean("turnEnd", turnEnd);
 		int avatarId = doc.getInteger("avatar", -1);
-		avatar = Factory.genAvatar(avatarId);
 		List<Integer> handDocList = (List<Integer>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -131,25 +125,31 @@ public class Player {
 		entity.setOwned(owned);
 		entity.setInJail(inJail);
 		entity.setJailRound(jailRound);
-		AvatarEntity avatarEntity = avatar.toAvatarEntity();
-		if (board.getMap().getPlace(placeIndex) != null) {
-			int n = board.getMap().getPlace(placeIndex).getPlayersOn().size();
-			if (n == 1) {
-				avatarEntity.getAvatarStyle().put("margin-left", "40px");
-			} else if (n == 2) {
-				avatarEntity.getAvatarStyle().put("margin-left", "13px");
-			} else if (n == 3) {
-				avatarEntity.getAvatarStyle().put("margin-left", "0px");
-			} else if (n == 4) {
-				if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
+		
+		Account account = new Account();
+		account.getFromDB(name);
+		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
+		if (avatar != null) {
+			AvatarEntity avatarEntity = avatar.toAvatarEntity();
+			if (board.getMap().getPlace(placeIndex) != null) {
+				int n = board.getMap().getPlace(placeIndex).getPlayersOn().size();
+				if (n == 1) {
+					avatarEntity.getAvatarStyle().put("margin-left", "40px");
+				} else if (n == 2) {
+					avatarEntity.getAvatarStyle().put("margin-left", "13px");
+				} else if (n == 3) {
 					avatarEntity.getAvatarStyle().put("margin-left", "0px");
-				} else {
-					avatarEntity.getAvatarStyle().put("margin-left", "-14px");
+				} else if (n == 4) {
+					if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
+						avatarEntity.getAvatarStyle().put("margin-left", "0px");
+					} else {
+						avatarEntity.getAvatarStyle().put("margin-left", "-14px");
+					}
 				}
 			}
+			entity.setAvatar(avatarEntity);
 		}
 		
-		entity.setAvatar(avatarEntity);
 		return entity;
 	}
 	
@@ -157,7 +157,6 @@ public class Player {
 		hand = new ArrayList<>();
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
-		avatar = Factory.genAvatar(1);
 	}
 	
 	public void addMoney(int x) {

@@ -133,6 +133,20 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 			$scope.getAllBoards();
 		});
 		
+		$scope.getAccountInfo = function(){
+			$http.get('/rich/accountinfo').then(function(response){
+				$scope.accountInfo = response.data;
+			});
+		}
+		
+		$scope.chooseAvatar = function(x){
+			var data = {"avatarId" : x}
+			$http({url: "/rich/chooseavatar", method: "POST", params: data}).then(function(response){
+				$scope.getAccountInfo()
+			});
+		}
+		
+		$scope.getAccountInfo()
 		
 	
 }]);

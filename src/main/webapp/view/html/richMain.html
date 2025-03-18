@@ -37,7 +37,10 @@
 				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
 				    </li>
 				    <li class="nav-item">
-				      <a class="nav-link" data-toggle="tab" href="#rulesstab" ng-click="hideTablesTab()">规则</a>
+				      <a class="nav-link" data-toggle="tab" href="#accounttab" ng-click="hideTablesTab()">头像</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
 				    </li>
 
 				  </ul>
@@ -72,7 +75,21 @@
 						</tr>
 					</table>
 				</div>
-
+				
+				<div id="accounttab" class="content container tab-pane">
+					<h2><b>个人中心</b></h1>
+					<h4>选择的头像：{{accountInfo.chosenAvatarEntity.name}}</h4>
+					<div ng-style="accountInfo.chosenAvatarEntity.avatarStyle" style="height: 150px; width: 150px;">
+					</div>
+					<h4>拥有的头像：</h4>
+					<div>
+						<div style="float:left;width: 100px; text-align:center;" ng-repeat="entity in accountInfo.avatarEntities track by $index">
+							<div ng-style="entity.avatarStyle" style="height:100px; width: 100px;cursor:pointer" ng-click="chooseAvatar($index)"></div>
+							<div style="clear:both"></div>
+							<div>{{entity.name}}</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

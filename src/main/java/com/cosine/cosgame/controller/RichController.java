@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosine.cosgame.rich.Meta;
 import com.cosine.cosgame.rich.entity.BoardEntity;
+import com.cosine.cosgame.rich.account.Account;
+import com.cosine.cosgame.rich.account.entity.AccountEntity;
 import com.cosine.cosgame.rich.Board;
 import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.util.StringEntity;
@@ -147,6 +149,34 @@ public class RichController {
 		} else {
 			board.setId("NE");
 		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	// account handles
+	@RequestMapping(value="/rich/accountinfo", method = RequestMethod.GET)
+	public ResponseEntity<AccountEntity> accountInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		AccountEntity entity = account.toAccountEntity();
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
+	@RequestMapping(value="/rich/chooseavatar", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> chooseAvatar(HttpServletRequest request, @RequestParam int avatarId) {
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		Account account = new Account();
+		account.getFromDB(username);
+		account.chooseAvatar(avatarId);
+		account.updateAccountDB(username);
+		StringEntity entity = new StringEntity();
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
