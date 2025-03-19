@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -17,12 +18,15 @@ public class Map {
 	List<Player> jailPlayers;
 	List<String> areaColors;
 	List<String> areaNames;
+	List<String> cornerNames;
 	int jailIndex;
 	int jailZone;
 	int bailCost;
 	int numDice;
 	String utilityName;
 	String stationName;
+	String name;
+	String nameFont;
 	
 	Board board;
 	
@@ -40,6 +44,9 @@ public class Map {
 		doc.append("areaNames", areaNames);
 		doc.append("utilityName", utilityName);
 		doc.append("stationName", stationName);
+		doc.append("cornerNames", cornerNames);
+		doc.append("name", name);
+		doc.append("nameFont", nameFont);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -65,6 +72,9 @@ public class Map {
 		areaNames = (List<String>) doc.get("areaNames");
 		utilityName = doc.getString("utilityName");
 		stationName = doc.getString("stationName");
+		cornerNames = (List<String>) doc.get("cornerNames");
+		name = doc.getString("name");
+		nameFont = doc.getString("nameFont");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -94,11 +104,16 @@ public class Map {
 		entity.setStationName(stationName);
 		entity.setUtilityName(utilityName);
 		entity.setAreaNames(areaNames);
+		entity.setCornerNames(cornerNames);
+		entity.setName(name);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
 		}
 		entity.setJailPlayersIndex(jailPlayerIndexes);
+		HashMap<String, String> fontStyle = new HashMap<>();
+		fontStyle.put("font-family", nameFont);
+		entity.setNameStyle(fontStyle);
 		return entity;
 	}
 	
@@ -270,5 +285,23 @@ public class Map {
 	}
 	public void setStationName(String stationName) {
 		this.stationName = stationName;
+	}
+	public List<String> getCornerNames() {
+		return cornerNames;
+	}
+	public void setCornerNames(List<String> cornerNames) {
+		this.cornerNames = cornerNames;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNameFont() {
+		return nameFont;
+	}
+	public void setNameFont(String nameFont) {
+		this.nameFont = nameFont;
 	}
 }

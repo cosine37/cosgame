@@ -131,25 +131,28 @@ public class Player {
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
 		if (avatar != null) {
 			AvatarEntity avatarEntity = avatar.toAvatarEntity();
-			if (board.getMap().getPlace(placeIndex) != null) {
-				int n = board.getMap().getPlace(placeIndex).getPlayersOn().size();
-				if (n == 1) {
-					avatarEntity.getAvatarStyle().put("margin-left", "40px");
-				} else if (n == 2) {
-					avatarEntity.getAvatarStyle().put("margin-left", "13px");
-				} else if (n == 3) {
+			int n = -1;
+			if (inJail) {
+				n = board.getMap().getJailPlayers().size();
+			} else if (board.getMap().getPlace(placeIndex) != null) {
+				n = board.getMap().getPlace(placeIndex).getPlayersOn().size();
+			}
+			if (n == 1) {
+				avatarEntity.getAvatarStyle().put("margin-left", "40px");
+			} else if (n == 2) {
+				avatarEntity.getAvatarStyle().put("margin-left", "13px");
+			} else if (n == 3) {
+				avatarEntity.getAvatarStyle().put("margin-left", "0px");
+			} else if (n == 4) {
+				if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
 					avatarEntity.getAvatarStyle().put("margin-left", "0px");
-				} else if (n == 4) {
-					if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
-						avatarEntity.getAvatarStyle().put("margin-left", "0px");
-					} else {
-						avatarEntity.getAvatarStyle().put("margin-left", "-14px");
-					}
+				} else {
+					avatarEntity.getAvatarStyle().put("margin-left", "-14px");
 				}
 			}
 			entity.setAvatar(avatarEntity);
 		}
-		
+		entity.setAvatarOrigin(avatar.toAvatarEntity());
 		return entity;
 	}
 	

@@ -13,6 +13,7 @@ public class PlayerEntity {
 	boolean inJail;
 	boolean confirmed;
 	AvatarEntity avatar;
+	AvatarEntity avatarOrigin;
 	
 	List<Integer> owned;
 
@@ -81,6 +82,12 @@ public class PlayerEntity {
 	}
 	public void setAvatar(AvatarEntity avatar) {
 		this.avatar = avatar;
+	}
+	public AvatarEntity getAvatarOrigin() {
+		return avatarOrigin;
+	}
+	public void setAvatarOrigin(AvatarEntity avatarOrigin) {
+		this.avatarOrigin = avatarOrigin;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class MapEntity {
 	int width;
@@ -13,6 +14,9 @@ public class MapEntity {
 	String utilityName;
 	String stationName;
 	List<String> areaNames;
+	List<String> cornerNames;
+	Map<String, String> nameStyle;
+	String name;
 	
 	public int getWidth() {
 		return width;
@@ -73,6 +77,24 @@ public class MapEntity {
 	}
 	public void setAreaNames(List<String> areaNames) {
 		this.areaNames = areaNames;
+	}
+	public List<String> getCornerNames() {
+		return cornerNames;
+	}
+	public void setCornerNames(List<String> cornerNames) {
+		this.cornerNames = cornerNames;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Map<String, String> getNameStyle() {
+		return nameStyle;
+	}
+	public void setNameStyle(Map<String, String> nameStyle) {
+		this.nameStyle = nameStyle;
 	}
 	
 }

@@ -31,6 +31,11 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		ws.onOpen(function() {
 			heartCheck.start();
 		});
+		
+		adjustLogs = function(logElementId){
+			var logcontent = document.getElementById(logElementId);
+			logcontent.scrollTop = logcontent.scrollHeight;
+		}
 	
 		$scope.goto = function(d){
 			var x = "https://" + $window.location.host;
@@ -127,6 +132,16 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			//alert(Json.stringify($scope.restRows[0]))
 		}
 		
+		setPlayerStyles = function(){
+			for (i=0;i<$scope.players.length;i++){
+				if (i==$scope.curPlayer){
+					$scope.players[i].curStyle={"background-color": "yellow"}
+				} else {
+					$scope.players[i].curStyle={}
+				}
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/rich/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -143,9 +158,15 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.lord = response.data.lord;
 				$scope.players = response.data.players;
 				$scope.logs = response.data.logs;
+				$scope.curPlayer = response.data.curPlayer;
 				
 				$scope.map = response.data.map;
 				setMapLayout();
+				setPlayerStyles();
+				
+				$http.post('/citadelsgame/empty').then(function(response){
+					adjustLogs("log-zone")
+				});
 				//$scope.$apply()
 			});
 		}

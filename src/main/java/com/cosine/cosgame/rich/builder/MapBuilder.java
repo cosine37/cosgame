@@ -17,6 +17,8 @@ public class MapBuilder {
 		final int n = (height+width-2)*2;
 		
 		Map map = new Map();
+		map.setName("青果巷");
+		map.setNameFont("jnk");
 		map.setHeight(height);
 		map.setWidth(width);
 		map.setNumDice(1);
@@ -25,6 +27,7 @@ public class MapBuilder {
 		map.setBailCost(500);
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","maroon","darkgreen","red","darkviolet","orange","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		map.setUtilityName("茶馆");
 		map.setStationName("游览车站");
 		int i;
