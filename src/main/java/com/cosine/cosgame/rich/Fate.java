@@ -1,5 +1,7 @@
 package com.cosine.cosgame.rich;
 
+import java.util.HashMap;
+
 public class Fate {
 	int id;
 	int type;
@@ -24,7 +26,6 @@ public class Fate {
 			p.goToJail();
 		}
 	}
-	
 	public int getId() {
 		return id;
 	}

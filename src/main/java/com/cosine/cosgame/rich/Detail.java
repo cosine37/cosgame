@@ -50,7 +50,19 @@ public class Detail {
 		entity.setExtras(extras);
 		
 		HashMap<String, String> imgStyle = new HashMap<>();
-		imgStyle.put("background-image", "url(/image/Rich/" + img + ".png)");
+		if (place.getType() == Consts.PLACE_FATE) {
+			int lastFateId = place.getBoard().getLastFateId();
+			Fate fate = Factory.genFate(lastFateId);
+			if (fate != null) {
+				imgStyle.put("background-image", "url(/image/Rich/fate/" + lastFateId + ".png)");
+				entity.setDesc(fate.getContent());
+			} else {
+				imgStyle.put("background-image", "url(/image/Rich/" + img + ".png)");
+				entity.setDesc("下次又会发生什么呢？");
+			}
+		} else {
+			imgStyle.put("background-image", "url(/image/Rich/" + img + ".png)");
+		}
 		entity.setImgStyle(imgStyle);
 		
 		String areaName = "";

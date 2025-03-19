@@ -37,9 +37,9 @@ public class Factory {
 		if (id == 1) {
 			return new Fate(1,Consts.FATE_ADD,100,"在路边捡到$100。","p在路边捡到了$100");
 		} else if (id == 2) {
-			return new Fate(2,Consts.FATE_LOSE,200,"在景区内随地吐痰，罚款$200。","p因为在景区内随地吐痰，被罚款$200");
+			return new Fate(2,Consts.FATE_LOSE,200,"对着警察吐痰，罚款$200。","p因为对着警察吐痰，被罚款$200");
 		} else if (id == 3) {
-			return new Fate(2,Consts.FATE_GOTOJAIL,0,"酒后大闹景区，立即入狱。","p因为喝酒闹事，进入监狱");
+			return new Fate(3,Consts.FATE_GOTOJAIL,0,"酒后闹事，立即入狱。","p因为喝酒闹事，被抓入监狱");
 		}
 		return fate;
 	}

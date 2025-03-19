@@ -60,6 +60,7 @@ public class MapBuilder {
 				p.setFont("jnk", 20);
 				p.setLandMsg("无事发生");
 				p.createDetail();
+				p.getDetail().setDesc("现在就是一个平平无奇的停车场，未来这一格可能有别的功效？");
 			} else if (i == 1) {
 				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
 				p.setImg("qingguo/zhuochuqiao");
@@ -83,12 +84,15 @@ public class MapBuilder {
 				p.setFont("jnk", 22);
 				p.setLandMsg("你来到了监狱大门口，但只是路过");
 				p.createDetail();
+				p.getDetail().setDesc("只是路过而已~");
 			} else if (i == 24) {
 				p = new GoToJail(i, "入狱");
 				p.setImg("goToJail");
 				p.setFont("jnk", 22);
 				p.setLandMsg("你将立即入狱");
 				p.createDetail();
+				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。");
+				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 			} else if (i == 11) {
 				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,1,new ArrayList<>(Arrays.asList(100,200)));
 				p.setFont("jnk", 18);

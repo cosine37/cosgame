@@ -2,13 +2,16 @@ package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.entity.BoardEntity;
+import com.cosine.cosgame.rich.entity.PlaceEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
 
@@ -124,7 +127,15 @@ public class Board {
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
 				if (map.getPlace(p.getPlaceIndex()) != null) {
-					entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
+					if (p.isInJail()) {
+						InJail inJail = new InJail(0,"监狱");
+						inJail.setBoard(this);
+						entity.setMyCurrentPlace(inJail.toPlaceEntity());
+					} else {
+						entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
+					}
+					
+					
 				}
 				entity.setMyLandMsg(p.myLandMsg());
 				entity.setInJail(p.isInJail());
