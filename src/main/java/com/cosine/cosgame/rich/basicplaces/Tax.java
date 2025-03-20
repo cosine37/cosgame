@@ -41,6 +41,9 @@ public class Tax extends Place{
 		p.loseMoney(rate);
 		
 		board.getLogger().logPlayerLoseMoney(p, rate);
+		
+		board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+		board.setBroadcastMsg(p.getName() + "支付了" + name + "$" + rate + "。");
 	}
 
 	public int getRate() {

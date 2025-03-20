@@ -20,6 +20,9 @@ public class GoToJail extends Place{
 	public void stepOn(Player p) {
 		p.goToJail();
 		board.getLogger().logGoToJail(p);
+		
+		board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+		board.setBroadcastMsg(p.getName() + "被送入了监狱！");
 	}
 	
 }

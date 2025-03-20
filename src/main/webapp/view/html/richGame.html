@@ -117,7 +117,21 @@
 						</div>
 						<div style="clear:both"></div>
 						<div>
-							<div></div>
+							<div style="float:left; width: 724">
+								<div style="padding-top: 20px;">
+									<div style="padding-left: 20px"><b>当前轮次：</b>{{gamedata.round}}</div>
+									<div style="padding-left: 20px"><b>游戏结束条件：</b></div>
+								</div>
+								
+								<div ng-show="gamedata.broadcastMsg != null && gamedata.broadcastMsg != ''" style="padding-left: 20px; padding-top:30px">
+									<table>
+										<tr>
+											<td><div ng-style="gamedata.broadcastImgStyle" style="height:120px; width:120px;background-size:cover"></div></td>
+											<td><div style="padding-left: 10px; font-family:'tyh'; font-size: 18px;">{{gamedata.broadcastMsg}}</div></td>
+										</tr>
+									</table>
+								</div>
+							</div>
 							<div style="float:right; padding:20px; padding-top:120px; width:240px;height:312px;background-color:slategrey;color:white; text-align:center" 
 								ng-show="chosenEstateIndex == -1">
 								可点击地产格查看细节。点击与显示的地产相同的地产格会关闭地产细节。

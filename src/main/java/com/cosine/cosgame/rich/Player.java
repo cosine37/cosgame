@@ -25,6 +25,7 @@ public class Player {
 	protected boolean inJail;
 	protected boolean turnEnd;
 	protected int jailRound;
+	protected int avatarId;
 	
 	protected List<Card> hand;
 	protected List<Card> deck;
@@ -53,6 +54,7 @@ public class Player {
 		doc.append("inJail", inJail);
 		doc.append("jailRound", jailRound);
 		doc.append("turnEnd", turnEnd);
+		doc.append("avatarId", avatarId);
 		
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
@@ -88,7 +90,15 @@ public class Player {
 		inJail = doc.getBoolean("inJail", false);
 		jailRound = doc.getInteger("jailRound", 0);
 		turnEnd = doc.getBoolean("turnEnd", turnEnd);
-		int avatarId = doc.getInteger("avatar", -1);
+		avatarId = doc.getInteger("avatarId", -1);
+		if (avatarId == -1) {
+			Account account = new Account();
+			account.getFromDB(name);
+			Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
+			if (avatar != null) {
+				avatarId = avatar.getId();
+			}
+		}
 		List<Integer> handDocList = (List<Integer>)doc.get("hand");
 		hand = new ArrayList<>();
 		for (i=0;i<handDocList.size();i++){
@@ -282,15 +292,24 @@ public class Player {
 					board.getLogger().logEscapeSuccess(this);
 					phase = Consts.PHASE_ESCAPE;
 					outOfJail();
+					
+					board.setBroadcastImg("dice/"+rollDisplay);
+					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
 				} else {
 					board.getLogger().logEscapeFail(this);
 					phase = Consts.PHASE_ESCAPE;
+					
+					board.setBroadcastImg("dice/"+rollDisplay);
+					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，越狱失败！");
 				}
 			} else { // regular roll and move
 				board.roll();
 				phase = Consts.PHASE_MOVE;
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
+				
+				board.setBroadcastImg("dice/"+rollDisplay);
+				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "。");
 			}
 			
 		} else if (option == 1) {
@@ -299,6 +318,9 @@ public class Player {
 					loseMoney(board.getMap().getBailCost());
 					outOfJail();
 					board.getLogger().logBait(this, board.getMap().getBailCost());
+					
+					board.setBroadcastImg("avatar/head_"+avatarId);
+					board.setBroadcastMsg(name + "花费了$500把自己保释了。");
 				}
 			} else {
 				
@@ -315,15 +337,24 @@ public class Player {
 					board.getLogger().logEscapeSuccess(this);
 					phase = Consts.PHASE_ESCAPE;
 					outOfJail();
+					
+					board.setBroadcastImg("dice/"+rollDisplay);
+					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
 				} else {
 					board.getLogger().logEscapeFail(this);
 					phase = Consts.PHASE_ESCAPE;
+					
+					board.setBroadcastImg("dice/"+rollDisplay);
+					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，越狱失败！");
 				}
 			} else { // regular roll and move
 				board.setLastRolled(x);
 				phase = Consts.PHASE_MOVE;
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
+				
+				board.setBroadcastImg("dice/"+rollDisplay);
+				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "。");
 			}
 			
 			
@@ -342,9 +373,13 @@ public class Player {
 			phase = Consts.PHASE_RESOLVE;
 			
 			moveToPlace(t);
-			board.getMap().getPlace(t).preStepOn(this);
+			
+			board.setBroadcastImg(board.getMap().getPlace(t).getImg());
+			board.setBroadcastMsg(name + "来到了" + board.getMap().getPlace(t).getName() + "。");
+			
 			board.getLogger().logPlayerArrive(this);
 			
+			board.getMap().getPlace(t).preStepOn(this);
 			//board.setLastRolled(0);
 			rollDisplay = 0;
 		}
@@ -371,6 +406,9 @@ public class Player {
 				outOfJail();
 				phase = Consts.PHASE_ROLL;
 				board.getLogger().logBait(this, board.getMap().getBailCost());
+				
+				board.setBroadcastImg("avatar/head_"+avatarId);
+				board.setBroadcastMsg(name + "花费了$500强制保释了自己。");
 			} else {
 				board.getLogger().logEndTurn(this);
 				board.nextPlayer();
@@ -525,5 +563,11 @@ public class Player {
 	}
 	public void setTurnEnd(boolean turnEnd) {
 		this.turnEnd = turnEnd;
+	}
+	public int getAvatarId() {
+		return avatarId;
+	}
+	public void setAvatarId(int avatarId) {
+		this.avatarId = avatarId;
 	}
 }

@@ -255,6 +255,9 @@ public class Estate extends Place{
 					ownerId = p.getIndex();
 					p.loseMoney(cost);
 					board.getLogger().log(p.getName() + " 花费了$" + cost + "购买了 " + name);
+					
+					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+					board.setBroadcastMsg(p.getName() + "购买了" + name);
 				}
 			}
 		} else if (p.getIndex() != ownerId) {
@@ -266,6 +269,9 @@ public class Estate extends Place{
 				board.getLogger().logPlayerRoll(p);
 			}
 			board.getLogger().log(p.getName() + " 向 " + owner.getName() + " 支付了租金$" + paidRent);
+			
+			board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+			board.setBroadcastMsg(p.getName() + "向" + owner.getName() + "支付了$" + paidRent + "。");
 		} else if (level < maxLevel){
 			if (option == 0) {
 				board.getLogger().log(p.getName() + " 没有加盖 " + name);
@@ -274,6 +280,9 @@ public class Estate extends Place{
 					p.loseMoney(upgradeCost);
 					level++;
 					board.getLogger().log(p.getName() + " 花费了$" + upgradeCost + "加盖了 " + name + " （当前等级：" + level + "级）");
+					
+					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+					board.setBroadcastMsg(p.getName() + "加盖了" + name + "。");
 				}
 			}
 		} else {
@@ -314,6 +323,9 @@ public class Estate extends Place{
 			
 			p.moveToPlace(newId);
 			board.getLogger().log(p.getName() + " 移动到了 " + oss.get(x).getName());
+			
+			board.setBroadcastImg(oss.get(x).getImg());
+			board.setBroadcastMsg(p.getName() + "移动到了" + oss.get(x).getName());
 		}
 	}
 	public int getArea() {

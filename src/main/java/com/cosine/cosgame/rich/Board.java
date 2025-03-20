@@ -18,6 +18,8 @@ import com.cosine.cosgame.util.MongoDBUtil;
 public class Board {
 	protected String id;
 	protected String lord;
+	protected String broadcastMsg;
+	protected String broadcastImg;
 	
 	protected int status;
 	protected int curCardId;
@@ -48,6 +50,8 @@ public class Board {
 		doc.append("playerNames",playerNames);
 		doc.append("lastRolled", lastRolled);
 		doc.append("lastFateId", lastFateId);
+		doc.append("boardcastMsg", broadcastMsg);
+		doc.append("broadcastImg", broadcastImg);
 		doc.append("logs", logger.getLogs());
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
@@ -66,6 +70,8 @@ public class Board {
 		round = doc.getInteger("round",0);
 		lastRolled = doc.getInteger("lastRolled", 0);
 		lastFateId = doc.getInteger("lastFateId", 0);
+		broadcastMsg = doc.getString("broadcastMsg");
+		broadcastImg = doc.getString("broadcastImg");
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
@@ -102,6 +108,13 @@ public class Board {
 		entity.setLastRolled(lastRolled);
 		entity.setRound(round);
 		entity.setCurPlayer(curPlayer);
+		entity.setBroadcastImg(broadcastImg);
+		entity.setBroadcastMsg(broadcastMsg);
+		HashMap<String, String> broadcastImgStyle = new HashMap<>();
+		if (broadcastImg != null && broadcastImg.length() > 0) {
+			broadcastImgStyle.put("background-image", "url(/image/Rich/" + broadcastImg + ".png)");
+		}
+		entity.setBroadcastImgStyle(broadcastImgStyle);
 		entity.setLogs(logger.getLogs());
 		Fate fate = Factory.genFate(lastFateId);
 		if (fate != null) {
@@ -152,6 +165,8 @@ public class Board {
 		logger = new Logger();
 		players = new ArrayList<>();
 		playerNames = new ArrayList<>();
+		broadcastMsg = "";
+		broadcastImg = "";
 		
 		String dbname = "rich";
 		String col = "board";
@@ -200,6 +215,11 @@ public class Board {
 			newRound();
 		}
 		players.get(curPlayer).startTurn();
+		/*
+		// Step 4: clear broadcast
+		broadcastImg = "";
+		broadcastMsg = "";
+		*/
 	}
 	public void newRound() {
 		round++;
@@ -258,6 +278,8 @@ public class Board {
 		updateDB("map", map.toDocument());
 		updateDB("round", round);
 		updateDB("curPlayer", curPlayer);
+		updateDB("broadcastMsg",broadcastMsg);
+		updateDB("broadcastImg",broadcastImg);
 		updateDB("logs", logger.getLogs());
 	}
 	
@@ -447,5 +469,17 @@ public class Board {
 	}
 	public void setLastFateId(int lastFateId) {
 		this.lastFateId = lastFateId;
+	}
+	public String getBroadcastMsg() {
+		return broadcastMsg;
+	}
+	public void setBroadcastMsg(String broadcastMsg) {
+		this.broadcastMsg = broadcastMsg;
+	}
+	public String getBroadcastImg() {
+		return broadcastImg;
+	}
+	public void setBroadcastImg(String broadcastImg) {
+		this.broadcastImg = broadcastImg;
 	}
 }

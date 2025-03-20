@@ -22,6 +22,9 @@ public class StartPoint extends Place {
 		p.addSalary();
 		
 		board.getLogger().logPlayerReceiveMoney(p, p.getSalary());
+		
+		board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+		board.setBroadcastMsg(p.getName() + "来到了" + name + "并领取了$" + p.getSalary() + "。");
 	}
 	
 	public void bypass(Player p) {

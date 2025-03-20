@@ -34,6 +34,12 @@ public class PersonalEvent extends Place {
 	public void preStepOn(Player p) {
 		int x = board.getMap().genRandomFateId();
 		board.setLastFateId(x);
+		
+		// broadcast fate
+		Fate fate = Factory.genFate(x);
+		board.setBroadcastImg("fate/" + x);
+		String broadcastMsg = p.getName() + "的见闻：" + fate.getContent();
+		board.setBroadcastMsg(broadcastMsg);
 	}
 	
 	public String getLandMsg(Player player) {

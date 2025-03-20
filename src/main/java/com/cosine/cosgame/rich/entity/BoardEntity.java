@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class BoardEntity {
 	String id;
@@ -8,6 +9,9 @@ public class BoardEntity {
 	String myNextPlace;
 	String myLandMsg;
 	String fateMsg;
+	String broadcastMsg;
+	String broadcastImg;
+	Map<String, String> broadcastImgStyle;
 	
 	int status;
 	int round;
@@ -140,5 +144,24 @@ public class BoardEntity {
 	public void setJailRound(int jailRound) {
 		this.jailRound = jailRound;
 	}
+	public String getBroadcastMsg() {
+		return broadcastMsg;
+	}
+	public void setBroadcastMsg(String broadcastMsg) {
+		this.broadcastMsg = broadcastMsg;
+	}
+	public String getBroadcastImg() {
+		return broadcastImg;
+	}
+	public void setBroadcastImg(String broadcastImg) {
+		this.broadcastImg = broadcastImg;
+	}
+	public Map<String, String> getBroadcastImgStyle() {
+		return broadcastImgStyle;
+	}
+	public void setBroadcastImgStyle(Map<String, String> broadcastImgStyle) {
+		this.broadcastImgStyle = broadcastImgStyle;
+	}
+	
 
 }
