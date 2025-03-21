@@ -24,9 +24,9 @@ public class PersonalEvent extends Place {
 		Fate fate = Factory.genFate(board.getLastFateId());
 		
 		if (fate != null) {
-			fate.apply(p);
+			board.getLogger().logFate(p, fate.getConversation(p));
 			
-			board.getLogger().logFate(p, fate.getConversation());
+			fate.apply(p);
 		}
 		
 	}
@@ -46,11 +46,12 @@ public class PersonalEvent extends Place {
 		String s = "";
 		Fate fate = Factory.genFate(board.getLastFateId());
 		if (fate != null) {
-			for (int i=0;i<fate.getConversation().length();i++) {
-				if (fate.getConversation().charAt(i) == 'p') {
+			String c = fate.getConversation(player);
+			for (int i=0;i<c.length();i++) {
+				if (c.charAt(i) == 'p') {
 					s = s+"你";
 				} else {
-					s = s+fate.getConversation().charAt(i);
+					s = s+c.charAt(i);
 				}
 			}
 		}

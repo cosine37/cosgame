@@ -340,4 +340,44 @@ public class Estate extends Place{
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public int getUpgradeCost() {
+		return upgradeCost;
+	}
+
+	public void setUpgradeCost(int upgradeCost) {
+		this.upgradeCost = upgradeCost;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+
+	public void setMaxLevel(int maxLevel) {
+		this.maxLevel = maxLevel;
+	}
+
+	public List<Integer> getRents() {
+		return rents;
+	}
+
+	public void setRents(List<Integer> rents) {
+		this.rents = rents;
+	}
 }

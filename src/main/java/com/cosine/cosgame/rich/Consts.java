@@ -52,6 +52,11 @@ public class Consts {
 	public static final int FATE_ADD = 1;
 	public static final int FATE_LOSE = 2;
 	public static final int FATE_GOTOJAIL = 3;
+	public static final int FATE_HOUSEREPAIR = 4;
+	public static final int FATE_PROPERTYTAX = 5;
+	public static final int FATE_RECEIVEEVERY = 6;
+	public static final int FATE_GIVEEVERY = 7;
+	public static final int FATE_MOVE = 8;
 	
 	
 	// settings related

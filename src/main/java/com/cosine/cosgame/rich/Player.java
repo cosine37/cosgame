@@ -54,7 +54,10 @@ public class Player {
 		doc.append("inJail", inJail);
 		doc.append("jailRound", jailRound);
 		doc.append("turnEnd", turnEnd);
-		doc.append("avatarId", avatarId);
+		Account account = new Account();
+		account.getFromDB(name);
+		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
+		doc.append("avatarId", avatar.getId());
 		
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){

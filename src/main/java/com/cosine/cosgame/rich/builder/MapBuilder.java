@@ -25,7 +25,7 @@ public class MapBuilder {
 		map.setJailIndex(9);
 		map.setJailZone(1);
 		map.setBailCost(500);
-		map.setAreaColors(new ArrayList<>(Arrays.asList("","maroon","darkgreen","red","darkviolet","orange","navy")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		map.setUtilityName("茶馆");
@@ -65,13 +65,13 @@ public class MapBuilder {
 				p.createDetail();
 				p.getDetail().setDesc("现在就是一个平平无奇的停车场，未来这一格可能有别的功效？");
 			} else if (i == 1) {
-				p = new Estate(i, "琢初桥", 1, 600,500,3,new ArrayList<>(Arrays.asList(80,350,750,1700)));
+				p = new Estate(i, "琢初桥", 1, 1200,500,3,new ArrayList<>(Arrays.asList(80,450,1050,3200)));
 				p.setImg("qingguo/zhuochuqiao");
 				p.setFont("jnk", 18);
 				p.createDetail();
 				p.getDetail().setDesc("有新老两座琢初桥，与新坊桥平行。以楚大夫伍参的第30世孙伍琢初的名字命名。伍琢初于1864年出生在青果巷对岸的东下塘，早年随父参与治理洪涝灾害，后被举荐为知县、知府。再奉命督办京汉铁路南段，创建汉口警察局，襄理汉阳铁厂和锰矿事务，业绩突出，又调任江苏负责江淮水灾赈务，民国后辞官回归故里。晚年资助建造该桥，琢初桥在其逝世一年后完工。");
 			} else if (i == 2) {
-				p = new Estate(i, "三锡堂码头", 1, 1000,500,3,new ArrayList<>(Arrays.asList(100,650,1350,2900)));
+				p = new Estate(i, "三锡堂码头", 1, 800,500,3,new ArrayList<>(Arrays.asList(45,280,850,2500)));
 				p.setImg("qingguo/sanxitang");
 				p.setFont("jnk", 18);
 				p.createDetail();
@@ -97,21 +97,21 @@ public class MapBuilder {
 				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。");
 				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 			} else if (i == 11) {
-				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,1,new ArrayList<>(Arrays.asList(100,200)));
+				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100,200)));
 				p.setFont("jnk", 18);
 				p.setImg("bubbleTea");
 				p.createDetail();
 				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
 				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
 			} else if (i == 26) {
-				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,1,new ArrayList<>(Arrays.asList(100,200)));
+				p = new Estate(i, "泥莲茶书院", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100,200)));
 				p.setFont("jnk", 18);
 				p.setImg("bubbleTea");
 				p.createDetail();
 				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
 				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
 			} else if (i == 5) {
-				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,1,new ArrayList<>(Arrays.asList(500,1000)));
+				p = new Estate(i, "雪洞巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500,1000)));
 				p.setFont("jnk", 18);
 				p.setImg("station");
 				p.createDetail();
@@ -120,7 +120,7 @@ public class MapBuilder {
 				//p.getDetail().setDesc2("雪洞巷位于半园以西，巷中建筑多为清式硬山造砖木结构。半园始建于明中，由唐荆川祖父唐贵所建，是当年“唐氏八宅”之一的贞和堂后花园。占地约为6亩，除筠星、易书、贞和、四并四堂外，还有一竹斋、分缘山房及廊轩亭榭等。园中凿有荷池，池畔置以湖石，叠石为山，亭台楼阁筑于池周。");
 				p.getDetail().setDesc2("雪洞巷位于顾孝子祠以西，巷中建筑多为清式硬山造砖木结构。顾孝子祠为清代纪念孝子顾寿南而建的专祠，门厅的阴阳鱼纹具有极高的艺术价值。根据阳湖县志记载，“顾寿南，字菊友。性至孝，父病，焚香祷于天，愿灭己寿算以代；母病，割股和药以进。父母竟愈，人以为孝感格天，一时齐称顾孝子。”祠后是清贵阳知府恽鸿仪故居。");
 			} else if (i == 21) {
-				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,1,new ArrayList<>(Arrays.asList(500,1000)));
+				p = new Estate(i, "涉园巷站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(500,1000)));
 				p.setFont("jnk", 18);
 				p.setImg("station");
 				p.createDetail();
@@ -128,25 +128,88 @@ public class MapBuilder {
 				p.getDetail().setDesc("可移动至其他游览车站。经过可以触发被动效果的地点则会触发被动效果（如钱庄），到达后无法购买且不需要支付路费。"); 
 				p.getDetail().setDesc2("涉园巷位于涉园以西，涉园是著名金融家和藏书家陶湘的故居，陶氏先祖名陶人群，明朝万历年间与常州名儒刘养心联姻后迁至常州，世居青果巷。复原后的涉园中建造了藏书阁，供游客阅览。");
 			}else if (i == 29) {
-				p = new Estate(i, "城隍庙戏楼", 6, 4000,2000,3,new ArrayList<>(Arrays.asList(500,2250,5000,13500)));
+				p = new Estate(i, "城隍庙戏楼", 6, 3000,2000,3,new ArrayList<>(Arrays.asList(275,1900,5100,9500)));
 				p.setImg("qingguo/chenghuangmiaoxilou");
 				p.setFont("jnk", 18);
 				p.createDetail();
 				p.getDetail().setDesc("阳湖城隍庙戏楼位于青果巷，为阳湖县城隍庙附属建筑。建于清乾隆24年(1759年)，清同治、光绪年间扩建，1890年竣工。戏楼为歇山顶二层木结构，下层由麻石方柱四根支撑，内外三面皆有木雕。上屋后台为子楼三间，下层作出入口，有砖雕门框“歌舞”、“升平”题额各一方。常州城内原有3座城隍庙，阳湖县城隍庙戏楼是仅存的一座城隍庙戏楼。城隍是中国民间和道教信奉的守护地方城池之神，大多由有功于地方民众的名臣英雄充当。");
-			} 
-			else if (i == 8) {
-				p = new Estate(i, "礼和堂", 2, 3200,2000,3,new ArrayList<>(Arrays.asList(300,1800,4500,11000)));
+			} else if (i == 8) {
+				p = new Estate(i, "礼和堂", 2, 3200,2000,3,new ArrayList<>(Arrays.asList(300,2100,5500,10500)));
 				p.setImg("qingguo/lihetang");
 				p.setFont("jnk", 18);
 				p.createDetail();
 				p.getDetail().setTitle("礼和堂 · 周有光故居");
-				p.getDetail().setDesc("原为唐荆川曾叔祖、明代画家唐世宁居住，在清朝末年被周有光先祖购得。周有光原名周耀平，笔名有光。青年和中年时期主要从事经济、金融工作，当过经济学教授，1955年开始专职从事语言文字研究。周有光是汉语拼音方案的主要制订者，并主持制订了《汉语拼音正词法基本规则》。");
+				p.getDetail().setDesc("唐氏八宅之一，原为唐荆川曾叔祖、明代画家唐世宁居住，在清朝末年被周有光先祖购得。周有光原名周耀平，笔名有光。青年和中年时期主要从事经济、金融工作，当过经济学教授，1955年开始专职从事语言文字研究。周有光是汉语拼音方案的主要制订者，并主持制订了《汉语拼音正词法基本规则》。");
+			} else if (i == 4) {
+				p = new Estate(i, "梳篦博物馆", 2, 2600,1500,3,new ArrayList<>(Arrays.asList(225,1350,3875,7900)));
+				p.setImg("qingguo/shubibowuguan");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("真老卜恒顺梳篦博物馆");
+				p.getDetail().setDesc("常州梳篦制作技艺形成于东晋时期，迄今已有1500多年的历史，有宫梳名篦之称。齿稀的称“梳”，齿密的称“篦”，梳理头发用梳，清除发垢用篦。用骨、木、竹、角、象牙等制。梳篦是古时人手必备之物，尤其妇女，几乎梳不离身。在常州梳篦业近代的发展中，以卜恒顺、老王大昌、王大昌、汪义大四家梳篦坊店最负盛名，其中尤以卜恒顺制作的梳篦美誉度最高。恒顺梳篦店开设于明代天启年间（1622），世代相传，传至1953年有八代之久，300余年历史，但卜家技艺传承现已断代，老王大昌、王大昌、汪义大三家祖传技艺亦已失传。");
+			} else if (i == 10) {
+				p = new Estate(i, "贞和堂", 3, 2700,1500,3,new ArrayList<>(Arrays.asList(240,1600,4200,8250)));
+				p.setImg("qingguo/zhenhetang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("贞和堂 · 唐荆川宅");
+				p.getDetail().setDesc("原名保和堂，是唐氏八宅中的主宅。贞和堂的大厅是常州保存下来的最大明代楠木厅。唐顺之，号荆川，嘉靖八年（1529年）二十三岁中进士，礼部会试第一，入翰林院任编修。与归有光、王慎中三人合称为“嘉靖三大家”。著有《荆川集》、《勾股容方圆论》等著作。荆川先生不但是有名的文学家、数学家，同时也是有名的抗倭英雄，在抗倭战斗中屡建奇功。刀枪骑射，无不娴熟。");
+			} else if (i == 12) {
+				p = new Estate(i, "八桂堂", 3, 1800,1000,3,new ArrayList<>(Arrays.asList(135,750,1950,5050)));
+				p.setImg("qingguo/baguitang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("唐氏八宅之一，是唐荆川高中会试状元后所建的宅子。因其在宅中种下八颗桂花树，因此得名。晚清为湖北按察使瞿赓甫（瞿秋白叔祖）所购，瞿秋白在八桂堂中的天香楼诞生，民国三十七年（1948年）为刘国钧购得。刘国钧曾在1930年集资创办常州大成纺织印染公司。");
+			} else if (i == 14) {
+				p = new Estate(i, "筠星堂", 3, 1500,500,3,new ArrayList<>(Arrays.asList(100,550,1250,4000)));
+				p.setImg("qingguo/yunxingtang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("唐氏八宅之一，原为唐荆川玄孙、明崇祯举人唐宇量居住，存清建回形转楼及部分明代木结构建筑，花厅及假山、石池花木等。");
+			} else if (i == 16) {
+				p = new Estate(i, "半园", 4, 2000,1000,3,new ArrayList<>(Arrays.asList(155,850,2250,5800)));
+				p.setImg("qingguo/banyuan");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("半园始建于明中，由唐荆川祖父唐贵所建，是贞和堂后花园。占地约为6亩。园中凿有荷池，池畔置以湖石，叠石为山，亭台楼阁筑于池周。");
+			} else if (i == 17) {
+				p = new Estate(i, "吕宅", 4, 2200,1000,3,new ArrayList<>(Arrays.asList(175,950,2650,6350)));
+				p.setImg("qingguo/lvzhai");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("吕宅 · 文化记忆馆");
+				p.getDetail().setDesc("青果巷文化记忆馆位于吕宅，是了解青果巷及常州历史文化的重要窗口。赵元任艺术中心同样位于吕宅，整个展陈以“教我如何不想他”为主题，展示了赵元任先生在语言学、音乐学等方面的杰出成就。");
+			} else if (i == 19) {
+				p = new Estate(i, "元代天井", 5, 2400,1000,3,new ArrayList<>(Arrays.asList(200,1100,3100,6900)));
+				p.setImg("qingguo/yuandaitianjing");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("“天井”井栏石用青石凿成，井壁以青砖，至今仍汲取此井之水洗用。据常州方志记载，此井系元代邑人赵云卿所开凿。赵精于地理，能知水源，经他选址开凿的井能长年不干涸，虽大旱之年水源枯竭，而此井涓涓不竭，被誉为“天井”。如今该井附近有打卡地天井阁。");
+			} else if (i == 23) {
+				p = new Estate(i, "史良故居", 5, 3100,2000,3,new ArrayList<>(Arrays.asList(285,2000,5300,10000)));
+				p.setImg("qingguo/shiliangguju");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("史良，中国当代法学家、政治家、女权运动先驱，抗日救国会“七君子”之一。她是新中国人民司法工作的开拓者和司法行政工作的奠基人，是中国妇女运动的领袖之一。");
+			} else if (i == 25) {
+				p = new Estate(i, "刘仙师庙", 6, 2800,1500,3,new ArrayList<>(Arrays.asList(250,1700,4450,8600)));
+				p.setImg("qingguo/liuxianshimiao");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("明万历年间曾有一刘姓神医在阳湖县城隍庙戏楼附近行医，医术高超、医德高尚，他时常为穷人看病不收钱而施药，因而终身贫困，最后郁郁而终。常州人感念这位神医，就在此造了刘仙师祠。旧时常州人有病就到刘先师祠庙里祈求保佑。");
+			} else if (i == 27) {
+				p = new Estate(i, "湛贻堂", 6, 3600,2000,3,new ArrayList<>(Arrays.asList(320,2500,6000,11500)));
+				p.setImg("qingguo/zhanyitang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("湛贻堂 · 赵元任故居");
+				p.getDetail().setDesc("湛贻堂原为旧宅中赵元任六世祖赵翼的堂号，湛贻堂系赵元任曾祖父赵朗浦（清金华府知府）建于咸丰年间，新宅建成后，沿用“湛贻堂”堂号以承先祖之志。1892年，赵元任生于祖父赵执诒任官地天津，1900年，因祖父病故，赵元任随父母扶灵柩首次回到常州，自此在湛贻堂生活。赵元任，中国语言学家，精研北方话与吴语方言的音系。通晓8种语言和33种汉语方言，被称为“汉语言学”之父。");
 			}
 			
 			map.addPlace(p);
 		}
 		
-		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,101,102,103,104)));
 		
 		return map;
 	}
