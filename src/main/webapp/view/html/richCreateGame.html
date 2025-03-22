@@ -13,68 +13,103 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/richCreateGameController.js"></script>
-<body ng-app="richCreateGameApp" ng-controller="richCreateGameCtrl">
-	富豪游戏
-	<div>
-		<button ng-click="goto('rich')">退出</button>
-		<button ng-click="dismiss()" ng-show="lord == username">解散</button>
-		<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
-	</div>
-	<div>
+<body ng-app="richCreateGameApp" ng-controller="richCreateGameCtrl" 
+	style="background:url('/image/Rich/create_bg.jpg'); background-size:cover;">
+	
+	<div style="background-color: rgba(255,255,255,0.5); border: 1px solid darkslategrey; border-radius: 15px; float: left; height: 900px; width: 300px;
+		margin-top: 20px; margin-left: 20px; text-align:center; position: relative">
+		<h2 style="margin-top: 10px">富豪游戏</h2>
 		<div ng-repeat="player in players track by $index">
 			<table>
 				<tr>
-					<td><div style="height:80px; width:80px;" ng-style="player.avatar.avatarStyle"></div></td>
-					<td>{{player.name}}</td>
-					<td>
+					<td rowspan='2'><div style="height:80px; width:80px;margin-left:20px;" ng-style="player.avatar.avatarStyle"></div></td>
+					<td style="font-size:22px; font-weight:bold; width: 200px;text-align:center">{{player.name}}</td>
+				</tr>
+				<tr>
+					<td style="text-align:center">
 						<button ng-show="player.index != firstPlayer && lord == username">设为初始</button>
 						<span ng-show="player.index == firstPlayer">初始玩家</span>
 					</td>
 				</tr>
 			</table>
 		</div>
-	</div>
-	<div>
-		<div>
-			地图：
-			<button ng-disabled="mapId==0" ng-click="mapId=0">青果巷</button>
-			<button ng-disabled="mapId==1" ng-click="mapId=1">GTA</button>
-		</div>
-		<div>
-			初始资金:
-			<button ng-disabled="startMoney==10000" ng-click="startMoney=10000">10000</button>
-			<button ng-disabled="startMoney==15000" ng-click="startMoney=15000">15000</button>
-			<button ng-disabled="startMoney==20000" ng-click="startMoney=20000">20000</button>
-			<button ng-disabled="startMoney==25000" ng-click="startMoney=25000">25000</button>
-		</div>
-		
-		<div>
-			初始收入:
-			<button ng-disabled="startSalary==1000" ng-click="startSalary=1000">1000</button>
-			<button ng-disabled="startSalary==2000" ng-click="startSalary=2000">2000</button>
-			<button ng-disabled="startSalary==2500" ng-click="startSalary=2500">2500</button>
-		</div>
-		
-		<div>
-			游戏结束条件:
-			<button ng-disabled="endCondition==0" ng-click="endCondition=0">吃鸡模式</button>
-			<button ng-disabled="endCondition==1" ng-click="endCondition=1">速战速决</button>
-			<button ng-disabled="endCondition==12" ng-click="endCondition=12">12轮后游戏结束</button>
-			<button ng-disabled="endCondition==26" ng-click="endCondition=26">26轮后游戏结束</button>
-			<button ng-disabled="endCondition==52" ng-click="endCondition=52">52轮后游戏结束</button>
-			<button ng-disabled="endCondition==58000" ng-click="endCondition=58000">58同城</button>
-		</div>
 		
 	</div>
 	
-	<div>
-		<div>
+	
+	<div style="background-color: rgba(255,255,255,0.5); border: 1px solid darkslategrey; border-radius: 15px; float: left; height: 900px; width: 1200px;
+		margin-top: 20px; margin-left: 20px; text-align:center; position: relative">
+		<div style="margin-top:20px;">
+			<button ng-disabled="mapId==0" ng-click="mapId=0" class="map-button">青果巷</button>
+			<!-- 
+			<button ng-disabled="mapId==1" ng-click="mapId=1" class="map-button">GTA</button>
+			 -->
+		</div>
+		<div style="margin-top: 10px;">
+			<img ng-src="/image/Rich/qingguo.png" class="map-graph" ng-show="mapId==0">
+		</div>
+		<div style="margin-top: 20px;">
+			<table style="margin-left: 300px; text-align:left; font-size: 16px;">
+				<tr>
+					<td style="width: 300px;"><b>地图面积：</b>
+						<span ng-show="mapId==0">小</span>
+					</td>
+					<td style="width: 300px;"><b>支持人数：</b>
+						<span ng-show="mapId==0">2~4人</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 300px;"><b>初始资金：</b><span>{{startMoney}}</span></td>
+					<td style="width: 300px;"><b>初始收入：</b><span>{{startSalary}}</span></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<b>结束条件：</b>
+						<span ng-show="endCondition == 0">吃鸡模式，当轮次结束时只剩一名玩家的现金不为负数，游戏结束。</span>
+						<span ng-show="endCondition == 1">速战速决，当轮次结束时任何一名玩家的现金为负数，游戏结束。</span>
+						<span ng-show="endCondition > 10 && endCondition < 1000">{{endCondition}}轮之后游戏结束</span>
+						<span ng-show="endCondition > 1000">当一名玩家的现金达到${{endCondition}}，游戏结束</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div style="position:absolute; bottom: 170px; left: 400px;text-align:center;width: 400px;"><h3>更改头像</h3></div>
+		<div style="position:absolute; bottom: 60px; left: 300px;">
 			<div style="float:left;width: 80px; text-align:center;" ng-repeat="entity in accountInfo.avatarEntities track by $index">
 				<div ng-style="entity.avatarStyle" style="height:80px; width: 80px;cursor:pointer" ng-click="chooseAvatar($index)"></div>
 				<div style="clear:both"></div>
 				<div>{{entity.name}}</div>
 			</div>
 		</div>
+		<div style="position:absolute; bottom: 20px; left: 400px;text-align:center;width: 400px;">
+			<button ng-click="goto('rich')">退出</button>
+			<button ng-click="dismiss()" ng-show="lord == username">解散</button>
+			<button ng-click="startGame()" ng-show="lord == username">开始游戏</button>
+		</div>
+		
 	</div>
+	
+	<div style="background-color: rgba(255,255,255,0.5); border: 1px solid darkslategrey; border-radius: 15px; float: left; height: 900px; width: 500px;
+		margin-top: 20px; margin-left: 20px; text-align:center; position: relative; padding:20px;" ng-show="lord == username">
+		<h4>初始资金</h4>
+		<button ng-disabled="startMoney==10000" ng-click="startMoney=10000">10000</button>
+		<button ng-disabled="startMoney==15000" ng-click="startMoney=15000">15000</button>
+		<button ng-disabled="startMoney==20000" ng-click="startMoney=20000">20000</button>
+		<button ng-disabled="startMoney==25000" ng-click="startMoney=25000">25000</button>
+		<div style="height: 10px;"></div>
+		<h4>初始收入</h4>
+		<button ng-disabled="startSalary==1000" ng-click="startSalary=1000">1000</button>
+		<button ng-disabled="startSalary==2000" ng-click="startSalary=2000">2000</button>
+		<button ng-disabled="startSalary==2500" ng-click="startSalary=2500">2500</button>
+		<div style="height: 10px;"></div>
+		<h4>结束条件</h4>
+		<button ng-disabled="endCondition==0" ng-click="endCondition=0">吃鸡模式</button>
+		<button ng-disabled="endCondition==1" ng-click="endCondition=1">速战速决</button>
+		<button ng-disabled="endCondition==12" ng-click="endCondition=12">12轮</button>
+		<button ng-disabled="endCondition==26" ng-click="endCondition=26">26轮</button>
+		<button ng-disabled="endCondition==52" ng-click="endCondition=52">52轮</button>
+		<button ng-disabled="endCondition==58000" ng-click="endCondition=58000">58同城</button>
+	</div>
+	
 </body>
 </html>

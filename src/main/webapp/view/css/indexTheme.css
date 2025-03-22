@@ -64,6 +64,11 @@
 	color: rgb(0,150,255);
 }
 
+.richtext{
+	font-weight: bold;
+	color: darkgreen;
+}
+
 .newsImg{
 	height: 320px;
 	width: 210px
