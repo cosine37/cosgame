@@ -13,7 +13,7 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/richGameController.js"></script>
-<body ng-app="richGameApp" ng-controller="richGameCtrl" class="noselect">
+<body ng-app="richGameApp" ng-controller="richGameCtrl" class="noselect" ng-click="bgm.play()">
 	<div style="zoom: 1.1">
 		<table>
 			<tr>
@@ -292,7 +292,17 @@
 					<div ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 				<td>
-					<div style="float:right">
+					<div style="margin-left: 30px">
+						<label for="volumeControl">音乐: </label>
+						<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+						<span>{{ (volume * 100) | number:0 }}%</span>
+					</div>
+					<div style="margin-left: 30px">
+						<label for="volumeControl">音效: </label>
+						<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="seVolume" ng-change="updateSeVolume()" />
+						<span>{{ (seVolume * 100) | number:0 }}%</span>
+					</div>
+					<div  style="margin-left: 30px">
 						<button ng-click="goto('rich')">退出</button>
 						<button ng-click="dismiss()" ng-show="lord == username">解散</button>
 					</div>

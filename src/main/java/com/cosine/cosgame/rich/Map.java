@@ -19,6 +19,7 @@ public class Map {
 	List<String> areaColors;
 	List<String> areaNames;
 	List<String> cornerNames;
+	List<String> bgms;
 	int jailIndex;
 	int jailZone;
 	int bailCost;
@@ -47,6 +48,7 @@ public class Map {
 		doc.append("cornerNames", cornerNames);
 		doc.append("name", name);
 		doc.append("nameFont", nameFont);
+		doc.append("bgms", bgms);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -75,6 +77,7 @@ public class Map {
 		cornerNames = (List<String>) doc.get("cornerNames");
 		name = doc.getString("name");
 		nameFont = doc.getString("nameFont");
+		bgms = (List<String>) doc.get("bgms");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -106,6 +109,7 @@ public class Map {
 		entity.setAreaNames(areaNames);
 		entity.setCornerNames(cornerNames);
 		entity.setName(name);
+		entity.setBgms(bgms);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -303,5 +307,11 @@ public class Map {
 	}
 	public void setNameFont(String nameFont) {
 		this.nameFont = nameFont;
+	}
+	public List<String> getBgms() {
+		return bgms;
+	}
+	public void setBgms(List<String> bgms) {
+		this.bgms = bgms;
 	}
 }

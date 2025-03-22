@@ -113,13 +113,7 @@ app.controller("richMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 					$scope.statuses.push(t)
 					
 					var z = response.data.value[i*5+3]
-					t = ''
-					if (x == '0'){
-						t = '-'
-					} else if (z == '1'){
-						t = '经典'
-					}
-					$scope.gameModes.push(t);
+					$scope.gameModes.push(z);
 					var y = response.data.value[i*5+4]
 					
 					$scope.canBack.push(y)

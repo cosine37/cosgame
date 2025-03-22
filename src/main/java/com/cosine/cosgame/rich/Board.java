@@ -31,6 +31,7 @@ public class Board {
 	protected Map map;
 	protected List<String> playerNames;
 	protected List<Player> players;
+	protected List<String> ses;
 	
 	protected Settings settings;
 	protected Logger logger;
@@ -53,6 +54,10 @@ public class Board {
 		doc.append("boardcastMsg", broadcastMsg);
 		doc.append("broadcastImg", broadcastImg);
 		doc.append("logs", logger.getLogs());
+		doc.append("ses", ses);
+		String mapName = "-";
+		if (map != null) mapName = map.getName();
+		doc.append("mapName", mapName);
 		for (i=0;i<players.size();i++){
 			players.get(i).setIndex(i);
 			String n = "player-" + players.get(i).getName();
@@ -75,9 +80,9 @@ public class Board {
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
+		ses = (List<String>) doc.get("ses");
 		List<String> logs = (List<String>) doc.get("logs");
 		logger = new Logger(logs);
-		
 		List<String> playerNames = (List<String>) doc.get("playerNames");
 		players = new ArrayList<>();
 		for (i=0;i<playerNames.size();i++){
@@ -111,6 +116,7 @@ public class Board {
 		entity.setBroadcastImg(broadcastImg);
 		entity.setBroadcastMsg(broadcastMsg);
 		entity.setEndCondition(settings.getEndCondition());
+		entity.setSes(ses);
 		HashMap<String, String> broadcastImgStyle = new HashMap<>();
 		if (broadcastImg != null && broadcastImg.length() > 0) {
 			broadcastImgStyle.put("background-image", "url(/image/Rich/" + broadcastImg + ".png)");
@@ -166,6 +172,7 @@ public class Board {
 		logger = new Logger();
 		players = new ArrayList<>();
 		playerNames = new ArrayList<>();
+		ses = new ArrayList<>();
 		broadcastMsg = "";
 		broadcastImg = "";
 		
@@ -290,9 +297,11 @@ public class Board {
 		updateDB("settings", settings.getSettings());
 		updateBasicDB();
 		updatePlayers();
+		updateDB("mapName", map.getName());
 	}
 	
 	public void buttonPressUDB(String username, int option) {
+		ses = new ArrayList<>();
 		Player p = getPlayerByName(username);
 		if (p == null) return;
 		if (p.getPhase() == Consts.PHASE_OFFTURN) {
@@ -326,6 +335,7 @@ public class Board {
 		updateDB("broadcastMsg",broadcastMsg);
 		updateDB("broadcastImg",broadcastImg);
 		updateDB("logs", logger.getLogs());
+		updateDB("ses", ses);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -437,6 +447,9 @@ public class Board {
 	public int getFirstPlayer() {
 		return settings.getFirstPlayer();
 	}
+	public void addSes(String se) {
+		ses.add(se);
+	}
 	public String getId() {
 		return id;
 	}
@@ -526,5 +539,11 @@ public class Board {
 	}
 	public void setBroadcastImg(String broadcastImg) {
 		this.broadcastImg = broadcastImg;
+	}
+	public List<String> getSes() {
+		return ses;
+	}
+	public void setSes(List<String> ses) {
+		this.ses = ses;
 	}
 }

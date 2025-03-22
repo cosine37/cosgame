@@ -40,6 +40,10 @@ public class PersonalEvent extends Place {
 		board.setBroadcastImg("fate/" + x);
 		String broadcastMsg = p.getName() + "的见闻：" + fate.getContent();
 		board.setBroadcastMsg(broadcastMsg);
+		
+		// add se
+		String seSrc = "/sound/Rich/fate/" + x + ".mp3";
+		board.addSes(seSrc);
 	}
 	
 	public String getLandMsg(Player player) {

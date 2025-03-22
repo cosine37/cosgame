@@ -37,7 +37,7 @@ public class Factory {
 		if (id == 1) {
 			return new Fate(id,Consts.FATE_ADD,100,"在路边捡到$100。","p在路边捡到了$100");
 		} else if (id == 2) {
-			return new Fate(id,Consts.FATE_LOSE,200,"对着警察吐痰，罚款$200。","p因为对着警察吐痰，被罚款$200");
+			return new Fate(id,Consts.FATE_LOSE,200,"对着警察吐痰，被罚款$200。","p因为对着警察吐痰，被罚款$200");
 		} else if (id == 3) {
 			return new Fate(id,Consts.FATE_GOTOJAIL,0,"酒后闹事，立即入狱。","p因为喝酒闹事，被抓入监狱");
 		} else if (id == 4) {
@@ -49,7 +49,7 @@ public class Factory {
 		} else if (id == 7) {
 			return new Fate(id,Consts.FATE_RECEIVEEVERY,158,"过生日，每名其他玩家交给你$158作为礼物。","p过生日，每名其他玩家交给p$158作为礼物");
 		} else if (id == 8) {
-			return new Fate(id,Consts.FATE_GIVEEVERY,88,"给朋友发送节日红包，交给每名其他玩家$88。","p给每名其他玩家发送价值$88的红包。谢谢你，p");
+			return new Fate(id,Consts.FATE_GIVEEVERY,88,"给朋友发送节日红包，交给每名其他玩家$88。","p给每名其他玩家发送价值$88的红包");
 		} else if (id == 9) {
 			return new Fate(id,Consts.FATE_LOSE,721,"遗失钱包，损失$721。","p的钱包丢了，损失了$721");
 		} else if (id == 10) {

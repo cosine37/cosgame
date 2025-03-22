@@ -13,7 +13,7 @@
 <script src="/js/lib/bootstrap.js"></script>
 <script src="/js/lib/angular-websocket.js"></script>
 <script src="/js/app/richCreateGameController.js"></script>
-<body ng-app="richCreateGameApp" ng-controller="richCreateGameCtrl" 
+<body ng-app="richCreateGameApp" ng-controller="richCreateGameCtrl" ng-click="bgm.play()" class="noselect"
 	style="background:url('/image/Rich/create_bg.jpg'); background-size:cover;">
 	
 	<div style="background-color: rgba(255,255,255,0.5); border: 1px solid darkslategrey; border-radius: 15px; float: left; height: 900px; width: 300px;
@@ -32,6 +32,12 @@
 					</td>
 				</tr>
 			</table>
+		</div>
+		
+		<div style="position:absolute; bottom:20px; left: 25px;width: 250px; text-align:center">
+			<label for="volumeControl">音量: </label>
+			<input type="range" id="volumeControl" min="0" max="1"step="0.01" ng-model="volume" ng-change="updateVolume()" />
+			<span>{{ (volume * 100) | number:0 }}%</span>
 		</div>
 		
 	</div>
@@ -59,8 +65,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 300px;"><b>初始资金：</b><span>{{startMoney}}</span></td>
-					<td style="width: 300px;"><b>初始收入：</b><span>{{startSalary}}</span></td>
+					<td style="width: 300px;"><b>初始资金：</b>
+						<span>{{startMoney}}</span>
+					</td>
+					<td style="width: 300px;"><b>初始收入：</b>
+						<span>{{startSalary}}</span>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2">

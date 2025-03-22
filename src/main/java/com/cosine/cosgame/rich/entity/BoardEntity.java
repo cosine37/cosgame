@@ -27,6 +27,7 @@ public class BoardEntity {
 	List<PlayerEntity> players;
 	List<String> myOptions;
 	List<String> logs;
+	List<String> ses;
 	MapEntity map;
 	SettingsEntity settings;
 	PlaceEntity myCurrentPlace;
@@ -168,6 +169,12 @@ public class BoardEntity {
 	}
 	public void setEndCondition(int endCondition) {
 		this.endCondition = endCondition;
+	}
+	public List<String> getSes() {
+		return ses;
+	}
+	public void setSes(List<String> ses) {
+		this.ses = ses;
 	}
 	
 

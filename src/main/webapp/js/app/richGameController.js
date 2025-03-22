@@ -58,6 +58,49 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			});
 		}
 		
+		$scope.bgms = []
+		$scope.bgm = new Audio();
+		$scope.volume = 0.5;
+		randomizeBGM = function(){
+			n = $scope.bgms.length
+			newBgm = $scope.bgm.src
+			while (newBgm == $scope.bgm.src){
+				v = Math.floor(Math.random() * n);
+				newBgm = $scope.bgms[v]
+			}
+			
+			bgmSrc = '/sound/Rich/' + newBgm + '.mp3'
+			$scope.bgm.src = bgmSrc
+			$scope.bgm.volume = $scope.volume;
+		}
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		//randomizeBGM();
+		
+		$scope.ses == []
+		$scope.se = new Audio();
+		$scope.seVolume = 0.5;
+		$scope.updateSeVolume = function() {
+			$scope.se.volume = $scope.seVolume;
+		};
+		playSes = function(){
+			if ($scope.ses == null) return;
+			for (i=0;i<$scope.ses.length;i++){
+				if ($scope.ses[i] != $scope.se.src){
+					$scope.se.src = $scope.ses[i];
+					$scope.se.play();
+					
+					$scope.lastPlayed = $scope.ses[i]
+				}
+				
+			}
+		}
+		
 		$scope.buttonPress = function(option){
 			var data = {"option" : option}
 			$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
@@ -164,6 +207,14 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.curPlayer = response.data.curPlayer;
 				
 				$scope.map = response.data.map;
+				if ($scope.bgms.length == 0){
+					$scope.bgms = $scope.map.bgms;
+					randomizeBGM();
+				}
+				$scope.ses = response.data.ses;
+				playSes($scope.ses);
+				
+				
 				setMapLayout();
 				setPlayerStyles();
 				

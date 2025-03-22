@@ -47,6 +47,23 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 			});
 		}
 		
+		$scope.bgm = new Audio();
+		$scope.volume = 0.5;
+		randomizeBGM = function(){
+			v = Math.floor(Math.random() * 4)+1;
+			bgmSrc = '/sound/Rich/create_' + v + '.mp3'
+			$scope.bgm.src = bgmSrc
+			$scope.bgm.volume = $scope.volume;
+		}
+		$scope.updateVolume = function() {
+			$scope.bgm.volume = $scope.volume;
+		};
+		$scope.bgm.addEventListener("ended", function() {
+			randomizeBGM()
+			$scope.bgm.play();
+		}, true);
+		randomizeBGM();
+		
 		$scope.startMoney = 15000;
 		$scope.startSalary = 2000;
 		$scope.endCondition = 0;

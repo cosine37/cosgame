@@ -35,6 +35,7 @@ public class MapBuilder {
 		map.setBailCost(500);
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		map.setUtilityName("茶馆");
 		map.setStationName("游览车站");

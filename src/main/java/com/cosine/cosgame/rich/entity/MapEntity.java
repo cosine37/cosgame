@@ -15,6 +15,7 @@ public class MapEntity {
 	String stationName;
 	List<String> areaNames;
 	List<String> cornerNames;
+	List<String> bgms;
 	Map<String, String> nameStyle;
 	String name;
 	
@@ -95,6 +96,12 @@ public class MapEntity {
 	}
 	public void setNameStyle(Map<String, String> nameStyle) {
 		this.nameStyle = nameStyle;
+	}
+	public List<String> getBgms() {
+		return bgms;
+	}
+	public void setBgms(List<String> bgms) {
+		this.bgms = bgms;
 	}
 	
 }
