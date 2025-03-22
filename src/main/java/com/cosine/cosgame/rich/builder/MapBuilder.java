@@ -11,7 +11,15 @@ import com.cosine.cosgame.rich.Place;
 import com.cosine.cosgame.rich.basicplaces.*;
 
 public class MapBuilder {
-	public static Map genTestMap() {
+	public static Map genMap(int mapId) {
+		if (mapId == 0) {
+			return genQingguo();
+		} else {
+			return new Map();
+		}
+	}
+	
+	public static Map genQingguo() {
 		final int height = 7;
 		final int width = 10;
 		final int n = (height+width-2)*2;
@@ -94,7 +102,7 @@ public class MapBuilder {
 				p.setFont("jnk", 22);
 				p.setLandMsg("你将立即入狱");
 				p.createDetail();
-				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。");
+				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
 				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 			} else if (i == 11) {
 				p = new Estate(i, "霸王茶姬", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(100,200)));
@@ -210,7 +218,7 @@ public class MapBuilder {
 		}
 		
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,101,102,103,104)));
-		
+		//map.setFateIds(new ArrayList<>(Arrays.asList(102)));
 		return map;
 	}
 }

@@ -106,4 +106,14 @@ public class Logger {
 		}
 		log(s);
 	}
+	
+	public void logAboutEnd() {
+		String s = "游戏结束条件暂时触发，本轮（公平轮）结束后若条件依然满足，游戏结束";
+		log(s);
+	}
+	
+	public void logEndGame() {
+		String s = "游戏结束";
+		log(s);
+	}
 }

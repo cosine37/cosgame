@@ -102,10 +102,12 @@ public class Fate {
 							break;
 						}
 					}
+					
 					x++;
 					if (x == p.getBoard().getMap().getPlaces().size()) {
 						x=0;
 					}
+					p.getBoard().getMap().getPlace(x).bypass(p);
 				}
 			}
 		}

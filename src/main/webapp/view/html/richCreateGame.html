@@ -36,6 +36,11 @@
 	</div>
 	<div>
 		<div>
+			地图：
+			<button ng-disabled="mapId==0" ng-click="mapId=0">青果巷</button>
+			<button ng-disabled="mapId==1" ng-click="mapId=1">GTA</button>
+		</div>
+		<div>
 			初始资金:
 			<button ng-disabled="startMoney==10000" ng-click="startMoney=10000">10000</button>
 			<button ng-disabled="startMoney==15000" ng-click="startMoney=15000">15000</button>
@@ -54,7 +59,9 @@
 			游戏结束条件:
 			<button ng-disabled="endCondition==0" ng-click="endCondition=0">吃鸡模式</button>
 			<button ng-disabled="endCondition==1" ng-click="endCondition=1">速战速决</button>
-			<button ng-disabled="endCondition==52" ng-click="endCondition=52">52回合</button>
+			<button ng-disabled="endCondition==12" ng-click="endCondition=12">12轮后游戏结束</button>
+			<button ng-disabled="endCondition==26" ng-click="endCondition=26">26轮后游戏结束</button>
+			<button ng-disabled="endCondition==52" ng-click="endCondition=52">52轮后游戏结束</button>
 			<button ng-disabled="endCondition==58000" ng-click="endCondition=58000">58同城</button>
 		</div>
 		

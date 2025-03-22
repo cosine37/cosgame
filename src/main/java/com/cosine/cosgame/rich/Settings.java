@@ -14,6 +14,7 @@ public class Settings {
 		entity.setStartMoney(getStartMoney());
 		entity.setStartSalary(getStartSalary());
 		entity.setEndCondition(getEndCondition());
+		entity.setMapId(getMapId());
 		
 		return entity;
 	}
@@ -56,5 +57,9 @@ public class Settings {
 	
 	public int getFirstPlayer() {
 		return get(Consts.SETTINGS_FIRST_PLAYER);
+	}
+	
+	public int getMapId() {
+		return get(Consts.SETTINGS_MAPID);
 	}
 }

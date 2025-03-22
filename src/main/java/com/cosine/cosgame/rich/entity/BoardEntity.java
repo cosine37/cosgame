@@ -20,6 +20,7 @@ public class BoardEntity {
 	int lastRolled;
 	int curPlayer;
 	int jailRound;
+	int endCondition;
 	
 	boolean inJail;
 	
@@ -161,6 +162,12 @@ public class BoardEntity {
 	}
 	public void setBroadcastImgStyle(Map<String, String> broadcastImgStyle) {
 		this.broadcastImgStyle = broadcastImgStyle;
+	}
+	public int getEndCondition() {
+		return endCondition;
+	}
+	public void setEndCondition(int endCondition) {
+		this.endCondition = endCondition;
 	}
 	
 

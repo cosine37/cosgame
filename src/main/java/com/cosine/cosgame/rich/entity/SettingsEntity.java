@@ -6,6 +6,7 @@ public class SettingsEntity {
 	int startSalary;
 	int endCondition;
 	int firstPlayer;
+	int mapId;
 	
 	public int getStartMoney() {
 		return startMoney;
@@ -36,5 +37,11 @@ public class SettingsEntity {
 	}
 	public void setFirstPlayer(int firstPlayer) {
 		this.firstPlayer = firstPlayer;
+	}
+	public int getMapId() {
+		return mapId;
+	}
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
 	}
 }

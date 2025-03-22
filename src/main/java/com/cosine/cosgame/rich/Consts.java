@@ -65,6 +65,7 @@ public class Consts {
 	public static final int SETTINGS_START_SALARY = 2;
 	public static final int SETTINGS_END_CONDITION = 3;
 	public static final int SETTINGS_FIRST_PLAYER = 4;
+	public static final int SETTINGS_MAPID = 5;
 	
 	// avatar related
 	public static final int MAXAVATAR = 8;

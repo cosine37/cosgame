@@ -120,7 +120,13 @@
 							<div style="float:left; width: 724">
 								<div style="padding-top: 20px;">
 									<div style="padding-left: 20px"><b>当前轮次：</b>{{gamedata.round}}</div>
-									<div style="padding-left: 20px"><b>游戏结束条件：</b></div>
+									<div style="padding-left: 20px"><b>游戏结束条件：</b>
+										<span ng-show="gamedata.endCondition == 0">吃鸡模式，当轮次结束时只剩一名玩家的现金不为负数，游戏结束。</span>
+										<span ng-show="gamedata.endCondition == 1">速战速决，当轮次结束时任何一名玩家的现金为负数，游戏结束。</span>
+										<span ng-show="gamedata.endCondition > 10 && gamedata.endCondition < 1000">{{gamedata.endCondition}}轮之后</span>
+										<span ng-show="gamedata.endCondition > 1000">当一名玩家的现金达到${{gamedata.endCondition}}</span>
+									</div>
+									
 								</div>
 								
 								<div ng-show="gamedata.broadcastMsg != null && gamedata.broadcastMsg != ''" style="padding-left: 20px; padding-top:30px;">
@@ -296,7 +302,7 @@
 			<!-- End actual map -->
 		</table>
 	</div>
-	<div class="player-console">
+	<div class="player-console" ng-show="status == INGAME">
 		<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace.name}}，现在不是你的回合</div>
 		<div ng-show="phase == ROLL && gamedata.inJail">你的回合开始，这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
@@ -323,5 +329,6 @@
 			<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		</div>
 	</div>
+	<div class="player-console" ng-show="status == ENDGAME">游戏结束</div>
 </body>
 </html>

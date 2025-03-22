@@ -110,6 +110,7 @@ public class Board {
 		entity.setCurPlayer(curPlayer);
 		entity.setBroadcastImg(broadcastImg);
 		entity.setBroadcastMsg(broadcastMsg);
+		entity.setEndCondition(settings.getEndCondition());
 		HashMap<String, String> broadcastImgStyle = new HashMap<>();
 		if (broadcastImg != null && broadcastImg.length() > 0) {
 			broadcastImgStyle.put("background-image", "url(/image/Rich/" + broadcastImg + ".png)");
@@ -212,26 +213,70 @@ public class Board {
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();
-			newRound();
+			if (gameEnds()) {
+				endGame();
+			} else {
+				newRound();
+				players.get(curPlayer).startTurn();
+			}
+		} else {
+			if (gameEnds()) {
+				logger.logAboutEnd();
+			}
+			players.get(curPlayer).startTurn();
 		}
-		players.get(curPlayer).startTurn();
-		/*
-		// Step 4: clear broadcast
-		broadcastImg = "";
-		broadcastMsg = "";
-		*/
 	}
 	public void newRound() {
 		round++;
 		logger.logRoundStart(round);
+		
+	}
+	public boolean gameEnds() {
+		int i, numAlive;
+		boolean ans = false;
+		int ec = settings.getEndCondition();
+		if (ec < 10) { // alive player related
+			numAlive = 0;
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getMoney() >= 0) {
+					numAlive++;
+				}
+			}
+			if (ec == 0) {
+				if (numAlive < 2) {
+					ans = true;
+				}
+			} else if (ec == 1) {
+				if (numAlive < players.size()) {
+					ans = true;
+				}
+			}
+		} else if (ec<1000){ // num rounds related
+			if (round>=ec) {
+				ans = true;
+			}
+		} else { // money related
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getMoney() >= ec) {
+					ans = true;
+				}
+			}
+		}
+		return ans;
+	}
+	public void endGame() {
+		// Step 1: set status
+		status = Consts.ENDGAME;
+		logger.logEndGame();
 	}
 	
 	// Actual Operations
 	public void startGameUDB(List<Integer> settingsList) {
 		// Step 1: initialize Map, settings and players
 		this.status = Consts.INGAME;
-		map = MapBuilder.genTestMap();
+		
 		settings = new Settings(settingsList);
+		map = MapBuilder.genMap(settings.getMapId());
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).startGame();
