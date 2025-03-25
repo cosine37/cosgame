@@ -17,6 +17,9 @@ public class MapEntity {
 	List<String> cornerNames;
 	List<String> bgms;
 	Map<String, String> nameStyle;
+	Map<String, String> mapStyle;
+	Map<String, String> centerStyle;
+	Map<String, String> logStyle;
 	String name;
 	
 	public int getWidth() {
@@ -102,6 +105,24 @@ public class MapEntity {
 	}
 	public void setBgms(List<String> bgms) {
 		this.bgms = bgms;
+	}
+	public Map<String, String> getMapStyle() {
+		return mapStyle;
+	}
+	public void setMapStyle(Map<String, String> mapStyle) {
+		this.mapStyle = mapStyle;
+	}
+	public Map<String, String> getCenterStyle() {
+		return centerStyle;
+	}
+	public void setCenterStyle(Map<String, String> centerStyle) {
+		this.centerStyle = centerStyle;
+	}
+	public Map<String, String> getLogStyle() {
+		return logStyle;
+	}
+	public void setLogStyle(Map<String, String> logStyle) {
+		this.logStyle = logStyle;
 	}
 	
 }

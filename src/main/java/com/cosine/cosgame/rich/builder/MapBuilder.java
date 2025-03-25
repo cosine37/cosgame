@@ -14,9 +14,42 @@ public class MapBuilder {
 	public static Map genMap(int mapId) {
 		if (mapId == 0) {
 			return genQingguo();
+		} if (mapId == 1) {
+			return genGTA();
 		} else {
 			return new Map();
 		}
+	}
+	
+	public static Map genGTA() {
+		final int height = 11;
+		final int width = 11;
+		final int n = (height+width-2)*2;
+		int i;
+		Map map = new Map();
+		map.setName("GTA");
+		map.setNameFont("hbt");
+		map.setHeight(height);
+		map.setWidth(width);
+		map.setJailIndex(10);
+		map.setJailZone(1);
+		map.setBailCost(500);
+		map.setMapZoom("0.95");
+		map.setCenterZoom("1.05");
+		map.setCenterHeight("602px");
+		map.setCenterWidth("1034px");
+		map.setLogHeight("880px");
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
+		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		for (i=0;i<n;i++) {
+			Place p = new Empty(i, "地点"+i);
+			p.setFont("hbt", 22);
+			map.addPlace(p);
+		}
+		
+		return map;
 	}
 	
 	public static Map genQingguo() {
@@ -33,6 +66,11 @@ public class MapBuilder {
 		map.setJailIndex(9);
 		map.setJailZone(1);
 		map.setBailCost(500);
+		map.setMapZoom("1.1");
+		map.setCenterZoom("1");
+		map.setCenterHeight("602px");
+		map.setCenterWidth("964px");
+		map.setLogHeight("480px");
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
@@ -219,7 +257,6 @@ public class MapBuilder {
 		}
 		
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,101,102,103,104)));
-		//map.setFateIds(new ArrayList<>(Arrays.asList(102)));
 		return map;
 	}
 }

@@ -28,6 +28,11 @@ public class Map {
 	String stationName;
 	String name;
 	String nameFont;
+	String mapZoom;
+	String centerZoom;
+	String centerWidth;
+	String centerHeight;
+	String logHeight;
 	
 	Board board;
 	
@@ -49,6 +54,11 @@ public class Map {
 		doc.append("name", name);
 		doc.append("nameFont", nameFont);
 		doc.append("bgms", bgms);
+		doc.append("mapZoom", mapZoom);
+		doc.append("centerZoom", centerZoom);
+		doc.append("centerWidth", centerWidth);
+		doc.append("centerHeight", centerHeight);
+		doc.append("logHeight", logHeight);
 		List<Integer> jailPlayerIndexes = new ArrayList<>();
 		for (i=0;i<jailPlayers.size();i++) {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
@@ -78,6 +88,11 @@ public class Map {
 		name = doc.getString("name");
 		nameFont = doc.getString("nameFont");
 		bgms = (List<String>) doc.get("bgms");
+		mapZoom = doc.getString("mapZoom");
+		centerZoom = doc.getString("centerZoom");
+		centerWidth = doc.getString("centerWidth");
+		centerHeight = doc.getString("centerHeight");
+		logHeight = doc.getString("logHeight");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -118,6 +133,17 @@ public class Map {
 		HashMap<String, String> fontStyle = new HashMap<>();
 		fontStyle.put("font-family", nameFont);
 		entity.setNameStyle(fontStyle);
+		HashMap<String, String> mapStyle = new HashMap<>();
+		mapStyle.put("zoom", mapZoom);
+		HashMap<String, String> centerStyle = new HashMap<>();
+		centerStyle.put("zoom", centerZoom);
+		centerStyle.put("height", centerHeight);
+		centerStyle.put("width", centerWidth);
+		HashMap<String, String> logStyle = new HashMap<>();
+		logStyle.put("height", logHeight);
+		entity.setMapStyle(mapStyle);
+		entity.setCenterStyle(centerStyle);
+		entity.setLogStyle(logStyle);
 		return entity;
 	}
 	
@@ -313,5 +339,35 @@ public class Map {
 	}
 	public void setBgms(List<String> bgms) {
 		this.bgms = bgms;
+	}
+	public String getMapZoom() {
+		return mapZoom;
+	}
+	public void setMapZoom(String mapZoom) {
+		this.mapZoom = mapZoom;
+	}
+	public String getCenterZoom() {
+		return centerZoom;
+	}
+	public void setCenterZoom(String centerZoom) {
+		this.centerZoom = centerZoom;
+	}
+	public String getCenterWidth() {
+		return centerWidth;
+	}
+	public void setCenterWidth(String centerWidth) {
+		this.centerWidth = centerWidth;
+	}
+	public String getCenterHeight() {
+		return centerHeight;
+	}
+	public void setCenterHeight(String centerHeight) {
+		this.centerHeight = centerHeight;
+	}
+	public String getLogHeight() {
+		return logHeight;
+	}
+	public void setLogHeight(String logHeight) {
+		this.logHeight = logHeight;
 	}
 }

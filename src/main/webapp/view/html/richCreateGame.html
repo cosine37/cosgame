@@ -47,21 +47,32 @@
 		margin-top: 20px; margin-left: 20px; text-align:center; position: relative">
 		<div style="margin-top:20px;">
 			<button ng-disabled="mapId==0" ng-click="mapId=0" class="map-button">青果巷</button>
-			<!-- 
-			<button ng-disabled="mapId==1" ng-click="mapId=1" class="map-button">GTA</button>
-			 -->
+			<button ng-disabled="mapId==1" ng-click="mapId=1" class="map-button">G T A</button>
 		</div>
 		<div style="margin-top: 10px;">
 			<img ng-src="/image/Rich/qingguo.png" class="map-graph" ng-show="mapId==0">
+			<img ng-src="/image/Rich/gta.png" class="map-graph" ng-show="mapId==1">
 		</div>
 		<div style="margin-top: 20px;">
-			<table style="margin-left: 300px; text-align:left; font-size: 16px;">
+			<table style="margin-left: 300px; text-align:left; font-size: 16px;" >
 				<tr>
 					<td style="width: 300px;"><b>地图面积：</b>
 						<span ng-show="mapId==0">小</span>
+						<span ng-show="mapId==1">中</span>
 					</td>
 					<td style="width: 300px;"><b>支持人数：</b>
 						<span ng-show="mapId==0">2~4人</span>
+						<span ng-show="mapId==1">2~6人</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 300px;"><b>游戏节奏：</b>
+						<span ng-show="mapId==0">快</span>
+						<span ng-show="mapId==1">中</span>
+					</td>
+					<td style="width: 300px;"><b>推荐扩展：</b>
+						<span ng-show="mapId==0">无</span>
+						<span ng-show="mapId==1">GTA</span>
 					</td>
 				</tr>
 				<tr>
