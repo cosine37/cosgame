@@ -16,6 +16,7 @@ public class PlayerEntity {
 	AvatarEntity avatarOrigin;
 	
 	List<Integer> owned;
+	List<CardEntity> hand;
 
 	public String getName() {
 		return name;
@@ -88,6 +89,12 @@ public class PlayerEntity {
 	}
 	public void setAvatarOrigin(AvatarEntity avatarOrigin) {
 		this.avatarOrigin = avatarOrigin;
+	}
+	public List<CardEntity> getHand() {
+		return hand;
+	}
+	public void setHand(List<CardEntity> hand) {
+		this.hand = hand;
 	}
 	
 }

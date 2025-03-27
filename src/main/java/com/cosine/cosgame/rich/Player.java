@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.cosine.cosgame.rich.account.Account;
 import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.AvatarEntity;
+import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
 
 public class Player {
@@ -61,17 +62,17 @@ public class Player {
 		
 		List<Integer> handDocList = new ArrayList<>();
 		for (i=0;i<hand.size();i++){
-			handDocList.add(hand.get(i).getId());
+			handDocList.add(hand.get(i).getId()*100+hand.get(i).getLevel());
 		}
 		doc.append("hand",handDocList);
 		List<Integer> deckDocList = new ArrayList<>();
 		for (i=0;i<deck.size();i++){
-			deckDocList.add(deck.get(i).getId());
+			deckDocList.add(deck.get(i).getId()*100+deck.get(i).getLevel());
 		}
 		doc.append("deck",deckDocList);
 		List<Integer> discardDocList = new ArrayList<>();
 		for (i=0;i<discard.size();i++){
-			discardDocList.add(discard.get(i).getId());
+			discardDocList.add(discard.get(i).getId()*100+discard.get(i).getLevel());
 		}
 		doc.append("discard",discardDocList);
 		return doc;
@@ -166,6 +167,14 @@ public class Player {
 			entity.setAvatar(avatarEntity);
 		}
 		entity.setAvatarOrigin(avatar.toAvatarEntity());
+		
+		int i;
+		List<CardEntity> handEntity = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			handEntity.add(hand.get(i).toCardEntity());
+		}
+		entity.setHand(handEntity);
+		
 		return entity;
 	}
 	
@@ -442,6 +451,13 @@ public class Player {
 		board.getLogger().logEndTurn(this);
 		board.nextPlayer();
 		
+	}
+	
+	public void addCard(Card c) {
+		// TODO: change this later
+		if (hand.size()<5) {
+			hand.add(c);
+		}
 	}
 	
 	public String getName() {

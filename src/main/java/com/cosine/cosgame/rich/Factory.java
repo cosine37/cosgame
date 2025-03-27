@@ -3,12 +3,24 @@ package com.cosine.cosgame.rich;
 import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.*;
+import com.cosine.cosgame.rich.gta.cards.*;
 
 public class Factory {
-	public static Card genCard(int id) {
+	public static Card genCard(int x) {
 		Card c = new Card();
+		int id = x/100;
+		int level = x%100;
 		
+		if (id == 10) {
+			c = new CardRelease();
+		}
+		
+		c.setLevel(level);
 		return c;
+	}
+	
+	public static Card genNewCard(int x) {
+		return genCard(x*100);
 	}
 	
 	public static Place genPlace(Document doc, Board board) {
@@ -85,6 +97,11 @@ public class Factory {
 			return new Fate(18,Consts.FATE_LOSE,555,"算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555。","p在算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555");
 		} else if (id == 104) {
 			return new Fate(id,Consts.FATE_ADD,1437,"和老师傅学习乱针绣并当场卖出，获得$1888。","p和老师傅学习乱针绣并当场卖出，获得$1888");
+		} 
+		
+		
+		else if (id == 201) {
+			return new Fate(id,Consts.FATE_CARD,10,"给狱警推荐了好吃的甜甜圈，获得狱警赠送的出狱卡。","因为给狱警推荐了好吃的甜甜圈，p获得狱警赠送的出狱卡");
 		}
 		return fate;
 	}

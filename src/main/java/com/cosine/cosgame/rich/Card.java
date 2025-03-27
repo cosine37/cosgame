@@ -1,13 +1,35 @@
 package com.cosine.cosgame.rich;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.cosine.cosgame.rich.entity.CardEntity;
+
 public class Card {
-	int id;
-	String name;
-	List<Boolean> types;
-	Player player;
-	Board board;
+	protected int id;
+	protected String name;
+	protected String desc;
+	protected String img;
+	protected List<Boolean> types;
+	protected Player player;
+	protected Board board;
+	protected int level;
+	
+	public Card() {
+		level = 0;
+		types = new ArrayList<>();
+	}
+	
+	public CardEntity toCardEntity(){
+		CardEntity entity = new CardEntity();
+		entity.setId(id);
+		entity.setLevel(level);
+		entity.setName(name);
+		entity.setDesc(desc);
+		entity.setImg(img);
+		entity.setTypes(types);
+		return entity;
+	}
 	
 	public int getId() {
 		return id;
@@ -38,5 +60,23 @@ public class Card {
 	}
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

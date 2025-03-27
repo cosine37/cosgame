@@ -2,15 +2,15 @@
 	<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace.name}}，现在不是你的回合</div>
 	<div ng-show="phase == ROLL && gamedata.inJail">你的回合开始，这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：
 		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-		<!-- 
+
 		<button ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		 -->
+
 	</div>
 	<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace.name}}，你的回合开始，请选择一项：
 		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-		<!-- 
+		
 		<button ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		 -->
+
 	</div>
 	<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
 		请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>

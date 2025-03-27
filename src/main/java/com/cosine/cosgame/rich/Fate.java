@@ -110,6 +110,9 @@ public class Fate {
 					p.getBoard().getMap().getPlace(x).bypass(p);
 				}
 			}
+		} else if (type == Consts.FATE_CARD) {
+			Card c = Factory.genNewCard(value);
+			p.addCard(c);
 		}
 	}
 	public int getId() {

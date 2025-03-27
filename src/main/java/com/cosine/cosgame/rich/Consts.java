@@ -57,6 +57,7 @@ public class Consts {
 	public static final int FATE_RECEIVEEVERY = 6;
 	public static final int FATE_GIVEEVERY = 7;
 	public static final int FATE_MOVE = 8;
+	public static final int FATE_CARD = 9;
 	
 	
 	// settings related
