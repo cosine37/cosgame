@@ -70,4 +70,7 @@ public class Consts {
 	
 	// avatar related
 	public static final int MAXAVATAR = 8;
+	
+	// card related
+	public static final int CARD_OPTION_THROW = 99;
 }

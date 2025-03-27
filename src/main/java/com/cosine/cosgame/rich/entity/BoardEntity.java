@@ -12,6 +12,7 @@ public class BoardEntity {
 	String broadcastMsg;
 	String broadcastImg;
 	Map<String, String> broadcastImgStyle;
+	List<CardEntity> myHand;
 	
 	int status;
 	int round;
@@ -175,6 +176,12 @@ public class BoardEntity {
 	}
 	public void setSes(List<String> ses) {
 		this.ses = ses;
+	}
+	public List<CardEntity> getMyHand() {
+		return myHand;
+	}
+	public void setMyHand(List<CardEntity> myHand) {
+		this.myHand = myHand;
 	}
 	
 

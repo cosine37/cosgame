@@ -28,7 +28,7 @@ public class MapBuilder {
 		int i;
 		Map map = new Map();
 		map.setName("GTA");
-		map.setNameFont("hbt");
+		map.setNameFont("tyh");
 		map.setHeight(height);
 		map.setWidth(width);
 		map.setJailIndex(10);
@@ -45,12 +45,27 @@ public class MapBuilder {
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		for (i=0;i<n;i++) {
 			Place p = new Empty(i, "地点"+i);
-			p.setFont("hbt", 22);
+			p.setFont("tyh", 22);
 			if (i == 2) {
 				p = new PersonalEvent(i, "命运");
 				p.setImg("fate");
-				p.setFont("hbt", 22);
+				p.setFont("tyh", 22);
 				p.createDetail();
+			} else if (i == 10) {
+				p = new Jail(i, "监狱大门");
+				p.setImg("jailDoor");
+				p.setFont("tyh", 22);
+				p.setLandMsg("你来到了监狱大门口，但只是路过");
+				p.createDetail();
+				p.getDetail().setDesc("只是路过而已~");
+			} else if (i == 3) {
+				p = new GoToJail(i, "入狱");
+				p.setImg("goToJail");
+				p.setFont("tyh", 22);
+				p.setLandMsg("你将立即入狱");
+				p.createDetail();
+				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
+				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 			}
 			map.addPlace(p);
 		}

@@ -66,7 +66,7 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		
 		$scope.startMoney = 15000;
 		$scope.startSalary = 2000;
-		$scope.endCondition = 0;
+		$scope.endCondition = 52;
 		$scope.firstPlayer = 0;
 		$scope.mapId = 0;
 		

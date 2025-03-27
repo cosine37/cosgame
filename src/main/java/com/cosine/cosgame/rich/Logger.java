@@ -116,4 +116,14 @@ public class Logger {
 		String s = "游戏结束";
 		log(s);
 	}
+	
+	public void logPlayCard(Player p, Card c) {
+		String s = p.getName() + " 打出了 " + c.getName();
+		log(s);
+	}
+	
+	public void logThrowCard(Player p, Card c) {
+		String s = p.getName() + " 丢弃了 " + c.getName();
+		log(s);
+	}
 }

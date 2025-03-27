@@ -167,14 +167,6 @@ public class Player {
 			entity.setAvatar(avatarEntity);
 		}
 		entity.setAvatarOrigin(avatar.toAvatarEntity());
-		
-		int i;
-		List<CardEntity> handEntity = new ArrayList<>();
-		for (i=0;i<hand.size();i++) {
-			handEntity.add(hand.get(i).toCardEntity());
-		}
-		entity.setHand(handEntity);
-		
 		return entity;
 	}
 	
@@ -254,6 +246,36 @@ public class Player {
 		
 		// Step 2: set related status
 		inJail = false;
+	}
+	
+	public void playCard(int x, int rawOptions) {
+		if (x>=0 && x<hand.size()) {
+			Card c = hand.remove(x);
+			if (rawOptions == Consts.CARD_OPTION_THROW) {
+				board.getLogger().logThrowCard(this,c);
+				
+				board.setBroadcastImg("avatar/head_"+avatarId);
+				board.setBroadcastMsg(name + "丢弃了" + c.getName() + "。");
+			} else {
+				board.getLogger().logPlayCard(this,c);
+				c.play(rawOptions);
+				
+				// TODO: put the card in discard
+				if (c.isExhaust() == false) {
+					
+				}
+			}
+			
+		}
+	}
+	
+	public void playCardRaw(int option) {
+		if (option>=10000 && option<20000) {
+			int x = option/100;
+			x = x%100;
+			int rawOptions = option%100;
+			playCard(x, rawOptions);
+		}
 	}
 	
 	public List<String> getOptions(){
@@ -337,6 +359,8 @@ public class Player {
 			} else {
 				
 			}
+		} else if (option>=10000 && option<20000) { // play cards
+			playCardRaw(option);
 		}
 		
 		else if (option>100000) {

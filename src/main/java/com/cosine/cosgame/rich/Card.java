@@ -1,6 +1,7 @@
 package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.cosine.cosgame.rich.entity.CardEntity;
@@ -9,15 +10,20 @@ public class Card {
 	protected int id;
 	protected String name;
 	protected String desc;
-	protected String img;
 	protected List<Boolean> types;
 	protected Player player;
 	protected Board board;
 	protected int level;
+	protected boolean exhaust;
 	
 	public Card() {
 		level = 0;
 		types = new ArrayList<>();
+		exhaust = true;
+	}
+	
+	public void play(int rawOptions) {
+		
 	}
 	
 	public CardEntity toCardEntity(){
@@ -26,9 +32,17 @@ public class Card {
 		entity.setLevel(level);
 		entity.setName(name);
 		entity.setDesc(desc);
-		entity.setImg(img);
 		entity.setTypes(types);
+		HashMap<String, String> imgStyle = new HashMap<>();
+		imgStyle.put("background-image", "url(/image/Rich/card/" + id + ".png)");
+		imgStyle.put("background-size", "cover");
+		entity.setImgStyle(imgStyle);
+		entity.setPlayable(playable());
 		return entity;
+	}
+	
+	public boolean playable() {
+		return false;
 	}
 	
 	public int getId() {
@@ -67,16 +81,16 @@ public class Card {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getImg() {
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
-	}
 	public int getLevel() {
 		return level;
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public boolean isExhaust() {
+		return exhaust;
+	}
+	public void setExhaust(boolean exhaust) {
+		this.exhaust = exhaust;
 	}
 }

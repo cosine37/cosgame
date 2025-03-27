@@ -153,10 +153,57 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.chosenEstate = $scope.map.places[x];
 			}
 			
+			
+		}
+		
+		$scope.chosenCard = -1;
+		$scope.clickHand = function(x){
+			if ($scope.phase != $scope.OFFTURN){
+				if (x == $scope.chosenCard){
+					$scope.chosenCard = -1;
+				} else {
+					$scope.chosenCard = x;
+				}
+				setHandStyles()
+			}
+			
+		}
+		$scope.showPlayButton = function(){
+			if ($scope.chosenCard>=0 && $scope.chosenCard<$scope.hand.length){
+				return $scope.hand[$scope.chosenCard].playable;
+			} else {
+				return false;
+			}
+		}
+		$scope.playCard = function(){
+			if ($scope.chosenCard>=0){
+				var option = 10000;
+				option = option+$scope.chosenCard * 100;
+				var data = {"option" : option}
+				$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
+					$scope.chosenCard = -1;
+					ws.send("refresh");
+				});
+			}
+		}
+		
+		$scope.throwCard = function(){
+			if ($scope.chosenCard>=0){
+				var f = confirm("你确定要丢弃这张牌吗？");
+				if (f){
+					var option = 10000;
+					option = option+$scope.chosenCard * 100 + 99;
+					var data = {"option" : option}
+					$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
+						$scope.chosenCard = -1;
+						ws.send("refresh");
+					});
+				}
+			}
 		}
 		
 		setMapLayout = function(){
-			var i,j
+			var i,j;
 			$scope.bottomRow = []
 			$scope.topRow = []
 			for (i=0;i<$scope.map.width;i++){
@@ -188,6 +235,18 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			}
 		}
 		
+		$scope.handStyle = [];
+		setHandStyles = function(){
+			$scope.handStyle = [];
+			for (i=0;i<$scope.hand.length;i++){
+				var cstyle = {}
+				if (i == $scope.chosenCard){
+					cstyle["margin-top"] = "-30px"
+				}
+				$scope.handStyle.push(cstyle);
+			}
+		}
+		
 		$scope.getBoard = function(){
 			$http.get('/rich/getboard').then(function(response){
 				$scope.gamedata = response.data
@@ -205,6 +264,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.players = response.data.players;
 				$scope.logs = response.data.logs;
 				$scope.curPlayer = response.data.curPlayer;
+				$scope.hand = response.data.myHand;
 				
 				$scope.map = response.data.map;
 				if ($scope.bgms.length == 0){
@@ -217,6 +277,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				
 				setMapLayout();
 				setPlayerStyles();
+				setHandStyles();
 				
 				$http.post('/citadelsgame/empty').then(function(response){
 					adjustLogs("log-zone")

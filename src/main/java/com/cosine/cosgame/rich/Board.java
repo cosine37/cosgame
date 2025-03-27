@@ -11,6 +11,7 @@ import org.bson.Document;
 import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.entity.BoardEntity;
+import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
 import com.cosine.cosgame.util.MongoDBUtil;
@@ -103,7 +104,7 @@ public class Board {
 	}
 	
 	public BoardEntity toBoardEntity(String username) {
-		int i;
+		int i,j;
 		BoardEntity entity = new BoardEntity();
 		entity.setId(id);
 		entity.setLord(lord);
@@ -160,6 +161,12 @@ public class Board {
 				entity.setMyLandMsg(p.myLandMsg());
 				entity.setInJail(p.isInJail());
 				entity.setJailRound(p.getJailRound());
+				
+				List<CardEntity> handEntity = new ArrayList<>();
+				for (j=0;j<p.getHand().size();j++) {
+					handEntity.add(p.getHand().get(j).toCardEntity());
+				}
+				entity.setMyHand(handEntity);
 			}
 		}
 		entity.setPlayers(pes);
