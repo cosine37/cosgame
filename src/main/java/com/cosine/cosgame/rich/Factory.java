@@ -4,6 +4,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.*;
 import com.cosine.cosgame.rich.gta.cards.*;
+import com.cosine.cosgame.rich.gta.places.*;
 
 public class Factory {
 	public static Card genCard(int x) {
@@ -40,6 +41,8 @@ public class Factory {
 			p = new Jail(doc, board);
 		} else if (type == Consts.PLACE_GOTOJAIL) {
 			p = new GoToJail(doc, board);
+		} else if (type == Consts.PLACE_HOSPITAL) {
+			p = new Hospital(doc, board);
 		}
 		return p;
 	}

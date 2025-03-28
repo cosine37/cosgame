@@ -9,6 +9,7 @@ import com.cosine.cosgame.rich.Fate;
 import com.cosine.cosgame.rich.Map;
 import com.cosine.cosgame.rich.Place;
 import com.cosine.cosgame.rich.basicplaces.*;
+import com.cosine.cosgame.rich.gta.places.*;
 
 public class MapBuilder {
 	public static Map genMap(int mapId) {
@@ -33,6 +34,8 @@ public class MapBuilder {
 		map.setWidth(width);
 		map.setJailIndex(10);
 		map.setJailZone(1);
+		map.setHospitalIndex(30);
+		map.setWardZone(3);
 		map.setBailCost(500);
 		map.setMapZoom("0.95");
 		map.setCenterZoom("1.05");
@@ -42,7 +45,7 @@ public class MapBuilder {
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
-		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","ward","")));
 		for (i=0;i<n;i++) {
 			Place p = new Empty(i, "地点"+i);
 			p.setFont("tyh", 22);
@@ -66,6 +69,14 @@ public class MapBuilder {
 				p.createDetail();
 				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
 				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
+			} else if (i == 30) {
+				p = new Hospital(i, "医院");
+				p.setImg("hospital");
+				p.setFont("tyh", 22);
+				//p.setLandMsg("你来到了医院门口，可以回复你的生命值");
+				p.createDetail();
+				p.getDetail().setDesc("你可以在此回复生命值。");
+				p.getDetail().setDesc2("花费$500回复1点生命值。若你的生命值为1，你可以花费$1000回复2点生命值。");
 			}
 			map.addPlace(p);
 		}

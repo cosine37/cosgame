@@ -22,6 +22,9 @@ public class MapEntity {
 	Map<String, String> logStyle;
 	String name;
 	
+	List<Integer> wardPlayersIndex;
+	int wardZone;
+	
 	public int getWidth() {
 		return width;
 	}
@@ -123,6 +126,18 @@ public class MapEntity {
 	}
 	public void setLogStyle(Map<String, String> logStyle) {
 		this.logStyle = logStyle;
+	}
+	public List<Integer> getWardPlayersIndex() {
+		return wardPlayersIndex;
+	}
+	public void setWardPlayersIndex(List<Integer> wardPlayersIndex) {
+		this.wardPlayersIndex = wardPlayersIndex;
+	}
+	public int getWardZone() {
+		return wardZone;
+	}
+	public void setWardZone(int wardZone) {
+		this.wardZone = wardZone;
 	}
 	
 }

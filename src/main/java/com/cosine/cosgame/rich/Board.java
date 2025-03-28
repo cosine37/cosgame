@@ -223,7 +223,18 @@ public class Board {
 		// Step 2: reset fate id for display purposes
 		lastFateId = 0;
 		
-		// Step 3: find the next player and potentially start round
+		// Step 3: GTA related, send all user with 0 hp to the ward
+		int i;
+		if (settings.getUseGTA() == 1) {
+			for (i=0;i<players.size();i++) {
+				if (players.get(i).getHp() == 0) {
+					players.get(i).goToWard();
+				}
+			}
+		}
+		
+		
+		// Step 4: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();

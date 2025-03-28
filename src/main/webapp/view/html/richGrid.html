@@ -96,18 +96,13 @@
 	</div>
 </div>
 
-
-<!-- 
-<div>
-	{{g.name}}
+<div ng-show="g.type==HOSPITAL" class="grid-div" style="background-color:ForestGreen">
+	<div style="padding-top:3px; color:white" ng-style="g.fontStyle">{{g.name}}</div>
+	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
+	
+	<div class="grid-avatars-div" style="top: 50px;">
+		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>
-<div ng-show="g.type==ESTATE">
-	{{g.level}}/{{g.maxLevel}}
-</div>
-<div>
-	{{g.playersOn}}
-</div>
-<div ng-show="g.type==ESTATE">
-	<span ng-show="g.ownerId != -1">{{g.ownerName}}</span>
-</div>
- -->

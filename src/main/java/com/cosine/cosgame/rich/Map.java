@@ -34,6 +34,11 @@ public class Map {
 	String centerHeight;
 	String logHeight;
 	
+	// GTA related
+	int hospitalIndex;
+	int wardZone;
+	List<Player> wardPlayers;
+	
 	Board board;
 	
 	public Document toDocument(){
@@ -44,6 +49,8 @@ public class Map {
 		doc.append("fateIds", fateIds);
 		doc.append("jailIndex", jailIndex);
 		doc.append("jailZone", jailZone);
+		doc.append("hospitalIndex", hospitalIndex);
+		doc.append("wardZone", wardZone);
 		doc.append("bailCost", bailCost);
 		doc.append("numDice", numDice);
 		doc.append("areaColors", areaColors);
@@ -64,6 +71,11 @@ public class Map {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
 		}
 		doc.append("jailPlayerIndexes", jailPlayerIndexes);
+		List<Integer> wardPlayerIndexes = new ArrayList<>();
+		for (i=0;i<wardPlayers.size();i++) {
+			wardPlayerIndexes.add(wardPlayers.get(i).getIndex());
+		}
+		doc.append("wardPlayerIndexes", wardPlayerIndexes);
 		List<Document> placesDocList = new ArrayList<>();
 		for (i=0;i<places.size();i++){
 			placesDocList.add(places.get(i).toDocument());
@@ -78,6 +90,8 @@ public class Map {
 		fateIds = (List<Integer>) doc.get("fateIds");
 		jailIndex = doc.getInteger("jailIndex", -1);
 		jailZone = doc.getInteger("jailZone", -1);
+		hospitalIndex = doc.getInteger("hospitalIndex", -1);
+		wardZone = doc.getInteger("wardZone", -1);
 		bailCost = doc.getInteger("bailCost", 0);
 		numDice = doc.getInteger("numDice", 1);
 		areaColors = (List<String>) doc.get("areaColors");
@@ -104,6 +118,11 @@ public class Map {
 		jailPlayers = new ArrayList<>();
 		for (i=0;i<jailPlayerIndexes.size();i++) {
 			jailPlayers.add(board.getPlayers().get(jailPlayerIndexes.get(i)));
+		}
+		List<Integer> wardPlayerIndexes = (List<Integer>) doc.get("wardPlayerIndexes");
+		wardPlayers = new ArrayList<>();
+		for (i=0;i<wardPlayerIndexes.size();i++) {
+			wardPlayers.add(board.getPlayers().get(wardPlayerIndexes.get(i)));
 		}
 	}
 	public MapEntity toMapEntity() {
@@ -151,6 +170,7 @@ public class Map {
 		places = new ArrayList<>();
 		fateIds = new ArrayList<>();
 		jailPlayers = new ArrayList<>();
+		wardPlayers = new ArrayList<>();
 	}
 	
 	public void genMap(int x) {
@@ -201,6 +221,7 @@ public class Map {
 		
 	}
 	
+	// jail related
 	public boolean escapedFromJail() {
 		if (numDice == 1) {
 			if (board.getLastRolled() == 6) {
@@ -226,6 +247,24 @@ public class Map {
 		for (int i=0;i<jailPlayers.size();i++) {
 			if (jailPlayers.get(i).getName().contentEquals(p.getName())) {
 				jailPlayers.remove(i);
+			}
+		}
+	}
+	
+	public Place getHospital() {
+		if (hospitalIndex>=0 && hospitalIndex<places.size()) {
+			return places.get(hospitalIndex); 
+		} else {
+			return null;
+		}
+	}
+	public void addToWard(Player p) {
+		wardPlayers.add(p);
+	}
+	public void removeFromWard(Player p) {
+		for (int i=0;i<wardPlayers.size();i++) {
+			if (wardPlayers.get(i).getName().contentEquals(p.getName())) {
+				wardPlayers.remove(i);
 			}
 		}
 	}
@@ -369,5 +408,23 @@ public class Map {
 	}
 	public void setLogHeight(String logHeight) {
 		this.logHeight = logHeight;
+	}
+	public int getHospitalIndex() {
+		return hospitalIndex;
+	}
+	public void setHospitalIndex(int hospitalIndex) {
+		this.hospitalIndex = hospitalIndex;
+	}
+	public int getWardZone() {
+		return wardZone;
+	}
+	public void setWardZone(int wardZone) {
+		this.wardZone = wardZone;
+	}
+	public List<Player> getWardPlayers() {
+		return wardPlayers;
+	}
+	public void setWardPlayers(List<Player> wardPlayers) {
+		this.wardPlayers = wardPlayers;
 	}
 }

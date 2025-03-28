@@ -27,13 +27,14 @@ public class Player {
 	protected boolean turnEnd;
 	protected int jailRound;
 	protected int avatarId;
-	
 	protected List<Card> hand;
 	protected List<Card> deck;
 	protected List<Card> discard;
 	protected List<Integer> owned;
-	
 	protected int placeIndex;
+	
+	// GTA related
+	protected boolean inWard;
 	
 	protected Board board;
 	
@@ -276,6 +277,25 @@ public class Player {
 		
 		// Step 2: set related status
 		inJail = false;
+	}
+	
+	public void goToWard() {
+		// Step 1: remove from the current place and add player in jail
+		board.getMap().getPlace(placeIndex).removePlayer(this);
+		board.getMap().addToWard(this);
+		
+		// Step 2: set related status
+		inWard = true;
+		
+	}
+	
+	public void outOfWard() {
+		// Step 1: remove from the jail and add to jail index
+		board.getMap().removeFromWard(this);
+		board.getMap().getHospital().addPlayerOn(this);
+		
+		// Step 2: set related status
+		inWard = false;
 	}
 	
 	public void playCard(int x, int rawOptions) {

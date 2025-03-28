@@ -18,13 +18,15 @@
 		<table>
 			<tr>
 				<td>
-					<div ng-show="map.cornerNames[2] == 'jail'" ng-include="'/view/html/richJailCorner.html'"></div>
+					<div ng-show="map.cornerNames[2] == 'jail'" ng-include="'/view/html/richJailCorner.html'" style="float:right"></div>
+					<div ng-show="map.cornerNames[2] == 'ward'" ng-include="'/view/html/richWardCorner.html'" style="float:right"></div>
 				</td>
 				<td ng-repeat="g in topRow track by $index" class="grid-td">
 					<div ng-include="'/view/html/richGrid.html'"></div>
 				</td>
 				<td>
 					<div ng-show="map.cornerNames[3] == 'jail'" ng-include="'/view/html/richJailCorner.html'"></div>
+					<div ng-show="map.cornerNames[3] == 'ward'" ng-include="'/view/html/richWardCorner.html'"></div>
 				</td>
 			</tr>
 			<tr ng-if="map.places">
@@ -291,6 +293,7 @@
 			<tr>
 				<td>
 					<div ng-show="map.cornerNames[1] == 'jail'" ng-include="'/view/html/richJailCorner.html'" style="float:right"></div>
+					<div ng-show="map.cornerNames[1] == 'ward'" ng-include="'/view/html/richWardCorner.html'" style="float:right"></div>
 				</td>
 				<td ng-repeat="g in bottomRow track by $index" class="grid-td">
 					<div ng-include="'/view/html/richGrid.html'"></div>
