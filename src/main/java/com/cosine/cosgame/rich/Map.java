@@ -149,6 +149,11 @@ public class Map {
 			jailPlayerIndexes.add(jailPlayers.get(i).getIndex());
 		}
 		entity.setJailPlayersIndex(jailPlayerIndexes);
+		List<Integer> wardPlayerIndexes = new ArrayList<>();
+		for (i=0;i<wardPlayers.size();i++) {
+			wardPlayerIndexes.add(wardPlayers.get(i).getIndex());
+		}
+		entity.setWardPlayersIndex(wardPlayerIndexes);
 		HashMap<String, String> fontStyle = new HashMap<>();
 		fontStyle.put("font-family", nameFont);
 		entity.setNameStyle(fontStyle);
@@ -251,6 +256,7 @@ public class Map {
 		}
 	}
 	
+	// hospital/ward related
 	public Place getHospital() {
 		if (hospitalIndex>=0 && hospitalIndex<places.size()) {
 			return places.get(hospitalIndex); 

@@ -62,6 +62,7 @@ public class Consts {
 	public static final int FATE_MOVE = 8;
 	public static final int FATE_CARD = 9;
 	public static final int FATE_HPSTAR = 10;
+	public static final int FATE_CARDLOSE = 11;
 	
 	
 	// settings related
@@ -82,4 +83,5 @@ public class Consts {
 	// GTA player related
 	public static final int GTA_MAXHP = 5;
 	public static final int GTA_MAXSTAR = 6;
+	public static final int GTA_TREATMENTFEE = 500;
 }

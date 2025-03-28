@@ -139,6 +139,12 @@ public class Fate {
 			p.addCard(c);
 		} else if (type == Consts.FATE_HPSTAR) {
 			hpStarHandle(p, value);
+		} else if (type == Consts.FATE_CARDLOSE) {
+			int cardId = value/10000;
+			int loseAmount = value%10000;
+			Card c = Factory.genNewCard(cardId);
+			p.addCard(c);
+			p.loseMoney(loseAmount);
 		}
 	}
 	public int getId() {

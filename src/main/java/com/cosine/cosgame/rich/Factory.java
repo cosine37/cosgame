@@ -16,6 +16,15 @@ public class Factory {
 			c = new CardRelease();
 		}
 		
+		
+		else if (id == 20001) {
+			c = new CardSalmonBite();
+		} else if (id == 20002) {
+			c = new CardPoutine();
+		} else if (id == 20003) {
+			c = new CardNanaimoBar();
+		}
+		
 		c.setLevel(level);
 		return c;
 	}
@@ -89,6 +98,18 @@ public class Factory {
 			return new Fate(id,Consts.FATE_ADD,996,"被拉去表演脱口秀，获得出场费$996。","p被拉去表演脱口秀，获得出场费$996");
 		} else if (id == 20) {
 			return new Fate(id,Consts.FATE_ADD,1437,"在路边捡到一颗金杨桃，倒卖后获得$1437。","p在路边捡到一颗金杨桃，倒卖后获得$1437");
+		} else if (id == 21) {
+			return new Fate(id,Consts.FATE_ADD,200,"发小归还十年前借的$200，即使你已经完全忘了这件事。","p的发小归还十年前借的$200，即使p已经完全忘了这件事");
+		} else if (id == 22) {
+			return new Fate(id,Consts.FATE_ADD,1145,"投稿时把小学作文《让我掏心掏肺的朋友》错投在医学栏目，竟意外地被《柳叶刀》发布，获得稿费$1145。","p投稿时把小学作文《让我掏心掏肺的朋友》错投在医学栏目，竟意外地被《柳叶刀》发布，p获得稿费$1145");
+		} else if (id == 23) {
+			return new Fate(id,Consts.FATE_ADD,520,"你在技术博客上发表的《为什么会找不到对象》被情感杂志收录，获得稿费$520。","p在技术博客上发表的《为什么会找不到对象》被情感杂志收录，获得稿费$520");
+		} else if (id == 24) {
+			return new Fate(id,Consts.FATE_LOSE,400,"被发小借走$400，发小发誓以后或许会还。","p被发小借走$400，发小发誓以后或许会还");
+		} else if (id == 25) {
+			return new Fate(id,Consts.FATE_LOSE,809,"感到呼吸困难，花费$809做全身体检，结果发现只是衣服穿反了。","p感到呼吸困难，花费$809做全身体检，结果发现只是衣服穿反了");
+		} else if (id == 26) {
+			return new Fate(id,Consts.FATE_LOSE,1300,"好心扶起被撞倒的老登却被老登反诬是肇事者，赔偿老登$1300。","p好心扶起被撞倒的老登却被老登反诬是肇事者，p赔偿老登$1300。");
 		}
 		
 		
@@ -100,7 +121,13 @@ public class Factory {
 			return new Fate(18,Consts.FATE_LOSE,555,"算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555。","p在算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555");
 		} else if (id == 104) {
 			return new Fate(id,Consts.FATE_ADD,1437,"和老师傅学习乱针绣并当场卖出，获得$1888。","p和老师傅学习乱针绣并当场卖出，获得$1888");
-		} 
+		} else if (id == 105) {
+			return new Fate(id,Consts.FATE_CARD,10,"将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡。","p将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡");
+		} else if (id == 106) {
+			return new Fate(id,Consts.FATE_MOVE,102,"追着游览车玩，移动到前方最近的游览车站。","p追着游览车玩，将会移动前方最近的游览车站");
+		} else if (id == 107) {
+			return new Fate(id,Consts.FATE_GOTOJAIL,0,"为海外商家出口大麻糕，因机翻的商品名被海关误解，立即入狱。","p为海外商家出口大麻糕，因机翻的商品名被海关误解，p被被抓入监狱");
+		}  
 		
 		
 		else if (id == 201) {
@@ -113,6 +140,14 @@ public class Factory {
 		} else if (id == 10002) {
 			return new Fate(id,Consts.FATE_LOSE,210600,"被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600。","p被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600");
 		}
+		
+		else if (id == 10201) {
+			return new Fate(id,Consts.FATE_CARD,20001,"参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃。","p参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃");
+		} else if (id == 10202) {
+			return new Fate(id,Consts.FATE_CARDLOSE,200020100,"购买魁北克特色小吃肉汁奶酪盖浇薯条，花费$100。","p购买魁北克特色小吃肉汁奶酪盖浇薯条，花费$100");
+		} else if (id == 10203) {
+			return new Fate(id,Consts.FATE_CARD,20003,"参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条。","p参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条");
+		} 
 		
 		return fate;
 	}

@@ -38,7 +38,7 @@ public class PersonalEvent extends Place {
 		// broadcast fate
 		Fate fate = Factory.genFate(x);
 		board.setBroadcastImg("fate/" + x);
-		String broadcastMsg = p.getName() + "的见闻：" + fate.getContent();
+		String broadcastMsg = p.getName() + "的" + name + "：" + fate.getContent();
 		board.setBroadcastMsg(broadcastMsg);
 		
 		// add se

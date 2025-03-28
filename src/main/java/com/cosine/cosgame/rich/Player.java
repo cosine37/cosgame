@@ -55,6 +55,7 @@ public class Player {
 		doc.append("rollDisplay", rollDisplay);
 		doc.append("inJail", inJail);
 		doc.append("jailRound", jailRound);
+		doc.append("inWard", inWard);
 		doc.append("turnEnd", turnEnd);
 		Account account = new Account();
 		account.getFromDB(name);
@@ -94,6 +95,7 @@ public class Player {
 		rollDisplay = doc.getInteger("rollDisplay", 0);
 		inJail = doc.getBoolean("inJail", false);
 		jailRound = doc.getInteger("jailRound", 0);
+		inWard = doc.getBoolean("inWard", false);
 		turnEnd = doc.getBoolean("turnEnd", turnEnd);
 		avatarId = doc.getInteger("avatarId", -1);
 		if (avatarId == -1) {
@@ -195,6 +197,8 @@ public class Player {
 		hp = hp+x;
 		// TODO: may need to update here
 		if (hp>Consts.GTA_MAXHP) hp = Consts.GTA_MAXHP;
+		
+		board.getLogger().logRecover(this, x);
 	}
 	
 	public void loseHp(int x) {
@@ -227,7 +231,12 @@ public class Player {
 		
 		// below are expansion settings
 		if (board.getSettings().getUseGTA()>0) {
+			
 			hp = Consts.GTA_MAXHP;
+			
+			// TODO: revert back
+			//hp = 0;
+			
 			star = 0;
 		}
 	}
@@ -280,7 +289,7 @@ public class Player {
 	}
 	
 	public void goToWard() {
-		// Step 1: remove from the current place and add player in jail
+		// Step 1: remove from the current place and add player in ward
 		board.getMap().getPlace(placeIndex).removePlayer(this);
 		board.getMap().addToWard(this);
 		
@@ -290,12 +299,23 @@ public class Player {
 	}
 	
 	public void outOfWard() {
-		// Step 1: remove from the jail and add to jail index
+		// Step 1: remove from the ward and add to ward index
 		board.getMap().removeFromWard(this);
 		board.getMap().getHospital().addPlayerOn(this);
 		
 		// Step 2: set related status
 		inWard = false;
+		
+		// Step 3: pay treatment fee
+		int fee = Consts.GTA_TREATMENTFEE*hp;
+		if (money<1) fee = 0; else if (money<fee) fee = money-1;
+		loseMoney(fee);
+		
+		// Step 4: logs
+		board.getLogger().logOutOfWard(this, fee);
+		
+		board.setBroadcastImg("avatar/head_"+avatarId);
+		board.setBroadcastMsg(name + "出院了，住院期间花费$" + fee + "。");
 	}
 	
 	public void playCard(int x, int rawOptions) {
@@ -336,7 +356,16 @@ public class Player {
 				if (money>=board.getMap().getBailCost()) {
 					ans.add("保释");
 				}
-			} else {
+			} else if (inWard) {
+				if (hp < Consts.GTA_MAXHP) {
+					ans.add("治疗");
+				}
+				if (hp>0) {
+					ans.add("出院！");
+				}
+				
+			}
+			else {
 				ans.add("掷骰");
 			}
 			
@@ -386,7 +415,31 @@ public class Player {
 					board.setBroadcastImg("dice/"+rollDisplay);
 					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，越狱失败！");
 				}
-			} else { // regular roll and move
+			} else if (inWard) {
+				if (hp<Consts.GTA_MAXHP) {
+					hp++;
+					
+					board.getLogger().logWardTreatment(this);
+					board.setBroadcastImg("avatar/head_"+avatarId);
+					board.setBroadcastMsg(name + "正在病房接受治疗。");
+					
+					board.getLogger().logEndTurn(this);
+					board.nextPlayer();
+				} else {
+					outOfWard();
+				}
+			}
+			
+			else { // regular roll and move
+				if (board.getSettings().getUseGTA() == 1) { // GTA ward handles
+					board.wardCheck();
+					if (inWard) {
+						board.getLogger().logEndTurn(this);
+						board.nextPlayer();
+						return;
+					}
+				}
+				
 				board.roll();
 				phase = Consts.PHASE_MOVE;
 				rollDisplay = board.getLastRolled();
@@ -404,9 +457,15 @@ public class Player {
 					board.getLogger().logBait(this, board.getMap().getBailCost());
 					
 					board.setBroadcastImg("avatar/head_"+avatarId);
-					board.setBroadcastMsg(name + "花费了$500把自己保释了。");
+					board.setBroadcastMsg(name + "花费了$" + board.getMap().getBailCost() + "把自己保释了。");
 				}
-			} else {
+			} else if (inWard) {
+				if (hp<Consts.GTA_MAXHP && hp>0) {
+					outOfWard();
+				} 
+			}
+			
+			else {
 				
 			}
 		} else if (option>=10000 && option<20000) { // play cards
@@ -494,7 +553,7 @@ public class Player {
 				board.getLogger().logBait(this, board.getMap().getBailCost());
 				
 				board.setBroadcastImg("avatar/head_"+avatarId);
-				board.setBroadcastMsg(name + "花费了$500强制保释了自己。");
+				board.setBroadcastMsg(name + "花费了$" + board.getMap().getBailCost() + "强制保释了自己。");
 			} else {
 				board.getLogger().logEndTurn(this);
 				board.nextPlayer();
@@ -662,5 +721,11 @@ public class Player {
 	}
 	public void setAvatarId(int avatarId) {
 		this.avatarId = avatarId;
+	}
+	public boolean isInWard() {
+		return inWard;
+	}
+	public void setInWard(boolean inWard) {
+		this.inWard = inWard;
 	}
 }

@@ -8,21 +8,23 @@ import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.rich.Fate;
 import com.cosine.cosgame.rich.Map;
 import com.cosine.cosgame.rich.Place;
+import com.cosine.cosgame.rich.Settings;
 import com.cosine.cosgame.rich.basicplaces.*;
 import com.cosine.cosgame.rich.gta.places.*;
 
 public class MapBuilder {
-	public static Map genMap(int mapId) {
+	public static Map genMap(Settings settings) {
+		int mapId = settings.getMapId();
 		if (mapId == 0) {
-			return genQingguo();
+			return genQingguo(settings);
 		} if (mapId == 1) {
-			return genGTA();
+			return genGTA(settings);
 		} else {
 			return new Map();
 		}
 	}
 	
-	public static Map genGTA() {
+	public static Map genGTA(Settings settings) {
 		final int height = 11;
 		final int width = 11;
 		final int n = (height+width-2)*2;
@@ -34,8 +36,6 @@ public class MapBuilder {
 		map.setWidth(width);
 		map.setJailIndex(10);
 		map.setJailZone(1);
-		map.setHospitalIndex(30);
-		map.setWardZone(3);
 		map.setBailCost(500);
 		map.setMapZoom("0.95");
 		map.setCenterZoom("1.05");
@@ -45,15 +45,23 @@ public class MapBuilder {
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
-		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","ward","")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		if (settings.getUseGTA() == 1) {
+			map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","ward")));
+			map.setHospitalIndex(30);
+			map.setWardZone(3);
+		}
 		for (i=0;i<n;i++) {
 			Place p = new Empty(i, "地点"+i);
 			p.setFont("tyh", 22);
-			if (i == 2 || i == 7) {
+			if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36) {
 				p = new PersonalEvent(i, "命运");
 				p.setImg("fate");
 				p.setFont("tyh", 22);
 				p.createDetail();
+				if (settings.getUseGTA() == 1) {
+					p.getDetail().setDesc2("点击确定之后命运才会生效。有些卡牌可以改变当前的命运。");
+				}
 			} else if (i == 10) {
 				p = new Jail(i, "监狱大门");
 				p.setImg("jailDoor");
@@ -61,30 +69,31 @@ public class MapBuilder {
 				p.setLandMsg("你来到了监狱大门口，但只是路过");
 				p.createDetail();
 				p.getDetail().setDesc("只是路过而已~");
-			} else if (i == 3) {
-				p = new GoToJail(i, "入狱");
-				p.setImg("goToJail");
-				p.setFont("tyh", 22);
-				p.setLandMsg("你将立即入狱");
-				p.createDetail();
-				p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
-				p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 			} else if (i == 30) {
-				p = new Hospital(i, "医院");
-				p.setImg("hospital");
-				p.setFont("tyh", 22);
-				//p.setLandMsg("你来到了医院门口，可以回复你的生命值");
-				p.createDetail();
-				p.getDetail().setDesc("你可以在此回复生命值。");
-				p.getDetail().setDesc2("花费$500回复1点生命值。若你的生命值为1，你可以花费$1000回复2点生命值。");
+				if (settings.getUseGTA() == 1) {
+					p = new Hospital(i, "医院");
+					p.setImg("hospital");
+					p.setFont("tyh", 22);
+					p.createDetail();
+					p.getDetail().setDesc("你可以在此回复生命值。");
+					p.getDetail().setDesc2("花费$500回复1点生命值。若你的生命值为1，你可以花费$1000回复2点生命值。");
+				} else {
+					p = new GoToJail(i, "入狱");
+					p.setImg("goToJail");
+					p.setFont("tyh", 22);
+					p.setLandMsg("你将立即入狱");
+					p.createDetail();
+					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
+					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
+				}
 			}
 			map.addPlace(p);
 		}
-		map.setFateIds(new ArrayList<>(Arrays.asList(10001,10002)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(10203)));
 		return map;
 	}
 	
-	public static Map genQingguo() {
+	public static Map genQingguo(Settings settings) {
 		final int height = 7;
 		final int width = 10;
 		final int n = (height+width-2)*2;
@@ -288,7 +297,7 @@ public class MapBuilder {
 			map.addPlace(p);
 		}
 		
-		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,101,102,103,104)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,101,102,103,104,105,21,22,23,24,25,26,106,107)));
 		return map;
 	}
 }

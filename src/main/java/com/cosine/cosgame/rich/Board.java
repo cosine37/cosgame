@@ -14,6 +14,7 @@ import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
+import com.cosine.cosgame.rich.gta.places.Ward;
 import com.cosine.cosgame.util.MongoDBUtil;
 
 public class Board {
@@ -152,7 +153,13 @@ public class Board {
 						InJail inJail = new InJail(0,"监狱");
 						inJail.setBoard(this);
 						entity.setMyCurrentPlace(inJail.toPlaceEntity());
-					} else {
+					} else if (p.isInWard()) {
+						Ward ward = new Ward(0,"病房");
+						ward.setBoard(this);
+						entity.setMyCurrentPlace(ward.toPlaceEntity());
+					}
+					
+					else {
 						entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
 					}
 					
@@ -216,6 +223,22 @@ public class Board {
 	public void roll() {
 		roll(1);
 	}
+	
+	// GTA related
+	public void wardCheck() {
+		int i;
+		for (i=0;i<players.size();i++) {
+			if (players.get(i).getHp() == 0 && players.get(i).isInWard() == false) {
+				players.get(i).goToWard();
+				
+				logger.logGoToWard(players.get(i));
+				this.setBroadcastImg("avatar/head_"+players.get(i).getAvatarId());
+				this.setBroadcastMsg(players.get(i).getName() + "眼前一黑，被送进ICU。");
+			}
+		}
+	}
+	// End GTA related
+	
 	public void nextPlayer() {
 		// Step 1: end the turn for the current player
 		players.get(curPlayer).setPhase(Consts.PHASE_OFFTURN);
@@ -224,15 +247,9 @@ public class Board {
 		lastFateId = 0;
 		
 		// Step 3: GTA related, send all user with 0 hp to the ward
-		int i;
 		if (settings.getUseGTA() == 1) {
-			for (i=0;i<players.size();i++) {
-				if (players.get(i).getHp() == 0) {
-					players.get(i).goToWard();
-				}
-			}
+			wardCheck();
 		}
-		
 		
 		// Step 4: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
@@ -301,7 +318,7 @@ public class Board {
 		this.status = Consts.INGAME;
 		
 		settings = new Settings(settingsList);
-		map = MapBuilder.genMap(settings.getMapId());
+		map = MapBuilder.genMap(settings);
 		int i;
 		for (i=0;i<players.size();i++) {
 			players.get(i).startGame();

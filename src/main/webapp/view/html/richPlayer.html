@@ -14,9 +14,11 @@
 	</div>
 
 	<div ng-show="phase == MOVE">你掷了一个{{gamedata.lastRolled}}，将会移动到{{gamedata.myNextPlace}}。
-		请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+		请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+	</div>
 	<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace.name}}，{{gamedata.myLandMsg}}，
-		请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button></div>
+		请选择一项：<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+	</div>
 	<div ng-show="phase == ESCAPE">你掷了一个{{gamedata.lastRolled}}，
 		<span ng-show="gamedata.inJail == false">越狱成功！</span>
 		<span ng-show="gamedata.inJail">越狱失败。</span>
@@ -33,7 +35,7 @@
 <div class="player-console" ng-show="status == ENDGAME">游戏结束</div>
 
 
-<div style="padding-top:40px; margin-left: 20px;">
+<div style="padding-top:30px; margin-left: 20px;">
 	<div class="card card-size card-size-discard" ng-repeat="c in gamedata.myHand track by $index" ng-include="'/view/html/richCard.html'"
 		style="background-color:darkslategrey" ng-click="clickHand($index)" ng-style="handStyle[$index]"></div>
 </div>

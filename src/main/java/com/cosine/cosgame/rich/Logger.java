@@ -118,12 +118,32 @@ public class Logger {
 	}
 	
 	public void logPlayCard(Player p, Card c) {
-		String s = p.getName() + " 打出了 " + c.getName();
+		String s = p.getName() + " 使用了 " + c.getName();
 		log(s);
 	}
 	
 	public void logThrowCard(Player p, Card c) {
 		String s = p.getName() + " 丢弃了 " + c.getName();
+		log(s);
+	}
+	
+	public void logGoToWard(Player p) {
+		String s = p.getName() + " 眼前一黑，被送进ICU";
+		log(s);
+	}
+	
+	public void logWardTreatment(Player p) {
+		String s = p.getName() + " 在病房接受治疗，回复 1 点生命值";
+		log(s);
+	}
+	
+	public void logOutOfWard(Player p, int fee) {
+		String s = p.getName() + " 出院了，住院期间共花费 $" + fee;
+		log(s);
+	}
+	
+	public void logRecover(Player p, int x) {
+		String s = p.getName() + " 回复了 " + x + " 点生命值";
 		log(s);
 	}
 }

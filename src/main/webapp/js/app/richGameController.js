@@ -233,6 +233,22 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				} else {
 					$scope.players[i].curStyle={}
 				}
+				
+				$scope.players[i].hpDisplay = [];
+				$scope.players[i].starDisplay = [];
+				
+				for (j=0;j<5;j++){
+					var x = {}
+					x["background-size"] = "cover";
+					
+					if (j<$scope.players[i].hp){
+						x["background-image"] = "url(/image/Rich/hp1.png)"
+					} else {
+						x["background-image"] = "url(/image/Rich/hp0.png)"
+					}
+					$scope.players[i].hpDisplay.push(x);
+				}
+				//alert($scope.players[i].hpDisplay)
 			}
 		}
 		
@@ -242,7 +258,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			for (i=0;i<$scope.hand.length;i++){
 				var cstyle = {}
 				if (i == $scope.chosenCard){
-					cstyle["margin-top"] = "-30px"
+					cstyle["margin-top"] = "-25px"
 				}
 				$scope.handStyle.push(cstyle);
 			}
