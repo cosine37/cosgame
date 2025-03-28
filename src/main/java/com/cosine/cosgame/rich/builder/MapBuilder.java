@@ -46,7 +46,7 @@ public class MapBuilder {
 		for (i=0;i<n;i++) {
 			Place p = new Empty(i, "地点"+i);
 			p.setFont("tyh", 22);
-			if (i == 2) {
+			if (i == 2 || i == 7) {
 				p = new PersonalEvent(i, "命运");
 				p.setImg("fate");
 				p.setFont("tyh", 22);
@@ -69,7 +69,7 @@ public class MapBuilder {
 			}
 			map.addPlace(p);
 		}
-		map.setFateIds(new ArrayList<>(Arrays.asList(201)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(10001,10002)));
 		return map;
 	}
 	

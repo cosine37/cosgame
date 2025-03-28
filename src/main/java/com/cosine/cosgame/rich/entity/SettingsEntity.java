@@ -7,6 +7,7 @@ public class SettingsEntity {
 	int endCondition;
 	int firstPlayer;
 	int mapId;
+	int useGTA;
 	
 	public int getStartMoney() {
 		return startMoney;
@@ -43,5 +44,11 @@ public class SettingsEntity {
 	}
 	public void setMapId(int mapId) {
 		this.mapId = mapId;
+	}
+	public int getUseGTA() {
+		return useGTA;
+	}
+	public void setUseGTA(int useGTA) {
+		this.useGTA = useGTA;
 	}
 }

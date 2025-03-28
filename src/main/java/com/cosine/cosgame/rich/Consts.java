@@ -28,7 +28,7 @@ public class Consts {
 	public static final int TOTALTYPES = 4;
 	
 	
-	// places 
+	// basic places 
 	public static final int PLACE_EMPTY = 0;
 	public static final int PLACE_ESTATE = 1;
 	public static final int PLACE_SPECIAL = 2;
@@ -37,6 +37,9 @@ public class Consts {
 	public static final int PLACE_FATE = 5;
 	public static final int PLACE_JAIL = 6;
 	public static final int PLACE_GOTOJAIL = 7;
+	
+	// GTA places
+	public static final int PLACE_HOSPITAL = 11;
 	
 	public static final int STARTPOINT_INDEX = 0;
 	
@@ -58,6 +61,7 @@ public class Consts {
 	public static final int FATE_GIVEEVERY = 7;
 	public static final int FATE_MOVE = 8;
 	public static final int FATE_CARD = 9;
+	public static final int FATE_HPSTAR = 10;
 	
 	
 	// settings related
@@ -67,10 +71,15 @@ public class Consts {
 	public static final int SETTINGS_END_CONDITION = 3;
 	public static final int SETTINGS_FIRST_PLAYER = 4;
 	public static final int SETTINGS_MAPID = 5;
+	public static final int SETTINGS_USEGTA = 6;
 	
 	// avatar related
 	public static final int MAXAVATAR = 8;
 	
 	// card related
 	public static final int CARD_OPTION_THROW = 99;
+	
+	// GTA player related
+	public static final int GTA_MAXHP = 5;
+	public static final int GTA_MAXSTAR = 6;
 }

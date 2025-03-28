@@ -49,12 +49,36 @@ public class Fate {
 		return ans;
 	}
 	
+	public void hpStarHandle(Player p, int raw) {
+		int x = raw%10;
+		int f = raw/10;
+		if (f == 1) { // add hp
+			p.addHp(x);
+		} else if (f == 2) { // lose hp
+			p.loseHp(x);
+		} else if (f == 3) { // add star
+			p.addStar(x);
+		} else if (f == 4) { // lose star
+			p.loseStar(x);
+		}
+	}
+	
 	public void apply(Player p) {
 		int i;
 		if (type == Consts.FATE_ADD) {
-			p.addMoney(value);
+			int x = value%10000;
+			int raw = value/10000;
+			p.addMoney(x);
+			if (raw>9) {
+				hpStarHandle(p,raw);
+			}
 		} else if (type == Consts.FATE_LOSE) {
-			p.loseMoney(value);
+			int x = value%10000;
+			int raw = value/10000;
+			p.loseMoney(x);
+			if (raw>9) {
+				hpStarHandle(p,raw);
+			}
 		} else if (type == Consts.FATE_GOTOJAIL) {
 			p.goToJail();
 		} else if (type == Consts.FATE_HOUSEREPAIR) {
@@ -113,6 +137,8 @@ public class Fate {
 		} else if (type == Consts.FATE_CARD) {
 			Card c = Factory.genNewCard(value);
 			p.addCard(c);
+		} else if (type == Consts.FATE_HPSTAR) {
+			hpStarHandle(p, value);
 		}
 	}
 	public int getId() {

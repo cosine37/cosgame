@@ -16,6 +16,9 @@ public class PlayerEntity {
 	AvatarEntity avatarOrigin;
 	
 	List<Integer> owned;
+	
+	int hp;
+	int star;
 
 	public String getName() {
 		return name;
@@ -76,6 +79,18 @@ public class PlayerEntity {
 	}
 	public void setInJail(boolean inJail) {
 		this.inJail = inJail;
+	}
+	public int getHp() {
+		return hp;
+	}
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
 	}
 	public AvatarEntity getAvatar() {
 		return avatar;

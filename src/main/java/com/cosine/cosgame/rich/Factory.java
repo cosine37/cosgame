@@ -103,6 +103,14 @@ public class Factory {
 		else if (id == 201) {
 			return new Fate(id,Consts.FATE_CARD,10,"给狱警推荐了好吃的甜甜圈，获得狱警赠送的出狱卡。","因为给狱警推荐了好吃的甜甜圈，p获得狱警赠送的出狱卡");
 		}
+		
+		
+		else if (id == 10001) {
+			return new Fate(id,Consts.FATE_HPSTAR,21,"边走路边玩手机，撞到电线杆，失去1点生命值。","因为边走路边玩手机，撞到电线杆，p失去1点生命值");
+		} else if (id == 10002) {
+			return new Fate(id,Consts.FATE_LOSE,210600,"被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600。","p被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600");
+		}
+		
 		return fate;
 	}
 	

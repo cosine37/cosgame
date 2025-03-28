@@ -15,7 +15,7 @@ public class Settings {
 		entity.setStartSalary(getStartSalary());
 		entity.setEndCondition(getEndCondition());
 		entity.setMapId(getMapId());
-		
+		entity.setUseGTA(getUseGTA());
 		return entity;
 	}
 	
@@ -61,5 +61,9 @@ public class Settings {
 	
 	public int getMapId() {
 		return get(Consts.SETTINGS_MAPID);
+	}
+	
+	public int getUseGTA() {
+		return get(Consts.SETTINGS_USEGTA);
 	}
 }

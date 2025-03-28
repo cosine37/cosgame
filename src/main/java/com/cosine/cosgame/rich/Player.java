@@ -139,6 +139,8 @@ public class Player {
 		entity.setOwned(owned);
 		entity.setInJail(inJail);
 		entity.setJailRound(jailRound);
+		entity.setHp(hp);
+		entity.setStar(star);
 		
 		Account account = new Account();
 		account.getFromDB(name);
@@ -188,6 +190,28 @@ public class Player {
 		money = money+salary;
 	}
 	
+	public void addHp(int x) {
+		hp = hp+x;
+		// TODO: may need to update here
+		if (hp>Consts.GTA_MAXHP) hp = Consts.GTA_MAXHP;
+	}
+	
+	public void loseHp(int x) {
+		hp = hp-x;
+		if (hp<0) hp = 0;
+	}
+	
+	public void addStar(int x) {
+		star = star+x;
+		// TODO: may need to update here
+		if (star>Consts.GTA_MAXSTAR) star = Consts.GTA_MAXSTAR;
+	}
+	
+	public void loseStar(int x) {
+		star = star-x;
+		if (star<0) star = 0;
+	}
+	
 	public void moveToPlace(int x) {
 		placeIndex = x;
 		board.getMap().getPlace(x).addPlayerOn(this);
@@ -199,6 +223,12 @@ public class Player {
 		moveToPlace(0);
 		phase = Consts.PHASE_OFFTURN;
 		inJail = false;
+		
+		// below are expansion settings
+		if (board.getSettings().getUseGTA()>0) {
+			hp = Consts.GTA_MAXHP;
+			star = 0;
+		}
 	}
 	
 	public void startTurn() {
