@@ -16,6 +16,7 @@ public class PlayerEntity {
 	AvatarEntity avatarOrigin;
 	
 	List<Integer> owned;
+	List<Integer> buffs;
 	
 	int hp;
 	int star;
@@ -103,6 +104,12 @@ public class PlayerEntity {
 	}
 	public void setAvatarOrigin(AvatarEntity avatarOrigin) {
 		this.avatarOrigin = avatarOrigin;
+	}
+	public List<Integer> getBuffs() {
+		return buffs;
+	}
+	public void setBuffs(List<Integer> buffs) {
+		this.buffs = buffs;
 	}
 	
 }

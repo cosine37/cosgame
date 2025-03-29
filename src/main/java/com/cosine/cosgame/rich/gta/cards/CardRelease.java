@@ -9,6 +9,7 @@ public class CardRelease extends Card {
 		id = 10;
 		name = "出狱卡";
 		desc = "立即出狱，不需要支付保释费。消耗。";
+		rarity = 0;
 	}
 	
 	public void play(int rawOptions) {

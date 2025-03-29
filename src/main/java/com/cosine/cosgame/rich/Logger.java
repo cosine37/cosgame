@@ -146,4 +146,9 @@ public class Logger {
 		String s = p.getName() + " 回复了 " + x + " 点生命值";
 		log(s);
 	}
+	
+	public void logSetDiceResult(Player p, int x) {
+		String s = p.getName() + " 下一次的骰子点数为 " + x;
+		log(s);
+	}
 }

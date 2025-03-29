@@ -6,6 +6,7 @@ import java.util.Map;
 public class CardEntity {
 	int id;
 	int level;
+	int rarity;
 	String name;
 	String desc;
 	List<Boolean> types;
@@ -53,6 +54,12 @@ public class CardEntity {
 	}
 	public void setPlayable(boolean playable) {
 		this.playable = playable;
+	}
+	public int getRarity() {
+		return rarity;
+	}
+	public void setRarity(int rarity) {
+		this.rarity = rarity;
 	}
 	
 }

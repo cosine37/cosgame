@@ -12,10 +12,16 @@ public class Factory {
 		int id = x/100;
 		int level = x%100;
 		
-		if (id == 10) {
+		if (id == 1) {
+			c = new Card1();
+		}
+		else if (id == 10) {
 			c = new CardRelease();
 		}
 		
+		else if (id == 16) {
+			c = new CardNugget();
+		}
 		
 		else if (id == 20001) {
 			c = new CardSalmonBite();

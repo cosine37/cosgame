@@ -37,5 +37,5 @@
 
 <div style="padding-top:30px; margin-left: 20px;">
 	<div class="card card-size card-size-discard" ng-repeat="c in gamedata.myHand track by $index" ng-include="'/view/html/richCard.html'"
-		style="background-color:darkslategrey" ng-click="clickHand($index)" ng-style="handStyle[$index]"></div>
+		 ng-click="clickHand($index)" ng-style="handStyle[$index]"></div>
 </div>

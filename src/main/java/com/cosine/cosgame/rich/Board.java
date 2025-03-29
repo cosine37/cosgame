@@ -205,23 +205,29 @@ public class Board {
 		place.addPlayerOn(p);
 	}
 	
-	public void roll(int n) {
+	public void roll(Player p, int n) {
 		int result = 0;
-		Random rand = new Random();
-		for (int i=0;i<n;i++) {
-			int t = rand.nextInt(60000);
-			int x = t%6+1;
-			result = result+x;
+		if (p != null && p.getBuff().getNextRoll() != -1) {
+			result = p.getBuff().getNextRoll();
+			p.getBuff().clearNextRoll();
+		} else {
+			Random rand = new Random();
+			for (int i=0;i<n;i++) {
+				int t = rand.nextInt(60000);
+				int x = t%6+1;
+				result = result+x;
+			}
+			
+			// TODO: edit dice result here;
+			//result = 15;
 		}
 		
-		// TODO: edit dice result here;
-		//result = 15;
 		
 		lastRolled = result;
 	}
 	
-	public void roll() {
-		roll(1);
+	public void roll(Player p) {
+		roll(p, 1);
 	}
 	
 	// GTA related

@@ -10,6 +10,7 @@ import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.AvatarEntity;
 import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
+import com.cosine.cosgame.rich.gta.cards.*;
 
 public class Player {
 	protected String name;
@@ -35,6 +36,7 @@ public class Player {
 	
 	// GTA related
 	protected boolean inWard;
+	protected Buff buff;
 	
 	protected Board board;
 	
@@ -57,6 +59,7 @@ public class Player {
 		doc.append("jailRound", jailRound);
 		doc.append("inWard", inWard);
 		doc.append("turnEnd", turnEnd);
+		doc.append("buffs", buff.getBuffs());
 		Account account = new Account();
 		account.getFromDB(name);
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
@@ -98,6 +101,8 @@ public class Player {
 		inWard = doc.getBoolean("inWard", false);
 		turnEnd = doc.getBoolean("turnEnd", turnEnd);
 		avatarId = doc.getInteger("avatarId", -1);
+		List<Integer> buffs = (List<Integer>) doc.get("buffs");
+		buff = new Buff(buffs);
 		if (avatarId == -1) {
 			Account account = new Account();
 			account.getFromDB(name);
@@ -144,6 +149,7 @@ public class Player {
 		entity.setJailRound(jailRound);
 		entity.setHp(hp);
 		entity.setStar(star);
+		entity.setBuffs(buff.getBuffs());
 		
 		Account account = new Account();
 		account.getFromDB(name);
@@ -179,6 +185,7 @@ public class Player {
 		hand = new ArrayList<>();
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
+		buff = new Buff();
 	}
 	
 	public void addMoney(int x) {
@@ -231,13 +238,14 @@ public class Player {
 		
 		// below are expansion settings
 		if (board.getSettings().getUseGTA()>0) {
-			
 			hp = Consts.GTA_MAXHP;
-			
-			// TODO: revert back
-			//hp = 0;
-			
 			star = 0;
+			
+			// TODO: test cards here
+			hand.add(new Card1());
+			hand.add(new CardSalmonBite());
+			hand.add(new CardPoutine());
+			hand.add(new CardNugget());
 		}
 	}
 	
@@ -398,7 +406,7 @@ public class Player {
 		if (phase != Consts.PHASE_ROLL) return;
 		if (option == 0) {
 			if (inJail) {
-				board.roll();
+				board.roll(this);
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
 				if (board.getMap().escapedFromJail()) {
@@ -440,7 +448,7 @@ public class Player {
 					}
 				}
 				
-				board.roll();
+				board.roll(this);
 				phase = Consts.PHASE_MOVE;
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
@@ -566,7 +574,7 @@ public class Player {
 	public void phaseUtility(int option) {
 		if (phase != Consts.PHASE_UTILITY) return;
 		if (option == 0) {
-			board.roll();
+			board.roll(this);
 			rollDisplay = board.getLastRolled();
 			phase = Consts.PHASE_RESOLVE;
 		}
@@ -727,5 +735,11 @@ public class Player {
 	}
 	public void setInWard(boolean inWard) {
 		this.inWard = inWard;
+	}
+	public Buff getBuff() {
+		return buff;
+	}
+	public void setBuff(Buff buff) {
+		this.buff = buff;
 	}
 }

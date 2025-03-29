@@ -1,0 +1,26 @@
+<table>
+	<tr>
+		<td colspan="2">
+			<span style="width:30px">
+				<span ng-show="$index == curPlayer" style="font-size:20px; font-weight:bold">&rArr;</span>
+			</span>
+			<span style="font-size:20px">{{p.name}}</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div ng-style="p.avatarOrigin.avatarStyle" style="height:100px; width:100px;"></div>
+		</td>
+		<td style="width: 120px;">
+			<div><b>现金：</b>${{p.money}}</div>
+			<div ng-show="gamedata.settings.useGTA == 1">
+				<div style="float:left; height: 20px; width: 20px;" 
+					ng-repeat="hpStyle in p.hpDisplay track by $index" ng-style="hpStyle"></div>
+				<div style="clear:both"></div>
+				<div>
+					<div style="float:left" ng-show="p.buffs[0]>-1">{{p.buffs[0]}}</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>

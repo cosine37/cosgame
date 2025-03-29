@@ -15,21 +15,13 @@ public class Card {
 	protected Board board;
 	protected int level;
 	protected boolean exhaust;
-	
-	public Card() {
-		level = 0;
-		types = new ArrayList<>();
-		exhaust = true;
-	}
-	
-	public void play(int rawOptions) {
-		
-	}
+	protected int rarity;
 	
 	public CardEntity toCardEntity(){
 		CardEntity entity = new CardEntity();
 		entity.setId(id);
 		entity.setLevel(level);
+		entity.setRarity(rarity);
 		entity.setName(name);
 		entity.setDesc(desc);
 		entity.setTypes(types);
@@ -41,8 +33,27 @@ public class Card {
 		return entity;
 	}
 	
+	public Card() {
+		level = 0;
+		types = new ArrayList<>();
+		exhaust = true;
+		rarity = 0;
+		
+		for (int i=0;i<10;i++) types.add(false);
+		types.set(0, true);
+	}
+	
+	public void play(int rawOptions) {
+		
+	}
+	
 	public boolean playable() {
 		return false;
+	}
+	
+	public void passive() {
+		types.set(0, false);
+		types.set(1, true);
 	}
 	
 	public int getId() {
