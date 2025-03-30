@@ -8,7 +8,7 @@ public class CardRelease extends Card {
 		super();
 		id = 10;
 		name = "出狱卡";
-		desc = "立即出狱，不需要支付保释费。消耗。";
+		desc = "立即出狱并清空通缉值，不需要支付保释费。消耗。";
 		rarity = 0;
 	}
 	
@@ -16,9 +16,17 @@ public class CardRelease extends Card {
 		if (player.isInJail()) {
 			player.outOfJail();
 			
-			board.getLogger().log(player.getName() + " 被释放出狱");
 			board.setBroadcastImg("card/"+id);
-			board.setBroadcastMsg(player.getName() + "使用了出狱卡，被释放出狱。");
+			if (board.getSettings().getUseGTA() == 1) {
+				player.setStar(0);
+				board.getLogger().log(player.getName() + " 被释放出狱并清空了通缉值");
+				board.setBroadcastMsg(player.getName() + "使用了出狱卡，被释放出狱且清空了通缉值。");
+			} else {
+				board.getLogger().log(player.getName() + " 被释放出狱");
+				board.setBroadcastMsg(player.getName() + "使用了出狱卡，被释放出狱。");
+			}
+			
+			
 		}
 		exhaust = true;
 	}
@@ -29,4 +37,14 @@ public class CardRelease extends Card {
 		}
 		return false;
 	}
+	
+	public String getDesc() {
+		if (board != null && board.getSettings().getUseGTA() == 1) {
+			return "立即出狱并清空通缉值，不需要支付保释费。消耗。";
+		} else {
+			return "立即出狱，不需要支付保释费。消耗。";
+		}
+	}
+	
+	
 }

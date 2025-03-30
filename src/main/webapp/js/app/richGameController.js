@@ -229,7 +229,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		setPlayerStyles = function(){
 			for (i=0;i<$scope.players.length;i++){
 				if (i==$scope.curPlayer){
-					$scope.players[i].curStyle={"background-color": "yellow"}
+					$scope.players[i].curStyle={"background-color": "LightGray"}
 				} else {
 					$scope.players[i].curStyle={}
 				}
@@ -248,7 +248,18 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					}
 					$scope.players[i].hpDisplay.push(x);
 				}
-				//alert($scope.players[i].hpDisplay)
+				
+				for (j=0;j<6;j++){
+					var x = {}
+					x["background-size"] = "cover";
+					
+					if (j<$scope.players[i].star){
+						x["background-image"] = "url(/image/Rich/star1.png)"
+					} else {
+						x["background-image"] = "url(/image/Rich/star0.png)"
+					}
+					$scope.players[i].starDisplay.push(x);
+				}
 			}
 		}
 		

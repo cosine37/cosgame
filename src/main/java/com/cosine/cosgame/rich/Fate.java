@@ -138,13 +138,27 @@ public class Fate {
 			Card c = Factory.genNewCard(value);
 			p.addCard(c);
 		} else if (type == Consts.FATE_HPSTAR) {
-			hpStarHandle(p, value);
+			if (value<100) {
+				hpStarHandle(p, value);
+			} else if (value>999 && value<10000) {
+				int raw1 = value/100;
+				int raw2 = value%100;
+				hpStarHandle(p, raw1);
+				hpStarHandle(p, raw2);
+			}
+			
 		} else if (type == Consts.FATE_CARDLOSE) {
 			int cardId = value/10000;
 			int loseAmount = value%10000;
 			Card c = Factory.genNewCard(cardId);
 			p.addCard(c);
 			p.loseMoney(loseAmount);
+		} else if (type == Consts.FATE_CARDHPSTAR) {
+			int cardId = value/100;
+			int raw = value%100;
+			hpStarHandle(p,raw);
+			Card c = Factory.genNewCard(cardId);
+			p.addCard(c);
 		}
 	}
 	public int getId() {

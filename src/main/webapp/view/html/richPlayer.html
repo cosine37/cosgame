@@ -1,6 +1,8 @@
 <div class="player-console" ng-show="status == INGAME">
 	<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace.name}}，现在不是你的回合</div>
-	<div ng-show="phase == ROLL && gamedata.inJail">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：
+	<div ng-show="phase == ROLL && gamedata.inJail">
+		<span ng-show="gamedata.settings.useGTA == 0">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：</span>
+		<span ng-show="gamedata.settings.useGTA == 1">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱，且增加1点通缉值）或是花费${{map.bailCost}}×通缉值保释出狱，同时通缉值清零：</span>
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
 		<button ng-show="chosenCard >= 0 && showPlayButton()" ng-click="playCard()">打出</button>
@@ -22,7 +24,8 @@
 	<div ng-show="phase == ESCAPE">你掷了一个{{gamedata.lastRolled}}，
 		<span ng-show="gamedata.inJail == false">越狱成功！</span>
 		<span ng-show="gamedata.inJail">越狱失败。</span>
-		<span ng-show="gamedata.inJail && gamedata.jailRound == 3">因为这是你入狱的第三回合，请支付${{map.bailCost}}保释费出狱。</span>
+		<span ng-show="gamedata.inJail && gamedata.jailRound == 3 && gamedata.settings.useGTA == 0">因为这是你入狱的第三回合，请支付${{map.bailCost}}保释费出狱。</span>
+		<span ng-show="gamedata.inJail && gamedata.jailRound == 3 && gamedata.settings.useGTA == 1">因为这是你入狱的第三回合，请支付保释费${{map.bailCost}}×通缉值出狱。</span>
 		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 	</div>
 	<div ng-show="phase == UTILITYPHASE">你来到了{{gamedata.myCurrentPlace.name}}，需要掷一次骰子：

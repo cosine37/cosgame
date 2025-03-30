@@ -29,6 +29,8 @@ public class Factory {
 			c = new CardPoutine();
 		} else if (id == 20003) {
 			c = new CardNanaimoBar();
+		} else if (id == 20004) {
+			c = new CardHawaiianPizza();
 		}
 		
 		c.setLevel(level);
@@ -145,6 +147,8 @@ public class Factory {
 			return new Fate(id,Consts.FATE_HPSTAR,21,"边走路边玩手机，撞到电线杆，失去1点生命值。","因为边走路边玩手机，撞到电线杆，p失去1点生命值");
 		} else if (id == 10002) {
 			return new Fate(id,Consts.FATE_LOSE,210600,"被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600。","p被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600");
+		} else if (id == 10003) {
+			return new Fate(id,Consts.FATE_HPSTAR,4121,"参与无偿献血，减少1点生命值和1点通缉值。","p参与无偿献血，减少1点生命值和1点通缉值");
 		}
 		
 		else if (id == 10201) {
@@ -153,6 +157,8 @@ public class Factory {
 			return new Fate(id,Consts.FATE_CARDLOSE,200020100,"购买魁北克特色小吃肉汁奶酪盖浇薯条，花费$100。","p购买魁北克特色小吃肉汁奶酪盖浇薯条，花费$100");
 		} else if (id == 10203) {
 			return new Fate(id,Consts.FATE_CARD,20003,"参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条。","p参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条");
+		} else if (id == 10204) {
+			return new Fate(id,Consts.FATE_CARDHPSTAR,2000431,"制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值。","p制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值");
 		} 
 		
 		return fate;

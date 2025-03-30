@@ -151,4 +151,31 @@ public class Logger {
 		String s = p.getName() + " 下一次的骰子点数为 " + x;
 		log(s);
 	}
+	
+	public void logGoToJailGTA(Player p) {
+		String s = "";
+		if (p.getStar()<=2) {
+			s = p.getName() + " 因轻罪入狱";
+		} else if (p.getStar()<=4) {
+			s = p.getName() + " 因中罪入狱，需要弃置所有手牌";
+		} else if (p.getStar()<=6) {
+			s = p.getName() + " 因重罪入狱，需要弃置所有手牌且不得提前保释";
+		}
+		log(s);
+	}
+	
+	public void logEscapeSuccessGTA(Player p) {
+		String s = p.getName() + " 越狱成功，通缉值+1";
+		log(s);
+	}
+	
+	public void logBaitGTA(Player p, int baitCost) {
+		String s = p.getName() + " 花费了 $"+baitCost + " 保释出狱，通缉值清零";
+		log(s);
+	}
+	
+	public void logJailWaitGTA(Player p) {
+		String s = p.getName() + " 无法提前保释，只得等待";
+		log(s);
+	}
 }

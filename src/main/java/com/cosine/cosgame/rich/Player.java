@@ -242,11 +242,17 @@ public class Player {
 			star = 0;
 			
 			// TODO: test cards here
+			/*
 			hand.add(new Card1());
 			hand.add(new CardSalmonBite());
 			hand.add(new CardPoutine());
 			hand.add(new CardNugget());
+			*/
+			hand.add(new CardRelease());
 		}
+		
+		
+		
 	}
 	
 	public void startTurn() {
@@ -284,6 +290,27 @@ public class Player {
 		// Step 2: set related status
 		inJail = true;
 		jailRound = 0;
+		
+		// Step 3: GTA related
+		if (board.getSettings().getUseGTA() == 1) {
+			board.getLogger().logGoToJailGTA(this);
+			board.setBroadcastImg("avatar/head_"+avatarId);
+			if (star<=2) {
+				board.setBroadcastMsg(name + "因轻罪入狱。");
+			} else if (star<=4) {
+				List<Card> newHand = new ArrayList<>();
+				for (int i=0;i<hand.size();i++) {
+					if (hand.get(i).getId() == 10) {
+						newHand.add(hand.get(i));
+					}
+				}
+				hand = newHand;
+				board.setBroadcastMsg(name + "因中罪入狱，弃置除出狱卡外的所有手牌。");
+			} else if (star<=6) {
+				hand = new ArrayList<>();
+				board.setBroadcastMsg(name + "因重罪入狱，弃置所有手牌且不得提前保释。");
+			}
+		}
 		
 	}
 	
@@ -362,7 +389,16 @@ public class Player {
 			if (inJail) {
 				ans.add("越狱");
 				if (money>=board.getMap().getBailCost()) {
-					ans.add("保释");
+					if (board.getSettings().getUseGTA() == 1) {
+						if (star>4 && jailRound<3) {
+							ans.add("等待");
+						} else {
+							ans.add("保释");
+						}
+					} else {
+						ans.add("保释");
+					}
+					
 				}
 			} else if (inWard) {
 				if (hp < Consts.GTA_MAXHP) {
@@ -410,12 +446,20 @@ public class Player {
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
 				if (board.getMap().escapedFromJail()) {
-					board.getLogger().logEscapeSuccess(this);
+					if (board.getSettings().getUseGTA() == 1) {
+						addStar(1);
+						board.getLogger().logEscapeSuccessGTA(this);
+						board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱，但是增加1点通缉值！");
+					} else {
+						board.getLogger().logEscapeSuccess(this);
+						board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
+					}
+
 					phase = Consts.PHASE_ESCAPE;
 					outOfJail();
-					
+
 					board.setBroadcastImg("dice/"+rollDisplay);
-					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
+					
 				} else {
 					board.getLogger().logEscapeFail(this);
 					phase = Consts.PHASE_ESCAPE;
@@ -459,13 +503,34 @@ public class Player {
 			
 		} else if (option == 1) {
 			if (inJail) {// bail option
-				if (money>=board.getMap().getBailCost()) {
-					loseMoney(board.getMap().getBailCost());
+				int bailCost = board.getMap().getBailCost();
+				if (board.getSettings().getUseGTA() == 1) {
+					if (star>4 && jailRound<3) { // cannot bail if star>4
+						board.getLogger().logJailWaitGTA(this);
+						board.setBroadcastImg("avatar/head_"+avatarId);
+						board.setBroadcastMsg(name + "不得提前保释，正在猛啃窝窝头。");
+						
+						board.getLogger().logEndTurn(this);
+						board.nextPlayer();
+						return;
+					}
+					if (star > 0) bailCost = bailCost*star;
+				}
+				
+				if (money>=bailCost) {
+					loseMoney(bailCost);
 					outOfJail();
-					board.getLogger().logBait(this, board.getMap().getBailCost());
-					
+					if (board.getSettings().getUseGTA() == 1) {
+						star = 0;
+						board.getLogger().logBaitGTA(this, bailCost);
+						board.setBroadcastMsg(name + "花费了$" + bailCost + "把自己保释了，通缉值清零。");
+					} else {
+						board.getLogger().logBait(this, bailCost);
+						board.setBroadcastMsg(name + "花费了$" + bailCost + "把自己保释了。");
+					}
+
 					board.setBroadcastImg("avatar/head_"+avatarId);
-					board.setBroadcastMsg(name + "花费了$" + board.getMap().getBailCost() + "把自己保释了。");
+					
 				}
 			} else if (inWard) {
 				if (hp<Consts.GTA_MAXHP && hp>0) {
@@ -487,12 +552,18 @@ public class Player {
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
 				if (board.getMap().escapedFromJail()) {
-					board.getLogger().logEscapeSuccess(this);
+					if (board.getSettings().getUseGTA() == 1) {
+						addStar(1);
+						board.getLogger().logEscapeSuccessGTA(this);
+						board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱，但是增加1点通缉值！");
+					} else {
+						board.getLogger().logEscapeSuccess(this);
+						board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
+					}
 					phase = Consts.PHASE_ESCAPE;
 					outOfJail();
 					
 					board.setBroadcastImg("dice/"+rollDisplay);
-					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，成功越狱！");
 				} else {
 					board.getLogger().logEscapeFail(this);
 					phase = Consts.PHASE_ESCAPE;
@@ -517,9 +588,21 @@ public class Player {
 	public void phaseMove(int option) {
 		if (phase != Consts.PHASE_MOVE) return;
 		if (option == 0) {
+			int totalSteps = rollDisplay;
+			if (board.getSettings().getUseGTA() == 1) { // GTA go to jail handles
+				if (totalSteps <= star) {
+					goToJail();
+					
+					board.getLogger().logEndTurn(this);
+					board.nextPlayer();
+					return;
+				}
+			}
+			
 			board.getMap().getPlace(placeIndex).removePlayer(this);
+			
 			int t = placeIndex;
-			for (int i=rollDisplay-1;i>=0;i--) {
+			for (int i=totalSteps-1;i>=0;i--) {
 				t = (t+1)%board.getMap().mapSize();
 				if (i!=0) board.getMap().getPlace(t).bypass(this);
 			}
@@ -555,13 +638,24 @@ public class Player {
 		if (inJail) {
 			// TODO: custom here
 			if (jailRound == 3) {
-				loseMoney(board.getMap().getBailCost());
+				int bailCost = board.getMap().getBailCost();
+				if (board.getSettings().getUseGTA() == 1) {
+					if (star > 0) bailCost = bailCost*star;
+				}
+				
+				loseMoney(bailCost);
 				outOfJail();
 				phase = Consts.PHASE_ROLL;
-				board.getLogger().logBait(this, board.getMap().getBailCost());
+				if (board.getSettings().getUseGTA() == 1) {
+					star = 0;
+					board.getLogger().logBaitGTA(this, bailCost);
+					board.setBroadcastMsg(name + "花费了$" + bailCost + "强制保释了自己，通缉值清零。");
+				} else {
+					board.getLogger().logBait(this, bailCost);
+					board.setBroadcastMsg(name + "花费了$" + bailCost + "强制保释了自己。");
+				}
 				
 				board.setBroadcastImg("avatar/head_"+avatarId);
-				board.setBroadcastMsg(name + "花费了$" + board.getMap().getBailCost() + "强制保释了自己。");
 			} else {
 				board.getLogger().logEndTurn(this);
 				board.nextPlayer();

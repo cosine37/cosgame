@@ -34,6 +34,7 @@ public class MapBuilder {
 		map.setNameFont("tyh");
 		map.setHeight(height);
 		map.setWidth(width);
+		map.setNumDice(1);
 		map.setJailIndex(10);
 		map.setJailZone(1);
 		map.setBailCost(500);
@@ -89,7 +90,7 @@ public class MapBuilder {
 			}
 			map.addPlace(p);
 		}
-		map.setFateIds(new ArrayList<>(Arrays.asList(10203)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(10204,10003)));
 		return map;
 	}
 	

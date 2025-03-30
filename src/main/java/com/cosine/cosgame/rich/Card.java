@@ -23,7 +23,7 @@ public class Card {
 		entity.setLevel(level);
 		entity.setRarity(rarity);
 		entity.setName(name);
-		entity.setDesc(desc);
+		entity.setDesc(getDesc());
 		entity.setTypes(types);
 		HashMap<String, String> imgStyle = new HashMap<>();
 		imgStyle.put("background-image", "url(/image/Rich/card/" + id + ".png)");
