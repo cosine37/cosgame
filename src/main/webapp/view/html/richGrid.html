@@ -22,7 +22,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 50px; width:50px;margin-left: 35px;margin-top:5px;" ng-show="g.area>100"></div>
 	
 	<div class="grid-avatars-div" style="top: 60px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -33,7 +36,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -45,7 +51,10 @@
 	<div style="font-size: 14px">{{g.desc}}</div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -57,7 +66,10 @@
 	<div style="font-size: 14px; color: white">{{g.desc}}</div>
 	
 	<div class="grid-avatars-div" style="top: 70px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -68,7 +80,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -79,7 +94,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -90,7 +108,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -101,7 +122,10 @@
 	<div ng-style="g.imgStyle" style="background-size:cover;height: 70px; width:70px;margin-left: 25px;margin-top:5px;"></div>
 	
 	<div class="grid-avatars-div" style="top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>

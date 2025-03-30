@@ -99,10 +99,30 @@ button:disabled{
 }
 
 .grid-avatar{
-	float: left;
 	height: 40px;
 	width: 40px;
 	filter:drop-shadow(0px 0px 5px yellow);
+	z-index: 300;
+	position: sticky
+}
+
+.grid-avatar-with-vehicle{
+	height: 32px;
+	width: 32px;
+	filter:drop-shadow(0px 0px 5px yellow);
+	z-index: 300;
+	position: sticky;
+	margin-left: 4px;
+}
+
+.grid-vehicle{
+	height:40px;
+	width:80px;
+	filter:drop-shadow(0px 0px 5px yellow);
+	z-index: 200;
+	position: absolute;
+	margin-left: -20px;
+	margin-top: -25px;
 }
 
 .corner-div{

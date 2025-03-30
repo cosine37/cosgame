@@ -97,17 +97,17 @@ public class Account {
 		entity.setMoney(money);
 		entity.setDiamond(diamond);
 		entity.setKey(key);
-		entity.setChosenAvatarEntity(Factory.genAvatar(chosenAvatar).toAvatarEntity());
+		entity.setChosenAvatarEntity(Factory.genAvatar(chosenAvatar).toAvatarEntity(null));
 		
 		int i;
 		List<AvatarEntity> avatarEntities = new ArrayList<>();
 		for (i=0;i<Consts.MAXAVATAR;i++) {
 			if (avatars.charAt(i) == '1') {
 				Avatar avatar = Factory.genAvatar(i);
-				avatarEntities.add(avatar.toAvatarEntity());
+				avatarEntities.add(avatar.toAvatarEntity(null));
 			} else {
 				Avatar avatar = Factory.genAvatar(-1);
-				avatarEntities.add(avatar.toAvatarEntity());
+				avatarEntities.add(avatar.toAvatarEntity(null));
 			}
 			
 			

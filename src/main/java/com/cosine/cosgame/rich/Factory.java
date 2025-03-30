@@ -1,5 +1,8 @@
 package com.cosine.cosgame.rich;
 
+import java.util.List;
+import java.util.Random;
+
 import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.*;
@@ -15,7 +18,10 @@ public class Factory {
 		if (id == 1) {
 			c = new Card1();
 		}
-		else if (id == 10) {
+		
+		else if (id == 9) {
+			c = new CardVehicleCoupon();
+		} else if (id == 10) {
 			c = new CardRelease();
 		}
 		
@@ -185,7 +191,32 @@ public class Factory {
 		} else if (id == 7) {
 			avatar = new Avatar(7,"啦啦");
 		}
-		
 		return avatar;
+	}
+	
+	public static Vehicle genVehicle(int id) {
+		Vehicle v = new Vehicle();
+		if (id == 1) {
+			v = new Vehicle(id, "利兰Mini 1000");
+		} else if (id == 2) {
+			v = new Vehicle(id, "特斯拉Cybertruck");
+		} else if (id == 3) {
+			v = new Vehicle(id, "宝马X3");
+		} else if (id == 4) {
+			v = new Vehicle(id, "凯迪拉克OV");
+		} else if (id == 8) {
+			v = new Vehicle(id, "奥迪A8");
+		} else if (id == 11) {
+			v = new Vehicle(id, "汗血宝马");
+		} else if (id == 12) {
+			v = new Vehicle(id, "密勒顿");
+		}
+		return v;
+	}
+	
+	public static Vehicle genRandomVehicle(List<Integer> ls) {
+		Random rand = new Random();
+		int x = rand.nextInt(ls.size());
+		return genVehicle(ls.get(x));
 	}
 }

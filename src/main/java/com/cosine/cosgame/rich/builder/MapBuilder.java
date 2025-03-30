@@ -41,7 +41,7 @@ public class MapBuilder {
 		map.setMapZoom("0.95");
 		map.setCenterZoom("1.05");
 		map.setCenterHeight("602px");
-		map.setCenterWidth("1034px");
+		map.setCenterWidth("1033px");
 		map.setLogHeight("880px");
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
@@ -91,6 +91,7 @@ public class MapBuilder {
 			map.addPlace(p);
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(10204,10003)));
+		map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,8,11,12)));
 		return map;
 	}
 	

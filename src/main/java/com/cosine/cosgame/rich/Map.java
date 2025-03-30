@@ -38,6 +38,7 @@ public class Map {
 	int hospitalIndex;
 	int wardZone;
 	List<Player> wardPlayers;
+	List<Integer> vehicleIds;
 	
 	Board board;
 	
@@ -47,6 +48,7 @@ public class Map {
 		doc.append("width", width);
 		doc.append("height", height);
 		doc.append("fateIds", fateIds);
+		doc.append("vehicleIds", vehicleIds);
 		doc.append("jailIndex", jailIndex);
 		doc.append("jailZone", jailZone);
 		doc.append("hospitalIndex", hospitalIndex);
@@ -88,6 +90,7 @@ public class Map {
 		height = doc.getInteger("height", 0);
 		width = doc.getInteger("width", 0);
 		fateIds = (List<Integer>) doc.get("fateIds");
+		vehicleIds = (List<Integer>) doc.get("vehicleIds");
 		jailIndex = doc.getInteger("jailIndex", -1);
 		jailZone = doc.getInteger("jailZone", -1);
 		hospitalIndex = doc.getInteger("hospitalIndex", -1);
@@ -432,5 +435,11 @@ public class Map {
 	}
 	public void setWardPlayers(List<Player> wardPlayers) {
 		this.wardPlayers = wardPlayers;
+	}
+	public List<Integer> getVehicleIds() {
+		return vehicleIds;
+	}
+	public void setVehicleIds(List<Integer> vehicleIds) {
+		this.vehicleIds = vehicleIds;
 	}
 }

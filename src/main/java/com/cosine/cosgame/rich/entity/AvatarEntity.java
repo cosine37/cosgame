@@ -4,7 +4,9 @@ import java.util.Map;
 
 public class AvatarEntity {
 	String name;
+	Map<String, String> avatarBlockStyle;
 	Map<String, String> avatarStyle;
+	Map<String, String> vehicleStyle;
 	
 	public String getName() {
 		return name;
@@ -17,6 +19,18 @@ public class AvatarEntity {
 	}
 	public void setAvatarStyle(Map<String, String> avatarStyle) {
 		this.avatarStyle = avatarStyle;
+	}
+	public Map<String, String> getAvatarBlockStyle() {
+		return avatarBlockStyle;
+	}
+	public void setAvatarBlockStyle(Map<String, String> avatarBlockStyle) {
+		this.avatarBlockStyle = avatarBlockStyle;
+	}
+	public Map<String, String> getVehicleStyle() {
+		return vehicleStyle;
+	}
+	public void setVehicleStyle(Map<String, String> vehicleStyle) {
+		this.vehicleStyle = vehicleStyle;
 	}
 
 }

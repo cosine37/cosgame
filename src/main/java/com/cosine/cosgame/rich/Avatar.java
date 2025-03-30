@@ -13,13 +13,20 @@ public class Avatar {
 		this.name = name;
 	}
 	
-	public AvatarEntity toAvatarEntity() {
+	public AvatarEntity toAvatarEntity(Vehicle vehicle) {
 		AvatarEntity entity = new AvatarEntity();
 		entity.setName(name);
 		HashMap<String, String> avatarStyle = new HashMap<>();
 		avatarStyle.put("background-image", "url(/image/Rich/avatar/" + getHead() + ".png)");
 		avatarStyle.put("background-size", "cover");
 		entity.setAvatarStyle(avatarStyle);
+		HashMap<String, String> vehicleStyle = new HashMap<>();
+		if (vehicle != null) {
+			vehicleStyle.put("background-image", "url(/image/Rich/vehicle/" + vehicle.getId() + ".png)");
+			vehicleStyle.put("background-size", "cover");
+		}
+		entity.setVehicleStyle(vehicleStyle);
+		entity.setAvatarBlockStyle(new HashMap<>());
 		return entity;
 	}
 	

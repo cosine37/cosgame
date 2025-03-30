@@ -1,6 +1,9 @@
 <div class="corner-div" >
 	<div class="grid-avatars-div" style="margin-top: 50px;">
-		<div class="grid-avatar" ng-repeat="i in map.wardPlayersIndex track by $index" ng-style="players[i].avatar.avatarStyle">
+		<div ng-repeat="i in map.wardPlayersIndex track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
 		</div>
 		<div style="clear:both"></div>
 	</div>

@@ -37,6 +37,7 @@ public class Player {
 	// GTA related
 	protected boolean inWard;
 	protected Buff buff;
+	protected Vehicle vehicle;
 	
 	protected Board board;
 	
@@ -60,6 +61,7 @@ public class Player {
 		doc.append("inWard", inWard);
 		doc.append("turnEnd", turnEnd);
 		doc.append("buffs", buff.getBuffs());
+		doc.append("vehicle", vehicle.getId());
 		Account account = new Account();
 		account.getFromDB(name);
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
@@ -103,6 +105,8 @@ public class Player {
 		avatarId = doc.getInteger("avatarId", -1);
 		List<Integer> buffs = (List<Integer>) doc.get("buffs");
 		buff = new Buff(buffs);
+		int vehicleId = doc.getInteger("vehicle", -1);
+		vehicle = Factory.genVehicle(vehicleId);
 		if (avatarId == -1) {
 			Account account = new Account();
 			account.getFromDB(name);
@@ -150,34 +154,43 @@ public class Player {
 		entity.setHp(hp);
 		entity.setStar(star);
 		entity.setBuffs(buff.getBuffs());
+		if (vehicle == null) {
+			entity.setVehicleId(-1);
+		} else {
+			entity.setVehicleId(vehicle.getId());
+		}
+		
 		
 		Account account = new Account();
 		account.getFromDB(name);
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
 		if (avatar != null) {
-			AvatarEntity avatarEntity = avatar.toAvatarEntity();
+			AvatarEntity avatarEntity = avatar.toAvatarEntity(vehicle);
 			int n = -1;
 			if (inJail) {
 				n = board.getMap().getJailPlayers().size();
-			} else if (board.getMap().getPlace(placeIndex) != null) {
+			} else if (inWard) {
+				n = board.getMap().getWardPlayers().size();
+			} 	
+			else if (board.getMap().getPlace(placeIndex) != null) {
 				n = board.getMap().getPlace(placeIndex).getPlayersOn().size();
 			}
 			if (n == 1) {
-				avatarEntity.getAvatarStyle().put("margin-left", "40px");
+				avatarEntity.getAvatarBlockStyle().put("margin-left", "40px");
 			} else if (n == 2) {
-				avatarEntity.getAvatarStyle().put("margin-left", "13px");
+				avatarEntity.getAvatarBlockStyle().put("margin-left", "13px");
 			} else if (n == 3) {
-				avatarEntity.getAvatarStyle().put("margin-left", "0px");
+				avatarEntity.getAvatarBlockStyle().put("margin-left", "0px");
 			} else if (n == 4) {
 				if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
-					avatarEntity.getAvatarStyle().put("margin-left", "0px");
+					avatarEntity.getAvatarBlockStyle().put("margin-left", "0px");
 				} else {
-					avatarEntity.getAvatarStyle().put("margin-left", "-14px");
+					avatarEntity.getAvatarBlockStyle().put("margin-left", "-14px");
 				}
 			}
 			entity.setAvatar(avatarEntity);
+			entity.setAvatarOrigin(avatar.toAvatarEntity(null));
 		}
-		entity.setAvatarOrigin(avatar.toAvatarEntity());
 		return entity;
 	}
 	
@@ -186,6 +199,7 @@ public class Player {
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
 		buff = new Buff();
+		vehicle = new Vehicle();
 	}
 	
 	public void addMoney(int x) {
@@ -224,6 +238,14 @@ public class Player {
 		if (star<0) star = 0;
 	}
 	
+	public void receiveVehicle(Vehicle v) {
+		setVehicle(v);
+	}
+	
+	public void loseVehicle() {
+		vehicle = new Vehicle();
+	}
+	
 	public void moveToPlace(int x) {
 		placeIndex = x;
 		board.getMap().getPlace(x).addPlayerOn(this);
@@ -249,6 +271,7 @@ public class Player {
 			hand.add(new CardNugget());
 			*/
 			hand.add(new CardRelease());
+			hand.add(new CardVehicleCoupon());
 		}
 		
 		
@@ -298,6 +321,7 @@ public class Player {
 			if (star<=2) {
 				board.setBroadcastMsg(name + "因轻罪入狱。");
 			} else if (star<=4) {
+				loseVehicle();
 				List<Card> newHand = new ArrayList<>();
 				for (int i=0;i<hand.size();i++) {
 					if (hand.get(i).getId() == 10) {
@@ -305,10 +329,11 @@ public class Player {
 					}
 				}
 				hand = newHand;
-				board.setBroadcastMsg(name + "因中罪入狱，弃置除出狱卡外的所有手牌。");
+				board.setBroadcastMsg(name + "因中罪入狱，失去载具和除出狱卡外的所有手牌。");
 			} else if (star<=6) {
+				loseVehicle();
 				hand = new ArrayList<>();
-				board.setBroadcastMsg(name + "因重罪入狱，弃置所有手牌且不得提前保释。");
+				board.setBroadcastMsg(name + "因重罪入狱，失去载具和所有手牌且不得提前保释。");
 			}
 		}
 		
@@ -835,5 +860,11 @@ public class Player {
 	}
 	public void setBuff(Buff buff) {
 		this.buff = buff;
+	}
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 }

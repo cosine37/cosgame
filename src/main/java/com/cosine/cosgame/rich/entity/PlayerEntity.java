@@ -20,6 +20,7 @@ public class PlayerEntity {
 	
 	int hp;
 	int star;
+	int vehicleId;
 
 	public String getName() {
 		return name;
@@ -110,6 +111,12 @@ public class PlayerEntity {
 	}
 	public void setBuffs(List<Integer> buffs) {
 		this.buffs = buffs;
+	}
+	public int getVehicleId() {
+		return vehicleId;
+	}
+	public void setVehicleId(int vehicleId) {
+		this.vehicleId = vehicleId;
 	}
 	
 }
