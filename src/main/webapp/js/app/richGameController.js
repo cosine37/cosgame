@@ -164,6 +164,13 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$scope.chosenCard = -1;
 				} else {
 					$scope.chosenCard = x;
+					
+					if ($scope.hand[$scope.chosenCard].id == 9000){
+						var tempSe = new Audio();
+						tempSe.volume = $scope.seVolume;
+						tempSe.src = '/sound/Rich/aoligei.mp3'
+						tempSe.play();
+					}		
 				}
 				setHandStyles()
 			}

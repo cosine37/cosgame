@@ -90,7 +90,7 @@ public class MapBuilder {
 			}
 			map.addPlace(p);
 		}
-		map.setFateIds(new ArrayList<>(Arrays.asList(10204,10003)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(10004,10005)));
 		map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,8,11,12)));
 		return map;
 	}

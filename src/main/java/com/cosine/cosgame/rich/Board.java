@@ -119,6 +119,17 @@ public class Board {
 		entity.setBroadcastMsg(broadcastMsg);
 		entity.setEndCondition(settings.getEndCondition());
 		entity.setSes(ses);
+		
+		String lastRolledDisplay = "";
+		if (lastRolled<10) {
+			lastRolledDisplay = "一个" + lastRolled;
+		} else if (lastRolled>10 && lastRolled<100) {
+			int r1 = lastRolled/10;
+			int r2 = lastRolled%10;
+			lastRolledDisplay = "" + r1 + "和" + r2;
+		}
+		entity.setLastRolledDisplay(lastRolledDisplay);
+		
 		HashMap<String, String> broadcastImgStyle = new HashMap<>();
 		if (broadcastImg != null && broadcastImg.length() > 0) {
 			broadcastImgStyle.put("background-image", "url(/image/Rich/" + broadcastImg + ".png)");
@@ -215,7 +226,7 @@ public class Board {
 			for (int i=0;i<n;i++) {
 				int t = rand.nextInt(60000);
 				int x = t%6+1;
-				result = result+x;
+				result = result*10+x;
 			}
 			
 			// TODO: edit dice result here;

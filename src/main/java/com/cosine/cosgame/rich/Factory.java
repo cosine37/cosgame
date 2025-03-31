@@ -29,6 +29,10 @@ public class Factory {
 			c = new CardNugget();
 		}
 		
+		else if (id == 9000) {
+			c = new CardSuccessBook();
+		}
+		
 		else if (id == 20001) {
 			c = new CardSalmonBite();
 		} else if (id == 20002) {
@@ -115,7 +119,7 @@ public class Factory {
 		} else if (id == 21) {
 			return new Fate(id,Consts.FATE_ADD,200,"发小归还十年前借的$200，即使你已经完全忘了这件事。","p的发小归还十年前借的$200，即使p已经完全忘了这件事");
 		} else if (id == 22) {
-			return new Fate(id,Consts.FATE_ADD,1145,"投稿时把小学作文《让我掏心掏肺的朋友》错投在医学栏目，竟意外地被《柳叶刀》发布，获得稿费$1145。","p投稿时把小学作文《让我掏心掏肺的朋友》错投在医学栏目，竟意外地被《柳叶刀》发布，p获得稿费$1145");
+			return new Fate(id,Consts.FATE_ADD,1145,"小学时投稿的作文《让我掏心掏肺的朋友》竟意外地被《柳叶刀》周刊发布，获得稿费$1145。","p小学时投稿的作文《让我掏心掏肺的朋友》竟意外地被《柳叶刀》周刊发布，p获得稿费$1145");
 		} else if (id == 23) {
 			return new Fate(id,Consts.FATE_ADD,520,"你在技术博客上发表的《为什么会找不到对象》被情感杂志收录，获得稿费$520。","p在技术博客上发表的《为什么会找不到对象》被情感杂志收录，获得稿费$520");
 		} else if (id == 24) {
@@ -155,6 +159,10 @@ public class Factory {
 			return new Fate(id,Consts.FATE_LOSE,210600,"被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600。","p被疯狗咬，失去1点生命值，打狂犬病疫苗花费$600");
 		} else if (id == 10003) {
 			return new Fate(id,Consts.FATE_HPSTAR,4121,"参与无偿献血，减少1点生命值和1点通缉值。","p参与无偿献血，减少1点生命值和1点通缉值");
+		} else if (id == 10004) {
+			return new Fate(id,Consts.FATE_CARDLOSE,90000386,"购买一本名为《成功学》的书，花费$386。","p购买了一本名为《成功学》的书，花费$386");
+		} else if (id == 10005) {
+			return new Fate(id,Consts.FATE_LOSE,210493,"玩游戏被对手暴虐，一拳打碎显示屏，失去1点生命值，更换显示屏花费$493。","p玩游戏被对手暴虐，一拳打碎显示屏，失去1点生命值，更换显示屏花费$493");
 		}
 		
 		else if (id == 10201) {
@@ -166,6 +174,11 @@ public class Factory {
 		} else if (id == 10204) {
 			return new Fate(id,Consts.FATE_CARDHPSTAR,2000431,"制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值。","p制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值");
 		} 
+		
+		// vehicle tweaks
+		else if (id == 910001) {
+			return new Fate(id,Consts.FATE_VEHICLEHPSTAR,20021,"汽车撞到电线杆，失去载具和1点生命值。","p的汽车撞到电线杆，p失去载具和1点生命值");
+		}
 		
 		return fate;
 	}

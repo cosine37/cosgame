@@ -31,8 +31,20 @@ public class PersonalEvent extends Place {
 		
 	}
 	
+	public int vehicleTweak(int x) {
+		int ans = x;
+		if (x == 10001) {
+			ans = 910001;
+		}
+		return ans;
+	}
+	
 	public void preStepOn(Player p) {
 		int x = board.getMap().genRandomFateId();
+		if (p.getVehicle() != null && p.getVehicle().getId() > -1) {
+			x = vehicleTweak(x);
+		}
+		
 		board.setLastFateId(x);
 		
 		// broadcast fate

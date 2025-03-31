@@ -64,6 +64,7 @@ public class Consts {
 	public static final int FATE_HPSTAR = 10;
 	public static final int FATE_CARDLOSE = 11;
 	public static final int FATE_CARDHPSTAR = 12;
+	public static final int FATE_VEHICLEHPSTAR = 13;
 	
 	
 	// settings related

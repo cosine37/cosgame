@@ -11,6 +11,7 @@ public class BoardEntity {
 	String fateMsg;
 	String broadcastMsg;
 	String broadcastImg;
+	String lastRolledDisplay;
 	Map<String, String> broadcastImgStyle;
 	List<CardEntity> myHand;
 	
@@ -182,6 +183,12 @@ public class BoardEntity {
 	}
 	public void setMyHand(List<CardEntity> myHand) {
 		this.myHand = myHand;
+	}
+	public String getLastRolledDisplay() {
+		return lastRolledDisplay;
+	}
+	public void setLastRolledDisplay(String lastRolledDisplay) {
+		this.lastRolledDisplay = lastRolledDisplay;
 	}
 	
 

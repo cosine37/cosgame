@@ -159,6 +159,19 @@ public class Fate {
 			hpStarHandle(p,raw);
 			Card c = Factory.genNewCard(cardId);
 			p.addCard(c);
+		} else if (type == Consts.FATE_VEHICLEHPSTAR) {
+			int x = value/10000;
+			int y = value%10000;
+			if (x == 2) p.loseVehicle();
+			if (y<100) {
+				hpStarHandle(p, y);
+			} else if (y>999 && y<10000) {
+				int raw1 = y/100;
+				int raw2 = y%100;
+				hpStarHandle(p, raw1);
+				hpStarHandle(p, raw2);
+			}
+			
 		}
 	}
 	public int getId() {

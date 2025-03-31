@@ -291,7 +291,14 @@ public class Player {
 	}
 	
 	public String myNextPlaceName() {
-		Place place = board.getMap().getPlaceAfter(placeIndex,rollDisplay);
+		int temp = rollDisplay;
+		int totalSteps = 0;
+		while (temp>0) {
+			totalSteps = totalSteps+temp%10;
+			temp = temp/10;
+		}
+		
+		Place place = board.getMap().getPlaceAfter(placeIndex,totalSteps);
 		if (place == null) return ""; else return place.getName();
 	}
 	
@@ -435,7 +442,12 @@ public class Player {
 				
 			}
 			else {
-				ans.add("掷骰");
+				if (vehicle != null && vehicle.getId()>-1) {
+					ans.add("掷一个骰子");
+					ans.add("掷两个骰子");
+				} else {
+					ans.add("掷骰");
+				}
 			}
 			
 		} else if (phase == Consts.PHASE_MOVE) {
@@ -523,7 +535,7 @@ public class Player {
 				board.getLogger().logPlayerRoll(this);
 				
 				board.setBroadcastImg("dice/"+rollDisplay);
-				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "。");
+				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，将会来到" + myNextPlaceName());
 			}
 			
 		} else if (option == 1) {
@@ -563,8 +575,26 @@ public class Player {
 				} 
 			}
 			
-			else {
+			else if (vehicle != null && vehicle.getId() > -1){
+				if (board.getSettings().getUseGTA() == 1) { // GTA ward handles
+					board.wardCheck();
+					if (inWard) {
+						board.getLogger().logEndTurn(this);
+						board.nextPlayer();
+						return;
+					}
+				}
 				
+				board.roll(this,2);
+				phase = Consts.PHASE_MOVE;
+				rollDisplay = board.getLastRolled();
+				board.getLogger().logPlayerRoll(this);
+				
+				int r1 = rollDisplay/10;
+				int r2 = rollDisplay%10;
+				
+				board.setBroadcastImg("dice/"+rollDisplay);
+				board.setBroadcastMsg(name + "掷了" + r1 + "和" + r2 + "，将会来到" + myNextPlaceName());
 			}
 		} else if (option>=10000 && option<20000) { // play cards
 			playCardRaw(option);
@@ -603,7 +633,7 @@ public class Player {
 				board.getLogger().logPlayerRoll(this);
 				
 				board.setBroadcastImg("dice/"+rollDisplay);
-				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "。");
+				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，将会来到" + myNextPlaceName());
 			}
 			
 			
@@ -613,7 +643,13 @@ public class Player {
 	public void phaseMove(int option) {
 		if (phase != Consts.PHASE_MOVE) return;
 		if (option == 0) {
-			int totalSteps = rollDisplay;
+			int temp = rollDisplay;
+			int totalSteps = 0;
+			while (temp>0) {
+				totalSteps = totalSteps+temp%10;
+				temp = temp/10;
+			}
+			
 			if (board.getSettings().getUseGTA() == 1) { // GTA go to jail handles
 				if (totalSteps <= star) {
 					goToJail();

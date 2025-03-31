@@ -47,6 +47,11 @@ public class Logger {
 	
 	public void logPlayerRoll(Player p) {
 		String s = p.getName() + " 掷出了 " + p.getRollDisplay();
+		if (p.getRollDisplay()>10 && p.getRollDisplay()<100) {
+			int r1 = p.getRollDisplay()/10;
+			int r2 = p.getRollDisplay()%10;
+			s = p.getName() + " 掷出了 " + r1 + " 和 " +r2;
+		}
 		log(s);
 	}
 	
