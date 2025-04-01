@@ -11,7 +11,7 @@ public class CardRumor extends Card {
 		super();
 		id = 21;
 		name = "谣言卡";
-		desc = "指定一名玩家，有70%的几率增加该玩家1点通缉值。消耗。";
+		desc = "成功率：70%；指定一名玩家获得+1starP。消耗。";
 		rarity = 0;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
 	}

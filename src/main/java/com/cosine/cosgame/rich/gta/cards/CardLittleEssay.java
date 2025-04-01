@@ -11,7 +11,7 @@ public class CardLittleEssay extends Card {
 		super();
 		id = 22;
 		name = "小作文";
-		desc = "指定一名玩家，增加该玩家2点通缉值。消耗。";
+		desc = "指定一名玩家获得+2starP。消耗。";
 		rarity = 2;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
 	}

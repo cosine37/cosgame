@@ -29,15 +29,19 @@ public class Factory {
 			c = new CardNugget();
 		}
 		
+		else if (id == 19) {
+			c = new CardCurlingStone();
+		}
+		
 		else if (id == 21) {
 			c = new CardRumor();
 		} else if (id == 22) {
 			c = new CardLittleEssay();
 		}
 		
-		else if (id == 25) {
+		else if (id == 24) {
 			c = new CardDividend();
-		} else if (id == 26) {
+		} else if (id == 25) {
 			c = new CardHealthInsurance();
 		}
 		

@@ -8,7 +8,7 @@ public class CardPoutine extends Card {
 		super();
 		id = 20002;
 		name = "盖浇薯条";
-		desc = "回复2点生命值。消耗。";
+		desc = "+2healthP。消耗。";
 		rarity = 2;
 	}
 	

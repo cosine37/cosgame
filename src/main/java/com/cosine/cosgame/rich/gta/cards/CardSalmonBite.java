@@ -8,7 +8,7 @@ public class CardSalmonBite extends Card {
 		super();
 		id = 20001;
 		name = "烟熏三文鱼";
-		desc = "回复1点生命值。消耗。";
+		desc = "+1healthP。消耗。";
 		rarity = 1;
 	}
 	

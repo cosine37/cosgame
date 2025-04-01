@@ -6,9 +6,9 @@ import com.cosine.cosgame.rich.Consts;
 public class CardDividend extends Card {
 	public CardDividend() {
 		super();
-		id = 25;
+		id = 24;
 		name = "返现卡";
-		desc = "你每次支出都会返现2%（向下取整）";
+		desc = "你每次支出都会返现2%（向下取整）。";
 		rarity = 1;
 		passive();
 	}

@@ -133,6 +133,13 @@ button:disabled{
 	position: relative;
 }
 
+.star-in-text{
+	background-image: url('/image/Rich/star1.png');
+	height: 20px;
+	width: 20px;
+	background-size: cover;
+}
+
 .player-console{
 	margin-top: 20px;
 	margin-left: 20px;

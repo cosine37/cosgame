@@ -282,8 +282,8 @@ public class Player {
 			hand.add(new CardVehicleCoupon());
 			hand.add(new CardRumor());
 			hand.add(new CardLittleEssay());
-			hand.add(new CardDividend());
-			hand.add(new CardHealthInsurance());
+			hand.add(new CardCurlingStone());
+			hand.add(new CardPoutine());
 		}
 		
 		

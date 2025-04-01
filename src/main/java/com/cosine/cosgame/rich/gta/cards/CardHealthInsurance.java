@@ -6,7 +6,7 @@ import com.cosine.cosgame.rich.Consts;
 public class CardHealthInsurance extends Card {
 	public CardHealthInsurance() {
 		super();
-		id = 26;
+		id = 25;
 		name = "医保卡";
 		desc = "你每次住院的费用减免$500。";
 		rarity = 2;

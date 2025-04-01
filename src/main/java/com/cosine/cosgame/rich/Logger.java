@@ -183,4 +183,12 @@ public class Logger {
 		String s = p.getName() + " 无法提前保释，只得等待";
 		log(s);
 	}
+	public void logLoseHp(Player p, int x) {
+		String s = p.getName() + " 失去了 " + x + " 点生命值";
+		log(s);
+	}
+	public void logGainstar(Player p, int x) {
+		String s = p.getName() + " 增加了 " + x + " 点通缉值";
+		log(s);
+	}
 }

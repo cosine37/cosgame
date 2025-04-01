@@ -8,7 +8,7 @@ public class CardHawaiianPizza extends Card {
 		super();
 		id = 20004;
 		name = "夏威夷披萨";
-		desc = "回复2点生命值。消耗。";
+		desc = "+2healthP。消耗。";
 		rarity = 2;
 	}
 	

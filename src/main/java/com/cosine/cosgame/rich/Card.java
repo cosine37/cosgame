@@ -24,7 +24,7 @@ public class Card {
 		entity.setLevel(level);
 		entity.setRarity(rarity);
 		entity.setName(name);
-		entity.setDesc(getDesc());
+		entity.setDesc(parseDesc());
 		entity.setTypes(types);
 		HashMap<String, String> imgStyle = new HashMap<>();
 		imgStyle.put("background-image", "url(/image/Rich/card/" + id + ".png)");
@@ -66,6 +66,44 @@ public class Card {
 	public void onLoseMoney(int x) {}
 	
 	public int wardFeeDeduction() {return 0;}
+	
+	String smartReplace(String s, String s1, String s2) {
+		int i=0;
+		int n = s.length();
+		int x = s1.length();
+		String ans = "";
+		while (i<n) {
+			if (i+x > n) {
+				ans = ans+s.charAt(i);
+				i++;
+				
+			} else {
+				String ts = s.substring(i,i+x);
+				if (ts.contentEquals(s1)){
+					ans = ans + s2;
+					i = i+x;
+				} else {
+					ans = ans + s.charAt(i);
+					i++;
+				}
+			}
+		}
+		return ans;
+	}
+	
+	public String parseDesc() {
+		String ans = getDesc();
+		
+		//ans = smartReplace(ans,"s","<span style='width: 20px; height:20px; background-image=url(/image/Rich/star1.png); background-size:cover'></span>");
+		ans = smartReplace(ans,"starP","<img src='/image/Rich/star1.png' style='width: 18px; height:22px;padding-bottom:4px'>");
+		ans = smartReplace(ans,"healthP","<img src='/image/Rich/hp1.png' style='width: 20px; height:22px;padding-bottom:4px;padding-left: 2px;'>");
+		
+		ans = smartReplace(ans,"消耗","<b style='color:darkorange'>消耗</b>");
+		ans = smartReplace(ans,"载具","<b style='color:darkblue'>载具</b>");
+		ans = smartReplace(ans,"成功率：","<b>成功率：</b>");
+		
+		return ans;
+	}
 	
 	public int getId() {
 		return id;

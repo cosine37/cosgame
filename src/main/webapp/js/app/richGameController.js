@@ -4,9 +4,9 @@ var setUrl = function(d){
 	return header + server + d;
 }
 
-var app = angular.module("richGameApp", ["ngWebSocket"]);
-app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket',
-	function($scope, $window, $http, $document, $timeout, $websocket){
+var app = angular.module("richGameApp", ["ngWebSocket", "ngSanitize"]);
+app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$timeout', '$websocket','$sce',
+	function($scope, $window, $http, $document, $timeout, $websocket,$sce){
 		var ws = $websocket("wss://" + $window.location.host + "/rich/boardrefresh");
 		var heartCheck = {
 			timeout: 10000,//10s
@@ -236,6 +236,9 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					var data = {"option" : option}
 					$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
 						$scope.chosenCard = -1;
+						$scope.curPlayStyle = -1;
+						$scope.chosenPlayer = -1;
+						$scope.chosenGrid = -1;
 						ws.send("refresh");
 					});
 				}
@@ -306,6 +309,8 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		setHandStyles = function(){
 			$scope.handStyle = [];
 			for (i=0;i<$scope.hand.length;i++){
+				$scope.hand[i].descDisplay = $sce.trustAsHtml($scope.hand[i].desc);
+				//alert($scope.hand[i].descDisplay)
 				var cstyle = {}
 				if (i == $scope.chosenCard){
 					cstyle["margin-top"] = "-25px"
