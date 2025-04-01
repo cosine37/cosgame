@@ -35,6 +35,12 @@ public class Factory {
 			c = new CardLittleEssay();
 		}
 		
+		else if (id == 25) {
+			c = new CardDividend();
+		} else if (id == 26) {
+			c = new CardHealthInsurance();
+		}
+		
 		else if (id == 9000) {
 			c = new CardSuccessBook();
 		}

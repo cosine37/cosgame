@@ -253,18 +253,16 @@ public class Estate extends Place{
 			} else if (option == 1) {
 				if (p.getMoney()>=cost) {
 					ownerId = p.getIndex();
-					p.loseMoney(cost);
 					board.getLogger().log(p.getName() + " 花费了$" + cost + "购买了 " + name);
 					
 					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
 					board.setBroadcastMsg(p.getName() + "购买了" + name);
+					p.loseMoney(cost);
 				}
 			}
 		} else if (p.getIndex() != ownerId) {
 			int paidRent = getRent();
 			Player owner = board.getPlayers().get(ownerId);
-			owner.addMoney(paidRent);
-			p.loseMoney(paidRent);
 			if (area == Consts.AREA_UTILITY) {
 				board.getLogger().logPlayerRoll(p);
 			}
@@ -272,17 +270,21 @@ public class Estate extends Place{
 			
 			board.setBroadcastImg("avatar/head_"+p.getAvatarId());
 			board.setBroadcastMsg(p.getName() + "向" + owner.getName() + "支付了$" + paidRent + "。");
+			
+			owner.addMoney(paidRent);
+			p.loseMoney(paidRent);
 		} else if (level < maxLevel){
 			if (option == 0) {
 				board.getLogger().log(p.getName() + " 没有加盖 " + name);
 			} else if (option == 1) {
 				if (p.getMoney()>=upgradeCost && level<maxLevel) {
-					p.loseMoney(upgradeCost);
 					level++;
 					board.getLogger().log(p.getName() + " 花费了$" + upgradeCost + "加盖了 " + name + " （当前等级：" + level + "级）");
 					
 					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
 					board.setBroadcastMsg(p.getName() + "加盖了" + name + "。");
+					
+					p.loseMoney(upgradeCost);
 				}
 			}
 		} else {

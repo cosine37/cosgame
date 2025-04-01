@@ -59,6 +59,14 @@ public class Card {
 		types.set(1, true);
 	}
 	
+	public boolean isPassive() {
+		return types.get(1);
+	}
+	
+	public void onLoseMoney(int x) {}
+	
+	public int wardFeeDeduction() {return 0;}
+	
 	public int getId() {
 		return id;
 	}

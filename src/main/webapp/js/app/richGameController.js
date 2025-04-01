@@ -310,6 +310,14 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				if (i == $scope.chosenCard){
 					cstyle["margin-top"] = "-25px"
 				}
+				
+				if ($scope.hand[i].types[0] == true){
+					cstyle["background-color"] = "white"
+				}
+				if ($scope.hand[i].types[1] == true){
+					cstyle["background-color"] = "darkslategrey"
+				}
+				
 				$scope.handStyle.push(cstyle);
 			}
 		}

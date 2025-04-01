@@ -208,6 +208,14 @@ public class Player {
 	
 	public void loseMoney(int x) {
 		money = money-x;
+		
+		if (hand != null) {
+			for (int i=0;i<hand.size();i++) {
+				if (hand.get(i).isPassive()) {
+					hand.get(i).onLoseMoney(x);
+				}
+			}
+		}
 	}
 	
 	public void addSalary() {
@@ -270,10 +278,12 @@ public class Player {
 			hand.add(new CardPoutine());
 			hand.add(new CardNugget());
 			*/
-			hand.add(new CardRelease());
+			//hand.add(new CardRelease());
 			hand.add(new CardVehicleCoupon());
 			hand.add(new CardRumor());
 			hand.add(new CardLittleEssay());
+			hand.add(new CardDividend());
+			hand.add(new CardHealthInsurance());
 		}
 		
 		
@@ -377,14 +387,33 @@ public class Player {
 		
 		// Step 3: pay treatment fee
 		int fee = Consts.GTA_TREATMENTFEE*hp;
+		
+		int deduction = 0;
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).isPassive()) {
+				deduction = deduction+hand.get(i).wardFeeDeduction();
+			}
+		}
+		if (deduction > 0) {
+			board.getLogger().log(name + " 的 医保卡 共减免医疗费 $" +deduction);
+		}
+		fee = fee-deduction;
+		
 		if (money<1) fee = 0; else if (money<fee) fee = money-1;
-		loseMoney(fee);
+		
 		
 		// Step 4: logs
 		board.getLogger().logOutOfWard(this, fee);
 		
 		board.setBroadcastImg("avatar/head_"+avatarId);
-		board.setBroadcastMsg(name + "出院了，住院期间花费$" + fee + "。");
+		if (deduction > 0) {
+			board.setBroadcastMsg(name + "出院了，住院期间花费$" + fee + "，医保卡为其减免了$" + deduction + "。");
+		} else {
+			board.setBroadcastMsg(name + "出院了，住院期间花费$" + fee + "。");
+		}
+		
+		
+		loseMoney(fee);
 	}
 	
 	public void playCard(int x, int rawOptions) {
@@ -557,8 +586,6 @@ public class Player {
 				}
 				
 				if (money>=bailCost) {
-					loseMoney(bailCost);
-					outOfJail();
 					if (board.getSettings().getUseGTA() == 1) {
 						star = 0;
 						board.getLogger().logBaitGTA(this, bailCost);
@@ -567,6 +594,8 @@ public class Player {
 						board.getLogger().logBait(this, bailCost);
 						board.setBroadcastMsg(name + "花费了$" + bailCost + "把自己保释了。");
 					}
+					outOfJail();
+					loseMoney(bailCost);
 
 					board.setBroadcastImg("avatar/head_"+avatarId);
 					
@@ -706,8 +735,7 @@ public class Player {
 					if (star > 0) bailCost = bailCost*star;
 				}
 				
-				loseMoney(bailCost);
-				outOfJail();
+				
 				phase = Consts.PHASE_ROLL;
 				if (board.getSettings().getUseGTA() == 1) {
 					star = 0;
@@ -719,6 +747,9 @@ public class Player {
 				}
 				
 				board.setBroadcastImg("avatar/head_"+avatarId);
+				
+				loseMoney(bailCost);
+				outOfJail();
 			} else {
 				board.getLogger().logEndTurn(this);
 				board.nextPlayer();
