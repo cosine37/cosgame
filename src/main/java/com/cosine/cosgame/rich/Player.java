@@ -272,6 +272,8 @@ public class Player {
 			*/
 			hand.add(new CardRelease());
 			hand.add(new CardVehicleCoupon());
+			hand.add(new CardRumor());
+			hand.add(new CardLittleEssay());
 		}
 		
 		

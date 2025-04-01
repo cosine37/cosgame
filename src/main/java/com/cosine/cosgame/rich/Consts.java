@@ -82,6 +82,9 @@ public class Consts {
 	// card related
 	public static final int CARD_OPTION_THROW = 99;
 	
+	public static final int PLAYSTYLE_DIRECT = 0;
+	public static final int PLAYSTYLE_CHOOSEPLAYER = 1;
+	
 	// GTA player related
 	public static final int GTA_MAXHP = 5;
 	public static final int GTA_MAXSTAR = 6;

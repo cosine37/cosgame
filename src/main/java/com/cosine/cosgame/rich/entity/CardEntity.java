@@ -7,6 +7,7 @@ public class CardEntity {
 	int id;
 	int level;
 	int rarity;
+	int playStyle;
 	String name;
 	String desc;
 	List<Boolean> types;
@@ -60,6 +61,12 @@ public class CardEntity {
 	}
 	public void setRarity(int rarity) {
 		this.rarity = rarity;
+	}
+	public int getPlayStyle() {
+		return playStyle;
+	}
+	public void setPlayStyle(int playStyle) {
+		this.playStyle = playStyle;
 	}
 	
 }

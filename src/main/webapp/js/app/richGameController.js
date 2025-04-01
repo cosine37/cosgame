@@ -157,9 +157,28 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			
 		}
 		
+		
+		$scope.PLAYSTYLE_CHOOSEPLAYER = 1;
+		
+		$scope.curPlayStyle = -1;
 		$scope.chosenCard = -1;
+		$scope.chosenPlayer = -1;
+		$scope.chosenGrid = -1;
+		$scope.clickChoosePlayer = function(x){
+			if (x == $scope.chosenPlayer){
+				$scope.chosenPlayer = -1
+			} else {
+				$scope.chosenPlayer = x
+			}
+		}
 		$scope.clickHand = function(x){
 			if ($scope.phase != $scope.OFFTURN){
+				$scope.chosenPlayer = -1;
+				$scope.chosenGrid = -1;
+				$scope.curPlayStyle = -1;
+				
+				//alert(chosenPlayer)
+				
 				if (x == $scope.chosenCard){
 					$scope.chosenCard = -1;
 				} else {
@@ -170,7 +189,9 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						tempSe.volume = $scope.seVolume;
 						tempSe.src = '/sound/Rich/aoligei.mp3'
 						tempSe.play();
-					}		
+					}
+					
+					$scope.curPlayStyle = $scope.hand[$scope.chosenCard].playStyle
 				}
 				setHandStyles()
 			}
@@ -178,7 +199,12 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		$scope.showPlayButton = function(){
 			if ($scope.chosenCard>=0 && $scope.chosenCard<$scope.hand.length){
-				return $scope.hand[$scope.chosenCard].playable;
+				if ($scope.hand[$scope.chosenCard].playable == false){
+					return false;
+				} else if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEPLAYER && $scope.chosenPlayer == -1){
+					return false;
+				}
+				return true;
 			} else {
 				return false;
 			}
@@ -187,9 +213,15 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			if ($scope.chosenCard>=0){
 				var option = 10000;
 				option = option+$scope.chosenCard * 100;
+				if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEPLAYER){
+					option = option + parseInt($scope.chosenPlayer)
+				}
 				var data = {"option" : option}
 				$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
 					$scope.chosenCard = -1;
+					$scope.curPlayStyle = -1;
+					$scope.chosenPlayer = -1;
+					$scope.chosenGrid = -1;
 					ws.send("refresh");
 				});
 			}

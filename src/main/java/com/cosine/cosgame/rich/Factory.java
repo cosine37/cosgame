@@ -29,6 +29,12 @@ public class Factory {
 			c = new CardNugget();
 		}
 		
+		else if (id == 21) {
+			c = new CardRumor();
+		} else if (id == 22) {
+			c = new CardLittleEssay();
+		}
+		
 		else if (id == 9000) {
 			c = new CardSuccessBook();
 		}

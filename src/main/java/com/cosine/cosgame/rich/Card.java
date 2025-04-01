@@ -16,6 +16,7 @@ public class Card {
 	protected int level;
 	protected boolean exhaust;
 	protected int rarity;
+	protected int playStyle;
 	
 	public CardEntity toCardEntity(){
 		CardEntity entity = new CardEntity();
@@ -30,6 +31,7 @@ public class Card {
 		imgStyle.put("background-size", "cover");
 		entity.setImgStyle(imgStyle);
 		entity.setPlayable(playable());
+		entity.setPlayStyle(playStyle);
 		return entity;
 	}
 	
@@ -38,6 +40,7 @@ public class Card {
 		types = new ArrayList<>();
 		exhaust = true;
 		rarity = 0;
+		playStyle = Consts.PLAYSTYLE_DIRECT;
 		
 		for (int i=0;i<10;i++) types.add(false);
 		types.set(0, true);
