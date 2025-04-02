@@ -330,6 +330,17 @@ public class Estate extends Place{
 			board.setBroadcastMsg(p.getName() + "移动到了" + oss.get(x).getName());
 		}
 	}
+	
+	// Begin gta related
+	public void destroyHouse() {
+		level = 0;
+	}
+	
+	public void downgradeHouse() {
+		level--;
+	}
+	
+	// End gta related
 	public int getArea() {
 		return area;
 	}

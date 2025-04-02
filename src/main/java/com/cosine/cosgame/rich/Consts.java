@@ -84,6 +84,7 @@ public class Consts {
 	
 	public static final int PLAYSTYLE_DIRECT = 0;
 	public static final int PLAYSTYLE_CHOOSEPLAYER = 1;
+	public static final int PLAYSTYLE_CHOOSEGRID = 2;
 	
 	// GTA player related
 	public static final int GTA_MAXHP = 5;

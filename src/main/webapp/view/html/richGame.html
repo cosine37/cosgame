@@ -233,6 +233,8 @@
 								<div ng-show="chosenEstate.area<100">
 									<div ng-show="chosenEstate.maxLevel<5" style="width: 240px;margin-top: 30px;text-align:center; font-size: 20px" 
 										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
+									<div ng-show="chosenEstate.maxLevel==5" style="width: 240px;margin-top: 10px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
 								</div>
 								<div ng-show="chosenEstate.area == UTILITYAREA">
 									<div ng-show="chosenEstate.maxLevel<2" style="width: 240px;margin-top: 45px;text-align:center; font-size: 20px" 

@@ -279,11 +279,15 @@ public class Player {
 			hand.add(new CardNugget());
 			*/
 			//hand.add(new CardRelease());
+			/*
 			hand.add(new CardVehicleCoupon());
 			hand.add(new CardRumor());
 			hand.add(new CardLittleEssay());
 			hand.add(new CardCurlingStone());
 			hand.add(new CardPoutine());
+			*/
+			hand.add(new CardVehicleCoupon());
+			hand.add(new CardDinosaur());
 		}
 		
 		

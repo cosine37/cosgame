@@ -44,7 +44,7 @@ public class MapBuilder {
 		map.setCenterWidth("1033px");
 		map.setLogHeight("880px");
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
-		map.setAreaNames(new ArrayList<>(Arrays.asList("","东下塘区","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setAreaNames(new ArrayList<>(Arrays.asList("","怡陶碧谷·Etobicoke","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		if (settings.getUseGTA() == 1) {
@@ -87,7 +87,21 @@ public class MapBuilder {
 					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
 					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 				}
-			}
+			} else if (i == 1) {
+				p = new Estate(i, "汉伯湾", 1, 600,300,5,new ArrayList<>(Arrays.asList(20,300,300,900,1600,2500)));
+				p.setImg("gta/HumberBay");
+				p.setFont("tyh", 18);
+				p.createDetail();
+				p.getDetail().setTitle("汉伯湾·Humber Bay");
+				p.getDetail().setDesc("1809年前此地为未开发地段。1882年一个旅馆财团开发了汉伯河（Humber River）至多伦多的轮渡服务，该服务于1886年停用。1890年多伦多港湾委员会（THC）在东岸填河造陆，并修建了吊桥，从此不需要轮渡即可过河。1970年代汉伯湾公园（Humber Bay Park）在此建造。");
+			}  else if (i == 3) {
+				p = new Estate(i, "伊斯灵顿", 1, 800,500,5,new ArrayList<>(Arrays.asList(40,200,600,1800,3200,4500)));
+				p.setImg("gta/Islington");
+				p.setFont("tyh", 18);
+				p.createDetail();
+				p.getDetail().setTitle("伊斯灵顿·Islington");
+				p.getDetail().setDesc("该社区发源于1832年建造的蒙哥马利客栈（Montgomery's Inn）。1850年设乡，并用该客栈作为议会厅。当时镇名为美美高（Mimico）。1855年第一条从西部通往多伦多的铁路建设完毕，将美美高镇分成两部分。1860年，北部脱离美美高，成立伊斯灵顿（Islington）乡镇，因当时的蒙哥马利客栈老板的妻子出生于英国的伊斯灵顿而得名。1954年并入怡陶碧谷（Etobicoke），1998年并入多伦多。");
+			} 
 			map.addPlace(p);
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(10004,10005)));

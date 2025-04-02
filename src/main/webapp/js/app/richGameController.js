@@ -159,11 +159,19 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		
 		$scope.PLAYSTYLE_CHOOSEPLAYER = 1;
+		$scope.PLAYSTYLE_CHOOSEGRID = 2;
 		
 		$scope.curPlayStyle = -1;
 		$scope.chosenCard = -1;
 		$scope.chosenPlayer = -1;
 		$scope.chosenGrid = -1;
+		$scope.clickChooseGrid = function(x){
+			if (x == $scope.chosenGrid){
+				$scope.chosenGrid = -1
+			} else {
+				$scope.chosenGrid = x
+			}
+		}
 		$scope.clickChoosePlayer = function(x){
 			if (x == $scope.chosenPlayer){
 				$scope.chosenPlayer = -1
@@ -215,6 +223,8 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				option = option+$scope.chosenCard * 100;
 				if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEPLAYER){
 					option = option + parseInt($scope.chosenPlayer)
+				} else if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEGRID){
+					option = option + parseInt($scope.chosenGrid)
 				}
 				var data = {"option" : option}
 				$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){

@@ -130,3 +130,12 @@
 		<div style="clear:both"></div>
 	</div>
 </div>
+
+
+
+<div style="position:relative;height:45px; width:45px; margin-top: -45px; padding-left: 75px; z-index:300">
+	<div style="height:40px; width:40px;background-image:url('image/Rich/checked.png'); background-size:cover; cursor:pointer"
+		ng-show="curPlayStyle == PLAYSTYLE_CHOOSEGRID && chosenGrid == g.id" ng-click="event.stopPropagation();clickChooseGrid(g.id)"></div>
+	<div style="height:40px; width:40px;background-image:url('image/Rich/not-checked.png'); background-size:cover; cursor:pointer"
+		ng-show="curPlayStyle == PLAYSTYLE_CHOOSEGRID && chosenGrid != g.id" ng-click="event.stopPropagation();clickChooseGrid(g.id)"></div>
+</div>

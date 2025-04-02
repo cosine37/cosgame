@@ -43,6 +43,10 @@ public class Factory {
 			c = new CardDividend();
 		} else if (id == 25) {
 			c = new CardHealthInsurance();
+		} 
+		
+		else if (id == 30) {
+			c = new CardDinosaur();
 		}
 		
 		else if (id == 9000) {
