@@ -191,4 +191,12 @@ public class Logger {
 		String s = p.getName() + " 增加了 " + x + " 点通缉值";
 		log(s);
 	}
+	public void logGainCard(Player p, int x) {
+		String s = p.getName() + " 获得了 " + x + " 张牌";
+		log(s);
+	}
+	public void logLoseStar(Player p, int x) {
+		String s = p.getName() + " 减少了 " + x + " 点通缉值";
+		log(s);
+	}
 }

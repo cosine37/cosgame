@@ -38,10 +38,13 @@ public class Consts {
 	public static final int PLACE_JAIL = 6;
 	public static final int PLACE_GOTOJAIL = 7;
 	
+	public static final int STARTPOINT_INDEX = 0;
+	
 	// GTA places
 	public static final int PLACE_HOSPITAL = 11;
+	public static final int PLACE_CARDGAINER = 12;
 	
-	public static final int STARTPOINT_INDEX = 0;
+	
 	
 	// areas
 	public static final int AREA_UTILITY = 101;
@@ -79,12 +82,16 @@ public class Consts {
 	// avatar related
 	public static final int MAXAVATAR = 8;
 	
-	// card related
+	// GTA card related
 	public static final int CARD_OPTION_THROW = 99;
 	
 	public static final int PLAYSTYLE_DIRECT = 0;
 	public static final int PLAYSTYLE_CHOOSEPLAYER = 1;
 	public static final int PLAYSTYLE_CHOOSEGRID = 2;
+	
+	public static final int GUARANTEE_UNCOMMON = 5;
+	public static final int GUARANTEE_RARE = 10;
+	public static final int GUARANTEE_EPIC = 20;
 	
 	// GTA player related
 	public static final int GTA_MAXHP = 5;

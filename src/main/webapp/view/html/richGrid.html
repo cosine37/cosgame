@@ -131,6 +131,20 @@
 	</div>
 </div>
 
+<div ng-show="g.type==CARDGAINER" class="grid-div" ng-style="g.imgStyle" style="background-size:cover;">
+	<div style="color: gold" ng-style="g.fontStyle">{{g.name}}</div>
+	<div style="font-size: 13px; color: white;padding:2px; padding-top:5px;">{{g.desc}}</div>
+	
+	<div class="grid-avatars-div" style="top: 70px;">
+		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">
+			<div class="grid-avatar" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId==-1"></div>
+			<div class="grid-avatar-with-vehicle" ng-style="players[i].avatar.avatarStyle" ng-show="players[i].vehicleId!=-1"></div>
+			<div class="grid-vehicle" ng-style="players[i].avatar.vehicleStyle" ng-show="players[i].vehicleId!=-1"></div>
+		</div>
+		<div style="clear:both"></div>
+	</div>
+</div>
+
 
 
 <div style="position:relative;height:45px; width:45px; margin-top: -45px; padding-left: 75px; z-index:300">

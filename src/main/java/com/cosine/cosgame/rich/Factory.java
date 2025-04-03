@@ -31,9 +31,9 @@ public class Factory {
 		
 		else if (id == 19) {
 			c = new CardCurlingStone();
-		}
-		
-		else if (id == 21) {
+		} else if (id == 20) {
+			c = new CardFromNothing();
+		} else if (id == 21) {
 			c = new CardRumor();
 		} else if (id == 22) {
 			c = new CardLittleEssay();
@@ -90,6 +90,8 @@ public class Factory {
 			p = new GoToJail(doc, board);
 		} else if (type == Consts.PLACE_HOSPITAL) {
 			p = new Hospital(doc, board);
+		} else if (type == Consts.PLACE_CARDGAINER) {
+			p = new CardGainer(doc, board);
 		}
 		return p;
 	}

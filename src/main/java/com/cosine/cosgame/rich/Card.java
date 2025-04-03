@@ -68,6 +68,7 @@ public class Card {
 	public int wardFeeDeduction() {return 0;}
 	
 	String smartReplace(String s, String s1, String s2) {
+		if (s == null) return null;
 		int i=0;
 		int n = s.length();
 		int x = s1.length();
@@ -152,5 +153,17 @@ public class Card {
 	}
 	public void setExhaust(boolean exhaust) {
 		this.exhaust = exhaust;
+	}
+	public int getRarity() {
+		return rarity;
+	}
+	public void setRarity(int rarity) {
+		this.rarity = rarity;
+	}
+	public int getPlayStyle() {
+		return playStyle;
+	}
+	public void setPlayStyle(int playStyle) {
+		this.playStyle = playStyle;
 	}
 }

@@ -39,12 +39,21 @@ public class Map {
 	int wardZone;
 	List<Player> wardPlayers;
 	List<Integer> vehicleIds;
+	List<Integer> commonCardIds;
+	List<Integer> uncommonCardIds;
+	List<Integer> rareCardIds;
+	List<Integer> epicCardIds;
 	
 	Board board;
 	
 	public Document toDocument(){
 		int i;
 		Document doc = new Document();
+		List<Document> placesDocList = new ArrayList<>();
+		for (i=0;i<places.size();i++){
+			placesDocList.add(places.get(i).toDocument());
+		}
+		doc.append("places",placesDocList);
 		doc.append("width", width);
 		doc.append("height", height);
 		doc.append("fateIds", fateIds);
@@ -78,11 +87,11 @@ public class Map {
 			wardPlayerIndexes.add(wardPlayers.get(i).getIndex());
 		}
 		doc.append("wardPlayerIndexes", wardPlayerIndexes);
-		List<Document> placesDocList = new ArrayList<>();
-		for (i=0;i<places.size();i++){
-			placesDocList.add(places.get(i).toDocument());
-		}
-		doc.append("places",placesDocList);
+		doc.append("commonCardIds", commonCardIds);
+		doc.append("uncommonCardIds", uncommonCardIds);
+		doc.append("rareCardIds", rareCardIds);
+		doc.append("epicCardIds", epicCardIds);
+		
 		return doc;
 	}
 	public void setFromDoc(Document doc){
@@ -110,6 +119,10 @@ public class Map {
 		centerWidth = doc.getString("centerWidth");
 		centerHeight = doc.getString("centerHeight");
 		logHeight = doc.getString("logHeight");
+		commonCardIds = (List<Integer>) doc.get("commonCardIds");
+		uncommonCardIds = (List<Integer>) doc.get("uncommonCardIds");
+		rareCardIds = (List<Integer>) doc.get("rareCardIds");
+		epicCardIds = (List<Integer>) doc.get("epicCardIds");
 		List<Document> placesDocList = (List<Document>)doc.get("places");
 		places = new ArrayList<>();
 		for (i=0;i<placesDocList.size();i++){
@@ -179,6 +192,10 @@ public class Map {
 		fateIds = new ArrayList<>();
 		jailPlayers = new ArrayList<>();
 		wardPlayers = new ArrayList<>();
+		commonCardIds = new ArrayList<>();
+		uncommonCardIds = new ArrayList<>();
+		rareCardIds = new ArrayList<>();
+		epicCardIds = new ArrayList<>();
 	}
 	
 	public void genMap(int x) {
@@ -277,6 +294,26 @@ public class Map {
 			}
 		}
 	}
+	// end of hospital/ward related
+	
+	// card related
+	public void sortCardRarity(List<Integer> ids) {
+		int i;
+		for (i=0;i<ids.size();i++) {
+			Card c = Factory.genNewCard(ids.get(i));
+			if (c.getRarity() == 0) {
+				commonCardIds.add(ids.get(i));
+			} else if (c.getRarity() == 1) {
+				uncommonCardIds.add(ids.get(i));
+			} else if (c.getRarity() == 2) {
+				rareCardIds.add(ids.get(i));
+			} else if (c.getRarity() == 3) {
+				epicCardIds.add(ids.get(i));
+			}
+		}
+	}
+	// end of card related
+	
 	public int mapSize() {
 		return places.size();
 	}
@@ -441,5 +478,29 @@ public class Map {
 	}
 	public void setVehicleIds(List<Integer> vehicleIds) {
 		this.vehicleIds = vehicleIds;
+	}
+	public List<Integer> getCommonCardIds() {
+		return commonCardIds;
+	}
+	public void setCommonCardIds(List<Integer> commonCardIds) {
+		this.commonCardIds = commonCardIds;
+	}
+	public List<Integer> getUncommonCardIds() {
+		return uncommonCardIds;
+	}
+	public void setUncommonCardIds(List<Integer> uncommonCardIds) {
+		this.uncommonCardIds = uncommonCardIds;
+	}
+	public List<Integer> getRareCardIds() {
+		return rareCardIds;
+	}
+	public void setRareCardIds(List<Integer> rareCardIds) {
+		this.rareCardIds = rareCardIds;
+	}
+	public List<Integer> getEpicCardIds() {
+		return epicCardIds;
+	}
+	public void setEpicCardIds(List<Integer> epicCardIds) {
+		this.epicCardIds = epicCardIds;
 	}
 }

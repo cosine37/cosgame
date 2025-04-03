@@ -43,7 +43,7 @@ public class MapBuilder {
 		map.setCenterHeight("602px");
 		map.setCenterWidth("1033px");
 		map.setLogHeight("880px");
-		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkorange","DarkCyan","darkviolet","darkgreen","maroon","Chocolate","navy")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","Etobicoke·怡陶碧谷","Mississauga·密西沙加","Brampton·宾顿","Vaughan·旺市","Richmond HL·列治文山","Markham·万锦","Scarborough·士嘉堡","Toronto·多伦多")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
@@ -99,6 +99,25 @@ public class MapBuilder {
 					p.createDetail();
 					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
 					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
+				}
+			} else if (i==20) {
+				if (settings.getUseGTA() == 1) {
+					p = new CardGainer(i, "Wonderland");
+					p.setImg("gta/Wonderland2");
+					p.setFont("tyh", 20);
+					p.setDesc("经过或停留此处将会减少1点通缉值并获得1张牌。停留会额外获得1张。");
+					p.setLandMsg("将会减少1点通缉值并获得2张牌（如果你有手牌空间）");
+					p.createDetail();
+					p.getDetail().setDesc("经过获停留此处将会减少1点通缉值并获得1张牌。停留则会额外获得一张。");
+					p.getDetail().setTitle("Canada's Wonderland·加拿大奇幻乐园");
+					p.getDetail().setImg("gta/Wonderland");
+				} else {
+					p = new Empty(i, "免费停车场");
+					p.setImg("parking");
+					p.setFont("tyh", 20);
+					p.setLandMsg("无事发生");
+					p.createDetail();
+					p.getDetail().setDesc("现在就是一个平平无奇的停车场，未来这一格可能有别的功效？");
 				}
 			} else if (i == 32) {
 				p = new Estate(i, "Tim Hortons", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
@@ -319,7 +338,11 @@ public class MapBuilder {
 			map.addPlace(p);
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(10004,10005)));
-		map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,8,11,12)));
+		if (settings.getUseGTA() == 1) {
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(1,9,10,16,19,20,21,22,24,25,30,20001,20002,20003,20004)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,8,11,12)));
+		}
+		
 		return map;
 	}
 	

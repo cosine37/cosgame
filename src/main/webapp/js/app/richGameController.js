@@ -136,6 +136,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.JAIL = 6;
 		$scope.GOTOJAIL = 7;
 		$scope.HOSPITAL = 11;
+		$scope.CARDGAINER = 12;
 		
 		// For estate details
 		$scope.chosenEstateIndex = -1;

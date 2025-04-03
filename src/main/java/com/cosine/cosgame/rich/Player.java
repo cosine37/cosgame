@@ -38,6 +38,7 @@ public class Player {
 	protected boolean inWard;
 	protected Buff buff;
 	protected Vehicle vehicle;
+	protected CardGenerator cardGenerator;
 	
 	protected Board board;
 	
@@ -62,6 +63,7 @@ public class Player {
 		doc.append("turnEnd", turnEnd);
 		doc.append("buffs", buff.getBuffs());
 		doc.append("vehicle", vehicle.getId());
+		doc.append("cardGenerator", cardGenerator.toDocument());
 		Account account = new Account();
 		account.getFromDB(name);
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
@@ -139,6 +141,10 @@ public class Player {
 			c.setBoard(board);
 			discard.add(c);
 		}
+		Document cardGeneratorDoc = (Document) doc.get("cardGenerator");
+		cardGenerator = new CardGenerator();
+		cardGenerator.setPlayer(this);
+		cardGenerator.setFromDoc(cardGeneratorDoc);
 	}
 	public PlayerEntity toPlayerEntity() {
 		PlayerEntity entity = new PlayerEntity();
@@ -200,6 +206,7 @@ public class Player {
 		discard = new ArrayList<>();
 		buff = new Buff();
 		vehicle = new Vehicle();
+		cardGenerator = new CardGenerator();
 	}
 	
 	public void addMoney(int x) {
@@ -286,8 +293,13 @@ public class Player {
 			hand.add(new CardCurlingStone());
 			hand.add(new CardPoutine());
 			*/
-			hand.add(new CardVehicleCoupon());
-			hand.add(new CardDinosaur());
+			//hand.add(new CardVehicleCoupon());
+			//hand.add(new CardDinosaur());
+			
+			addRandomCard();
+			addRandomCard();
+			hand.add(new CardFromNothing());
+			
 		}
 		
 		
@@ -706,7 +718,12 @@ public class Player {
 			
 			moveToPlace(t);
 			
-			board.setBroadcastImg(board.getMap().getPlace(t).getImg());
+			if (board.getMap().getPlace(t).getType() == Consts.PLACE_STARTPOINT || board.getMap().getPlace(t).getType() == Consts.PLACE_CARDGAINER) {
+				board.setBroadcastImg(board.getMap().getPlace(t).getDetail().getImg());
+			} else {
+				board.setBroadcastImg(board.getMap().getPlace(t).getImg());
+			}
+			
 			board.setBroadcastMsg(name + "来到了" + board.getMap().getPlace(t).getName() + "。");
 			
 			board.getLogger().logPlayerArrive(this);
@@ -786,12 +803,35 @@ public class Player {
 		
 	}
 	
+	// begin card related
 	public void addCard(Card c) {
-		// TODO: change this later
-		if (hand.size()<5) {
+		if (fullHand() == false) {
 			hand.add(c);
 		}
 	}
+	
+	public boolean fullHand() {
+		if (hand.size()<5) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean addRandomCard() {
+		if (fullHand() == false) {
+			Card c = cardGenerator.generateACard();
+			if (c != null) {
+				hand.add(c);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	// end card related
 	
 	public String getName() {
 		return name;
