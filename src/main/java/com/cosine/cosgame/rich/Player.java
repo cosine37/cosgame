@@ -261,6 +261,14 @@ public class Player {
 		vehicle = new Vehicle();
 	}
 	
+	public boolean hasVehicle() {
+		if (vehicle.getId()>0) return true; else return false;
+	}
+	
+	public void hurt(Player victim, int x) {
+		victim.loseHp(x);
+	}
+	
 	public void moveToPlace(int x) {
 		placeIndex = x;
 		board.getMap().getPlace(x).addPlayerOn(this);
@@ -298,8 +306,6 @@ public class Player {
 			
 			addRandomCard();
 			addRandomCard();
-			hand.add(new CardFromNothing());
-			
 		}
 		
 		
@@ -830,6 +836,10 @@ public class Player {
 		} else {
 			return false;
 		}
+	}
+	
+	public void missHandle() {
+		
 	}
 	// end card related
 	

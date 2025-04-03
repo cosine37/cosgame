@@ -13,9 +13,10 @@ public class CardDinosaur extends Card {
 		super();
 		id = 30;
 		name = "恐龙卡";
-		desc = "指定一个地块，拆除房屋，对该地块上的所有玩家造成3点伤害且摧毁载具。消耗。";
+		desc = "指定一个地块，拆除房屋，对该地块上的所有玩家造成2点伤害并摧毁载具。消耗。";
 		rarity = 3;
 		playStyle = Consts.PLAYSTYLE_CHOOSEGRID;
+		attack = 2;
 	}
 	
 	public void play(int rawOptions) {
@@ -43,16 +44,18 @@ public class CardDinosaur extends Card {
 				
 			}
 			
-			int x = 3;
-			
 			int i,j;
+			
+			int x = getFinalAttack();
 			
 			String ts = "";
 			boolean f2 = false;
 			for (i=0;i<place.getPlayersOn().size();i++) {
 				Player p = place.getPlayersOn().get(i);
-				p.loseHp(3);
-				p.loseVehicle();
+				player.hurt(p, x);
+				if (p.hasVehicle()) {
+					p.loseVehicle();
+				}
 				if (i == 0) {
 					ts = ts+p.getName();
 				} else if (i==place.getPlayersOn().size()-1) {
@@ -62,7 +65,7 @@ public class CardDinosaur extends Card {
 				}
 				f2 = true;
 			}
-			ts = ts+"受到了" + x + "点伤害"; 
+			ts = ts+"受到了" + x + "点伤害且失去载具"; 
 			if (f2) {
 				broadcastMsg = broadcastMsg+"，" + ts;
 			} else {

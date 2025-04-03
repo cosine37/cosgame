@@ -268,7 +268,10 @@ public class Board {
 			wardCheck();
 		}
 		
-		// Step 4: find the next player and potentially start round
+		// Step 4: GTA related, minus all related buffs
+		players.get(curPlayer).getBuff().turnEndMinus();
+		
+		// Step 5: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();
@@ -286,8 +289,19 @@ public class Board {
 		}
 	}
 	public void newRound() {
+		// Step 1: add and log round #
 		round++;
 		logger.logRoundStart(round);
+		
+		// Step 2: GTA related, deal 1 card every 3rd round
+		int i;
+		if (round%3 == 0) {
+			logger.log("每名玩家获得一张牌且通缉点数-1");
+			for (i=0;i<players.size();i++) {
+				players.get(i).addRandomCard();
+				players.get(i).loseStar(1);
+			}
+		}
 		
 	}
 	public boolean gameEnds() {

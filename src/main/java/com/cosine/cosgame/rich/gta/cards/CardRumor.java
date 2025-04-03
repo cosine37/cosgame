@@ -14,20 +14,21 @@ public class CardRumor extends Card {
 		desc = "成功率：70%；指定一名玩家获得+1starP。消耗。";
 		rarity = 0;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
+		aim = 70;
 	}
 	
 	public void play(int rawOptions) {
 		int targetPlayerIndex = rawOptions%100;
 		if (playable() && targetPlayerIndex>=0 && targetPlayerIndex<board.getPlayers().size()) {
 			Player tp = board.getPlayers().get(targetPlayerIndex);
-			Random rand = new Random();
-			int x = rand.nextInt(100);
 			
 			board.setBroadcastImg("card/"+id);
 			String targetName = tp.getName();
 			if (targetName.contentEquals(player.getName())) targetName = "自己";
 			
-			if (x<70) {
+			boolean f = aimed();
+			
+			if (f) {
 				tp.addStar(1);
 				
 				board.getLogger().log(player.getName() + " 对 " + targetName + " 制造了谣言， " + tp.getName() + "的通缉值增加了1");
@@ -42,8 +43,6 @@ public class CardRumor extends Card {
 	}
 	
 	public boolean playable() {
-		if (player.isInJail() || player.isInWard()) return false;
-		if (player.getPhase() != Consts.PHASE_OFFTURN) return true;
-		return false;
+		return defaultPlayable();
 	}
 }

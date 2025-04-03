@@ -27,9 +27,11 @@ public class Factory {
 		
 		else if (id == 16) {
 			c = new CardNugget();
-		}
-		
-		else if (id == 19) {
+		} else if (id == 17) {
+			c = new CardBaseball();
+		} else if (id == 18) {
+			c = new CardBrick();
+		} else if (id == 19) {
 			c = new CardCurlingStone();
 		} else if (id == 20) {
 			c = new CardFromNothing();
@@ -43,6 +45,10 @@ public class Factory {
 			c = new CardDividend();
 		} else if (id == 25) {
 			c = new CardHealthInsurance();
+		} else if (id == 26) {
+			c = new CardDeathCart();
+		} else if (id == 27) {
+			c = new CardGTA();
 		} 
 		
 		else if (id == 30) {
@@ -61,6 +67,10 @@ public class Factory {
 			c = new CardNanaimoBar();
 		} else if (id == 20004) {
 			c = new CardHawaiianPizza();
+		} else if (id == 20005) {
+			c = new CardIceWine();
+		} else if (id == 20006) {
+			c = new CardDuMaurier();
 		}
 		
 		c.setLevel(level);

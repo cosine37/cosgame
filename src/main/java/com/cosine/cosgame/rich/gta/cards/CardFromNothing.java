@@ -36,8 +36,6 @@ public class CardFromNothing extends Card {
 	}
 	
 	public boolean playable() {
-		if (player.isInJail() || player.isInWard()) return false;
-		if (player.getPhase() != Consts.PHASE_OFFTURN) return true;
-		return false;
+		return defaultPlayable();
 	}
 }

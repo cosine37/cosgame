@@ -3,6 +3,7 @@ package com.cosine.cosgame.rich;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import com.cosine.cosgame.rich.entity.CardEntity;
 
@@ -17,6 +18,8 @@ public class Card {
 	protected boolean exhaust;
 	protected int rarity;
 	protected int playStyle;
+	protected int attack;
+	protected int aim;
 	
 	public CardEntity toCardEntity(){
 		CardEntity entity = new CardEntity();
@@ -41,6 +44,8 @@ public class Card {
 		exhaust = true;
 		rarity = 0;
 		playStyle = Consts.PLAYSTYLE_DIRECT;
+		attack = 0;
+		aim = 100;
 		
 		for (int i=0;i<10;i++) types.add(false);
 		types.set(0, true);
@@ -51,6 +56,12 @@ public class Card {
 	}
 	
 	public boolean playable() {
+		return false;
+	}
+	
+	public boolean defaultPlayable() {
+		if (player.isInJail() || player.isInWard()) return false;
+		if (player.getPhase() != Consts.PHASE_OFFTURN) return true;
 		return false;
 	}
 	
@@ -101,9 +112,36 @@ public class Card {
 		
 		ans = smartReplace(ans,"消耗","<b style='color:darkorange'>消耗</b>");
 		ans = smartReplace(ans,"载具","<b style='color:darkblue'>载具</b>");
+		ans = smartReplace(ans,"增伤","<b style='color:maroon'>增伤</b>");
+		ans = smartReplace(ans,"伤害","<b style='color:maroon'>伤害</b>");
+		ans = smartReplace(ans,"精准","<b style='color:darkgreen'>精准</b>");
 		ans = smartReplace(ans,"成功率：","<b>成功率：</b>");
 		
 		return ans;
+	}
+	
+	public int getFinalAttack() {
+		int ans = attack;
+		if (player.getBuff().getAttackBoost() > 0) {
+			ans++;
+		}
+		return ans;
+	}
+	
+	public int getFinalAim() {
+		int ans = aim;
+		if (player.getBuff().getAimBoost() > 0) {
+			ans = ans+20;
+		}
+		return ans;
+	}
+	
+	public boolean aimed() {
+		Random rand = new Random();
+		int x = rand.nextInt(100);
+		boolean f = false;
+		if (x<getFinalAim()) f = true;
+		return f;
 	}
 	
 	public int getId() {
@@ -165,5 +203,17 @@ public class Card {
 	}
 	public void setPlayStyle(int playStyle) {
 		this.playStyle = playStyle;
+	}
+	public int getAttack() {
+		return attack;
+	}
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+	public int getAim() {
+		return aim;
+	}
+	public void setAim(int aim) {
+		this.aim = aim;
 	}
 }
