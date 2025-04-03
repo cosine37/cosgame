@@ -165,19 +165,23 @@ public class Estate extends Place{
 	public int getRentUtilityDisplay() {
 		int ans = rents.get(level);
 		int x = numOccupiedInArea();
-		return ans*x;
+		if (x>0) x = x-1;
+		ans = rents.get(x);
+		return ans;
 	}
 	public int getRent() {
 		if (level<rents.size()) {
 			int ans = rents.get(level);
 			if (area == Consts.AREA_UTILITY) {
 				int x = numOccupiedInArea();
-				ans = ans*x;
+				if (x>0) x = x-1;
+				ans = rents.get(x);
 				
 				ans = ans*board.getLastRolled();
 			} else if (area == Consts.AREA_STATION) {
 				int x = numOccupiedInArea();
-				ans = ans*x;
+				if (x>0) x = x-1;
+				ans = rents.get(x);
 			} else {
 				if (monopoly()) {
 					ans = ans*2;
@@ -303,7 +307,7 @@ public class Estate extends Place{
 		List<Place> oss = otherStations();
 		ans.add("不移动");
 		for (int i=0;i<oss.size();i++) {
-			ans.add("移动到" + oss.get(i).getName());
+			ans.add("至" + oss.get(i).getName());
 		}
 		return ans;
 	}

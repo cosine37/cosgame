@@ -43,10 +43,12 @@ public class MapBuilder {
 		map.setCenterHeight("602px");
 		map.setCenterWidth("1033px");
 		map.setLogHeight("880px");
-		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkgreen","darkorange","darkviolet","maroon","navy")));
-		map.setAreaNames(new ArrayList<>(Arrays.asList("","怡陶碧谷·Etobicoke","青果巷区","清秀坊区","兴仁坊区","古村巷区","正素巷区")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","darkorange","DarkCyan","darkviolet","darkgreen","maroon","Chocolate","navy")));
+		map.setAreaNames(new ArrayList<>(Arrays.asList("","Etobicoke·怡陶碧谷","Mississauga·密西沙加","Brampton·宾顿","Vaughan·旺市","Richmond HL·列治文山","Markham·万锦","Scarborough·士嘉堡","Toronto·多伦多")));
 		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		map.setUtilityName("咖啡店");
+		map.setStationName("GO车站");
 		if (settings.getUseGTA() == 1) {
 			map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","ward")));
 			map.setHospitalIndex(30);
@@ -55,7 +57,18 @@ public class MapBuilder {
 		for (i=0;i<n;i++) {
 			Place p = new Empty(i, "地点"+i);
 			p.setFont("tyh", 22);
-			if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36) {
+			if (i == 0) {
+				p = new StartPoint(i, "金融区");
+				p.setFont("tyh", 26);
+				p.setImg("gta/DT2");
+				p.setDesc("经过或停留此处领取$2000");
+				p.setLandMsg("将会获得$2000");
+				p.createDetail();
+				p.getDetail().setTitle("金融区");
+				p.getDetail().setImg("gta/DT");
+				p.getDetail().setDesc("经过或停留此处获得$2000。");
+				p.getDetail().setDesc2("金融区是多伦多建筑最密集的地区。金融区的发展开始于19世纪末期，20世纪中叶逐渐成了五大行的中心。其中，加拿大帝国商业银行（Canadian Imperial Bank of Commerce, CIBC）和多伦多道明银行（Toronto-Dominion Bank, TD）在此创立。另外三家银行也在20世纪陆陆续续将总部迁移到此地。");
+			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 38 || i == 12 || i == 28) {
 				p = new PersonalEvent(i, "命运");
 				p.setImg("fate");
 				p.setFont("tyh", 22);
@@ -87,21 +100,222 @@ public class MapBuilder {
 					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
 					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
 				}
+			} else if (i == 32) {
+				p = new Estate(i, "Tim Hortons", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/TimHortons");
+				p.createDetail();
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
+			} else if (i == 3) {
+				p = new Estate(i, "Second Cup", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/SecondCup");
+				p.createDetail();
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
+			} else if (i == 5) {
+				p = new Estate(i, "Mimico GO", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/GO");
+				p.createDetail();
+				p.getDetail().setTitle("Mimico GO车站");
+				p.getDetail().setImg("gta/GOTrain");
+				p.getDetail().setDesc("可移动至其他GO车站。经过可以触发被动效果的地点则会触发被动效果（如金融区），到达后无法购买且不需要支付路费。"); 
+				p.getDetail().setDesc2("");
+			} else if (i == 15) {
+				p = new Estate(i, "Malton GO", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/GO");
+				p.createDetail();
+				p.getDetail().setTitle("Malton GO车站");
+				p.getDetail().setImg("gta/GOTrain");
+				p.getDetail().setDesc("可移动至其他GO车站。经过可以触发被动效果的地点则会触发被动效果（如金融区），到达后无法购买且不需要支付路费。"); 
+				p.getDetail().setDesc2("");
+			} else if (i == 25) {
+				p = new Estate(i, "Milliken GO", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/GO");
+				p.createDetail();
+				p.getDetail().setTitle("Milliken GO车站");
+				p.getDetail().setImg("gta/GOTrain");
+				p.getDetail().setDesc("可移动至其他GO车站。经过可以触发被动效果的地点则会触发被动效果（如金融区），到达后无法购买且不需要支付路费。"); 
+				p.getDetail().setDesc2("");
+			} else if (i == 35) {
+				p = new Estate(i, "Danforth GO", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("tyh", 18);
+				p.setImg("gta/GO");
+				p.createDetail();
+				p.getDetail().setTitle("Danforth GO车站");
+				p.getDetail().setImg("gta/GOTrain");
+				p.getDetail().setDesc("可移动至其他GO车站。经过可以触发被动效果的地点则会触发被动效果（如金融区），到达后无法购买且不需要支付路费。"); 
+				p.getDetail().setDesc2("");
 			} else if (i == 1) {
-				p = new Estate(i, "汉伯湾", 1, 600,300,5,new ArrayList<>(Arrays.asList(20,300,300,900,1600,2500)));
+				p = new Estate(i, "Humber Bay", 1, 600,300,5,new ArrayList<>(Arrays.asList(20,300,300,900,1600,2500)));
 				p.setImg("gta/HumberBay");
-				p.setFont("tyh", 18);
+				p.setFont("tyh", 16);
 				p.createDetail();
-				p.getDetail().setTitle("汉伯湾·Humber Bay");
+				p.getDetail().setTitle("Humber Bay·汉伯湾");
 				p.getDetail().setDesc("1809年前此地为未开发地段。1882年一个旅馆财团开发了汉伯河（Humber River）至多伦多的轮渡服务，该服务于1886年停用。1890年多伦多港湾委员会（THC）在东岸填河造陆，并修建了吊桥，从此不需要轮渡即可过河。1970年代汉伯湾公园（Humber Bay Park）在此建造。");
-			}  else if (i == 3) {
-				p = new Estate(i, "伊斯灵顿", 1, 800,500,5,new ArrayList<>(Arrays.asList(40,200,600,1800,3200,4500)));
+			} else if (i == 4) {
+				p = new Estate(i, "Islington", 1, 800,500,5,new ArrayList<>(Arrays.asList(40,200,600,1800,3200,4500)));
 				p.setImg("gta/Islington");
-				p.setFont("tyh", 18);
+				p.setFont("tyh", 16);
 				p.createDetail();
-				p.getDetail().setTitle("伊斯灵顿·Islington");
+				p.getDetail().setTitle("Islington·伊斯灵顿");
 				p.getDetail().setDesc("该社区发源于1832年建造的蒙哥马利客栈（Montgomery's Inn）。1850年设乡，并用该客栈作为议会厅。当时镇名为美美高（Mimico）。1855年第一条从西部通往多伦多的铁路建设完毕，将美美高镇分成两部分。1860年，北部脱离美美高，成立伊斯灵顿（Islington）乡镇，因当时的蒙哥马利客栈老板的妻子出生于英国的伊斯灵顿而得名。1954年并入怡陶碧谷（Etobicoke），1998年并入多伦多。");
-			} 
+			} else if (i == 6) {
+				p = new Estate(i, "Dixie", 2, 1600,1000,5,new ArrayList<>(Arrays.asList(120,600,1800,5000,7000,9000)));
+				p.setImg("gta/Dixie");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Dixie·迪克西");
+				p.getDetail().setDesc("");
+			} else if (i == 8) {
+				p = new Estate(i, "Square One", 2, 3200,2000,5,new ArrayList<>(Arrays.asList(280,1500,4500,10000,12000,14000)));
+				p.setImg("gta/SquareOne");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Square One·一号广场");
+				p.getDetail().setDesc("");
+			} else if (i == 9) {
+				p = new Estate(i, "Erin Mills", 2, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("gta/ErinMills");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Erin Mills·艾琳米尔");
+				p.getDetail().setDesc("");
+			} else if (i == 11) {
+				p = new Estate(i, "Churchville", 3, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
+				p.setImg("gta/Churchville");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Churchville·丘奇维尔");
+				p.getDetail().setDesc("");
+			} else if (i == 13) {
+				p = new Estate(i, "Heart Lake", 3, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
+				p.setImg("gta/HeartLake");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Heart Lake·心湖");
+				p.getDetail().setDesc("");
+			} else if (i == 14) {
+				p = new Estate(i, "Woodhill", 3, 1200,500,5,new ArrayList<>(Arrays.asList(80,400,1000,3000,4500,6000)));
+				p.setImg("gta/Woodhill");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Woodhill·伍德希尔");
+				p.getDetail().setDesc("");
+			} else if (i == 16) {
+				p = new Estate(i, "Woodbridge", 4, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
+				p.setImg("gta/Woodbridge");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Woodbridge·木桥");
+				p.getDetail().setDesc("");
+			} else if (i == 18) {
+				p = new Estate(i, "VMC", 4, 2000,1500,5,new ArrayList<>(Arrays.asList(160,800,2200,6000,8000,10000)));
+				p.setImg("gta/VMC");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("VMC·工人新村");
+				p.getDetail().setDesc("");
+			} else if (i == 19) {
+				p = new Estate(i, "Concord", 4, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("gta/Concord");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Concord·康科德");
+				p.getDetail().setDesc("");
+			} else if (i == 21) {
+				p = new Estate(i, "Rouge Woods", 5, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
+				p.setImg("gta/RougeWoods");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Rouge Woods·红河谷");
+				p.getDetail().setDesc("");
+			} else if (i == 23) {
+				p = new Estate(i, "Bayview Hill", 5, 3000,2000,5,new ArrayList<>(Arrays.asList(260,1300,3900,9000,11000,12750)));
+				p.setImg("gta/BayviewHill");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Bayview HL·富豪山庄");
+				p.getDetail().setDesc("");
+			} else if (i == 24) {
+				p = new Estate(i, "Times Square", 5, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("gta/TimesSquare");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Times SQR·时代广场");
+				p.getDetail().setDesc("");
+			} else if (i == 26) {
+				p = new Estate(i, "Pacific Mall", 6, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("gta/PacificMall");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Pacific Mall·太古");
+				p.getDetail().setDesc("");
+			} else if (i == 26) {
+				p = new Estate(i, "Pacific Mall", 6, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("gta/PacificMall");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Pacific Mall·太古");
+				p.getDetail().setDesc("");
+			} else if (i == 27) {
+				p = new Estate(i, "Unionville", 6, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("gta/Unionville");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Unionville·渔人村");
+				p.getDetail().setDesc("");
+			} else if (i == 29) {
+				p = new Estate(i, "Vinegar Hill", 6, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
+				p.setImg("gta/VinegarHill");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Vinegar HL·维内加山");
+				p.getDetail().setDesc("");
+			}  else if (i == 31) {
+				p = new Estate(i, "Midland CTR", 7, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
+				p.setImg("gta/MidlandCenter");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Midland CTR·金钟城");
+				p.getDetail().setDesc("");
+			}
+			else if (i == 34) {
+				p = new Estate(i, "Golden Mile", 7, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
+				p.setImg("gta/GoldenMile");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Golden Mile·黄金里");
+				p.getDetail().setDesc("");
+			}
+			else if (i == 36) {
+				p = new Estate(i, "Casa Loma", 8, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("gta/CasaLoma");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Casa Loma·卡萨罗马");
+				p.getDetail().setDesc("");
+			}
+			else if (i == 37) {
+				p = new Estate(i, "Eaton CTR", 8, 3500,2000,5,new ArrayList<>(Arrays.asList(350,1750,5000,11000,13000,15000)));
+				p.setImg("gta/EatonCenter");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("Eaton CTR·伊顿中心");
+				p.getDetail().setDesc("");
+			}
+			else if (i == 39) {
+				p = new Estate(i, "CN Tower", 8, 4000,2000,5,new ArrayList<>(Arrays.asList(500,2000,6000,14000,17000,20000)));
+				p.setImg("gta/CNTower");
+				p.setFont("tyh", 16);
+				p.createDetail();
+				p.getDetail().setTitle("CN Tower·加国电视塔");
+				p.getDetail().setDesc("");
+			}
 			map.addPlace(p);
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(10004,10005)));

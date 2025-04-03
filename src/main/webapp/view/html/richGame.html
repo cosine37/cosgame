@@ -241,8 +241,10 @@
 										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
 								</div>
 								<div ng-show="chosenEstate.area == STATIONAREA">
-									<div ng-show="chosenEstate.maxLevel<2" style="width: 240px;margin-top: 45px;text-align:center; font-size: 20px" 
-										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}">{{chosenEstate.areaName}}</div>
+									<div ng-show="chosenEstate.rents.length==2" style="width: 240px;margin-top: 45px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}" ng-show="chosenEstate.rents.length==2">{{chosenEstate.areaName}}</div>
+									<div ng-show="chosenEstate.rents.length==4" style="width: 240px;margin-top: 20px;text-align:center; font-size: 20px" 
+										ng-style="{'font-family': chosenEstate.fontStyle['font-family']}" >{{chosenEstate.areaName}}</div>
 								</div>
 							</div>
 						</div>
