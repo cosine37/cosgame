@@ -213,10 +213,20 @@ public class Estate extends Place{
 		if (isUnoccupied()) {
 			return "你可以花费$" + cost + "购买该地块";
 		} else if (player.getIndex() != ownerId) {
+			// GTA related: no need to pay for rent
+			Player owner = board.getPlayers().get(ownerId);
+			if (board.getSettings().getUseGTA() == 1) {
+				if (owner.isInJail()) {
+					return owner.getName() + "在监狱，你不需要支付路费";
+				} else if (owner.isInWard()) {
+					return owner.getName() + "在住院，你不需要支付路费";
+				}
+			}
+			
 			if (area == Consts.AREA_UTILITY) {
-				return "你掷了一个" + board.getLastRolled() + "，需要支付$" + getRent() + "给" + board.getPlayers().get(ownerId).getName();
+				return "你掷了一个" + board.getLastRolled() + "，需要支付$" + getRent() + "给" + owner.getName();
 			} else {
-				return "你需要支付$" + getRent() + "给" + board.getPlayers().get(ownerId).getName();
+				return "你需要支付$" + getRent() + "给" + owner.getName();
 			}
 		} else if (level < maxLevel){
 			return "你可以升级该地块";
@@ -265,18 +275,40 @@ public class Estate extends Place{
 				}
 			}
 		} else if (p.getIndex() != ownerId) {
-			int paidRent = getRent();
+			
 			Player owner = board.getPlayers().get(ownerId);
-			if (area == Consts.AREA_UTILITY) {
-				board.getLogger().logPlayerRoll(p);
+			// GTA related: no need to pay for rent
+			boolean flag = true;
+			if (board.getSettings().getUseGTA() == 1) {
+				if (owner.isInJail()) {
+					flag = false;
+					board.getLogger().log(owner.getName() + " 在监狱，所以 " + p.getName() + " 无需支付租金");
+					
+					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+					board.setBroadcastMsg(owner.getName() + "在监狱，所以" + p.getName() + "无需支付租金。");
+				} else if (owner.isInWard()) {
+					flag = false;
+					board.getLogger().log(owner.getName() + " 在住院，所以 " + p.getName() + " 无需支付租金");
+					
+					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+					board.setBroadcastMsg(owner.getName() + "在住院，所以" + p.getName() + "无需支付租金。");
+				}
 			}
-			board.getLogger().log(p.getName() + " 向 " + owner.getName() + " 支付了租金$" + paidRent);
 			
-			board.setBroadcastImg("avatar/head_"+p.getAvatarId());
-			board.setBroadcastMsg(p.getName() + "向" + owner.getName() + "支付了$" + paidRent + "。");
+			if (flag) {
+				int paidRent = getRent();
+				if (area == Consts.AREA_UTILITY) {
+					board.getLogger().logPlayerRoll(p);
+				}
+				board.getLogger().log(p.getName() + " 向 " + owner.getName() + " 支付了租金$" + paidRent);
+				
+				board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+				board.setBroadcastMsg(p.getName() + "向" + owner.getName() + "支付了$" + paidRent + "。");
+				
+				owner.addMoney(paidRent);
+				p.loseMoney(paidRent);
+			}
 			
-			owner.addMoney(paidRent);
-			p.loseMoney(paidRent);
 		} else if (level < maxLevel){
 			if (option == 0) {
 				board.getLogger().log(p.getName() + " 没有加盖 " + name);

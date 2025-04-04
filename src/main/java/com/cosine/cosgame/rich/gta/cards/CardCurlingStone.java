@@ -11,7 +11,7 @@ public class CardCurlingStone extends Card {
 		super();
 		id = 19;
 		name = "冰壶卡";
-		desc = "+1starP，对前方（不包括你在的这格）9格内的所有玩家造成1点伤害。消耗。";
+		desc = "+1starP，对前方（不包括所在格）9格内的所有玩家造成1点伤害。消耗。";
 		rarity = 1;
 		attack = 1;
 	}

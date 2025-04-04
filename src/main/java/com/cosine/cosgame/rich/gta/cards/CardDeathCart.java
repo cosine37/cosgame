@@ -11,8 +11,8 @@ public class CardDeathCart extends Card {
 		super();
 		id = 26;
 		name = "归天之车";
-		desc = "+2starP，对前方（不包括你在的这格）9格内的所有玩家造成2点伤害并摧毁其载具。消耗。";
-		rarity = 1;
+		desc = "+2starP，对前方（不包括所在格）9格内的所有玩家造成2点伤害并摧毁其载具。消耗。";
+		rarity = 2;
 		attack = 2;
 	}
 	

@@ -49,9 +49,11 @@ public class Factory {
 			c = new CardDeathCart();
 		} else if (id == 27) {
 			c = new CardGTA();
-		} 
-		
-		else if (id == 30) {
+		} else if (id == 28) {
+			c = new CardIbaka();
+		} else if (id == 29) {
+			c = new CardThunder();
+		}  else if (id == 30) {
 			c = new CardDinosaur();
 		}
 		
@@ -71,6 +73,10 @@ public class Factory {
 			c = new CardIceWine();
 		} else if (id == 20006) {
 			c = new CardDuMaurier();
+		} else if (id == 20007) {
+			c = new CardMacRetro();
+		} else if (id == 20008) {
+			c = new CardCanadaGoose();
 		}
 		
 		c.setLevel(level);

@@ -303,7 +303,7 @@ public class Player {
 			*/
 			//hand.add(new CardVehicleCoupon());
 			//hand.add(new CardDinosaur());
-			
+			//hand.add(new CardThunder());
 			addRandomCard();
 			addRandomCard();
 		}

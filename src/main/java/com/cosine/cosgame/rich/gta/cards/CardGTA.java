@@ -9,7 +9,7 @@ public class CardGTA extends Card {
 	public CardGTA() {
 		super();
 		id = 27;
-		name = "GTA";
+		name = "G T A";
 		desc = "+2starP，获得载具。消耗。";
 		rarity = 0;
 	}
