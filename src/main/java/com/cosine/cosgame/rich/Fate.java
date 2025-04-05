@@ -162,7 +162,17 @@ public class Fate {
 		} else if (type == Consts.FATE_VEHICLEHPSTAR) {
 			int x = value/10000;
 			int y = value%10000;
-			if (x == 2) p.loseVehicle();
+			if (x == 1) {
+				Vehicle v = Factory.genRandomVehicle(p.getBoard().getMap().getVehicleIds());
+				p.receiveVehicle(v);
+				p.getBoard().getLogger().log(p.getName() + " 获得了载具 " + v.getName());
+			} else if (x == 2) {
+				p.loseVehicle();
+			} else {
+				Vehicle v = Factory.genVehicle(x);
+				p.receiveVehicle(v);
+				p.getBoard().getLogger().log(p.getName() + " 获得了载具 " + v.getName());
+			}
 			if (y<100) {
 				hpStarHandle(p, y);
 			} else if (y>999 && y<10000) {

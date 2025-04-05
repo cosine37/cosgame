@@ -75,6 +75,8 @@ public class Factory {
 		
 		else if (id == 9000) {
 			c = new CardSuccessBook();
+		} else if (id == 9001) {
+			c = new CardGift();
 		}
 		
 		else if (id == 20001) {
@@ -196,15 +198,22 @@ public class Factory {
 		} else if (id == 105) {
 			return new Fate(id,Consts.FATE_CARD,10,"将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡。","p将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡");
 		} else if (id == 106) {
-			return new Fate(id,Consts.FATE_MOVE,102,"追着游览车玩，移动到前方最近的游览车站。","p追着游览车玩，将会移动前方最近的游览车站");
+			return new Fate(id,Consts.FATE_MOVE,102,"追着游览车玩，移动到前方最近的游览车站（需要支付路费或选择是否购买）。","p追着游览车玩，将会移动前方最近的游览车站");
 		} else if (id == 107) {
 			return new Fate(id,Consts.FATE_GOTOJAIL,0,"为海外商家出口大麻糕，因机翻的商品名被海关误解，立即入狱。","p为海外商家出口大麻糕，因机翻的商品名被海关误解，p被被抓入监狱");
-		}  
+		} 
+		
 		
 		
 		else if (id == 201) {
 			return new Fate(id,Consts.FATE_CARD,10,"给狱警推荐了好吃的甜甜圈，获得狱警赠送的出狱卡。","因为给狱警推荐了好吃的甜甜圈，p获得狱警赠送的出狱卡");
-		}
+		} else if (id == 202) {
+			return new Fate(id,Consts.FATE_MOVE,0,"去五大行实习，移动到金融区（可领取$2000）。","p将去往金融区的五大行实习");
+		} else if (id == 203) {
+			return new Fate(id,Consts.FATE_MOVE,101,"咖啡店推出你还没喝过的季节限定，移动到前方最近的咖啡店（需要支付路费或选择是否购买）。","咖啡店推出p还没喝过的季节限定，p将会移动到最近的咖啡店");
+		} else if (id == 204) {
+			return new Fate(id,Consts.FATE_MOVE,102,"作为资深车迷，一路追着庞巴迪双层车拍车，移动到前方最近的GO车站（需要支付路费或选择是否购买）。","作为资深车迷，p一路追着庞巴迪双层车拍车，将会移动到前方最近的GO车站");
+		} 
 		
 		
 		else if (id == 10001) {
@@ -217,7 +226,21 @@ public class Factory {
 			return new Fate(id,Consts.FATE_CARDLOSE,90000386,"购买一本名为《成功学》的书，花费$386。","p购买了一本名为《成功学》的书，花费$386");
 		} else if (id == 10005) {
 			return new Fate(id,Consts.FATE_LOSE,210493,"玩游戏被对手暴虐，一拳打碎显示屏，失去1点生命值，更换显示屏花费$493。","p玩游戏被对手暴虐，一拳打碎显示屏，失去1点生命值，更换显示屏花费$493");
-		}
+		} else if (id == 10006) {
+			return new Fate(id,Consts.FATE_HPSTAR,23,"被闪电击中，失去3点生命值。","p被闪电击中，失去3点生命值");
+		} else if (id == 10007) {
+			return new Fate(id,Consts.FATE_HPSTAR,32,"大晚上边唱跳边打篮球，被邻居举报后收到律师函警告，增加2点通缉值。","p大晚上边唱跳边打篮球，被邻居举报后收到律师函警告，p增加2点通缉值");
+		} else if (id == 10008) {
+			return new Fate(id,Consts.FATE_CARDHPSTAR,900141,"在社区担任生命教育的志工，减少1点通缉值并获得小朋友赠送的礼物。","p在社区担任生命教育的志工，减少1点通缉值并获得小朋友赠送的礼物");
+		} else if (id == 10009) {
+			return new Fate(id,Consts.FATE_VEHICLEHPSTAR,10000,"与朋友参观车展，没想到朋友当场买下两辆车并送你一辆，老板大气！","p与朋友参观车展，没想到p的朋友当场买下两辆车并送p一辆，老板大气");
+		} else if (id == 10010) {
+			return new Fate(id,Consts.FATE_VEHICLEHPSTAR,9990031,"故意不小心把共享单车骑回家，但是决定将错就错，增加1点通缉值。","p故意不小心把共享单车骑回家，但是决定将错就错，p增加1点通缉值");
+		} else if (id == 10011) {
+			return new Fate(id,Consts.FATE_ADD,211001,"参与魔术表演获得出场费$1001，但是表演帽子戏法时被兔子咬伤，失去1点生命值。","p参与魔术表演获得出场费$1001，但是表演帽子戏法时被兔子咬伤，p失去1点生命值");
+		} else if (id == 10012) {
+			return new Fate(id,Consts.FATE_ADD,220250,"参与地狱辣挑战获得冠军，奖励$250，但赛后一泻千里，失去2点生命值。","p参与地狱辣挑战获得冠军，奖励$250，但p赛后一泻千里，失去2点生命值");
+		} 
 		
 		else if (id == 10201) {
 			return new Fate(id,Consts.FATE_CARD,20001,"参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃。","p参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃");
@@ -227,11 +250,19 @@ public class Factory {
 			return new Fate(id,Consts.FATE_CARD,20003,"参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条。","p参加试吃活动，获得商家赠送的温哥华岛特色甜品纳奈莫条");
 		} else if (id == 10204) {
 			return new Fate(id,Consts.FATE_CARDHPSTAR,2000431,"制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值。","p制作安大略出产的带有菠萝的夏威夷披萨被视为异端，增加1点通缉值");
-		} 
+		} else if (id == 10205) {
+			return new Fate(id,Consts.FATE_HPSTAR,33,"周日在Yonge街拖行已经归天的马，增加3点通缉值。","周日，p因在Yonge街拖行已经归天的马，增加3点通缉值");
+		}
 		
 		// vehicle tweaks
 		else if (id == 910001) {
 			return new Fate(id,Consts.FATE_VEHICLEHPSTAR,20021,"汽车撞到电线杆，失去载具和1点生命值。","p的汽车撞到电线杆，p失去载具和1点生命值");
+		} else if (id == 910006) {
+			return new Fate(id,Consts.FATE_VEHICLEHPSTAR,20023,"汽车被闪电击中，失去载具和3点生命值。","p的汽车被闪电击中，p失去载具和3点生命值");
+		} else if (id == 910009) {
+			return new Fate(id,Consts.FATE_LOSE,150,"把汽车停在公厕门口，被罚款$150。","p把汽车停在公厕门口，被罚款$150");
+		} else if (id == 910010) {
+			return new Fate(id,Consts.FATE_ADD,946,"在汽车上表演杂技，获得路人打赏的$946。","p在汽车上表演杂技，获得路人打赏的$946");
 		}
 		
 		return fate;
@@ -270,13 +301,29 @@ public class Factory {
 		} else if (id == 3) {
 			v = new Vehicle(id, "宝马X3");
 		} else if (id == 4) {
+			v = new Vehicle(id, "丰田RAV4");
+		} else if (id == 5) {
 			v = new Vehicle(id, "凯迪拉克OV");
+		} else if (id == 6) {
+			v = new Vehicle(id, "大众Taos");
+		} else if (id == 7) {
+			v = new Vehicle(id, "宾利欧陆GT");
 		} else if (id == 8) {
 			v = new Vehicle(id, "奥迪A8");
+		} else if (id == 9) {
+			v = new Vehicle(id, "保时捷911");
+		} else if (id == 10) {
+			v = new Vehicle(id, "兰博基尼Urus");
 		} else if (id == 11) {
 			v = new Vehicle(id, "汗血宝马");
 		} else if (id == 12) {
 			v = new Vehicle(id, "密勒顿");
+		} else if (id == 13) {
+			v = new Vehicle(id, "哈雷Street Rod");
+		} else if (id == 14) {
+			v = new Vehicle(id, "大众桑塔纳");
+		} else if (id == 999) {
+			v = new Vehicle(id, "共享单车");
 		}
 		return v;
 	}

@@ -45,7 +45,7 @@ public class MapBuilder {
 		map.setLogHeight("880px");
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","Etobicoke·怡陶碧谷","Mississauga·密西沙加","Brampton·宾顿","Vaughan·旺市","Richmond HL·列治文山","Markham·万锦","Scarborough·士嘉堡","Toronto·多伦多")));
-		map.setBgms(new ArrayList<>(Arrays.asList("qingguo1","qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7")));
+		map.setBgms(new ArrayList<>(Arrays.asList("gta1","gta2","gta3","gta4","gta5","gta6","gta7","gta8","gta9","gta10","gta11")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		map.setUtilityName("咖啡店");
 		map.setStationName("GO车站");
@@ -74,7 +74,7 @@ public class MapBuilder {
 				p.setFont("tyh", 22);
 				p.createDetail();
 				if (settings.getUseGTA() == 1) {
-					p.getDetail().setDesc2("点击确定之后命运才会生效。有些卡牌可以改变当前的命运。");
+					p.getDetail().setDesc2("冷知识：点击确定之后命运才会生效。未来有些卡牌可以改变当前的命运。");
 				}
 			} else if (i == 10) {
 				p = new Jail(i, "监狱大门");
@@ -337,10 +337,12 @@ public class MapBuilder {
 			}
 			map.addPlace(p);
 		}
-		map.setFateIds(new ArrayList<>(Arrays.asList(10004,10005)));
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
 		if (settings.getUseGTA() == 1) {
-			map.sortCardRarity(new ArrayList<>(Arrays.asList(1,9,10,16,17,18,19,20,21,22,24,25,26,27,28,29,30,41,42,20001,20002,20003,20004,20005,20006,20007,20008)));
-			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,8,11,12)));
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,2,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10201,10202,10203,10204,10205)));
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(1,9,10,16,17,18,19,20,21,22,24,25,26,27,28,29,30,37,38,39,41,42,43,20001,20002,20003,20004,20005,20006,20007,20008)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14)));
 		}
 		
 		return map;

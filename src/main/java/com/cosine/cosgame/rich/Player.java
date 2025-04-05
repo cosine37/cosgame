@@ -304,7 +304,7 @@ public class Player {
 			//hand.add(new CardVehicleCoupon());
 			//hand.add(new CardDinosaur());
 			//hand.add(new CardThunder());
-			hand.add(new CardBuyEstate());
+			//hand.add(new CardBuyEstate());
 			addRandomCard();
 			addRandomCard();
 		}

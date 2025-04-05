@@ -35,6 +35,12 @@ public class PersonalEvent extends Place {
 		int ans = x;
 		if (x == 10001) {
 			ans = 910001;
+		} else if (x == 10006) {
+			ans = 910006;
+		} else if (x == 10009) {
+			ans = 910009;
+		} else if (x == 10010) {
+			ans = 910010;
 		}
 		return ans;
 	}

@@ -293,9 +293,9 @@ public class Board {
 		round++;
 		logger.logRoundStart(round);
 		
-		// Step 2: GTA related, deal 1 card every 3rd round
+		// Step 2: GTA related, deal 1 card every 5 rounds
 		int i;
-		if (round%3 == 0) {
+		if (round%5 == 0) {
 			logger.log("每名玩家获得一张牌且通缉点数-1");
 			for (i=0;i<players.size();i++) {
 				players.get(i).addRandomCard();
