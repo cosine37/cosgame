@@ -212,6 +212,8 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					return false;
 				} else if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEPLAYER && $scope.chosenPlayer == -1){
 					return false;
+				} else if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEGRID && $scope.chosenGrid == -1){
+					return false;
 				}
 				return true;
 			} else {

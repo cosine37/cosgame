@@ -53,8 +53,24 @@ public class Factory {
 			c = new CardIbaka();
 		} else if (id == 29) {
 			c = new CardThunder();
-		}  else if (id == 30) {
+		} else if (id == 30) {
 			c = new CardDinosaur();
+		}
+		
+		
+		else if (id == 37) {
+			c = new CardDowngrade();
+		} else if (id == 38) {
+			c = new CardOccupy();
+		} else if (id == 39) {
+			c = new CardAlterContract();
+		}
+		else if (id == 41) {
+			c = new CardBuild();
+		} else if (id == 42) {
+			c = new CardRobotWorker();
+		} else if (id == 43) {
+			c = new CardBuyEstate();
 		}
 		
 		else if (id == 9000) {

@@ -12,6 +12,7 @@ public class CardEntity {
 	String desc;
 	List<Boolean> types;
 	Map<String, String> imgStyle;
+	Map<String, String> descStyle;
 	boolean playable;
 	
 	public int getId() {
@@ -67,6 +68,12 @@ public class CardEntity {
 	}
 	public void setPlayStyle(int playStyle) {
 		this.playStyle = playStyle;
+	}
+	public Map<String, String> getDescStyle() {
+		return descStyle;
+	}
+	public void setDescStyle(Map<String, String> descStyle) {
+		this.descStyle = descStyle;
 	}
 	
 }

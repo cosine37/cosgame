@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.CardEntity;
 
 public class Card {
@@ -20,6 +21,7 @@ public class Card {
 	protected int playStyle;
 	protected int attack;
 	protected int aim;
+	protected int fontSize;
 	
 	public CardEntity toCardEntity(){
 		CardEntity entity = new CardEntity();
@@ -35,6 +37,9 @@ public class Card {
 		entity.setImgStyle(imgStyle);
 		entity.setPlayable(playable());
 		entity.setPlayStyle(playStyle);
+		HashMap<String, String> descStyle = new HashMap<>();
+		descStyle.put("font-size", "" + fontSize + "px");
+		entity.setDescStyle(descStyle);
 		return entity;
 	}
 	
@@ -46,6 +51,7 @@ public class Card {
 		playStyle = Consts.PLAYSTYLE_DIRECT;
 		attack = 0;
 		aim = 100;
+		fontSize = 18;
 		
 		for (int i=0;i<10;i++) types.add(false);
 		types.set(0, true);
@@ -65,18 +71,45 @@ public class Card {
 		return false;
 	}
 	
+	// begin passive cards handle
 	public void passive() {
 		types.set(0, false);
 		types.set(1, true);
 	}
-	
 	public boolean isPassive() {
 		return types.get(1);
 	}
-	
 	public void onLoseMoney(int x) {}
-	
 	public int wardFeeDeduction() {return 0;}
+	// end passive cards handle
+	
+	public boolean changeEstateLevel(Place p, int level) {
+		if (p != null && p.getType() == Consts.PLACE_ESTATE) {
+			Estate e = (Estate) p;
+			if (e.getOwnerId() == -1) return false;
+			int originalLevel = e.getLevel();
+			int newLevel = e.getLevel()+level;
+			if (newLevel<0) newLevel = 0;
+			if (newLevel>e.getMaxLevel()) newLevel = e.getMaxLevel();
+			if (originalLevel == newLevel) {
+				return false;
+			} else {
+				e.setLevel(newLevel);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean changeEstateOwner(Place place, Player newOwner) {
+		if (place != null && place.getType() == Consts.PLACE_ESTATE) {
+			Estate e = (Estate) place;
+			if (e.getOwnerId() == newOwner.getIndex()) return false;
+			e.setOwnerId(newOwner.getIndex());
+			return true;
+		}
+		return false;
+	}
 	
 	String smartReplace(String s, String s1, String s2) {
 		if (s == null) return null;
