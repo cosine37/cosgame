@@ -41,9 +41,9 @@ public class CardGenerator {
 		int rarity = 0;
 		if (x<5) {
 			rarity = 3;
-		} else if (x<10) {
+		} else if (x<15) {
 			rarity = 2;
-		} else if (x<25) {
+		} else if (x<40) {
 			rarity = 1;
 		} else {
 			rarity = 0;

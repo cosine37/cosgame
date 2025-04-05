@@ -46,11 +46,8 @@ public class CardGainer extends Place {
 	public void bypass(Player p) {
 		super.bypass(p);
 		if (p.fullHand() == false) {
-			board.getLogger().logLoseStar(p, 1);
 			board.getLogger().logGainCard(p, 1);
 		}
-		
-		p.loseStar(1);
 		p.addRandomCard();
 	}
 

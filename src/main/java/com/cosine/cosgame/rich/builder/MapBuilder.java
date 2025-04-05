@@ -105,10 +105,10 @@ public class MapBuilder {
 					p = new CardGainer(i, "Wonderland");
 					p.setImg("gta/Wonderland2");
 					p.setFont("tyh", 20);
-					p.setDesc("经过或停留此处将会减少1点通缉值并获得1张牌。停留会额外获得1张。");
+					p.setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");
 					p.setLandMsg("将会减少1点通缉值并获得2张牌（如果你有手牌空间）");
 					p.createDetail();
-					p.getDetail().setDesc("经过获停留此处将会减少1点通缉值并获得1张牌。停留则会额外获得一张。");
+					p.getDetail().setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");
 					p.getDetail().setTitle("Canada's Wonderland·加拿大奇幻乐园");
 					p.getDetail().setImg("gta/Wonderland");
 				} else {
@@ -341,7 +341,8 @@ public class MapBuilder {
 		if (settings.getUseGTA() == 1) {
 			map.setFateIds(new ArrayList<>(Arrays.asList(1,2,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204,
 					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10201,10202,10203,10204,10205)));
-			map.sortCardRarity(new ArrayList<>(Arrays.asList(1,9,10,16,17,18,19,20,21,22,24,25,26,27,28,29,30,37,38,39,41,42,43,20001,20002,20003,20004,20005,20006,20007,20008)));
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,9,10,14,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,37,38,39,41,42,43,
+					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14)));
 		}
 		

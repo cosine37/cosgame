@@ -22,6 +22,7 @@ public class Card {
 	protected int attack;
 	protected int aim;
 	protected int fontSize;
+	protected List<String> options;
 	
 	public CardEntity toCardEntity(){
 		CardEntity entity = new CardEntity();
@@ -40,6 +41,7 @@ public class Card {
 		HashMap<String, String> descStyle = new HashMap<>();
 		descStyle.put("font-size", "" + fontSize + "px");
 		entity.setDescStyle(descStyle);
+		entity.setOptions(options);
 		return entity;
 	}
 	
@@ -52,6 +54,7 @@ public class Card {
 		attack = 0;
 		aim = 100;
 		fontSize = 18;
+		options = new ArrayList<>();
 		
 		for (int i=0;i<10;i++) types.add(false);
 		types.set(0, true);
@@ -248,5 +251,21 @@ public class Card {
 	}
 	public void setAim(int aim) {
 		this.aim = aim;
+	}
+
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public List<String> getOptions() {
+		return options;
+	}
+
+	public void setOptions(List<String> options) {
+		this.options = options;
 	}
 }

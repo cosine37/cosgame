@@ -88,6 +88,7 @@ public class Consts {
 	public static final int PLAYSTYLE_DIRECT = 0;
 	public static final int PLAYSTYLE_CHOOSEPLAYER = 1;
 	public static final int PLAYSTYLE_CHOOSEGRID = 2;
+	public static final int PLAYSTYLE_CHOOSEOPTION = 3;
 	
 	public static final int GUARANTEE_UNCOMMON = 5;
 	public static final int GUARANTEE_RARE = 10;

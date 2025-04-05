@@ -17,6 +17,18 @@ public class Factory {
 		
 		if (id == 1) {
 			c = new Card1();
+		} else if (id == 2) {
+			c = new Card2();
+		} else if (id == 3) {
+			c = new Card3();
+		} else if (id == 4) {
+			c = new Card4();
+		} else if (id == 5) {
+			c = new Card5();
+		} else if (id == 6) {
+			c = new Card6();
+		} else if (id == 7) {
+			c = new CardRemoteDice();
 		}
 		
 		else if (id == 9) {
@@ -24,8 +36,11 @@ public class Factory {
 		} else if (id == 10) {
 			c = new CardRelease();
 		}
-		
-		else if (id == 16) {
+		else if (id == 14) {
+			c = new CardDiamond();
+		} else if (id == 15) {
+			c = new CardPearl();
+		} else if (id == 16) {
 			c = new CardNugget();
 		} else if (id == 17) {
 			c = new CardBaseball();
@@ -95,6 +110,10 @@ public class Factory {
 			c = new CardMacRetro();
 		} else if (id == 20008) {
 			c = new CardCanadaGoose();
+		} else if (id == 20009) {
+			c = new CardBloodyCaesar();
+		} else if (id == 20010) {
+			c = new CardPurdy();
 		}
 		
 		c.setLevel(level);
@@ -183,7 +202,7 @@ public class Factory {
 		} else if (id == 25) {
 			return new Fate(id,Consts.FATE_LOSE,809,"感到呼吸困难，花费$809做全身体检，结果发现只是衣服穿反了。","p感到呼吸困难，花费$809做全身体检，结果发现只是衣服穿反了");
 		} else if (id == 26) {
-			return new Fate(id,Consts.FATE_LOSE,1300,"好心扶起被撞倒的老登却被老登反诬是肇事者，赔偿老登$1300。","p好心扶起被撞倒的老登却被老登反诬是肇事者，p赔偿老登$1300。");
+			return new Fate(id,Consts.FATE_LOSE,1300,"好心扶起被撞倒的老登却被老登反诬是肇事者，赔偿老登$1300。","p好心扶起被撞倒的老登却被老登反诬是肇事者，p赔偿老登$1300");
 		}
 		
 		

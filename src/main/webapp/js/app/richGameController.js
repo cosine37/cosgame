@@ -161,6 +161,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		
 		$scope.PLAYSTYLE_CHOOSEPLAYER = 1;
 		$scope.PLAYSTYLE_CHOOSEGRID = 2;
+		$scope.PLAYSTYLE_CHOOSEOPTIONS = 3;
 		
 		$scope.curPlayStyle = -1;
 		$scope.chosenCard = -1;
@@ -220,10 +221,11 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				return false;
 			}
 		}
-		$scope.playCard = function(){
+		$scope.playCardOption = function(x){
 			if ($scope.chosenCard>=0){
 				var option = 10000;
 				option = option+$scope.chosenCard * 100;
+				option = option+x;
 				if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEPLAYER){
 					option = option + parseInt($scope.chosenPlayer)
 				} else if ($scope.curPlayStyle == $scope.PLAYSTYLE_CHOOSEGRID){
@@ -238,6 +240,9 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					ws.send("refresh");
 				});
 			}
+		}
+		$scope.playCard = function(){
+			$scope.playCardOption(0);
 		}
 		
 		$scope.throwCard = function(){

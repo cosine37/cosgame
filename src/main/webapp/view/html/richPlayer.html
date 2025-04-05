@@ -4,18 +4,22 @@
 		<span ng-show="gamedata.settings.useGTA == 0">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：</span>
 		<span ng-show="gamedata.settings.useGTA == 1">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱，且增加1点通缉值）或是花费${{map.bailCost}}×通缉值保释出狱，同时通缉值清零：</span>
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-		
+		<!-- 
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		
-		<button ng-show="chosenCard >= 0 && showPlayButton()" ng-click="playCard()">打出</button>
+		 -->
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCard($index)">{{option}}</button>
 		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
 	<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace.name}}，你的回合开始，请选择一项：
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-
+		<!-- 
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		
-		<button ng-show="chosenCard >= 0 && showPlayButton()" ng-click="playCard()">打出</button>
+		 -->
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
 		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
 

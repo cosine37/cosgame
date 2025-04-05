@@ -160,10 +160,13 @@ public class Player {
 		entity.setHp(hp);
 		entity.setStar(star);
 		entity.setBuffs(buff.getBuffs());
-		if (vehicle == null) {
+		entity.setHandSize(hand.size());
+		if (vehicle == null || vehicle.getId() == -1) {
 			entity.setVehicleId(-1);
+			entity.setVehicleName("没有");
 		} else {
 			entity.setVehicleId(vehicle.getId());
+			entity.setVehicleName(vehicle.getName());
 		}
 		
 		
@@ -305,6 +308,9 @@ public class Player {
 			//hand.add(new CardDinosaur());
 			//hand.add(new CardThunder());
 			//hand.add(new CardBuyEstate());
+			//hand.add(new CardDiamond());
+			//hand.add(new CardPearl());
+			//hand.add(new CardNugget());
 			addRandomCard();
 			addRandomCard();
 		}
@@ -648,7 +654,11 @@ public class Player {
 				int r2 = rollDisplay%10;
 				
 				board.setBroadcastImg("dice/"+rollDisplay);
-				board.setBroadcastMsg(name + "掷了" + r1 + "和" + r2 + "，将会来到" + myNextPlaceName());
+				if (r1 == 0) {
+					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，将会来到" + myNextPlaceName());
+				} else {
+					board.setBroadcastMsg(name + "掷了" + r1 + "和" + r2 + "，将会来到" + myNextPlaceName());
+				}
 			}
 		} else if (option>=10000 && option<20000) { // play cards
 			playCardRaw(option);

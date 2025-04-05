@@ -21,6 +21,8 @@ public class PlayerEntity {
 	int hp;
 	int star;
 	int vehicleId;
+	String vehicleName;
+	int handSize;
 
 	public String getName() {
 		return name;
@@ -117,6 +119,18 @@ public class PlayerEntity {
 	}
 	public void setVehicleId(int vehicleId) {
 		this.vehicleId = vehicleId;
+	}
+	public String getVehicleName() {
+		return vehicleName;
+	}
+	public void setVehicleName(String vehicleName) {
+		this.vehicleName = vehicleName;
+	}
+	public int getHandSize() {
+		return handSize;
+	}
+	public void setHandSize(int handSize) {
+		this.handSize = handSize;
 	}
 	
 }
