@@ -8,7 +8,7 @@ public class CardRelease extends Card {
 		super();
 		id = 10;
 		name = "出狱卡";
-		desc = "立即出狱并清空通缉值，不需要支付保释费。消耗。";
+		desc = "在监狱内时可使用，立即出狱并清空通缉值，不需要支付保释费。消耗。";
 		rarity = 0;
 	}
 	
@@ -40,7 +40,7 @@ public class CardRelease extends Card {
 	
 	public String getDesc() {
 		if (board != null && board.getSettings().getUseGTA() == 1) {
-			return "立即出狱并清空通缉值，不需要支付保释费。消耗。";
+			return "在监狱内时可使用，立即出狱并清空通缉值，不需要支付保释费。消耗。";
 		} else {
 			return "立即出狱，不需要支付保释费。消耗。";
 		}

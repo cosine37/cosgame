@@ -34,6 +34,9 @@ public class BoardEntity {
 	SettingsEntity settings;
 	PlaceEntity myCurrentPlace;
 	
+	// GTA Related
+	List<Integer> myBuffs;
+	
 	public String getId() {
 		return id;
 	}
@@ -190,6 +193,11 @@ public class BoardEntity {
 	public void setLastRolledDisplay(String lastRolledDisplay) {
 		this.lastRolledDisplay = lastRolledDisplay;
 	}
-	
+	public List<Integer> getMyBuffs() {
+		return myBuffs;
+	}
+	public void setMyBuffs(List<Integer> myBuffs) {
+		this.myBuffs = myBuffs;
+	}
 
 }

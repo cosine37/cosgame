@@ -200,8 +200,10 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 						tempSe.src = '/sound/Rich/aoligei.mp3'
 						tempSe.play();
 					}
+					if ($scope.hand[$scope.chosenCard].playable == true){
+						$scope.curPlayStyle = $scope.hand[$scope.chosenCard].playStyle
+					}
 					
-					$scope.curPlayStyle = $scope.hand[$scope.chosenCard].playStyle
 				}
 				setHandStyles()
 			}
@@ -335,7 +337,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				}
 				
 				if ($scope.hand[i].types[0] == true){
-					cstyle["background-color"] = "white"
+					cstyle["background-color"] = "LemonChiffon"
 				}
 				if ($scope.hand[i].types[1] == true){
 					cstyle["background-color"] = "darkslategrey"

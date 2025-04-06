@@ -33,7 +33,7 @@ public class Buff {
 	public int getRollAdd() {
 		return buffs.get(ROLLADD);
 	}
-	public void setRoleAdd(int x) {
+	public void setRollAdd(int x) {
 		buffs.set(ROLLADD,x);
 	}
 	public void clearRollAdd() {

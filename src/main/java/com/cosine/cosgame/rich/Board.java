@@ -174,6 +174,7 @@ public class Board {
 						entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
 					}
 					
+					entity.setMyBuffs(p.getBuff().getBuffs());
 					
 				}
 				entity.setMyLandMsg(p.myLandMsg());
@@ -247,10 +248,6 @@ public class Board {
 		for (i=0;i<players.size();i++) {
 			if (players.get(i).getHp() == 0 && players.get(i).isInWard() == false) {
 				players.get(i).goToWard();
-				
-				logger.logGoToWard(players.get(i));
-				this.setBroadcastImg("avatar/head_"+players.get(i).getAvatarId());
-				this.setBroadcastMsg(players.get(i).getName() + "眼前一黑，被送进ICU。");
 			}
 		}
 	}

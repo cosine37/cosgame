@@ -15,7 +15,9 @@ public class Factory {
 		int id = x/100;
 		int level = x%100;
 		
-		if (id == 1) {
+		if (id == 0) {
+			c = new CardStay();
+		} else if (id == 1) {
 			c = new Card1();
 		} else if (id == 2) {
 			c = new Card2();
@@ -35,8 +37,13 @@ public class Factory {
 			c = new CardVehicleCoupon();
 		} else if (id == 10) {
 			c = new CardRelease();
-		}
-		else if (id == 14) {
+		} else if (id == 11) {
+			c = new CardP1();
+		} else if (id == 12) {
+			c = new CardP2();
+		} else if (id == 13) {
+			c = new CardP3();
+		} else if (id == 14) {
 			c = new CardDiamond();
 		} else if (id == 15) {
 			c = new CardPearl();
@@ -70,10 +77,19 @@ public class Factory {
 			c = new CardThunder();
 		} else if (id == 30) {
 			c = new CardDinosaur();
-		}
-		
-		
-		else if (id == 37) {
+		} else if (id == 31) {
+			c = new CardKyogre();
+		} else if (id == 32) {
+			c = new CardDart();
+		} else if (id == 33) {
+			c = new CardShuriken();
+		} else if (id == 34) {
+			c = new CardFrisbee();
+		} else if (id == 35) {
+			c = new CardPainted();
+		} else if (id == 36) {
+			c = new CardFakeDown();
+		} else if (id == 37) {
 			c = new CardDowngrade();
 		} else if (id == 38) {
 			c = new CardOccupy();
@@ -86,6 +102,20 @@ public class Factory {
 			c = new CardRobotWorker();
 		} else if (id == 43) {
 			c = new CardBuyEstate();
+		} else if (id == 44) {
+			c = new CardSubstitute();
+		} else if (id == 45) {
+			c = new CardTelescope();
+		} else if (id == 46) {
+			c = new CardHydroPump();
+		} else if (id == 47) {
+			c = new CardJavelin();
+		} else if (id == 48) {
+			c = new CardAllRich();
+		} else if (id == 49) {
+			c = new CardAllPoor();
+		} else if (id == 50) {
+			c = new CardMipha();
 		}
 		
 		else if (id == 9000) {

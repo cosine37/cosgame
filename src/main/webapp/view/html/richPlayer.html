@@ -23,12 +23,26 @@
 		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
 
-	<div ng-show="phase == MOVE">你掷了{{gamedata.lastRolledDisplay}}，将会移动到{{gamedata.myNextPlace}}。
-		请选择一项：<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+	<div ng-show="phase == MOVE">你掷了{{gamedata.lastRolledDisplay}}，
+		<span ng-show="gamedata.myBuffs[1]>-1">还会额外移动{{gamedata.myBuffs[1]}}步，</span>
+		将会移动到{{gamedata.myNextPlace}}。请选择一项：
+		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
+		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
-	<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace.name}}，{{gamedata.myLandMsg}}，
-		请选择一项：<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+	
+	<div ng-show="phase == RESOLVE">你来到了{{gamedata.myCurrentPlace.name}}，{{gamedata.myLandMsg}}，请选择一项：
+		<button ng-show="chosenCard < 0" button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
+		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
+	
 	<div ng-show="phase == ESCAPE">你掷了一个{{gamedata.lastRolled}}，
 		<span ng-show="gamedata.inJail == false">越狱成功！</span>
 		<span ng-show="gamedata.inJail">越狱失败。</span>
@@ -36,11 +50,25 @@
 		<span ng-show="gamedata.inJail && gamedata.jailRound == 3 && gamedata.settings.useGTA == 1">因为这是你入狱的第三回合，请支付保释费${{map.bailCost}}×通缉值出狱。</span>
 		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 	</div>
+	
 	<div ng-show="phase == UTILITYPHASE">你来到了{{gamedata.myCurrentPlace.name}}，需要掷一次骰子：
-		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
+		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
 	</div>
 	<div ng-show="phase == STATIONPHASE">你可以移动到其他地点（移动后不能购买且不需支付路费）：
-		<button ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
+		
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
+		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
+			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
+		<button ng-show="chosenCard >= 0" ng-click="throwCard()">丢弃</button>
+	</div>
+	
+	<div>
 	</div>
 </div>
 <div class="player-console" ng-show="status == ENDGAME">游戏结束</div>

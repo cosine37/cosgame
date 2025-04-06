@@ -70,7 +70,14 @@ public class Card {
 	
 	public boolean defaultPlayable() {
 		if (player.isInJail() || player.isInWard()) return false;
-		if (player.getPhase() != Consts.PHASE_OFFTURN) return true;
+		if (player.getPhase() == Consts.PHASE_ROLL) return true;
+		return false;
+	}
+	
+	public boolean alsoPlayableAfterRoll() {
+		if (player.isInJail() || player.isInWard()) return false;
+		if (player.getPhase() == Consts.PHASE_ROLL) return true;
+		if (player.getPhase() == Consts.PHASE_MOVE) return true;
 		return false;
 	}
 	
@@ -84,6 +91,9 @@ public class Card {
 	}
 	public void onLoseMoney(int x) {}
 	public int wardFeeDeduction() {return 0;}
+	public boolean clearJail() {return false;}
+	public boolean clearWard() {return false;}
+	public boolean passiveAimBoost() {return false;}
 	// end passive cards handle
 	
 	public boolean changeEstateLevel(Place p, int level) {
@@ -169,6 +179,16 @@ public class Card {
 		if (player.getBuff().getAimBoost() > 0) {
 			ans = ans+20;
 		}
+		boolean passiveAimBoost = false;
+		for (int i=0;i<player.getHand().size();i++) {
+			if (player.getHand().get(i).passiveAimBoost()) {
+				passiveAimBoost = true;
+			}
+		}
+		if (passiveAimBoost) {
+			ans = ans+10;
+		}
+		System.out.println("Aim value:" + ans);
 		return ans;
 	}
 	

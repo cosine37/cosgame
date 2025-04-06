@@ -2,6 +2,7 @@ package com.cosine.cosgame.rich;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -232,6 +233,10 @@ public class Player {
 		money = money+salary;
 	}
 	
+	public void fullRestore() {
+		hp = Consts.GTA_MAXHP;
+	}
+	
 	public void addHp(int x) {
 		hp = hp+x;
 		// TODO: may need to update here
@@ -290,33 +295,9 @@ public class Player {
 			star = 0;
 			
 			// TODO: test cards here
-			/*
-			hand.add(new Card1());
-			hand.add(new CardSalmonBite());
-			hand.add(new CardPoutine());
-			hand.add(new CardNugget());
-			*/
-			//hand.add(new CardRelease());
-			/*
-			hand.add(new CardVehicleCoupon());
-			hand.add(new CardRumor());
-			hand.add(new CardLittleEssay());
-			hand.add(new CardCurlingStone());
-			hand.add(new CardPoutine());
-			*/
-			//hand.add(new CardVehicleCoupon());
-			//hand.add(new CardDinosaur());
-			//hand.add(new CardThunder());
-			//hand.add(new CardBuyEstate());
-			//hand.add(new CardDiamond());
-			//hand.add(new CardPearl());
-			//hand.add(new CardNugget());
 			addRandomCard();
 			addRandomCard();
 		}
-		
-		
-		
 	}
 	
 	public void startTurn() {
@@ -339,6 +320,11 @@ public class Player {
 			temp = temp/10;
 		}
 		
+		// GTA related, add steps
+		if (buff.getRollAdd() > 0) {
+			totalSteps = totalSteps+buff.getRollAdd();
+		}
+		
 		Place place = board.getMap().getPlaceAfter(placeIndex,totalSteps);
 		if (place == null) return ""; else return place.getName();
 	}
@@ -354,6 +340,20 @@ public class Player {
 	}
 	
 	public void goToJail() {
+		// Step 0: GTA related, in case user have substitude;
+		int i;
+		for (i=0;i<hand.size();i++) {
+			if (hand.get(i).clearJail()) {
+				Card c = hand.get(i);
+				board.getLogger().log(name + " 消耗了一张 " + c.getName() + " ，逃过了入狱并且清空了通缉值");
+				board.setBroadcastImg("card/"+c.getId());
+				board.setBroadcastMsg(name + "消耗了一张" + c.getName() + "，逃过了入狱并且清空了通缉值。谢谢你，" + c.getName() + "！");
+				hand.remove(i);
+				star = 0;
+				return;
+			}
+		}
+		
 		// Step 1: remove from the current place and add player in jail
 		board.getMap().getPlace(placeIndex).removePlayer(this);
 		board.getMap().addToJail(this);
@@ -369,19 +369,13 @@ public class Player {
 			if (star<=2) {
 				board.setBroadcastMsg(name + "因轻罪入狱。");
 			} else if (star<=4) {
+				board.setBroadcastMsg(name + "因中罪入狱，失去载具和除出狱卡外的随机2张手牌。");
+				this.discardRandom(2,10);
 				loseVehicle();
-				List<Card> newHand = new ArrayList<>();
-				for (int i=0;i<hand.size();i++) {
-					if (hand.get(i).getId() == 10) {
-						newHand.add(hand.get(i));
-					}
-				}
-				hand = newHand;
-				board.setBroadcastMsg(name + "因中罪入狱，失去载具和除出狱卡外的所有手牌。");
 			} else if (star<=6) {
-				loseVehicle();
-				hand = new ArrayList<>();
 				board.setBroadcastMsg(name + "因重罪入狱，失去载具和所有手牌且不得提前保释。");
+				hand = new ArrayList<>();
+				loseVehicle();
 			}
 		}
 		
@@ -397,7 +391,25 @@ public class Player {
 	}
 	
 	public void goToWard() {
+		// Step 0: GTA related, in case user have Mipha;
+		int i;
+		for (i=0;i<hand.size();i++) {
+			if (hand.get(i).clearWard()) {
+				Card c = hand.get(i);
+				board.getLogger().log(name + " 消耗了一张 " + c.getName() + " ，回复了所有生命值");
+				board.setBroadcastImg("card/"+c.getId());
+				board.setBroadcastMsg(name + "消耗了一张" + c.getName() + "，回复了所有生命值。谢谢你，" + c.getName() + "！");
+				hand.remove(i);
+				fullRestore();
+				return;
+			}
+		}
+		
 		// Step 1: remove from the current place and add player in ward
+		board.getLogger().logGoToWard(this);
+		board.setBroadcastImg("avatar/head_"+avatarId);
+		board.setBroadcastMsg(name + "眼前一黑，被送进ICU。");
+		
 		board.getMap().getPlace(placeIndex).removePlayer(this);
 		board.getMap().addToWard(this);
 		
@@ -473,6 +485,31 @@ public class Player {
 			int rawOptions = option%100;
 			playCard(x, rawOptions);
 		}
+	}
+	
+	public void discardRandom(int num, int exception) {
+		int i,x;
+		List<Card> setAside = new ArrayList<>();
+		for (i=0;i<hand.size();i++) {
+			if (hand.get(i).getId() == exception) {
+				setAside.add(hand.remove(i));
+			}
+		}
+		
+		Random rand = new Random();
+		for (i=0;i<num;i++) {
+			if (hand.size() == 0) break;
+			x = rand.nextInt(hand.size());
+			hand.remove(x);
+		}
+		
+		for (i=0;i<setAside.size();i++) {
+			hand.add(setAside.get(i));
+		}
+	}
+	
+	public void discardRandom(int num) {
+		discardRandom(num,-1);
 	}
 	
 	public List<String> getOptions(){
@@ -714,13 +751,22 @@ public class Player {
 				temp = temp/10;
 			}
 			
-			if (board.getSettings().getUseGTA() == 1) { // GTA go to jail handles
-				if (totalSteps <= star) {
+			if (buff.getRollAdd() > 0) {
+				totalSteps = totalSteps+buff.getRollAdd();
+				buff.clearRollAdd();
+			}
+			
+			if (board.getSettings().getUseGTA() == 1) { // GTA add steps and go to jail handles
+				
+				if (totalSteps <= star && star>0) {
 					goToJail();
 					
-					board.getLogger().logEndTurn(this);
-					board.nextPlayer();
-					return;
+					if (inJail) {
+						board.getLogger().logEndTurn(this);
+						board.nextPlayer();
+						return;
+					}
+					
 				}
 			}
 			
@@ -748,19 +794,23 @@ public class Player {
 			board.getMap().getPlace(t).preStepOn(this);
 			//board.setLastRolled(0);
 			rollDisplay = 0;
+		} else if (option>=10000 && option<20000) { // play cards
+			playCardRaw(option);
 		}
 	}
 	
 	public void phaseResolve(int option) {
 		if (phase != Consts.PHASE_RESOLVE) return;
-		
-		turnEnd = true;
-		board.getMap().getPlace(placeIndex).stepOn(this, option);
-		if (turnEnd) {
-			board.getLogger().logEndTurn(this);
-			board.nextPlayer();
+		if (option>=10000 && option<20000) { // play cards
+			playCardRaw(option);
+		} else {
+			turnEnd = true;
+			board.getMap().getPlace(placeIndex).stepOn(this, option);
+			if (turnEnd) {
+				board.getLogger().logEndTurn(this);
+				board.nextPlayer();
+			}
 		}
-		
 	}
 	
 	public void phaseEscape(int option) {

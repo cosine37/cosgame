@@ -157,6 +157,11 @@ public class Logger {
 		log(s);
 	}
 	
+	public void logAddMoreStep(Player p, int x) {
+		String s = p.getName() + " 移动时额外移动 " + x + " 步";
+		log(s);
+	}
+	
 	public void logGoToJailGTA(Player p) {
 		String s = "";
 		if (p.getStar()<=2) {

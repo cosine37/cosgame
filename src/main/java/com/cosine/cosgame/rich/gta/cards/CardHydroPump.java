@@ -6,16 +6,16 @@ import com.cosine.cosgame.rich.Card;
 import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.rich.Player;
 
-public class CardBrick extends Card {
-	public CardBrick() {
+public class CardHydroPump extends Card {
+	public CardHydroPump() {
 		super();
-		id = 18;
-		name = "板砖卡";
-		desc = "成功率：70%；+2starP，对一名玩家造成2点伤害并摧毁载具。消耗。";
-		rarity = 1;
+		id = 46;
+		name = "水炮卡";
+		desc = "成功率：80%；+1starP，对一名玩家造成2点伤害且该玩家失去1张手牌。消耗。";
+		rarity = 2;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
 		attack = 2;
-		aim = 70;
+		aim = 80;
 	}
 	
 	public void play(int rawOptions) {
@@ -32,23 +32,18 @@ public class CardBrick extends Card {
 			if (f) {
 				int x = getFinalAttack();
 
-				board.getLogger().log(player.getName() + " 对 " + targetName + " 造成了 " + x + " 点伤害");
-				board.getLogger().log(player.getName() + " 获得了 2 点通缉值");
+				board.getLogger().log(player.getName() + " 对 " + targetName + " 造成了 " + x + " 点伤害，且" + targetName + "失去了 1 张随机手牌");
+				board.getLogger().log(player.getName() + " 获得了 1 点通缉值");
 				
-				String s1 = "点伤害，";
-				if (tp.hasVehicle()) {
-					s1 = "点伤害且失去了载具，";
-				}
-				board.setBroadcastMsg(player.getName() + "使用了板砖卡，对" + targetName + "扔出板砖，" + tp.getName() + "受到了" + x + s1 + player.getName() + "获得了2点通缉值。");
+				String s1 = "点伤害，并失去了一张随机手牌。";
+				board.setBroadcastMsg(player.getName() + "使用了水炮卡，对" + targetName + "猛烈地喷射大量水流，" + tp.getName() + "受到了" + x + s1 + player.getName() + "获得了1点通缉值。");
 				
 				player.hurt(tp, x);
-				if (tp.hasVehicle()) {
-					tp.loseVehicle();
-				}
-				player.addStar(2);
+				tp.discardRandom(1);
+				player.addStar(1);
 			} else {
 				board.getLogger().log(player.getName() + " 但是没有命中 " + targetName);
-				board.setBroadcastMsg(player.getName() + "使用了板砖卡，对" + targetName + "扔出板砖，但是并没有命中" + targetName +"。");
+				board.setBroadcastMsg(player.getName() + "使用了水炮卡，但是并没有命中" + targetName +"。");
 			}
 			
 		}
