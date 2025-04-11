@@ -29,6 +29,7 @@ public class CardGainer extends Place {
 		String bcm = p.getName() + "来到了" + name;
 		if (p.getStar() > 0) {
 			bcm = bcm + "，失去了1点通缉值";
+			p.loseStar(1);
 		}
 		
 		board.getLogger().logGainCard(p, x);

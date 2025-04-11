@@ -45,8 +45,8 @@ public class Estate extends Place{
 		ownerId = doc.getInteger("ownerId", -1);
 		rents = (List<Integer>) doc.get("rents");
 	}
-	public PlaceEntity toPlaceEntity() {
-		PlaceEntity entity = super.toPlaceEntity();
+	public PlaceEntity toPlaceEntity(String username) {
+		PlaceEntity entity = super.toPlaceEntity(username);
 		entity.setArea(area);
 		entity.setCost(cost);
 		entity.setUpgradeCost(upgradeCost);
@@ -81,6 +81,21 @@ public class Estate extends Place{
 			areaStyle.put("background-color", board.getMap().getAreaColors().get(area));
 		}
 		entity.setAreaStyle(areaStyle);
+		
+		
+		HashMap<String, String> estateBackground = new HashMap<>();
+		if (ownerId == -1) {
+			estateBackground.put("background-color", "white");
+		} else {
+			Player owner = board.getPlayers().get(ownerId);
+			if (owner.getName().contentEquals(username)) {
+				estateBackground.put("background-color", "LightGreen");
+			} else {
+				estateBackground.put("background-color", "LightPink");
+			}
+		}
+		entity.setEstateBackground(estateBackground);
+		
 		return entity;
 	}
 	

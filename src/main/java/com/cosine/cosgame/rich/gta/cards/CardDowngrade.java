@@ -16,12 +16,14 @@ public class CardDowngrade extends Card {
 	}
 	
 	public void play(int rawOptions) {
-		boolean f = changeEstateLevel(player.getPlace(),1);
+		boolean f = changeEstateLevel(player.getPlace(),-1);
 		if (f) {
 			board.getLogger().log(player.getName() + " 将地产 " + player.getPlace().getName() + " 降了一级");
+			board.getLogger().log(player.getName() + " 增加 1 点通缉值");
 			
 			board.setBroadcastImg("card/"+id);
 			board.setBroadcastMsg(player.getName() + "使用了" + name + "将地产" + player.getPlace().getName() + "降了一级。");
+			player.addStar(1);
 		} else {
 			if (player.getPlace() != null) {
 				board.getLogger().log(player.getName() + " 无法降级 " + player.getPlace().getName());

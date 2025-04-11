@@ -25,6 +25,7 @@ public class PlaceEntity {
 	Map<String, String> imgStyle;
 	Map<String, String> fontStyle;
 	Map<String, String> areaStyle;
+	Map<String, String> estateBackground;
 
 	public String getName() {
 		return name;
@@ -139,6 +140,12 @@ public class PlaceEntity {
 	}
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+	public Map<String, String> getEstateBackground() {
+		return estateBackground;
+	}
+	public void setEstateBackground(Map<String, String> estateBackground) {
+		this.estateBackground = estateBackground;
 	}
 	
 }

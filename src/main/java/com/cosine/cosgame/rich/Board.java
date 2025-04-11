@@ -110,7 +110,7 @@ public class Board {
 		entity.setId(id);
 		entity.setLord(lord);
 		entity.setStatus(status);
-		entity.setMap(map.toMapEntity());
+		entity.setMap(map.toMapEntity(username));
 		entity.setSettings(settings.toSettingsEntity());
 		entity.setLastRolled(lastRolled);
 		entity.setRound(round);
@@ -163,15 +163,15 @@ public class Board {
 					if (p.isInJail()) {
 						InJail inJail = new InJail(0,"监狱");
 						inJail.setBoard(this);
-						entity.setMyCurrentPlace(inJail.toPlaceEntity());
+						entity.setMyCurrentPlace(inJail.toPlaceEntity(username));
 					} else if (p.isInWard()) {
 						Ward ward = new Ward(0,"病房");
 						ward.setBoard(this);
-						entity.setMyCurrentPlace(ward.toPlaceEntity());
+						entity.setMyCurrentPlace(ward.toPlaceEntity(username));
 					}
 					
 					else {
-						entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity());
+						entity.setMyCurrentPlace(map.getPlace(p.getPlaceIndex()).toPlaceEntity(username));
 					}
 					
 					entity.setMyBuffs(p.getBuff().getBuffs());

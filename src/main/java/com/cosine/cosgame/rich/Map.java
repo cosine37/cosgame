@@ -141,12 +141,12 @@ public class Map {
 			wardPlayers.add(board.getPlayers().get(wardPlayerIndexes.get(i)));
 		}
 	}
-	public MapEntity toMapEntity() {
+	public MapEntity toMapEntity(String username) {
 		int i;
 		MapEntity entity = new MapEntity();
 		List<PlaceEntity> pes = new ArrayList<>();
 		for (i=0;i<places.size();i++) {
-			pes.add(places.get(i).toPlaceEntity());
+			pes.add(places.get(i).toPlaceEntity(username));
 		}
 		entity.setPlaces(pes);
 		entity.setHeight(height);

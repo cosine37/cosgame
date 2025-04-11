@@ -105,7 +105,7 @@ public class MapBuilder {
 					p = new CardGainer(i, "Wonderland");
 					p.setImg("gta/Wonderland2");
 					p.setFont("tyh", 20);
-					p.setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");
+					p.setDesc("经过获得1张牌；停留获得2张牌并减少1点通缉值");
 					p.setLandMsg("将会减少1点通缉值并获得2张牌（如果你有手牌空间）");
 					p.createDetail();
 					p.getDetail().setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");

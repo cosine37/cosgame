@@ -42,11 +42,9 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">基本规则</a>
 				    </li>
-				    <!-- 
 					<li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#gtatab" ng-click="hideTablesTab()">GTA扩展</a>
 				    </li>
-				     -->
 				  </ul>
 			</div>
 			<div class="tab-content">
@@ -99,38 +97,195 @@
 					<h2><b>基本规则</b></h2>
 					<table>
 						<tr>
-							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>背景</b></h4></td>
+							<td colspan="2" style="width: 1000px"><h3><b>背景</b></h3></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这是作者本人非常想实现的游戏，最早的想法可以追溯到大约12年前。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这是作者本人非常想实现的游戏，最早的想法可以追溯到大约2014年年初。
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏人数</b></h4></td>
+							<td colspan="2" style="width: 1000px"><h3><b>游戏人数</b></h3></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~4人，最佳人数为3~4人。
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~4人，较大的地图可以支持2~6人，最佳人数为3~4人。
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>规则概述</b></h4></td>
+							<td colspan="2" style="width: 1000px"><h3><b>规则概述</b></h3></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每名玩家轮流行动。轮到各自的回合，每名玩家掷一次骰子并向前移动相应的步数。到达不同的地点，执行不同的效果
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时每名玩家会分发一定的现金。
+								每名玩家轮流行动。轮到各自的回合，每名玩家掷一次骰子并按顺时针方向移动相应的步数。到达不同的地点，执行不同的效果。
+								关于每个地块的规则，请看下文。<b class="richtext">有些规则和官方的规则会有出入，若一条规则的描述为绿色加粗，则代表该规则与官方规则有出入。</b>
 								</p>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>地点概述</b></h4></td>
+							<td colspan="2" style="width: 1000px"><h3><b>地点概述</b></h3></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F4B5;&nbsp;起点</h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时所有玩家所在的一格。
+							到达或经过该格的玩家会获得$2000。不同地图的起点名称会不同，但效果是一样的。</td>
+						</tr>
+						<tr><td colspan="2" style="width: 1000px; height:10px;"></td></tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F3E0;&nbsp;地产</h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当玩家来到没有被占领的地产时，可以选择是否购买。
+							若玩家的现金不足以支付地产费用则无法购买。
+							<b class="richtext">与官方规则不同，若玩家选择不购买，不会拍卖地产。</b>当玩家来到自己所拥有的地产时，可以支付费用升级地产。
+							每个地产有升级上限，若玩家的现金不足以支付升级费用或是地产到达上限则无法升级。
+							当玩家来到其他玩家所拥有的地产时，需要支付过路费（房租）。
+							大部分地产可以被升级3次或5次，取决于地图的设置。还有以下一些特殊的地产:</td>
+						</tr>
+						<tr><td colspan="2" style="width: 1000px; height:10px;"></td></tr>
+						<tr>
+							<td><h5>&#x1F689;&nbsp;车站</h5></td>
+							<td rowspan="2">
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/station.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align:top">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不能被升级，但是一名玩家所获得的车站越多，过路费（房租）就越高。每个地图车站的图标会有所不同。
+								<b class="richtext">在购买或支付过路费后，玩家可以决定是否移动到其他车站。移动之后不能购买也不需要支付路费。
+								该移动视为从初始车站按顺时针移动至到达的车站，所以期间经过的地块的被动效果都会触发。</b>
+							</td>
+						</tr>
+						<tr>
+							<td><h5>&#x2615;&nbsp;饮料店</h5></td>
+							<td rowspan="2">
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/bubbleTea.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align:top">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不能被升级，但是一名玩家所获得的饮料店越多，过路费（房租）就越高。
+								每个玩家支付过路费（房租）时会掷一次骰子，点数越大路费越高。根据主题，每个地图的饮料店类型会不同，可能会是奶茶店或咖啡店等。
+							</td>
+						</tr>
+						<tr><td colspan="2" style="width: 1000px; height:10px;"></td></tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F3AD;&nbsp;命运</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达该格的玩家会获得触发随机事件，
+							根据事件的描述触发效果。每个地图的命运格名称会不同，但是图标是一样的。</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/fate.png');background-size:cover">
+								</div>
+							</td>
+							
+						</tr>
+						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F4B8;&nbsp;税收</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达该格的玩家需要支付相应的费用，
+							类似的地块名称会不同，如<b>所得税、奢侈税</b>等，图标和金额也有可能会不同，但主效果是一样的。</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/incomeTax.png');background-size:cover">
+								</div>
+							</td>
+							
+						</tr>
+						
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F46E;&nbsp;监狱大门、入狱与监狱</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达<b>监狱大门</b>地块后，无视发生。</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/jailDoor.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达<b>入狱</b>地块的玩家将立刻进入<b>监狱</b>。
+							<b>该行为视为移出地图，所以不会触发任意一格的被动效果。</b>除了该地块之外，还有一些<b>命运</b>的效果是<b>入狱</b>。</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/goToJail.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位于<b>监狱</b>地块的玩家可以做出如下决策：
+								<ul>
+									<li><b>保释：</b>支付$500出狱，之后立即进行回合</li>
+									<li><b>越狱：</b><b class="richtext">掷一次骰子，若点数为6，则视为越狱成功，否则视为越狱失败。越狱成功后立即进行正常的回合。越狱失败则跳过该回合。</b>
+									当第三次越狱依然失败，则支付$500强制出狱。</li>
+								</ul>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出狱的玩家将会移动到<b>监狱大门</b>。
+							</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/jail.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F698;&nbsp;免费停车场</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;到达<b>免费停车场</b>地块后，无事情发生。</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/parking.png');background-size:cover">
+								</div>
+							</td>
 						</tr>
 					</table>
 				</div>
 				<div id="gtatab" class="content container tab-pane">
+					<h2><b>GTA扩展</b></h2>
+					<table>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该模式增加了<b>卡牌、载具、生命值、通缉值</b>机制和<b>医院、游乐园</b>地块，并大幅修改了与<b>入狱</b>相关的规则。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F3B4;&nbsp;卡牌</h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用GTA模式的游戏开始时，每名玩家会分发2张卡牌。
+							当5的倍数的回合数开始时，每名玩家会获得1张卡牌。到达或经过某些地块，以及一些命运卡的效果也会获得卡牌。<b>每名玩家的手牌上限为5，当一名玩家的手牌达到5张时，会无视获得卡牌的效果。</b><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大部分卡牌当且仅当在玩家各自的回合掷骰子之前才可以打出。有一些卡牌有例外。
+							目前所有卡牌都可以被丢弃，且在自己的回合的任何阶段都可以丢弃。以下为一些与卡牌相关的细节:<br/>&nbsp;<br/>
+							<h5>卡牌类型</h5>
+							<ul>
+								<li><b>行动：</b>可以主动打出，且大部分当且仅当在玩家各自的回合掷骰子之前才可以打出。</li>
+								<li><b>被动：</b>不能主动打出，但是持有该卡牌有被动效果。</li>
+							</ul>
+							<h5>关键词</h5>
+							<ul>
+								<li><b style="color:darkorange">消耗：</b>打出后该牌将会消失，目前几乎所有的卡牌都带有该关键词。</li>
+								<li><b style="color:maroon">伤害：</b>令一名玩家失去一定数量的生命值，具体细节见下文。</li>
+								<li><b style="color:maroon">增伤：</b>在一定的回合内对其他玩家造成的伤害+1。</li>
+								<li><b>成功率：</b>打出后，效果只有一定几率会发动。</li>
+								<li><b style="color:darkgreen">精准：</b>在一定的回合内令所有带<b>成功率</b>效果的卡牌<b>成功率</b>增加20%。</li>
+								<li><b style="color:darkblue">载具：</b>见下文。</li>
+							</ul>
+							</td>
+							
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F697;&nbsp;载具</h4></td>
+						</tr>
+						<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家拥有<b>载具</b>时，在移动时可以选择投掷1或2个骰子。
+						不同<b>载具</b>的插图不同，但是效果是一样的。有些<b>卡牌</b>和<b>命运</b>会令一名玩家获得或失去<b>载具</b>。<br/>
+					</table>
 				</div>
 			</div>
 		</div>

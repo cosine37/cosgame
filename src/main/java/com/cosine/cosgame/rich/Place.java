@@ -67,7 +67,7 @@ public abstract class Place {
 		detail = new Detail(this);
 		detail.setFromDoc(detailDoc);
 	}
-	public PlaceEntity toPlaceEntity() {
+	public PlaceEntity toPlaceEntity(String username) {
 		PlaceEntity entity = new PlaceEntity();
 		entity.setId(id);
 		entity.setType(type);
