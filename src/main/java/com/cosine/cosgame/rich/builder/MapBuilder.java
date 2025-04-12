@@ -189,21 +189,21 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Dixie·迪克西");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该社区是密西沙加（Mississauga）最古老的社区之一，原名Sydenham。1865年以Beaumont Wilson Bowen Dixie命名。其为威尔士移民，在此资助建立了新教教堂。如今该区域大部分都是商业用地，密西沙加中国城也坐落于此，只有一小片是居民区。");
 			} else if (i == 8) {
 				p = new Estate(i, "Square One", 2, 3200,2000,5,new ArrayList<>(Arrays.asList(280,1500,4500,10000,12000,14000)));
 				p.setImg("gta/SquareOne");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Square One·一号广场");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该地原为农地，后落入商人麦拉夫连（Bruce McLaughlin）手中。1968年时，多伦多西侧的几个小镇合并成密西沙加（Mississauga）镇，麦拉夫连随即准备在该地大兴土木。1969年原密西沙加镇政府被火灾焚毁，于是麦拉夫连提供在同一片地皮上兴建新的镇政府，并在新镇政府边上兴建大型商场。一号广场于1969年动工，1973年10月3日对外开放，当时为全国最大的商场。如今广场附近拥有密西沙加艺术中心和密西沙加中央图书馆等设施，同时亦有一座巴士总站。");
 			} else if (i == 9) {
 				p = new Estate(i, "Erin Mills", 2, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
 				p.setImg("gta/ErinMills");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Erin Mills·艾琳米尔");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该区域为开发商CF（Cadillac Fairview）于1970年代起开发的新城。名称来源于南侧的Erindale，其中Erin为爱尔兰语中爱尔兰人之意，因该村的首位牧师，爱尔兰人James Magrath的家乡而得名。河流Credit River从此穿过，Credit是个法语名，意为信用。名称起源于18世纪时法国的皮草贸易商先为当地人提供物品，当地人第二年春天再提供皮草的诚信交易。");
 			} else if (i == 11) {
 				p = new Estate(i, "Churchville", 3, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
 				p.setImg("gta/Churchville");

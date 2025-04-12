@@ -232,9 +232,9 @@ public class Estate extends Place{
 			Player owner = board.getPlayers().get(ownerId);
 			if (board.getSettings().getUseGTA() == 1) {
 				if (owner.isInJail()) {
-					return owner.getName() + "在监狱，你不需要支付路费";
+					return owner.getName() + "在监狱，所以你不需要支付租金";
 				} else if (owner.isInWard()) {
-					return owner.getName() + "在住院，你不需要支付路费";
+					return owner.getName() + "在住院，所以你不需要支付租金";
 				}
 			}
 			
@@ -244,7 +244,7 @@ public class Estate extends Place{
 				return "你需要支付$" + getRent() + "给" + owner.getName();
 			}
 		} else if (level < maxLevel){
-			return "你可以升级该地块";
+			return "你可以花费$" + upgradeCost + "升级该地块";
 		} else {
 			return "这是你的地块";
 		}
@@ -258,7 +258,20 @@ public class Estate extends Place{
 				ans.add("购买地块");
 			}
 		} else if (player.getIndex() != ownerId) {
-			ans.add("支付租金");
+			Player owner = board.getPlayers().get(ownerId);
+			boolean flag = true;
+			if (board.getSettings().getUseGTA() == 1) {
+				if (owner.isInJail()) {
+					ans.add("活该！");
+					flag = false;
+				} else if (owner.isInWard()) {
+					ans.add("真遗憾呐（笑）");
+					flag = false;
+				}
+			}
+			if (flag) {
+				ans.add("支付租金");
+			}
 		} else if (level < maxLevel){
 			ans.add("不升级");
 			if (player.getMoney()>=upgradeCost) {

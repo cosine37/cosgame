@@ -223,11 +223,11 @@
 						<tr>
 							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位于<b>监狱</b>地块的玩家可以做出如下决策：
 								<ul>
-									<li><b>保释：</b>支付$500出狱，之后立即进行回合</li>
+									<li><b>保释：</b>支付$500出狱，之后立即正常进行回合。若现金不足$500，不能选择该选项。</li>
 									<li><b>越狱：</b><b class="richtext">掷一次骰子，若点数为6，则视为越狱成功，否则视为越狱失败。越狱成功后立即进行正常的回合。越狱失败则跳过该回合。</b>
-									当第三次越狱依然失败，则支付$500强制出狱。</li>
+									当第三次越狱依然失败，则支付$500强制出狱并立即正常进行回合。</li>
 								</ul>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出狱的玩家将会移动到<b>监狱大门</b>。
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出狱的玩家将会移动到<b>监狱大门</b>。入狱期间的玩家<b>依然可以</b>收过路费（房租）。
 							</td>
 							<td>
 								<div style="width:200px;height:200px;background-image:url('/image/Rich/jail.png');background-size:cover">
@@ -270,7 +270,7 @@
 							</ul>
 							<h5>关键词</h5>
 							<ul>
-								<li><b style="color:darkorange">消耗：</b>打出后该牌将会消失，目前几乎所有的卡牌都带有该关键词。</li>
+								<li><b style="color:darkorange">消耗：</b>将该牌移除，目前几乎所有的卡牌都带有该关键词。</li>
 								<li><b style="color:maroon">伤害：</b>令一名玩家失去一定数量的生命值，具体细节见下文。</li>
 								<li><b style="color:maroon">增伤：</b>在一定的回合内对其他玩家造成的伤害+1。</li>
 								<li><b>成功率：</b>打出后，效果只有一定几率会发动。</li>
@@ -283,8 +283,80 @@
 						<tr>
 							<td colspan="2" style="width: 1000px"><h4>&#x1F697;&nbsp;载具</h4></td>
 						</tr>
-						<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家拥有<b>载具</b>时，在移动时可以选择投掷1或2个骰子。
-						不同<b>载具</b>的插图不同，但是效果是一样的。有些<b>卡牌</b>和<b>命运</b>会令一名玩家获得或失去<b>载具</b>。<br/>
+						<tr>
+							<td colspan="2" style="width: 1000px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家拥有<b>载具</b>时，在移动时可以选择投掷1或2个骰子。
+							不同<b>载具</b>的插图不同，但是效果是一样的。有些<b>卡牌</b>和<b>命运</b>会令一名玩家获得或失去<b>载具</b>。<br/>
+							</td>
+						</tr>
+						<tr><td colspan="2" style="width: 1000px; height:10px;"></td></tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F3E5;&nbsp;生命值、医院与病房</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							生命值标记显示为<img src='/image/Rich/hp1.png' style='width: 20px; height:22px;padding-bottom:4px;padding-left: 2px;'>。
+							游戏开始时每名玩家拥有<b>5点生命值</b>，且生命值上限目前为5。
+							一些卡牌和命运卡会让玩家增加或减少生命值。当玩家来到<b>医院</b>时，可以花费$500回复1点生命值（不能超过上限）。若来到<b>医院</b>的玩家的生命值只有1，则可以花费$1000回复2点生命值。
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/hospital.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家<b>掷骰子前，或结束回合时，</b>
+							所有生命值为0的玩家（包括当前玩家）会移动到<b>病房</b>。在<b>病房</b>的玩家不能使用绝大部分的牌（但仍可以丢弃）且其他玩家到达该玩家的地产不需要支付过路费（房租）。
+							在<b>病房</b>的玩家回合开始时，可以选择一项：
+							<ul>
+								<li><b>治疗：</b>回复1点生命值，并立即结束回合。</li>
+								<li><b>出院：</b><b>只要生命值大于0，任何时候都可以出院。</b>出院时支付相当于$500×当前生命值的医疗费，之后移动到<b>医院（不触发医院的效果）</b>并立即正常进行回合。
+								若资金不足以支付医疗费，则会将现金设为$1。</li>
+							</ul>
+							</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/ward.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F46E;&nbsp;通缉值与监狱</h4></td>
+						</tr>
+						<tr>
+							<td style="width: 1000px; vertical-align: top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							通缉值标记显示为<img src='/image/Rich/star1.png' style='width: 18px; height:22px;padding-bottom:4px'>。
+							游戏开始时每名玩家拥有<b>0点通缉值</b>，且通缉值上限目前为6。一些卡牌、地块和命运卡会让玩家增加或减少通缉值。<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当一名玩家移动的<b>总步数小于等于通缉值，</b>该玩家会跳过移动步骤，直接入狱并结束回合。总步数等于骰子点数加上加点效果。
+							根据入狱时的通缉值，执行以下效果：
+							<ul>
+								<li><b>轻罪（1~2<img src='/image/Rich/star1.png' style='width: 18px; height:22px;padding-bottom:4px'>）</b>
+								与标准版游戏的入狱规则几乎一样。</li>
+								<li><b>中罪（3~4<img src='/image/Rich/star1.png' style='width: 18px; height:22px;padding-bottom:4px'>）</b>
+								入狱时失去<b>载具</b>以及除<b>出狱卡</b>之外的随机2张手牌。</li>
+								<li><b>重罪（5~6<img src='/image/Rich/star1.png' style='width: 18px; height:22px;padding-bottom:4px'>）</b>
+								入狱时失去<b>载具</b>以及所有手牌。在入狱期间不得提前（不到3回合）保释。</li>
+							</ul>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在<b>监狱</b>的玩家不能使用绝大部分的牌（但仍可以丢弃）。
+							<b class="richtext">与之前的规则不同，其他玩家到达在监狱内的玩家的地产不需要支付过路费（房租）。</b>在<b>监狱</b>的玩家回合开始时，可以选择一项：
+							<ul>
+								<li><b>保释：</b><b class="richtext">支付$500×当前通缉值的保释费出狱并清空通缉值</b>，之后立即正常进行回合。若现金不够支付保释费，不能选择该选项。
+								<b class="richtext">重罪的玩家在入狱的3回合之前该选项会改为等待，效果为立即结束回合。</b></li>
+								<li><b>越狱：</b><b class="richtext">掷一次骰子，若点数为6，则视为越狱成功，否则视为越狱失败。越狱成功后立即进行正常的回合，且获得1点通缉值。越狱失败则跳过该回合。</b>
+								当第3次越狱依然失败，则支付<b class="richtext">$500×当前通缉值</b>的保释费强制出狱<b class="richtext">并清空通缉值</b>，之后立即正常进行回合。</li>
+							</ul>
+							</td>
+							<td>
+								<div style="width:200px;height:200px;background-image:url('/image/Rich/jail.png');background-size:cover">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4>&#x1F3A2;&nbsp;游乐园</h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;经过该地块会获得1张卡牌，停留该地块会获得2张卡牌并失去1点通缉值。若玩家的手牌数量达到上限（5张）则不会获得。
+								若玩家有4张手牌，停留该地块只会获得1张卡牌。每个地图的游乐园名称和配图会不同，但效果是一样的。
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>
