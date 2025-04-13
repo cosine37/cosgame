@@ -8,6 +8,7 @@ public class Buff {
 	final int ROLLADD = 1;
 	final int ATTACKBOOST = 2;
 	final int AIMBOOST = 3;
+	final int FREEROUND = 4;
 	
 	List<Integer> buffs;
 	
@@ -57,6 +58,15 @@ public class Buff {
 	public void cleargetAimBoostBoost() {
 		buffs.set(AIMBOOST,-1);
 	}
+	public int getFreeRound() {
+		return buffs.get(FREEROUND);
+	}
+	public void setFreeRound(int x) {
+		buffs.set(FREEROUND, x);
+	}
+	public void clearFreeRound() {
+		buffs.set(FREEROUND, -1);
+	}
 	public void minusBoost(int c) {
 		int x = buffs.get(c);
 		x--;
@@ -72,10 +82,14 @@ public class Buff {
 	public void minusAimBoost() {
 		minusBoost(AIMBOOST);
 	}
+	public void minusFreeRound() {
+		minusBoost(FREEROUND);
+	}
 	
 	public void turnEndMinus() {
 		minusAttackBoost();
 		minusAimBoost();
+		minusFreeRound();
 	}
 	
 	public List<Integer> getBuffs() {

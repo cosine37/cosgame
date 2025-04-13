@@ -170,7 +170,7 @@ public class MapBuilder {
 				p.getDetail().setDesc("可移动至其他GO车站。经过可以触发被动效果的地点则会触发被动效果（如金融区），到达后无法购买且不需要支付路费。"); 
 				p.getDetail().setDesc2("");
 			} else if (i == 1) {
-				p = new Estate(i, "Humber Bay", 1, 600,300,5,new ArrayList<>(Arrays.asList(20,300,300,900,1600,2500)));
+				p = new Estate(i, "Humber Bay", 1, 600,300,5,new ArrayList<>(Arrays.asList(20,100,300,900,1600,2500)));
 				p.setImg("gta/HumberBay");
 				p.setFont("tyh", 16);
 				p.createDetail();
@@ -339,9 +339,12 @@ public class MapBuilder {
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
 		if (settings.getUseGTA() == 1) {
-			map.setFateIds(new ArrayList<>(Arrays.asList(1,2,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
-					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10201,10202,10203,10204,10205)));
-			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
+			/*
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10201,10202,10203,10204,10205)));
+					*/
+			map.setFateIds(new ArrayList<>(Arrays.asList(10013,10014,10015,10016)));
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
 					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14)));
 		}

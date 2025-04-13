@@ -25,6 +25,7 @@ public class BoardEntity {
 	int endCondition;
 	
 	boolean inJail;
+	boolean goingToJail;
 	
 	List<PlayerEntity> players;
 	List<String> myOptions;
@@ -198,6 +199,12 @@ public class BoardEntity {
 	}
 	public void setMyBuffs(List<Integer> myBuffs) {
 		this.myBuffs = myBuffs;
+	}
+	public boolean isGoingToJail() {
+		return goingToJail;
+	}
+	public void setGoingToJail(boolean goingToJail) {
+		this.goingToJail = goingToJail;
 	}
 
 }

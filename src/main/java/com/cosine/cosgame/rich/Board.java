@@ -159,6 +159,7 @@ public class Board {
 				entity.setPhase(p.getPhase());
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
+				entity.setGoingToJail(p.isGoingToJail());
 				if (map.getPlace(p.getPlaceIndex()) != null) {
 					if (p.isInJail()) {
 						InJail inJail = new InJail(0,"监狱");

@@ -197,6 +197,12 @@ public class Player {
 				} else {
 					avatarEntity.getAvatarBlockStyle().put("margin-left", "-14px");
 				}
+			} else if (n == 5) {
+				if (index == board.getMap().getPlace(placeIndex).getPlayersOn().get(0).getIndex()) {
+					avatarEntity.getAvatarBlockStyle().put("margin-left", "0px");
+				} else {
+					avatarEntity.getAvatarBlockStyle().put("margin-left", "-21px");
+				}
 			}
 			entity.setAvatar(avatarEntity);
 			entity.setAvatarOrigin(avatar.toAvatarEntity(null));
@@ -297,6 +303,8 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			
+			//hand.add(new CardRefuseRent());
 		}
 	}
 	
@@ -327,6 +335,24 @@ public class Player {
 		
 		Place place = board.getMap().getPlaceAfter(placeIndex,totalSteps);
 		if (place == null) return ""; else return place.getName();
+	}
+	
+	public boolean isGoingToJail() {
+		if (board.getSettings().getUseGTA() != 1) return false;
+		int temp = rollDisplay;
+		int totalSteps = 0;
+		while (temp>0) {
+			totalSteps = totalSteps+temp%10;
+			temp = temp/10;
+		}
+		if (buff.getRollAdd() > 0) {
+			totalSteps = totalSteps+buff.getRollAdd();
+		}
+		if (totalSteps <= star && star>0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public String myCurrentPlaceName() {
@@ -750,15 +776,14 @@ public class Player {
 				totalSteps = totalSteps+temp%10;
 				temp = temp/10;
 			}
-			
 			if (buff.getRollAdd() > 0) {
 				totalSteps = totalSteps+buff.getRollAdd();
-				buff.clearRollAdd();
+				//buff.clearRollAdd();
 			}
 			
 			if (board.getSettings().getUseGTA() == 1) { // GTA add steps and go to jail handles
 				
-				if (totalSteps <= star && star>0) {
+				if (isGoingToJail()) {
 					goToJail();
 					
 					if (inJail) {
@@ -780,6 +805,10 @@ public class Player {
 			phase = Consts.PHASE_RESOLVE;
 			
 			moveToPlace(t);
+			
+			if (buff.getRollAdd() > 0) {
+				buff.clearRollAdd();
+			}
 			
 			if (board.getMap().getPlace(t).getType() == Consts.PLACE_STARTPOINT || board.getMap().getPlace(t).getType() == Consts.PLACE_CARDGAINER) {
 				board.setBroadcastImg(board.getMap().getPlace(t).getDetail().getImg());

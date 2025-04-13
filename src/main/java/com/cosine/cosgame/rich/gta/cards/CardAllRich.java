@@ -12,7 +12,7 @@ public class CardAllRich extends Card {
 		id = 48;
 		name = "均富卡";
 		desc = "平分所有人的现金。消耗。";
-		rarity = 2;
+		rarity = 3;
 	}
 	
 	public void play(int rawOptions) {

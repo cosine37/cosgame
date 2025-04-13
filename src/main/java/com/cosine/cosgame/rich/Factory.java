@@ -61,9 +61,9 @@ public class Factory {
 			c = new CardRumor();
 		} else if (id == 22) {
 			c = new CardLittleEssay();
-		}
-		
-		else if (id == 24) {
+		} else if (id == 23) {
+			c = new CardRefuseRent();
+		} else if (id == 24) {
 			c = new CardDividend();
 		} else if (id == 25) {
 			c = new CardHealthInsurance();
@@ -122,6 +122,8 @@ public class Factory {
 			c = new CardSuccessBook();
 		} else if (id == 9001) {
 			c = new CardGift();
+		} else if (id == 9002) {
+			c = new CardBlindBox();
 		}
 		
 		else if (id == 20001) {
@@ -289,7 +291,15 @@ public class Factory {
 			return new Fate(id,Consts.FATE_ADD,211001,"参与魔术表演获得出场费$1001，但是表演帽子戏法时被兔子咬伤，失去1点生命值。","p参与魔术表演获得出场费$1001，但是表演帽子戏法时被兔子咬伤，p失去1点生命值");
 		} else if (id == 10012) {
 			return new Fate(id,Consts.FATE_ADD,220250,"参与地狱辣挑战获得冠军，奖励$250，但赛后一泻千里，失去2点生命值。","p参与地狱辣挑战获得冠军，奖励$250，但p赛后一泻千里，失去2点生命值");
-		} 
+		} else if (id == 10013) {
+			return new Fate(id,Consts.FATE_HPSTAR,31,"对着警察吐痰，增加1点通缉值。","p因为对着警察吐痰，增加了1点通缉值");
+		} else if (id == 10014) {
+			return new Fate(id,Consts.FATE_HPSTAR,3122,"凌空抽射时没踢中球却踢伤自己的膝盖，失去2点生命值，但裁判却认为是假摔，出示红牌，增加1点通缉值。","p凌空抽射时没踢中球却踢伤自己的膝盖，失去2点生命值，但裁判却认为是假摔，出示红牌，p增加1点通缉值");
+		} else if (id == 10015) {
+			return new Fate(id,Consts.FATE_CARDHPSTAR,900223,"购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，失去3点生命值并免费获得盲盒。","p购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，p失去3点生命值并免费获得盲盒");
+		} else if (id == 10016) {
+			return new Fate(id,Consts.FATE_ADD,330999,"你兄弟带你晚没有晚过的船新版本的真人版，你觉得是兄弟就要来砍他，一刀下去获得$999和3点通缉值。","p的兄弟带p晚没有晚过的船新版本的真人版，p觉得是兄弟就要来砍他，一刀下去获得$999和3点通缉值");
+		}
 		
 		else if (id == 10201) {
 			return new Fate(id,Consts.FATE_CARD,20001,"参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃。","p参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃");

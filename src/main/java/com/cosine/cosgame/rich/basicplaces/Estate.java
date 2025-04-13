@@ -237,6 +237,10 @@ public class Estate extends Place{
 					return owner.getName() + "在住院，所以你不需要支付租金";
 				}
 			}
+			// refuse card related
+			if (player.getBuff().getFreeRound()>0) {
+				return "你拥有免租效果，所以你不需要支付租金";
+			}
 			
 			if (area == Consts.AREA_UTILITY) {
 				return "你掷了一个" + board.getLastRolled() + "，需要支付$" + getRent() + "给" + owner.getName();
@@ -268,6 +272,11 @@ public class Estate extends Place{
 					ans.add("真遗憾呐（笑）");
 					flag = false;
 				}
+			}
+			// refuse card related
+			if (player.getBuff().getFreeRound()>0) {
+				ans.add("漂亮！");
+				flag = false;
 			}
 			if (flag) {
 				ans.add("支付租金");
@@ -322,7 +331,14 @@ public class Estate extends Place{
 					board.setBroadcastMsg(owner.getName() + "在住院，所以" + p.getName() + "无需支付租金。");
 				}
 			}
-			
+			// refuse card related
+			if (p.getBuff().getFreeRound()>0) {
+				board.getLogger().log(p.getName() + " 拥有免租效果，所以无需支付租金");
+					
+				board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+				board.setBroadcastMsg(p.getName() + "拥有免租效果，所以无需支付租金。");
+				flag = false;
+			}
 			if (flag) {
 				int paidRent = getRent();
 				if (area == Consts.AREA_UTILITY) {

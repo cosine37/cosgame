@@ -14,9 +14,9 @@
 	</div>
 	<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace.name}}，你的回合开始，请选择一项：
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-		<!-- 
+		
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		 -->
+		
 		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
 		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
 			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>
@@ -25,7 +25,9 @@
 
 	<div ng-show="phase == MOVE">你掷了{{gamedata.lastRolledDisplay}}，
 		<span ng-show="gamedata.myBuffs[1]>-1">还会额外移动{{gamedata.myBuffs[1]}}步，</span>
-		将会移动到{{gamedata.myNextPlace}}。请选择一项：
+		<span ng-show="gamedata.goingToJail == false">将会移动到{{gamedata.myNextPlace}}。</span>
+		<span ng-show="gamedata.goingToJail">将会被抓进监狱。</span>
+		请选择一项：
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		
 		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
