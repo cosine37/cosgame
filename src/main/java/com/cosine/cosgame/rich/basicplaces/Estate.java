@@ -408,6 +408,14 @@ public class Estate extends Place{
 			
 			board.setBroadcastImg(oss.get(x).getImg());
 			board.setBroadcastMsg(p.getName() + "移动到了" + oss.get(x).getName());
+			
+			// add se
+			String input = oss.get(x).getImg(); 
+			int slashIndex = input.indexOf('/');
+			String mapName = (slashIndex != -1) ? input.substring(0, slashIndex) : input;
+			String seSrc = "/sound/Rich/" + mapName + "/" + newId + ".mp3";
+			board.addSes(seSrc);
+			board.setSesPlayer(p.getIndex());
 		}
 	}
 	

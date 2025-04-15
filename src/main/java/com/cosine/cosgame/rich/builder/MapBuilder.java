@@ -19,9 +19,135 @@ public class MapBuilder {
 			return genQingguo(settings);
 		} if (mapId == 1) {
 			return genGTA(settings);
-		} else {
+		} if (mapId == 2) {
+			return genShanghai(settings);
+		} 
+		
+		else {
 			return new Map();
 		}
+	}
+	
+	public static Map genShanghai(Settings settings) {
+		final int height = 11;
+		final int width = 11;
+		final int n = (height+width-2)*2;
+		int i;
+		Map map = new Map();
+		map.setName("上海滩");
+		map.setNameFont("jnk");
+		map.setHeight(height);
+		map.setWidth(width);
+		map.setNumDice(1);
+		map.setJailIndex(10);
+		map.setJailZone(1);
+		map.setBailCost(500);
+		map.setMapZoom("0.95");
+		map.setCenterZoom("1.05");
+		map.setCenterHeight("602px");
+		map.setCenterWidth("1033px");
+		map.setLogHeight("880px");
+		//map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","olive","orangered","darkslategrey","darkviolet","darkgreen","DarkCyan","maroon","navy")));
+		map.setAreaNames(new ArrayList<>(Arrays.asList("","黄浦区","徐汇区","长宁区","普陀区","静安区","虹口区","杨浦区","浦东新区")));
+		map.setBgms(new ArrayList<>(Arrays.asList("gta1","gta2","gta3","gta4","gta5","gta6","gta7","gta8","gta9","gta10","gta11")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		map.setUtilityName("餐饮");
+		map.setStationName("地铁站");
+		if (settings.getUseGTA() == 1) {
+			map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","ward")));
+			map.setHospitalIndex(30);
+			map.setWardZone(3);
+		}
+		
+		for (i=0;i<n;i++) {
+			Place p = new Empty(i, "地点"+i);
+			p.setFont("jnk", 22);
+			
+			if (i == 0) {
+				p = new StartPoint(i, "外  滩");
+				p.setFont("jnk", 24);
+				p.setImg("shanghai/waitan2");
+				p.setDesc("经过或停留此处领取$2000");
+				p.setLandMsg("将会获得$2000");
+				p.createDetail();
+				p.getDetail().setTitle("外滩");
+				p.getDetail().setImg("shanghai/waitan");
+				p.getDetail().setDesc("经过或停留此处获得$2000。");
+				p.getDetail().setDesc2("外滩位于上海市黄浦区的黄浦江畔，即外黄浦滩，为中国历史文化街区。全长1.5千米，南起延安东路，北至苏州河上的外白渡桥，东面即黄浦江，西面是旧上海金融、外贸机构的集中地。上海辟为商埠以后，外国的银行、商行、总会、报社开始在此云集，外滩成为全国乃至远东的金融中心。");
+			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 38 || i == 13 || i == 27) {
+				p = new PersonalEvent(i, "见闻");
+				p.setImg("fate");
+				p.setFont("jnk", 24);
+				p.createDetail();
+				if (settings.getUseGTA() == 1) {
+					p.getDetail().setDesc2("冷知识：点击确定之后见闻才会生效。未来有些卡牌可以改变当前的见闻。");
+				}
+			} else if (i == 12) {
+				p = new Estate(i, "小南国", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("jnk", 18);
+				p.setImg("eatery");
+				p.createDetail();
+				p.getDetail().setImg("shanghai/xiaonanguo");
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
+			} else if (i == 28) {
+				p = new Estate(i, "杏花楼", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("jnk", 18);
+				p.setImg("eatery");
+				p.createDetail();
+				p.getDetail().setImg("shanghai/xinghualou");
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
+			}
+			
+			else if (i == 5) {
+				p = new Estate(i, "大木桥路", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("heiti", 18);
+				p.setImg("shanghai/subway");
+				p.createDetail();
+				p.getDetail().setTitle("大木桥路地铁站");
+				p.getDetail().setImg("shanghai/damuqiaolu");
+				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+			} else if (i == 15) {
+				p = new Estate(i, "中山公园", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("heiti", 18);
+				p.setImg("shanghai/subway");
+				p.createDetail();
+				p.getDetail().setTitle("中山公园地铁站");
+				p.getDetail().setImg("shanghai/zhongshangongyuan");
+				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+			} else if (i == 25) {
+				p = new Estate(i, "上海火车站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("heiti", 18);
+				p.setImg("shanghai/subway");
+				p.createDetail();
+				p.getDetail().setTitle("上海火车站地铁站");
+				p.getDetail().setImg("shanghai/shanghaizhan");
+				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+			} else if (i == 35) {
+				p = new Estate(i, "世纪大道", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("heiti", 18);
+				p.setImg("shanghai/subway");
+				p.createDetail();
+				p.getDetail().setTitle("世纪大道地铁站");
+				p.getDetail().setImg("shanghai/shijidadao");
+				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+			} else if (i == 1) {
+				p = new Estate(i, "人民广场", 1, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("shanghai/renmingguangchang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("人民广场在上海地区开埠前是一片水田。清道光二十八年（1848年），英租界扩张至此，修护城河，筑泥城，称为“泥城浜”。清同治二年（1863年），英领事馆在此建有“上海跑马厅”，要求“华人不得入内”。1954年5月31日，跑马总会大楼改为上海图书馆。1994年10月1日，上海人民广场综合改造工程竣工。广场中央有320平方米的圆形喷水池，广场北侧是上海市人民政府所在地，西北侧为上海大剧院，东北侧为上海城市规划展示馆，南侧为上海博物馆。");
+			}
+			
+			map.addPlace(p);
+		}
+		return map;
 	}
 	
 	public static Map genGTA(Settings settings) {
@@ -274,13 +400,6 @@ public class MapBuilder {
 				p.createDetail();
 				p.getDetail().setTitle("Pacific Mall·太古");
 				p.getDetail().setDesc("");
-			} else if (i == 26) {
-				p = new Estate(i, "Pacific Mall", 6, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
-				p.setImg("gta/PacificMall");
-				p.setFont("tyh", 16);
-				p.createDetail();
-				p.getDetail().setTitle("Pacific Mall·太古");
-				p.getDetail().setDesc("");
 			} else if (i == 27) {
 				p = new Estate(i, "Unionville", 6, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
 				p.setImg("gta/Unionville");
@@ -339,11 +458,11 @@ public class MapBuilder {
 		}
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
 		if (settings.getUseGTA() == 1) {
-			/*
+			
 			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
-					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10201,10202,10203,10204,10205)));
-					*/
-			map.setFateIds(new ArrayList<>(Arrays.asList(10013,10014,10015,10016)));
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10201,10202,10203,10204,10205)));
+					
+			//map.setFateIds(new ArrayList<>(Arrays.asList(10013,10014,10015,10016)));
 			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
 					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14)));

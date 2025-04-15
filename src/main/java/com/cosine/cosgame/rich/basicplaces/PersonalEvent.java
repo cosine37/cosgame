@@ -62,6 +62,7 @@ public class PersonalEvent extends Place {
 		// add se
 		String seSrc = "/sound/Rich/fate/" + x + ".mp3";
 		board.addSes(seSrc);
+		board.setSesPlayer(Consts.SES_ALLPLAYERS);
 	}
 	
 	public String getLandMsg(Player player) {

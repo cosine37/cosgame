@@ -34,6 +34,7 @@ public class Board {
 	protected List<String> playerNames;
 	protected List<Player> players;
 	protected List<String> ses;
+	protected int sesPlayer;
 	
 	protected Settings settings;
 	protected Logger logger;
@@ -57,6 +58,7 @@ public class Board {
 		doc.append("broadcastImg", broadcastImg);
 		doc.append("logs", logger.getLogs());
 		doc.append("ses", ses);
+		doc.append("sesPlayer", sesPlayer);
 		String mapName = "-";
 		if (map != null) mapName = map.getName();
 		doc.append("mapName", mapName);
@@ -83,6 +85,7 @@ public class Board {
 		settings = new Settings(settingsList);
 		playerNames = (List<String>)doc.get("playerNames");
 		ses = (List<String>) doc.get("ses");
+		sesPlayer = doc.getInteger("sesPlayer", -1);
 		List<String> logs = (List<String>) doc.get("logs");
 		logger = new Logger(logs);
 		List<String> playerNames = (List<String>) doc.get("playerNames");
@@ -118,7 +121,6 @@ public class Board {
 		entity.setBroadcastImg(broadcastImg);
 		entity.setBroadcastMsg(broadcastMsg);
 		entity.setEndCondition(settings.getEndCondition());
-		entity.setSes(ses);
 		
 		String lastRolledDisplay = "";
 		if (lastRolled<10) {
@@ -160,6 +162,14 @@ public class Board {
 				entity.setMyOptions(p.getOptions());
 				entity.setMyNextPlace(p.myNextPlaceName());
 				entity.setGoingToJail(p.isGoingToJail());
+				
+				if (sesPlayer == Consts.SES_ALLPLAYERS || sesPlayer == i) {
+					entity.setSes(ses);
+				} else {
+					entity.setSes(new ArrayList<>());
+				}
+				
+				
 				if (map.getPlace(p.getPlaceIndex()) != null) {
 					if (p.isInJail()) {
 						InJail inJail = new InJail(0,"监狱");
@@ -366,6 +376,7 @@ public class Board {
 	
 	public void buttonPressUDB(String username, int option) {
 		ses = new ArrayList<>();
+		sesPlayer = -1;
 		Player p = getPlayerByName(username);
 		if (p == null) return;
 		if (p.getPhase() == Consts.PHASE_OFFTURN) {
@@ -400,6 +411,7 @@ public class Board {
 		updateDB("broadcastImg",broadcastImg);
 		updateDB("logs", logger.getLogs());
 		updateDB("ses", ses);
+		updateDB("sesPlayer", sesPlayer);
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -609,5 +621,11 @@ public class Board {
 	}
 	public void setSes(List<String> ses) {
 		this.ses = ses;
+	}
+	public int getSesPlayer() {
+		return sesPlayer;
+	}
+	public void setSesPlayer(int sesPlayer) {
+		this.sesPlayer = sesPlayer;
 	}
 }

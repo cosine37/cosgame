@@ -69,6 +69,9 @@ public class Consts {
 	public static final int FATE_CARDHPSTAR = 12;
 	public static final int FATE_VEHICLEHPSTAR = 13;
 	
+	// ses
+	public static final int SES_ALLPLAYERS = 999;
+	
 	
 	// settings related
 	public static final int SETTINGS_MODE = 0;

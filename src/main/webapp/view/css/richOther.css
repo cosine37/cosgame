@@ -36,6 +36,10 @@
      font-family: 'jnk'; 
      src:url('/font/jnk.woff') format('woff')
 }
+@font-face{
+     font-family: 'heiti'; 
+     src:url('/font/heiti.woff') format('woff')
+}
 
 button{
 	outline: none;
@@ -196,7 +200,7 @@ button:disabled{
 }
 
 .map-graph{
-	width: 500px;
+	width: 400px;
 	height: 300px;
 	background-size:cover;
 }
