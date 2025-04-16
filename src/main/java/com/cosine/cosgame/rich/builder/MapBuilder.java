@@ -147,6 +147,18 @@ public class MapBuilder {
 			
 			map.addPlace(p);
 		}
+		
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
+		if (settings.getUseGTA() == 1) {
+			/*
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10201,10202,10203,10204,10205)));
+			*/	
+			map.setFateIds(new ArrayList<>(Arrays.asList(10015,10017,10018,10019)));
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
+					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)));
+		}
 		return map;
 	}
 	
@@ -336,63 +348,63 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Churchville·丘奇维尔");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("丘奇维尔（Churchville）名称来自Amaziah Church于1815年在此建立的面粉厂，在面粉厂周围形成了小的村路。后此处陆续建造了屠宰场、皮革厂、学校、教堂等。1974年并入宾顿市（Brampton）。2022年，一场冰雹引发的洪水摧毁了此处50多幢房屋。");
 			} else if (i == 13) {
 				p = new Estate(i, "Heart Lake", 3, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
 				p.setImg("gta/HeartLake");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Heart Lake·心湖");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("心湖（Heart Lake）是一个锅穴湖，一般认为是由埋藏在冰水沉积层内砂砾中的死冰块融化后引起塌陷而造成的。因湖形似爱心而得名，周边区域也以该湖为名。每年当地的小学生都会在湖周围植树。");
 			} else if (i == 14) {
-				p = new Estate(i, "Woodhill", 3, 1200,500,5,new ArrayList<>(Arrays.asList(80,400,1000,3000,4500,6000)));
-				p.setImg("gta/Woodhill");
+				p = new Estate(i, "Bramalea", 3, 1200,500,5,new ArrayList<>(Arrays.asList(80,400,1000,3000,4500,6000)));
+				p.setImg("gta/Bramalea");
 				p.setFont("tyh", 16);
 				p.createDetail();
-				p.getDetail().setTitle("Woodhill·伍德希尔");
-				p.getDetail().setDesc("");
+				p.getDetail().setTitle("Bramalea·布兰马里");
+				p.getDetail().setDesc("布兰马里（Bramalea）是宾顿市（Brampton）的新城，由开发商Bramalea Consolidated Developments建造，也是该开发商建造的第一个卫星城。");
 			} else if (i == 16) {
 				p = new Estate(i, "Woodbridge", 4, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
 				p.setImg("gta/Woodbridge");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Woodbridge·木桥");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该社区坐落旺市（Vaughan）的西南，在20世纪80年代开发，西部拥有大量的森林绿地以及高尔夫俱乐部，而东南角是400高速和407高速的交汇点，曾是地产最富裕的地区。近年来，因该区域枪击案和爆炸案频发，导致该区域的房价不复往日之荣光。");
 			} else if (i == 18) {
 				p = new Estate(i, "VMC", 4, 2000,1500,5,new ArrayList<>(Arrays.asList(160,800,2200,6000,8000,10000)));
 				p.setImg("gta/VMC");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("VMC·工人新村");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("VMC，全称Vaughan Metropolitan Center，位于旺市（Vaughan）南侧，是旺市的新兴社区，也是旺市的研发中心和交通枢纽。因房价实惠，该区域超过一半的居民是中青年移民，大部分是尼亚加拉大学（Niagara University）和约克大学（York University）的在读学生以及教职工，还有从事包括商业、服务和制造业等各种行业的工人，所以此处也拥有工人新村的外号。");
 			} else if (i == 19) {
 				p = new Estate(i, "Concord", 4, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
 				p.setImg("gta/Concord");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Concord·康科德");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该区域是旺市（Vaughan）的工业区，由1854年建立的邮政小镇发展而来。如今此处拥有加拿大国家铁路的编组站MacMillan Yard以及好多大的工厂、仓库、车行和汽车修理厂。2004年奥莱Vaughan Mills开张营业。目前该地仍处于大发展时期。");
 			} else if (i == 21) {
 				p = new Estate(i, "Rouge Woods", 5, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
 				p.setImg("gta/RougeWoods");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Rouge Woods·红河谷");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该社区因流经此处的红河（Rouge River）而得名，位于列治文山（Richmond Hill）中心。上世纪90年代起进行大规模开发，如今仍处于开发状态。该区域内有数量众多的公园、足球场、网球场、棒球场以及室内滑冰场等体育场馆。");
 			} else if (i == 23) {
 				p = new Estate(i, "Bayview Hill", 5, 3000,2000,5,new ArrayList<>(Arrays.asList(260,1300,3900,9000,11000,12750)));
 				p.setImg("gta/BayviewHill");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Bayview HL·富豪山庄");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("Bayview Hill社区建于上世纪90年代初，为豪宅区域，居民大多为移民且接受过高等教育，且该区域有安省高中常年排名前十的名校Bayview Secondary School，所以该区域拥有富豪山庄的雅称。");
 			} else if (i == 24) {
 				p = new Estate(i, "Times Square", 5, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
 				p.setImg("gta/TimesSquare");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Times SQR·时代广场");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("列治文山（Richmond Hill）的时代广场（Times Square）是华人社区的美食广场和综合购物中心。90年代初，该地区迎来了大量香港投资移民，所以这一带就有了“时代广场”, “黄金商场”等有名的中国人购物、饮食中心。");
 			} else if (i == 26) {
 				p = new Estate(i, "Pacific Mall", 6, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
 				p.setImg("gta/PacificMall");
@@ -414,7 +426,7 @@ public class MapBuilder {
 				p.createDetail();
 				p.getDetail().setTitle("Vinegar HL·维内加山");
 				p.getDetail().setDesc("");
-			}  else if (i == 31) {
+			} else if (i == 31) {
 				p = new Estate(i, "Midland CTR", 7, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
 				p.setImg("gta/MidlandCenter");
 				p.setFont("tyh", 16);
@@ -459,13 +471,14 @@ public class MapBuilder {
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
 		if (settings.getUseGTA() == 1) {
 			
-			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
-					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10201,10202,10203,10204,10205)));
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,202,203,204,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019,10201,10202,10203,10204,10205)));
 					
 			//map.setFateIds(new ArrayList<>(Arrays.asList(10013,10014,10015,10016)));
 			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
 					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
-			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)));
+			
 		}
 		
 		return map;

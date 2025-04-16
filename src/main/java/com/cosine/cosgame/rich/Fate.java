@@ -1,6 +1,8 @@
 package com.cosine.cosgame.rich;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.cosine.cosgame.rich.basicplaces.Estate;
 
@@ -181,7 +183,34 @@ public class Fate {
 				hpStarHandle(p, raw1);
 				hpStarHandle(p, raw2);
 			}
+		} else if (type == Consts.FATE_RECEIVEEVERYCARD) {
+			List<Card> cards = new ArrayList<>();
+			for (i=0;i<p.getBoard().getPlayers().size();i++) {
+				Player tp = p.getBoard().getPlayers().get(i);
+				if (tp.getIndex() != p.getIndex()) {
+					Card c = tp.sendRandom();
+					if (c != null) {
+						p.getBoard().getLogger().log(tp.getName() + " 送给 " + p.getName() + " 一张 " + c.getName());
+						cards.add(c);
+					}
+				}
+			}
+			for (i=0;i<cards.size();i++) {
+				p.addCard(cards.get(i));
+			}
+		} else if (type == Consts.FATE_LOSECARDHPSTAR) {
+			int raw = value%10000;
+			int x = value/10000;
+			hpStarHandle(p,raw);
 			
+			for (i=0;i<x;i++) {
+				Card c = p.sendRandom();
+				if (c != null) {
+					p.getBoard().getLogger().log(p.getName() + " 在慌乱中失去了 " + c.getName());
+				}
+			}
+		} else if (type == Consts.FATE_LOSEHAND) {
+			p.setHand(new ArrayList<>());
 		}
 	}
 	public int getId() {

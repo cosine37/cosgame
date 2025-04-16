@@ -296,10 +296,16 @@ public class Factory {
 		} else if (id == 10014) {
 			return new Fate(id,Consts.FATE_HPSTAR,3122,"凌空抽射时没踢中球却踢伤自己的膝盖，失去2点生命值，但裁判却认为是假摔，出示红牌，增加1点通缉值。","p凌空抽射时没踢中球却踢伤自己的膝盖，失去2点生命值，但裁判却认为是假摔，出示红牌，p增加1点通缉值");
 		} else if (id == 10015) {
-			return new Fate(id,Consts.FATE_CARDHPSTAR,900223,"购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，失去3点生命值并免费获得盲盒。","p购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，p失去3点生命值并免费获得盲盒");
+			return new Fate(id,Consts.FATE_CARDHPSTAR,900222,"购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，失去2点生命值并免费获得盲盒。","p购买盲盒时要求路人帮忙砍一刀，路人表示没听说过这么奇怪的要求但照做了，p失去2点生命值并免费获得盲盒");
 		} else if (id == 10016) {
 			return new Fate(id,Consts.FATE_ADD,330999,"你兄弟带你晚没有晚过的船新版本的真人版，你觉得是兄弟就要来砍他，一刀下去获得$999和3点通缉值。","p的兄弟带p晚没有晚过的船新版本的真人版，p觉得是兄弟就要来砍他，一刀下去获得$999和3点通缉值");
-		}
+		} else if (id == 10017) {
+			return new Fate(id,Consts.FATE_RECEIVEEVERYCARD,0,"过生日，每名其他玩家交给你一张随机手牌作为礼物。","p过生日，每名其他玩家交给p一张随机手牌作为礼物");
+		} else if (id == 10018) {
+			return new Fate(id,Consts.FATE_LOSECARDHPSTAR,10023,"被吸血老太婆攻击，失去3点生命值，逃跑时在慌乱中丢失一张手牌。","p被吸血老太婆攻击，失去3点生命值");
+		} else if (id == 10019) {
+			return new Fate(id,Consts.FATE_LOSEHAND,0,"背包被老鹰抓走，失去所有手牌。","p的背包被老鹰抓走，失去所有手牌");
+		} 
 		
 		else if (id == 10201) {
 			return new Fate(id,Consts.FATE_CARD,20001,"参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃。","p参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃");
@@ -381,7 +387,37 @@ public class Factory {
 			v = new Vehicle(id, "哈雷Street Rod");
 		} else if (id == 14) {
 			v = new Vehicle(id, "大众桑塔纳");
-		} else if (id == 999) {
+		} else if (id == 15) {
+			v = new Vehicle(id, "福特F-150");
+		} else if (id == 16) {
+			v = new Vehicle(id, "奔驰AMG S 63");
+		} else if (id == 17) {
+			v = new Vehicle(id, "本田思域");
+		} else if (id == 18) {
+			v = new Vehicle(id, "现代伊兰特");
+		} else if (id == 19) {
+			v = new Vehicle(id, "尼桑Rogue");
+		} else if (id == 20) {
+			v = new Vehicle(id, "雪佛兰索罗德");
+		} else if (id == 21) {
+			v = new Vehicle(id, "一汽夏利");
+		} else if (id == 22) {
+			v = new Vehicle(id, "奇瑞QQ");
+		} else if (id == 23) {
+			v = new Vehicle(id, "垃圾车");
+		} else if (id == 24) {
+			v = new Vehicle(id, "洗冰车");
+		} else if (id == 25) {
+			v = new Vehicle(id, "马自达CX-5");
+		} else if (id == 26) {
+			v = new Vehicle(id, "凯旋TR6");
+		} else if (id == 27) {
+			v = new Vehicle(id, "BRT");
+		}
+		
+		
+		
+		else if (id == 999) {
 			v = new Vehicle(id, "共享单车");
 		}
 		return v;

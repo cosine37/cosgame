@@ -303,7 +303,7 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
-			
+			//hand.add(new CardGTA());
 			//hand.add(new CardRefuseRent());
 		}
 	}
@@ -536,6 +536,17 @@ public class Player {
 	
 	public void discardRandom(int num) {
 		discardRandom(num,-1);
+	}
+	
+	public Card sendRandom() {
+		if (hand.size()>0) {
+			Random rand = new Random();
+			int x = rand.nextInt(hand.size());
+			Card c = hand.remove(x);
+			return c;
+		} else {
+			return null;
+		}
 	}
 	
 	public List<String> getOptions(){

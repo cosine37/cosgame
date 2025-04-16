@@ -68,6 +68,9 @@ public class Consts {
 	public static final int FATE_CARDLOSE = 11;
 	public static final int FATE_CARDHPSTAR = 12;
 	public static final int FATE_VEHICLEHPSTAR = 13;
+	public static final int FATE_RECEIVEEVERYCARD = 14;
+	public static final int FATE_LOSECARDHPSTAR = 15;
+	public static final int FATE_LOSEHAND = 16;
 	
 	// ses
 	public static final int SES_ALLPLAYERS = 999;
