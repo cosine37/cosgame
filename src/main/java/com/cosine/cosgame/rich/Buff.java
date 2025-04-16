@@ -9,6 +9,7 @@ public class Buff {
 	final int ATTACKBOOST = 2;
 	final int AIMBOOST = 3;
 	final int FREEROUND = 4;
+	final int TELEPORT = 5;
 	
 	List<Integer> buffs;
 	
@@ -67,6 +68,16 @@ public class Buff {
 	public void clearFreeRound() {
 		buffs.set(FREEROUND, -1);
 	}
+	public int getTeleport() {
+		return buffs.get(TELEPORT);
+	}
+	public void setTeleport(int x) {
+		buffs.set(TELEPORT, x);
+	}
+	public void clearTeleport() {
+		buffs.set(TELEPORT, -1);
+	}
+	
 	public void minusBoost(int c) {
 		int x = buffs.get(c);
 		x--;

@@ -334,7 +334,7 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Square One·一号广场");
-				p.getDetail().setDesc("该地原为农地，后落入商人麦拉夫连（Bruce McLaughlin）手中。1968年时，多伦多西侧的几个小镇合并成密西沙加（Mississauga）镇，麦拉夫连随即准备在该地大兴土木。1969年原密西沙加镇政府被火灾焚毁，于是麦拉夫连提供在同一片地皮上兴建新的镇政府，并在新镇政府边上兴建大型商场。一号广场于1969年动工，1973年10月3日对外开放，当时为全国最大的商场。如今广场附近拥有密西沙加艺术中心和密西沙加中央图书馆等设施，同时亦有一座巴士总站。");
+				p.getDetail().setDesc("该地原为农地，后落入商人麦拉夫连（Bruce McLaughlin）手中。1968年时，多伦多西侧的几个小镇合并成密西沙加（Mississauga）镇，麦拉夫连随即准备在该地大兴土木。1969年原密西沙加镇政府被火灾焚毁，于是麦拉夫连提供在同一片地皮上兴建新的镇政府，并在新镇政府边上兴建大型商场。一号广场于1969年动工，1973年10月3日对外开放，当时为全国最大的商场（今第二大）。广场附近拥有密西沙加艺术中心和密西沙加中央图书馆等设施，同时亦有一座巴士总站。");
 			} else if (i == 9) {
 				p = new Estate(i, "Erin Mills", 2, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
 				p.setImg("gta/ErinMills");
@@ -411,28 +411,28 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Pacific Mall·太古");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("位于万锦（Markham）的太古广场是北美地区最大的室内华人商场，于90年代中期开场。前身是1983年建立的农贸市场，该农贸市场与1988年毁于火灾。80年代后期，来自香港的移民潮承建了该商场，以香港同名的太古广场命名。太古的二楼一度空置，在1999年建成太古民族村。");
 			} else if (i == 27) {
 				p = new Estate(i, "Unionville", 6, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
 				p.setImg("gta/Unionville");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Unionville·渔人村");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("该村庄位于万锦（Markham）东北角，中文名为于人村或渔人村。1794年，一批德国裔移民建立了该村庄，该村庄以1841年在红河沿岸建造的联合磨坊（Union Mill）得名。1960年代，约克县政府曾想拓宽缅因街（Main Street），但是因当地居民而作罢。1998年，万锦政府将其列为古迹保护区。");
 			} else if (i == 29) {
 				p = new Estate(i, "Vinegar Hill", 6, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
 				p.setImg("gta/VinegarHill");
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Vinegar HL·维内加山");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("维内加山（Vinegar Hill）位于万锦（Markham）南部，是万锦第一批居民居住的社区，名称起源于当地的醋厂。该区域拥有许多历史性建筑，如工人小屋、万锦的第一个邮政局等。");
 			} else if (i == 31) {
-				p = new Estate(i, "Midland CTR", 7, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
+				p = new Estate(i, "Skycity CTR", 7, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
 				p.setImg("gta/MidlandCenter");
 				p.setFont("tyh", 16);
 				p.createDetail();
-				p.getDetail().setTitle("Midland CTR·金钟城");
-				p.getDetail().setDesc("");
+				p.getDetail().setTitle("Skycity CTR·金钟城");
+				p.getDetail().setDesc("位于士嘉堡（Scarborough）的金钟城（Skycity Centre）是大多伦多地区中餐最密集的区域，于2010年开始营业，此前该区域为未开发区域。");
 			}
 			else if (i == 34) {
 				p = new Estate(i, "Golden Mile", 7, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
@@ -440,7 +440,7 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Golden Mile·黄金里");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("位于士嘉堡（Scarborough）的黄金里（Golden Mile）是加拿大最早的工业园区之一。二战之前该地居住着苏格兰移民，二战期间在该区域建立了军需品工厂。50年代之后，当地政府向加拿大国家政府购买了当地的建筑，并将其改建成了图书馆、办公楼等场所，该社区因此得以发展。黄金里（Golden Mile）名称来源于英国同名的工业园区。");
 			}
 			else if (i == 36) {
 				p = new Estate(i, "Casa Loma", 8, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
@@ -448,7 +448,7 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Casa Loma·卡萨罗马");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("卡萨罗马城堡（Casa Loma）是建成于1914年仿中世纪城堡风格的建筑，由亨利·佩雷特爵士（Sir Henry Pellatt）建造，当时是加拿大最大的私人宅邸，但其一家人居住不到10年就因财政问题将其卖出。1937年起该地成为旅游景点，有时也会承办婚礼等各种活动。周边的社区也以该城堡命名。");
 			}
 			else if (i == 37) {
 				p = new Estate(i, "Eaton CTR", 8, 3500,2000,5,new ArrayList<>(Arrays.asList(350,1750,5000,11000,13000,15000)));
@@ -456,7 +456,7 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("Eaton CTR·伊顿中心");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("位于多伦多市中心核心区的伊顿中心（Eaton Centre）为开发商CF（Cadillac Fairview）建立的商场和办公大楼，1977年开业，名字起源于1869年在此营业的伊顿百货，但该百货于1999年关张。该商场是加拿大第三大商场，也是加拿大少数法定节假日依然营业的商场。");
 			}
 			else if (i == 39) {
 				p = new Estate(i, "CN Tower", 8, 4000,2000,5,new ArrayList<>(Arrays.asList(500,2000,6000,14000,17000,20000)));
@@ -464,7 +464,7 @@ public class MapBuilder {
 				p.setFont("tyh", 16);
 				p.createDetail();
 				p.getDetail().setTitle("CN Tower·加国电视塔");
-				p.getDetail().setDesc("");
+				p.getDetail().setDesc("加拿大国家电视塔（Canada's National Tower）由加拿大铁路公司于1976年建造，是多伦多的地标。塔高553.33米，当时是世界最高建筑，直至2007年被迪拜塔超越，如今是世界第十高建筑。1995年该建筑被收入现代世界七大奇迹。该建筑的设计初衷是为了更好的传输电视信号，因60年代时多伦多市中心高速发展，摩天大楼阻碍电视信号的传播，不得不将广播中心建造至300米以上。如今塔内向公众开放的区域有Horizon咖啡厅、观景台和360度旋转餐厅。");
 			}
 			map.addPlace(p);
 		}

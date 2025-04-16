@@ -33,10 +33,11 @@
 				<div><b>手牌数： </b>{{p.handSize}}</div>
 			</div>
 		</td>
-		<td style="width: 90px; vertical-align:top" ng-show="gamedata.settings.useGTA == 1">
+		<td style="width: 140px; vertical-align:top" ng-show="gamedata.settings.useGTA == 1">
 			<div>
 				<div ng-show="p.buffs[0]>-1" style="color:black"><b>掷骰点数: </b>{{p.buffs[0]}}</div>
 				<div ng-show="p.buffs[1]>-1" style="color:black"><b>骰子加点: </b>{{p.buffs[1]}}</div>
+				<div ng-show="p.buffs[5]>-1" style="color:black"><b>传送: </b>{{map.places[p.buffs[5]].name}}</div>
 				<div ng-show="p.buffs[4]>-1" style="color:black"><b>免租回合: </b>{{p.buffs[4]}}</div>
 				<div ng-show="p.buffs[2]>-1" style="color: maroon"><b>增伤回合: </b>{{p.buffs[2]}}</div>
 				<div ng-show="p.buffs[3]>-1" style="color: darkgreen"><b>精准回合: </b>{{p.buffs[3]}}</div>

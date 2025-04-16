@@ -303,6 +303,9 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			hand.add(new CardTeleport());
+			hand.add(new Card2());
+			hand.add(new CardP2());
 			//hand.add(new CardGTA());
 			//hand.add(new CardRefuseRent());
 		}
@@ -334,11 +337,16 @@ public class Player {
 		}
 		
 		Place place = board.getMap().getPlaceAfter(placeIndex,totalSteps);
+		if (buff.getTeleport() != -1) {
+			place = board.getMap().getPlace(buff.getTeleport());
+		}
+		
 		if (place == null) return ""; else return place.getName();
 	}
 	
 	public boolean isGoingToJail() {
 		if (board.getSettings().getUseGTA() != 1) return false;
+		if (buff.getTeleport() != -1) return false;
 		int temp = rollDisplay;
 		int totalSteps = 0;
 		while (temp>0) {
@@ -668,8 +676,19 @@ public class Player {
 				rollDisplay = board.getLastRolled();
 				board.getLogger().logPlayerRoll(this);
 				
-				board.setBroadcastImg("dice/"+rollDisplay);
-				board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，将会来到" + myNextPlaceName());
+				
+				String broadcastMsg = name + "掷了一个" + rollDisplay;
+				if (buff.getTeleport() > -1) {
+					broadcastMsg = name + "将会移动到" + myNextPlaceName();
+					board.setBroadcastImg("card/40");
+				} else {
+					board.setBroadcastImg("dice/"+rollDisplay);
+					if (buff.getRollAdd() > 0) {
+						broadcastMsg = broadcastMsg + "，还会额外移动" + buff.getRollAdd() + "步";
+					}
+					broadcastMsg = broadcastMsg + "，将会来到" + myNextPlaceName();
+				}
+				board.setBroadcastMsg(broadcastMsg);
 			}
 			
 		} else if (option == 1) {
@@ -809,13 +828,18 @@ public class Player {
 			board.getMap().getPlace(placeIndex).removePlayer(this);
 			
 			int t = placeIndex;
-			for (int i=totalSteps-1;i>=0;i--) {
-				t = (t+1)%board.getMap().mapSize();
-				if (i!=0) board.getMap().getPlace(t).bypass(this);
+			if (buff.getTeleport() > -1) { // teleport
+				t = buff.getTeleport();
+				buff.clearTeleport();
+			} else { // regular move
+				for (int i=totalSteps-1;i>=0;i--) {
+					t = (t+1)%board.getMap().mapSize();
+					if (i!=0) board.getMap().getPlace(t).bypass(this);
+				}
 			}
 			phase = Consts.PHASE_RESOLVE;
-			
 			moveToPlace(t);
+			
 			
 			if (buff.getRollAdd() > 0) {
 				buff.clearRollAdd();

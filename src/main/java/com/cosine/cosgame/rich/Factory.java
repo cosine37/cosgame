@@ -95,8 +95,9 @@ public class Factory {
 			c = new CardOccupy();
 		} else if (id == 39) {
 			c = new CardAlterContract();
-		}
-		else if (id == 41) {
+		} else if (id == 40) {
+			c = new CardTeleport();
+		} else if (id == 41) {
 			c = new CardBuild();
 		} else if (id == 42) {
 			c = new CardRobotWorker();
