@@ -1,7 +1,7 @@
 <div ng-show="g.type==ESTATE" class="grid-div" style="cursor:pointer" ng-click="clickEstate(g.id)" ng-style="g.estateBackground">
 	<div style="height: 60px;">
 		<div ng-style="g.fontStyle">{{g.name}}</div>
-		<div style="font-size:16px" ng-show="g.ownerId==-1">${{g.cost}}</div>
+		<div style="font-size:16px" ng-show="g.ownerId==-1">${{g.totalCost}}</div>
 		<div style="font-size:14px" ng-show="g.ownerId!=-1">{{g.ownerName}}</div>
 		<div style="font-size:14px" ng-show="g.ownerId!=-1 && g.area != UTILITYAREA"><b>路费：</b>${{g.rent}}</div>
 		

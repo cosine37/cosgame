@@ -48,7 +48,7 @@ public class MapBuilder {
 		map.setCenterWidth("1033px");
 		map.setLogHeight("880px");
 		//map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
-		map.setAreaColors(new ArrayList<>(Arrays.asList("","olive","orangered","darkslategrey","darkviolet","darkgreen","DarkCyan","maroon","navy")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","olive","darkviolet","darkslategrey","maroon","darkgreen","orangered","darkcyan","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","黄浦区","徐汇区","长宁区","普陀区","静安区","虹口区","杨浦区","浦东新区")));
 		map.setBgms(new ArrayList<>(Arrays.asList("gta1","gta2","gta3","gta4","gta5","gta6","gta7","gta8","gta9","gta10","gta11")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
@@ -65,23 +65,68 @@ public class MapBuilder {
 			p.setFont("jnk", 22);
 			
 			if (i == 0) {
-				p = new StartPoint(i, "外  滩");
+				p = new StartPoint(i, "外滩");
 				p.setFont("jnk", 24);
 				p.setImg("shanghai/waitan2");
 				p.setDesc("经过或停留此处领取$2000");
 				p.setLandMsg("将会获得$2000");
 				p.createDetail();
-				p.getDetail().setTitle("外滩");
-				p.getDetail().setImg("shanghai/waitan");
+				p.getDetail().setTitle("外滩 · 南京东路步行街");
+				p.getDetail().setImg("shanghai/nanjinglu");
 				p.getDetail().setDesc("经过或停留此处获得$2000。");
-				p.getDetail().setDesc2("外滩位于上海市黄浦区的黄浦江畔，即外黄浦滩，为中国历史文化街区。全长1.5千米，南起延安东路，北至苏州河上的外白渡桥，东面即黄浦江，西面是旧上海金融、外贸机构的集中地。上海辟为商埠以后，外国的银行、商行、总会、报社开始在此云集，外滩成为全国乃至远东的金融中心。");
-			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 38 || i == 13 || i == 27) {
+				p.getDetail().setDesc2("外滩位于上海市黄浦区的黄浦江畔，即外黄浦滩，为中国历史文化街区。全长1.5千米，南起延安东路，北至苏州河上的外白渡桥，东面即黄浦江，西面是旧上海金融、外贸机构的集中地。上海辟为商埠以后，外国的银行、商行、总会、报社开始在此云集，外滩成为全国乃至远东的金融中心。南京东路辟筑于1851年，是上海开埠以后最早修筑的几条马路，并逐渐发展成为上海乃至世界上最繁华的商业街之一，有“中华第一街”之誉称。2020年9月12日，步行街路段东延至外滩。");
+			} else if (i == 3 || i == 8 || i == 18 || i == 23 || i == 33 || i == 38 || i == 13 || i == 28) {
 				p = new PersonalEvent(i, "见闻");
 				p.setImg("fate");
 				p.setFont("jnk", 24);
 				p.createDetail();
 				if (settings.getUseGTA() == 1) {
 					p.getDetail().setDesc2("冷知识：点击确定之后见闻才会生效。未来有些卡牌可以改变当前的见闻。");
+				}
+			} else if (i == 10) {
+				p = new Jail(i, "监狱大门");
+				p.setImg("jailDoor");
+				p.setFont("jnk", 22);
+				p.setLandMsg("你来到了监狱大门口，但只是路过");
+				p.createDetail();
+				p.getDetail().setDesc("只是路过而已~");
+			} else if (i == 30) {
+				if (settings.getUseGTA() == 1) {
+					p = new Hospital(i, "医院");
+					p.setImg("hospital");
+					p.setFont("jnk", 22);
+					p.createDetail();
+					p.getDetail().setDesc("你可以在此回复生命值。");
+					p.getDetail().setDesc2("花费$500回复1点生命值。若你的生命值为1，你可以花费$1000回复2点生命值。");
+				} else {
+					p = new GoToJail(i, "入狱");
+					p.setImg("goToJail");
+					p.setFont("jnk", 22);
+					p.setLandMsg("你将立即入狱");
+					p.createDetail();
+					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
+					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
+				}
+			} else if (i==20) {
+				if (settings.getUseGTA() == 1) {
+					p = new CardGainer(i, "南翔古镇");
+					p.setImg("shanghai/nanxiang2");
+					p.setFont("jnk", 22);
+					p.setDesc("经过获得1张牌；停留获得2张牌并减少1点通缉值");
+					p.setLandMsg("将会减少1点通缉值并获得2张牌（如果你有手牌空间）");
+					p.createDetail();
+					p.getDetail().setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");
+					p.getDetail().setDesc2("南翔古镇因白鹤南翔寺成镇，遂得名。宋元时期，已成为巨镇。明清时期，达于鼎盛，店肆林立，商贾辐辏，百货胼集，古镇内文物古迹众多，有古猗园和南翔双塔2个历史文化风貌区、南翔寺砖塔、赵氏住宅等10处文物保护单位，以及南翔小笼制作技艺等国家级非物质文化遗产。");
+					p.getDetail().setTitle("南翔古镇");
+					p.getDetail().setImg("shanghai/nanxiang");
+					
+				} else {
+					p = new Empty(i, "免费停车场");
+					p.setImg("parking");
+					p.setFont("jnk", 20);
+					p.setLandMsg("无事发生");
+					p.createDetail();
+					p.getDetail().setDesc("现在就是一个平平无奇的停车场，未来这一格可能有别的功效？");
 				}
 			} else if (i == 12) {
 				p = new Estate(i, "小南国", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
@@ -91,7 +136,7 @@ public class MapBuilder {
 				p.getDetail().setImg("shanghai/xiaonanguo");
 				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
 				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
-			} else if (i == 28) {
+			} else if (i == 27) {
 				p = new Estate(i, "杏花楼", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
 				p.setFont("jnk", 18);
 				p.setImg("eatery");
@@ -99,9 +144,7 @@ public class MapBuilder {
 				p.getDetail().setImg("shanghai/xinghualou");
 				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
 				p.getDetail().setDesc2("作者语：咱也妹有恰饭啊，就不介绍了。");
-			}
-			
-			else if (i == 5) {
+			} else if (i == 5) {
 				p = new Estate(i, "大木桥路", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
 				p.setFont("heiti", 18);
 				p.setImg("shanghai/subway");
@@ -109,7 +152,7 @@ public class MapBuilder {
 				p.getDetail().setTitle("大木桥路地铁站");
 				p.getDetail().setImg("shanghai/damuqiaolu");
 				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
-				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如外滩），到达后无法购买且不需要支付路费。");
 			} else if (i == 15) {
 				p = new Estate(i, "中山公园", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
 				p.setFont("heiti", 18);
@@ -118,7 +161,7 @@ public class MapBuilder {
 				p.getDetail().setTitle("中山公园地铁站");
 				p.getDetail().setImg("shanghai/zhongshangongyuan");
 				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
-				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如外滩），到达后无法购买且不需要支付路费。");
 			} else if (i == 25) {
 				p = new Estate(i, "上海火车站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
 				p.setFont("heiti", 18);
@@ -127,7 +170,7 @@ public class MapBuilder {
 				p.getDetail().setTitle("上海火车站地铁站");
 				p.getDetail().setImg("shanghai/shanghaizhan");
 				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
-				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如外滩），到达后无法购买且不需要支付路费。");
 			} else if (i == 35) {
 				p = new Estate(i, "世纪大道", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
 				p.setFont("heiti", 18);
@@ -136,13 +179,160 @@ public class MapBuilder {
 				p.getDetail().setTitle("世纪大道地铁站");
 				p.getDetail().setImg("shanghai/shijidadao");
 				p.getDetail().setDesc("欢迎乘坐上海轨道交通4号线，本线为环线~"); 
-				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如人民广场），到达后无法购买且不需要支付路费。");
+				p.getDetail().setDesc2("可移动至其他地铁站。经过可以触发被动效果的地点则会触发被动效果（如外滩），到达后无法购买且不需要支付路费。");
 			} else if (i == 1) {
 				p = new Estate(i, "人民广场", 1, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
 				p.setImg("shanghai/renmingguangchang");
 				p.setFont("jnk", 18);
 				p.createDetail();
 				p.getDetail().setDesc("人民广场在上海地区开埠前是一片水田。清道光二十八年（1848年），英租界扩张至此，修护城河，筑泥城，称为“泥城浜”。清同治二年（1863年），英领事馆在此建有“上海跑马厅”，要求“华人不得入内”。1954年5月31日，跑马总会大楼改为上海图书馆。1994年10月1日，上海人民广场综合改造工程竣工。广场中央有320平方米的圆形喷水池，广场北侧是上海市人民政府所在地，西北侧为上海大剧院，东北侧为上海城市规划展示馆，南侧为上海博物馆。");
+			} else if (i == 2) {
+				p = new Estate(i, "豫园", 1, 3000,2000,5,new ArrayList<>(Arrays.asList(260,1300,3900,9000,11000,12750)));
+				p.setImg("shanghai/yuyuan");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("豫园 · 城隍庙");
+				p.getDetail().setDesc("豫园是建于明朝时期的古典园林，座落于中国上海市黄浦区，原上海老城厢东北部，北靠福佑路，东临安仁街，西南有城隍庙、豫园商城。豫园共有西部、东部、中部和内园四个景区。西部景区有三穗堂、仰山堂、点春堂、大假山和元代铁狮等知名景观。上海城隍庙是道教正一派道观，与老城隍庙小吃、荷花池、湖心亭及九曲桥组成了独具特色的上海“老城厢”旅游文化名片。始建于明永乐元年（1403年），由原霍光行祠改建而成。此后历经多次扩建，于清朝道光初年达到鼎盛。");
+			} else if (i == 4) {
+				p = new Estate(i, "打浦桥", 1, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("shanghai/dapuqiao");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("打浦桥 · 田子坊");
+				p.getDetail().setDesc("因打浦路而得名。肇嘉浜上有古桥名带浦桥，谐音打浦桥。位于今徐家汇路、瑞金二路口。建筑年代不详，首见于清同治《上海县志》。初为木桥，20世纪20年代改建为水泥桥，民国三十五年（1946年），填没肇家浜之日晖港（今瑞金南路）以东河道时拆除。打浦桥街道辖区内有国家3A级旅游景区“田子坊”，坐落于泰康路，小工厂、小作坊、石库门民居集聚，具有浓厚的海派特色市井文化，2000年起利用旧厂房和石库门民居，经过10多年的建设发展，形成古今文化结合，中西文化交融的特色园区。");
+			} else if (i == 6) {
+				p = new Estate(i, "徐家汇", 2, 3200,2000,5,new ArrayList<>(Arrays.asList(280,1500,4500,10000,12000,14000)));
+				p.setImg("shanghai/xujiahui");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("徐家汇");
+				p.getDetail().setDesc("徐家汇是上海的四大副中心和十大商圈之一。徐家汇的形成可上溯至明代。晚明文渊阁大学士、著名科学家徐光启曾在此建农庄别业，从事农业实验并著书立说，逝世后即安葬于此，其后裔在此繁衍生息，初名“徐家厍”，后渐成集镇。十九世纪中叶，法国天主教耶稣会江南教区择地徐家汇这个世代笃信天主教的徐光启后裔居住地建造耶稣会会院。徐家汇是上海近代化过程中的文化重镇。交通大学发端于此。徐家汇藏书楼是中国最早最完备的图书馆；依纳爵公学（徐汇中学）是中国内地最早的新式中学；同治七年在此创立了自然博物馆；1872年在徐家汇成立“江南科学委员会”。");
+			} else if (i == 7) {
+				p = new Estate(i, "龙华", 2, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
+				p.setImg("shanghai/longhua");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("龙华");
+				p.getDetail().setDesc("龙华镇为上海古老名镇，距徐家汇约一公里，在今徐汇区南部。唐代时它还是一个小小的村落，元代形成市集，明代才形成一座人口集中、店铺林立的集镇，商市繁荣。龙华镇上的龙华寺是上海地区历史悠久，规模宏大的古刹，“龙华晚钟”曾列为沪城八景之一。与龙华寺交相辉映的龙华古塔是上海市区唯一的宝塔，据传建于三国吴赤乌年间，现塔为北宋太平兴国二年（977年）时建造的原物。");
+			} else if (i == 9) {
+				p = new Estate(i, "漕河泾", 2, 2000,1500,5,new ArrayList<>(Arrays.asList(160,800,2200,6000,8000,10000)));
+				p.setImg("shanghai/caohejing");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("漕河泾");
+				p.getDetail().setDesc("元朝称王家宅，明朝时期，漕河泾市镇位于上海县城西南十八里，兴起于明正德年间，以布米渐聚成市，青浦、松江、七宝、闵行等地所产粮棉经水路集散于此。1832年2月，林则徐任江苏巡抚，对漕河泾地区的水利发展有所建树。1984年，在漕河泾地区成立了漕河泾微电子工业区开发公司。1988年6月7日，上海将漕河泾微电子工业区扩建漕河泾新兴技术开发区，列为上海经济技术开发区，成为中国首批国家级经济技术开发区。");
+			} else if (i == 11) {
+				p = new Estate(i, "古北新区", 3, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("shanghai/gubei");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("古北新区");
+				p.getDetail().setDesc("古北新区坐落于八大上海中心城区之一的长宁区虹桥路沿线，与虹桥经济技术开发区毗邻，是以涉外的高标准住宅为主，兼具商业和外贸功能。在这里生活着众多来沪工作、居留的外籍人士及港、澳、台同胞、它已成为上海西大门，又一个对外开放的窗口。");
+			} else if (i == 14) {
+				p = new Estate(i, "北新泾", 3, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
+				p.setImg("shanghai/beixinjing");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("北新泾");
+				p.getDetail().setDesc("地处长宁区西北部，东起双流路，南至新渔路，西以淞虹路为界，与长宁区新泾镇相邻，北隔吴淞江与普陀区长征镇相望。元至元二十九年（1292年），朝廷批准松江知府仆散翰文奏议，划出华亭县东北高昌等五乡设置上海县，北新泾地区属高昌乡二十七保、二十八保、二十九保和三十保。");
+			} else if (i == 16) {
+				p = new Estate(i, "曹杨新村", 4, 800,500,5,new ArrayList<>(Arrays.asList(40,200,600,1800,3200,4500)));
+				p.setImg("shanghai/caoyangxincun");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("曹杨新村");
+				p.getDetail().setDesc("始建于1951年，是解放后全中国兴建的第一个人民新村，承载着悠久的历史意义。环境宽敞、房屋建筑实用美观、设施齐全，为日后全国各地人民新村的建设提供了一定的借鉴，许多全国劳动模范，先进工作者陆续在此安家落户。");
+			} else if (i == 17) {
+				p = new Estate(i, "真如", 4, 1200,500,5,new ArrayList<>(Arrays.asList(80,400,1000,3000,4500,6000)));
+				p.setImg("shanghai/zhenru");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("真如");
+				p.getDetail().setDesc("唐武德四年至南宋嘉定十年(621—1217年)，地境属昆山县临江乡。元延祐七年（1320年），真如寺移至现址，明洪武年间临江乡改称依仁乡，明正德年间在真如寺周边形成真如市（集市），万历年间形成真如集镇。如今是上海中心城区的四个城市副中心之一。");
+			} else if (i == 19) {
+				p = new Estate(i, "桃浦新村", 4, 600,300,5,new ArrayList<>(Arrays.asList(20,100,300,900,1600,2500)));
+				p.setImg("shanghai/taopu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("桃浦新村");
+				p.getDetail().setDesc("该新村建于1958年，得名于桃浦镇。桃浦镇地处普陀区西北部，东连万里街道和宝山区大场镇，南邻嘉定区真新街道、江桥镇，西毗嘉定区南翔镇，北依宝山区大场镇。南宋建炎三年（1129年），韩世忠驻兵境内，厂头古镇逐渐形成，时属昆山县临江乡。");
+			} else if (i == 21) {
+				p = new Estate(i, "曹家渡", 5, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("shanghai/caojiadu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("曹家渡");
+				p.getDetail().setDesc("曹家渡位于上海市西北部，地处普陀区、静安区和长宁区的交界处，是沪西地区重要的交通枢纽及商业副中心。明永乐年间（1403～1424年），举人曹守常一族迁此定居，故址在今长宁区江苏北路、万航渡路东，形成境内第一个村落曹家宅。明隆庆元年至万历四十七年（1567～1619年），曹氏先祖为利两岸村民交通便利，在今吴淞江南北两岸三官堂桥与长生庵间（今长宁区曹杨路桥附近）建渡亭，设义渡，称曹家渡。");
+			} else if (i == 22) {
+				p = new Estate(i, "静安寺", 5, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("shanghai/jingansi");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("静安寺");
+				p.getDetail().setDesc("静安寺是汉族地区佛教全国重点寺院之一，上海市密宗古刹之一，上海市文物保护单位。其历史相传最早可追溯至三国孙吴赤乌十年（247年），初名沪渎重元（玄）寺。宋大中祥符元年（1008年），更名静安寺。");
+			} else if (i == 24) {
+				p = new Estate(i, "张园", 5, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
+				p.setImg("shanghai/zhangyuan");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("张园");
+				p.getDetail().setDesc("1882年无锡籍富商张叔和购地后建花园，并于1885年向社会开放，命名为“张氏味莼园”，人们习惯于称其为“张园”。历史上的张园是晚清民初上海政治活动中心、文化娱乐中心，首屈一指的市民活动场所，有着“海上第一名园”的美誉，同时也是新式公共文化的诞生地。电灯试燃、照相连景，以及1897年后电影的频繁放映，吸引观者云集。还曾聚集过无数文人雅士和各界名流，孙中山、黄兴、章太炎、蔡元培等名人在此发表过重要的演讲。");
+			} else if (i == 26) {
+				p = new Estate(i, "提篮桥", 6, 1600,1000,5,new ArrayList<>(Arrays.asList(120,600,1800,5000,7000,9000)));
+				p.setImg("shanghai/tilanqiao");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("提篮桥");
+				p.getDetail().setDesc("清朝嘉庆年间，本地居民在下海庙附近的下海浦上兴建一桥，名为提篮桥，该地因此得名。第一次鸦片战争之后，该处被划入上海美租界，由于区内有香火鼎盛的下海庙和通往浦东的轮渡，逐渐成为苏州河以北的主要集市之一。1903年，上海公共租界工部局在提篮桥地区的华德路（长阳路）、舟山路、昆明路、保定路之间的地块建造了规模宏大的工部局监狱，俗称为“提篮桥监狱”。*但是这一个地产和监狱没什么关系。");
+			} else if (i == 29) {
+				p = new Estate(i, "江湾镇", 6, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
+				p.setImg("shanghai/jiangwanzhen");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("江湾镇");
+				p.getDetail().setDesc("民国十七年（1928年），隶上海特别市江湾区，设市政委员江湾办事处。“一·二八”“八一三”两次淞沪战争，江湾都成为重要战场，日军为筑机场、兵营、仓库，圈地拆房，江湾镇复遭兵燹。沦陷时期，属伪上海特别市中心区，设伪镇公所。抗日战争胜利后，隶上海市二十二区（后改江湾区）。");
+			} else if (i == 31) {
+				p = new Estate(i, "新江湾城", 7, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("shanghai/xinjiangwancheng");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("新江湾城");
+				p.getDetail().setDesc("新江湾城地处上海中心城区东北部，总占地面积9.45平方公里，原系上海江湾机场的旧址，是上海市区一块自然生态“绿宝石”。城区中规划了江湾天地、复旦大学江湾校区、新江湾城公园、自然花园、都市村庄、知识商务中心等六大板块，以及生态走廊、文化中心、极限运动中心等特色生活配套。");
+			} else if (i == 32) {
+				p = new Estate(i, "五角场", 7, 3000,2000,5,new ArrayList<>(Arrays.asList(260,1300,3900,9000,11000,12750)));
+				p.setImg("shanghai/wujiaochang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("五角场");
+				p.getDetail().setDesc("五角场地区形成，源于民国时期的上海市政府所实施的“大上海计划”。新市中心区确立后，厂商纷纷来开店办厂。初步形成了五角场地区经济发展的规模。上海解放后，五角场地区农业、工业和商业服务业不断发展。尤其工业和仓储业有较大发展。1991年，上海市市城市总体规划把五角场列入城市副中心。");
+			} else if (i == 34) {
+				p = new Estate(i, "复兴岛", 7, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
+				p.setImg("shanghai/fuxingdao");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("复兴岛");
+				p.getDetail().setDesc("位于上海市市区东部，杨浦区东南部的黄浦江下游，距吴淞口约6公里。复兴岛原为黄浦江中一处浅滩，由于该地江面骤宽，水流分散，加之涨潮与落潮时的水流方向不一致，在黄浦江转折处形成一块范围较大的浅滩。1906年其雏形形成，1915～1934年经人工筑堤并吹填泥土，形成现今的复兴岛。1905年开始整治黄浦江时，因旁有周家嘴自然村，被称为周家嘴岛。1937年日军侵占后改称定海岛，因定海路得名。1945年为纪念抗日战争胜利改名复兴岛。");
+			} else if (i == 36) {
+				p = new Estate(i, "金桥", 8, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
+				p.setImg("shanghai/jinqiao");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("金桥");
+				p.getDetail().setDesc("金桥镇隶属于上海浦东新区，地处浦东新区中部，南临张江高科技园区。镇域约于唐代成陆，唐天宝十载（公元751年）割昆山、嘉定、海盐各一部置华亭县，时属江南东道吴郡（苏州）华亭县辖。");
+			} else if (i == 37) {
+				p = new Estate(i, "张江高科", 8, 3500,2000,5,new ArrayList<>(Arrays.asList(350,1750,5000,11000,13000,15000)));
+				p.setImg("shanghai/zhangjiang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("张江高科");
+				p.getDetail().setDesc("1992年7月，上海市张江高科技园区成立，规划面积25平方公里。1999年8月，上海市委、市政府颁布了“聚焦张江”的战略决策，明确园区以集成电路、软件、生物医药为主导产业，集中体现创新创业的主体功能。2015年3月1日，张江高科技园区正式纳入上海自贸区范。");
+			} else if (i == 39) {
+				p = new Estate(i, "陆家嘴", 8, 4000,2000,5,new ArrayList<>(Arrays.asList(500,2000,6000,14000,17000,20000)));
+				p.setImg("shanghai/lujiazui");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setTitle("陆家嘴");
+				p.getDetail().setDesc("位于上海市浦东新区的黄浦江畔，两面环水，其中，西面隔江与外滩万国建筑博览群相望，北面隔江眺望北外滩，占地面积31.78平方千米。陆家嘴是上海国际金融中心的核心功能区，为多家跨国银行的中国（含港澳台）及东亚总部所在地。陆家嘴境内有东方明珠广播电视塔、上海中心大厦、上海环球金融中心、上海金茂大厦等现代化建筑楼群，江边是老码头遗址。");
 			}
 			
 			map.addPlace(p);
@@ -475,7 +665,7 @@ public class MapBuilder {
 					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019,10201,10202,10203,10204,10205)));
 					
 			//map.setFateIds(new ArrayList<>(Arrays.asList(10013,10014,10015,10016)));
-			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,
 					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)));
 			

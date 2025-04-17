@@ -20,6 +20,7 @@ public class PlaceEntity {
 	int ownerId;
 	int cost;
 	int upgradeCost;
+	int totalCost;
 	int rent;
 	List<Integer> rents;
 	Map<String, String> imgStyle;
@@ -146,6 +147,12 @@ public class PlaceEntity {
 	}
 	public void setEstateBackground(Map<String, String> estateBackground) {
 		this.estateBackground = estateBackground;
+	}
+	public int getTotalCost() {
+		return totalCost;
+	}
+	public void setTotalCost(int totalCost) {
+		this.totalCost = totalCost;
 	}
 	
 }

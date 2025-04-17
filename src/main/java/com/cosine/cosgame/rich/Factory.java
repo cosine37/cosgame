@@ -127,6 +127,29 @@ public class Factory {
 			c = new CardBlindBox();
 		}
 		
+		else if (id == 10001) {
+			c = new CardPanFriedBun();
+		} else if (id == 10002) {
+			c = new CardCatfish();
+		} else if (id == 10003) {
+			c = new CardSteamedBun();
+		} else if (id == 10004) {
+			c = new CardRibRiceCake();
+		} else if (id == 10005) {
+			c = new CardDreamBlue();
+		} else if (id == 10006) {
+			c = new CardDoubleHappiness();
+		} else if (id == 10007) {
+			c = new CardVanishingCream();
+		} else if (id == 10008) {
+			c = new CardDomesticGoose();
+		} else if (id == 10009) {
+			c = new CardYellowWine();
+		} else if (id == 10010) {
+			c = new CardPearSyrupCandy();
+		}
+		
+		
 		else if (id == 20001) {
 			c = new CardSalmonBite();
 		} else if (id == 20002) {

@@ -161,6 +161,7 @@ public class Card {
 		ans = smartReplace(ans,"增伤","<b style='color:maroon'>增伤</b>");
 		ans = smartReplace(ans,"伤害","<b style='color:maroon'>伤害</b>");
 		ans = smartReplace(ans,"精准","<b style='color:darkgreen'>精准</b>");
+		ans = smartReplace(ans,"偷取","<b>偷取</b>");
 		ans = smartReplace(ans,"成功率：","<b>成功率：</b>");
 		
 		return ans;

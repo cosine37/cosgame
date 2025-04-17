@@ -49,6 +49,7 @@ public class Estate extends Place{
 		PlaceEntity entity = super.toPlaceEntity(username);
 		entity.setArea(area);
 		entity.setCost(cost);
+		entity.setTotalCost(totalCost());
 		entity.setUpgradeCost(upgradeCost);
 		entity.setLevel(level);
 		entity.setMaxLevel(maxLevel);
@@ -226,7 +227,7 @@ public class Estate extends Place{
 	}
 	public String getLandMsg(Player player) {
 		if (isUnoccupied()) {
-			return "你可以花费$" + cost + "购买该地块";
+			return "你可以花费$" + totalCost() + "购买该地块";
 		} else if (player.getIndex() != ownerId) {
 			// GTA related: no need to pay for rent
 			Player owner = board.getPlayers().get(ownerId);
@@ -258,7 +259,7 @@ public class Estate extends Place{
 		List<String> ans = new ArrayList<>();
 		if (isUnoccupied()) {
 			ans.add("不购买");
-			if (player.getMoney()>=cost) {
+			if (player.getMoney()>=totalCost()) {
 				ans.add("购买地块");
 			}
 		} else if (player.getIndex() != ownerId) {
@@ -302,13 +303,13 @@ public class Estate extends Place{
 			if (option == 0) {
 				board.getLogger().log(p.getName() + " 没有购买 " + name);
 			} else if (option == 1) {
-				if (p.getMoney()>=cost) {
+				if (p.getMoney()>=totalCost()) {
 					ownerId = p.getIndex();
-					board.getLogger().log(p.getName() + " 花费了$" + cost + "购买了 " + name);
+					board.getLogger().log(p.getName() + " 花费了$" + totalCost() + "购买了 " + name);
 					
 					board.setBroadcastImg("avatar/head_"+p.getAvatarId());
 					board.setBroadcastMsg(p.getName() + "购买了" + name);
-					p.loseMoney(cost);
+					p.loseMoney(totalCost());
 				}
 			}
 		} else if (p.getIndex() != ownerId) {
@@ -427,7 +428,13 @@ public class Estate extends Place{
 	public void downgradeHouse() {
 		level--;
 	}
-	
+	public int totalCost() {
+		int ans = cost;
+		if (level>0) {
+			ans = ans+level*upgradeCost;
+		}
+		return ans;
+	}
 	// End gta related
 	public int getArea() {
 		return area;

@@ -6,14 +6,15 @@ import com.cosine.cosgame.rich.Card;
 import com.cosine.cosgame.rich.Consts;
 import com.cosine.cosgame.rich.Player;
 
-public class CardLittleEssay extends Card {
-	public CardLittleEssay() {
+public class CardDomesticGoose extends Card {
+	public CardDomesticGoose() {
 		super();
-		id = 22;
-		name = "小作文";
-		desc = "指定一名玩家获得+3starP。消耗。";
-		rarity = 2;
+		id = 10008;
+		name = "白乌龟";
+		desc = "对一名玩家造成1点伤害。消耗。";
+		rarity = 1;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
+		attack = 1;
 	}
 	
 	public void play(int rawOptions) {
@@ -22,14 +23,14 @@ public class CardLittleEssay extends Card {
 			Player tp = board.getPlayers().get(targetPlayerIndex);
 			
 			board.setBroadcastImg("card/"+id);
-			
 			String targetName = tp.getName();
 			if (targetName.contentEquals(player.getName())) targetName = "自己";
-				
-			board.getLogger().log(player.getName() + " 对 " + targetName + " 进行了社死攻击， " + tp.getName() + " 的通缉值增加了3");
-			board.setBroadcastMsg(player.getName() + "使用小作文对" + targetName + "进行了社死攻击，" + tp.getName() + "的通缉值增加了3。");
 			
-			tp.addStar(3);
+			int x = getFinalAttack();
+			board.getLogger().log(player.getName() + " 对 " + tp.getName() + " 造成了 " + x + " 点伤害");
+			board.setBroadcastMsg(player.getName() + "召唤了白乌龟，对" + targetName + "造成了" + x + "点伤害。");
+			
+			player.hurt(tp, x);
 			
 		}
 		exhaust = true;

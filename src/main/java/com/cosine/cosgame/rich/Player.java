@@ -303,11 +303,7 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
-			hand.add(new CardTeleport());
-			hand.add(new Card2());
-			hand.add(new CardP2());
-			//hand.add(new CardGTA());
-			//hand.add(new CardRefuseRent());
+			//hand.add(new CardBuyEstate());
 		}
 	}
 	
@@ -679,14 +675,14 @@ public class Player {
 				
 				String broadcastMsg = name + "掷了一个" + rollDisplay;
 				if (buff.getTeleport() > -1) {
-					broadcastMsg = name + "将会移动到" + myNextPlaceName();
+					broadcastMsg = name + "将会传送到" + myNextPlaceName();
 					board.setBroadcastImg("card/40");
 				} else {
 					board.setBroadcastImg("dice/"+rollDisplay);
 					if (buff.getRollAdd() > 0) {
 						broadcastMsg = broadcastMsg + "，还会额外移动" + buff.getRollAdd() + "步";
 					}
-					broadcastMsg = broadcastMsg + "，将会来到" + myNextPlaceName();
+					broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
 				}
 				board.setBroadcastMsg(broadcastMsg);
 			}
@@ -746,12 +742,25 @@ public class Player {
 				int r1 = rollDisplay/10;
 				int r2 = rollDisplay%10;
 				
-				board.setBroadcastImg("dice/"+rollDisplay);
-				if (r1 == 0) {
-					board.setBroadcastMsg(name + "掷了一个" + rollDisplay + "，将会来到" + myNextPlaceName());
+				
+				String broadcastMsg = "";
+				if (buff.getTeleport()>-1) {
+					broadcastMsg = name + "将会传送到" + myNextPlaceName();
+					board.setBroadcastImg("card/40");
 				} else {
-					board.setBroadcastMsg(name + "掷了" + r1 + "和" + r2 + "，将会来到" + myNextPlaceName());
+					board.setBroadcastImg("dice/"+rollDisplay);
+					if (r1 == 0) {
+						broadcastMsg = name + "掷了一个" + rollDisplay;
+					} else {
+						broadcastMsg = name + "掷了" + r1 + "和" + r2;
+					}
+					if (buff.getRollAdd() > 0) {
+						broadcastMsg = broadcastMsg + "，还会额外移动" + buff.getRollAdd() + "步";
+					}
+					broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
 				}
+				
+				board.setBroadcastMsg(broadcastMsg);
 			}
 		} else if (option>=10000 && option<20000) { // play cards
 			playCardRaw(option);
