@@ -42,7 +42,7 @@
 
 				<td id="central-grid" colspan="{{map.width-2}}" rowspan="{{map.height-2}}"  ng-repeat="x in [0] track by $index"
 					style="padding:0px; vertical-align:top">
-					<div style="background-color: AntiqueWhite" ng-style="map.centerStyle">
+					<div style="background-color: AntiqueWhite" ng-style="map.centerStyle" ng-show="shownEco<0">
 						<div style="float:left; height: 250px; width: 250px; margin:20px; background-size:cover"
 							ng-style="gamedata.myCurrentPlace.detail.imgStyle">
 						</div>
@@ -105,7 +105,12 @@
 						<div>
 							<div style="float:left; width: 724">
 								<div style="padding-top: 20px;">
-									<div style="padding-left: 20px"><b>当前轮次：</b>{{gamedata.round}}</div>
+									<div style="padding-left: 20px;height:20px;float:left"><b>当前轮次：</b>{{gamedata.round}}</div>
+									<div style="float:right; margin-left: 50px;" ng-show="gamedata.settings.useNEW == 1">
+										<button ng-click="clickEco(1)">银行</button>
+										<button ng-click="clickEco(2)">股市</button>
+									</div>
+									<div style="clear:both"></div>
 									<div style="padding-left: 20px"><b>游戏结束条件：</b>
 										<span ng-show="gamedata.endCondition == 0">吃鸡模式，当轮次结束时只剩一名玩家的现金不为负数，游戏结束。</span>
 										<span ng-show="gamedata.endCondition == 1">速战速决，当轮次结束时任何一名玩家的现金为负数，游戏结束。</span>
@@ -250,6 +255,9 @@
 						</div>
 						
 					</div>
+					
+					
+					<div ng-include="'/view/html/richEco.html'" ng-show="shownEco>0" style="background-color: AntiqueWhite" ng-style="map.centerStyle"></div>
 					
 					
 					<div ng-include="'/view/html/richPlayer.html'"  ng-show="map.height>10"></div>

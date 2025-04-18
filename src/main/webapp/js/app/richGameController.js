@@ -154,9 +154,17 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			} else {
 				$scope.chosenEstate = $scope.map.places[x];
 			}
-			
-			
 		}
+		
+		// For bank & stock
+		$scope.shownEco = -1;
+		$scope.clickEco = function(x){
+			$scope.shownEco = x
+		}
+		$scope.closeEco = function(x){
+			$scope.shownEco = -1;
+		}
+		// end bank & stock
 		
 		
 		$scope.PLAYSTYLE_CHOOSEPLAYER = 1;

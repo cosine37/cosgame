@@ -23,6 +23,9 @@ public class BoardEntity {
 	int curPlayer;
 	int jailRound;
 	int endCondition;
+	int mySalary;
+	int myHp;
+	int myStar;
 	
 	boolean inJail;
 	boolean goingToJail;
@@ -205,6 +208,24 @@ public class BoardEntity {
 	}
 	public void setGoingToJail(boolean goingToJail) {
 		this.goingToJail = goingToJail;
+	}
+	public int getMySalary() {
+		return mySalary;
+	}
+	public void setMySalary(int mySalary) {
+		this.mySalary = mySalary;
+	}
+	public int getMyHp() {
+		return myHp;
+	}
+	public void setMyHp(int myHp) {
+		this.myHp = myHp;
+	}
+	public int getMyStar() {
+		return myStar;
+	}
+	public void setMyStar(int myStar) {
+		this.myStar = myStar;
 	}
 
 }

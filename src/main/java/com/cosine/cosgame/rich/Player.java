@@ -682,8 +682,14 @@ public class Player {
 					if (buff.getRollAdd() > 0) {
 						broadcastMsg = broadcastMsg + "，还会额外移动" + buff.getRollAdd() + "步";
 					}
-					broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
+					if (isGoingToJail()) {
+						broadcastMsg = broadcastMsg + "，将会被抓进监狱";
+					} else {
+						broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
+					}
+					
 				}
+				broadcastMsg = broadcastMsg + "。";
 				board.setBroadcastMsg(broadcastMsg);
 			}
 			
@@ -757,9 +763,13 @@ public class Player {
 					if (buff.getRollAdd() > 0) {
 						broadcastMsg = broadcastMsg + "，还会额外移动" + buff.getRollAdd() + "步";
 					}
-					broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
+					if (isGoingToJail()) {
+						broadcastMsg = broadcastMsg + "，将会被抓进监狱";
+					} else {
+						broadcastMsg = broadcastMsg + "，将会移动到" + myNextPlaceName();
+					}
 				}
-				
+				broadcastMsg = broadcastMsg + "。";
 				board.setBroadcastMsg(broadcastMsg);
 			}
 		} else if (option>=10000 && option<20000) { // play cards

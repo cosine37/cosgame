@@ -8,6 +8,7 @@ public class SettingsEntity {
 	int firstPlayer;
 	int mapId;
 	int useGTA;
+	int useNEW;
 	
 	public int getStartMoney() {
 		return startMoney;
@@ -50,5 +51,11 @@ public class SettingsEntity {
 	}
 	public void setUseGTA(int useGTA) {
 		this.useGTA = useGTA;
+	}
+	public int getUseNEW() {
+		return useNEW;
+	}
+	public void setUseNEW(int useNEW) {
+		this.useNEW = useNEW;
 	}
 }

@@ -84,6 +84,7 @@ public class Consts {
 	public static final int SETTINGS_FIRST_PLAYER = 4;
 	public static final int SETTINGS_MAPID = 5;
 	public static final int SETTINGS_USEGTA = 6;
+	public static final int SETTINGS_USENEW = 7;
 	
 	// avatar related
 	public static final int MAXAVATAR = 8;

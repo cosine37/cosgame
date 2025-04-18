@@ -65,6 +65,11 @@ public class Logger {
 		log(s);
 	}
 	
+	public void logPlayerReceiveSalary(Player p, int amount) {
+		String s = p.getName() + " 获得了薪水 $" + amount;
+		log(s);
+	}
+	
 	public void logPlayerLoseMoney(Player p, int amount) {
 		String s = p.getName() + " 向银行支付了 $" + amount;
 		log(s);

@@ -16,6 +16,8 @@ public class Settings {
 		entity.setEndCondition(getEndCondition());
 		entity.setMapId(getMapId());
 		entity.setUseGTA(getUseGTA());
+		entity.setUseNEW(getUseNEW());
+		
 		return entity;
 	}
 	
@@ -65,5 +67,9 @@ public class Settings {
 	
 	public int getUseGTA() {
 		return get(Consts.SETTINGS_USEGTA);
+	}
+	
+	public int getUseNEW() {
+		return get(Consts.SETTINGS_USENEW);
 	}
 }

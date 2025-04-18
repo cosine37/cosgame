@@ -63,7 +63,7 @@
 <div ng-show="g.type==STARTPOINT" class="grid-div" ng-style="g.imgStyle" style="background-size:cover;">
 	<div style="color: gold" ng-style="g.fontStyle">{{g.name}}</div>
 	<div style="font-size: 16px; color: white; font-weight:bold"><span style="font-size:20px;">&#x21E6;&nbsp;&nbsp;</span>由此去</div>
-	<div style="font-size: 14px; color: white">{{g.desc}}</div>
+	<div style="font-size: 14px; color: white">经过或停留此处领取薪水${{gamedata.mySalary}}</div>
 	
 	<div class="grid-avatars-div" style="top: 70px;">
 		<div ng-repeat="i in g.playersOn track by $index" ng-style="players[i].avatar.avatarBlockStyle" style="float: left">

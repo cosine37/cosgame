@@ -70,9 +70,10 @@ app.controller("richCreateGameCtrl", ['$scope', '$window', '$http', '$document',
 		$scope.firstPlayer = 0;
 		$scope.mapId = 0;
 		$scope.useGTA = 0;
+		$scope.useNEW = 0;
 		
 		$scope.startGame = function(){
-			var settings = [0, $scope.startMoney, $scope.startSalary,$scope.endCondition,$scope.firstPlayer,$scope.mapId, $scope.useGTA]
+			var settings = [0, $scope.startMoney, $scope.startSalary,$scope.endCondition,$scope.firstPlayer,$scope.mapId, $scope.useGTA, $scope.useNEW]
 			var data = {"settings" : settings}
 			$http({url: "/rich/startgame", method: "POST", params: data}).then(function(response){
 				ws.send("start");

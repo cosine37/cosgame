@@ -69,7 +69,7 @@ public class MapBuilder {
 				p.setFont("jnk", 24);
 				p.setImg("shanghai/waitan2");
 				p.setDesc("经过或停留此处领取$2000");
-				p.setLandMsg("将会获得$2000");
+				p.setLandMsg("将会领取薪水");
 				p.createDetail();
 				p.getDetail().setTitle("外滩 · 南京东路步行街");
 				p.getDetail().setImg("shanghai/nanjinglu");

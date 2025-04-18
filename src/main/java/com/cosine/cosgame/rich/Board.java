@@ -191,6 +191,9 @@ public class Board {
 				entity.setMyLandMsg(p.myLandMsg());
 				entity.setInJail(p.isInJail());
 				entity.setJailRound(p.getJailRound());
+				entity.setMySalary(p.getSalary());
+				entity.setMyStar(p.getStar());
+				entity.setMyHp(p.getHp());
 				
 				List<CardEntity> handEntity = new ArrayList<>();
 				for (j=0;j<p.getHand().size();j++) {
@@ -304,10 +307,12 @@ public class Board {
 		// Step 2: GTA related, deal 1 card every 5 rounds
 		int i;
 		if (round%5 == 0) {
-			logger.log("每名玩家获得一张牌且通缉点数-1");
+			logger.log("所有不在监狱的玩家获得一张牌且通缉值-1");
 			for (i=0;i<players.size();i++) {
-				players.get(i).addRandomCard();
-				players.get(i).loseStar(1);
+				if (players.get(i).isInJail() == false) {
+					players.get(i).addRandomCard();
+					players.get(i).loseStar(1);
+				}			
 			}
 		}
 		
@@ -363,7 +368,11 @@ public class Board {
 			players.get(i).startGame();
 		}
 		
-		// Step 2: start round
+		// Step 2: game start broadcast msg
+		setBroadcastImg("gameStart");
+		setBroadcastMsg("游戏开始！");
+		
+		// Step 3: start round
 		newRound();
 		players.get(curPlayer).startTurn();
 		

@@ -2,7 +2,8 @@
 	<div ng-show="phase == OFFTURN">你在{{gamedata.myCurrentPlace.name}}，现在不是你的回合</div>
 	<div ng-show="phase == ROLL && gamedata.inJail">
 		<span ng-show="gamedata.settings.useGTA == 0">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱）或是花费${{map.bailCost}}保释出狱：</span>
-		<span ng-show="gamedata.settings.useGTA == 1">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱，且增加1点通缉值）或是花费${{map.bailCost}}×通缉值保释出狱，同时通缉值清零：</span>
+		<span ng-show="gamedata.settings.useGTA == 1 && gamedata.myStar<5">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱，且增加1点通缉值）或是花费${{map.bailCost}}×通缉值保释出狱，同时通缉值清零：</span>
+		<span ng-show="gamedata.settings.useGTA == 1 && gamedata.myStar>4">这是你入狱的第{{gamedata.jailRound}}回合，你可以选择越狱（掷一次骰子，掷到6出狱，且增加1点通缉值）或是入狱3回合后保释出狱，同时通缉值清零：</span>
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
 		<!-- 
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>

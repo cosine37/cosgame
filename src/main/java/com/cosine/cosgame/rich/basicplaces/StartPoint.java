@@ -24,7 +24,7 @@ public class StartPoint extends Place {
 		board.getLogger().logPlayerReceiveMoney(p, p.getSalary());
 		
 		board.setBroadcastImg("avatar/head_"+p.getAvatarId());
-		board.setBroadcastMsg(p.getName() + "在" + name + "领取了$" + p.getSalary() + "。");
+		board.setBroadcastMsg(p.getName() + "在" + name + "领取了薪水$" + p.getSalary() + "。");
 	}
 	
 	public void bypass(Player p) {
@@ -32,7 +32,7 @@ public class StartPoint extends Place {
 		p.addSalary();
 		
 		board.getLogger().logBypass(p, this);
-		board.getLogger().logPlayerReceiveMoney(p, p.getSalary());
+		board.getLogger().logPlayerReceiveSalary(p, p.getSalary());
 	}
 
 }
