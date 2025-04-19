@@ -1,14 +1,27 @@
 
 <div ng-show="shownEco==1" style="padding-left: 30px; padding-top: 20px; position: relative">
 	<div><h2>银行</h2></div>
-	<div></div>
+	<div>
+		现金： {{gamedata.myMoney}}
+		存款： {{gamedata.mySaving}}
+	</div>
 	
+	<div>
+		<button ng-show="shownWD==0" ng-click="shownWD=1;bankform.wdAmount=0">存款</button>
+		<button ng-show="shownWD==0" ng-click="shownWD=2;bankform.wdAmount=0">取出</button>
+		<span ng-show="shownWD==1">请选择你要存入的金额：</span>
+		<span ng-show="shownWD==2">请选择你要取出的金额：</span>
+		<input ng-show="shownWD==1 || shownWD==2" type="number" ng-model="bankform.wdAmount"/>
+		<button ng-show="shownWD==1" ng-click="bankDeposit()">确定</button>
+		<button ng-show="shownWD==2" ng-click="bankWithdraw()">确定</button>
+		<button ng-show="shownWD==1 || shownWD==2" ng-click="shownWD=0">关闭</button>
+	</div>
 	
-	<button style="position: absolute; top: 20px; right: 30px;"ng-click="closeEco()">关闭银行</button>
+	<button style="position: absolute; top: 20px; right: 30px;"ng-click="closeEco()">离开银行</button>
 </div>
 
 <div ng-show="shownEco==2" style="padding-left: 30px; padding-top: 20px; position: relative">
 	<div><h2>股市</h2></div>
 	
-	<button style="position: absolute; top: 20px; right: 30px;"ng-click="closeEco()">关闭股市</button>
+	<button style="position: absolute; top: 20px; right: 30px;"ng-click="closeEco()">离开股市</button>
 </div>

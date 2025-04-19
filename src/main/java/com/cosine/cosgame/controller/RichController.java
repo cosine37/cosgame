@@ -152,8 +152,21 @@ public class RichController {
 		return new ResponseEntity<>(entity, HttpStatus.OK);
 	}
 	
-	
-	
+	@RequestMapping(value="/rich/bankwd", method = RequestMethod.POST)
+	public ResponseEntity<StringEntity> bankWD(HttpServletRequest request, @RequestParam int amount){
+		StringEntity entity = new StringEntity();
+		Board board = new Board();
+		HttpSession session = request.getSession(true);
+		String username = (String) session.getAttribute("username");
+		String boardId = (String) session.getAttribute("boardId");
+		if (board.exists(boardId)) {
+			board.getFromDB(boardId);
+			board.bankWdUDB(username, amount);
+		} else {
+			board.setId("NE");
+		}
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+	}
 	
 	
 	

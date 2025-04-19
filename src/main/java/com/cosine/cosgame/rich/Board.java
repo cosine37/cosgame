@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
+import com.cosine.cosgame.rich.eco.Bank;
 import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
@@ -37,6 +38,7 @@ public class Board {
 	protected int sesPlayer;
 	
 	protected Settings settings;
+	protected Bank bank;
 	protected Logger logger;
 	protected MongoDBUtil dbutil;
 
@@ -59,6 +61,7 @@ public class Board {
 		doc.append("logs", logger.getLogs());
 		doc.append("ses", ses);
 		doc.append("sesPlayer", sesPlayer);
+		doc.append("bank", bank.toDocument());
 		String mapName = "-";
 		if (map != null) mapName = map.getName();
 		doc.append("mapName", mapName);
@@ -105,6 +108,11 @@ public class Board {
 		map.setBoard(this);
 		map.setFromDoc(mapDoc);
 		
+		Document bankDoc = (Document) doc.get("bank");
+		bank = new Bank();
+		bank.setBoard(this);
+		bank.setFromDoc(bankDoc);
+		
 	}
 	
 	public BoardEntity toBoardEntity(String username) {
@@ -121,6 +129,7 @@ public class Board {
 		entity.setBroadcastImg(broadcastImg);
 		entity.setBroadcastMsg(broadcastMsg);
 		entity.setEndCondition(settings.getEndCondition());
+		entity.setBank(bank.toBankEntity(username));
 		
 		String lastRolledDisplay = "";
 		if (lastRolled<10) {
@@ -194,6 +203,8 @@ public class Board {
 				entity.setMySalary(p.getSalary());
 				entity.setMyStar(p.getStar());
 				entity.setMyHp(p.getHp());
+				entity.setMyMoney(p.getMoney());
+				entity.setMySaving(bank.getSaving(p));
 				
 				List<CardEntity> handEntity = new ArrayList<>();
 				for (j=0;j<p.getHand().size();j++) {
@@ -215,6 +226,7 @@ public class Board {
 		ses = new ArrayList<>();
 		broadcastMsg = "";
 		broadcastImg = "";
+		bank = new Bank();
 		
 		String dbname = "rich";
 		String col = "board";
@@ -304,9 +316,10 @@ public class Board {
 		round++;
 		logger.logRoundStart(round);
 		
-		// Step 2: GTA related, deal 1 card every 5 rounds
+		// Step 2: GTA & NEW related, deal 1 card every 5 rounds & interest
 		int i;
 		if (round%5 == 0) {
+			// GTA
 			logger.log("所有不在监狱的玩家获得一张牌且通缉值-1");
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).isInJail() == false) {
@@ -314,6 +327,9 @@ public class Board {
 					players.get(i).loseStar(1);
 				}			
 			}
+			
+			// NEW
+			bank.distributeInterest();
 		}
 		
 	}
@@ -372,7 +388,10 @@ public class Board {
 		setBroadcastImg("gameStart");
 		setBroadcastMsg("游戏开始！");
 		
-		// Step 3: start round
+		// Step 3: NEW bank related
+		bank.gameStart();
+		
+		// Step 4: start round
 		newRound();
 		players.get(curPlayer).startTurn();
 		
@@ -407,6 +426,22 @@ public class Board {
 		updatePlayers();
 	}
 	
+	public void bankWdUDB(String username, int amount) {
+		Player p = getPlayerByName(username);
+		if (p.getPhase() == Consts.PHASE_OFFTURN) {
+			if (amount<0) {
+				amount = 0-amount;
+				bank.withdraw(p, amount);
+			} else if (amount>0){
+				bank.deposit(p, amount);
+			} else if (amount == 0) {
+				
+			}
+		}
+		updateBasicDB();
+		updatePlayers();
+	}
+	
 	// End Actual Operations
 	
 	public void updateBasicDB() {
@@ -421,6 +456,7 @@ public class Board {
 		updateDB("logs", logger.getLogs());
 		updateDB("ses", ses);
 		updateDB("sesPlayer", sesPlayer);
+		updateDB("bank", bank.toDocument());
 	}
 	
 	public void removePlayerFromDB(int index) {

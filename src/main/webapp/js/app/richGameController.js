@@ -101,12 +101,7 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 			}
 		}
 		
-		$scope.buttonPress = function(option){
-			var data = {"option" : option}
-			$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
-				ws.send("refresh");
-			});
-		}
+		
 		
 		genArray = function(s,n){
 			ans = []
@@ -163,6 +158,63 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		}
 		$scope.closeEco = function(x){
 			$scope.shownEco = -1;
+		}
+		$scope.bankform = {
+			wdAmount: 0
+		}
+		$scope.shownWD=0
+		$scope.bankDeposit = function(){
+			var x = parseInt($scope.bankform.wdAmount)
+			if (x == 0){
+				alert("警告！请不要干存入$0这样无意义的事情，Cosgame的作者可是生气了，哼！")
+				$scope.bankform.wdAmount = 0;
+				return
+			} else if (x < 0){
+				alert("警告！请不要干存入负数金额这样无意义的事情，Cosgame的作者可是生气了，哼！")
+				$scope.bankform.wdAmount = 0;
+				return
+			} else if (x > $scope.gamedata.myMoney){
+				alert("警告！你没有那么多钱可以存，Cosgame的作者可是要嘲笑你的，哈哈哈哈！")
+				$scope.bankform.wdAmount = 0;
+				return
+			}
+			var data = {"amount" : $scope.bankform.wdAmount}
+			$http({url: "/rich/bankwd", method: "POST", params: data}).then(function(response){
+				ws.send("refresh");
+			});
+			$scope.shownWD=0
+			$scope.bankform.wdAmount = 0;
+		}
+		
+		$scope.bankWithdraw = function(){
+			var x = parseInt($scope.bankform.wdAmount)
+			if (x == 0){
+				alert("警告！请不要干取出$0这样无意义的事情，Cosgame的作者可是生气了，哼！")
+				$scope.bankform.wdAmount = 0;
+				return
+			} else if (x < 0){
+				alert("警告！请不要干取出负数金额这样无意义的事情，Cosgame的作者可是生气了，哼！")
+				$scope.bankform.wdAmount = 0;
+				return
+			} else if (x > $scope.gamedata.mySaving){
+				alert("警告！你没有那么多钱可以取，Cosgame的作者可是要嘲笑你的，哈哈哈哈！")
+				$scope.bankform.wdAmount = 0;
+				return
+			}
+			x = 0-x;
+			var data = {"amount" : x}
+			$http({url: "/rich/bankwd", method: "POST", params: data}).then(function(response){
+				ws.send("refresh");
+			});
+			$scope.shownWD=0
+			$scope.bankform.wdAmount = 0;
+		}
+		
+		$scope.buttonPress = function(option){
+			var data = {"option" : option}
+			$http({url: "/rich/buttonpress", method: "POST", params: data}).then(function(response){
+				ws.send("refresh");
+			});
 		}
 		// end bank & stock
 		

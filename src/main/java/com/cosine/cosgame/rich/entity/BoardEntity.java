@@ -3,6 +3,8 @@ package com.cosine.cosgame.rich.entity;
 import java.util.List;
 import java.util.Map;
 
+import com.cosine.cosgame.rich.eco.BankEntity;
+
 public class BoardEntity {
 	String id;
 	String lord;
@@ -26,6 +28,8 @@ public class BoardEntity {
 	int mySalary;
 	int myHp;
 	int myStar;
+	int myMoney;
+	int mySaving;
 	
 	boolean inJail;
 	boolean goingToJail;
@@ -37,6 +41,7 @@ public class BoardEntity {
 	MapEntity map;
 	SettingsEntity settings;
 	PlaceEntity myCurrentPlace;
+	BankEntity bank;
 	
 	// GTA Related
 	List<Integer> myBuffs;
@@ -226,6 +231,24 @@ public class BoardEntity {
 	}
 	public void setMyStar(int myStar) {
 		this.myStar = myStar;
+	}
+	public BankEntity getBank() {
+		return bank;
+	}
+	public void setBank(BankEntity bank) {
+		this.bank = bank;
+	}
+	public int getMyMoney() {
+		return myMoney;
+	}
+	public void setMyMoney(int myMoney) {
+		this.myMoney = myMoney;
+	}
+	public int getMySaving() {
+		return mySaving;
+	}
+	public void setMySaving(int mySaving) {
+		this.mySaving = mySaving;
 	}
 
 }
