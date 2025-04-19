@@ -239,6 +239,10 @@ public class Player {
 		money = money+salary;
 	}
 	
+	public void addSalary(int x) {
+		salary = salary+x;
+	}
+	
 	public void fullRestore() {
 		hp = Consts.GTA_MAXHP;
 	}

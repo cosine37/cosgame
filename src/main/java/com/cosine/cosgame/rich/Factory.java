@@ -6,6 +6,8 @@ import java.util.Random;
 import org.bson.Document;
 
 import com.cosine.cosgame.rich.basicplaces.*;
+import com.cosine.cosgame.rich.eco.News;
+import com.cosine.cosgame.rich.eco.news.*;
 import com.cosine.cosgame.rich.gta.cards.*;
 import com.cosine.cosgame.rich.gta.places.*;
 
@@ -178,6 +180,16 @@ public class Factory {
 	
 	public static Card genNewCard(int x) {
 		return genCard(x*100);
+	}
+	
+	public static News genNews(int id) {
+		News news = new News();
+		if (id == 1) {
+			news = new NewsTaxReturn();
+		} else if (id == 2) {
+			news = new NewsHappyCity();
+		}
+		return news;
 	}
 	
 	public static Place genPlace(Document doc, Board board) {

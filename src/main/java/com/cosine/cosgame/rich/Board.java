@@ -11,6 +11,7 @@ import org.bson.Document;
 import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.eco.Bank;
+import com.cosine.cosgame.rich.eco.News;
 import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
@@ -316,10 +317,9 @@ public class Board {
 		round++;
 		logger.logRoundStart(round);
 		
-		// Step 2: GTA & NEW related, deal 1 card every 5 rounds & interest
+		// Step 2: GTA related, deal 1 card every 5 rounds
 		int i;
-		if (round%5 == 0) {
-			// GTA
+		if (round%5 == 0 && settings.getUseGTA() == 1) {
 			logger.log("所有不在监狱的玩家获得一张牌且通缉值-1");
 			for (i=0;i<players.size();i++) {
 				if (players.get(i).isInJail() == false) {
@@ -328,8 +328,20 @@ public class Board {
 				}			
 			}
 			
-			// NEW
+		}
+		
+		// Step 3: NEW related, news and interest every 3 rounds
+		if (round%3 == 0 && settings.getUseNEW() == 1) {
 			bank.distributeInterest();
+			
+			if (map.getNewsIds().size()>0) {
+				Random rand = new Random();
+				int x = rand.nextInt(map.getNewsIds().size());
+				int newsId = map.getNewsIds().get(x);
+				News news = Factory.genNews(newsId);
+				news.setBoard(this);
+				news.effect();
+			}
 		}
 		
 	}

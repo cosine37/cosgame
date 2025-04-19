@@ -15,6 +15,7 @@ public class Map {
 	int height;
 	List<Place> places;
 	List<Integer> fateIds;
+	List<Integer> newsIds;
 	List<Player> jailPlayers;
 	List<String> areaColors;
 	List<String> areaNames;
@@ -57,6 +58,7 @@ public class Map {
 		doc.append("width", width);
 		doc.append("height", height);
 		doc.append("fateIds", fateIds);
+		doc.append("newsIds", newsIds);
 		doc.append("vehicleIds", vehicleIds);
 		doc.append("jailIndex", jailIndex);
 		doc.append("jailZone", jailZone);
@@ -99,6 +101,7 @@ public class Map {
 		height = doc.getInteger("height", 0);
 		width = doc.getInteger("width", 0);
 		fateIds = (List<Integer>) doc.get("fateIds");
+		newsIds = (List<Integer>) doc.get("newsIds");
 		vehicleIds = (List<Integer>) doc.get("vehicleIds");
 		jailIndex = doc.getInteger("jailIndex", -1);
 		jailZone = doc.getInteger("jailZone", -1);
@@ -190,6 +193,7 @@ public class Map {
 	public Map() {
 		places = new ArrayList<>();
 		fateIds = new ArrayList<>();
+		newsIds = new ArrayList<>();
 		jailPlayers = new ArrayList<>();
 		wardPlayers = new ArrayList<>();
 		commonCardIds = new ArrayList<>();
@@ -502,5 +506,11 @@ public class Map {
 	}
 	public void setEpicCardIds(List<Integer> epicCardIds) {
 		this.epicCardIds = epicCardIds;
+	}
+	public List<Integer> getNewsIds() {
+		return newsIds;
+	}
+	public void setNewsIds(List<Integer> newsIds) {
+		this.newsIds = newsIds;
 	}
 }
