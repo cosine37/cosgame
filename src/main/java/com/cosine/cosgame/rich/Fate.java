@@ -211,6 +211,25 @@ public class Fate {
 			}
 		} else if (type == Consts.FATE_LOSEHAND) {
 			p.setHand(new ArrayList<>());
+		} else if (type == Consts.FATE_ADDSALARY) {
+			p.addSalary(value);
+		} else if (type == Consts.FATE_LOSESALARY) {
+			p.addSalary(0-value);
+		} else if (type == Consts.FATE_HPSTARSTOP) {
+			if (value<100) {
+				hpStarHandle(p, value);
+			} else if (value>999 && value<10000) {
+				int raw1 = value/100;
+				int raw2 = value%100;
+				hpStarHandle(p, raw1);
+				hpStarHandle(p, raw2);
+			}
+			
+			p.getBuff().setNextRoll(0);
+		} else if (type == Consts.FATE_LOSESTOP) {
+			p.loseMoney(value);
+			
+			p.getBuff().setNextRoll(0);
 		}
 	}
 	public int getId() {

@@ -307,6 +307,7 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			hand.add(new CardVehicleCoupon());
 			//hand.add(new CardBuyEstate());
 		}
 	}
@@ -499,6 +500,8 @@ public class Player {
 				
 				board.setBroadcastImg("avatar/head_"+avatarId);
 				board.setBroadcastMsg(name + "丢弃了" + c.getName() + "。");
+				
+				c.onThrow();
 			} else {
 				board.getLogger().logPlayCard(this,c);
 				c.play(rawOptions);

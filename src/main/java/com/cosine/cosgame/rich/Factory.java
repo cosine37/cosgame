@@ -127,6 +127,8 @@ public class Factory {
 			c = new CardGift();
 		} else if (id == 9002) {
 			c = new CardBlindBox();
+		} else if (id == 9003) {
+			c = new CardPanda();
 		}
 		
 		else if (id == 10001) {
@@ -188,6 +190,34 @@ public class Factory {
 			news = new NewsTaxReturn();
 		} else if (id == 2) {
 			news = new NewsHappyCity();
+		} else if (id == 3) {
+			news = new NewsPainCity();
+		} else if (id == 4) {
+			news = new NewsPeachGarden();
+		} 
+		
+		else if (id == 6) {
+			news = new NewsArrows();
+		} else if (id == 7) {
+			news = new NewsGust();
+		}
+		
+		else if (id == 9) {
+			news = new NewsPanda();
+		} else if (id == 10) {
+			news = new NewsGifts();
+		} else if (id == 11) {
+			news = new NewsCarRace();
+		} else if (id == 12) {
+			news = new NewsCarStop();
+		} else if (id == 13) {
+			news = new NewsCarInsurance();
+		} else if (id == 14) {
+			news = new NewsCarDistribute();
+		} else if (id == 15) {
+			news = new NewsCarTrain();
+		} else if (id == 16) {
+			news = new NewsCarBurn();
 		}
 		return news;
 	}
@@ -341,6 +371,14 @@ public class Factory {
 			return new Fate(id,Consts.FATE_LOSECARDHPSTAR,10023,"被吸血老太婆攻击，失去3点生命值，逃跑时在慌乱中丢失一张手牌。","p被吸血老太婆攻击，失去3点生命值");
 		} else if (id == 10019) {
 			return new Fate(id,Consts.FATE_LOSEHAND,0,"背包被老鹰抓走，失去所有手牌。","p的背包被老鹰抓走，失去所有手牌");
+		} else if (id == 10020) {
+			return new Fate(id,Consts.FATE_HPSTARSTOP,21,"不小心掉入坑内，失去1点生命值，且下回合骰子点数为0。","p不小心掉入坑内，失去1点生命值，且p下回合骰子点数为0");
+		} else if (id == 10021) {
+			return new Fate(id,Consts.FATE_ADDSALARY,500,"研究出时间复杂度为O(1)的排序算法，大大优化公司产品的效率，加薪$500。","p因研究出时间复杂度为O(1)的排序算法，大大优化公司产品的效率，加薪$500");
+		} else if (id == 10022) {
+			return new Fate(id,Consts.FATE_LOSESALARY,100,"在开会时吐槽PHP是世界上最差的语言，激怒领导，降薪$100。","p因在开会时吐槽PHP是世界上最差的语言，激怒领导，降薪$100");
+		} else if (id == 10023) {
+			return new Fate(id,Consts.FATE_ADDSALARY,100,"在工作时玩Cosgame被领导发现，没想到领导也非常喜欢并要求组织团建，加薪$100。","p在工作时玩Cosgame被领导发现，没想到领导也非常喜欢并要求p组织团建，加薪$100");
 		} 
 		
 		else if (id == 10201) {
@@ -364,6 +402,8 @@ public class Factory {
 			return new Fate(id,Consts.FATE_LOSE,150,"把汽车停在公厕门口，被罚款$150。","p把汽车停在公厕门口，被罚款$150");
 		} else if (id == 910010) {
 			return new Fate(id,Consts.FATE_ADD,946,"在汽车上表演杂技，获得路人打赏的$946。","p在汽车上表演杂技，获得路人打赏的$946");
+		} else if (id == 910020) {
+			return new Fate(id,Consts.FATE_LOSESTOP,567,"汽车爆胎，更换轮胎花费$567，且下回合骰子点数为0。","p汽车爆胎，更换轮胎花费$567，且p下回合骰子点数为0");
 		}
 		
 		return fate;
@@ -449,6 +489,8 @@ public class Factory {
 			v = new Vehicle(id, "凯旋TR6");
 		} else if (id == 27) {
 			v = new Vehicle(id, "BRT");
+		} else if (id == 28) {
+			v = new Vehicle(id, "奥拓");
 		}
 		
 		

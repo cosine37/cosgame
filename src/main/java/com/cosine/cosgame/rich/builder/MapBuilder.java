@@ -50,7 +50,7 @@ public class MapBuilder {
 		//map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
 		map.setAreaColors(new ArrayList<>(Arrays.asList("","olive","darkviolet","darkslategrey","maroon","darkgreen","orangered","darkcyan","navy")));
 		map.setAreaNames(new ArrayList<>(Arrays.asList("","黄浦区","徐汇区","长宁区","普陀区","静安区","虹口区","杨浦区","浦东新区")));
-		map.setBgms(new ArrayList<>(Arrays.asList("gta1","gta2","gta3","gta4","gta5","gta6","gta7","gta8","gta9","gta10","gta11")));
+		map.setBgms(new ArrayList<>(Arrays.asList("shanghai1","shanghai2","shanghai3","shanghai4","shanghai5","shanghai6","shanghai7","shanghai8","shanghai9","shanghai10")));
 		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
 		map.setUtilityName("餐饮");
 		map.setStationName("地铁站");
@@ -340,16 +340,18 @@ public class MapBuilder {
 		
 		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
 		if (settings.getUseGTA() == 1) {
-			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,
-					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019)));
 			
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019,10020,10021,10022,10023)));
+			
+			//map.setFateIds(new ArrayList<>(Arrays.asList(10020,10021,10022,10023)));
 			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
 					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)));
 		}
 		map.setNewsIds(new ArrayList<>());
 		if (settings.getUseNEW() == 1) {
-			map.setNewsIds(new ArrayList<>(Arrays.asList(1,2)));
+			map.setNewsIds(new ArrayList<>(Arrays.asList(1,2,3,4,6,7,9,10,11,12,13,14,15,16)));
 		}
 		return map;
 	}

@@ -201,6 +201,8 @@ public class Card {
 		return f;
 	}
 	
+	public void onThrow() {};
+	
 	public int getId() {
 		return id;
 	}
