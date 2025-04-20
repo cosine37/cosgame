@@ -34,6 +34,7 @@ public class MapBuilder {
 		final int n = (height+width-2)*2;
 		int i;
 		Map map = new Map();
+		map.setId(2);
 		map.setName("上海滩");
 		map.setNameFont("jnk");
 		map.setHeight(height);
@@ -346,12 +347,14 @@ public class MapBuilder {
 			
 			//map.setFateIds(new ArrayList<>(Arrays.asList(10020,10021,10022,10023)));
 			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
-					20001,20002,20003,20004,20005,20006,20007,20008,20009,20010)));
-			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)));
+					58,59,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)));
 		}
 		map.setNewsIds(new ArrayList<>());
 		if (settings.getUseNEW() == 1) {
-			map.setNewsIds(new ArrayList<>(Arrays.asList(1,2,3,4,6,7,9,10,11,12,13,14,15,16)));
+			map.setNewsIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)));
+			//map.setNewsIds(new ArrayList<>(Arrays.asList(17)));
 		}
 		return map;
 	}
@@ -362,6 +365,7 @@ public class MapBuilder {
 		final int n = (height+width-2)*2;
 		int i;
 		Map map = new Map();
+		map.setId(1);
 		map.setName("GTA");
 		map.setNameFont("tyh");
 		map.setHeight(height);
@@ -684,6 +688,7 @@ public class MapBuilder {
 		final int n = (height+width-2)*2;
 		
 		Map map = new Map();
+		map.setId(0);
 		map.setName("青果巷");
 		map.setNameFont("jnk");
 		map.setHeight(height);

@@ -11,6 +11,7 @@ import com.cosine.cosgame.rich.entity.MapEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
 
 public class Map {
+	int id;
 	int width;
 	int height;
 	List<Place> places;
@@ -54,6 +55,7 @@ public class Map {
 		for (i=0;i<places.size();i++){
 			placesDocList.add(places.get(i).toDocument());
 		}
+		doc.append("id", id);
 		doc.append("places",placesDocList);
 		doc.append("width", width);
 		doc.append("height", height);
@@ -98,6 +100,7 @@ public class Map {
 	}
 	public void setFromDoc(Document doc){
 		int i;
+		id = doc.getInteger("id", 0);
 		height = doc.getInteger("height", 0);
 		width = doc.getInteger("width", 0);
 		fateIds = (List<Integer>) doc.get("fateIds");
@@ -512,5 +515,11 @@ public class Map {
 	}
 	public void setNewsIds(List<Integer> newsIds) {
 		this.newsIds = newsIds;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

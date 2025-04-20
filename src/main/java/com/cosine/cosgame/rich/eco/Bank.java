@@ -42,6 +42,7 @@ public class Bank {
 	}
 	
 	public void gameStart() {
+		rate = 2;
 		for (int i=0;i<board.getPlayers().size();i++) {
 			savings.add(0);
 			bonusRates.add(0);
@@ -58,6 +59,7 @@ public class Bank {
 	}
 	
 	public int getTotal(Player p) {
+		if (savings.size() <= p.getIndex()) return 0;
 		int ans = p.getMoney();
 		ans = ans+savings.get(p.getIndex());
 		return ans;

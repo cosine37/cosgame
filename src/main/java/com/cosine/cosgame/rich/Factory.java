@@ -121,6 +121,12 @@ public class Factory {
 			c = new CardMipha();
 		}
 		
+		else if (id == 58) {
+			c = new CardCP3();
+		} else if (id == 59) {
+			c = new CardBuildCar();
+		}
+		
 		else if (id == 9000) {
 			c = new CardSuccessBook();
 		} else if (id == 9001) {
@@ -194,15 +200,15 @@ public class Factory {
 			news = new NewsPainCity();
 		} else if (id == 4) {
 			news = new NewsPeachGarden();
-		} 
-		
-		else if (id == 6) {
+		} else if (id == 5) {
+			news = new NewsStationCaveIn();
+		} else if (id == 6) {
 			news = new NewsArrows();
 		} else if (id == 7) {
 			news = new NewsGust();
-		}
-		
-		else if (id == 9) {
+		} else if (id == 8) {
+			news = new NewsVampire();
+		} else if (id == 9) {
 			news = new NewsPanda();
 		} else if (id == 10) {
 			news = new NewsGifts();
@@ -218,6 +224,8 @@ public class Factory {
 			news = new NewsCarTrain();
 		} else if (id == 16) {
 			news = new NewsCarBurn();
+		} else if (id == 17) {
+			news = new NewsTakeEstate();
 		}
 		return news;
 	}

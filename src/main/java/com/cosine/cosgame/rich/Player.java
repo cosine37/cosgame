@@ -162,6 +162,8 @@ public class Player {
 		entity.setStar(star);
 		entity.setBuffs(buff.getBuffs());
 		entity.setHandSize(hand.size());
+		entity.setTotalMoney(board.getBank().getTotal(this));
+		entity.setSaving(board.getBank().getSaving(this));
 		if (vehicle == null || vehicle.getId() == -1) {
 			entity.setVehicleId(-1);
 			entity.setVehicleName("没有");
@@ -307,7 +309,10 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
-			hand.add(new CardVehicleCoupon());
+			//hand.add(new CardVehicleCoupon());
+			//hand.add(new CardCP3());
+			//hand.add(new CardBuildCar());
+			//hand.add(new CardPanda());
 			//hand.add(new CardBuyEstate());
 		}
 	}

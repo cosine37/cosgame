@@ -12,6 +12,7 @@ import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.eco.Bank;
 import com.cosine.cosgame.rich.eco.News;
+import com.cosine.cosgame.rich.eco.NewsBuff;
 import com.cosine.cosgame.rich.entity.BoardEntity;
 import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlaceEntity;
@@ -40,6 +41,7 @@ public class Board {
 	
 	protected Settings settings;
 	protected Bank bank;
+	protected NewsBuff newsBuff;
 	protected Logger logger;
 	protected MongoDBUtil dbutil;
 
@@ -54,6 +56,7 @@ public class Board {
 		doc.append("round",round);
 		doc.append("map",map.toDocument());
 		doc.append("settings",settings.getSettings());
+		doc.append("newsBuffs", newsBuff.getBuffs());
 		doc.append("playerNames",playerNames);
 		doc.append("lastRolled", lastRolled);
 		doc.append("lastFateId", lastFateId);
@@ -87,6 +90,8 @@ public class Board {
 		broadcastImg = doc.getString("broadcastImg");
 		List<Integer> settingsList = (List<Integer>)doc.get("settings");
 		settings = new Settings(settingsList);
+		List<Integer> newsBuffs = (List<Integer>)doc.get("newsBuffs");
+		newsBuff = new NewsBuff(newsBuffs);
 		playerNames = (List<String>)doc.get("playerNames");
 		ses = (List<String>) doc.get("ses");
 		sesPlayer = doc.getInteger("sesPlayer", -1);
@@ -228,6 +233,7 @@ public class Board {
 		broadcastMsg = "";
 		broadcastImg = "";
 		bank = new Bank();
+		newsBuff = new NewsBuff();
 		
 		String dbname = "rich";
 		String col = "board";
@@ -331,9 +337,11 @@ public class Board {
 		}
 		
 		// Step 3: NEW related, news and interest every 3 rounds
-		if (round%3 == 0 && settings.getUseNEW() == 1) {
+		if (round%5 == 0 && settings.getUseNEW() == 1) {
+			logger.log("利息已发放");
 			bank.distributeInterest();
 			
+			newsBuff.clearBuffs();
 			if (map.getNewsIds().size()>0) {
 				Random rand = new Random();
 				int x = rand.nextInt(map.getNewsIds().size());
@@ -469,6 +477,7 @@ public class Board {
 		updateDB("ses", ses);
 		updateDB("sesPlayer", sesPlayer);
 		updateDB("bank", bank.toDocument());
+		updateDB("newsBuffs", newsBuff.getBuffs());
 	}
 	
 	public void removePlayerFromDB(int index) {
@@ -583,6 +592,10 @@ public class Board {
 	public void addSes(String se) {
 		ses.add(se);
 	}
+	public void removeLastSe() {
+		int x = ses.size()-1;
+		ses.remove(x);
+	}
 	public String getId() {
 		return id;
 	}
@@ -684,5 +697,17 @@ public class Board {
 	}
 	public void setSesPlayer(int sesPlayer) {
 		this.sesPlayer = sesPlayer;
+	}
+	public Bank getBank() {
+		return bank;
+	}
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+	public NewsBuff getNewsBuff() {
+		return newsBuff;
+	}
+	public void setNewsBuff(NewsBuff newsBuff) {
+		this.newsBuff = newsBuff;
 	}
 }

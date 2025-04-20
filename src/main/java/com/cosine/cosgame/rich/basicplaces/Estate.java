@@ -383,9 +383,14 @@ public class Estate extends Place{
 		List<String> ans = new ArrayList<>();
 		List<Place> oss = otherStations();
 		ans.add("不移动");
-		for (int i=0;i<oss.size();i++) {
-			ans.add("至" + oss.get(i).getName());
+		if (board.getNewsBuff().getNoStationMove() == 1) {
+			
+		} else {
+			for (int i=0;i<oss.size();i++) {
+				ans.add("至" + oss.get(i).getName());
+			}
 		}
+		
 		return ans;
 	}
 	public void resolveStation(Player p, int option) {
@@ -436,6 +441,12 @@ public class Estate extends Place{
 		return ans;
 	}
 	// End gta related
+	// Begin new related
+	public void removeOwner() {
+		ownerId = -1;
+	}
+	// End new related
+	
 	public int getArea() {
 		return area;
 	}

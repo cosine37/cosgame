@@ -15,9 +15,9 @@
 	</div>
 	<div ng-show="phase == ROLL && gamedata.inJail == false">你在{{gamedata.myCurrentPlace.name}}，你的回合开始，请选择一项：
 		<button ng-show="chosenCard < 0" ng-repeat="o in gamedata.myOptions track by $index" ng-click="buttonPress($index)">{{o}}</button>
-		
+		<!-- 
 		<button ng-show="chosenCard < 0" ng-repeat="x in [100001,100002,100003,100004,100005,100006] track by $index" ng-click="buttonPress(x)">{{x-100000}}</button>
-		
+		 -->
 		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle != PLAYSTYLE_CHOOSEOPTIONS" ng-click="playCard()">打出</button>
 		<button ng-show="chosenCard >= 0 && showPlayButton() && curPlayStyle == PLAYSTYLE_CHOOSEOPTIONS" 
 			ng-repeat="option in hand[chosenCard].options track by $index" ng-click="playCardOption($index)">{{option}}</button>

@@ -426,6 +426,10 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				$scope.curPlayer = response.data.curPlayer;
 				$scope.hand = response.data.myHand;
 				
+				if ($scope.phase != $scope.OFFTURN){
+					$scope.shownEco = -1;
+				}
+				
 				$scope.map = response.data.map;
 				if ($scope.bgms.length == 0){
 					$scope.bgms = $scope.map.bgms;

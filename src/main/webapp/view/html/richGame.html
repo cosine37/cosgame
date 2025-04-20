@@ -106,7 +106,7 @@
 							<div style="float:left; width: 724">
 								<div style="padding-top: 20px;">
 									<div style="padding-left: 20px;height:20px;float:left"><b>当前轮次：</b>{{gamedata.round}}</div>
-									<div style="float:right; margin-left: 50px;" ng-show="gamedata.settings.useNEW == 1">
+									<div style="float:right; margin-left: 50px;" ng-show="gamedata.settings.useNEW == 1 && phase == OFFTURN">
 										<button ng-click="clickEco(1)">银行</button>
 										<button ng-click="clickEco(2)">股市</button>
 									</div>

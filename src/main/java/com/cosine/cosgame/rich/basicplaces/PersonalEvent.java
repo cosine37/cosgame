@@ -1,5 +1,7 @@
 package com.cosine.cosgame.rich.basicplaces;
 
+import java.util.Random;
+
 import org.bson.Document;
 
 import com.cosine.cosgame.rich.Board;
@@ -49,6 +51,13 @@ public class PersonalEvent extends Place {
 	
 	public void preStepOn(Player p) {
 		int x = board.getMap().genRandomFateId();
+		// NEW dominant fate related
+		if (board.getNewsBuff().getDominantFate() != -1) {
+			Random rand = new Random();
+			int y = rand.nextInt(3);
+			if (y>0) x = board.getNewsBuff().getDominantFate();
+		}
+		
 		if (p.getVehicle() != null && p.getVehicle().getId() > -1) {
 			x = vehicleTweak(x);
 		}

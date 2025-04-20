@@ -10,6 +10,8 @@ public class PlayerEntity {
 	int index;
 	int rollDisplay;
 	int jailRound;
+	int totalMoney;
+	int saving;
 	boolean inJail;
 	boolean confirmed;
 	AvatarEntity avatar;
@@ -131,6 +133,18 @@ public class PlayerEntity {
 	}
 	public void setHandSize(int handSize) {
 		this.handSize = handSize;
+	}
+	public int getTotalMoney() {
+		return totalMoney;
+	}
+	public void setTotalMoney(int totalMoney) {
+		this.totalMoney = totalMoney;
+	}
+	public int getSaving() {
+		return saving;
+	}
+	public void setSaving(int saving) {
+		this.saving = saving;
 	}
 	
 }
