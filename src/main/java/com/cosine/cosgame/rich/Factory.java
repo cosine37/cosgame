@@ -120,11 +120,20 @@ public class Factory {
 		} else if (id == 50) {
 			c = new CardMipha();
 		}
-		
-		else if (id == 58) {
+		else if (id == 54) {
+			c = new CardFakeCry();
+		} else if (id == 55) {
+			c = new CardCutpurse();
+		} else if (id == 56) {
+			c = new CardHarsh();
+		} else if (id == 57) {
+			c = new CardFlyingThief();
+		} else if (id == 58) {
 			c = new CardCP3();
 		} else if (id == 59) {
 			c = new CardBuildCar();
+		} else if (id == 60) {
+			c = new CardKaka();
 		}
 		
 		else if (id == 9000) {

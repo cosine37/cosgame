@@ -309,6 +309,8 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			//hand.add(new CardHarsh());
+			//hand.add(new CardKaka());
 			//hand.add(new CardVehicleCoupon());
 			//hand.add(new CardCP3());
 			//hand.add(new CardBuildCar());

@@ -14,7 +14,6 @@ public class CardCP3 extends Card {
 		desc = "偷取一名玩家一张手牌，消耗。";
 		rarity = 2;
 		playStyle = Consts.PLAYSTYLE_CHOOSEPLAYER;
-		attack = 2;
 	}
 	
 	public void play(int rawOptions) {
@@ -33,10 +32,9 @@ public class CardCP3 extends Card {
 			} else {
 				board.getLogger().log(player.getName() + " 召唤的五八从 " + tp.getName() + " 处偷取了一张 " + c.getName());
 				board.setBroadcastMsg(player.getName() + "召唤的58从" + targetName + "处偷取了一张" + c.getName() + "并一个妙传递给了" + player.getName() + "，58真是脏的飞起！");
+				
+				player.getHand().add(c);
 			}
-			
-			player.getHand().add(c);
-			
 			
 			
 		}
