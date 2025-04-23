@@ -351,6 +351,12 @@ public class Estate extends Place{
 				board.setBroadcastMsg(p.getName() + "向" + owner.getName() + "支付了$" + paidRent + "。");
 				
 				owner.addMoney(paidRent);
+				int cash = p.getMoney();
+                if (cash < paidRent) {
+                    // If cash is not enough to pay the rent, deduct money from savings account at bank.
+                    int savingDeduction = paidRent - cash;
+                    board.getBank().withdraw(p, savingDeduction);
+                }
 				p.loseMoney(paidRent);
 			}
 			
