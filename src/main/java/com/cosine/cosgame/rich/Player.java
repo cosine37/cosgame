@@ -9,9 +9,7 @@ import org.bson.Document;
 import com.cosine.cosgame.rich.account.Account;
 import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.AvatarEntity;
-import com.cosine.cosgame.rich.entity.CardEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
-import com.cosine.cosgame.rich.gta.cards.*;
 
 public class Player {
 	protected String name;
@@ -226,6 +224,13 @@ public class Player {
 	}
 	
 	public void loseMoney(int x) {
+		int cash = this.getMoney();
+		if (cash < x) {
+			// If cash is not enough to pay the amount, deduct money 
+			// from savings account at bank.
+			int savingDeduction = x - cash;
+			board.getBank().withdraw(this, savingDeduction);
+		}
 		money = money-x;
 		
 		if (hand != null) {
