@@ -134,6 +134,14 @@ public class Factory {
 			c = new CardBuildCar();
 		} else if (id == 60) {
 			c = new CardKaka();
+		} else if (id == 61) {
+			c = new CardZhiHeng();
+		} else if (id == 62) {
+			c = new CardFiveGoals();
+		} else if (id == 63) {
+			c = new CardTanners();
+		} else if (id == 64) {
+			c = new CardArsenal();
 		}
 		
 		else if (id == 9000) {

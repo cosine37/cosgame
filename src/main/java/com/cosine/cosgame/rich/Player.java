@@ -10,6 +10,7 @@ import com.cosine.cosgame.rich.account.Account;
 import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.entity.AvatarEntity;
 import com.cosine.cosgame.rich.entity.PlayerEntity;
+import com.cosine.cosgame.rich.gta.cards.*;
 
 public class Player {
 	protected String name;
@@ -314,6 +315,8 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			//hand.add(new CardFiveGoals());
+			//hand.add(new CardZhiHeng());
 			//hand.add(new CardHarsh());
 			//hand.add(new CardKaka());
 			//hand.add(new CardVehicleCoupon());
