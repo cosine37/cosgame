@@ -137,11 +137,21 @@ public class Factory {
 		} else if (id == 61) {
 			c = new CardZhiHeng();
 		} else if (id == 62) {
-			c = new CardFiveGoals();
+			c = new CardGraverobber();
 		} else if (id == 63) {
 			c = new CardTanners();
 		} else if (id == 64) {
 			c = new CardArsenal();
+		} else if (id == 65) {
+			c = new CardTruck();
+		} else if (id == 66) {
+			c = new CardTrick();
+		} else if (id == 67) {
+			c = new CardBlessings();
+		}
+		
+		else if (id == 95) {
+			c = new CardFiveGoals();
 		}
 		
 		else if (id == 9000) {

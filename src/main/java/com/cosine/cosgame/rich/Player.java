@@ -252,13 +252,17 @@ public class Player {
 	}
 	
 	public void fullRestore() {
-		hp = Consts.GTA_MAXHP;
+		hp = getMaxHp();
+	}
+	
+	public int getMaxHp() {
+		return Consts.GTA_MAXHP;
 	}
 	
 	public void addHp(int x) {
 		hp = hp+x;
 		// TODO: may need to update here
-		if (hp>Consts.GTA_MAXHP) hp = Consts.GTA_MAXHP;
+		if (hp>getMaxHp()) hp = getMaxHp();
 		
 		board.getLogger().logRecover(this, x);
 	}
@@ -315,6 +319,11 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			//hand.add(new CardTrick());
+			//hand.add(new CardGraverobber());
+			//hand.add(new CardGraverobber());
+			//hand.add(new CardGraverobber());
+			//hand.add(new CardTruck());
 			//hand.add(new CardFiveGoals());
 			//hand.add(new CardZhiHeng());
 			//hand.add(new CardHarsh());

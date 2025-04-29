@@ -13,7 +13,7 @@ public class CardArsenal extends Card {
 		id = 64;
 		name = "军械库";
 		desc = "丢弃所有手牌，若丢弃的牌不小于1张，随机获4张牌。消耗。";
-		rarity = 1;
+		rarity = 2;
 	}
 	
 	public void play(int rawOptions) {

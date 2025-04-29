@@ -6,7 +6,7 @@ import com.cosine.cosgame.rich.Consts;
 public class CardFiveGoals extends Card {
 	public CardFiveGoals() {
 		super();
-		id = 62;
+		id = 95;
 		name = "九五至尊";
 		desc = "获得随机牌，直至你有5张手牌。消耗。";
 		rarity = 3;
