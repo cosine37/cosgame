@@ -26,6 +26,9 @@ public abstract class Place {
 	
 	protected List<Player> playersOn;
 	
+	// NEW related
+	protected PlaceBuff placeBuff;
+	
 	public Document toDocument(){
 		int i;
 		Document doc = new Document();
@@ -37,6 +40,7 @@ public abstract class Place {
 		doc.append("img", img);
 		doc.append("fontFamily", fontFamily);
 		doc.append("fontSize", fontSize);
+		doc.append("placeBuff", placeBuff.getBuffs());
 		List<Integer> playersOnDocList = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++){
 			playersOnDocList.add(playersOn.get(i).getIndex());
@@ -63,6 +67,9 @@ public abstract class Place {
 			playersOn.add(e);
 			e.setPlaceIndex(this.id);
 		}
+		List<Integer> pbLst = (List<Integer>) doc.get("placeBuff");
+		placeBuff = new PlaceBuff(pbLst);
+		
 		Document detailDoc = (Document) doc.get("detail");
 		detail = new Detail(this);
 		detail.setFromDoc(detailDoc);
@@ -89,6 +96,14 @@ public abstract class Place {
 		if (detail != null) {
 			entity.setDetail(detail.toDetailEntity());
 		}
+		entity.setPlaceBuffs(placeBuff.getBuffs());
+		entity.setNoBuff(placeBuff.noBuff());
+		HashMap<String, String> estateBackground = new HashMap<>();
+		if (placeBuff.getDisable() > 0) {
+			estateBackground.put("background-image", "url(/image/Rich/placeBuff/pollution.png)");
+			estateBackground.put("background-size", "cover");
+		}
+		entity.setEstateBackground(estateBackground);
 		return entity;
 	}
 	
@@ -99,6 +114,7 @@ public abstract class Place {
 		
 		desc = "";
 		playersOn = new ArrayList<>();
+		placeBuff = new PlaceBuff();
 		detail = new Detail(this);
 	}
 	
@@ -237,6 +253,12 @@ public abstract class Place {
 	}
 	public void setDetail(Detail detail) {
 		this.detail = detail;
+	}
+	public PlaceBuff getPlaceBuff() {
+		return placeBuff;
+	}
+	public void setPlaceBuff(PlaceBuff placeBuff) {
+		this.placeBuff = placeBuff;
 	}
 	
 

@@ -253,6 +253,12 @@ public class Factory {
 			news = new NewsCarBurn();
 		} else if (id == 17) {
 			news = new NewsTakeEstate();
+		} else if (id == 18) {
+			news = new NewsEarthquake();
+		} else if (id == 19) {
+			news = new NewsPollution();
+		} else if (id == 20) {
+			news = new NewsAngel();
 		}
 		return news;
 	}
@@ -346,7 +352,7 @@ public class Factory {
 		} else if (id == 103) {
 			return new Fate(18,Consts.FATE_LOSE,555,"算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555。","p在算命时被大师质问：“你算什么东西？”后十分抑郁，去看心理医生，付咨询费$555");
 		} else if (id == 104) {
-			return new Fate(id,Consts.FATE_ADD,1437,"和老师傅学习乱针绣并当场卖出，获得$1888。","p和老师傅学习乱针绣并当场卖出，获得$1888");
+			return new Fate(id,Consts.FATE_ADD,1888,"和老师傅学习乱针绣并当场卖出，获得$1888。","p和老师傅学习乱针绣并当场卖出，获得$1888");
 		} else if (id == 105) {
 			return new Fate(id,Consts.FATE_CARD,10,"将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡。","p将捡到的钱包还给失主，没想到失主是狱警，获得狱警赠送的出狱卡");
 		} else if (id == 106) {

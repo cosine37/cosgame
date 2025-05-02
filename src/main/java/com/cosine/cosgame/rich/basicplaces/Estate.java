@@ -83,19 +83,21 @@ public class Estate extends Place{
 		}
 		entity.setAreaStyle(areaStyle);
 		
-		
-		HashMap<String, String> estateBackground = new HashMap<>();
-		if (ownerId == -1) {
-			estateBackground.put("background-color", "white");
-		} else {
-			Player owner = board.getPlayers().get(ownerId);
-			if (owner.getName().contentEquals(username)) {
-				estateBackground.put("background-color", "LightGreen");
+		if (placeBuff.noBuff()) {
+			HashMap<String, String> estateBackground = new HashMap<>();
+			if (ownerId == -1) {
+				estateBackground.put("background-color", "white");
 			} else {
-				estateBackground.put("background-color", "LightPink");
+				Player owner = board.getPlayers().get(ownerId);
+				if (owner.getName().contentEquals(username)) {
+					estateBackground.put("background-color", "LightGreen");
+				} else {
+					estateBackground.put("background-color", "LightPink");
+				}
 			}
+			entity.setEstateBackground(estateBackground);
 		}
-		entity.setEstateBackground(estateBackground);
+		
 		
 		return entity;
 	}
@@ -229,6 +231,11 @@ public class Estate extends Place{
 		if (isUnoccupied()) {
 			return "你可以花费$" + totalCost() + "购买该地块";
 		} else if (player.getIndex() != ownerId) {
+			// NEW related, place buffs
+			if (placeBuff.getDisable() > -1) {
+				return "该地被污染，正在整改，所以你不需要支付租金";
+			}
+			
 			// GTA related: no need to pay for rent
 			Player owner = board.getPlayers().get(ownerId);
 			if (board.getSettings().getUseGTA() == 1) {
@@ -242,6 +249,8 @@ public class Estate extends Place{
 			if (player.getBuff().getFreeRound()>0) {
 				return "你拥有免租效果，所以你不需要支付租金";
 			}
+			
+			
 			
 			if (area == Consts.AREA_UTILITY) {
 				return "你掷了一个" + board.getLastRolled() + "，需要支付$" + getRent() + "给" + owner.getName();
@@ -265,6 +274,12 @@ public class Estate extends Place{
 		} else if (player.getIndex() != ownerId) {
 			Player owner = board.getPlayers().get(ownerId);
 			boolean flag = true;
+			// NEW related, place buffs
+			if (placeBuff.getDisable() > -1) {
+				ans.add("好臭啊（恼）");
+				flag = false;
+			}
+			// GTA related: no need to pay for rent
 			if (board.getSettings().getUseGTA() == 1) {
 				if (owner.isInJail()) {
 					ans.add("活该！");
@@ -315,8 +330,16 @@ public class Estate extends Place{
 		} else if (p.getIndex() != ownerId) {
 			
 			Player owner = board.getPlayers().get(ownerId);
-			// GTA related: no need to pay for rent
 			boolean flag = true;
+			// NEW related, place buffs
+			if (placeBuff.getDisable() > -1) {
+				flag = false;
+				board.getLogger().log(name + " 被污染，正在整改，所以" + p.getName() + "无需支付租金");
+					
+				board.setBroadcastImg("avatar/head_"+p.getAvatarId());
+				board.setBroadcastMsg(name + "被污染，正在整改，所以" + p.getName() + "无需支付租金。");
+			}
+			// GTA related: no need to pay for rent
 			if (board.getSettings().getUseGTA() == 1) {
 				if (owner.isInJail()) {
 					flag = false;

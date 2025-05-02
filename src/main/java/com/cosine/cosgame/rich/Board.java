@@ -301,7 +301,7 @@ public class Board {
 		// Step 4: GTA related, minus all related buffs
 		players.get(curPlayer).getBuff().turnEndMinus();
 		
-		// Step 5: find the next player and potentially start round
+		// Step 5 find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();
@@ -319,12 +319,17 @@ public class Board {
 		}
 	}
 	public void newRound() {
+		int i;
 		// Step 1: add and log round #
 		round++;
 		logger.logRoundStart(round);
 		
-		// Step 2: GTA related, deal 1 card every 5 rounds
-		int i;
+		// Step 2: decrease place buffs
+		for (i=0;i<map.getPlaces().size();i++) {
+			map.getPlace(i).getPlaceBuff().minusBuff();
+		}
+		
+		// Step 3: GTA related, deal 1 card every 5 rounds
 		if (round%5 == 0 && settings.getUseGTA() == 1) {
 			logger.log("所有不在监狱的玩家获得一张牌且通缉值-1");
 			for (i=0;i<players.size();i++) {
@@ -336,7 +341,7 @@ public class Board {
 			
 		}
 		
-		// Step 3: NEW related, news and interest every 3 rounds
+		// Step 4: NEW related, news and interest every 3 rounds
 		if (round%5 == 0 && settings.getUseNEW() == 1) {
 			logger.log("利息已发放");
 			bank.distributeInterest();
@@ -351,6 +356,7 @@ public class Board {
 				news.effect();
 			}
 		}
+		
 		
 	}
 	public boolean gameEnds() {

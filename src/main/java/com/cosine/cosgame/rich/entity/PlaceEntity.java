@@ -23,10 +23,15 @@ public class PlaceEntity {
 	int totalCost;
 	int rent;
 	List<Integer> rents;
+	
 	Map<String, String> imgStyle;
 	Map<String, String> fontStyle;
 	Map<String, String> areaStyle;
 	Map<String, String> estateBackground;
+	
+	// NEW related
+	boolean noBuff;
+	List<Integer> placeBuffs;
 
 	public String getName() {
 		return name;
@@ -153,6 +158,18 @@ public class PlaceEntity {
 	}
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
+	}
+	public List<Integer> getPlaceBuffs() {
+		return placeBuffs;
+	}
+	public void setPlaceBuffs(List<Integer> placeBuffs) {
+		this.placeBuffs = placeBuffs;
+	}
+	public boolean isNoBuff() {
+		return noBuff;
+	}
+	public void setNoBuff(boolean noBuff) {
+		this.noBuff = noBuff;
 	}
 	
 }
