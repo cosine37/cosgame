@@ -150,6 +150,14 @@ public class Factory {
 			c = new CardBlessings();
 		}
 		
+		else if (id == 84) {
+			c = new CardScald();
+		} else if (id == 85) {
+			c = new CardSteamEruption();
+		} else if (id == 86) {
+			c = new CardMalatang();
+		}
+		
 		else if (id == 95) {
 			c = new CardFiveGoals();
 		}
@@ -162,6 +170,10 @@ public class Factory {
 			c = new CardBlindBox();
 		} else if (id == 9003) {
 			c = new CardPanda();
+		} else if (id == 9004) {
+			c = new CardTTT();
+		} else if (id == 9005) {
+			c = new CardKJK();
 		}
 		
 		else if (id == 10001) {
@@ -259,6 +271,16 @@ public class Factory {
 			news = new NewsPollution();
 		} else if (id == 20) {
 			news = new NewsAngel();
+		} else if (id == 21) {
+			news = new NewsHacker();
+		} else if (id == 22) {
+			news = new NewsEagle();
+		} else if (id == 23) {
+			news = new NewsTTT();
+		} else if (id == 24) {
+			news = new NewsKJK();
+		} else if (id == 25) {
+			news = new NewsFrozenRain();
 		}
 		return news;
 	}
@@ -359,6 +381,12 @@ public class Factory {
 			return new Fate(id,Consts.FATE_MOVE,102,"追着游览车玩，移动到前方最近的游览车站（需要支付路费或选择是否购买）。","p追着游览车玩，将会移动前方最近的游览车站");
 		} else if (id == 107) {
 			return new Fate(id,Consts.FATE_GOTOJAIL,0,"为海外商家出口大麻糕，因机翻的商品名被海关误解，立即入狱。","p为海外商家出口大麻糕，因机翻的商品名被海关误解，p被被抓入监狱");
+		} else if (id == 108) {
+			return new Fate(id,Consts.FATE_MOVE,0,"参观外滩观光隧道，移动到外滩并领取薪水。","p参观外滩观光隧道，移动到外滩并领取薪水");
+		} else if (id == 109) {
+			return new Fate(id,Consts.FATE_MOVE,101,"饿到灵魂出窍，移动到前方最近的餐馆（需要支付路费或选择是否购买）。","p饿到灵魂出窍，移动到前方最近的餐馆");
+		} else if (id == 110) {
+			return new Fate(id,Consts.FATE_MOVE,102,"在商场误打误撞进入了地下通道，移动到前方最近的地铁站（需要支付路费或选择是否购买）。","p在商场误打误撞进入了地下通道，移动到前方最近的地铁站");
 		} 
 		
 		
@@ -420,7 +448,19 @@ public class Factory {
 			return new Fate(id,Consts.FATE_LOSESALARY,100,"在开会时吐槽PHP是世界上最差的语言，激怒领导，降薪$100。","p因在开会时吐槽PHP是世界上最差的语言，激怒领导，降薪$100");
 		} else if (id == 10023) {
 			return new Fate(id,Consts.FATE_ADDSALARY,100,"在工作时玩Cosgame被领导发现，没想到领导也非常喜欢并要求组织团建，加薪$100。","p在工作时玩Cosgame被领导发现，没想到领导也非常喜欢并要求p组织团建，加薪$100");
-		} 
+		} else if (id == 10024) {
+			return new Fate(id,Consts.FATE_ADDSALARY,200,"学会将生活垃圾赛博化并交给Java的垃圾回收器处理，老板大喜并让你兼职清洁工，加薪$200。","p学会将生活垃圾赛博化并交给Java的垃圾回收器处理，老板大喜并让p让你兼职清洁工，加薪$200");
+		} else if (id == 10025) {
+			return new Fate(id,Consts.FATE_FILLHAND,9004,"蒸了3个包子，吃第4个包子时被烫到，每有一个空手牌位，获得一张烫烫烫。","p蒸了3个包子，吃第4个包子时被烫到，p的每个空手牌位都变成烫烫烫");
+		} else if (id == 10026) {
+			return new Fate(id,Consts.FATE_REPLACEHAND,9005,"试图用手机扫码解锁背包，被提示打开方式不对，每张手牌都变成锟斤拷。","p试图用手机扫码解锁背包，被提示打开方式不对，p的每张手牌都变成锟斤拷");
+		}
+		
+		else if (id == 10101) {
+			return new Fate(id,Consts.FATE_CARDLOSE,100040100,"购买繁花中登场的网红菜肴排骨年糕，花费$100。","p购买繁花中登场的网红菜肴排骨年糕，花费$100");
+		} else if (id == 10102) {
+			return new Fate(id,Consts.FATE_CARD,10003,"参加试吃活动，获得商家赠送的江南地区特产小笼包。","p参加试吃活动，获得商家赠送的江南地区特产小笼包");
+		}
 		
 		else if (id == 10201) {
 			return new Fate(id,Consts.FATE_CARD,20001,"参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃。","p参加试吃活动，获得商家赠送的因纽特人特产烟熏三文鱼小吃");

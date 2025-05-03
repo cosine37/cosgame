@@ -319,6 +319,9 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
+			//hand.add(new CardSteamEruption());
+			//hand.add(new CardKJK());
+			//hand.add(new CardTTT());
 			//hand.add(new CardTrick());
 			//hand.add(new CardGraverobber());
 			//hand.add(new CardGraverobber());

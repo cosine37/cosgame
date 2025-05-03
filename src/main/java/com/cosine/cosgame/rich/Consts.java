@@ -75,6 +75,8 @@ public class Consts {
 	public static final int FATE_LOSESTOP = 18;
 	public static final int FATE_ADDSALARY = 19;
 	public static final int FATE_LOSESALARY = 20;
+	public static final int FATE_FILLHAND = 21;
+	public static final int FATE_REPLACEHAND = 22;
 	
 	// ses
 	public static final int SES_ALLPLAYERS = 999;

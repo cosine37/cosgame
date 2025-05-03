@@ -89,6 +89,16 @@ public class Card {
 	public boolean isPassive() {
 		return types.get(1);
 	}
+	// begin curse cards handle
+	public void curse() {
+		types.set(0, false);
+		types.set(1, false);
+		types.set(2, true);
+	}
+	public boolean isCurse() {
+		return types.get(2);
+	}
+	
 	public void onLoseMoney(int x) {}
 	public int wardFeeDeduction() {return 0;}
 	public boolean clearJail() {return false;}

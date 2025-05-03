@@ -402,6 +402,9 @@ app.controller("richGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 				if ($scope.hand[i].types[1] == true){
 					cstyle["background-color"] = "darkslategrey"
 				}
+				if ($scope.hand[i].types[2] == true){
+					cstyle["background-color"] = "Brown"
+				}
 				
 				$scope.handStyle.push(cstyle);
 			}

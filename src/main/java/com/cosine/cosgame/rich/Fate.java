@@ -230,6 +230,19 @@ public class Fate {
 			p.loseMoney(value);
 			
 			p.getBuff().setNextRoll(0);
+		} else if (type == Consts.FATE_FILLHAND) {
+			while (p.fullHand() == false) {
+				Card c = Factory.genNewCard(value);
+				p.addCard(c);
+			}
+		} else if (type == Consts.FATE_REPLACEHAND) {
+			List<Card> hand = new ArrayList<>();
+			int n = p.getHand().size();
+			for (i=0;i<n;i++) {
+				Card c = Factory.genNewCard(value);
+				hand.add(c);
+			}
+			p.setHand(hand);
 		}
 	}
 	public int getId() {
