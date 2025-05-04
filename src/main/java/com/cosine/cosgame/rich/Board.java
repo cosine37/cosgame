@@ -298,10 +298,15 @@ public class Board {
 			wardCheck();
 		}
 		
-		// Step 4: GTA related, minus all related buffs
+		// Step 4: GTA related, end turn passive handles
+		for (int i=0;i<players.get(curPlayer).getHand().size();i++) {
+			players.get(curPlayer).getHand().get(i).onTurnEnd();
+		}
+		
+		// Step 5: GTA related, minus all related buffs
 		players.get(curPlayer).getBuff().turnEndMinus();
 		
-		// Step 5 find the next player and potentially start round
+		// Step 6: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();

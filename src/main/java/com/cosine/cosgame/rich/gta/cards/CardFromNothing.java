@@ -14,8 +14,6 @@ public class CardFromNothing extends Card {
 	
 	public void play(int rawOptions) {
 		if (playable()) {
-			
-			
 			boolean f;
 			int x = 0;
 			f = player.addRandomCard();
@@ -26,9 +24,9 @@ public class CardFromNothing extends Card {
 			board.setBroadcastImg("card/"+id);
 			board.getLogger().logGainCard(player, x);
 			if (x == 0) {
-				board.setBroadcastMsg(player.getName() + "使用了无中生有，但是手牌已达上限，没有获得任何牌。");
+				board.setBroadcastMsg(player.getName() + "使用了" + name +"，但是手牌已达上限，没有获得任何牌。");
 			} else {
-				board.setBroadcastMsg(player.getName() + "使用了无中生有，随机获得了" + x + "张牌。");
+				board.setBroadcastMsg(player.getName() + "使用了" + name +"，随机获得了" + x + "张牌。");
 			}
 			
 		}

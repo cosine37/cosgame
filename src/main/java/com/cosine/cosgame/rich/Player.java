@@ -268,7 +268,20 @@ public class Player {
 	}
 	
 	public void loseHp(int x) {
-		hp = hp-x;
+		int value = x;
+		// GTA related, restrict lose value
+		for (int i=0;i<hand.size();i++) {
+			if (hand.get(i).capHurt() && value>1) {
+				value=1;
+				board.getLogger().log("因为" + hand.get(i).getName() + "的效果，失去的生命值改为 1 点");
+			}
+		}
+		hp = hp-value;
+		for (int i=0;i<hand.size();i++) {
+			if (value>0) {
+				hand.get(i).onLoseHp(value);
+			}
+		}
 		if (hp<0) hp = 0;
 	}
 	
@@ -297,6 +310,11 @@ public class Player {
 	
 	public void hurt(Player victim, int x) {
 		victim.loseHp(x);
+	
+		// GTA related, passive effects
+		for (int i=0;i<hand.size();i++) {
+			hand.get(i).onHurt(x);
+		}
 	}
 	
 	public void moveToPlace(int x) {
@@ -319,23 +337,8 @@ public class Player {
 			// TODO: test cards here
 			addRandomCard();
 			addRandomCard();
-			//hand.add(new CardSteamEruption());
-			//hand.add(new CardKJK());
-			//hand.add(new CardTTT());
-			//hand.add(new CardTrick());
-			//hand.add(new CardGraverobber());
-			//hand.add(new CardGraverobber());
-			//hand.add(new CardGraverobber());
-			//hand.add(new CardTruck());
-			//hand.add(new CardFiveGoals());
-			//hand.add(new CardZhiHeng());
-			//hand.add(new CardHarsh());
-			//hand.add(new CardKaka());
-			//hand.add(new CardVehicleCoupon());
-			//hand.add(new CardCP3());
-			//hand.add(new CardBuildCar());
-			//hand.add(new CardPanda());
-			//hand.add(new CardBuyEstate());
+			//hand.add(new CardDual());
+			//hand.add(new CardFrenzyBone());
 		}
 	}
 	
@@ -478,6 +481,15 @@ public class Player {
 		// Step 2: set related status
 		inWard = true;
 		
+		// Step 3: GTA related, exhaust cards onward
+		for (i=hand.size()-1;i>=0;i--) {
+			Card c = hand.get(i);
+			if (c.exhaustOnWard()) {
+				hand.remove(i);
+				board.getLogger().log(name + " 的 " + c.getName() + " 被消耗了");
+			}
+		}
+		
 	}
 	
 	public void outOfWard() {
@@ -525,7 +537,7 @@ public class Player {
 			if (rawOptions == Consts.CARD_OPTION_THROW) {
 				board.getLogger().logThrowCard(this,c);
 				
-				board.setBroadcastImg("avatar/head_"+avatarId);
+				board.setBroadcastImg("card/"+c.getId());
 				board.setBroadcastMsg(name + "丢弃了" + c.getName() + "。");
 				
 				c.onThrow();
@@ -535,7 +547,14 @@ public class Player {
 				
 				// TODO: put the card in discard
 				if (c.isExhaust() == false) {
-					
+					if (c.returnHand()) {
+						if (fullHand()) {
+							board.getLogger().log(name + " 手牌已满，无法将 " + c.getName() + " 返回手牌。");
+						} else {
+							addCard(c);
+							board.getLogger().log(name + " 将 " + c.getName() + " 返回了手牌。");
+						}
+					}
 				}
 			}
 			
@@ -585,6 +604,53 @@ public class Player {
 		} else {
 			return null;
 		}
+	}
+	
+	public int handRarity() {
+		int ans = 0;
+		int i;
+		int maxRarity = 0;
+		int count = 0;
+		for (i=0;i<hand.size();i++) {
+			 if (hand.get(i).getRarity() > maxRarity) {
+				 count = 1;
+				 maxRarity = hand.get(i).getRarity();
+			 } else if (hand.get(i).getRarity() == maxRarity) {
+				 count++;
+			 }
+		}
+		ans = maxRarity*10+count;
+		return ans;
+	}
+	
+	public String handRarityStr() {
+		String s = "";
+		int i;
+		int maxRarity = 0;
+		int count = 0;
+		for (i=0;i<hand.size();i++) {
+			 if (hand.get(i).getRarity() > maxRarity) {
+				 count = 1;
+				 maxRarity = hand.get(i).getRarity();
+			 } else if (hand.get(i).getRarity() == maxRarity) {
+				 count++;
+			 }
+		}
+		if (count == 0) {
+			s = "没有手牌";
+		} else {
+			if (maxRarity == 0) {
+				s = "常见";
+			} else if (maxRarity == 1) {
+				s = "罕见";
+			} else if (maxRarity == 2) {
+				s = "稀有";
+			} else if (maxRarity == 3) {
+				s = "史诗";
+			}
+			s = "" + count + "张" + s + "手牌";
+		}
+		return s;
 	}
 	
 	public List<String> getOptions(){

@@ -148,6 +148,22 @@ public class Factory {
 			c = new CardTrick();
 		} else if (id == 67) {
 			c = new CardBlessings();
+		} else if (id == 68) {
+			c = new CardBefriend();
+		} else if (id == 69) {
+			c = new CardDual();
+		} else if (id == 70) {
+			c = new CardFrenzyBone();
+		} else if (id == 71) {
+			c = new CardSilverLion();
+		} else if (id == 72) {
+			c = new CardBitterMeat();
+		} else if (id == 73) {
+			c = new CardYoung();
+		} else if (id == 74) {
+			c = new CardLegacyPlan();
+		} else if (id == 75) {
+			c = new CardCloseMoon();
 		}
 		
 		else if (id == 84) {
