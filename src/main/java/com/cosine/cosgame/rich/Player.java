@@ -333,10 +333,12 @@ public class Player {
 		if (board.getSettings().getUseGTA()>0) {
 			hp = Consts.GTA_MAXHP;
 			star = 0;
-			
+			for (int i=0;i<index;i++) {
+				addRandomCard();
+			}
 			// TODO: test cards here
-			addRandomCard();
-			addRandomCard();
+			//addRandomCard();
+			//addRandomCard();
 			//hand.add(new CardDual());
 			//hand.add(new CardFrenzyBone());
 		}

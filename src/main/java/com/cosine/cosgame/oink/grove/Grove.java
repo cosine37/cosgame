@@ -151,7 +151,7 @@ public class Grove {
 		if (board.getStatus() == Consts.ROUNDEND) {
 			entity.setMurIndex(murdererId());
 		} else {
-			entity.setMurIndex(-1);
+			entity.setMurIndex(-9);
 		}
 		
 		if (board.getStatus() == Consts.ENDGAME) {
@@ -195,12 +195,13 @@ public class Grove {
 		
 		int ans = suspects.get(0).getNum();
 		for (i=1;i<suspects.size();i++) {
+			if (suspects.get(i).getNum() < 0) continue;
 			if (reverse) {
-				if (suspects.get(i).getNum()<ans) {
+				if (suspects.get(i).getNum()<ans || ans < 0) {
 					ans = suspects.get(i).getNum();
 				}
 			} else {
-				if (suspects.get(i).getNum()>ans) {
+				if (suspects.get(i).getNum()>ans || ans < 0) {
 					ans = suspects.get(i).getNum();
 				}
 			}
