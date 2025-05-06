@@ -18,6 +18,7 @@ public class AllTabs {
 		//allTabs.add(new Tab("花园战争", "gardenwar", "darkgreen"));
 		allTabs.add(new Tab("抽象小品", "oink", "rgb(0,150,255)"));
 		allTabs.add(new Tab("富豪游戏", "rich", "darkgreen"));
+		allTabs.add(new Tab("回转寿司", "sushi", "rgb(10,34,0)"));
 		return allTabs;
 	}
 }

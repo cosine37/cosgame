@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cosgame Sushi</title>
+<link rel="stylesheet" type="text/css" href="/view/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/view/css/mainTheme.css">
+<link rel="stylesheet" type="text/css" href="/view/css/sushiTheme.css">
+</head>
+<script src="/js/lib/angular.js"></script>
+<script src="/js/lib/jquery.js"></script>
+<script src="/js/lib/bootstrap.js"></script>
+<script src="/js/app/sushiMainController.js"></script>
+<body ng-app="sushiMainApp" ng-controller="sushiMainCtrl">
+	<div id="header" class="header">
+		<table width="100%">
+			<tr>
+				<td><h1 class="title">Cosgame</h1></td>
+				<td align="right" style="padding-right: 30px">
+					<span style="margin-right: 10px; color: white">{{username}}</span>
+					<button class="btn btn-info btn-sm" ng-click="logout()">Logout</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="tabs" class="tabs">
+		<button ng-repeat="tab in allTabs" ng-click="goto(tab.path)" ng-style="tab.style">{{tab.name}}</button>
+	</div>
+	
+	<div id="tabcontent" class="tabcontent">
+		<div class="container">
+			<div id="sidebar" class="sidebar">
+				<ul class="nav nav-tabs flex-column" role="tablist">
+				    <li class="nav-item">
+				      <a class="nav-link active" data-toggle="tab" href="#listtab" ng-click="showTablesTab()">游戏</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#rulestab" ng-click="hideTablesTab()">规则</a>
+				    </li>
+				  </ul>
+			</div>
+			
+			<div class="tab-content">
+				<div id="listtab" class="content container tab-pane active">
+					<h1>回转寿司</h1>
+					<table class="table">
+						<tr>
+							<td><button ng-click="newGame()">新游戏</button></td>
+						</tr>
+					</table>
+					<table class="table">
+						<tr>
+							<td>房间号</td>
+							<td>房主</td>
+							<td>状态</td>
+							<td></td>
+						</tr>
+						<tr ng-repeat ="x in boards track by $index">
+							<td>{{x}}</td>
+							<td>{{lords[$index]}}</td>
+							<td>{{statuses[$index]}}</td>
+							<td>
+								<button ng-show="statuses[$index] == '准备中'" ng-click="goToBoard($index)">加入</button>
+								<button ng-show="statuses[$index] == '游戏中' && canBack[$index] == 'y'" ng-click="backToBoard($index)">回桌</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<div id="rulestab" class="content container tab-pane fade">
+					<h2><b>规则</b></h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="nothanksheader"><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 没啥背景
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="nothanksheader"><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持2~8人，4、5人游戏体验最佳。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="nothanksheader"><b>游戏内容</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
