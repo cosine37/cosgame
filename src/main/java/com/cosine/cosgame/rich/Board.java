@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.bson.Document;
 
+import com.cosine.cosgame.rich.basicplaces.Estate;
 import com.cosine.cosgame.rich.basicplaces.InJail;
 import com.cosine.cosgame.rich.builder.MapBuilder;
 import com.cosine.cosgame.rich.eco.Bank;
@@ -306,7 +307,25 @@ public class Board {
 		// Step 5: GTA related, minus all related buffs
 		players.get(curPlayer).getBuff().turnEndMinus();
 		
-		// Step 6: find the next player and potentially start round
+		// Step 6: refresh player owned estates info by iterating through board places.
+		HashMap<Integer, Integer> playerIndexToEstatesCount = new HashMap<>();
+		for (Player p : this.getPlayers()) {
+			// Add all player indices to the map.
+			playerIndexToEstatesCount.put(p.getIndex(), 0);
+		}
+		for (Place place : this.getMap().getPlaces()) {
+			if (place.getType() != Consts.PLACE_ESTATE) continue;
+			Estate e = (Estate) place;
+			int owner = e.getOwnerId();
+			if (owner != -1) {
+				playerIndexToEstatesCount.put(owner, playerIndexToEstatesCount.get(owner) + 1);
+			}
+		}
+		for (Player p : this.getPlayers()) {
+			p.setEstatesCount(playerIndexToEstatesCount.get(p.getIndex()));
+		}
+
+		// Step 7: find the next player and potentially start round
 		curPlayer = (curPlayer+1)%players.size();
 		if (curPlayer == settings.getFirstPlayer()) {
 			logger.logRoundEndDivider();

@@ -12,6 +12,7 @@ public class PlayerEntity {
 	int jailRound;
 	int totalMoney;
 	int saving;
+	int estatesCount;
 	boolean inJail;
 	boolean confirmed;
 	AvatarEntity avatar;
@@ -146,5 +147,10 @@ public class PlayerEntity {
 	public void setSaving(int saving) {
 		this.saving = saving;
 	}
-	
+	public int getEstatesCount() {
+		return estatesCount;
+	}
+	public void setEstatesCount(int estatesCount) {
+		this.estatesCount = estatesCount;
+	}
 }
