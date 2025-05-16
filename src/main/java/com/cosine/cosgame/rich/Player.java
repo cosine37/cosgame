@@ -33,6 +33,7 @@ public class Player {
 	protected List<Card> discard;
 	protected List<Integer> owned;
 	protected int placeIndex;
+	protected int estatesCount;
 	
 	// GTA related
 	protected boolean inWard;
@@ -64,6 +65,7 @@ public class Player {
 		doc.append("buffs", buff.getBuffs());
 		doc.append("vehicle", vehicle.getId());
 		doc.append("cardGenerator", cardGenerator.toDocument());
+		doc.append("estatesCount", estatesCount);
 		Account account = new Account();
 		account.getFromDB(name);
 		Avatar avatar = Factory.genAvatar(account.getChosenAvatar());
@@ -105,6 +107,7 @@ public class Player {
 		inWard = doc.getBoolean("inWard", false);
 		turnEnd = doc.getBoolean("turnEnd", turnEnd);
 		avatarId = doc.getInteger("avatarId", -1);
+		estatesCount = doc.getInteger("estatesCount", 0);
 		List<Integer> buffs = (List<Integer>) doc.get("buffs");
 		buff = new Buff(buffs);
 		int vehicleId = doc.getInteger("vehicle", -1);
@@ -163,6 +166,7 @@ public class Player {
 		entity.setHandSize(hand.size());
 		entity.setTotalMoney(board.getBank().getTotal(this));
 		entity.setSaving(board.getBank().getSaving(this));
+		entity.setEstatesCount(estatesCount);
 		if (vehicle == null || vehicle.getId() == -1) {
 			entity.setVehicleId(-1);
 			entity.setVehicleName("没有");
@@ -1235,5 +1239,11 @@ public class Player {
 	}
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+	public int getEstatesCount() {
+		return estatesCount;
+	}
+	public void setEstatesCount(int estatesCount) {
+		this.estatesCount = estatesCount;
 	}
 }
