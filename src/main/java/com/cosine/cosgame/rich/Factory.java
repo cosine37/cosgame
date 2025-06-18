@@ -212,6 +212,14 @@ public class Factory {
 			c = new CardYellowWine();
 		} else if (id == 10010) {
 			c = new CardPearSyrupCandy();
+		} else if (id == 10011) {
+			c = new CardPeach();
+		} else if (id == 10012) {
+			c = new CardFriedRice();
+		} else if (id == 10013) {
+			c = new CardVinegar();
+		} else if (id == 10014) {
+			c = new CardKnifeFishWonton();
 		}
 		
 		

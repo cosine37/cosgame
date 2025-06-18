@@ -20,6 +20,8 @@ public abstract class Place {
 	protected String img;
 	protected String fontFamily;
 	protected int fontSize;
+	protected String fontColor;
+	protected String fontWeight;
 	protected Detail detail;
 	
 	protected Board board;
@@ -40,6 +42,8 @@ public abstract class Place {
 		doc.append("img", img);
 		doc.append("fontFamily", fontFamily);
 		doc.append("fontSize", fontSize);
+		doc.append("fontColor", fontColor);
+		doc.append("fontWeight", fontWeight);
 		doc.append("placeBuff", placeBuff.getBuffs());
 		List<Integer> playersOnDocList = new ArrayList<>();
 		for (i=0;i<playersOn.size();i++){
@@ -58,6 +62,9 @@ public abstract class Place {
 		landMsg = doc.getString("landMsg");
 		img = doc.getString("img");
 		fontFamily = doc.getString("fontFamily");
+		fontColor = doc.getString("fontColor");
+		fontWeight = doc.getString("fontWeight");
+		//if (fontColor == null || fontColor.length() == 0) fontColor = "black";
 		fontSize = doc.getInteger("fontSize", 16);
 		List<Integer> playersOnDocList = (List<Integer>)doc.get("playersOn");
 		playersOn = new ArrayList<>();
@@ -92,6 +99,8 @@ public abstract class Place {
 		HashMap<String, String> fontStyle = new HashMap<>();
 		fontStyle.put("font-family", fontFamily);
 		fontStyle.put("font-size", Integer.toString(fontSize)+"px");
+		if (fontColor != null && fontColor.length() > 0) fontStyle.put("color", fontColor);
+		if (fontWeight != null && fontWeight.length() > 0) fontStyle.put("fontWeight", fontWeight);
 		entity.setFontStyle(fontStyle);
 		if (detail != null) {
 			entity.setDetail(detail.toDetailEntity());
@@ -169,9 +178,23 @@ public abstract class Place {
 		ans.add("确定");
 		return ans;
 	}
+	public void setFont(String fontFamily, int fontSize, String fontColor,String fontWeight) {
+		this.fontFamily = fontFamily;
+		this.fontSize = fontSize;
+		this.fontColor = fontColor;
+		this.fontWeight = fontWeight;
+	}
+	public void setFont(String fontFamily, int fontSize, String fontColor) {
+		this.fontFamily = fontFamily;
+		this.fontSize = fontSize;
+		this.fontColor = fontColor;
+		this.fontWeight = "";
+	}
 	public void setFont(String fontFamily, int fontSize) {
 		this.fontFamily = fontFamily;
 		this.fontSize = fontSize;
+		this.fontColor = "";
+		this.fontWeight = "";
 	}
 	public void createDetail() {
 		detail = new Detail(this);
@@ -259,6 +282,12 @@ public abstract class Place {
 	}
 	public void setPlaceBuff(PlaceBuff placeBuff) {
 		this.placeBuff = placeBuff;
+	}
+	public String getFontColor() {
+		return fontColor;
+	}
+	public void setFontColor(String fontColor) {
+		this.fontColor = fontColor;
 	}
 	
 

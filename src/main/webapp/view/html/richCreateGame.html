@@ -49,11 +49,13 @@
 			<button ng-disabled="mapId==0" ng-click="mapId=0" class="map-button">青果巷</button>
 			<button ng-disabled="mapId==1" ng-click="mapId=1" class="map-button">G T A</button>
 			<button ng-disabled="mapId==2" ng-click="mapId=2" class="map-button">上海滩</button>
+			<button ng-disabled="mapId==3" ng-click="mapId=3" class="map-button">苏中南</button>
 		</div>
 		<div style="margin-top: 10px;">
 			<img ng-src="/image/Rich/qingguo.png" class="map-graph" ng-show="mapId==0">
 			<img ng-src="/image/Rich/gta.png" class="map-graph" ng-show="mapId==1">
 			<img ng-src="/image/Rich/shanghai2.png" class="map-graph" ng-show="mapId==2">
+			<img ng-src="/image/Rich/szn.png" class="map-graph" ng-show="mapId==3">
 		</div>
 		<div style="margin-top: 20px;">
 			<table style="margin-left: 300px; text-align:left; font-size: 16px;" >
@@ -62,11 +64,13 @@
 						<span ng-show="mapId==0">小</span>
 						<span ng-show="mapId==1">大</span>
 						<span ng-show="mapId==2">大</span>
+						<span ng-show="mapId==3">大</span>
 					</td>
 					<td style="width: 300px;"><b>支持人数：</b>
 						<span ng-show="mapId==0">2~4人</span>
 						<span ng-show="mapId==1">2~6人</span>
 						<span ng-show="mapId==2">2~6人</span>
+						<span ng-show="mapId==3">2~6人</span>
 					</td>
 				</tr>
 				<tr>
@@ -74,11 +78,13 @@
 						<span ng-show="mapId==0">快</span>
 						<span ng-show="mapId==1">中</span>
 						<span ng-show="mapId==2">中</span>
+						<span ng-show="mapId==3">中</span>
 					</td>
 					<td style="width: 300px;"><b>推荐扩展：</b>
 						<span ng-show="mapId==0">无</span>
 						<span ng-show="mapId==1">GTA</span>
 						<span ng-show="mapId==2">GTA</span>
+						<span ng-show="mapId==3">GTA</span>
 					</td>
 				</tr>
 				<tr>

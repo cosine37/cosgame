@@ -21,11 +21,324 @@ public class MapBuilder {
 			return genGTA(settings);
 		} if (mapId == 2) {
 			return genShanghai(settings);
+		} if (mapId == 3) {
+			return genSZN(settings);
 		} 
 		
 		else {
 			return new Map();
 		}
+	}
+	
+	public static Map genSZN(Settings settings) {
+		final int height = 11;
+		final int width = 11;
+		final int n = (height+width-2)*2;
+		int i;
+		Map map = new Map();
+		map.setId(3);
+		map.setName("苏中南");
+		map.setNameFont("jnk");
+		map.setHeight(height);
+		map.setWidth(width);
+		map.setNumDice(1);
+		map.setJailIndex(10);
+		map.setJailZone(1);
+		map.setBailCost(500);
+		map.setMapZoom("0.95");
+		map.setCenterZoom("1.05");
+		map.setCenterHeight("602px");
+		map.setCenterWidth("1033px");
+		map.setLogHeight("880px");
+		//map.setAreaColors(new ArrayList<>(Arrays.asList("","darkslategrey","orangered","DarkCyan","darkviolet","darkgreen","maroon","olive","navy")));
+		//map.setAreaColors(new ArrayList<>(Arrays.asList("","olive","darkviolet","darkslategrey","maroon","darkgreen","orangered","darkcyan","navy")));
+		map.setAreaColors(new ArrayList<>(Arrays.asList("","darkcyan","darkslategrey","darkgreen","navy","maroon","olive","darkviolet","orangered")));
+		map.setAreaNames(new ArrayList<>(Arrays.asList("","江苏南通","江苏泰州","江苏扬州","安徽南京","江苏镇江","江苏常州","江苏无锡","江苏苏州")));
+		map.setBgms(new ArrayList<>(Arrays.asList("qingguo2","qingguo3","qingguo4","qingguo5","qingguo6","qingguo7","szn1","szn2","szn3","szn5")));
+		map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","")));
+		map.setUtilityName("港口");
+		map.setStationName("高铁站");
+		if (settings.getUseGTA() == 1) {
+			map.setCornerNames(new ArrayList<>(Arrays.asList("","jail","","ward")));
+			map.setHospitalIndex(30);
+			map.setWardZone(3);
+		}
+		
+		for (i=0;i<n;i++) {
+			Place p = new Empty(i, "地点"+i);
+			p.setFont("jnk", 22);
+			
+			if (i == 0) {
+				p = new StartPoint(i, "梅友机场");
+				p.setFont("jnk", 24);
+				p.setImg("szn/meiyou2");
+				p.setDesc("经过或停留此处领取$2000");
+				p.setLandMsg("将会领取薪水");
+				p.createDetail();
+				p.getDetail().setTitle("城市航站楼 · 苏州梅友机场");
+				p.getDetail().setImg("szn/meiyou");
+				p.getDetail().setDesc("经过或停留此处获得$2000。");
+				p.getDetail().setDesc2("该航站楼拥有其专属的IATA代码，由上海虹桥机场和上海浦东机场出发的旅客可以在此办理值机业务，且拥有去往上海机场的“虚拟航班”，即赋予航班号的接驳车。只是这个摆渡距离有亿些长，差点没把我给笑死。");
+			} else if (i == 3 || i == 8 || i == 18 || i == 23 || i == 33 || i == 38 || i == 13 || i == 28) {
+				p = new PersonalEvent(i, "见闻");
+				p.setImg("fate");
+				p.setFont("jnk", 24);
+				p.createDetail();
+				if (settings.getUseGTA() == 1) {
+					p.getDetail().setDesc2("冷知识：点击确定之后见闻才会生效。未来有些卡牌可以改变当前的见闻。");
+				}
+			} else if (i == 10) {
+				p = new Jail(i, "监狱大门");
+				p.setImg("jailDoor");
+				p.setFont("jnk", 22);
+				p.setLandMsg("你来到了监狱大门口，但只是路过");
+				p.createDetail();
+				p.getDetail().setDesc("这里原本是泰州高铁站的站房，但因为没有高铁经过此处，所以只能用来当监狱了~");
+			} else if (i == 30) {
+				if (settings.getUseGTA() == 1) {
+					p = new Hospital(i, "医院");
+					p.setImg("hospital");
+					p.setFont("jnk", 22);
+					p.createDetail();
+					p.getDetail().setDesc("你可以在此回复生命值。");
+					p.getDetail().setDesc2("花费$500回复1点生命值。若你的生命值为1，你可以花费$1000回复2点生命值。");
+					p.getDetail().setTitle("江阴市人民医院");
+					p.getDetail().setImg("szn/jyrmyy");
+				} else {
+					p = new GoToJail(i, "入狱");
+					p.setImg("goToJail");
+					p.setFont("jnk", 22);
+					p.setLandMsg("你将立即入狱");
+					p.createDetail();
+					p.getDetail().setDesc("正值六月，巡警在看到你的一瞬间，天空突然飘下了雪花，所以你被捕入狱了。入狱属于移出地图，所以你不会领取经过钱庄的$2000。");
+					p.getDetail().setDesc2("难道这个游戏唯一入狱的方式就是走到这一格上？");
+				}
+			} else if (i==20) {
+				if (settings.getUseGTA() == 1) {
+					p = new CardGainer(i, "紫金山");
+					p.setImg("szn/zijinshan2");
+					p.setFont("jnk", 22);
+					p.setDesc("经过获得1张牌；停留获得2张牌并减少1点通缉值");
+					p.setLandMsg("将会减少1点通缉值并获得2张牌（如果你有手牌空间）");
+					p.createDetail();
+					p.getDetail().setDesc("经过此处获得1张牌。停留此处获得2张牌并减少1点通缉值。");
+					p.getDetail().setDesc2("钟山又称紫金山，历史上便是知名的风景区，其历史可以追溯至中国的东晋时期。钟山风景名胜区现由两大区域构成，即东部主体钟山区域的中山陵园风景区（包含中山陵景区、明孝陵景区、灵谷景区三大核心景区和其他区域景点）以及西部的玄武湖区域（包括玄武湖公园景区和九华山区域）。");
+					p.getDetail().setTitle("钟山风景名胜区");
+					p.getDetail().setImg("szn/zijinshan");
+					
+				} else {
+					p = new Empty(i, "免费停车场");
+					p.setImg("parking");
+					p.setFont("jnk", 20);
+					p.setLandMsg("无事发生");
+					p.createDetail();
+					p.getDetail().setDesc("现在就是一个平平无奇的停车场，未来这一格可能有别的功效？");
+				}
+			} else if (i == 7) {
+				p = new Estate(i, "泰州港", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("jnk", 18);
+				p.setImg("port");
+				p.createDetail();
+				p.getDetail().setImg("szn/taizhougang");
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("泰州港，原名高港港（叠词词，恶心心），是长江25个干线港口之一，形成于北宋太祖乾德三年（965年）。港内设有长江泊位22座。堆场面积达60万平方米，各类仓库面积达1.2万平方米。");
+			} else if (i == 22) {
+				p = new Estate(i, "新民洲港", Consts.AREA_UTILITY, 1500,0,0,new ArrayList<>(Arrays.asList(80,200)));
+				p.setFont("jnk", 18);
+				p.setImg("port");
+				p.createDetail();
+				p.getDetail().setImg("szn/xinminzhougang");
+				p.getDetail().setDesc("若该地被某位玩家拥有，到达后掷一次骰子，按所掷之数支付路费。"); 
+				p.getDetail().setDesc2("新民洲港位于镇江市京口区，是国家一类对外开放口岸，拥有1657米长江深水岸线和6个5万吨级兼靠7万吨级泊位，年吞吐能力超1200万立方米，是长江沿线重要港口之一。");
+			} else if (i == 5) {
+				p = new Estate(i, "南通西站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("lishu", 20, "red", "bold");
+				p.setImg("szn/crh");;
+				p.createDetail();
+				p.getDetail().setImg("szn/nantongxi");
+				p.getDetail().setDesc("欢迎您乘坐复兴号列车，本次列车全列禁烟~"); 
+				p.getDetail().setDesc2("可移动至其他高铁站。经过可以触发被动效果的地点则会触发被动效果（如梅友机场），到达后无法购买且不需要支付路费。");
+			} else if (i == 15) {
+				p = new Estate(i, "扬州东站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("lishu", 20, "red", "bold");
+				p.setImg("szn/crh");
+				p.createDetail();
+				p.getDetail().setImg("szn/yangzhoudong");
+				p.getDetail().setDesc("欢迎您乘坐复兴号列车，本次列车全列禁烟~"); 
+				p.getDetail().setDesc2("可移动至其他高铁站。经过可以触发被动效果的地点则会触发被动效果（如梅友机场），到达后无法购买且不需要支付路费。");
+			} else if (i == 25) {
+				p = new Estate(i, "吊州北站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("lishu", 20, "red", "bold");
+				p.setImg("szn/crh");
+				p.createDetail();
+				p.getDetail().setImg("szn/diaozhoubei");
+				p.getDetail().setDesc("欢迎您乘坐复兴号列车，本次列车全列禁烟~"); 
+				p.getDetail().setDesc2("可移动至其他高铁站。经过可以触发被动效果的地点则会触发被动效果（如梅友机场），到达后无法购买且不需要支付路费。");
+			} else if (i == 35) {
+				p = new Estate(i, "无锡东站", Consts.AREA_STATION, 2000,0,0,new ArrayList<>(Arrays.asList(250,500,1000,2000)));
+				p.setFont("lishu", 20, "red", "bold");
+				p.setImg("szn/crh");
+				p.createDetail();
+				p.getDetail().setImg("szn/wuxidong");
+				p.getDetail().setDesc("欢迎您乘坐复兴号列车，本次列车全列禁烟~"); 
+				p.getDetail().setDesc2("可移动至其他高铁站。经过可以触发被动效果的地点则会触发被动效果（如梅友机场），到达后无法购买且不需要支付路费。");
+			} else if (i == 1) {
+				p = new Estate(i, "海门区", 1, 2000,1500,5,new ArrayList<>(Arrays.asList(160,800,2200,6000,8000,10000)));
+				p.setImg("szn/haimen");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南通市海门区位于江苏省东南部、长江三角洲的黄金地带，东临黄海、南傍长江，与上海隔江相望，被誉为“江海门户”、“北上海”，是工业、交通和海洋经济的重要枢纽，其中著名地标包括张謇纪念馆、叠石桥家纺城、余东古镇、海港生态公园、九龙岛文化湿地与蛎岈山海洋公园等景点");
+			} else if (i == 2) {
+				p = new Estate(i, "通州区", 1, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
+				p.setImg("szn/tongzhou");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南通市通州区位于江苏东南部、长江北岸，是一个集江海交通枢纽与工业经济于一体的重要城区，也是南通的重要经济区和交通枢纽，拥有著名景点濠河风景区、唐闸古镇及通州湾江海联动区等。");
+			} else if (i == 4) {
+				p = new Estate(i, "崇川区", 1, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
+				p.setImg("szn/chongchuan");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南通市崇川区位于市中心，是南通的政治、经济、文化核心区。区内有著名的狼山风景区、濠河景区等自然与人文景观，吸引大量游客。崇川区还汇聚了南通大学、南通博物苑等地标性建筑，展现出丰富的历史底蕴与现代活力。");
+			} else if (i == 6) {
+				p = new Estate(i, "高港区", 2, 1200,500,5,new ArrayList<>(Arrays.asList(80,400,1000,3000,4500,6000)));
+				p.setImg("szn/gaogang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("泰州市高港区位于江苏省中部、长江北岸，是泰州对接长江经济带的重要门户。高港区拥有临港经济区、泰州港等现代化港口产业集群，是长江沿线的工业重镇。区内还包括金港花园、南山湖公园等宜居与休闲场所，展现出宜业宜居的城市魅力。");
+			} else if (i == 9) {
+				p = new Estate(i, "海陵区", 2, 1000,500,5,new ArrayList<>(Arrays.asList(60,300,900,2700,4000,5500)));
+				p.setImg("szn/hailing");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("泰州市海陵区位于江苏省中部，是泰州市的政治、经济、文化中心。区内有古运河文化旅游景区和梅兰芳纪念馆等丰富的历史人文景观。现代商业和科技产业园区在这里集聚，推动城市高质量发展。");
+			} else if (i == 11) {
+				p = new Estate(i, "江都区", 3, 1400,1000,5,new ArrayList<>(Arrays.asList(100,500,1500,4500,6250,7500)));
+				p.setImg("szn/jiangdu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("扬州市江都区位于江苏中部，长江与京杭大运河交汇处，地理位置优越。江都区以“水乡园林”著称，拥有引江河公园、江都水利枢纽等地标。区内现代化工业园和高新技术产业园发展迅速，是扬州经济的重要增长极。");
+			} else if (i == 12) {
+				p = new Estate(i, "广陵区", 3, 1800,1000,5,new ArrayList<>(Arrays.asList(140,700,2000,5500,7500,9500)));
+				p.setImg("szn/guangling");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("扬州市广陵区是古城扬州的政治、经济和文化中心，拥有深厚的历史底蕴。区内有东关街、个园等著名历史街区和古园林，见证着扬州繁华的文化记忆。广陵区还不断发展现代服务业和高端产业，展现出古今辉映的城市活力。");
+			} else if (i == 14) {
+				p = new Estate(i, "邗江区", 3, 1600,1000,5,new ArrayList<>(Arrays.asList(120,600,1800,5000,7000,9000)));
+				p.setImg("szn/hanjiang");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("扬州市邗江区地处古扬州核心腹地，南临长江、北接淮水，并由京杭大运河贯穿，是历史悠久的2500多年古邑，自吴王夫差开掘邗沟筑城起就有“淮左名都”之誉。区内著名景点包括世界文化遗产蜀冈–瘦西湖风景名胜区，以及大明寺、邗沟大王庙、隋炀帝陵等多处全国重点文物保护单位，文化底蕴深厚。");
+			} else if (i == 16) {
+				p = new Estate(i, "玄武区", 4, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("szn/xuanwu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南京市玄武区位于市中心，是南京的政治、文化和科教重镇。区内有著名的玄武湖公园、南京火车站以及中山陵、紫金山风景区等景点。玄武区经济繁荣，商业和高新技术产业融合发展，展现出古韵新风的独特魅力。");
+			} else if (i == 17) {
+				p = new Estate(i, "鼓楼区", 4, 3200,2000,5,new ArrayList<>(Arrays.asList(280,1500,4500,10000,12000,14000)));
+				p.setImg("szn/gulou");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南京市鼓楼区位于市中心，是江苏省和南京市的核心行政和商业区。区内有鼓楼公园、南师大随园校区、长江路民国建筑群等丰富的人文景观。鼓楼区是现代金融、科技和文化创意产业集聚之地，经济活力旺盛。");
+			} else if (i == 19) {
+				p = new Estate(i, "建邺区", 4, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("szn/jianye");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("南京市建邺区位于南京市主城区西南部，毗邻长江，是南京现代化城市的代表区域。区内有奥体中心、河西CBD和青奥城等地标性建筑，展现出现代都市风貌。建邺区以金融、高科技产业为引领，推动高质量发展，成为南京的新兴经济引擎。");
+			} else if (i == 21) {
+				p = new Estate(i, "润州区", 5, 600,300,5,new ArrayList<>(Arrays.asList(20,100,300,900,1600,2500)));
+				p.setImg("szn/runzhou");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("镇江市润州区位于市区西南部，是镇江的政治、文化和交通中心。区内有金山风景区、南山风景区等著名历史文化景点，山水相依、环境优美。润州区不断发展现代服务业和高新技术产业，经济活力不断增强。");
+			} else if (i == 24) {
+				p = new Estate(i, "京口区", 5, 800,500,5,new ArrayList<>(Arrays.asList(40,200,600,1800,3200,4500)));
+				p.setImg("szn/jingkou");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("镇江市京口区位于市区东北部，是镇江的历史文化和经济活跃区。区内有北固山公园、焦山风景区等著名景点，山水相依、景色宜人。京口区以现代服务业和港口物流为支柱，发展迅速，展现出历史与现代交融的魅力。");
+			} else if (i == 26) {
+				p = new Estate(i, "新北区", 6, 2800,1500,5,new ArrayList<>(Arrays.asList(240,1200,3600,8500,10250,12000)));
+				p.setImg("szn/xinbei");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("常州市新北区位于市区北部，是常州的现代化产业和科技创新核心区。区内有常州恐龙园、环球港等地标性文旅商业综合体，展现出现代都市活力。新北区大力发展高端制造业和高新技术产业，经济活力充沛、前景广阔。");
+			} else if (i == 27) {
+				p = new Estate(i, "钟楼区", 6, 2000,1500,5,new ArrayList<>(Arrays.asList(160,800,2200,6000,8000,10000)));
+				p.setImg("szn/zhonglou");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("常州市钟楼区是常州的核心城区，因南唐时期建有古钟楼而得名，拥有超过2000年历史沉淀，是城市文化与商贸中心。区内京杭大运河贯穿而过，连串南市河、西瀛里、篦箕巷等历史文化街区与青枫公园、运河五号创意街区、瞿秋白纪念馆等地标交相辉映，展现丰富人文底蕴与城市活力。");
+			} else if (i == 29) {
+				p = new Estate(i, "天宁区", 6, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("szn/tianning");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("常州市天宁区位于常州市主城区东北部，交通便利，京杭大运河、高铁、沪宁高速等贯穿全境，素有“江南水乡”风貌与现代都市格局交织的特色。区内地标丰富，包括天宁禅寺及其高达153米的天宁宝塔、历史文化街区青果巷、红梅公园、寺墩遗址及焦溪古镇等，承载深厚的文化与历史价值。");
+			} else if (i == 31) {
+				p = new Estate(i, "梁溪区", 7, 3000,2000,5,new ArrayList<>(Arrays.asList(260,1300,3900,9000,11000,12750)));
+				p.setImg("szn/liangxi");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("无锡市梁溪区位于市中心，因横贯城区的梁溪河命名，区内拥有清名桥历史文化街区、南长街、小娄巷、崇安寺和南禅寺等一系列融合古运河与江南老城风貌的景点，以及中国民族工商业博物馆和无锡博物院等文化地标。");
+			} else if (i == 32) {
+				p = new Estate(i, "滨湖区", 7, 2200,1500,5,new ArrayList<>(Arrays.asList(180,900,2500,7000,8750,10500)));
+				p.setImg("szn/binhu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("无锡市滨湖区位于太湖之滨，是无锡的旅游度假和现代服务业重镇。区内拥有灵山大佛、蠡湖风景区等著名景点，山水园林和人文历史相得益彰。滨湖区经济发展活跃，高新技术产业和现代都市生活和谐共生。");
+			} else if (i == 34) {
+				p = new Estate(i, "新吴区", 7, 2600,1500,5,new ArrayList<>(Arrays.asList(220,1100,3300,8000,9750,11500)));
+				p.setImg("szn/xinwu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("无锡市新吴区位于市区东部，是无锡的高新技术产业和外向型经济发展核心区。区内汇聚了众多创新型企业和研发中心，现代化都市氛围浓厚。新吴区也是宜居宜业的典范，生活配套和生态环境建设齐头并进。");
+			} else if (i == 36) {
+				p = new Estate(i, "虎丘区", 8, 3500,2000,5,new ArrayList<>(Arrays.asList(350,1750,5000,11000,13000,15000)));
+				p.setImg("szn/huqiu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("苏州市虎丘区位于市区西北部，以虎丘山风景区而得名，拥有深厚的历史文化底蕴。区内融合了千年古刹云岩寺塔和京杭大运河风光，是江南园林与古运河文化的交汇地。现代虎丘区也是苏州高新技术产业和生态宜居新城区，经济与文化交相辉映。");
+			} else if (i == 37) {
+				p = new Estate(i, "相城区", 8, 2400,1500,5,new ArrayList<>(Arrays.asList(200,1000,3000,7500,9250,11000)));
+				p.setImg("szn/xiangcheng");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("苏州市相城区位于苏州城区北部，东依阳澄湖、南临古城与工业园区，交通便利，是苏州重要的“枢纽中心城”。区内依托阳澄湖生态休闲旅游度假区及中国花卉植物园、荷塘月色湿地公园、盛泽湖月季园等生态景区，以及御窑金砖博物馆、元和塘沿线历史水道和孙武纪念园等文化地标，展现深厚的江南文化底蕴。");
+			} else if (i == 39) {
+				p = new Estate(i, "姑苏区", 8, 4000,2000,5,new ArrayList<>(Arrays.asList(500,2000,6000,14000,17000,20000)));
+				
+				p.setImg("szn/gusu");
+				p.setFont("jnk", 18);
+				p.createDetail();
+				p.getDetail().setDesc("苏州市姑苏区位于苏州市中心，是苏州古城的重要组成部分，也是历史文化最为集中的核心区域。区内拥有拙政园、狮子林、平江路历史街区等世界文化遗产和著名景点，展现出深厚的江南水乡韵味。姑苏区融合了传统文化和现代生活，成为苏州旅游、文化和生活方式的重要展示窗口。");
+			}
+			
+			map.addPlace(p);
+		}
+		
+		map.setFateIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,201,202,203,204)));
+		if (settings.getUseGTA() == 1) {
+			
+			map.setFateIds(new ArrayList<>(Arrays.asList(1,4,5,6,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,
+					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019,10020,10021,10022,10023,10024,10025,10026,
+					10102,103,104)));
+			
+			//map.setFateIds(new ArrayList<>(Arrays.asList(10025,10026)));
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,49,50,
+					54,55,56,57,58,59,60,61,63,64,66,68,69,70,71,72,73,74,75,84,85,86,95,
+					10011,10012,10003,10014,10005,10006,10007,10008,10009,10013)));
+			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)));
+		}
+		map.setNewsIds(new ArrayList<>());
+		if (settings.getUseNEW() == 1) {
+			map.setNewsIds(new ArrayList<>(Arrays.asList(1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)));
+			//map.setNewsIds(new ArrayList<>(Arrays.asList(17,18,19,20)));
+		}
+		return map;
 	}
 	
 	public static Map genShanghai(Settings settings) {
@@ -347,7 +660,7 @@ public class MapBuilder {
 					10101,10102,103,108,109,110)));
 			
 			//map.setFateIds(new ArrayList<>(Arrays.asList(10025,10026)));
-			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,
+			map.sortCardRarity(new ArrayList<>(Arrays.asList(0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,49,50,
 					54,55,56,57,58,59,60,61,63,64,66,68,69,70,71,72,73,74,75,84,85,86,95,
 					10001,10002,10003,10004,10005,10006,10007,10008,10009,10010)));
 			map.setVehicleIds(new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)));

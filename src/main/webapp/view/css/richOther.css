@@ -40,6 +40,10 @@
      font-family: 'heiti'; 
      src:url('/font/heiti.woff') format('woff')
 }
+@font-face{
+     font-family: 'lishu'; 
+     src:url('/font/lishu.woff') format('woff')
+}
 
 button{
 	outline: none;
