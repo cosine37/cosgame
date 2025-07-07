@@ -3,6 +3,11 @@ package com.cosine.cosgame.oink.flip7;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
+import com.cosine.cosgame.oink.flip7.entity.CardEntity;
+import com.cosine.cosgame.oink.flip7.entity.Flip7PlayerEntity;
+
 public class Flip7Player {
 	int index;
 	int score;
@@ -16,6 +21,89 @@ public class Flip7Player {
 	boolean confirmed;
 	
 	Flip7 flip7;
+	
+	public Document toDocument(){
+		int i;
+		Document doc = new Document();
+		doc.append("index",index);
+		doc.append("score",score);
+		doc.append("phase",phase);
+		doc.append("name",name);
+		List<Document> numCardsDocList = new ArrayList<>();
+		for (i=0;i<numCards.size();i++){
+			numCardsDocList.add(numCards.get(i).toDocument());
+		}
+		doc.append("numCards",numCardsDocList);
+		List<Document> addonCardsDocList = new ArrayList<>();
+		for (i=0;i<addonCards.size();i++){
+			addonCardsDocList.add(addonCards.get(i).toDocument());
+		}
+		doc.append("addonCards",addonCardsDocList);
+		List<Document> specialCardsDocList = new ArrayList<>();
+		for (i=0;i<specialCards.size();i++){
+			specialCardsDocList.add(specialCards.get(i).toDocument());
+		}
+		doc.append("specialCards",specialCardsDocList);
+		doc.append("active",active);
+		doc.append("confirmed",confirmed);
+		return doc;
+	}
+	public void setFromDoc(Document doc){
+		int i;
+		index = doc.getInteger("index",0);
+		score = doc.getInteger("score",0);
+		phase = doc.getInteger("phase",0);
+		name = doc.getString("name");
+		List<Document> numCardsDocList = (List<Document>)doc.get("numCards");
+		numCards = new ArrayList<>();
+		for (i=0;i<numCardsDocList.size();i++){
+			Card e = new Card();
+			e.setFromDoc(numCardsDocList.get(i));
+			numCards.add(e);
+		}
+		List<Document> addonCardsDocList = (List<Document>)doc.get("addonCards");
+		addonCards = new ArrayList<>();
+		for (i=0;i<addonCardsDocList.size();i++){
+			Card e = new Card();
+			e.setFromDoc(addonCardsDocList.get(i));
+			addonCards.add(e);
+		}
+		List<Document> specialCardsDocList = (List<Document>)doc.get("specialCards");
+		specialCards = new ArrayList<>();
+		for (i=0;i<specialCardsDocList.size();i++){
+			Card e = new Card();
+			e.setFromDoc(specialCardsDocList.get(i));
+			specialCards.add(e);
+		}
+		active = doc.getBoolean("active",false);
+		confirmed = doc.getBoolean("confirmed",false);
+	}
+	
+	public Flip7PlayerEntity toFlip7PlayerEntity(String username){
+		int i,j;
+		Flip7PlayerEntity entity = new Flip7PlayerEntity();
+		entity.setIndex(index);
+		entity.setScore(score);
+		entity.setName(name);
+		List<CardEntity> listOfNumCards = new ArrayList<>();
+		for (i=0;i<numCards.size();i++){
+			listOfNumCards.add(numCards.get(i).toCardEntity());
+		}
+		entity.setNumCards(listOfNumCards);
+		List<CardEntity> listOfAddonCards = new ArrayList<>();
+		for (i=0;i<addonCards.size();i++){
+			listOfAddonCards.add(addonCards.get(i).toCardEntity());
+		}
+		entity.setAddonCards(listOfAddonCards);
+		List<CardEntity> listOfSpecialCards = new ArrayList<>();
+		for (i=0;i<specialCards.size();i++){
+			listOfSpecialCards.add(specialCards.get(i).toCardEntity());
+		}
+		entity.setSpecialCards(listOfSpecialCards);
+		entity.setActive(active);
+		entity.setConfirmed(confirmed);
+		return entity;
+	}
 	
 	public Flip7Player() {
 		numCards = new ArrayList<>();
