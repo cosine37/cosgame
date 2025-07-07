@@ -16,8 +16,9 @@ public class Consts {
 	public static final int WEST = 4;
 	public static final int MASKMAN = 5;
 	public static final int POPE = 6;
+	public static final int FLIP7 = 7;
 	
-	public static final int NUMGAMES = 6;
+	public static final int NUMGAMES = 7;
 	
 	// Settings
 	public static final int SETTINGS_GAME = 0;

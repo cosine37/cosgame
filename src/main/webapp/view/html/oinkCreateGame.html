@@ -131,6 +131,12 @@
 								<span style="font-weight: bold">胜利条件：</span> 游戏一共进行7轮，最后仙丹最多的玩家获得胜利。
 							</div>
 						</div>
+						
+						<div ng-show="gameMode == FLIP7">
+							<div class="fakemsg-div" style="width: 400px;">
+								<span style="font-weight: bold">支持人数：</span> 3~18人，最佳人数为5~6人。
+							</div>
+						</div>
 					</div>
 					
 					<div style="border-top: 1px groove lightgrey; padding-top: 5px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px;">
@@ -138,6 +144,7 @@
 						<button ng-click="gameMode = GROVE; playMsgSE()" ng-disabled="gameMode == GROVE">{{gameName[GROVE]}}</button>
 						<button ng-click="gameMode = POPE; playMsgSE()" ng-disabled="gameMode == POPE">{{gameName[POPE]}}</button>
 						<button ng-click="gameMode = WEST; playMsgSE()" ng-disabled="gameMode == WEST">{{gameName[WEST]}}</button>
+						<button ng-click="gameMode = FLIP7; playMsgSE()" ng-disabled="gameMode == FLIP7">{{gameName[FLIP7]}}</button>
 						
 						<button ng-click="chatBox = CHANGESIGNATURE; playClickSE()" ng-show="chatBox != CHANGESIGNATURE" style="float:right; margin-left: 5px;">更换签名</button>
 						<button ng-click="chatBox = 0; playClickSE()" ng-show="chatBox == CHANGESIGNATURE" style="float:right; margin-left: 5px;">关闭签名</button>

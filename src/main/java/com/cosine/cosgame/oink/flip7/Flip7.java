@@ -107,10 +107,12 @@ public class Flip7 {
 		return entity;
 	}
 	
-	public Flip7() {
+	public Flip7(Board board) {
 		players = new ArrayList<>();
 		deck = new ArrayList<>();
 		discard = new ArrayList<>();
+		
+		this.board = board;
 		
 		String dbname = "oink";
 		String col = "board";
@@ -179,6 +181,25 @@ public class Flip7 {
 		return null;
 	}
 	
+	// Begin actual operations
+	public void startGameUDB() {
+		// Step 1: create players
+		int i;
+		List<String> playerNames = board.getPlayerNames();
+		players = new ArrayList<>();
+		for (i=0;i<playerNames.size();i++) {
+			Flip7Player p = new Flip7Player(playerNames.get(i));
+			p.setFlip7(this);
+			players.add(p);
+		}
+		
+		startGame();
+		
+		updatePlayers();
+		updateBasicDB();
+	}
+	// End actual operations
+	
 	public void updatePlayer(int index) {
 		Flip7Player p = players.get(index);
 		if (p != null) {
@@ -204,7 +225,7 @@ public class Flip7 {
 	public void updateBasicDB() {
 		updateDB("round", round);
 		updateDB("status", board.getStatus());
-		//updateDB("curPlayer", curPlayer);
+		updateDB("curPlayer", curPlayer);
 		updateDB("firstPlayer", firstPlayer);
 		//updateDB("logs", logger.getLogs());
 		int i;

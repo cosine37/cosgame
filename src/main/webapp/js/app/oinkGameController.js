@@ -21,6 +21,7 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 		$scope.GROVE = 2;
 		$scope.POPE = 6;
 		$scope.WEST = 4;
+		$scope.FLIP7 = 7;
 		
 		$scope.INGAME = 1
 		$scope.ROUNDEND = 2
@@ -675,8 +676,6 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs("log-zone-pope")
 					});
-					//alert($scope.status)
-					//alert($scope.ENDGAME)
 				} else if ($scope.game == $scope.WEST){
 					var oldPhase = $scope.phase
 					$scope.gamedata = response.data.west
@@ -720,6 +719,8 @@ app.controller("oinkGameCtrl", ['$scope', '$window', '$http', '$document', '$tim
 					$http.post('/citadelsgame/empty').then(function(response){
 						adjustLogs("log-zone-west")
 					});
+				} else if ($scope.game == $scope.FLIP7){
+					$scope.gamedata = response.data.flip7
 				}
 				
 				

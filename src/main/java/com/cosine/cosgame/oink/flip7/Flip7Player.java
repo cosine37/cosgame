@@ -111,6 +111,11 @@ public class Flip7Player {
 		specialCards = new ArrayList<>();
 	}
 	
+	public Flip7Player(String name) {
+		this();
+		this.name = name;
+	}
+	
 	public void startRound() {
 		active = true;
 		

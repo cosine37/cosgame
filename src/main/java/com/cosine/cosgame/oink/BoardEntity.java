@@ -3,6 +3,7 @@ package com.cosine.cosgame.oink;
 import java.util.List;
 
 import com.cosine.cosgame.oink.account.entity.AccountEntity;
+import com.cosine.cosgame.oink.flip7.entity.Flip7Entity;
 import com.cosine.cosgame.oink.grove.entity.GroveEntity;
 import com.cosine.cosgame.oink.pope.entity.PopeEntity;
 import com.cosine.cosgame.oink.startups.entity.StartupsEntity;
@@ -21,6 +22,7 @@ public class BoardEntity {
 	GroveEntity grove;
 	PopeEntity pope;
 	WestEntity west;
+	Flip7Entity flip7;
 	
 	public String getId() {
 		return id;
@@ -81,5 +83,11 @@ public class BoardEntity {
 	}
 	public void setWest(WestEntity west) {
 		this.west = west;
+	}
+	public Flip7Entity getFlip7() {
+		return flip7;
+	}
+	public void setFlip7(Flip7Entity flip7) {
+		this.flip7 = flip7;
 	}
 }

@@ -790,6 +790,13 @@ body {
 				<button ng-click="goto('oink')">退出</button>
 			</div>
 		</div>
+		
+	</div>
+	
+	<div ng-show="game==FLIP7 && status != ENDGAME">
+		{{gamedata}}
+	</div>
+	<div ng-show="game==FLIP7 && status == ENDGAME">
 	</div>
 
 </body>

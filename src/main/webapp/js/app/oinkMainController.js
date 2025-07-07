@@ -122,6 +122,8 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 						t = '保卫教宗'
 					} else if (z == '4'){
 						t = '兄莠弟攻'
+					} else if (z == '7'){
+						t = '慰藉食物'
 					}
 					$scope.gameModes.push(t);
 					var y = response.data.value[i*5+4]

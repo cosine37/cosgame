@@ -8,6 +8,7 @@ import org.bson.Document;
 
 import com.cosine.cosgame.oink.account.Account;
 import com.cosine.cosgame.oink.account.entity.AccountEntity;
+import com.cosine.cosgame.oink.flip7.Flip7;
 import com.cosine.cosgame.oink.grove.Grove;
 import com.cosine.cosgame.oink.pope.PopeGame;
 import com.cosine.cosgame.oink.startups.Startups;
@@ -27,6 +28,7 @@ public class Board {
 	Grove grove;
 	PopeGame pope;
 	West west;
+	Flip7 flip7;
 	
 	MongoDBUtil dbutil;
 	
@@ -35,6 +37,7 @@ public class Board {
 		grove = new Grove(this);
 		pope = new PopeGame(this);
 		west = new West(this);
+		flip7 = new Flip7(this);
 		
 		playerNames = new ArrayList<>();
 		
@@ -57,6 +60,8 @@ public class Board {
 			doc = pope.toDocument();
 		} else if (game == Consts.WEST) {
 			doc = west.toDocument();
+		} else if (game == Consts.FLIP7) {
+			doc = flip7.toDocument();
 		}
 		
 		doc.append("id", id);
@@ -93,6 +98,8 @@ public class Board {
 			pope.setFromDoc(doc);
 		} else if (game == Consts.WEST) {
 			west.setFromDoc(doc);
+		} else if (game == Consts.FLIP7) {
+			flip7.setFromDoc(doc);
 		}
 	}
 	
@@ -112,6 +119,8 @@ public class Board {
 			entity.setPope(pope.toPopeEntity(username));
 		} else if (game == Consts.WEST) {
 			entity.setWest(west.toWestEntity(username));
+		} else if (game == Consts.FLIP7) {
+			entity.setFlip7(flip7.toFlip7Entity(username));
 		}
 		
 		int i;
@@ -165,6 +174,8 @@ public class Board {
 				pope.startGameUDB(settings);
 			} else if (this.game == Consts.WEST) {
 				west.startGameUDB();
+			} else if (this.game == Consts.FLIP7) {
+				flip7.startGameUDB();
 			}
 		}
 	}
