@@ -60,6 +60,10 @@
 				    <li class="nav-item">
 				      <a class="nav-link" data-toggle="tab" href="#westrulesstab" ng-click="hideTablesTab()">兄莠弟攻规则</a>
 				    </li>
+				    
+				    <li class="nav-item">
+				      <a class="nav-link" data-toggle="tab" href="#flip7rulestab" ng-click="hideTablesTab()">慰藉食品规则</a>
+				    </li>
 
 				  </ul>
 			</div>
@@ -455,6 +459,113 @@
 									
 								</p>
 								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>轮次与游戏结束</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有<b>下注</b>的玩家展示手牌，手牌<b>战力</b>最小的玩家将加上<b>救兵</b>牌的<b>战力</b>。
+								最终<b>战力</b>最大的玩家获胜，获得<b>仙丹池</b>中的所有<b>仙丹</b>。若最终<b>战力</b>相同，则最靠近本轮起始玩家的玩家获胜。若一名玩家在回合结束时没有<b>仙丹</b>，则该玩家出局。</br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7轮过后游戏结束。游戏结束时，<b>仙丹</b>最多的玩家获胜（若相同则共同获胜）。
+								</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="flip7rulestab" class="content container tab-pane fade">
+					<h2><b>慰藉食品规则</b></h2>
+					<table>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>背景</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 你和你的穷人朋友们参加了慰藉食品的大胃王挑战，比拼谁吃的最多。
+								根据饮食与健康的说法，人一天要吃的食物种类越多越健康，而吃<b>相同</b>的食物被视为不健康的，即使是慰藉食品，也要保证健康饮食啊（笑）。</br>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏人数</b></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持3~18人，最佳人数为5~6人。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="width: 1000px"><h4 class="pokerworldtext"><b>游戏内容与流程</b></h4></td>
+						</tr>
+						<tr>
+							<td>
+								<div ng-repeat="c in f7c12 track by $index" ng-include="'/view/html/Flip7Card.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有15张牌，<b>战力</b>（数字）分别为1~15。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时，每名玩家会获得4枚<b>仙丹</b>。游戏最多会进行7轮。
+									每轮游戏开始时，15张牌将会被洗混，之后给每名玩家发一张牌。牌堆顶的一张牌将会被翻出，称为<b>救兵</b>牌。将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每轮游戏，每名在场玩家按顺序选择以下一项执行：</br>
+									<ul>
+										<li><b>置换手牌:</b> 抽一张牌，并正面朝上弃一张手牌。</li>
+										<li><b>置换救兵:</b> 从牌堆顶翻出一张牌替代当前<b>救兵</b>牌成为新的<b>救兵</b>牌。</li>
+									</ul>
+									
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当所有在场玩家执行完以上选项后，每名在场玩家按顺序选择以下一项执行：</br></br>
+									<ul>
+										<li><b>下注:</b> 将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b>。</li>
+										<li><b>退出:</b> 将手牌背面朝下弃置，不参与本轮的比较。</li>
+									</ul>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div ng-repeat="c in f7c110 track by $index" ng-include="'/view/html/Flip7Card.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有15张牌，<b>战力</b>（数字）分别为1~15。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时，每名玩家会获得4枚<b>仙丹</b>。游戏最多会进行7轮。
+									每轮游戏开始时，15张牌将会被洗混，之后给每名玩家发一张牌。牌堆顶的一张牌将会被翻出，称为<b>救兵</b>牌。将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每轮游戏，每名在场玩家按顺序选择以下一项执行：</br>
+									<ul>
+										<li><b>置换手牌:</b> 抽一张牌，并正面朝上弃一张手牌。</li>
+										<li><b>置换救兵:</b> 从牌堆顶翻出一张牌替代当前<b>救兵</b>牌成为新的<b>救兵</b>牌。</li>
+									</ul>
+									
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当所有在场玩家执行完以上选项后，每名在场玩家按顺序选择以下一项执行：</br></br>
+									<ul>
+										<li><b>下注:</b> 将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b>。</li>
+										<li><b>退出:</b> 将手牌背面朝下弃置，不参与本轮的比较。</li>
+									</ul>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div ng-repeat="c in f7c1001 track by $index" ng-include="'/view/html/Flip7Card.html'" class="card-size-hand card card-size noselect">
+								</div>
+							</td>
+							<td style="width: 790px;vertical-align: top">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共有15张牌，<b>战力</b>（数字）分别为1~15。</br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;游戏开始时，每名玩家会获得4枚<b>仙丹</b>。游戏最多会进行7轮。
+									每轮游戏开始时，15张牌将会被洗混，之后给每名玩家发一张牌。牌堆顶的一张牌将会被翻出，称为<b>救兵</b>牌。将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b></br>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每轮游戏，每名在场玩家按顺序选择以下一项执行：</br>
+									<ul>
+										<li><b>置换手牌:</b> 抽一张牌，并正面朝上弃一张手牌。</li>
+										<li><b>置换救兵:</b> 从牌堆顶翻出一张牌替代当前<b>救兵</b>牌成为新的<b>救兵</b>牌。</li>
+									</ul>
+									
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当所有在场玩家执行完以上选项后，每名在场玩家按顺序选择以下一项执行：</br></br>
+									<ul>
+										<li><b>下注:</b> 将一枚<b>仙丹</b>（第七轮则为2枚）加入<b>仙丹池</b>。</li>
+										<li><b>退出:</b> 将手牌背面朝下弃置，不参与本轮的比较。</li>
+									</ul>
+								</p>
 							</td>
 						</tr>
 						<tr>

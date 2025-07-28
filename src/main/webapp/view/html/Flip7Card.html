@@ -1,0 +1,52 @@
+<div style="height:318px; width: 208px; border-radius: 10px; border: 6px solid white" ng-style="c.backgroundStyle">
+	<div ng-show="c.num<1000">
+		<div style="height: 60px; width: 60px; margin-left: 10px; margin-top: 10px; border-radius: 15px; float:left;
+			font-family: 'yzgc'; font-size: 38px; text-align: center; vertical-align: center; padding-top: 5px;" ng-style="c.bannerStyle">
+			<div ng-show="c.num<100">{{c.num}}</div>
+			<div ng-show="c.num>100 && c.num<110">+{{c.num%100}}</div>
+			<div ng-show="c.num>=110 && c.num<200" style="font-size: 28px;padding-top: 5px;">+{{c.num%100}}</div>
+			<div ng-show="c.num>200">×{{c.num%100}}</div>
+		</div>
+		<div style="width: 5px; height:60px;float:left;"> </div>
+		<div style="color: white; font-family: 'yzgc';font-size: 26px; padding-top: 10px; text-align: right; width:119px; height:60px; float:left; padding-right:10px">{{c.name}}</div>
+		<div style="clear:both"></div>
+	</div>
+	<div style="height: 160px; width: 160px; margin-left: 23px; margin-top: 40px;" ng-style="c.imgStyle" ng-show="c.num<1000">
+	</div>
+	
+	<div ng-show="c.num>1000" style="color: white; font-family: 'yzgc';font-size: 36px; padding-top: 10px; text-align: center; width:194px;"  >
+		{{c.name}}
+	</div>
+	<div ng-show="c.num>1000" style="height: 160px; width: 160px; margin-left: 23px; margin-top: 10px" ng-style="c.imgStyle">
+	</div>
+	<div ng-show="c.num>1000" style="color: white; font-family: 'yzgc';font-size: 20px;padding-top: 10px; text-align: center; width:194px;">
+		{{c.desc}}
+	</div>
+	<!-- 
+	<div style="height: 138px; margin-top: 5px; border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" ng-style="c.bannerStyle">
+	</div>
+	 -->
+	<!-- 
+	<div style="height: 54px; width:54px; border-radius: 27px; border: 1px groove yellow; color:white; background-color: rgb(0,150,255);
+		 position: absolute; top: 0px; left: 0px; font-family: 'lyt';font-size: 35px; text-align: center; padding-top: 2px; z-index: 30;">
+		{{c.num}}
+	</div>
+	<div style="height: 54px; width:54px; border-radius: 27px; border: 1px groove yellow; color:white; background-color: rgb(0,150,255);
+		 position: absolute; top: 0px; right: 0px; font-family: 'lyt';font-size: 35px; text-align: center; padding-top: 2px; z-index: 30;">
+		{{c.num}}
+	</div>
+	<div style="height: 170px; width: 128px; left: 40px; top: 8px; position:absolute; z-index: 10;" ng-style="c.avatarStyle">
+		
+	</div>
+	<div style="height: 170px; width: 128px; left: 40px; top: 8px; position:absolute;  z-index: 20;
+		 background-image: url(/image/Oink/West/frame.png);background-size:cover;"></div>
+	<div style="height: 36px; width: 188px; left: 10px; top: 160px; border-radius: 5px; position:absolute;  z-index: 40;
+		background-color: beige; text-align: center; font-family: 'hbt'; font-size: 26px;" >
+		{{c.name}}
+	</div>
+	<div style="height: 105px; width: 188px; left: 10px; bottom: 10px; border-radius: 5px; position:absolute; background-color: darkslategrey; 
+		text-align: center; font-size: 16px; padding: 2px; color: white">
+		{{c.desc}}
+	</div>
+	  -->
+</div>

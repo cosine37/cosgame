@@ -412,5 +412,60 @@ app.controller("oinkMainCtrl", ['$scope', '$window', '$http', '$document', '$web
 		}
 		$scope.westCards = []
 		$scope.westCards.push(wc1);
+		
+		f7c12 = {
+			"num": 12,
+			"name": "披萨",
+			"imgStyle":{
+				'background-image': 'url(/image/Oink/Flip7/12.png)',
+				"background-size" : 'cover'
+			},
+			"backgroundStyle":{
+				"background-color" : "orange"
+			},
+			"bannerStyle":{
+				"background-color" : "white",
+				"color": "orange"
+			}
+		}
+		$scope.f7c12 = []
+		$scope.f7c12.push(f7c12);
+		
+		f7c110 = {
+			"num": 110,
+			"name": "蓝纹奶酪",
+			"imgStyle":{
+				'background-image': 'url(/image/Oink/Flip7/110.png)',
+				"background-size" : 'cover'
+			},
+			"backgroundStyle":{
+				"background-color" : "darkslategrey"
+			},
+			"bannerStyle":{
+				"background-color" : "white",
+				"color": "darkslategrey"
+			}
+		}
+		$scope.f7c110 = []
+		$scope.f7c110.push(f7c110);
+		
+		f7c1001 = {
+			"num": 1001,
+			"name": "停止",
+			"desc":"这回合结束。",
+			"imgStyle":{
+				'background-image': 'url(/image/Oink/Flip7/12.png)',
+				"background-size" : 'cover'
+			},
+			"backgroundStyle":{
+				"background-color" : "blue"
+			},
+			"bannerStyle":{
+				"background-color" : "white",
+				"color": "orange"
+			}
+		}
+		$scope.f7c1001 = []
+		$scope.f7c1001.push(f7c1001);
 	
 }]);

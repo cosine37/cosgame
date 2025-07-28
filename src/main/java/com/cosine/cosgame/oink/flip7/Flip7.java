@@ -198,6 +198,7 @@ public class Flip7 {
 		updatePlayers();
 		updateBasicDB();
 	}
+	
 	// End actual operations
 	
 	public void updatePlayer(int index) {
